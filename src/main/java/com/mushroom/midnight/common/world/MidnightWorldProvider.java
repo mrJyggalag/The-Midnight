@@ -92,7 +92,7 @@ public class MidnightWorldProvider extends WorldProvider {
     @Override
     @SideOnly(Side.CLIENT)
     public Vec3d getFogColor(float celestialAngle, float partialTicks) {
-        return new Vec3d(0.2F, 0.1F, 0.4F);
+        return new Vec3d(0.07F, 0.0F, 0.27F);
     }
 
     @Override

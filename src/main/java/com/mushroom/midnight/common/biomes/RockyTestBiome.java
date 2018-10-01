@@ -8,7 +8,7 @@ public class RockyTestBiome extends Biome implements IMidnightBiome {
     }
 
     @Override
-    public boolean isRidged() {
-        return true;
+    public float getRidgeWeight() {
+        return 1.0F;
     }
 }

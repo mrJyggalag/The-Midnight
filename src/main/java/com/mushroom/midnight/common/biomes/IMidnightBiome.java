@@ -3,9 +3,9 @@ package com.mushroom.midnight.common.biomes;
 import net.minecraft.world.biome.Biome;
 
 public interface IMidnightBiome {
-    boolean isRidged();
+    float getRidgeWeight();
 
-    static boolean isRidged(Biome biome) {
-        return biome instanceof IMidnightBiome && ((IMidnightBiome) biome).isRidged();
+    static float getRidgeWeight(Biome biome) {
+        return biome instanceof IMidnightBiome ? ((IMidnightBiome) biome).getRidgeWeight() : 0.0F;
     }
 }
