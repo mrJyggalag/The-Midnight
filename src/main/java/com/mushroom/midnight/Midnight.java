@@ -24,7 +24,7 @@ public class Midnight {
     public static final SimpleNetworkWrapper NETWORK = new SimpleNetworkWrapper(MODID);
     public static final CreativeTabs MIDNIGHT_TAB = new CreativeTabs(MODID) {
         @Override
-        public ItemStack getTabIconItem() {
+        public ItemStack createIcon() {
             return new ItemStack(Items.APPLE);
         }
     };

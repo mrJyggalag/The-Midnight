@@ -13,7 +13,7 @@ public class ItemBase extends Item implements IModelProvider {
 
     public ItemBase(String registryName) {
         this.registryName = registryName;
-        setUnlocalizedName(Midnight.MODID + "." + registryName);
+        setTranslationKey(Midnight.MODID + "." + registryName);
         setRegistryName(registryName);
     }
 
