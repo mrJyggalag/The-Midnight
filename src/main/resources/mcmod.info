@@ -1,0 +1,12 @@
+[{
+  "modid": "midnight",
+  "name": "Midnight",
+  "description": "A spooky biome",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "logoFile": "",
+  "url": "",
+  "updateJSON": "",
+  "authorList": ["Martacus", "Gegy", "cipherzerox", "Energized"],
+  "credits": ""
+}]

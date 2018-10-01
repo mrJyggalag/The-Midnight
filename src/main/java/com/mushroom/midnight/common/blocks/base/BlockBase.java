@@ -17,6 +17,7 @@ public class BlockBase extends Block implements IMidnightBlock, IModelProvider {
 
         setUnlocalizedName(Midnight.MODID + "." + registryName);
         setRegistryName(registryName);
+        setCreativeTab(Midnight.MIDNIGHT_TAB);
     }
 
     @Override

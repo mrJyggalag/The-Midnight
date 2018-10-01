@@ -2,8 +2,8 @@ package com.mushroom.midnight.common.registry;
 
 import com.google.common.collect.Lists;
 import com.mushroom.midnight.Midnight;
-import com.mushroom.midnight.common.blocks.BlockShadowroot;
-import com.mushroom.midnight.common.blocks.BlockShadowrootLeaves;
+import com.mushroom.midnight.common.blocks.*;
+import com.mushroom.midnight.common.blocks.BlockEbonysBlock;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraftforge.event.RegistryEvent;
@@ -20,13 +20,54 @@ public class ModBlocks {
     static List<Block> blocks;
 
     public static final Block SHADOWROOT_LOG = Blocks.AIR;
-    public static final Block SHADOWROOT_LEAVES = Blocks.AIR;
+    public static final Block SHADOWROOT_LEAF = Blocks.AIR;
+    public static final Block SHADOWROOT_PLANK = Blocks.AIR;
+    public static final Block DEAD_WOOD_LOG = Blocks.AIR;
+    public static final Block DEAD_WOOD_PLANK = Blocks.AIR;
+    public static final Block DARK_WILLOW_LOG = Blocks.AIR;
+    public static final Block DARK_WILLOW_PLANK = Blocks.AIR;
+    public static final Block NIGHTSTONE = Blocks.AIR;
+    public static final Block NIGHTSTONE_BRICK = Blocks.AIR;
+    public static final Block NIGHTSTONE_BRICK_CHISELED = Blocks.AIR;
+    public static final Block DARK_PEARL_ORE = Blocks.AIR;
+    public static final Block DARK_PEARL_BLOCK = Blocks.AIR;
+    public static final Block EBONYS_ORE = Blocks.AIR;
+    public static final Block EBONYS_BLOCK = Blocks.AIR;
+    public static final Block NAGRILITE_ORE = Blocks.AIR;
+    public static final Block NAGRILITE_BLOCK = Blocks.AIR;
+    public static final Block TENEBRUM_ORE = Blocks.AIR;
+    public static final Block TENEBRUM_BLOCK = Blocks.AIR;
+    public static final Block RIFT_BLOCK = Blocks.AIR;
+
+    public static final Block SHADOWROOT_CRAFTING_TABLE = Blocks.AIR;
+    public static final Block SHADOWROOT_CHEST = Blocks.AIR;
+    public static final Block MIDNIGHT_FURNACE = Blocks.AIR;
 
     @SubscribeEvent
     public static void registerBlocks(RegistryEvent.Register<Block> event) {
         blocks = Lists.newArrayList(
-                new BlockShadowroot("shadowroot"),
-                new BlockShadowrootLeaves("shadowroot_leaves")
+                new BlockShadowroot("shadowroot_log"),
+                new BlockShadowrootLeaf("shadowroot_leaf"),
+                new BlockShadowrootPlank("shadowroot_plank"),
+                new BlockDeadWood("dead_wood_log"),
+                new BlockDeadPlank("dead_wood_plank"),
+                new BlockDarkWillowLog("dark_willow_log"),
+                new BlockDarkWillowPlank("dark_willow_plank"),
+                new BlockNightstone("nightstone"),
+                new BlockNightstoneBrick("nightstone_brick"),
+                new BlockChiseledNightstoneBrick("nightstone_brick_chiseled"),
+                new BlockDarkPearlOre("dark_pearl_ore"),
+                new BlockDarkPearlBlock("dark_pearl_block"),
+                new BlockEbonysOre("ebonys_ore"),
+                new BlockEbonysBlock("ebonys_block"),
+                new BlockNagriliteOre("nagrilite_ore"),
+                new BlockNagriliteBlock("nagrilite_block"),
+                new BlockTenebrumOre("tenebrum_ore"),
+                new BlockTenebrumBlock("tenebrum_block"),
+                new BlockShadowrootCraftingTable("shadowroot_crafting_table"),
+                new BlockShadowrootChest("shadowroot_chest"),
+                new BlockMidnightFurnace("midnight_furnace"),
+                new BlockRiftBlock("rift_block")
         );
 
         //registerTile(TileStatue.class, "statue");

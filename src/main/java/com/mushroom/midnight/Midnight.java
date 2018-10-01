@@ -22,14 +22,14 @@ public class Midnight {
     public static final String VERSION = "@VERSION@";
     public static final Logger LOGGER = LogManager.getLogger(NAME);
     public static final SimpleNetworkWrapper NETWORK = new SimpleNetworkWrapper(MODID);
-    public static final CreativeTabs EGYPTIAN_TAB = new CreativeTabs(MODID) {
+    public static final CreativeTabs MIDNIGHT_TAB = new CreativeTabs(MODID) {
         @Override
         public ItemStack getTabIconItem() {
             return new ItemStack(Items.APPLE);
         }
     };
 
-    @SidedProxy(serverSide = "CommonProxy", clientSide = "ClientProxy")
+    @SidedProxy(serverSide = "com.mushroom.midnight.common.CommonProxy", clientSide = "com.mushroom.midnight.client.ClientProxy")
     public static CommonProxy proxy;
 
     @Mod.Instance(MODID)
