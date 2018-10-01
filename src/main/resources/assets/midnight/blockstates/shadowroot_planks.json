@@ -2,7 +2,7 @@
   "forge_marker": 1,
   "defaults": {
     "textures": {
-      "all": "midnight:blocks/dead_wood_plank"
+      "all": "midnight:blocks/shadowroot_planks"
     }
   },
   "variants": {

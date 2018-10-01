@@ -5,10 +5,9 @@ import com.mushroom.midnight.client.IModelProvider;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 
-public class BlockShadowrootChest extends Block implements IModelProvider {
-
-    public BlockShadowrootChest() {
-        super(Material.WOOD);
+public final class BlockBasic extends Block implements IModelProvider {
+    public BlockBasic(Material material) {
+        super(material);
         this.setCreativeTab(Midnight.MIDNIGHT_TAB);
     }
 }

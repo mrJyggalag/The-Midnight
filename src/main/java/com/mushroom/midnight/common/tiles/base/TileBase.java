@@ -23,7 +23,7 @@ public class TileBase extends TileEntity {
 
     @Override
     public final SPacketUpdateTileEntity getUpdatePacket() {
-        return new SPacketUpdateTileEntity(getPos(), -999, writeToNBT(new NBTTagCompound()));
+        return new SPacketUpdateTileEntity(getPos(), 0, writeToNBT(new NBTTagCompound()));
     }
 
     @Override

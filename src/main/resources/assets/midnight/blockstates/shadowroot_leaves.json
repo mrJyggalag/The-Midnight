@@ -2,7 +2,7 @@
   "forge_marker": 1,
   "defaults": {
     "textures": {
-      "all": "midnight:blocks/dark_willow_plank"
+      "all": "midnight:blocks/shadowroot_leaves"
     }
   },
   "variants": {

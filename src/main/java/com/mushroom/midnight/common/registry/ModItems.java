@@ -3,11 +3,12 @@ package com.mushroom.midnight.common.registry;
 import com.google.common.collect.Lists;
 import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.client.IModelProvider;
-import com.mushroom.midnight.common.blocks.base.IMidnightBlock;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
+import net.minecraft.block.Block;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.event.RegistryEvent;
@@ -22,7 +23,6 @@ import java.util.List;
 @GameRegistry.ObjectHolder(Midnight.MODID)
 @Mod.EventBusSubscriber(modid = Midnight.MODID)
 public class ModItems {
-
     static List<Item> items;
 
     @SubscribeEvent
@@ -31,32 +31,46 @@ public class ModItems {
 
         );
 
-        ModBlocks.blocks.stream().filter(block -> block instanceof IMidnightBlock).forEach(block -> {
-            Item itemBlock = ((IMidnightBlock) block).getItem().setRegistryName(block.getRegistryName());
-            items.add(itemBlock);
-        });
-
-        event.getRegistry().registerAll(items.toArray(new Item[0]));
+        items.forEach(event.getRegistry()::register);
     }
 
     @SideOnly(Side.CLIENT)
     @SubscribeEvent
     public static void registerModels(ModelRegistryEvent event) {
-        items.stream().filter(item -> item instanceof IModelProvider).forEach(item -> {
-            Int2ObjectMap<String> variants = new Int2ObjectOpenHashMap<>();
-            ((IModelProvider) item).gatherVariants(variants);
-            for (Int2ObjectMap.Entry<String> entry : variants.int2ObjectEntrySet()){
-                ModelLoader.setCustomModelResourceLocation(item, entry.getIntKey(),
-                        new ModelResourceLocation(item.getRegistryName(), entry.getValue()));
-            }
-        });
+        ModItems.items.stream().filter(i -> i instanceof IModelProvider).forEach(ModItems::registerItemModel);
+        ModBlocks.blocks.stream().filter(b -> b instanceof IModelProvider).forEach(ModItems::registerBlockModel);
+    }
 
-        ModBlocks.blocks.stream().filter(block -> block instanceof IModelProvider).forEach(block -> {
-            Int2ObjectMap<String> variants = new Int2ObjectOpenHashMap<>();
-            ((IModelProvider) block).gatherVariants(variants);
-            for (Int2ObjectMap.Entry<String> entry : variants.int2ObjectEntrySet())
-                ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(block), entry.getIntKey(),
-                        new ModelResourceLocation(block.getRegistryName(), entry.getValue()));
-        });
+    @SideOnly(Side.CLIENT)
+    private static void registerBlockModel(Block block) {
+        ResourceLocation identifier = block.getRegistryName();
+        Item item = Item.getItemFromBlock(block);
+        if (identifier == null || item == null) {
+            throw new IllegalStateException("Cannot register model for improperly registered block");
+        }
+
+        Int2ObjectMap<String> variants = new Int2ObjectOpenHashMap<>();
+        ((IModelProvider) block).gatherVariants(variants);
+        for (Int2ObjectMap.Entry<String> entry : variants.int2ObjectEntrySet()) {
+            int metadata = entry.getIntKey();
+            String variant = entry.getValue();
+            ModelLoader.setCustomModelResourceLocation(item, metadata, new ModelResourceLocation(identifier, variant));
+        }
+    }
+
+    @SideOnly(Side.CLIENT)
+    private static void registerItemModel(Item item) {
+        ResourceLocation identifier = item.getRegistryName();
+        if (identifier == null) {
+            throw new IllegalStateException("Cannot register model for block without identifier");
+        }
+
+        Int2ObjectMap<String> variants = new Int2ObjectOpenHashMap<>();
+        ((IModelProvider) item).gatherVariants(variants);
+        for (Int2ObjectMap.Entry<String> entry : variants.int2ObjectEntrySet()) {
+            int metadata = entry.getIntKey();
+            String variant = entry.getValue();
+            ModelLoader.setCustomModelResourceLocation(item, metadata, new ModelResourceLocation(identifier, variant));
+        }
     }
 }

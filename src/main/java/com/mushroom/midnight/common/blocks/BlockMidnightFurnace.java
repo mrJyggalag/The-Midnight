@@ -1,11 +1,14 @@
 package com.mushroom.midnight.common.blocks;
 
-import com.mushroom.midnight.common.blocks.base.BlockBase;
+import com.mushroom.midnight.Midnight;
+import com.mushroom.midnight.client.IModelProvider;
+import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 
-public class BlockMidnightFurnace extends BlockBase {
+public class BlockMidnightFurnace extends Block implements IModelProvider {
 
-    public BlockMidnightFurnace(String registryName) {
-        super(Material.ROCK, registryName);
+    public BlockMidnightFurnace() {
+        super(Material.ROCK);
+        this.setCreativeTab(Midnight.MIDNIGHT_TAB);
     }
 }

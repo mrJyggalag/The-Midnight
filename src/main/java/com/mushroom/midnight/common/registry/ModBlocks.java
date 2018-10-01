@@ -2,10 +2,18 @@ package com.mushroom.midnight.common.registry;
 
 import com.google.common.collect.Lists;
 import com.mushroom.midnight.Midnight;
-import com.mushroom.midnight.common.blocks.*;
-import com.mushroom.midnight.common.blocks.BlockEbonysBlock;
+import com.mushroom.midnight.common.blocks.BlockBasic;
+import com.mushroom.midnight.common.blocks.BlockMidnightFurnace;
+import com.mushroom.midnight.common.blocks.BlockRiftBlock;
+import com.mushroom.midnight.common.blocks.BlockShadowrootChest;
+import com.mushroom.midnight.common.blocks.BlockShadowrootCraftingTable;
 import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
 import net.minecraft.init.Blocks;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -20,15 +28,15 @@ public class ModBlocks {
     static List<Block> blocks;
 
     public static final Block SHADOWROOT_LOG = Blocks.AIR;
-    public static final Block SHADOWROOT_LEAF = Blocks.AIR;
-    public static final Block SHADOWROOT_PLANK = Blocks.AIR;
+    public static final Block SHADOWROOT_LEAVES = Blocks.AIR;
+    public static final Block SHADOWROOT_PLANKS = Blocks.AIR;
     public static final Block DEAD_WOOD_LOG = Blocks.AIR;
-    public static final Block DEAD_WOOD_PLANK = Blocks.AIR;
+    public static final Block DEAD_WOOD_PLANKS = Blocks.AIR;
     public static final Block DARK_WILLOW_LOG = Blocks.AIR;
-    public static final Block DARK_WILLOW_PLANK = Blocks.AIR;
+    public static final Block DARK_WILLOW_PLANKS = Blocks.AIR;
     public static final Block NIGHTSTONE = Blocks.AIR;
     public static final Block NIGHTSTONE_BRICK = Blocks.AIR;
-    public static final Block NIGHTSTONE_BRICK_CHISELED = Blocks.AIR;
+    public static final Block CHISELED_NIGHTSTONE_BRICK = Blocks.AIR;
     public static final Block DARK_PEARL_ORE = Blocks.AIR;
     public static final Block DARK_PEARL_BLOCK = Blocks.AIR;
     public static final Block EBONYS_ORE = Blocks.AIR;
@@ -46,37 +54,69 @@ public class ModBlocks {
     @SubscribeEvent
     public static void registerBlocks(RegistryEvent.Register<Block> event) {
         blocks = Lists.newArrayList(
-                new BlockShadowroot("shadowroot_log"),
-                new BlockShadowrootLeaf("shadowroot_leaf"),
-                new BlockShadowrootPlank("shadowroot_plank"),
-                new BlockDeadWood("dead_wood_log"),
-                new BlockDeadPlank("dead_wood_plank"),
-                new BlockDarkWillowLog("dark_willow_log"),
-                new BlockDarkWillowPlank("dark_willow_plank"),
-                new BlockNightstone("nightstone"),
-                new BlockNightstoneBrick("nightstone_brick"),
-                new BlockChiseledNightstoneBrick("nightstone_brick_chiseled"),
-                new BlockDarkPearlOre("dark_pearl_ore"),
-                new BlockDarkPearlBlock("dark_pearl_block"),
-                new BlockEbonysOre("ebonys_ore"),
-                new BlockEbonysBlock("ebonys_block"),
-                new BlockNagriliteOre("nagrilite_ore"),
-                new BlockNagriliteBlock("nagrilite_block"),
-                new BlockTenebrumOre("tenebrum_ore"),
-                new BlockTenebrumBlock("tenebrum_block"),
-                new BlockShadowrootCraftingTable("shadowroot_crafting_table"),
-                new BlockShadowrootChest("shadowroot_chest"),
-                new BlockMidnightFurnace("midnight_furnace"),
-                new BlockRiftBlock("rift_block")
+                RegUtil.withName(new BlockBasic(Material.WOOD), "shadowroot_log"),
+                RegUtil.withName(new BlockBasic(Material.LEAVES), "shadowroot_leaves"),
+                RegUtil.withName(new BlockBasic(Material.WOOD), "shadowroot_planks"),
+                RegUtil.withName(new BlockBasic(Material.WOOD), "dead_wood_log"),
+                RegUtil.withName(new BlockBasic(Material.WOOD), "dead_wood_planks"),
+                RegUtil.withName(new BlockBasic(Material.WOOD), "dark_willow_log"),
+                RegUtil.withName(new BlockBasic(Material.WOOD), "dark_willow_planks"),
+                RegUtil.withName(new BlockBasic(Material.ROCK), "nightstone"),
+                RegUtil.withName(new BlockBasic(Material.ROCK), "nightstone_brick"),
+                RegUtil.withName(new BlockBasic(Material.ROCK), "chiseled_nightstone_brick"),
+                RegUtil.withName(new BlockBasic(Material.ROCK), "dark_pearl_ore"),
+                RegUtil.withName(new BlockBasic(Material.IRON), "dark_pearl_block"),
+                RegUtil.withName(new BlockBasic(Material.ROCK), "ebonys_ore"),
+                RegUtil.withName(new BlockBasic(Material.IRON), "ebonys_block"),
+                RegUtil.withName(new BlockBasic(Material.ROCK), "nagrilite_ore"),
+                RegUtil.withName(new BlockBasic(Material.IRON), "nagrilite_block"),
+                RegUtil.withName(new BlockBasic(Material.ROCK), "tenebrum_ore"),
+                RegUtil.withName(new BlockBasic(Material.IRON), "tenebrum_block"),
+                RegUtil.withName(new BlockShadowrootCraftingTable(), "shadowroot_crafting_table"),
+                RegUtil.withName(new BlockShadowrootChest(), "shadowroot_chest"),
+                RegUtil.withName(new BlockMidnightFurnace(), "midnight_furnace"),
+                RegUtil.withName(new BlockRiftBlock(), "rift_block")
         );
 
-        //registerTile(TileStatue.class, "statue");
-
-        event.getRegistry().registerAll(blocks.toArray(new Block[0]));
+        blocks.forEach(event.getRegistry()::register);
     }
 
-    private static void registerTile(Class classs, String registryName) {
-        GameRegistry.registerTileEntity(classs, Midnight.MODID + ":tile_" + registryName);
+    @SubscribeEvent
+    public static void registerItems(RegistryEvent.Register<Item> event) {
+        event.getRegistry().registerAll(itemBlocks(
+                SHADOWROOT_LOG, SHADOWROOT_LEAVES, SHADOWROOT_PLANKS,
+                DEAD_WOOD_LOG, DEAD_WOOD_PLANKS,
+                DARK_WILLOW_LOG, DARK_WILLOW_PLANKS,
+                NIGHTSTONE, NIGHTSTONE_BRICK, CHISELED_NIGHTSTONE_BRICK,
+                DARK_PEARL_ORE, DARK_PEARL_BLOCK,
+                EBONYS_ORE, EBONYS_BLOCK,
+                NAGRILITE_ORE, NAGRILITE_BLOCK,
+                TENEBRUM_ORE, TENEBRUM_BLOCK,
+                SHADOWROOT_CRAFTING_TABLE,
+                SHADOWROOT_CHEST,
+                MIDNIGHT_FURNACE,
+                RIFT_BLOCK
+        ));
     }
 
+    private static Item[] itemBlocks(Block... blocks) {
+        Item[] items = new Item[blocks.length];
+        for (int i = 0; i < blocks.length; i++) {
+            items[i] = itemBlock(blocks[i]);
+        }
+        return items;
+    }
+
+    private static Item itemBlock(Block block) {
+        ItemBlock item = new ItemBlock(block);
+        if (block.getRegistryName() == null) {
+            throw new IllegalArgumentException("Cannot create ItemBlock for Block without registry name");
+        }
+        item.setRegistryName(block.getRegistryName());
+        return item;
+    }
+
+    private static void registerTile(Class<? extends TileEntity> entityClass, String registryName) {
+        GameRegistry.registerTileEntity(entityClass, new ResourceLocation(Midnight.MODID, registryName));
+    }
 }
