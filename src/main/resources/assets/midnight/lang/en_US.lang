@@ -1,1 +1,8 @@
+# Item Groups
+
 itemGroup.midnight=Midnight
+
+# Config
+
+config.midnight.midnight_dimension_id=Midnight Dimension ID
+config.midnight.midnight_dimension_id.tooltip=The ID to be used for the Midnight Dimension
