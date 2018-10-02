@@ -1,6 +1,7 @@
 package com.mushroom.midnight.common.world;
 
 import com.mushroom.midnight.common.biomes.IMidnightBiome;
+import com.mushroom.midnight.common.registry.ModBlocks;
 import com.mushroom.midnight.common.world.noise.OctaveNoiseSampler;
 import com.mushroom.midnight.common.world.util.BiomeWeightTable;
 import com.mushroom.midnight.common.world.util.NoiseChunkPrimer;
@@ -39,7 +40,7 @@ public class MidnightChunkGenerator implements IChunkGenerator {
     private static final int BIOME_NOISE_OFFSET = BIOME_WEIGHT_RADIUS;
     private static final int BIOME_NOISE_SIZE = BUFFER_WIDTH + BIOME_WEIGHT_RADIUS * 2;
 
-    private static final IBlockState STONE = Blocks.STONE.getDefaultState();
+    private static final IBlockState STONE = ModBlocks.NIGHTSTONE.getDefaultState();
 
     private final World world;
     private final Random random;
