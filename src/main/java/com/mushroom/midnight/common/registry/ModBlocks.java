@@ -5,7 +5,6 @@ import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.common.blocks.BlockBasic;
 import com.mushroom.midnight.common.blocks.BlockMidnightFurnace;
 import com.mushroom.midnight.common.blocks.BlockMidnightGrass;
-import com.mushroom.midnight.common.blocks.BlockRiftBlock;
 import com.mushroom.midnight.common.blocks.BlockShadowrootChest;
 import com.mushroom.midnight.common.blocks.BlockShadowrootCraftingTable;
 import net.minecraft.block.Block;
@@ -78,7 +77,6 @@ public class ModBlocks {
                 RegUtil.withName(new BlockShadowrootCraftingTable(), "shadowroot_crafting_table"),
                 RegUtil.withName(new BlockShadowrootChest(), "shadowroot_chest"),
                 RegUtil.withName(new BlockMidnightFurnace(), "midnight_furnace"),
-                RegUtil.withName(new BlockRiftBlock(), "rift_block"),
                 RegUtil.withName(new BlockBasic(Material.GROUND), "midnight_dirt"),
                 RegUtil.withName(new BlockMidnightGrass(Material.GRASS), "midnight_grass")
         );
@@ -100,7 +98,6 @@ public class ModBlocks {
                 SHADOWROOT_CRAFTING_TABLE,
                 SHADOWROOT_CHEST,
                 MIDNIGHT_FURNACE,
-                RIFT_BLOCK,
                 MIDNIGHT_DIRT, MIDNIGHT_GRASS
         ));
     }
