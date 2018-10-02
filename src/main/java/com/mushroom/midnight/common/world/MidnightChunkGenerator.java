@@ -1,19 +1,24 @@
 package com.mushroom.midnight.common.world;
 
 import com.mushroom.midnight.common.biomes.IMidnightBiome;
-import com.mushroom.midnight.common.world.noise.OctavedNoiseGenerator;
+import com.mushroom.midnight.common.world.noise.OctaveNoiseSampler;
 import com.mushroom.midnight.common.world.util.BiomeWeightTable;
 import com.mushroom.midnight.common.world.util.NoiseChunkPrimer;
+import net.minecraft.block.BlockFalling;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldEntitySpawner;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.BiomeProvider;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.ChunkPrimer;
 import net.minecraft.world.gen.IChunkGenerator;
+import net.minecraftforge.event.ForgeEventFactory;
+import net.minecraftforge.event.terraingen.PopulateChunkEvent;
+import net.minecraftforge.event.terraingen.TerrainGen;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -42,12 +47,18 @@ public class MidnightChunkGenerator implements IChunkGenerator {
     private Biome[] biomeBuffer;
     private Biome[] biomeNoiseBuffer;
 
-    private final OctavedNoiseGenerator worldNoise;
-    private final OctavedNoiseGenerator surfaceNoise;
+    private final OctaveNoiseSampler worldNoise;
+    private final OctaveNoiseSampler surfaceNoise;
+    private final OctaveNoiseSampler ridgedSurfaceNoise;
+
+    private final OctaveNoiseSampler depthNoise;
 
     private final double[] worldNoiseBuffer = new double[BUFFER_WIDTH * BUFFER_WIDTH * BUFFER_HEIGHT];
     private final double[] terrainBuffer = new double[BUFFER_WIDTH * BUFFER_WIDTH * BUFFER_HEIGHT];
     private final double[] surfaceBuffer = new double[BUFFER_WIDTH * BUFFER_WIDTH];
+    private final double[] ridgedSurfaceBuffer = new double[BUFFER_WIDTH * BUFFER_WIDTH];
+
+    private final double[] depthBuffer = new double[256];
 
     private final NoiseChunkPrimer noisePrimer;
     private final BiomeWeightTable weightTable;
@@ -56,8 +67,20 @@ public class MidnightChunkGenerator implements IChunkGenerator {
         this.world = world;
         this.random = new Random(world.getSeed());
 
-        this.worldNoise = new OctavedNoiseGenerator(this.random, 3, 5.0, 0.1, 0.51, 2.01, BUFFER_WIDTH, BUFFER_HEIGHT, BUFFER_WIDTH);
-        this.surfaceNoise = new OctavedNoiseGenerator(this.random, 8, 3.0, 0.04, 0.51, 2.01, BUFFER_WIDTH, BUFFER_WIDTH);
+        this.worldNoise = OctaveNoiseSampler.perlin(this.random, 3);
+        this.worldNoise.setAmplitude(5.0);
+        this.worldNoise.setFrequency(0.1);
+
+        this.surfaceNoise = OctaveNoiseSampler.perlin(this.random, 8);
+        this.surfaceNoise.setAmplitude(3.0);
+        this.surfaceNoise.setFrequency(0.04);
+
+        this.ridgedSurfaceNoise = OctaveNoiseSampler.ridged(this.random, 3, 4.0);
+        this.ridgedSurfaceNoise.setAmplitude(4.0);
+        this.ridgedSurfaceNoise.setFrequency(0.08);
+
+        this.depthNoise = OctaveNoiseSampler.perlin(this.random, 4);
+        this.depthNoise.setFrequency(0.0625);
 
         this.noisePrimer = new NoiseChunkPrimer(HORIZONTAL_GRANULARITY, VERTICAL_GRANULARITY, NOISE_WIDTH, NOISE_HEIGHT);
         this.weightTable = new BiomeWeightTable(BIOME_WEIGHT_RADIUS);
@@ -67,6 +90,8 @@ public class MidnightChunkGenerator implements IChunkGenerator {
     public Chunk generateChunk(int chunkX, int chunkZ) {
         int globalX = chunkX << 4;
         int globalZ = chunkZ << 4;
+
+        this.random.setSeed(chunkX * 341873128712L + chunkZ * 132897987541L);
 
         BiomeProvider biomeProvider = this.world.getBiomeProvider();
         this.biomeBuffer = biomeProvider.getBiomes(this.biomeBuffer, globalX, globalZ, 16, 16);
@@ -99,11 +124,14 @@ public class MidnightChunkGenerator implements IChunkGenerator {
                 return null;
             }
         });
+
+        this.coverSurface(primer, chunkX, chunkZ);
     }
 
     protected void populateNoise(int chunkX, int chunkZ) {
-        this.worldNoise.generateOctavedNoise3D(this.worldNoiseBuffer, chunkX * NOISE_WIDTH, 0, chunkZ * NOISE_WIDTH);
-        this.surfaceNoise.generateOctavedNoise2D(this.surfaceBuffer, chunkX * NOISE_WIDTH, chunkZ * NOISE_WIDTH);
+        this.worldNoise.sample3D(this.worldNoiseBuffer, chunkX * NOISE_WIDTH, 0, chunkZ * NOISE_WIDTH, BUFFER_WIDTH, BUFFER_HEIGHT, BUFFER_WIDTH);
+        this.surfaceNoise.sample2D(this.surfaceBuffer, chunkX * NOISE_WIDTH, chunkZ * NOISE_WIDTH, BUFFER_WIDTH, BUFFER_WIDTH);
+        this.ridgedSurfaceNoise.sample2D(this.ridgedSurfaceBuffer, chunkX * NOISE_WIDTH, chunkZ * NOISE_WIDTH, BUFFER_WIDTH, BUFFER_WIDTH);
 
         float heightOrigin = 62.0F / VERTICAL_GRANULARITY;
 
@@ -118,21 +146,21 @@ public class MidnightChunkGenerator implements IChunkGenerator {
                 float totalWeight = 0.0F;
 
                 Biome originBiome = this.sampleNoiseBiome(localX, localZ);
-                for (int neighbourZ = -BIOME_WEIGHT_RADIUS; neighbourZ <= BIOME_WEIGHT_RADIUS; neighbourZ++) {
-                    for (int neighbourX = -BIOME_WEIGHT_RADIUS; neighbourX <= BIOME_WEIGHT_RADIUS; neighbourX++) {
-                        Biome neighbourBiome = this.sampleNoiseBiome(localX + neighbourX, localZ + neighbourZ);
-                        float neighbourBaseHeight = neighbourBiome.getBaseHeight();
-                        float neighbourHeightVariation = neighbourBiome.getHeightVariation();
-                        boolean ridged = IMidnightBiome.isRidged(neighbourBiome);
+                for (int neighborZ = -BIOME_WEIGHT_RADIUS; neighborZ <= BIOME_WEIGHT_RADIUS; neighborZ++) {
+                    for (int neighborX = -BIOME_WEIGHT_RADIUS; neighborX <= BIOME_WEIGHT_RADIUS; neighborX++) {
+                        Biome neighborBiome = this.sampleNoiseBiome(localX + neighborX, localZ + neighborZ);
+                        float neighborBaseHeight = neighborBiome.getBaseHeight();
+                        float neighborHeightVariation = neighborBiome.getHeightVariation();
+                        float neighborRidgeWeight = IMidnightBiome.getRidgeWeight(neighborBiome);
 
-                        float biomeWeight = this.weightTable.get(neighbourX, neighbourZ) / (neighbourBaseHeight + 2.0F);
-                        if (neighbourBiome.getBaseHeight() > originBiome.getBaseHeight()) {
+                        float biomeWeight = this.weightTable.get(neighborX, neighborZ) / (neighborBaseHeight + 2.0F);
+                        if (neighborBiome.getBaseHeight() > originBiome.getBaseHeight()) {
                             biomeWeight *= 2.0F;
                         }
 
-                        heightVariation += neighbourHeightVariation * biomeWeight;
-                        baseHeight += neighbourBaseHeight * biomeWeight;
-                        ridgeWeight += ridged ? biomeWeight : 0.0F;
+                        heightVariation += neighborHeightVariation * biomeWeight;
+                        baseHeight += neighborBaseHeight * biomeWeight;
+                        ridgeWeight += neighborRidgeWeight * biomeWeight;
 
                         totalWeight += biomeWeight;
                     }
@@ -145,12 +173,17 @@ public class MidnightChunkGenerator implements IChunkGenerator {
 
                 heightVariation = heightVariation * 0.9F + 0.1F;
 
-                double surfaceNoise = (this.surfaceBuffer[surfaceIndex++] + 1.5) / 3.0;
-                surfaceNoise = (surfaceNoise * heightVariation * 0.5) + baseHeight;
+                double perlinSurfaceNoise = this.surfaceBuffer[surfaceIndex];
+                double ridgedSurfaceNoise = this.ridgedSurfaceBuffer[surfaceIndex];
+                surfaceIndex++;
+
+                double surfaceNoise = perlinSurfaceNoise + (ridgedSurfaceNoise - perlinSurfaceNoise) * ridgeWeight;
+                surfaceNoise = (surfaceNoise + 1.5) / 3.0;
+                surfaceNoise = (surfaceNoise * heightVariation * 4.0) + baseHeight;
 
                 for (int localY = 0; localY < NOISE_HEIGHT + 1; localY++) {
                     double sampledNoise = this.worldNoiseBuffer[index];
-                    double density = sampledNoise * Math.pow(heightVariation * 5.0, 3.0);
+                    double density = sampledNoise * Math.pow(heightVariation * 4.0, 3.0);
 
                     double densityBias = surfaceNoise - localY;
                     if (localY < baseHeight) {
@@ -169,8 +202,57 @@ public class MidnightChunkGenerator implements IChunkGenerator {
         return this.biomeNoiseBuffer[(x + BIOME_NOISE_OFFSET) + (z + BIOME_NOISE_OFFSET) * BIOME_NOISE_SIZE];
     }
 
+    private void coverSurface(ChunkPrimer primer, int chunkX, int chunkZ) {
+        if (!ForgeEventFactory.onReplaceBiomeBlocks(this, chunkX, chunkZ, primer, this.world)) {
+            return;
+        }
+
+        int globalX = chunkX << 4;
+        int globalZ = chunkZ << 4;
+        this.biomeBuffer = this.world.getBiomeProvider().getBiomes(this.biomeBuffer, globalX, globalZ, 16, 16);
+
+        this.depthNoise.sample2D(this.depthBuffer, globalX, globalZ, 16, 16);
+
+        for (int localZ = 0; localZ < 16; localZ++) {
+            for (int localX = 0; localX < 16; localX++) {
+                int index = localX + localZ * 16;
+                Biome biome = this.biomeBuffer[index];
+                double depth = this.depthBuffer[index];
+
+                biome.genTerrainBlocks(this.world, this.random, primer, globalX + localX, globalZ + localZ, depth);
+            }
+        }
+    }
+
     @Override
-    public void populate(int x, int z) {
+    public void populate(int chunkX, int chunkZ) {
+        BlockFalling.fallInstantly = true;
+
+        try {
+            int globalX = chunkX << 4;
+            int globalZ = chunkZ << 4;
+
+            BlockPos origin = new BlockPos(globalX, 0, globalZ);
+            Biome biome = this.world.getBiome(origin.add(16, 0, 16));
+
+            this.random.setSeed(this.world.getSeed());
+            long chunkSeedX = this.random.nextLong() / 2L * 2L + 1L;
+            long chunkSeedZ = this.random.nextLong() / 2L * 2L + 1L;
+            this.random.setSeed(chunkX * chunkSeedX + chunkZ * chunkSeedZ ^ this.world.getSeed());
+
+            ForgeEventFactory.onChunkPopulate(true, this, this.world, this.random, chunkX, chunkZ, false);
+
+            biome.decorate(this.world, this.random, new BlockPos(globalX, 0, globalZ));
+            if (TerrainGen.populate(this, this.world, this.random, chunkX, chunkZ, false, PopulateChunkEvent.Populate.EventType.ANIMALS)) {
+                int originX = globalX + 8;
+                int originZ = globalZ + 8;
+                WorldEntitySpawner.performWorldGenSpawning(this.world, biome, originX, originZ, 16, 16, this.random);
+            }
+
+            ForgeEventFactory.onChunkPopulate(false, this, this.world, this.random, chunkX, chunkZ, false);
+        } finally {
+            BlockFalling.fallInstantly = false;
+        }
     }
 
     @Override

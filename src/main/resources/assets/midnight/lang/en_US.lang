@@ -6,3 +6,7 @@ itemGroup.midnight=Midnight
 
 config.midnight.midnight_dimension_id=Midnight Dimension ID
 config.midnight.midnight_dimension_id.tooltip=The ID to be used for the Midnight Dimension
+
+# Entities
+
+entity.midnight.rift.name=Midnight Rift
