@@ -46,7 +46,6 @@ public class ModBlocks {
     public static final Block NAGRILITE_BLOCK = Blocks.AIR;
     public static final Block TENEBRUM_ORE = Blocks.AIR;
     public static final Block TENEBRUM_BLOCK = Blocks.AIR;
-    public static final Block RIFT_BLOCK = Blocks.AIR;
 
     public static final Block SHADOWROOT_CRAFTING_TABLE = Blocks.AIR;
     public static final Block SHADOWROOT_CHEST = Blocks.AIR;

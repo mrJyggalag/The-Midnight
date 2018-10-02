@@ -1,10 +1,15 @@
 package com.mushroom.midnight;
 
 import com.mushroom.midnight.common.CommonProxy;
+import com.mushroom.midnight.common.capability.RiftCooldownCapability;
+import com.mushroom.midnight.common.capability.VoidStorage;
 import com.mushroom.midnight.common.registry.ModDimensions;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.CapabilityInject;
+import net.minecraftforge.common.capabilities.CapabilityManager;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -36,8 +41,13 @@ public class Midnight {
     @Mod.Instance(MODID)
     public static Midnight instance;
 
+    @CapabilityInject(RiftCooldownCapability.class)
+    public static Capability<RiftCooldownCapability> riftCooldownCap = null;
+
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event) {
+        CapabilityManager.INSTANCE.register(RiftCooldownCapability.class, new VoidStorage<>(), RiftCooldownCapability.Impl::new);
+
         ModDimensions.register();
     }
 
@@ -50,5 +60,4 @@ public class Midnight {
     public void postInit(FMLPostInitializationEvent event) {
 
     }
-
 }

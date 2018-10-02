@@ -1,5 +1,9 @@
 package com.mushroom.midnight.common.entities;
 
+import com.mushroom.midnight.Midnight;
+import com.mushroom.midnight.common.capability.RiftCooldownCapability;
+import com.mushroom.midnight.common.registry.ModDimensions;
+import com.mushroom.midnight.common.world.MidnightTeleporter;
 import net.minecraft.entity.Entity;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.datasync.DataParameter;
@@ -7,6 +11,7 @@ import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.world.DimensionType;
 import net.minecraft.world.World;
 
 import javax.vecmath.Point2f;
@@ -69,6 +74,10 @@ public class EntityRift extends Entity {
             } else if (this.ticksExisted > LIFETIME) {
                 this.dataManager.set(UNSTABLE, true);
             }
+
+            if (this.openProgress >= OPEN_TIME) {
+                this.teleportEntities();
+            }
         }
 
         this.updateTimers();
@@ -95,21 +104,56 @@ public class EntityRift extends Entity {
         List<Entity> entities = this.world.getEntitiesWithinAABBExcludingEntity(this, pullBounds);
         for (Entity entity : entities) {
             if (!(entity instanceof EntityRift)) {
-                double deltaX = this.posX - entity.posX;
-                double deltaY = this.posY - entity.posY;
-                double deltaZ = this.posZ - entity.posZ;
-
-                double distanceSq = deltaX * deltaX + deltaY * deltaY + deltaZ * deltaZ;
-
-                if (distanceSq > 0.0) {
-                    double distance = Math.sqrt(distanceSq);
-                    double intensity = MathHelper.clamp(pullIntensity / distanceSq, 0.0F, 1.0F);
-
-                    entity.motionX += (deltaX / distance) * intensity;
-                    entity.motionY += (deltaY / distance) * intensity;
-                    entity.motionZ += (deltaZ / distance) * intensity;
-                }
+                this.pullEntity(pullIntensity, entity);
             }
+        }
+    }
+
+    private void pullEntity(double pullIntensity, Entity entity) {
+        double deltaX = this.posX - entity.posX;
+        double deltaY = (this.posY + this.height / 2.0F) - (entity.posY + entity.height / 2.0F);
+        double deltaZ = this.posZ - entity.posZ;
+
+        double distanceSq = deltaX * deltaX + deltaY * deltaY + deltaZ * deltaZ;
+
+        if (distanceSq > 0.0) {
+            double distance = Math.sqrt(distanceSq);
+            double intensity = MathHelper.clamp(pullIntensity / distanceSq, 0.0F, 1.0F);
+
+            // TODO: Sync to the client somehow as clients control player movement
+            entity.motionX += (deltaX / distance) * intensity;
+            entity.motionY += (deltaY / distance) * intensity;
+            entity.motionZ += (deltaZ / distance) * intensity;
+
+            entity.fallDistance = 0.0F;
+        }
+    }
+
+    private void teleportEntities() {
+        AxisAlignedBB bounds = this.getEntityBoundingBox().grow(-1.0);
+        DimensionType transportDimension = this.getTransportDimension();
+
+        List<Entity> entities = this.world.getEntitiesInAABBexcluding(this, bounds, entity -> {
+            if (entity.isRiding() || entity.isBeingRidden()) {
+                return false;
+            }
+            RiftCooldownCapability cooldown = entity.getCapability(Midnight.riftCooldownCap, null);
+            if (cooldown != null && !cooldown.isReady()) {
+                return false;
+            }
+            return !(entity instanceof EntityRift);
+        });
+
+        for (Entity entity : entities) {
+            entity.changeDimension(transportDimension.getId(), MidnightTeleporter.INSTANCE);
+        }
+    }
+
+    private DimensionType getTransportDimension() {
+        if (this.world.provider.getDimensionType() == ModDimensions.MIDNIGHT) {
+            return DimensionType.OVERWORLD;
+        } else {
+            return ModDimensions.MIDNIGHT;
         }
     }
 
@@ -125,7 +169,6 @@ public class EntityRift extends Entity {
         this.geometrySeed = compound.getLong("geometry_seed");
         this.ticksExisted = compound.getInteger("age");
         this.dataManager.set(OPEN, !compound.hasKey("open") || compound.getBoolean("open"));
-        this.openProgress = this.isOpen() ? OPEN_TIME : 0;
     }
 
     public Point2f[] computePath(float animation, float unstableAnimation, float time) {
