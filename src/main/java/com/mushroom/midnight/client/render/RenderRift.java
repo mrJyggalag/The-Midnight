@@ -28,7 +28,7 @@ public class RenderRift extends Render<EntityRift> {
             GlStateManager.pushMatrix();
 
             GlStateManager.translate(x, y + entity.height / 2.0F, z);
-            GlStateManager.rotate(entityYaw, 0.0F, 1.0F, 0.0F);
+            GlStateManager.rotate(180.0F - entityYaw, 0.0F, 1.0F, 0.0F);
 
             Tessellator tessellator = Tessellator.getInstance();
             BufferBuilder builder = tessellator.getBuffer();

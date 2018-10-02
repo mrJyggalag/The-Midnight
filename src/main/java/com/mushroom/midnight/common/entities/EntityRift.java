@@ -13,7 +13,7 @@ public class EntityRift extends Entity {
 
     public EntityRift(World world) {
         super(world);
-        this.setSize(1.2F, 2.5F);
+        this.setSize(1.8F, 4.0F);
         this.noClip = true;
     }
 
@@ -25,7 +25,7 @@ public class EntityRift extends Entity {
     public void onUpdate() {
         super.onUpdate();
         if (this.world.isRemote && this.geometry == null) {
-            this.geometry = RiftGeometry.generate(new Random(this.geometrySeed), this.width, this.height);
+            this.geometry = RiftGeometry.generate(new Random(this.geometrySeed), this.width / 2.0F, this.height / 2.0F);
         }
     }
 
