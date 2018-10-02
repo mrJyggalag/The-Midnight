@@ -1,7 +1,7 @@
 package com.mushroom.midnight.common.registry;
 
 import com.mushroom.midnight.Midnight;
-import com.mushroom.midnight.common.biomes.RockyTestBiome;
+import com.mushroom.midnight.common.biomes.BiomeBlackRidge;
 import net.minecraft.init.Biomes;
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.event.RegistryEvent;
@@ -17,7 +17,7 @@ public class ModBiomes {
     @SubscribeEvent
     public static void onRegisterBiomes(RegistryEvent.Register<Biome> event) {
         event.getRegistry().registerAll(
-                RegUtil.applyName(new RockyTestBiome(
+                RegUtil.applyName(new BiomeBlackRidge(
                         new Biome.BiomeProperties("rocky_test")
                                 .setBaseHeight(0.125F)
                                 .setHeightVariation(0.05F)
