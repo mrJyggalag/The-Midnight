@@ -4,7 +4,6 @@ import com.google.common.collect.Lists;
 import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.common.blocks.BlockBasic;
 import com.mushroom.midnight.common.blocks.BlockMidnightFurnace;
-import com.mushroom.midnight.common.blocks.BlockRiftBlock;
 import com.mushroom.midnight.common.blocks.BlockShadowrootChest;
 import com.mushroom.midnight.common.blocks.BlockShadowrootCraftingTable;
 import net.minecraft.block.Block;
@@ -45,7 +44,6 @@ public class ModBlocks {
     public static final Block NAGRILITE_BLOCK = Blocks.AIR;
     public static final Block TENEBRUM_ORE = Blocks.AIR;
     public static final Block TENEBRUM_BLOCK = Blocks.AIR;
-    public static final Block RIFT_BLOCK = Blocks.AIR;
 
     public static final Block SHADOWROOT_CRAFTING_TABLE = Blocks.AIR;
     public static final Block SHADOWROOT_CHEST = Blocks.AIR;
@@ -74,8 +72,7 @@ public class ModBlocks {
                 RegUtil.withName(new BlockBasic(Material.IRON), "tenebrum_block"),
                 RegUtil.withName(new BlockShadowrootCraftingTable(), "shadowroot_crafting_table"),
                 RegUtil.withName(new BlockShadowrootChest(), "shadowroot_chest"),
-                RegUtil.withName(new BlockMidnightFurnace(), "midnight_furnace"),
-                RegUtil.withName(new BlockRiftBlock(), "rift_block")
+                RegUtil.withName(new BlockMidnightFurnace(), "midnight_furnace")
         );
 
         blocks.forEach(event.getRegistry()::register);
@@ -94,8 +91,7 @@ public class ModBlocks {
                 TENEBRUM_ORE, TENEBRUM_BLOCK,
                 SHADOWROOT_CRAFTING_TABLE,
                 SHADOWROOT_CHEST,
-                MIDNIGHT_FURNACE,
-                RIFT_BLOCK
+                MIDNIGHT_FURNACE
         ));
     }
 
