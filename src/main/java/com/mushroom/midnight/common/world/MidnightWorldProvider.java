@@ -1,13 +1,11 @@
 package com.mushroom.midnight.common.world;
 
-import com.mushroom.midnight.common.registry.ModBiomes;
 import com.mushroom.midnight.common.registry.ModDimensions;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.DimensionType;
 import net.minecraft.world.WorldProvider;
-import net.minecraft.world.biome.BiomeProviderSingle;
 import net.minecraft.world.gen.IChunkGenerator;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -16,8 +14,7 @@ public class MidnightWorldProvider extends WorldProvider {
     @Override
     protected void init() {
         this.hasSkyLight = true;
-        // TODO: Will use a different biome provider
-        this.biomeProvider = new BiomeProviderSingle(ModBiomes.ROCKY_TEST);
+        this.biomeProvider = new MidnightBiomeProvider(this.world.getWorldInfo());
     }
 
     @Override
@@ -97,6 +94,14 @@ public class MidnightWorldProvider extends WorldProvider {
 
     @Override
     public float calculateCelestialAngle(long worldTime, float partialTicks) {
-        return 0.0F;
+        return 0.5F;
+    }
+
+    @Override
+    public void calculateInitialWeather() {
+    }
+
+    @Override
+    public void updateWeather() {
     }
 }

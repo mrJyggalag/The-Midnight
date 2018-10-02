@@ -30,6 +30,7 @@ public class MidnightTeleporter implements ITeleporter {
         entity.posX = rift.posX + displacementX;
         entity.posY = rift.posY + rift.height / 2.0F;
         entity.posZ = rift.posZ + displacementZ;
+        entity.fallDistance = 0.0F;
 
         RiftCooldownCapability capability = entity.getCapability(Midnight.riftCooldownCap, null);
         if (capability != null) {
@@ -50,9 +51,10 @@ public class MidnightTeleporter implements ITeleporter {
         }
 
         EntityRift rift = new EntityRift(world);
-        rift.setPositionAndRotation(entity.posX, entity.posY, entity.posZ, entity.rotationYaw, 0.0F);
+        rift.setPositionAndRotation(surface.getX() + 0.5, surface.getY() + 1.0, surface.getZ() + 0.5, entity.rotationYaw, 0.0F);
         rift.openProgress = EntityRift.OPEN_TIME;
         world.spawnEntity(rift);
+
         return rift;
     }
 }

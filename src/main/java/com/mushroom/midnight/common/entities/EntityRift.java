@@ -1,6 +1,7 @@
 package com.mushroom.midnight.common.entities;
 
 import com.mushroom.midnight.Midnight;
+import com.mushroom.midnight.client.particle.MidnightParticles;
 import com.mushroom.midnight.common.capability.RiftCooldownCapability;
 import com.mushroom.midnight.common.registry.ModDimensions;
 import com.mushroom.midnight.common.world.MidnightTeleporter;
@@ -70,13 +71,19 @@ public class EntityRift extends Entity {
                 if (this.unstableTime >= UNSTABLE_TIME && this.isOpen()) {
                     this.dataManager.set(OPEN, false);
                 }
-                this.pullEntities();
+                if (this.world.provider.getDimensionType() != ModDimensions.MIDNIGHT) {
+                    this.pullEntities();
+                }
             } else if (this.ticksExisted > LIFETIME) {
                 this.dataManager.set(UNSTABLE, true);
             }
 
             if (this.openProgress >= OPEN_TIME) {
                 this.teleportEntities();
+            }
+        } else {
+            if (this.world.provider.getDimensionType() != ModDimensions.MIDNIGHT) {
+                this.spawnSpores();
             }
         }
 
@@ -130,7 +137,7 @@ public class EntityRift extends Entity {
     }
 
     private void teleportEntities() {
-        AxisAlignedBB bounds = this.getEntityBoundingBox().grow(-1.0);
+        AxisAlignedBB bounds = this.getEntityBoundingBox().grow(-0.8);
         DimensionType transportDimension = this.getTransportDimension();
 
         List<Entity> entities = this.world.getEntitiesInAABBexcluding(this, bounds, entity -> {
@@ -154,6 +161,19 @@ public class EntityRift extends Entity {
             return DimensionType.OVERWORLD;
         } else {
             return ModDimensions.MIDNIGHT;
+        }
+    }
+
+    private void spawnSpores() {
+        Random random = this.world.rand;
+        if (random.nextInt(5) == 0) {
+            double particleX = this.posX + (random.nextInt(4) - random.nextInt(4));
+            double particleY = this.posY + (random.nextInt(4) - random.nextInt(4));
+            double particleZ = this.posZ + (random.nextInt(4) - random.nextInt(4));
+            double velocityX = (random.nextDouble() - 0.5) * 0.02;
+            double velocityY = (random.nextDouble() - 0.5) * 0.02;
+            double velocityZ = (random.nextDouble() - 0.5) * 0.02;
+            MidnightParticles.SPORE.spawn(this.world, particleX, particleY, particleZ, velocityX, velocityY, velocityZ);
         }
     }
 
