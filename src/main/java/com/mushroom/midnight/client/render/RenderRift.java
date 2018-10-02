@@ -3,6 +3,7 @@ package com.mushroom.midnight.client.render;
 import com.mushroom.midnight.common.entities.EntityRift;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
@@ -49,6 +50,8 @@ public class RenderRift extends Render<EntityRift> {
             GlStateManager.disableTexture2D();
             GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
 
+            OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 240, 240);
+
             builder.begin(GL11.GL_TRIANGLE_FAN, DefaultVertexFormats.POSITION_COLOR);
 
             builder.pos(0.0, 0.0, 0.0).color(0.0F, 0.0F, 0.0F, 1.0F).endVertex();
@@ -58,6 +61,8 @@ public class RenderRift extends Render<EntityRift> {
             }
 
             tessellator.draw();
+
+            OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, OpenGlHelper.lastBrightnessX, OpenGlHelper.lastBrightnessY);
 
             GlStateManager.enableTexture2D();
             GlStateManager.enableCull();

@@ -97,6 +97,14 @@ public class MidnightWorldProvider extends WorldProvider {
 
     @Override
     public float calculateCelestialAngle(long worldTime, float partialTicks) {
-        return 0.0F;
+        return 0.5F;
+    }
+
+    @Override
+    public void calculateInitialWeather() {
+    }
+
+    @Override
+    public void updateWeather() {
     }
 }
