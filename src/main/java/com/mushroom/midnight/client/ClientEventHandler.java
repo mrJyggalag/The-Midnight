@@ -4,6 +4,7 @@ import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.client.particle.MidnightParticles;
 import com.mushroom.midnight.common.registry.ModDimensions;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.client.event.EntityViewRenderEvent;
@@ -35,8 +36,9 @@ public class ClientEventHandler {
     public static void onSetupFogDensity(EntityViewRenderEvent.RenderFogEvent.FogDensity event) {
         Entity entity = event.getEntity();
         if (entity.world.provider.getDimensionType() == ModDimensions.MIDNIGHT) {
+            GlStateManager.setFog(GlStateManager.FogMode.EXP);
             event.setCanceled(true);
-            event.setDensity(0.03F);
+            event.setDensity(0.04F);
         }
     }
 

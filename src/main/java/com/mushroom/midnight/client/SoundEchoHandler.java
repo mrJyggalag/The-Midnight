@@ -1,9 +1,11 @@
 package com.mushroom.midnight.client;
 
-import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.common.registry.ModDimensions;
 import it.unimi.dsi.fastutil.longs.LongOpenHashSet;
 import it.unimi.dsi.fastutil.longs.LongSet;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.ISound;
 import net.minecraft.client.audio.PositionedSoundRecord;
@@ -11,16 +13,11 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.world.World;
 import net.minecraftforge.client.event.sound.PlaySoundEvent;
-import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
-import net.minecraftforge.fml.relauncher.Side;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-
-@Mod.EventBusSubscriber(modid = Midnight.MODID, value = Side.CLIENT)
+// TODO: Work out proper reverb effect
+//@Mod.EventBusSubscriber(modid = Midnight.MODID, value = Side.CLIENT)
 public class SoundEchoHandler {
     private static final Minecraft MC = Minecraft.getMinecraft();
     private static final ThreadLocal<Boolean> ECHO_ACTIVE = ThreadLocal.withInitial(() -> false);
