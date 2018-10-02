@@ -1,0 +1,15 @@
+{
+  "forge_marker": 1,
+  "variants": {
+    "normal": {
+        "model": "midnight:midnight_grass"
+    },
+    "snowy=false": [
+      { "model": "midnight:midnight_grass" },
+      { "model": "midnight:midnight_grass", "y": 90 },
+      { "model": "midnight:midnight_grass", "y": 180 },
+      { "model": "midnight:midnight_grass", "y": 270 }
+    ],
+    "snowy=true":  { "model": "minecraft:grass_snowed" }
+  }
+}
