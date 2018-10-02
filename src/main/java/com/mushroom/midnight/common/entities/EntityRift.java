@@ -1,5 +1,7 @@
 package com.mushroom.midnight.common.entities;
 
+import com.mushroom.midnight.Midnight;
+import com.mushroom.midnight.common.capability.RiftCooldownCapability;
 import com.mushroom.midnight.common.registry.ModDimensions;
 import com.mushroom.midnight.common.world.MidnightTeleporter;
 import net.minecraft.entity.Entity;
@@ -109,7 +111,7 @@ public class EntityRift extends Entity {
 
     private void pullEntity(double pullIntensity, Entity entity) {
         double deltaX = this.posX - entity.posX;
-        double deltaY = this.posY - entity.posY;
+        double deltaY = (this.posY + this.height / 2.0F) - (entity.posY + entity.height / 2.0F);
         double deltaZ = this.posZ - entity.posZ;
 
         double distanceSq = deltaX * deltaX + deltaY * deltaY + deltaZ * deltaZ;
@@ -122,15 +124,21 @@ public class EntityRift extends Entity {
             entity.motionX += (deltaX / distance) * intensity;
             entity.motionY += (deltaY / distance) * intensity;
             entity.motionZ += (deltaZ / distance) * intensity;
+
+            entity.fallDistance = 0.0F;
         }
     }
 
     private void teleportEntities() {
-        AxisAlignedBB bounds = this.getEntityBoundingBox();
+        AxisAlignedBB bounds = this.getEntityBoundingBox().grow(-1.0);
         DimensionType transportDimension = this.getTransportDimension();
 
         List<Entity> entities = this.world.getEntitiesInAABBexcluding(this, bounds, entity -> {
             if (entity.isRiding() || entity.isBeingRidden()) {
+                return false;
+            }
+            RiftCooldownCapability cooldown = entity.getCapability(Midnight.riftCooldownCap, null);
+            if (cooldown != null && !cooldown.isReady()) {
                 return false;
             }
             return !(entity instanceof EntityRift);
