@@ -17,7 +17,7 @@ import java.util.List;
 @Mod.EventBusSubscriber(modid = Midnight.MODID)
 @GameRegistry.ObjectHolder(Midnight.MODID)
 public class ModBiomes {
-    public static final Biome ROCKY_TEST = Biomes.DEFAULT;
+    public static final Biome BLACK_RIDGE = Biomes.DEFAULT;
 
     private static final List<Biome> SEED_BIOMES = new ArrayList<>();
 
@@ -25,7 +25,7 @@ public class ModBiomes {
     public static void onRegisterBiomes(RegistryEvent.Register<Biome> event) {
         event.getRegistry().registerAll(
                 RegUtil.applyName(new BiomeBlackRidge(
-                        new Biome.BiomeProperties("rocky_test")
+                        new Biome.BiomeProperties("black_ridge")
                                 .setBaseHeight(0.125F)
                                 .setHeightVariation(0.05F)
                 ))
@@ -33,7 +33,7 @@ public class ModBiomes {
     }
 
     public static void onInit() {
-        addSeedBiomes(ROCKY_TEST);
+        addSeedBiomes(BLACK_RIDGE);
     }
 
     public static void addSeedBiomes(Biome... biomes) {
