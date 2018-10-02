@@ -52,7 +52,7 @@ public class MidnightWorldProvider extends WorldProvider {
 
     @Override
     protected void generateLightBrightnessTable() {
-        float globalMultiplier = 0.2F;
+        float globalMultiplier = 0.1F;
         for (int i = 0; i <= 15; ++i) {
             float alpha = 1.0F - i / 15.0F;
             float brightness = (1.0F - alpha) / (alpha * 10.0F + 1.0F);
@@ -92,17 +92,11 @@ public class MidnightWorldProvider extends WorldProvider {
     @Override
     @SideOnly(Side.CLIENT)
     public Vec3d getFogColor(float celestialAngle, float partialTicks) {
-        return new Vec3d(0.1F, 0.04F, 0.15F);
+        return new Vec3d(0.05, 0.02F, 0.075F);
     }
 
     @Override
     public float calculateCelestialAngle(long worldTime, float partialTicks) {
         return 0.0F;
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public boolean doesXZShowFog(int x, int z) {
-        return true;
     }
 }
