@@ -9,6 +9,10 @@ public class RockyTestBiome extends Biome implements IMidnightBiome {
         this.spawnableCreatureList.clear();
         this.spawnableWaterCreatureList.clear();
         this.spawnableCaveCreatureList.clear();
+        this.decorator.treesPerChunk = 3;
+        this.decorator.deadBushPerChunk = 0;
+        this.decorator.reedsPerChunk = 0;
+        this.decorator.cactiPerChunk = 0;
     }
 
     @Override

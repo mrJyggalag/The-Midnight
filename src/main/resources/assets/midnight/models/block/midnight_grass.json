@@ -1,0 +1,10 @@
+{
+  "parent": "block/grass",
+  "textures": {
+    "particle": "midnight:blocks/midnight_dirt",
+    "bottom": "midnight:blocks/midnight_dirt",
+    "top": "midnight:blocks/midnight_grass_top",
+    "side": "midnight:blocks/midnight_grass_side",
+    "overlay": "midnight:blocks/midnight_grass_overlay"
+  }
+}
