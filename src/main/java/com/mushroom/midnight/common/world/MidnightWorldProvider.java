@@ -62,8 +62,8 @@ public class MidnightWorldProvider extends WorldProvider {
 
     @Override
     public void getLightmapColors(float partialTicks, float sunBrightness, float skyLight, float blockLight, float[] colors) {
-        colors[0] *= 0.9F;
-        colors[1] *= 0.8F;
+        colors[0] *= 0.95F;
+        colors[1] *= 0.85F;
         colors[2] *= 1.0F;
     }
 
@@ -92,7 +92,7 @@ public class MidnightWorldProvider extends WorldProvider {
     @Override
     @SideOnly(Side.CLIENT)
     public Vec3d getFogColor(float celestialAngle, float partialTicks) {
-        return new Vec3d(0.07F, 0.0F, 0.27F);
+        return new Vec3d(0.1F, 0.04F, 0.15F);
     }
 
     @Override

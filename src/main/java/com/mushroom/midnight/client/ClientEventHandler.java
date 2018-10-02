@@ -20,7 +20,7 @@ public class ClientEventHandler {
 
     @SubscribeEvent
     public static void onClientTick(TickEvent.ClientTickEvent event) {
-        if (event.phase == TickEvent.Phase.START) {
+        if (event.phase == TickEvent.Phase.START && !MC.isGamePaused()) {
             EntityPlayer player = MC.player;
             if (player == null) {
                 return;
@@ -45,10 +45,10 @@ public class ClientEventHandler {
         double originX = player.posX;
         double originY = player.posY;
         double originZ = player.posZ;
-        for (int i = 0; i < 4; i++) {
-            double particleX = originX + (random.nextInt(16) - random.nextInt(16));
-            double particleY = originY + (random.nextInt(16) - random.nextInt(16));
-            double particleZ = originZ + (random.nextInt(16) - random.nextInt(16));
+        for (int i = 0; i < 6; i++) {
+            double particleX = originX + (random.nextInt(24) - random.nextInt(24));
+            double particleY = originY + (random.nextInt(24) - random.nextInt(24));
+            double particleZ = originZ + (random.nextInt(24) - random.nextInt(24));
             double velocityX = (random.nextDouble() - 0.5) * 0.04;
             double velocityY = (random.nextDouble() - 0.5) * 0.04;
             double velocityZ = (random.nextDouble() - 0.5) * 0.04;
