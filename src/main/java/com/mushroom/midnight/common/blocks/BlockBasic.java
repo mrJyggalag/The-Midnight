@@ -5,7 +5,7 @@ import com.mushroom.midnight.client.IModelProvider;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 
-public final class BlockBasic extends Block implements IModelProvider {
+public class BlockBasic extends Block implements IModelProvider {
     public BlockBasic(Material material) {
         super(material);
         this.setCreativeTab(Midnight.MIDNIGHT_TAB);

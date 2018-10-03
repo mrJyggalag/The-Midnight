@@ -2,7 +2,7 @@
   "forge_marker": 1,
   "defaults": {
     "textures": {
-      "all": "midnight:blocks/rift_block"
+      "all": "midnight:blocks/nightstone"
     }
   },
   "variants": {
