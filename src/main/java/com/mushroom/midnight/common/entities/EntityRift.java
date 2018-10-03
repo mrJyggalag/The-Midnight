@@ -145,7 +145,7 @@ public class EntityRift extends Entity {
     }
 
     private void teleportEntities() {
-        AxisAlignedBB bounds = this.getEntityBoundingBox().grow(-0.8);
+        AxisAlignedBB bounds = this.getEntityBoundingBox().grow(-0.6);
         DimensionType transportDimension = this.getTransportDimension();
 
         List<Entity> entities = this.world.getEntitiesInAABBexcluding(this, bounds, entity -> {
@@ -236,10 +236,12 @@ public class EntityRift extends Entity {
 
             Ring ring = this.particleRings[random.nextInt(this.particleRings.length)];
 
-            float radius = random.nextFloat() * 1.0F + 2.5F;
-            float timeOffset = random.nextFloat() * 360.0F;
+            float radius = random.nextFloat() + 2.5F;
+            float angleOffset = random.nextFloat() * 360.0F;
+            float verticalOffset = (random.nextFloat() - 0.5F) * 0.25F;
+            float rotateSpeed = random.nextFloat() * 0.5F + 1.25F;
 
-            RiftParticle particle = new RiftParticle(this, particleX, particleY, particleZ, ring, radius, timeOffset);
+            RiftParticle particle = new RiftParticle(this, particleX, particleY, particleZ, ring, radius, angleOffset, verticalOffset, rotateSpeed);
             effectRenderer.addEffect(particle);
 
             this.releasedParticleCount++;

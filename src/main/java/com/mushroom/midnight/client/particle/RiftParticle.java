@@ -12,7 +12,7 @@ public class RiftParticle extends Particle {
     private static final float MIN_RETURN_DISTANCE = 0.2F;
 
     private static final int MIN_RETURN_CHANCE = 400;
-    private static final int RETURN_DECAY_TIME = EntityRift.UNSTABLE_TIME - EntityRift.OPEN_TIME - 2;
+    private static final int RETURN_DECAY_TIME = EntityRift.UNSTABLE_TIME + EntityRift.OPEN_TIME - TRANSITION_TIME - 2;
 
     private final EntityRift rift;
     private final EntityRift.Ring ring;
@@ -20,21 +20,25 @@ public class RiftParticle extends Particle {
     private final Point3d origin;
 
     private final float radius;
-    private final float offset;
+    private final float angleOffset;
+    private final float verticalOffset;
+    private final float rotateSpeed;
 
     private final MatrixStack matrix = new MatrixStack(4);
 
     private int transitionTime;
     private boolean returning;
 
-    public RiftParticle(EntityRift rift, double x, double y, double z, EntityRift.Ring ring, float radius, float offset) {
+    public RiftParticle(EntityRift rift, double x, double y, double z, EntityRift.Ring ring, float radius, float angleOffset, float verticalOffset, float rotateSpeed) {
         super(rift.world, x, y, z);
         this.setSize(0.2F, 0.2F);
         this.setParticleTextureIndex(0);
 
         this.rift = rift;
         this.radius = radius;
-        this.offset = offset;
+        this.angleOffset = angleOffset;
+        this.verticalOffset = verticalOffset;
+        this.rotateSpeed = rotateSpeed;
         this.ring = ring;
 
         this.origin = new Point3d(x, y, z);
@@ -107,9 +111,9 @@ public class RiftParticle extends Particle {
         this.matrix.push();
         this.matrix.rotate(this.ring.getTiltX(), 1.0F, 0.0F, 0.0F);
         this.matrix.rotate(this.ring.getTiltZ(), 0.0F, 0.0F, 1.0F);
-        this.matrix.rotate(this.particleAge * 1.5F + this.offset, 0.0F, 1.0F, 0.0F);
+        this.matrix.rotate(this.particleAge * this.rotateSpeed + this.angleOffset, 0.0F, 1.0F, 0.0F);
 
-        Point3d point = new Point3d(this.radius, 0.0, 0.0);
+        Point3d point = new Point3d(this.radius, this.verticalOffset, 0.0);
         this.matrix.transform(point);
 
         this.matrix.pop();
