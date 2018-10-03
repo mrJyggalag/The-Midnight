@@ -1,6 +1,14 @@
 package com.mushroom.midnight.common.biomes;
 
+import java.util.Random;
+
+import com.mushroom.midnight.common.world.generator.WorldGenShadowrootTrees;
+
+import net.minecraft.world.gen.feature.WorldGenAbstractTree;
+
 public class BiomeBlackRidge extends BiomeBase{
+
+  public final WorldGenShadowrootTrees SHADOWROOT_TREE_GEN = new WorldGenShadowrootTrees();
 
   public BiomeBlackRidge(BiomeProperties properties) {
     super(properties);
@@ -16,4 +24,8 @@ public class BiomeBlackRidge extends BiomeBase{
     this.decorator.cactiPerChunk = 0;
   }
 
+  @Override
+  public WorldGenAbstractTree getRandomTreeFeature(Random rand) {
+    return SHADOWROOT_TREE_GEN;
+  }
 }
