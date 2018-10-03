@@ -175,8 +175,8 @@ public class EntityRift extends Entity {
     private void spawnParticles() {
         Random random = this.world.rand;
 
-        if (this.world.provider.getDimensionType() != ModDimensions.MIDNIGHT) {
-            this.spawnSpores(random);
+        if (this.world.provider.getDimensionType() != ModDimensions.MIDNIGHT && random.nextInt(10) == 0) {
+            this.spawnSpore(random, 3.0F);
         }
 
         if (this.isOpen()) {
@@ -189,19 +189,22 @@ public class EntityRift extends Entity {
             if (!this.isUnstable()) {
                 this.spawnOrbitalParticles(random);
             }
+        } else if (this.openProgress == 2) {
+            int sporeCount = random.nextInt(3) + 8;
+            for (int i = 0; i < sporeCount; i++) {
+                this.spawnSpore(random, 1.0F);
+            }
         }
     }
 
-    private void spawnSpores(Random random) {
-        if (random.nextInt(5) == 0) {
-            double particleX = this.posX + (random.nextInt(4) - random.nextInt(4));
-            double particleY = this.posY + (random.nextInt(4) - random.nextInt(4));
-            double particleZ = this.posZ + (random.nextInt(4) - random.nextInt(4));
-            double velocityX = (random.nextDouble() - 0.5) * 0.02;
-            double velocityY = (random.nextDouble() - 0.5) * 0.02;
-            double velocityZ = (random.nextDouble() - 0.5) * 0.02;
-            MidnightParticles.SPORE.spawn(this.world, particleX, particleY, particleZ, velocityX, velocityY, velocityZ);
-        }
+    private void spawnSpore(Random random, float displacementScale) {
+        double velocityX = random.nextGaussian() * 0.3F;
+        double velocityY = random.nextGaussian() * 0.3F;
+        double velocityZ = random.nextGaussian() * 0.3F;
+        double particleX = this.posX + velocityX * displacementScale;
+        double particleY = this.posY + this.height / 2.0F + velocityY * displacementScale;
+        double particleZ = this.posZ + velocityZ * displacementScale;
+        MidnightParticles.SPORE.spawn(this.world, particleX, particleY, particleZ, velocityX, velocityY, velocityZ);
     }
 
     private Ring[] generateOrbitalRings() {
