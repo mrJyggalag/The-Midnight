@@ -6,16 +6,13 @@ test -f "$1.json" && exit 1
 printf '{
   "forge_marker": 1,
   "defaults": {
+    "model": "cube_all",
     "textures": {
       "all": "midnight:blocks/%s"
     }
   },
   "variants": {
-    "normal": {
-      "model": "cube_all"
-    },
-    "inventory": {
-      "model": "cube_all"
-    }
+    "normal": [{}],
+    "inventory": [{}]
   }
 }' "$1" > "$1.json"

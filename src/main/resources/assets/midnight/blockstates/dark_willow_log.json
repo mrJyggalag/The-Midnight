@@ -1,16 +1,23 @@
 {
   "forge_marker": 1,
   "defaults": {
+    "model": "cube_column",
     "textures": {
-      "all": "midnight:blocks/dark_willow_log"
+      "end": "midnight:blocks/dark_willow_log_top",
+      "side": "midnight:blocks/dark_willow_log"
     }
   },
   "variants": {
-    "normal": {
-      "model": "cube_all"
-    },
-    "inventory": {
-      "model": "cube_all"
+    "normal": [{}],
+    "inventory": [{}],
+    "axis": {
+      "x": {"x": 90, "y": 90},
+      "y": {},
+      "z": {"x": 90},
+      "none": {
+        "model": "cube_all",
+        "textures": {"all": "midnight:blocks/dark_willow_log"}
+      }
     }
   }
 }

@@ -5,9 +5,12 @@ import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.common.blocks.BlockBasic;
 import com.mushroom.midnight.common.blocks.BlockMidnightFurnace;
 import com.mushroom.midnight.common.blocks.BlockMidnightGrass;
+import com.mushroom.midnight.common.blocks.BlockMidnightLeaves;
+import com.mushroom.midnight.common.blocks.BlockMidnightLog;
 import com.mushroom.midnight.common.blocks.BlockShadowrootChest;
 import com.mushroom.midnight.common.blocks.BlockShadowrootCraftingTable;
 import net.minecraft.block.Block;
+import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
@@ -56,13 +59,22 @@ public class ModBlocks {
     @SubscribeEvent
     public static void registerBlocks(RegistryEvent.Register<Block> event) {
         blocks = Lists.newArrayList(
-                RegUtil.withName(new BlockBasic(Material.WOOD), "shadowroot_log"),
-                RegUtil.withName(new BlockBasic(Material.LEAVES), "shadowroot_leaves"),
-                RegUtil.withName(new BlockBasic(Material.WOOD), "shadowroot_planks"),
-                RegUtil.withName(new BlockBasic(Material.WOOD), "dead_wood_log"),
-                RegUtil.withName(new BlockBasic(Material.WOOD), "dead_wood_planks"),
-                RegUtil.withName(new BlockBasic(Material.WOOD), "dark_willow_log"),
-                RegUtil.withName(new BlockBasic(Material.WOOD), "dark_willow_planks"),
+                RegUtil.withName(new BlockMidnightLog(), "shadowroot_log"),
+                RegUtil.withName(new BlockMidnightLeaves(), "shadowroot_leaves"),
+                RegUtil.withName(new BlockBasic(Material.WOOD), "shadowroot_planks")
+                        .setSoundType(SoundType.WOOD)
+                        .setHardness(2.0F)
+                        .setResistance(5.0F),
+                RegUtil.withName(new BlockMidnightLog(), "dead_wood_log"),
+                RegUtil.withName(new BlockBasic(Material.WOOD), "dead_wood_planks")
+                        .setSoundType(SoundType.WOOD)
+                        .setHardness(2.0F)
+                        .setResistance(5.0F),
+                RegUtil.withName(new BlockMidnightLog(), "dark_willow_log"),
+                RegUtil.withName(new BlockBasic(Material.WOOD), "dark_willow_planks")
+                        .setSoundType(SoundType.WOOD)
+                        .setHardness(2.0F)
+                        .setResistance(5.0F),
                 RegUtil.withName(new BlockBasic(Material.ROCK), "nightstone"),
                 RegUtil.withName(new BlockBasic(Material.ROCK), "nightstone_brick"),
                 RegUtil.withName(new BlockBasic(Material.ROCK), "chiseled_nightstone_brick"),
@@ -77,8 +89,8 @@ public class ModBlocks {
                 RegUtil.withName(new BlockShadowrootCraftingTable(), "shadowroot_crafting_table"),
                 RegUtil.withName(new BlockShadowrootChest(), "shadowroot_chest"),
                 RegUtil.withName(new BlockMidnightFurnace(), "midnight_furnace"),
-                RegUtil.withName(new BlockBasic(Material.GROUND), "midnight_dirt"),
-                RegUtil.withName(new BlockMidnightGrass(Material.GRASS), "midnight_grass")
+                RegUtil.withName(new BlockBasic(Material.GROUND).setSoundType(SoundType.GROUND), "midnight_dirt"),
+                RegUtil.withName(new BlockMidnightGrass(), "midnight_grass")
         );
 
         blocks.forEach(event.getRegistry()::register);
