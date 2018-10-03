@@ -33,10 +33,6 @@ public class SporeParticle extends Particle {
 
         this.move(this.motionX, this.motionY, this.motionZ);
 
-        if (this.posY > this.prevPosY + this.motionY) {
-            this.setExpired();
-        }
-
         this.motionX *= 0.99;
         this.motionY *= 0.99;
         this.motionZ *= 0.99;

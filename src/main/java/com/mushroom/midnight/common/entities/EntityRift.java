@@ -2,9 +2,12 @@ package com.mushroom.midnight.common.entities;
 
 import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.client.particle.MidnightParticles;
+import com.mushroom.midnight.client.particle.RiftParticle;
 import com.mushroom.midnight.common.capability.RiftCooldownCapability;
 import com.mushroom.midnight.common.registry.ModDimensions;
 import com.mushroom.midnight.common.world.MidnightTeleporter;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.particle.ParticleManager;
 import net.minecraft.entity.Entity;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.datasync.DataParameter;
@@ -82,9 +85,7 @@ public class EntityRift extends Entity {
                 this.teleportEntities();
             }
         } else {
-            if (this.world.provider.getDimensionType() != ModDimensions.MIDNIGHT) {
-                this.spawnSpores();
-            }
+            this.spawnParticles();
         }
 
         this.updateTimers();
@@ -164,8 +165,19 @@ public class EntityRift extends Entity {
         }
     }
 
-    private void spawnSpores() {
+    private void spawnParticles() {
         Random random = this.world.rand;
+
+        if (this.world.provider.getDimensionType() != ModDimensions.MIDNIGHT) {
+            this.spawnSpores(random);
+        }
+
+        if (this.isOpen() && this.openProgress < OPEN_TIME) {
+            this.spawnOrbitalParticles(random);
+        }
+    }
+
+    private void spawnSpores(Random random) {
         if (random.nextInt(5) == 0) {
             double particleX = this.posX + (random.nextInt(4) - random.nextInt(4));
             double particleY = this.posY + (random.nextInt(4) - random.nextInt(4));
@@ -174,6 +186,25 @@ public class EntityRift extends Entity {
             double velocityY = (random.nextDouble() - 0.5) * 0.02;
             double velocityZ = (random.nextDouble() - 0.5) * 0.02;
             MidnightParticles.SPORE.spawn(this.world, particleX, particleY, particleZ, velocityX, velocityY, velocityZ);
+        }
+    }
+
+    private void spawnOrbitalParticles(Random random) {
+        ParticleManager effectRenderer = Minecraft.getMinecraft().effectRenderer;
+
+        for (int i = 0; i < 20; i++) {
+            float offsetHorizontal = (random.nextFloat() - 0.5F) * this.width * 0.8F;
+            float offsetVertical = (random.nextFloat() - 0.5F) * this.height * 0.8F;
+
+            float theta = (float) Math.toRadians(this.rotationYaw);
+            double particleX = this.posX + MathHelper.cos(theta) * offsetHorizontal;
+            double particleY = this.posY + offsetVertical;
+            double particleZ = this.posZ + MathHelper.sin(theta) * offsetHorizontal;
+
+            float orbitalOffset = random.nextFloat() * 360.0F;
+
+            RiftParticle particle = new RiftParticle(this, particleX, particleY, particleZ, orbitalOffset, orbitalInclination);
+            effectRenderer.addEffect(particle);
         }
     }
 
