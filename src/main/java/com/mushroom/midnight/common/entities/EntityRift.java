@@ -24,7 +24,10 @@ import java.util.List;
 import java.util.Random;
 
 public class EntityRift extends Entity {
-    public static final int OPEN_TIME = 10;
+    public static final int OPEN_TIME = 20;
+    public static final int CLOSE_SPEED = 2;
+    public static final int CLOSE_TIME = OPEN_TIME / CLOSE_SPEED;
+
     public static final int UNSTABLE_TIME = 100;
 
     private static final int POINT_COUNT = 12;
@@ -102,7 +105,7 @@ public class EntityRift extends Entity {
         if (this.isOpen()) {
             this.openProgress = Math.min(this.openProgress + 1, OPEN_TIME);
         } else {
-            this.openProgress = Math.max(this.openProgress - 1, 0);
+            this.openProgress = Math.max(this.openProgress - CLOSE_SPEED, 0);
         }
 
         if (this.isUnstable()) {
@@ -189,7 +192,7 @@ public class EntityRift extends Entity {
             if (!this.isUnstable()) {
                 this.spawnOrbitalParticles(random);
             }
-        } else if (this.openProgress == 2) {
+        } else if (this.openProgress == CLOSE_SPEED) {
             int sporeCount = random.nextInt(3) + 8;
             for (int i = 0; i < sporeCount; i++) {
                 this.spawnSpore(random, 1.0F);

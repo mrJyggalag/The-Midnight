@@ -12,7 +12,7 @@ public class RiftParticle extends Particle {
     private static final float MIN_RETURN_DISTANCE = 0.2F;
 
     private static final int MIN_RETURN_CHANCE = 400;
-    private static final int RETURN_DECAY_TIME = EntityRift.UNSTABLE_TIME + EntityRift.OPEN_TIME - TRANSITION_TIME - 2;
+    private static final int RETURN_DECAY_TIME = EntityRift.UNSTABLE_TIME + EntityRift.CLOSE_TIME - TRANSITION_TIME - 2;
 
     private final EntityRift rift;
     private final EntityRift.Ring ring;
