@@ -1,38 +1,50 @@
 package com.mushroom.midnight.client.particle;
 
 import com.mushroom.midnight.common.entities.EntityRift;
+import com.mushroom.midnight.common.util.MatrixStack;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.util.math.MathHelper;
 
-import javax.vecmath.Matrix4f;
 import javax.vecmath.Point3d;
-import javax.vecmath.Point3f;
-import javax.vecmath.Vector3d;
 
 public class RiftParticle extends Particle {
-    private static final float ORBITAL_DISTANCE = 2.5F;
+    private static final int TRANSITION_TIME = 20;
+    private static final float MIN_RETURN_DISTANCE = 0.2F;
+
+    private static final int MIN_RETURN_CHANCE = 400;
+    private static final int RETURN_DECAY_TIME = EntityRift.UNSTABLE_TIME - EntityRift.OPEN_TIME - 2;
 
     private final EntityRift rift;
-    private final float orbitalOffset;
-    private final float orbitalInclination;
+    private final EntityRift.Ring ring;
 
-    private final Matrix4f matrix = new Matrix4f();
+    private final Point3d origin;
 
-    public RiftParticle(EntityRift rift, double x, double y, double z, float orbitalOffset, float orbitalInclination) {
+    private final float radius;
+    private final float offset;
+
+    private final MatrixStack matrix = new MatrixStack(4);
+
+    private int transitionTime;
+    private boolean returning;
+
+    public RiftParticle(EntityRift rift, double x, double y, double z, EntityRift.Ring ring, float radius, float offset) {
         super(rift.world, x, y, z);
         this.setSize(0.2F, 0.2F);
-        this.setParticleTextureIndex(7);
+        this.setParticleTextureIndex(0);
 
         this.rift = rift;
-        this.orbitalOffset = orbitalOffset;
-        this.orbitalInclination = orbitalInclination;
+        this.radius = radius;
+        this.offset = offset;
+        this.ring = ring;
 
-        float shade = this.rand.nextFloat() * 0.1F + 0.4F;
+        this.origin = new Point3d(x, y, z);
+
+        float shade = this.rand.nextFloat() * 0.1F + 0.2F;
         this.particleRed = shade;
         this.particleGreen = shade;
         this.particleBlue = shade;
 
-        this.particleScale *= this.rand.nextFloat() * 0.6F + 1.0F;
+        this.particleScale *= this.rand.nextFloat() * 0.6F + 2.0F;
 
         this.canCollide = false;
     }
@@ -43,31 +55,68 @@ public class RiftParticle extends Particle {
         this.prevPosY = this.posY;
         this.prevPosZ = this.posZ;
 
-        if (this.rift.isDead) {
+        if (this.shouldExpire()) {
             this.setExpired();
+            this.rift.returnParticle();
             return;
         }
 
-        Point3d targetDelta = this.computeTarget();
-        targetDelta.sub(new Point3d(this.posX, this.posY, this.posZ));
+        // When stable, we have a return chance of MIN_RETURN_CHANCE, and by RETURN_DECAY_TIME, and chance of 1
+        int gradient = (MIN_RETURN_CHANCE / RETURN_DECAY_TIME);
+        int returnChance = MathHelper.clamp(gradient * (RETURN_DECAY_TIME - this.rift.unstableTime), 1, MIN_RETURN_CHANCE);
+        if (this.rand.nextInt(returnChance) == 0) {
+            this.returning = true;
+        }
 
-        this.posX += targetDelta.x * 0.1F;
-        this.posY += targetDelta.y * 0.1F;
-        this.posZ += targetDelta.z * 0.1F;
+        this.updateTransitionTimer();
+
+        float transitionAnimation = (float) this.transitionTime / TRANSITION_TIME;
+        transitionAnimation = (float) (1.0F - Math.pow(1.0F - transitionAnimation, 3.0F));
+
+        Point3d target = this.computeTarget();
+        this.posX = this.origin.x + (target.x - this.origin.x) * transitionAnimation;
+        this.posY = this.origin.y + (target.y - this.origin.y) * transitionAnimation;
+        this.posZ = this.origin.z + (target.z - this.origin.z) * transitionAnimation;
 
         this.particleAge++;
     }
 
-    private Point3d computeTarget() {
-        this.matrix.setIdentity();
-        this.matrix.rotZ(this.orbitalInclination);
-        this.matrix.rotY(this.particleAge * 3.0F + this.orbitalOffset);
+    private void updateTransitionTimer() {
+        if (this.returning && this.transitionTime > 0) {
+            this.transitionTime--;
+        } else if (this.transitionTime < TRANSITION_TIME) {
+            this.transitionTime++;
+        }
+    }
 
-        Point3f point = new Point3f(ORBITAL_DISTANCE, 0.0F, 0.0F);
+    private boolean shouldExpire() {
+        if (this.rift.isDead) {
+            return true;
+        }
+        if (this.returning) {
+            double deltaX = this.posX - this.origin.x;
+            double deltaY = this.posY - this.origin.y;
+            double deltaZ = this.posZ - this.origin.z;
+            double distanceSq = deltaX * deltaX + deltaY * deltaY + deltaZ * deltaZ;
+            return distanceSq < MIN_RETURN_DISTANCE * MIN_RETURN_DISTANCE;
+        }
+        return false;
+    }
+
+    private Point3d computeTarget() {
+        this.matrix.push();
+        this.matrix.rotate(this.ring.getTiltX(), 1.0F, 0.0F, 0.0F);
+        this.matrix.rotate(this.ring.getTiltZ(), 0.0F, 0.0F, 1.0F);
+        this.matrix.rotate(this.particleAge * 1.5F + this.offset, 0.0F, 1.0F, 0.0F);
+
+        Point3d point = new Point3d(this.radius, 0.0, 0.0);
         this.matrix.transform(point);
 
-        double targetX = this.rift.posX + displacementX;
-        double targetZ = this.rift.posZ + displacementZ;
-        return new Point3d(targetX, this.rift.posY + this.rift.height / 2.0F, targetZ);
+        this.matrix.pop();
+
+        double targetX = this.rift.posX + point.x;
+        double targetY = this.rift.posY + this.rift.height / 2.0F + point.y;
+        double targetZ = this.rift.posZ + point.z;
+        return new Point3d(targetX, targetY, targetZ);
     }
 }

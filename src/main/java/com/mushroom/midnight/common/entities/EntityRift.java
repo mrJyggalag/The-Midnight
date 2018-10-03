@@ -19,6 +19,7 @@ import net.minecraft.world.DimensionType;
 import net.minecraft.world.World;
 
 import javax.vecmath.Point2f;
+import javax.vecmath.Vector2f;
 import java.util.List;
 import java.util.Random;
 
@@ -29,10 +30,13 @@ public class EntityRift extends Entity {
     private static final int POINT_COUNT = 12;
     private static final float DISPLACEMENT_SCALE = 0.4F;
 
-    private static final int LIFETIME = 120;
+    private static final int LIFETIME = 80;
 
     private static final float PULL_RADIUS = 8.0F;
     private static final float PULL_INTENSITY = 5.0F;
+
+    private static final int ORBITAL_RING_COUNT = 3;
+    private static final int ORBITAL_PARTICLE_COUNT = 240;
 
     private static final DataParameter<Boolean> OPEN = EntityDataManager.createKey(EntityRift.class, DataSerializers.BOOLEAN);
     private static final DataParameter<Boolean> UNSTABLE = EntityDataManager.createKey(EntityRift.class, DataSerializers.BOOLEAN);
@@ -44,6 +48,9 @@ public class EntityRift extends Entity {
 
     public int unstableTime;
     public int prevUnstableTime;
+
+    private Ring[] particleRings;
+    private int releasedParticleCount;
 
     public EntityRift(World world) {
         super(world);
@@ -172,8 +179,16 @@ public class EntityRift extends Entity {
             this.spawnSpores(random);
         }
 
-        if (this.isOpen() && this.openProgress < OPEN_TIME) {
-            this.spawnOrbitalParticles(random);
+        if (this.isOpen()) {
+            if (this.particleRings == null) {
+                this.particleRings = this.generateOrbitalRings();
+            }
+            for (Ring ring : this.particleRings) {
+                ring.update();
+            }
+            if (!this.isUnstable()) {
+                this.spawnOrbitalParticles(random);
+            }
         }
     }
 
@@ -189,23 +204,50 @@ public class EntityRift extends Entity {
         }
     }
 
+    private Ring[] generateOrbitalRings() {
+        Random random = new Random(this.geometrySeed);
+
+        Ring[] rings = new Ring[ORBITAL_RING_COUNT];
+        for (int i = 0; i < rings.length; i++) {
+            float tiltX = random.nextFloat() * 360.0F;
+            float tiltZ = random.nextFloat() * 360.0F;
+
+            Vector2f tiltSpeed = new Vector2f(random.nextFloat(), random.nextFloat());
+            tiltSpeed.normalize();
+
+            rings[i] = new Ring(tiltX, tiltZ, tiltSpeed.x * 0.05F, tiltSpeed.y * 0.05F);
+        }
+
+        return rings;
+    }
+
     private void spawnOrbitalParticles(Random random) {
         ParticleManager effectRenderer = Minecraft.getMinecraft().effectRenderer;
 
-        for (int i = 0; i < 20; i++) {
+        int count = Math.min(random.nextInt(2) + 1, ORBITAL_PARTICLE_COUNT - this.releasedParticleCount);
+        for (int i = 0; i < count; i++) {
             float offsetHorizontal = (random.nextFloat() - 0.5F) * this.width * 0.8F;
             float offsetVertical = (random.nextFloat() - 0.5F) * this.height * 0.8F;
 
             float theta = (float) Math.toRadians(this.rotationYaw);
             double particleX = this.posX + MathHelper.cos(theta) * offsetHorizontal;
-            double particleY = this.posY + offsetVertical;
+            double particleY = this.posY + this.height / 2.0F + offsetVertical;
             double particleZ = this.posZ + MathHelper.sin(theta) * offsetHorizontal;
 
-            float orbitalOffset = random.nextFloat() * 360.0F;
+            Ring ring = this.particleRings[random.nextInt(this.particleRings.length)];
 
-            RiftParticle particle = new RiftParticle(this, particleX, particleY, particleZ, orbitalOffset, orbitalInclination);
+            float radius = random.nextFloat() * 1.0F + 2.5F;
+            float timeOffset = random.nextFloat() * 360.0F;
+
+            RiftParticle particle = new RiftParticle(this, particleX, particleY, particleZ, ring, radius, timeOffset);
             effectRenderer.addEffect(particle);
+
+            this.releasedParticleCount++;
         }
+    }
+
+    public void returnParticle() {
+        this.releasedParticleCount--;
     }
 
     @Override
@@ -259,5 +301,33 @@ public class EntityRift extends Entity {
 
     public boolean isUnstable() {
         return this.dataManager.get(UNSTABLE);
+    }
+
+    public static class Ring {
+        private float tiltX;
+        private float tiltZ;
+
+        private float tiltSpeedX;
+        private float tiltSpeedZ;
+
+        public Ring(float tiltX, float tiltZ, float tiltSpeedX, float tiltSpeedZ) {
+            this.tiltX = tiltX;
+            this.tiltZ = tiltZ;
+            this.tiltSpeedX = tiltSpeedX;
+            this.tiltSpeedZ = tiltSpeedZ;
+        }
+
+        public void update() {
+            this.tiltX += this.tiltSpeedX;
+            this.tiltZ += this.tiltSpeedZ;
+        }
+
+        public float getTiltX() {
+            return this.tiltX;
+        }
+
+        public float getTiltZ() {
+            return this.tiltZ;
+        }
     }
 }
