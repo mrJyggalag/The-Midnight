@@ -46,11 +46,12 @@ public class BlockMidnightLeaves extends BlockLeaves implements IModelProvider {
     }
 
     @Override
-    public boolean shouldSideBeRendered(IBlockState state, IBlockAccess blockAccess, BlockPos pos, EnumFacing side) {
-        if (this.isOpaqueCube(state) && blockAccess.getBlockState(pos.offset(side)).getBlock() == this) {
+    public boolean shouldSideBeRendered(IBlockState state, IBlockAccess access, BlockPos pos, EnumFacing side) {
+        BlockPos neighborPos = pos.offset(side);
+        if (this.isOpaqueCube(state) && access.getBlockState(neighborPos).getBlock() == this) {
             return false;
         }
-        return super.shouldSideBeRendered(state, blockAccess, pos, side);
+        return !access.getBlockState(neighborPos).doesSideBlockRendering(access, neighborPos, side.getOpposite());
     }
 
     @Override
@@ -61,8 +62,8 @@ public class BlockMidnightLeaves extends BlockLeaves implements IModelProvider {
     @Override
     public IBlockState getStateFromMeta(int meta) {
         return this.getDefaultState()
-                .withProperty(DECAYABLE, (meta & 1) != 0)
-                .withProperty(CHECK_DECAY, ((meta >> 1) & 1) != 0);
+            .withProperty(DECAYABLE, (meta & 1) != 0)
+            .withProperty(CHECK_DECAY, ((meta >> 1) & 1) != 0);
     }
 
     @Override
