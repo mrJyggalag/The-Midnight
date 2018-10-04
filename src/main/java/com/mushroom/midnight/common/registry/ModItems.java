@@ -6,7 +6,9 @@ import com.mushroom.midnight.client.IModelProvider;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockLeaves;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.client.renderer.block.statemap.StateMap;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.ModelRegistryEvent;
@@ -39,6 +41,11 @@ public class ModItems {
     public static void registerModels(ModelRegistryEvent event) {
         ModItems.items.stream().filter(i -> i instanceof IModelProvider).forEach(ModItems::registerItemModel);
         ModBlocks.blocks.stream().filter(b -> b instanceof IModelProvider).forEach(ModItems::registerBlockModel);
+
+        ModelLoader.setCustomStateMapper(ModBlocks.SHADOWROOT_LEAVES, new StateMap.Builder()
+                .ignore(BlockLeaves.CHECK_DECAY, BlockLeaves.DECAYABLE)
+                .build()
+        );
     }
 
     @SideOnly(Side.CLIENT)
