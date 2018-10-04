@@ -1,31 +1,25 @@
 package com.mushroom.midnight.common.biomes;
 
-import java.util.Random;
+import com.mushroom.midnight.common.registry.ModBlocks;
 
-import com.mushroom.midnight.common.world.generator.WorldGenShadowrootTrees;
-
-import net.minecraft.world.gen.feature.WorldGenAbstractTree;
-
-public class BiomeBlackRidge extends BiomeBase{
-
-  public final WorldGenShadowrootTrees SHADOWROOT_TREE_GEN = new WorldGenShadowrootTrees();
+public class BiomeBlackRidge extends BiomeBase {
 
   public BiomeBlackRidge(BiomeProperties properties) {
-    super(properties);
-    this.spawnableMonsterList.clear();
-    this.spawnableCreatureList.clear();
-    this.spawnableWaterCreatureList.clear();
-    this.spawnableCaveCreatureList.clear();
+      super(properties);
 
-    this.decorator.treesPerChunk = 10;
-    this.decorator.grassPerChunk = 2;
-    this.decorator.deadBushPerChunk = 0;
-    this.decorator.reedsPerChunk = 0;
-    this.decorator.cactiPerChunk = 0;
-  }
+      this.spawnableMonsterList.clear();
+      this.spawnableCreatureList.clear();
+      this.spawnableWaterCreatureList.clear();
+      this.spawnableCaveCreatureList.clear();
 
-  @Override
-  public WorldGenAbstractTree getRandomTreeFeature(Random rand) {
-    return SHADOWROOT_TREE_GEN;
+      this.decorator.treesPerChunk = 0;
+      this.decorator.grassPerChunk = 0;
+      this.decorator.deadBushPerChunk = 0;
+      this.decorator.reedsPerChunk = 0;
+      this.decorator.cactiPerChunk = 0;
+      this.decorator.flowersPerChunk = 0;
+
+      this.topBlock = ModBlocks.NIGHTSTONE.getDefaultState();
+      this.fillerBlock = ModBlocks.NIGHTSTONE.getDefaultState();
   }
 }

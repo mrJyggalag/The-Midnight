@@ -1,9 +1,9 @@
 package com.mushroom.midnight.common.blocks;
 
+import com.google.common.collect.Lists;
 import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.client.IModelProvider;
-
-import net.minecraft.block.BlockOldLeaf;
+import net.minecraft.block.BlockLeaves;
 import net.minecraft.block.BlockPlanks;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
@@ -14,15 +14,21 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 
-public class BlockMidnightLeaves extends BlockOldLeaf implements IModelProvider {
+import javax.annotation.Nonnull;
+import java.util.List;
 
+public class BlockMidnightLeaves extends BlockLeaves implements IModelProvider {
     public BlockMidnightLeaves() {
         super();
         this.setCreativeTab(Midnight.MIDNIGHT_TAB);
         this.setDefaultState(this.blockState.getBaseState().withProperty(DECAYABLE, true).withProperty(CHECK_DECAY, true));
     }
 
-    @Override public boolean isLeaves(IBlockState state, IBlockAccess world, BlockPos pos){ return true; }
+    @Nonnull
+    @Override
+    public List<ItemStack> onSheared(@Nonnull ItemStack item, IBlockAccess world, BlockPos pos, int fortune) {
+        return Lists.newArrayList(new ItemStack(this));
+    }
 
     @Override
     public BlockPlanks.EnumType getWoodType(int meta) {
@@ -40,11 +46,12 @@ public class BlockMidnightLeaves extends BlockOldLeaf implements IModelProvider 
     }
 
     @Override
-    public boolean shouldSideBeRendered(IBlockState state, IBlockAccess blockAccess, BlockPos pos, EnumFacing side) {
-        if (this.isOpaqueCube(state) && blockAccess.getBlockState(pos.offset(side)).getBlock() == this) {
+    public boolean shouldSideBeRendered(IBlockState state, IBlockAccess access, BlockPos pos, EnumFacing side) {
+        BlockPos neighborPos = pos.offset(side);
+        if (this.isOpaqueCube(state) && access.getBlockState(neighborPos).getBlock() == this) {
             return false;
         }
-        return super.shouldSideBeRendered(state, blockAccess, pos, side);
+        return !access.getBlockState(neighborPos).doesSideBlockRendering(access, neighborPos, side.getOpposite());
     }
 
     @Override
@@ -55,8 +62,8 @@ public class BlockMidnightLeaves extends BlockOldLeaf implements IModelProvider 
     @Override
     public IBlockState getStateFromMeta(int meta) {
         return this.getDefaultState()
-                .withProperty(DECAYABLE, (meta & 1) != 0)
-                .withProperty(CHECK_DECAY, ((meta >> 1) & 1) != 0);
+            .withProperty(DECAYABLE, (meta & 1) != 0)
+            .withProperty(CHECK_DECAY, ((meta >> 1) & 1) != 0);
     }
 
     @Override
