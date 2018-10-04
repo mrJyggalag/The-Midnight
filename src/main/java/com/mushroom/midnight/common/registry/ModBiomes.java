@@ -35,8 +35,8 @@ public class ModBiomes {
             )),
             RegUtil.applyName(new BiomeBlackRidge(
                 new Biome.BiomeProperties("black_ridge")
-                    .setBaseHeight(1.0F)
-                    .setHeightVariation(0.2F)
+                    .setBaseHeight(1.3F)
+                    .setHeightVariation(0.1F)
             ))
         );
     }
