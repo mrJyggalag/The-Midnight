@@ -1,13 +1,11 @@
 package com.mushroom.midnight.common.entities;
 
 import com.mushroom.midnight.Midnight;
-import com.mushroom.midnight.client.particle.MidnightParticles;
-import com.mushroom.midnight.client.particle.RiftParticle;
+import com.mushroom.midnight.client.particle.RiftParticleSystem;
 import com.mushroom.midnight.common.capability.RiftCooldownCapability;
 import com.mushroom.midnight.common.registry.ModDimensions;
 import com.mushroom.midnight.common.world.MidnightTeleporter;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.particle.ParticleManager;
+import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.Entity;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.datasync.DataParameter;
@@ -17,34 +15,28 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.DimensionType;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
 
-import javax.vecmath.Point2f;
-import javax.vecmath.Vector2f;
+import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Random;
 
-public class EntityRift extends Entity {
+public class EntityRift extends Entity implements IEntityAdditionalSpawnData {
     public static final int OPEN_TIME = 20;
     public static final int CLOSE_SPEED = 2;
     public static final int CLOSE_TIME = OPEN_TIME / CLOSE_SPEED;
 
     public static final int UNSTABLE_TIME = 100;
 
-    private static final int POINT_COUNT = 12;
-    private static final float DISPLACEMENT_SCALE = 0.4F;
-
     private static final int LIFETIME = 80;
 
     private static final float PULL_RADIUS = 8.0F;
     private static final float PULL_INTENSITY = 5.0F;
 
-    private static final int ORBITAL_RING_COUNT = 3;
-    private static final int ORBITAL_PARTICLE_COUNT = 240;
-
     private static final DataParameter<Boolean> OPEN = EntityDataManager.createKey(EntityRift.class, DataSerializers.BOOLEAN);
     private static final DataParameter<Boolean> UNSTABLE = EntityDataManager.createKey(EntityRift.class, DataSerializers.BOOLEAN);
 
-    private long geometrySeed = new Random().nextLong();
+    private RiftGeometry geometry;
 
     public int openProgress;
     public int prevOpenProgress;
@@ -52,13 +44,20 @@ public class EntityRift extends Entity {
     public int unstableTime;
     public int prevUnstableTime;
 
-    private Ring[] particleRings;
-    private int releasedParticleCount;
+    private RiftParticleSystem particleSystem;
 
     public EntityRift(World world) {
         super(world);
         this.setSize(1.8F, 4.0F);
         this.noClip = true;
+        this.initGeometry(new Random().nextLong());
+        if (world.isRemote) {
+            this.particleSystem = new RiftParticleSystem(this);
+        }
+    }
+
+    private void initGeometry(long seed) {
+        this.geometry = new RiftGeometry(seed, this.width, this.height);
     }
 
     @Override
@@ -94,8 +93,10 @@ public class EntityRift extends Entity {
             if (this.openProgress >= OPEN_TIME) {
                 this.teleportEntities();
             }
-        } else {
-            this.spawnParticles();
+        }
+
+        if (this.particleSystem != null && this.world.isRemote) {
+            this.particleSystem.updateParticles(this.world.rand);
         }
 
         this.updateTimers();
@@ -116,7 +117,7 @@ public class EntityRift extends Entity {
     }
 
     private void pullEntities() {
-        double pullIntensity = Math.pow((double) this.unstableTime / UNSTABLE_TIME, 3.0) * PULL_INTENSITY;
+        double pullIntensity = Math.pow((double) this.unstableTime / UNSTABLE_TIME, 5.0) * PULL_INTENSITY;
 
         AxisAlignedBB pullBounds = this.getEntityBoundingBox().grow(PULL_RADIUS);
         List<Entity> entities = this.world.getEntitiesWithinAABBExcludingEntity(this, pullBounds);
@@ -175,132 +176,28 @@ public class EntityRift extends Entity {
         }
     }
 
-    private void spawnParticles() {
-        Random random = this.world.rand;
-
-        if (this.world.provider.getDimensionType() != ModDimensions.MIDNIGHT && random.nextInt(10) == 0) {
-            this.spawnSpore(random, 3.0F);
-        }
-
-        if (this.isOpen()) {
-            if (this.particleRings == null) {
-                this.particleRings = this.generateOrbitalRings();
-            }
-            for (Ring ring : this.particleRings) {
-                ring.update();
-            }
-            if (!this.isUnstable()) {
-                this.spawnOrbitalParticles(random);
-            }
-        } else if (this.openProgress == CLOSE_SPEED) {
-            int sporeCount = random.nextInt(3) + 8;
-            for (int i = 0; i < sporeCount; i++) {
-                this.spawnSpore(random, 1.0F);
-            }
-        }
-    }
-
-    private void spawnSpore(Random random, float displacementScale) {
-        double velocityX = random.nextGaussian() * 0.3F;
-        double velocityY = random.nextGaussian() * 0.3F;
-        double velocityZ = random.nextGaussian() * 0.3F;
-        double particleX = this.posX + velocityX * displacementScale;
-        double particleY = this.posY + this.height / 2.0F + velocityY * displacementScale;
-        double particleZ = this.posZ + velocityZ * displacementScale;
-        MidnightParticles.SPORE.spawn(this.world, particleX, particleY, particleZ, velocityX, velocityY, velocityZ);
-    }
-
-    private Ring[] generateOrbitalRings() {
-        Random random = new Random(this.geometrySeed);
-
-        Ring[] rings = new Ring[ORBITAL_RING_COUNT];
-        for (int i = 0; i < rings.length; i++) {
-            float tiltX = random.nextFloat() * 360.0F;
-            float tiltZ = random.nextFloat() * 360.0F;
-
-            Vector2f tiltSpeed = new Vector2f(random.nextFloat(), random.nextFloat());
-            tiltSpeed.normalize();
-
-            rings[i] = new Ring(tiltX, tiltZ, tiltSpeed.x * 0.05F, tiltSpeed.y * 0.05F);
-        }
-
-        return rings;
-    }
-
-    private void spawnOrbitalParticles(Random random) {
-        ParticleManager effectRenderer = Minecraft.getMinecraft().effectRenderer;
-
-        int count = Math.min(random.nextInt(2) + 1, ORBITAL_PARTICLE_COUNT - this.releasedParticleCount);
-        for (int i = 0; i < count; i++) {
-            float offsetHorizontal = (random.nextFloat() - 0.5F) * this.width * 0.8F;
-            float offsetVertical = (random.nextFloat() - 0.5F) * this.height * 0.8F;
-
-            float theta = (float) Math.toRadians(this.rotationYaw);
-            double particleX = this.posX + MathHelper.cos(theta) * offsetHorizontal;
-            double particleY = this.posY + this.height / 2.0F + offsetVertical;
-            double particleZ = this.posZ + MathHelper.sin(theta) * offsetHorizontal;
-
-            Ring ring = this.particleRings[random.nextInt(this.particleRings.length)];
-
-            float radius = random.nextFloat() + 2.5F;
-            float angleOffset = random.nextFloat() * 360.0F;
-            float verticalOffset = (random.nextFloat() - 0.5F) * 0.25F;
-            float rotateSpeed = random.nextFloat() * 0.5F + 1.25F;
-
-            RiftParticle particle = new RiftParticle(this, particleX, particleY, particleZ, ring, radius, angleOffset, verticalOffset, rotateSpeed);
-            effectRenderer.addEffect(particle);
-
-            this.releasedParticleCount++;
-        }
-    }
-
-    public void returnParticle() {
-        this.releasedParticleCount--;
-    }
-
     @Override
     protected void writeEntityToNBT(NBTTagCompound compound) {
-        compound.setLong("geometry_seed", this.geometrySeed);
+        compound.setLong("geometry_seed", this.geometry.getSeed());
         compound.setInteger("age", this.ticksExisted);
         compound.setBoolean("open", this.isOpen());
     }
 
     @Override
     protected void readEntityFromNBT(NBTTagCompound compound) {
-        this.geometrySeed = compound.getLong("geometry_seed");
+        this.initGeometry(compound.getLong("geometry_seed"));
         this.ticksExisted = compound.getInteger("age");
         this.dataManager.set(OPEN, !compound.hasKey("open") || compound.getBoolean("open"));
     }
 
-    public Point2f[] computePath(float animation, float unstableAnimation, float time) {
-        Random random = new Random(this.geometrySeed);
-        Point2f[] ring = new Point2f[POINT_COUNT];
+    @Override
+    public void writeSpawnData(ByteBuf buffer) {
+        buffer.writeLong(this.geometry.getSeed());
+    }
 
-        float idleSpeed = 0.08F;
-        float idleIntensity = 0.1F * animation * (unstableAnimation * 5.0F + 1.0F);
-
-        float displacementAnimation = Math.min(2.0F * animation, 1.0F);
-
-        float sizeX = (this.width / 2.0F) * animation;
-        float sizeY = (this.height / 2.0F) * 0.5F * (animation + 1.0F);
-
-        // Generates a circle around (0; 0), stretching it horizontally and displacing each vertex by a random amount
-
-        float tau = (float) (Math.PI * 2.0F);
-        for (int i = 0; i < POINT_COUNT; i++) {
-            float angle = i * tau / POINT_COUNT;
-
-            float idleAnimation = MathHelper.sin(time * idleSpeed + i * 10) * idleIntensity;
-            float displacement = (random.nextFloat() * 2.0F - 1.0F) + idleAnimation;
-            float scaledDisplacement = displacement * DISPLACEMENT_SCALE * displacementAnimation;
-
-            float pointX = -MathHelper.sin(angle) * (sizeX + scaledDisplacement);
-            float pointY = MathHelper.cos(angle) * (sizeY + scaledDisplacement);
-
-            ring[i] = new Point2f(pointX, pointY);
-        }
-
-        return ring;
+    @Override
+    public void readSpawnData(ByteBuf buffer) {
+        this.initGeometry(buffer.readLong());
     }
 
     public boolean isOpen() {
@@ -311,31 +208,12 @@ public class EntityRift extends Entity {
         return this.dataManager.get(UNSTABLE);
     }
 
-    public static class Ring {
-        private float tiltX;
-        private float tiltZ;
+    public RiftGeometry getGeometry() {
+        return this.geometry;
+    }
 
-        private float tiltSpeedX;
-        private float tiltSpeedZ;
-
-        public Ring(float tiltX, float tiltZ, float tiltSpeedX, float tiltSpeedZ) {
-            this.tiltX = tiltX;
-            this.tiltZ = tiltZ;
-            this.tiltSpeedX = tiltSpeedX;
-            this.tiltSpeedZ = tiltSpeedZ;
-        }
-
-        public void update() {
-            this.tiltX += this.tiltSpeedX;
-            this.tiltZ += this.tiltSpeedZ;
-        }
-
-        public float getTiltX() {
-            return this.tiltX;
-        }
-
-        public float getTiltZ() {
-            return this.tiltZ;
-        }
+    @Nullable
+    public RiftParticleSystem getParticleSystem() {
+        return this.particleSystem;
     }
 }

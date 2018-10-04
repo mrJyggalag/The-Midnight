@@ -14,8 +14,8 @@ public class RiftParticle extends Particle {
     private static final int MIN_RETURN_CHANCE = 400;
     private static final int RETURN_DECAY_TIME = EntityRift.UNSTABLE_TIME + EntityRift.CLOSE_TIME - TRANSITION_TIME - 2;
 
-    private final EntityRift rift;
-    private final EntityRift.Ring ring;
+    private final RiftParticleSystem particleSystem;
+    private final RiftParticleSystem.Ring ring;
 
     private final Point3d origin;
 
@@ -29,12 +29,12 @@ public class RiftParticle extends Particle {
     private int transitionTime;
     private boolean returning;
 
-    public RiftParticle(EntityRift rift, double x, double y, double z, EntityRift.Ring ring, float radius, float angleOffset, float verticalOffset, float rotateSpeed) {
-        super(rift.world, x, y, z);
+    public RiftParticle(RiftParticleSystem particleSystem, RiftParticleSystem.Ring ring, double x, double y, double z, float radius, float angleOffset, float verticalOffset, float rotateSpeed) {
+        super(particleSystem.getEntity().world, x, y, z);
         this.setSize(0.2F, 0.2F);
         this.setParticleTextureIndex(0);
 
-        this.rift = rift;
+        this.particleSystem = particleSystem;
         this.radius = radius;
         this.angleOffset = angleOffset;
         this.verticalOffset = verticalOffset;
@@ -59,15 +59,17 @@ public class RiftParticle extends Particle {
         this.prevPosY = this.posY;
         this.prevPosZ = this.posZ;
 
+        EntityRift rift = this.particleSystem.getEntity();
+
         if (this.shouldExpire()) {
             this.setExpired();
-            this.rift.returnParticle();
+            this.particleSystem.returnParticle();
             return;
         }
 
         // When stable, we have a return chance of MIN_RETURN_CHANCE, and by RETURN_DECAY_TIME, and chance of 1
         int gradient = (MIN_RETURN_CHANCE / RETURN_DECAY_TIME);
-        int returnChance = MathHelper.clamp(gradient * (RETURN_DECAY_TIME - this.rift.unstableTime), 1, MIN_RETURN_CHANCE);
+        int returnChance = MathHelper.clamp(gradient * (RETURN_DECAY_TIME - rift.unstableTime), 1, MIN_RETURN_CHANCE);
         if (this.rand.nextInt(returnChance) == 0) {
             this.returning = true;
         }
@@ -94,7 +96,7 @@ public class RiftParticle extends Particle {
     }
 
     private boolean shouldExpire() {
-        if (this.rift.isDead) {
+        if (this.particleSystem.getEntity().isDead) {
             return true;
         }
         if (this.returning) {
@@ -118,9 +120,10 @@ public class RiftParticle extends Particle {
 
         this.matrix.pop();
 
-        double targetX = this.rift.posX + point.x;
-        double targetY = this.rift.posY + this.rift.height / 2.0F + point.y;
-        double targetZ = this.rift.posZ + point.z;
+        EntityRift rift = this.particleSystem.getEntity();
+        double targetX = rift.posX + point.x;
+        double targetY = rift.posY + rift.height / 2.0F + point.y;
+        double targetZ = rift.posZ + point.z;
         return new Point3d(targetX, targetY, targetZ);
     }
 }
