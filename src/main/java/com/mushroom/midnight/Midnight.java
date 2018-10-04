@@ -1,6 +1,8 @@
 package com.mushroom.midnight;
 
 import com.mushroom.midnight.common.CommonProxy;
+import com.mushroom.midnight.common.capability.DelegatedStorage;
+import com.mushroom.midnight.common.capability.RiftSpawnerCapability;
 import com.mushroom.midnight.common.capability.RiftCooldownCapability;
 import com.mushroom.midnight.common.capability.VoidStorage;
 import com.mushroom.midnight.common.registry.ModBiomes;
@@ -45,9 +47,13 @@ public class Midnight {
     @CapabilityInject(RiftCooldownCapability.class)
     public static Capability<RiftCooldownCapability> riftCooldownCap = null;
 
+    @CapabilityInject(RiftSpawnerCapability.class)
+    public static Capability<RiftSpawnerCapability> riftSpawnerCap = null;
+
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event) {
         CapabilityManager.INSTANCE.register(RiftCooldownCapability.class, new VoidStorage<>(), RiftCooldownCapability.Impl::new);
+        CapabilityManager.INSTANCE.register(RiftSpawnerCapability.class, new DelegatedStorage<>(), RiftSpawnerCapability.Impl::new);
 
         ModDimensions.register();
     }

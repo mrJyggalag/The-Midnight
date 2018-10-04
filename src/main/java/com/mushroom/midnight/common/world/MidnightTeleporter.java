@@ -52,7 +52,6 @@ public class MidnightTeleporter implements ITeleporter {
 
         EntityRift rift = new EntityRift(world);
         rift.setPositionAndRotation(surface.getX() + 0.5, surface.getY() + 1.0, surface.getZ() + 0.5, entity.rotationYaw, 0.0F);
-        rift.openProgress = EntityRift.OPEN_TIME;
         world.spawnEntity(rift);
 
         return rift;
