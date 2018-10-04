@@ -7,6 +7,7 @@ import com.mushroom.midnight.common.registry.ModDimensions;
 import com.mushroom.midnight.common.world.MidnightTeleporter;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
@@ -18,6 +19,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
 
 import javax.annotation.Nullable;
+import javax.vecmath.Vector3d;
 import java.util.List;
 import java.util.Random;
 
@@ -28,13 +30,15 @@ public class EntityRift extends Entity implements IEntityAdditionalSpawnData {
 
     public static final int UNSTABLE_TIME = 100;
 
-    private static final int LIFETIME = 80;
+    public static final int LIFETIME = 80;
 
-    private static final float PULL_RADIUS = 8.0F;
-    private static final float PULL_INTENSITY = 5.0F;
+    public static final float PULL_RADIUS = 8.0F;
+    public static final float PULL_INTENSITY = 5.0F;
 
-    private static final DataParameter<Boolean> OPEN = EntityDataManager.createKey(EntityRift.class, DataSerializers.BOOLEAN);
-    private static final DataParameter<Boolean> UNSTABLE = EntityDataManager.createKey(EntityRift.class, DataSerializers.BOOLEAN);
+    public static final double MAX_PULL_VELOCITY = 1.5;
+
+    public static final DataParameter<Boolean> OPEN = EntityDataManager.createKey(EntityRift.class, DataSerializers.BOOLEAN);
+    public static final DataParameter<Boolean> UNSTABLE = EntityDataManager.createKey(EntityRift.class, DataSerializers.BOOLEAN);
 
     private RiftGeometry geometry;
 
@@ -117,7 +121,7 @@ public class EntityRift extends Entity implements IEntityAdditionalSpawnData {
     }
 
     private void pullEntities() {
-        double pullIntensity = Math.pow((double) this.unstableTime / UNSTABLE_TIME, 5.0) * PULL_INTENSITY;
+        double pullIntensity = this.getPullIntensity();
 
         AxisAlignedBB pullBounds = this.getEntityBoundingBox().grow(PULL_RADIUS);
         List<Entity> entities = this.world.getEntitiesWithinAABBExcludingEntity(this, pullBounds);
@@ -128,7 +132,11 @@ public class EntityRift extends Entity implements IEntityAdditionalSpawnData {
         }
     }
 
-    private void pullEntity(double pullIntensity, Entity entity) {
+    public void pullEntity(double pullIntensity, Entity entity) {
+        if (entity instanceof EntityPlayer && ((EntityPlayer) entity).capabilities.isFlying) {
+            return;
+        }
+
         double deltaX = this.posX - entity.posX;
         double deltaY = (this.posY + this.height / 2.0F) - (entity.posY + entity.height / 2.0F);
         double deltaZ = this.posZ - entity.posZ;
@@ -139,17 +147,30 @@ public class EntityRift extends Entity implements IEntityAdditionalSpawnData {
             double distance = Math.sqrt(distanceSq);
             double intensity = MathHelper.clamp(pullIntensity / distanceSq, 0.0F, 1.0F);
 
-            // TODO: Sync to the client somehow as clients control player movement
-            entity.motionX += (deltaX / distance) * intensity;
-            entity.motionY += (deltaY / distance) * intensity;
-            entity.motionZ += (deltaZ / distance) * intensity;
+            double velocityX = entity.motionX + (deltaX / distance) * intensity;
+            double velocityY = entity.motionY + (deltaY / distance) * intensity;
+            double velocityZ = entity.motionZ + (deltaZ / distance) * intensity;
+
+            Vector3d velocity = new Vector3d(velocityX, velocityY, velocityZ);
+            if (velocity.lengthSquared() > MAX_PULL_VELOCITY * MAX_PULL_VELOCITY) {
+                velocity.normalize();
+                velocity.scale(MAX_PULL_VELOCITY);
+            }
+
+            entity.motionX = velocity.x;
+            entity.motionY = velocity.y;
+            entity.motionZ = velocity.z;
 
             entity.fallDistance = 0.0F;
         }
     }
 
+    public double getPullIntensity() {
+        return Math.pow((double) this.unstableTime / UNSTABLE_TIME, 5.0) * PULL_INTENSITY;
+    }
+
     private void teleportEntities() {
-        AxisAlignedBB bounds = this.getEntityBoundingBox().grow(-0.6);
+        AxisAlignedBB bounds = this.getEntityBoundingBox().grow(-0.4);
         DimensionType transportDimension = this.getTransportDimension();
 
         List<Entity> entities = this.world.getEntitiesInAABBexcluding(this, bounds, entity -> {
