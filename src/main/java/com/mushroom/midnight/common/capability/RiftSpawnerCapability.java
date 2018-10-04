@@ -48,13 +48,15 @@ public interface RiftSpawnerCapability extends ICapabilitySerializable<NBTTagCom
                 }
 
                 for (BlockPos spawnRegion : spawnRegions) {
-                    BlockPos riftPosition = this.generateRiftPosition(random, spawnRegion);
-                    if (world.isBlockLoaded(riftPosition) && world.isAirBlock(riftPosition)) {
-                        BlockPos correctedPosition = this.getCorrectedRiftPosition(world, riftPosition);
-                        if (correctedPosition == null || !this.canRiftSpawn(world, correctedPosition)) {
-                            continue;
+                    if (random.nextInt(120) == 0) {
+                        BlockPos riftPosition = this.generateRiftPosition(random, spawnRegion);
+                        if (world.isBlockLoaded(riftPosition) && world.isAirBlock(riftPosition)) {
+                            BlockPos correctedPosition = this.getCorrectedRiftPosition(world, riftPosition);
+                            if (correctedPosition == null || !this.canRiftSpawn(world, correctedPosition)) {
+                                continue;
+                            }
+                            this.spawnRift(world, correctedPosition);
                         }
-                        this.spawnRift(world, correctedPosition);
                     }
                 }
             }

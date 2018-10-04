@@ -34,12 +34,12 @@ public class EntityRift extends Entity implements IEntityAdditionalSpawnData {
 
     public static final int UNSTABLE_TIME = 100;
 
-    public static final int LIFETIME = 80;
+    public static final int LIFETIME = 2400;
 
     public static final float PULL_RADIUS = 8.0F;
     public static final float PULL_INTENSITY = 5.0F;
 
-    public static final double MAX_PULL_VELOCITY = 1.5;
+    public static final double MAX_PULL_VELOCITY = 1.2;
 
     public static final DataParameter<Boolean> OPEN = EntityDataManager.createKey(EntityRift.class, DataSerializers.BOOLEAN);
     public static final DataParameter<Boolean> UNSTABLE = EntityDataManager.createKey(EntityRift.class, DataSerializers.BOOLEAN);
@@ -104,7 +104,7 @@ public class EntityRift extends Entity implements IEntityAdditionalSpawnData {
                 if (!this.wasUsed() && this.world.provider.getDimensionType() != ModDimensions.MIDNIGHT) {
                     this.pullEntities();
                 }
-            } else if (this.ticksExisted > LIFETIME) {
+            } else if (this.ticksExisted > LIFETIME || this.world.isDaytime()) {
                 this.dataManager.set(UNSTABLE, true);
             }
 
