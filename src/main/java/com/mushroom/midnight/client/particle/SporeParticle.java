@@ -54,7 +54,7 @@ public class SporeParticle extends Particle {
 
     @Override
     public int getBrightnessForRender(float p_189214_1_) {
-        int skylight = 5;
+        int skylight = 10;
         int blocklight = 5;
         return skylight << 20 | blocklight << 4;
     }

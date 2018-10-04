@@ -28,13 +28,15 @@ import java.util.List;
 import java.util.Random;
 
 public class EntityRift extends Entity implements IEntityAdditionalSpawnData {
+    // TODO: In a singleplayer game where the overworld isn't loaded, the player can never get back!
+
     public static final int OPEN_TIME = 20;
     public static final int CLOSE_SPEED = 2;
     public static final int CLOSE_TIME = OPEN_TIME / CLOSE_SPEED;
 
     public static final int UNSTABLE_TIME = 100;
 
-    public static final int LIFETIME = 2400;
+    public static final int LIFETIME = 1200;
 
     public static final float PULL_RADIUS = 8.0F;
     public static final float PULL_INTENSITY = 5.0F;
@@ -262,6 +264,15 @@ public class EntityRift extends Entity implements IEntityAdditionalSpawnData {
         BlockPos endpoint = this.endpoint;
         float yaw = this.rotationYaw;
         endpointRift.setPositionAndRotation(endpoint.getX() + 0.5, endpoint.getY() + 0.5, endpoint.getZ() + 0.5, yaw, 0.0F);
+
+        endpointRift.dataManager.set(UNSTABLE, this.isUnstable());
+        endpointRift.dataManager.set(OPEN, this.isOpen());
+
+        endpointRift.ticksExisted = this.ticksExisted;
+        endpointRift.openProgress = this.openProgress;
+        endpointRift.prevOpenProgress = this.prevOpenProgress;
+        endpointRift.unstableTime = this.unstableTime;
+        endpointRift.prevUnstableTime = this.prevUnstableTime;
 
         endpointWorld.spawnEntity(endpointRift);
 
