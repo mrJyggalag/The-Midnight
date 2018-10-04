@@ -11,6 +11,8 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class MidnightWorldProvider extends WorldProvider {
+    private static final Vec3d FOG_COLOR = new Vec3d(0.075, 0.03, 0.1125);
+
     @Override
     protected void init() {
         this.hasSkyLight = true;
@@ -50,10 +52,11 @@ public class MidnightWorldProvider extends WorldProvider {
     @Override
     protected void generateLightBrightnessTable() {
         float globalMultiplier = 0.2F;
+        float baseBrightness = 0.1F;
         for (int i = 0; i <= 15; ++i) {
             float alpha = 1.0F - i / 15.0F;
             float brightness = (1.0F - alpha) / (alpha * 10.0F + 1.0F);
-            this.lightBrightnessTable[i] = brightness * globalMultiplier;
+            this.lightBrightnessTable[i] = brightness * globalMultiplier + baseBrightness;
         }
     }
 
@@ -89,7 +92,7 @@ public class MidnightWorldProvider extends WorldProvider {
     @Override
     @SideOnly(Side.CLIENT)
     public Vec3d getFogColor(float celestialAngle, float partialTicks) {
-        return new Vec3d(0.05, 0.02F, 0.075F);
+        return FOG_COLOR;
     }
 
     @Override

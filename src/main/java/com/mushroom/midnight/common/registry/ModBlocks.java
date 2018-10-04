@@ -22,6 +22,8 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 @GameRegistry.ObjectHolder(Midnight.MODID)
@@ -133,5 +135,9 @@ public class ModBlocks {
 
     private static void registerTile(Class<? extends TileEntity> entityClass, String registryName) {
         GameRegistry.registerTileEntity(entityClass, new ResourceLocation(Midnight.MODID, registryName));
+    }
+
+    public static Collection<Block> getBlocks() {
+        return Collections.unmodifiableCollection(blocks);
     }
 }

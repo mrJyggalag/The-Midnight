@@ -55,6 +55,8 @@ public class Midnight {
     @Mod.EventHandler
     public void init(FMLInitializationEvent event) {
         ModBiomes.onInit();
+
+        proxy.onInit();
     }
 
     @Mod.EventHandler

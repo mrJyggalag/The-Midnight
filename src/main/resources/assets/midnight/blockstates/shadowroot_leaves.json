@@ -1,7 +1,7 @@
 {
   "forge_marker": 1,
   "defaults": {
-    "model": "cube_all",
+    "model": "leaves",
     "textures": {
       "all": "midnight:blocks/shadowroot_leaves"
     }
