@@ -3,6 +3,7 @@ package com.mushroom.midnight.common.registry;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.SoundEvent;
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.registries.GameData;
 
@@ -25,5 +26,10 @@ public class RegUtil {
         ResourceLocation registryName = GameData.checkPrefix(biome.getBiomeName());
         biome.setRegistryName(registryName);
         return biome;
+    }
+
+    public static <T extends SoundEvent> T applyName(T sound) {
+        sound.setRegistryName(sound.getSoundName());
+        return sound;
     }
 }
