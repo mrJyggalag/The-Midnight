@@ -5,6 +5,7 @@ import com.mushroom.midnight.client.IModelProvider;
 import com.mushroom.midnight.client.render.RenderRift;
 import com.mushroom.midnight.common.entities.EntityRift;
 import com.mushroom.midnight.common.registry.ModBlocks;
+import com.mushroom.midnight.common.registry.ModDimensions;
 import com.mushroom.midnight.common.registry.ModItems;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
@@ -18,8 +19,6 @@ import net.minecraft.client.renderer.color.BlockColors;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.ColorizerFoliage;
-import net.minecraft.world.ColorizerGrass;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.biome.BiomeColorHelper;
 import net.minecraftforge.client.event.ModelRegistryEvent;
@@ -55,15 +54,15 @@ public class ModModelRegistry {
     }
 
     private static int computeGrassColor(IBlockState state, IBlockAccess world, BlockPos pos, int tintIndex) {
-        if (world == null || pos == null) {
-            return ColorizerGrass.getGrassColor(0.5, 1.0);
+        if (world == null || pos == null || MC.world.provider.getDimensionType() != ModDimensions.MIDNIGHT) {
+            return 0x606060;
         }
         return BiomeColorHelper.getGrassColorAtPos(world, pos);
     }
 
     private static int computeFoliageColor(IBlockState state, IBlockAccess world, BlockPos pos, int tintIndex) {
-        if (world == null || pos == null) {
-            return ColorizerFoliage.getFoliageColor(0.5, 1.0);
+        if (world == null || pos == null || MC.world.provider.getDimensionType() != ModDimensions.MIDNIGHT) {
+            return 0xA0A0A0;
         }
         return BiomeColorHelper.getFoliageColorAtPos(world, pos);
     }

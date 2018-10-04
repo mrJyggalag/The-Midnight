@@ -17,6 +17,7 @@ public class MidnightWorldProvider extends WorldProvider {
     protected void init() {
         this.hasSkyLight = true;
         this.biomeProvider = new MidnightBiomeProvider(this.world.getWorldInfo());
+        this.nether = true;
     }
 
     @Override
@@ -51,20 +52,19 @@ public class MidnightWorldProvider extends WorldProvider {
 
     @Override
     protected void generateLightBrightnessTable() {
-        float globalMultiplier = 0.2F;
-        float baseBrightness = 0.1F;
+        float baseLight = 0.04F;
         for (int i = 0; i <= 15; ++i) {
             float alpha = 1.0F - i / 15.0F;
             float brightness = (1.0F - alpha) / (alpha * 10.0F + 1.0F);
-            this.lightBrightnessTable[i] = brightness * globalMultiplier + baseBrightness;
+            this.lightBrightnessTable[i] = (float) (Math.pow(brightness, 2.5F) * 3.0F) + baseLight;
         }
     }
 
     @Override
     public void getLightmapColors(float partialTicks, float sunBrightness, float skyLight, float blockLight, float[] colors) {
-        colors[0] *= 0.95F;
-        colors[1] *= 0.85F;
-        colors[2] *= 1.0F;
+        colors[0] = blockLight * 0.93F + 0.07F;
+        colors[1] = blockLight * 0.96F + 0.03F;
+        colors[2] = blockLight * 0.94F + 0.16F;
     }
 
     @Override
@@ -73,14 +73,19 @@ public class MidnightWorldProvider extends WorldProvider {
     }
 
     @Override
+    public boolean hasSkyLight() {
+        return false;
+    }
+
+    @Override
     public float getSunBrightnessFactor(float partialTicks) {
-        return 0.4F;
+        return 0.0F;
     }
 
     @Override
     @SideOnly(Side.CLIENT)
     public float getSunBrightness(float partialTicks) {
-        return 0.4F;
+        return 0.0F;
     }
 
     @Override
