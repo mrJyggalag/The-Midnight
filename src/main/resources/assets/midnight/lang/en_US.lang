@@ -18,8 +18,8 @@ tile.midnight.dead_wood_planks.name=Dead Wood Planks
 tile.midnight.dark_willow_log.name=Dark Willow Log
 tile.midnight.dark_willow_planks.name=Dark Willow Planks
 
-tile.midnight.nightstone_brick.name=Nightstone Brick
-tile.midnight.chiseled_nightstone_brick.name=Chiseled Nightstone Brick
+tile.midnight.nightstone_bricks.name=Nightstone Bricks
+tile.midnight.chiseled_nightstone_bricks.name=Chiseled Nightstone Bricks
 
 tile.midnight.dark_pearl_ore.name=Dark Pearl Ore
 tile.midnight.dark_pearl_block.name=Dark Pearl Block

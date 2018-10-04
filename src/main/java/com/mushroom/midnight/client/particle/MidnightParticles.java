@@ -19,7 +19,14 @@ public enum MidnightParticles {
     }
 
     public void spawn(World world, double x, double y, double z, double velocityX, double velocityY, double velocityZ, int... parameters) {
+        if (!world.isRemote) {
+            return;
+        }
         Particle particle = this.create(world, x, y, z, velocityX, velocityY, velocityZ, parameters);
+        this.spawn(particle);
+    }
+
+    private void spawn(Particle particle) {
         Minecraft.getMinecraft().effectRenderer.addEffect(particle);
     }
 }

@@ -1,6 +1,7 @@
 package com.mushroom.midnight.client.render;
 
 import com.mushroom.midnight.common.entities.EntityRift;
+import com.mushroom.midnight.common.entities.RiftGeometry;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.OpenGlHelper;
@@ -36,7 +37,8 @@ public class RenderRift extends Render<EntityRift> {
             unstableAnimation = (float) (1.0F - Math.pow(1.0 - unstableAnimation, 2.0));
             unstableAnimation = MathHelper.clamp(unstableAnimation, 0.0F, 1.0F);
 
-            Point2f[] ring = entity.computePath(openAnimation, unstableAnimation, time);
+            RiftGeometry geometry = entity.getGeometry();
+            Point2f[] ring = geometry.computePath(openAnimation, unstableAnimation, time);
 
             GlStateManager.pushMatrix();
 

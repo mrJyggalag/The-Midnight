@@ -22,6 +22,8 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 @GameRegistry.ObjectHolder(Midnight.MODID)
@@ -38,8 +40,8 @@ public class ModBlocks {
     public static final Block DARK_WILLOW_LOG = Blocks.AIR;
     public static final Block DARK_WILLOW_PLANKS = Blocks.AIR;
     public static final Block NIGHTSTONE = Blocks.AIR;
-    public static final Block NIGHTSTONE_BRICK = Blocks.AIR;
-    public static final Block CHISELED_NIGHTSTONE_BRICK = Blocks.AIR;
+    public static final Block NIGHTSTONE_BRICKS = Blocks.AIR;
+    public static final Block CHISELED_NIGHTSTONE_BRICKS = Blocks.AIR;
     public static final Block DARK_PEARL_ORE = Blocks.AIR;
     public static final Block DARK_PEARL_BLOCK = Blocks.AIR;
     public static final Block EBONYS_ORE = Blocks.AIR;
@@ -76,8 +78,8 @@ public class ModBlocks {
                         .setHardness(2.0F)
                         .setResistance(5.0F),
                 RegUtil.withName(new BlockBasic(Material.ROCK), "nightstone"),
-                RegUtil.withName(new BlockBasic(Material.ROCK), "nightstone_brick"),
-                RegUtil.withName(new BlockBasic(Material.ROCK), "chiseled_nightstone_brick"),
+                RegUtil.withName(new BlockBasic(Material.ROCK), "nightstone_bricks"),
+                RegUtil.withName(new BlockBasic(Material.ROCK), "chiseled_nightstone_bricks"),
                 RegUtil.withName(new BlockBasic(Material.ROCK), "dark_pearl_ore"),
                 RegUtil.withName(new BlockBasic(Material.IRON), "dark_pearl_block"),
                 RegUtil.withName(new BlockBasic(Material.ROCK), "ebonys_ore"),
@@ -102,7 +104,7 @@ public class ModBlocks {
                 SHADOWROOT_LOG, SHADOWROOT_LEAVES, SHADOWROOT_PLANKS,
                 DEAD_WOOD_LOG, DEAD_WOOD_PLANKS,
                 DARK_WILLOW_LOG, DARK_WILLOW_PLANKS,
-                NIGHTSTONE, NIGHTSTONE_BRICK, CHISELED_NIGHTSTONE_BRICK,
+                NIGHTSTONE, NIGHTSTONE_BRICKS, CHISELED_NIGHTSTONE_BRICKS,
                 DARK_PEARL_ORE, DARK_PEARL_BLOCK,
                 EBONYS_ORE, EBONYS_BLOCK,
                 NAGRILITE_ORE, NAGRILITE_BLOCK,
@@ -133,5 +135,9 @@ public class ModBlocks {
 
     private static void registerTile(Class<? extends TileEntity> entityClass, String registryName) {
         GameRegistry.registerTileEntity(entityClass, new ResourceLocation(Midnight.MODID, registryName));
+    }
+
+    public static Collection<Block> getBlocks() {
+        return Collections.unmodifiableCollection(blocks);
     }
 }
