@@ -1,0 +1,13 @@
+{
+  "midnight_ambient": {
+    "category": "ambient",
+    "sounds": [
+      "midnight:ambient/midnight_ambient_1",
+      "midnight:ambient/midnight_ambient_2"
+    ]
+  },
+  "midnight_heartbeat": {
+    "category": "ambient",
+    "sounds": ["midnight:ambient/midnight_heartbeat"]
+  }
+}

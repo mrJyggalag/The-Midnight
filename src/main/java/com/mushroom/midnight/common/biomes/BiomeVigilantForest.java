@@ -20,7 +20,7 @@ public class BiomeVigilantForest extends BiomeBase{
 
         this.decorator = new VigilantDecorator();
 
-        this.decorator.treesPerChunk = 3;
+        this.decorator.treesPerChunk = 8;
         this.decorator.grassPerChunk = 0;
         this.decorator.deadBushPerChunk = 0;
         this.decorator.reedsPerChunk = 0;
