@@ -13,7 +13,6 @@ import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import javax.vecmath.Vector3d;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
@@ -51,7 +50,7 @@ public interface RiftSpawnerCapability extends ICapabilitySerializable<NBTTagCom
                 for (BlockPos spawnRegion : spawnRegions) {
                     BlockPos riftPosition = this.generateRiftPosition(random, spawnRegion);
                     if (world.isBlockLoaded(riftPosition) && world.isAirBlock(riftPosition)) {
-                        Vector3d correctedPosition = this.getCorrectedRiftPosition(world, riftPosition);
+                        BlockPos correctedPosition = this.getCorrectedRiftPosition(world, riftPosition);
                         if (correctedPosition == null || !this.canRiftSpawn(world, correctedPosition)) {
                             continue;
                         }
@@ -61,39 +60,26 @@ public interface RiftSpawnerCapability extends ICapabilitySerializable<NBTTagCom
             }
         }
 
-        private void spawnRift(World world, Vector3d position) {
+        private void spawnRift(World world, BlockPos pos) {
             EntityRift rift = new EntityRift(world);
 
             float yaw = world.rand.nextFloat() * 360.0F;
-            rift.setPositionAndRotation(position.x, position.y, position.z, yaw, 0.0F);
-
-            System.out.println("Spawn rift at " + position);
-
+            rift.setPositionAndRotation(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, yaw, 0.0F);
             world.spawnEntity(rift);
         }
 
-        private boolean canRiftSpawn(World world, Vector3d pos) {
-            AxisAlignedBB playerBounds = new AxisAlignedBB(
-                    pos.x - PLAYER_SEPARATION, pos.y - PLAYER_SEPARATION, pos.z - PLAYER_SEPARATION,
-                    pos.x + PLAYER_SEPARATION, pos.y + PLAYER_SEPARATION, pos.z + PLAYER_SEPARATION
-            );
+        private boolean canRiftSpawn(World world, BlockPos pos) {
+            AxisAlignedBB playerBounds = new AxisAlignedBB(pos).grow(PLAYER_SEPARATION);
             if (!world.getEntitiesWithinAABB(EntityPlayer.class, playerBounds).isEmpty()) {
                 return false;
             }
 
-            AxisAlignedBB riftBounds = new AxisAlignedBB(
-                    pos.x - RIFT_SEPARATION, pos.y - RIFT_SEPARATION, pos.z - RIFT_SEPARATION,
-                    pos.x + RIFT_SEPARATION, pos.y + RIFT_SEPARATION, pos.z + RIFT_SEPARATION
-            );
-
+            AxisAlignedBB riftBounds = new AxisAlignedBB(pos).grow(RIFT_SEPARATION);
             if (!world.getEntitiesWithinAABB(EntityRift.class, riftBounds).isEmpty()) {
                 return false;
             }
 
-            AxisAlignedBB bounds = new AxisAlignedBB(
-                    pos.x - 1.0, pos.y, pos.z - 1.0,
-                    pos.x + 1.0, pos.y + 2.0, pos.z + 1.0
-            );
+            AxisAlignedBB bounds = new AxisAlignedBB(pos).grow(1.0, 0.0, 1.0).expand(0.0, 1.0, 0.0);
             return world.getCollisionBoxes(null, bounds).isEmpty();
         }
 
@@ -105,11 +91,10 @@ public interface RiftSpawnerCapability extends ICapabilitySerializable<NBTTagCom
         }
 
         @Nullable
-        private Vector3d getCorrectedRiftPosition(World world, BlockPos pos) {
+        private BlockPos getCorrectedRiftPosition(World world, BlockPos pos) {
             BlockPos surface = this.findSurface(world, pos, 6);
             if (surface != null) {
-                BlockPos spawnPosition = surface.up();
-                return new Vector3d(spawnPosition.getX() + 0.5, spawnPosition.getY() + 0.5, spawnPosition.getZ() + 0.5);
+                return surface.up();
             }
             return null;
         }

@@ -13,13 +13,17 @@ import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.DimensionType;
 import net.minecraft.world.World;
+import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.vecmath.Vector3d;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Random;
 
@@ -39,6 +43,7 @@ public class EntityRift extends Entity implements IEntityAdditionalSpawnData {
 
     public static final DataParameter<Boolean> OPEN = EntityDataManager.createKey(EntityRift.class, DataSerializers.BOOLEAN);
     public static final DataParameter<Boolean> UNSTABLE = EntityDataManager.createKey(EntityRift.class, DataSerializers.BOOLEAN);
+    public static final DataParameter<Boolean> USED = EntityDataManager.createKey(EntityRift.class, DataSerializers.BOOLEAN);
 
     private RiftGeometry geometry;
 
@@ -47,6 +52,9 @@ public class EntityRift extends Entity implements IEntityAdditionalSpawnData {
 
     public int unstableTime;
     public int prevUnstableTime;
+
+    public BlockPos endpoint;
+    public EntityRift endpointRift;
 
     private RiftParticleSystem particleSystem;
 
@@ -68,6 +76,7 @@ public class EntityRift extends Entity implements IEntityAdditionalSpawnData {
     protected void entityInit() {
         this.dataManager.register(OPEN, true);
         this.dataManager.register(UNSTABLE, false);
+        this.dataManager.register(USED, false);
     }
 
     @Override
@@ -83,19 +92,31 @@ public class EntityRift extends Entity implements IEntityAdditionalSpawnData {
                 return;
             }
 
+            if (this.endpointRift != null && this.endpointRift.isDead) {
+                this.setDead();
+                return;
+            }
+
             if (this.isUnstable()) {
                 if (this.unstableTime >= UNSTABLE_TIME && this.isOpen()) {
                     this.dataManager.set(OPEN, false);
                 }
-                if (this.world.provider.getDimensionType() != ModDimensions.MIDNIGHT) {
+                if (!this.wasUsed() && this.world.provider.getDimensionType() != ModDimensions.MIDNIGHT) {
                     this.pullEntities();
                 }
             } else if (this.ticksExisted > LIFETIME) {
                 this.dataManager.set(UNSTABLE, true);
             }
 
-            if (this.openProgress >= OPEN_TIME) {
+            if (this.openProgress >= OPEN_TIME && !this.wasUsed()) {
                 this.teleportEntities();
+            }
+
+            if (this.endpointRift == null) {
+                World endpointWorld = this.getEndpointWorld();
+                if (endpointWorld != null && this.isEndpointLoaded(endpointWorld)) {
+                    this.computeEndpointRift(endpointWorld);
+                }
             }
         }
 
@@ -116,7 +137,7 @@ public class EntityRift extends Entity implements IEntityAdditionalSpawnData {
         if (this.isUnstable()) {
             this.unstableTime = Math.min(this.unstableTime + 1, UNSTABLE_TIME);
         } else {
-            this.unstableTime = Math.max(this.unstableTime - 1, 0);
+            this.unstableTime = 0;
         }
     }
 
@@ -166,12 +187,15 @@ public class EntityRift extends Entity implements IEntityAdditionalSpawnData {
     }
 
     public double getPullIntensity() {
+        if (this.wasUsed()) {
+            return 0.0;
+        }
         return Math.pow((double) this.unstableTime / UNSTABLE_TIME, 5.0) * PULL_INTENSITY;
     }
 
     private void teleportEntities() {
         AxisAlignedBB bounds = this.getEntityBoundingBox().grow(-0.4);
-        DimensionType transportDimension = this.getTransportDimension();
+        DimensionType endpointDimension = this.getEndpointDimension();
 
         List<Entity> entities = this.world.getEntitiesInAABBexcluding(this, bounds, entity -> {
             if (entity.isRiding() || entity.isBeingRidden()) {
@@ -185,16 +209,115 @@ public class EntityRift extends Entity implements IEntityAdditionalSpawnData {
         });
 
         for (Entity entity : entities) {
-            entity.changeDimension(transportDimension.getId(), MidnightTeleporter.INSTANCE);
+            entity.changeDimension(endpointDimension.getId(), new MidnightTeleporter(this));
         }
     }
 
-    private DimensionType getTransportDimension() {
+    private boolean isEndpointLoaded(World endpointWorld) {
+        if (this.endpoint != null) {
+            return endpointWorld.isBlockLoaded(this.endpoint);
+        }
+        return endpointWorld.isBlockLoaded(this.getPosition());
+    }
+
+    @Nonnull
+    public EntityRift computeEndpointRift(World endpointWorld) {
+        if (this.endpointRift != null && this.endpointRift.world == endpointWorld) {
+            return this.endpointRift;
+        }
+
+        this.endpointRift = this.getEndpointRift(endpointWorld);
+        this.endpointRift.setEndpoint(this);
+
+        return this.endpointRift;
+    }
+
+    private EntityRift getEndpointRift(World endpointWorld) {
+        BlockPos endpoint = this.computeEndpoint(endpointWorld);
+        EntityRift nearestRift = this.getNearestRift(endpointWorld, endpoint, 4.0);
+        if (nearestRift != null) {
+            return nearestRift;
+        }
+
+        return this.createEndpointRift(endpointWorld);
+    }
+
+    @Nullable
+    private EntityRift getNearestRift(World endpointWorld, BlockPos pos, double range) {
+        AxisAlignedBB bounds = new AxisAlignedBB(pos).grow(range);
+
+        List<EntityRift> rifts = endpointWorld.getEntitiesWithinAABB(EntityRift.class, bounds);
+        rifts.sort(Comparator.comparingDouble(e -> e.getDistanceSq(pos)));
+
+        if (!rifts.isEmpty()) {
+            return rifts.get(0);
+        }
+
+        return null;
+    }
+
+    private EntityRift createEndpointRift(World endpointWorld) {
+        EntityRift endpointRift = new EntityRift(endpointWorld);
+
+        BlockPos endpoint = this.endpoint;
+        float yaw = this.rotationYaw;
+        endpointRift.setPositionAndRotation(endpoint.getX() + 0.5, endpoint.getY() + 0.5, endpoint.getZ() + 0.5, yaw, 0.0F);
+
+        endpointWorld.spawnEntity(endpointRift);
+
+        return endpointRift;
+    }
+
+    private BlockPos computeEndpoint(World endpointWorld) {
+        if (this.endpoint == null) {
+            this.endpoint = endpointWorld.getTopSolidOrLiquidBlock(this.getPosition());
+        }
+        return this.endpoint;
+    }
+
+    public void setEndpoint(EntityRift rift) {
+        this.endpointRift = rift;
+        this.endpoint = rift.getPosition();
+    }
+
+    public void close() {
+        this.dataManager.set(UNSTABLE, true);
+        this.dataManager.set(USED, true);
+    }
+
+    public boolean isOpen() {
+        return this.dataManager.get(OPEN);
+    }
+
+    public boolean isUnstable() {
+        return this.dataManager.get(UNSTABLE);
+    }
+
+    public boolean wasUsed() {
+        return this.dataManager.get(USED);
+    }
+
+    public RiftGeometry getGeometry() {
+        return this.geometry;
+    }
+
+    @Nullable
+    public RiftParticleSystem getParticleSystem() {
+        return this.particleSystem;
+    }
+
+    public DimensionType getEndpointDimension() {
         if (this.world.provider.getDimensionType() == ModDimensions.MIDNIGHT) {
             return DimensionType.OVERWORLD;
         } else {
             return ModDimensions.MIDNIGHT;
         }
+    }
+
+    @Nullable
+    private World getEndpointWorld() {
+        DimensionType endpointDimension = this.getEndpointDimension();
+        return DimensionManager.getWorld(endpointDimension.getId());
     }
 
     @Override
@@ -214,27 +337,21 @@ public class EntityRift extends Entity implements IEntityAdditionalSpawnData {
     @Override
     public void writeSpawnData(ByteBuf buffer) {
         buffer.writeLong(this.geometry.getSeed());
+        buffer.writeInt(this.openProgress);
+        buffer.writeInt(this.unstableTime);
+        buffer.writeInt(this.ticksExisted);
     }
 
     @Override
     public void readSpawnData(ByteBuf buffer) {
         this.initGeometry(buffer.readLong());
-    }
 
-    public boolean isOpen() {
-        return this.dataManager.get(OPEN);
-    }
+        this.openProgress = buffer.readInt();
+        this.prevOpenProgress = this.openProgress;
 
-    public boolean isUnstable() {
-        return this.dataManager.get(UNSTABLE);
-    }
+        this.unstableTime = buffer.readInt();
+        this.prevUnstableTime = this.unstableTime;
 
-    public RiftGeometry getGeometry() {
-        return this.geometry;
-    }
-
-    @Nullable
-    public RiftParticleSystem getParticleSystem() {
-        return this.particleSystem;
+        this.ticksExisted = buffer.readInt();
     }
 }

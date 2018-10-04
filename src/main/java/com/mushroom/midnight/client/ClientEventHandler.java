@@ -41,8 +41,10 @@ public class ClientEventHandler {
         AxisAlignedBB pullBounds = player.getEntityBoundingBox().grow(EntityRift.PULL_RADIUS);
         List<EntityRift> rifts = player.world.getEntitiesWithinAABB(EntityRift.class, pullBounds);
         for (EntityRift rift : rifts) {
-            double pullIntensity = rift.getPullIntensity();
-            rift.pullEntity(pullIntensity, player);
+            if (!rift.wasUsed()) {
+                double pullIntensity = rift.getPullIntensity();
+                rift.pullEntity(pullIntensity, player);
+            }
         }
     }
 

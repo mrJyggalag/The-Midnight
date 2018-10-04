@@ -4,56 +4,42 @@ import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.common.capability.RiftCooldownCapability;
 import com.mushroom.midnight.common.entities.EntityRift;
 import net.minecraft.entity.Entity;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ITeleporter;
 
-import javax.annotation.Nonnull;
-import java.util.Comparator;
-import java.util.List;
-
 public class MidnightTeleporter implements ITeleporter {
     public static final int COOLDOWN = 40;
-    public static final MidnightTeleporter INSTANCE = new MidnightTeleporter();
+
+    private final EntityRift originRift;
+
+    public MidnightTeleporter(EntityRift originRift) {
+        this.originRift = originRift;
+    }
 
     @Override
     public void placeEntity(World world, Entity entity, float yaw) {
-        EntityRift rift = this.getPlaceRift(world, entity);
+        EntityRift endpointRift = this.originRift.computeEndpointRift(world);
 
-        float angle = (float) Math.toRadians(rift.rotationYaw);
+        if (entity instanceof EntityPlayer) {
+            this.originRift.close();
+            endpointRift.close();
+        }
+
+        float angle = (float) Math.toRadians(entity.rotationYaw);
         // TODO: Find safe space to place player around rift
-        float displacementX = -MathHelper.sin(angle) * rift.width;
-        float displacementZ = MathHelper.cos(angle) * rift.width;
+        float displacementX = -MathHelper.sin(angle) * endpointRift.width;
+        float displacementZ = MathHelper.cos(angle) * endpointRift.width;
 
-        entity.posX = rift.posX + displacementX;
-        entity.posY = rift.posY + rift.height / 2.0F;
-        entity.posZ = rift.posZ + displacementZ;
+        entity.posX = endpointRift.posX + displacementX;
+        entity.posY = endpointRift.posY + 0.5F;
+        entity.posZ = endpointRift.posZ + displacementZ;
         entity.fallDistance = 0.0F;
 
         RiftCooldownCapability capability = entity.getCapability(Midnight.riftCooldownCap, null);
         if (capability != null) {
             capability.setCooldown(COOLDOWN);
         }
-    }
-
-    @Nonnull
-    private EntityRift getPlaceRift(World world, Entity entity) {
-        BlockPos surface = world.getTopSolidOrLiquidBlock(entity.getPosition());
-        AxisAlignedBB bounds = new AxisAlignedBB(surface).grow(16.0);
-
-        List<EntityRift> rifts = world.getEntitiesWithinAABB(EntityRift.class, bounds);
-        rifts.sort(Comparator.comparingDouble(e -> e.getDistanceSq(entity)));
-
-        if (!rifts.isEmpty()) {
-            return rifts.get(0);
-        }
-
-        EntityRift rift = new EntityRift(world);
-        rift.setPositionAndRotation(surface.getX() + 0.5, surface.getY() + 1.0, surface.getZ() + 0.5, entity.rotationYaw, 0.0F);
-        world.spawnEntity(rift);
-
-        return rift;
     }
 }
