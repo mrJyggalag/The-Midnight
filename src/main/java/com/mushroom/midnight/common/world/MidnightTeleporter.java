@@ -2,7 +2,7 @@ package com.mushroom.midnight.common.world;
 
 import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.common.capability.RiftCooldownCapability;
-import com.mushroom.midnight.common.entities.EntityRift;
+import com.mushroom.midnight.common.entity.EntityRift;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.math.MathHelper;

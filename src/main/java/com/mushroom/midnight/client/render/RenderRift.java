@@ -1,7 +1,7 @@
 package com.mushroom.midnight.client.render;
 
-import com.mushroom.midnight.common.entities.EntityRift;
-import com.mushroom.midnight.common.entities.RiftGeometry;
+import com.mushroom.midnight.common.entity.EntityRift;
+import com.mushroom.midnight.common.entity.RiftGeometry;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.OpenGlHelper;

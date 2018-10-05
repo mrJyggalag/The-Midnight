@@ -1,8 +1,8 @@
 package com.mushroom.midnight.common.registry;
 
 import com.mushroom.midnight.Midnight;
-import com.mushroom.midnight.common.biomes.BiomeBlackRidge;
-import com.mushroom.midnight.common.biomes.BiomeVigilantForest;
+import com.mushroom.midnight.common.biome.BiomeBlackRidge;
+import com.mushroom.midnight.common.biome.BiomeVigilantForest;
 
 import net.minecraft.init.Biomes;
 import net.minecraft.world.biome.Biome;

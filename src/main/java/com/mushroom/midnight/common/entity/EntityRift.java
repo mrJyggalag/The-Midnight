@@ -1,4 +1,4 @@
-package com.mushroom.midnight.common.entities;
+package com.mushroom.midnight.common.entity;
 
 import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.client.particle.RiftParticleSystem;
@@ -28,8 +28,6 @@ import java.util.List;
 import java.util.Random;
 
 public class EntityRift extends Entity implements IEntityAdditionalSpawnData {
-    // TODO: In a singleplayer game where the overworld isn't loaded, the player can never get back!
-
     public static final int OPEN_TIME = 20;
     public static final int CLOSE_SPEED = 2;
     public static final int CLOSE_TIME = OPEN_TIME / CLOSE_SPEED;

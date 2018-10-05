@@ -1,6 +1,6 @@
 package com.mushroom.midnight.common.world;
 
-import com.mushroom.midnight.common.biomes.IMidnightBiome;
+import com.mushroom.midnight.common.biome.IMidnightBiome;
 import com.mushroom.midnight.common.registry.ModBlocks;
 import com.mushroom.midnight.common.world.noise.OctaveNoiseSampler;
 import com.mushroom.midnight.common.world.util.BiomeWeightTable;

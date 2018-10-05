@@ -1,4 +1,4 @@
-package com.mushroom.midnight.common.tiles.base;
+package com.mushroom.midnight.common.tile.base;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.nbt.NBTTagCompound;

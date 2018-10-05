@@ -1,0 +1,27 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "forge:multi-layer",
+    "transform": "forge:default-block",
+    "custom": {
+      "base": "midnight:lumen_bud#base",
+      "Cutout": "midnight:lumen_bud#base",
+      "Translucent": "midnight:lumen_bud#glow"
+    }
+  },
+  "variants": {
+    "normal": [{}],
+    "base": [
+      {
+        "model": "cross",
+        "textures": {"cross": "midnight:blocks/lumen_bud"}
+      }
+    ],
+    "glow": [
+      {
+        "model": "cross",
+        "textures": {"cross": "midnight:blocks/lumen_bud_glow"}
+      }
+    ]
+  }
+}

@@ -1,6 +1,6 @@
 package com.mushroom.midnight.client.particle;
 
-import com.mushroom.midnight.common.entities.EntityRift;
+import com.mushroom.midnight.common.entity.EntityRift;
 import com.mushroom.midnight.common.util.MatrixStack;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.util.math.MathHelper;

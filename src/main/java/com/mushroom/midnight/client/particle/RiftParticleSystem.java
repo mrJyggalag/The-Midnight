@@ -1,6 +1,6 @@
 package com.mushroom.midnight.client.particle;
 
-import com.mushroom.midnight.common.entities.EntityRift;
+import com.mushroom.midnight.common.entity.EntityRift;
 import com.mushroom.midnight.common.registry.ModDimensions;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.ParticleManager;

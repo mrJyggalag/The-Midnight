@@ -1,4 +1,4 @@
-package com.mushroom.midnight.common.biomes;
+package com.mushroom.midnight.common.biome;
 
 import net.minecraft.world.biome.Biome;
 

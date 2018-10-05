@@ -1,4 +1,4 @@
-package com.mushroom.midnight.common.blocks;
+package com.mushroom.midnight.common.block;
 
 import com.google.common.collect.Lists;
 import com.mushroom.midnight.Midnight;
