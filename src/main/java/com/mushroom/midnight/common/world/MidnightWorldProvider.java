@@ -11,7 +11,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class MidnightWorldProvider extends WorldProvider {
-    private static final Vec3d FOG_COLOR = new Vec3d(0.075, 0.03, 0.1125);
+    private static final Vec3d FOG_COLOR = new Vec3d(0.085, 0.04, 0.1225);
 
     @Override
     protected void init() {
@@ -52,7 +52,7 @@ public class MidnightWorldProvider extends WorldProvider {
 
     @Override
     protected void generateLightBrightnessTable() {
-        float baseLight = 0.08F;
+        float baseLight = 0.1F;
         for (int i = 0; i <= 15; ++i) {
             float alpha = 1.0F - i / 15.0F;
             float brightness = (1.0F - alpha) / (alpha * 10.0F + 1.0F);
