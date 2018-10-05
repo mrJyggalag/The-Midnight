@@ -1,7 +1,7 @@
 package com.mushroom.midnight.common.world;
 
 import com.mushroom.midnight.Midnight;
-import com.mushroom.midnight.common.entities.EntityRift;
+import com.mushroom.midnight.common.entity.EntityRift;
 import com.mushroom.midnight.common.registry.ModDimensions;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.server.MinecraftServer;

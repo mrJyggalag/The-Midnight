@@ -1,7 +1,7 @@
 package com.mushroom.midnight.common.capability;
 
 import com.mushroom.midnight.Midnight;
-import com.mushroom.midnight.common.entities.EntityRift;
+import com.mushroom.midnight.common.entity.EntityRift;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.AxisAlignedBB;

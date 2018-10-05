@@ -1,7 +1,7 @@
 package com.mushroom.midnight.common.world.generator;
 
-import com.mushroom.midnight.common.blocks.BlockMidnightLeaves;
-import com.mushroom.midnight.common.blocks.BlockMidnightLog;
+import com.mushroom.midnight.common.block.BlockMidnightLeaves;
+import com.mushroom.midnight.common.block.BlockMidnightLog;
 import com.mushroom.midnight.common.registry.ModBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;

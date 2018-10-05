@@ -1,4 +1,4 @@
-package com.mushroom.midnight.common.biomes;
+package com.mushroom.midnight.common.biome;
 
 import com.mushroom.midnight.common.registry.ModBlocks;
 import com.mushroom.midnight.common.world.generator.WorldGenMidnightGrass;

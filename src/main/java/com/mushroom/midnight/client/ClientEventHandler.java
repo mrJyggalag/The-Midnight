@@ -3,7 +3,7 @@ package com.mushroom.midnight.client;
 import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.client.particle.MidnightParticles;
 import com.mushroom.midnight.client.sound.LoopingMidnightSound;
-import com.mushroom.midnight.common.entities.EntityRift;
+import com.mushroom.midnight.common.entity.EntityRift;
 import com.mushroom.midnight.common.registry.ModDimensions;
 import com.mushroom.midnight.common.registry.ModSounds;
 import net.minecraft.client.Minecraft;

@@ -1,4 +1,4 @@
-package com.mushroom.midnight.common.blocks;
+package com.mushroom.midnight.common.block;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.BlockRenderLayer;
@@ -8,8 +8,8 @@ import net.minecraftforge.client.MinecraftForgeClient;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockGlowingPlant extends BlockMidnightPlant {
-    public BlockGlowingPlant() {
+public class BlockGlowingDoublePlant extends BlockDoubleMidnightPlant {
+    public BlockGlowingDoublePlant() {
         super();
         this.setLightLevel(0.8F);
     }

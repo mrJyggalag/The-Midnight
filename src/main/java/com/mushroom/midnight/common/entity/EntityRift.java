@@ -1,4 +1,4 @@
-package com.mushroom.midnight.common.entities;
+package com.mushroom.midnight.common.entity;
 
 import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.client.particle.RiftParticleSystem;

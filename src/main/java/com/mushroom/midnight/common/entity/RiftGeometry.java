@@ -1,4 +1,4 @@
-package com.mushroom.midnight.common.entities;
+package com.mushroom.midnight.common.entity;
 
 import net.minecraft.util.math.MathHelper;
 

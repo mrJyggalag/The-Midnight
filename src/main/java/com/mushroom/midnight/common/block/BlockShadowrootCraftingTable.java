@@ -1,19 +1,15 @@
-package com.mushroom.midnight.common.blocks;
+package com.mushroom.midnight.common.block;
 
 import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.client.IModelProvider;
 import com.mushroom.midnight.common.container.ContainerShadowrootCT;
 import com.mushroom.midnight.common.registry.ModBlocks;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockWorkbench;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.init.Blocks;
 import net.minecraft.inventory.Container;
-import net.minecraft.inventory.ContainerWorkbench;
-import net.minecraft.stats.StatList;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
