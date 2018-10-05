@@ -94,7 +94,7 @@ public class ClientEventHandler {
         if (entity.world.provider.getDimensionType() == ModDimensions.MIDNIGHT) {
             GlStateManager.setFog(GlStateManager.FogMode.EXP);
             event.setCanceled(true);
-            event.setDensity(0.02F);
+            event.setDensity(0.015F);
         }
     }
 
