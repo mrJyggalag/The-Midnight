@@ -1,6 +1,7 @@
 package com.mushroom.midnight.common.world;
 
 import com.mushroom.midnight.common.registry.ModDimensions;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.server.management.PlayerChunkMap;
@@ -141,7 +142,7 @@ public class MidnightWorldProvider extends WorldProvider {
                     int lightningZ = globalZ + rand.nextInt(16);
                     BlockPos pos = this.world.getPrecipitationHeight(new BlockPos(lightningX, 0, lightningZ));
 
-                    EntityLightningBolt lightning = new EntityLightningBolt(this.world, pos.getX(), pos.getY(), pos.getZ(), true);
+                    Entity lightning = new EntityLightningBolt(this.world, pos.getX(), pos.getY(), pos.getZ(), true);
                     this.world.addWeatherEffect(lightning);
                 }
             });
