@@ -37,6 +37,12 @@ tile.midnight.shadowroot_chest.name=Shadowroot Chest
 tile.midnight.shadowroot_crafting_table.name=Shadowroot Crafting Table
 tile.midnight.midnight_furnace.name=Midnight Furnace
 
+tile.midnight.tall_midnight_grass.name=Tall Midnight Grass
+tile.midnight.double_midnight_grass.name=Double Midnight Grass
+
+tile.midnight.lumen_bud.name=Lumen Bud
+tile.midnight.double_lumen_bud.name=Double Lumen Bud
+
 # Entities
 
 entity.midnight.rift.name=Midnight Rift

@@ -52,7 +52,7 @@ public class MidnightWorldProvider extends WorldProvider {
 
     @Override
     protected void generateLightBrightnessTable() {
-        float baseLight = 0.04F;
+        float baseLight = 0.08F;
         for (int i = 0; i <= 15; ++i) {
             float alpha = 1.0F - i / 15.0F;
             float brightness = (1.0F - alpha) / (alpha * 10.0F + 1.0F);
