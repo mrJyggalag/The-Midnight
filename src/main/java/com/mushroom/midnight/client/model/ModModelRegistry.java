@@ -3,7 +3,9 @@ package com.mushroom.midnight.client.model;
 import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.client.IModelProvider;
 import com.mushroom.midnight.client.render.RenderRift;
+import com.mushroom.midnight.client.render.RenderRifter;
 import com.mushroom.midnight.common.entity.EntityRift;
+import com.mushroom.midnight.common.entity.EntityRifter;
 import com.mushroom.midnight.common.registry.ModBlocks;
 import com.mushroom.midnight.common.registry.ModDimensions;
 import com.mushroom.midnight.common.registry.ModItems;
@@ -42,6 +44,7 @@ public class ModModelRegistry {
     @SubscribeEvent
     public static void onRegisterModels(ModelRegistryEvent event) {
         RenderingRegistry.registerEntityRenderingHandler(EntityRift.class, RenderRift::new);
+        RenderingRegistry.registerEntityRenderingHandler(EntityRifter.class, RenderRifter::new);
 
         ModItems.getItems().stream().filter(i -> i instanceof IModelProvider).forEach(ModModelRegistry::registerItemModel);
         ModBlocks.getBlocks().stream().filter(b -> b instanceof IModelProvider).forEach(ModModelRegistry::registerBlockModel);

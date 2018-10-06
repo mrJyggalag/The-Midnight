@@ -15,7 +15,6 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraftforge.client.event.EntityViewRenderEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -71,8 +70,7 @@ public class ClientEventHandler {
         }
 
         if (worldTime - lastAmbientSoundTime > 120 && rand.nextInt(100) == 0) {
-            SoundEvent[] ambientSounds = new SoundEvent[] { ModSounds.MIDNIGHT_AMBIENT };
-            ResourceLocation ambientSound = ambientSounds[rand.nextInt(ambientSounds.length)].getSoundName();
+            ResourceLocation ambientSound = ModSounds.MIDNIGHT_AMBIENT.getSoundName();
 
             float volume = rand.nextFloat() * 0.4F + 0.8F;
             float pitch = rand.nextFloat() * 0.6F + 0.7F;

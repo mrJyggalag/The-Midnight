@@ -3,9 +3,9 @@ package com.mushroom.midnight.common.world;
 import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.common.entity.EntityRift;
 import com.mushroom.midnight.common.registry.ModDimensions;
+import com.mushroom.midnight.common.util.WorldUtil;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -124,22 +124,10 @@ public class RiftSpawnHandler {
 
     @Nullable
     private static BlockPos getCorrectedRiftPosition(World world, BlockPos pos) {
-        BlockPos surface = findSurface(world, pos, 6);
+        BlockPos surface = WorldUtil.findSurface(world, pos, 6);
         if (surface != null) {
             return surface.up();
         }
         return null;
-    }
-
-    @Nullable
-    private static BlockPos findSurface(World world, BlockPos pos, int maxSteps) {
-        int steps = 0;
-        while (!world.isSideSolid(pos, EnumFacing.UP)) {
-            pos = pos.down();
-            if (steps++ > maxSteps) {
-                return null;
-            }
-        }
-        return pos;
     }
 }

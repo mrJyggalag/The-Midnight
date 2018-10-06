@@ -24,8 +24,10 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.vecmath.Vector3d;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 
 public class EntityRift extends Entity implements IEntityAdditionalSpawnData {
     public static final int OPEN_TIME = 20;
@@ -198,7 +200,7 @@ public class EntityRift extends Entity implements IEntityAdditionalSpawnData {
         DimensionType endpointDimension = this.getEndpointDimension();
 
         List<Entity> entities = this.world.getEntitiesInAABBexcluding(this, bounds, entity -> {
-            if (entity.isRiding() || entity.isBeingRidden()) {
+            if (entity.isRiding()) {
                 return false;
             }
             RiftCooldownCapability cooldown = entity.getCapability(Midnight.riftCooldownCap, null);
@@ -208,7 +210,14 @@ public class EntityRift extends Entity implements IEntityAdditionalSpawnData {
             return !(entity instanceof EntityRift);
         });
 
+        Set<Entity> recursedEntities = new HashSet<>();
         for (Entity entity : entities) {
+            recursedEntities.add(entity);
+            recursedEntities.addAll(entity.getRecursivePassengers());
+        }
+
+        for (Entity entity : recursedEntities) {
+            entity.dismountRidingEntity();
             entity.changeDimension(endpointDimension.getId(), new MidnightTeleporter(this));
         }
     }
