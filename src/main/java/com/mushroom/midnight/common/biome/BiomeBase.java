@@ -16,8 +16,8 @@ public class BiomeBase extends Biome implements IMidnightBiome {
 
     protected static final IBlockState NIGHT_STONE = ModBlocks.NIGHTSTONE.getDefaultState();
 
-    protected int grassColor = 0x9389BA;
-    protected int foliageColor = 0xB5AFCE;
+    protected int grassColor = 0xBF8ECC;
+    protected int foliageColor = 0x8F6DBC;
 
     public BiomeBase(BiomeProperties properties) {
         super(properties);
@@ -39,8 +39,8 @@ public class BiomeBase extends Biome implements IMidnightBiome {
     }
 
     @Override
-    public void genTerrainBlocks(World worldIn, Random rand, ChunkPrimer chunkPrimerIn, int x, int z, double noiseVal) {
-        this.genBiomeTerrain(worldIn, rand, chunkPrimerIn, x, z, noiseVal);
+    public void genTerrainBlocks(World world, Random rand, ChunkPrimer primer, int x, int z, double noiseVal) {
+        this.genBiomeTerrain(world, rand, primer, x, z, noiseVal);
     }
 
     public void genBiomeTerrain(World worldIn, Random rand, ChunkPrimer primer, int z, int x, double noiseVal) {

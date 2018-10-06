@@ -16,7 +16,9 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.block.statemap.StateMap;
 import net.minecraft.client.renderer.color.BlockColors;
+import net.minecraft.client.renderer.color.ItemColors;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
@@ -34,6 +36,9 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class ModModelRegistry {
     private static final Minecraft MC = Minecraft.getMinecraft();
 
+    private static final int DEFAULT_GRASS_COLOR = 0xBF8ECC;
+    private static final int DEFAULT_FOLIAGE_COLOR = 0x8F6DBC;
+
     @SubscribeEvent
     public static void onRegisterModels(ModelRegistryEvent event) {
         RenderingRegistry.registerEntityRenderingHandler(EntityRift.class, RenderRift::new);
@@ -49,22 +54,35 @@ public class ModModelRegistry {
 
     public static void onInit() {
         BlockColors blockColors = MC.getBlockColors();
+        ItemColors itemColors = MC.getItemColors();
+
         blockColors.registerBlockColorHandler(ModModelRegistry::computeGrassColor, ModBlocks.MIDNIGHT_GRASS);
-        blockColors.registerBlockColorHandler(ModModelRegistry::computeFoliageColor, ModBlocks.SHADOWROOT_LEAVES);
+        itemColors.registerItemColorHandler(ModModelRegistry::defaultGrassColor, ModBlocks.MIDNIGHT_GRASS);
+
+        blockColors.registerBlockColorHandler(ModModelRegistry::computeFoliageColor, ModBlocks.SHADOWROOT_LEAVES, ModBlocks.TALL_MIDNIGHT_GRASS, ModBlocks.DOUBLE_MIDNIGHT_GRASS);
+        itemColors.registerItemColorHandler(ModModelRegistry::defaultFoliageColor, ModBlocks.SHADOWROOT_LEAVES, ModBlocks.TALL_MIDNIGHT_GRASS, ModBlocks.DOUBLE_MIDNIGHT_GRASS);
     }
 
     private static int computeGrassColor(IBlockState state, IBlockAccess world, BlockPos pos, int tintIndex) {
         if (world == null || pos == null || MC.world.provider.getDimensionType() != ModDimensions.MIDNIGHT) {
-            return 0x606060;
+            return DEFAULT_FOLIAGE_COLOR;
         }
         return BiomeColorHelper.getGrassColorAtPos(world, pos);
     }
 
+    private static int defaultGrassColor(ItemStack stack, int tintIndex) {
+        return DEFAULT_GRASS_COLOR;
+    }
+
     private static int computeFoliageColor(IBlockState state, IBlockAccess world, BlockPos pos, int tintIndex) {
         if (world == null || pos == null || MC.world.provider.getDimensionType() != ModDimensions.MIDNIGHT) {
-            return 0xA0A0A0;
+            return DEFAULT_FOLIAGE_COLOR;
         }
         return BiomeColorHelper.getFoliageColorAtPos(world, pos);
+    }
+
+    private static int defaultFoliageColor(ItemStack stack, int tintIndex) {
+        return DEFAULT_FOLIAGE_COLOR;
     }
 
     @SideOnly(Side.CLIENT)
