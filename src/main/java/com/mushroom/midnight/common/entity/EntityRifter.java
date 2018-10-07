@@ -10,7 +10,6 @@ import com.mushroom.midnight.common.registry.ModDimensions;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.MoverType;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAILookIdle;
 import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
@@ -103,24 +102,27 @@ public class EntityRifter extends EntityMob implements IRiftTraveler, IEntityAdd
             return;
         }
 
-        float passengerWidth = entity.width;
+        float height = Math.max(entity.height, entity.getEyeHeight());
+        boolean vertical = height > entity.width;
+
+        float passengerWidth = vertical ? entity.height : entity.width;
+
         float dragOffset = (this.width + passengerWidth) / 2.0F;
-
-        entity.motionX = entity.motionY = entity.motionZ = 0.0;
-        entity.moveForward = entity.moveStrafing = 0.0F;
-
-        entity.onGround = true;
 
         float theta = (float) Math.toRadians(this.renderYawOffset);
         double dragOriginX = this.posX + MathHelper.sin(theta) * dragOffset;
         double dragOriginY = this.posY;
         double dragOriginZ = this.posZ - MathHelper.cos(theta) * dragOffset;
 
-        double deltaX = (dragOriginX - entity.posX) * 0.1;
-        double deltaY = (dragOriginY - entity.posY) * 0.1;
-        double deltaZ = (dragOriginZ - entity.posZ) * 0.1;
+        // TODO: Handle this better
+        entity.setPosition(dragOriginX, dragOriginY, dragOriginZ);
+        entity.setRenderYawOffset(this.rotationYaw);
 
-        entity.move(MoverType.SHULKER, deltaX, deltaY - 0.14, deltaZ);
+        float deltaYaw = this.rotationYaw - this.prevRotationYaw;
+
+        entity.rotationYaw += deltaYaw;
+        entity.setRotationYawHead(entity.getRotationYawHead() + deltaYaw);
+
         entity.onGround = true;
     }
 
