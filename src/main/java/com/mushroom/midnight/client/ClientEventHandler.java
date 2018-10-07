@@ -7,6 +7,7 @@ import com.mushroom.midnight.common.capability.RifterCapturedCapability;
 import com.mushroom.midnight.common.entity.EntityRift;
 import com.mushroom.midnight.common.registry.ModDimensions;
 import com.mushroom.midnight.common.registry.ModSounds;
+import com.mushroom.midnight.common.util.EntityUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.ISound;
 import net.minecraft.client.audio.PositionedSoundRecord;
@@ -120,16 +121,15 @@ public class ClientEventHandler {
             entity.limbSwing = 0.0F;
             entity.limbSwingAmount = entity.prevLimbSwingAmount = 0.0F;
 
-            float height = Math.max(entity.height, entity.getEyeHeight());
-            boolean vertical = height > entity.width;
-            if (vertical) {
-                GlStateManager.translate(0.0F, entity.width / 2.0F, 0.0F);
-                GlStateManager.translate(0.0F, 0.0F, entity.height / 2.0F);
-                GlStateManager.rotate(-90.0F, 1.0F, 0.0F, 0.0F);
-            } else {
+            EntityUtil.Stance stance = EntityUtil.getStance(entity);
+            if (stance == EntityUtil.Stance.QUADRUPEDAL) {
                 GlStateManager.translate(0.0F, entity.height, 0.0F);
                 GlStateManager.rotate(180.0F, 0.0F, 1.0F, 0.0F);
                 GlStateManager.rotate(180.0F, 1.0F, 0.0F, 0.0F);
+            } else {
+                GlStateManager.translate(0.0F, entity.width / 2.0F, 0.0F);
+                GlStateManager.translate(0.0F, 0.0F, entity.height / 2.0F);
+                GlStateManager.rotate(-90.0F, 1.0F, 0.0F, 0.0F);
             }
         }
     }

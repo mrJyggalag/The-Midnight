@@ -7,6 +7,7 @@ import com.mushroom.midnight.common.capability.VoidStorage;
 import com.mushroom.midnight.common.network.MessageCaptureEntity;
 import com.mushroom.midnight.common.registry.ModBiomes;
 import com.mushroom.midnight.common.registry.ModDimensions;
+import com.mushroom.midnight.common.util.EntityUtil;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -53,11 +54,12 @@ public class Midnight {
 
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event) {
-        CapabilityManager.INSTANCE.register(RiftCooldownCapability.class, new VoidStorage<>(), RiftCooldownCapability.Impl::new);
-        CapabilityManager.INSTANCE.register(RifterCapturedCapability.class, new VoidStorage<>(), RifterCapturedCapability.Impl::new);
+        CapabilityManager.INSTANCE.register(RiftCooldownCapability.class, new VoidStorage<>(), RiftCooldownCapability::new);
+        CapabilityManager.INSTANCE.register(RifterCapturedCapability.class, new VoidStorage<>(), RifterCapturedCapability::new);
 
         NETWORK.registerMessage(MessageCaptureEntity.Handler.class, MessageCaptureEntity.class, 0, Side.CLIENT);
 
+        EntityUtil.onPreInit();
         ModDimensions.register();
     }
 

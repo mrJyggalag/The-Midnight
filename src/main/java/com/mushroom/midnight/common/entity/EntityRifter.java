@@ -7,6 +7,7 @@ import com.mushroom.midnight.common.entity.task.EntityTaskRifterMelee;
 import com.mushroom.midnight.common.entity.task.EntityTaskRifterTransport;
 import com.mushroom.midnight.common.network.MessageCaptureEntity;
 import com.mushroom.midnight.common.registry.ModDimensions;
+import com.mushroom.midnight.common.util.EntityUtil;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -102,10 +103,8 @@ public class EntityRifter extends EntityMob implements IRiftTraveler, IEntityAdd
             return;
         }
 
-        float height = Math.max(entity.height, entity.getEyeHeight());
-        boolean vertical = height > entity.width;
-
-        float passengerWidth = vertical ? entity.height : entity.width;
+        EntityUtil.Stance stance = EntityUtil.getStance(entity);
+        float passengerWidth = stance == EntityUtil.Stance.BIPEDAL ? entity.width : entity.height;
 
         float dragOffset = (this.width + passengerWidth) / 2.0F;
 
@@ -124,6 +123,7 @@ public class EntityRifter extends EntityMob implements IRiftTraveler, IEntityAdd
         entity.setRotationYawHead(entity.getRotationYawHead() + deltaYaw);
 
         entity.onGround = true;
+        entity.fallDistance = 0.0F;
     }
 
     public boolean shouldCapture() {

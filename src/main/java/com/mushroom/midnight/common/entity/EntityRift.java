@@ -60,6 +60,8 @@ public class EntityRift extends Entity implements IEntityAdditionalSpawnData {
 
     private RiftParticleSystem particleSystem;
 
+    private boolean spawnedRifter;
+
     public EntityRift(World world) {
         super(world);
         this.setSize(1.8F, 4.0F);
@@ -120,6 +122,15 @@ public class EntityRift extends Entity implements IEntityAdditionalSpawnData {
                     this.computeEndpointRift(endpointWorld);
                 }
             }
+
+            boolean shouldSpawnRifter = !this.spawnedRifter && this.world.provider.getDimensionType() != ModDimensions.MIDNIGHT;
+            if (shouldSpawnRifter && !this.isUnstable() && this.world.rand.nextInt(20) == 0) {
+                AxisAlignedBB existingRifterBounds = this.getEntityBoundingBox().grow(16.0);
+                List<EntityRifter> existingRifters = this.world.getEntitiesWithinAABB(EntityRifter.class, existingRifterBounds);
+                if (existingRifters.isEmpty()) {
+                    this.trySpawnRifter();
+                }
+            }
         }
 
         if (this.particleSystem != null && this.world.isRemote) {
@@ -127,6 +138,23 @@ public class EntityRift extends Entity implements IEntityAdditionalSpawnData {
         }
 
         this.updateTimers();
+    }
+
+    private void trySpawnRifter() {
+        for (int attempts = 0; attempts < 4; attempts++) {
+            float theta = (float) (this.world.rand.nextFloat() * Math.PI * 2.0F);
+            float offsetX = -MathHelper.sin(theta) * this.width * 0.9F;
+            float offsetZ = MathHelper.cos(theta) * this.width * 0.9F;
+
+            EntityRifter rifter = new EntityRifter(this.world);
+            rifter.setPositionAndRotation(this.posX + offsetX, this.posY, this.posZ + offsetZ, (float) Math.toDegrees(theta), 0.0F);
+
+            if (rifter.isNotColliding()) {
+                this.world.spawnEntity(rifter);
+                this.spawnedRifter = true;
+                return;
+            }
+        }
     }
 
     private void updateTimers() {
@@ -346,6 +374,7 @@ public class EntityRift extends Entity implements IEntityAdditionalSpawnData {
         compound.setLong("geometry_seed", this.geometry.getSeed());
         compound.setInteger("age", this.ticksExisted);
         compound.setBoolean("open", this.isOpen());
+        compound.setBoolean("spawned_rifter", this.spawnedRifter);
     }
 
     @Override
@@ -353,6 +382,7 @@ public class EntityRift extends Entity implements IEntityAdditionalSpawnData {
         this.initGeometry(compound.getLong("geometry_seed"));
         this.ticksExisted = compound.getInteger("age");
         this.dataManager.set(OPEN, !compound.hasKey("open") || compound.getBoolean("open"));
+        this.spawnedRifter = compound.getBoolean("spawned_rifter");
     }
 
     @Override
