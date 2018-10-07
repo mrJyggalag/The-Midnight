@@ -217,6 +217,9 @@ public class EntityRift extends Entity implements IEntityAdditionalSpawnData {
         }
 
         for (Entity entity : recursedEntities) {
+            if (entity instanceof IRiftTraveler) {
+                ((IRiftTraveler) entity).onEnterRift(this);
+            }
             entity.dismountRidingEntity();
             entity.changeDimension(endpointDimension.getId(), new MidnightTeleporter(this));
         }

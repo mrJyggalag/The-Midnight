@@ -31,12 +31,12 @@ public class EntityTaskRifterTransport extends EntityAIBase {
 
     @Override
     public boolean shouldExecute() {
-        return !this.owner.getPassengers().isEmpty() && this.owner.shouldCapture();
+        return this.owner.hasCaptured() && this.owner.shouldCapture();
     }
 
     @Override
     public boolean shouldContinueExecuting() {
-        return !this.owner.getPassengers().isEmpty() && this.owner.shouldCapture();
+        return this.owner.hasCaptured() && this.owner.shouldCapture();
     }
 
     @Override
@@ -50,7 +50,7 @@ public class EntityTaskRifterTransport extends EntityAIBase {
         Path targetPath = this.computeFollowPath();
         if (targetPath == null) {
             // TODO: Do something so we don't just pick them up again
-            this.owner.dropCaptured();
+            this.owner.setCapturedEntity(null);
             return;
         }
 
@@ -88,9 +88,11 @@ public class EntityTaskRifterTransport extends EntityAIBase {
     @Nullable
     private Path computePathTowards(BlockPos surface) {
         Vec3d target = new Vec3d(surface);
-        Vec3d pathPos = RandomPositionGenerator.findRandomTargetBlockTowards(this.owner, 24, 4, target);
-        if (pathPos != null) {
-            return this.owner.getNavigator().getPathToXYZ(pathPos.x, pathPos.y, pathPos.z);
+        for (int i = 0; i < 16; i++) {
+            Vec3d pathPos = RandomPositionGenerator.findRandomTargetBlockTowards(this.owner, 24, 4, target);
+            if (pathPos != null) {
+                return this.owner.getNavigator().getPathToXYZ(pathPos.x, pathPos.y, pathPos.z);
+            }
         }
         return null;
     }
@@ -106,7 +108,7 @@ public class EntityTaskRifterTransport extends EntityAIBase {
     @Override
     public void resetTask() {
         this.owner.getNavigator().clearPath();
-        this.owner.dropCaptured();
+        this.owner.setCapturedEntity(null);
 
         this.path = null;
         this.invalidCount = 0;

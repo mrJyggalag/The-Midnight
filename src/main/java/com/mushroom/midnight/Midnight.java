@@ -2,7 +2,9 @@ package com.mushroom.midnight;
 
 import com.mushroom.midnight.common.CommonProxy;
 import com.mushroom.midnight.common.capability.RiftCooldownCapability;
+import com.mushroom.midnight.common.capability.RifterCapturedCapability;
 import com.mushroom.midnight.common.capability.VoidStorage;
+import com.mushroom.midnight.common.network.MessageCaptureEntity;
 import com.mushroom.midnight.common.registry.ModBiomes;
 import com.mushroom.midnight.common.registry.ModDimensions;
 import net.minecraft.creativetab.CreativeTabs;
@@ -17,6 +19,7 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
+import net.minecraftforge.fml.relauncher.Side;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -45,9 +48,15 @@ public class Midnight {
     @CapabilityInject(RiftCooldownCapability.class)
     public static Capability<RiftCooldownCapability> riftCooldownCap = null;
 
+    @CapabilityInject(RifterCapturedCapability.class)
+    public static Capability<RifterCapturedCapability> rifterCapturedCap = null;
+
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event) {
         CapabilityManager.INSTANCE.register(RiftCooldownCapability.class, new VoidStorage<>(), RiftCooldownCapability.Impl::new);
+        CapabilityManager.INSTANCE.register(RifterCapturedCapability.class, new VoidStorage<>(), RifterCapturedCapability.Impl::new);
+
+        NETWORK.registerMessage(MessageCaptureEntity.Handler.class, MessageCaptureEntity.class, 0, Side.CLIENT);
 
         ModDimensions.register();
     }

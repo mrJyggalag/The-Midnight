@@ -48,7 +48,6 @@ public class EntityReference<T extends Entity> {
 
         long totalWorldTime = this.world.getTotalWorldTime();
         if (forceLoad || totalWorldTime - this.lastLookupTime > 20) {
-            // TODO: Don't check every tick and take bool to force search!
             Optional<Entity> entity = this.world.loadedEntityList.stream()
                     .filter(e -> e.getUniqueID().equals(this.entityId))
                     .findFirst();

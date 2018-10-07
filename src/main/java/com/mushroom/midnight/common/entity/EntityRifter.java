@@ -1,48 +1,48 @@
 package com.mushroom.midnight.common.entity;
 
+import com.mushroom.midnight.Midnight;
+import com.mushroom.midnight.common.capability.RifterCapturedCapability;
 import com.mushroom.midnight.common.entity.task.EntityTaskRifterCapture;
 import com.mushroom.midnight.common.entity.task.EntityTaskRifterMelee;
 import com.mushroom.midnight.common.entity.task.EntityTaskRifterTransport;
+import com.mushroom.midnight.common.network.MessageCaptureEntity;
 import com.mushroom.midnight.common.registry.ModDimensions;
+import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.MoverType;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAILookIdle;
 import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
 import net.minecraft.entity.ai.EntityAISwimming;
 import net.minecraft.entity.ai.EntityAIWatchClosest;
-import net.minecraft.entity.ai.EntityMoveHelper;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.pathfinding.Path;
-import net.minecraft.pathfinding.PathNavigate;
-import net.minecraft.pathfinding.PathNavigateGround;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.DimensionType;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
 
-import javax.annotation.Nullable;
 import java.util.Comparator;
 import java.util.List;
 
-public class EntityRifter extends EntityMob {
+public class EntityRifter extends EntityMob implements IRiftTraveler, IEntityAdditionalSpawnData {
+    public static final int PICK_UP_COOLDOWN = 20;
+
     private static final double RIFT_SEARCH_RADIUS = 48.0;
 
     private final EntityReference<EntityRift> homeRift;
 
+    public int pickUpCooldown;
+
+    private EntityLivingBase capturedEntity;
+
     public EntityRifter(World world) {
         super(world);
-        this.moveHelper = new HookedMoveHelper(this);
-
         this.homeRift = new EntityReference<>(world);
-    }
-
-    @Override
-    protected PathNavigate createNavigator(World world) {
-        return new HookedNavigator(this, world);
     }
 
     @Override
@@ -58,7 +58,7 @@ public class EntityRifter extends EntityMob {
         this.tasks.addTask(3, new EntityAILookIdle(this));
 
         this.targetTasks.addTask(2, new EntityAINearestAttackableTarget<>(this, EntityLivingBase.class, 2, true, false, e -> {
-            if (e == null || e.isRiding()) {
+            if (e == null || RifterCapturedCapability.isCaptured(e)) {
                 return false;
             }
             return !(e instanceof EntityRifter);
@@ -78,12 +78,50 @@ public class EntityRifter extends EntityMob {
         if (!this.world.isRemote) {
             this.checkBurn();
 
+            if (this.capturedEntity != null && !this.capturedEntity.isEntityAlive()) {
+                this.setCapturedEntity(null);
+            }
+
+            if (this.pickUpCooldown > 0) {
+                this.pickUpCooldown--;
+            }
+
             if (this.world.provider.getDimensionType() == DimensionType.OVERWORLD) {
                 this.updateHomeRift();
             }
         }
 
+        if (this.capturedEntity != null) {
+            this.pullCapturedEntity(this.capturedEntity);
+        }
+
         super.onLivingUpdate();
+    }
+
+    private void pullCapturedEntity(EntityLivingBase entity) {
+        if (entity.world.isRemote && !Midnight.proxy.isClientPlayer(entity)) {
+            return;
+        }
+
+        float passengerWidth = entity.width;
+        float dragOffset = (this.width + passengerWidth) / 2.0F;
+
+        entity.motionX = entity.motionY = entity.motionZ = 0.0;
+        entity.moveForward = entity.moveStrafing = 0.0F;
+
+        entity.onGround = true;
+
+        float theta = (float) Math.toRadians(this.renderYawOffset);
+        double dragOriginX = this.posX + MathHelper.sin(theta) * dragOffset;
+        double dragOriginY = this.posY;
+        double dragOriginZ = this.posZ - MathHelper.cos(theta) * dragOffset;
+
+        double deltaX = (dragOriginX - entity.posX) * 0.1;
+        double deltaY = (dragOriginY - entity.posY) * 0.1;
+        double deltaZ = (dragOriginZ - entity.posZ) * 0.1;
+
+        entity.move(MoverType.SHULKER, deltaX, deltaY - 0.14, deltaZ);
+        entity.onGround = true;
     }
 
     public boolean shouldCapture() {
@@ -112,7 +150,7 @@ public class EntityRifter extends EntityMob {
                     return;
                 }
                 this.setFire(8);
-                this.dropCaptured();
+                this.setCapturedEntity(null);
             }
         }
     }
@@ -120,16 +158,41 @@ public class EntityRifter extends EntityMob {
     @Override
     public boolean attackEntityFrom(DamageSource source, float amount) {
         if (super.attackEntityFrom(source, amount)) {
-            this.dropCaptured();
+            this.setCapturedEntity(null);
             return true;
         }
         return false;
     }
 
-    public void dropCaptured() {
-        for (Entity passenger : this.getPassengers()) {
-            passenger.dismountRidingEntity();
+    public void setCapturedEntity(EntityLivingBase capturedEntity) {
+        if (this.capturedEntity != null) {
+            RifterCapturedCapability capability = this.capturedEntity.getCapability(Midnight.rifterCapturedCap, null);
+            if (capability != null) {
+                capability.setCaptured(false);
+            }
         }
+
+        this.capturedEntity = capturedEntity;
+
+        if (capturedEntity != null) {
+            RifterCapturedCapability capability = capturedEntity.getCapability(Midnight.rifterCapturedCap, null);
+            if (capability != null) {
+                capability.setCaptured(true);
+            }
+        }
+
+        if (!this.world.isRemote) {
+            MessageCaptureEntity message = new MessageCaptureEntity(this, capturedEntity);
+            Midnight.NETWORK.sendToAllTracking(message, this);
+        }
+    }
+
+    public EntityLivingBase getCapturedEntity() {
+        return this.capturedEntity;
+    }
+
+    public boolean hasCaptured() {
+        return this.capturedEntity != null;
     }
 
     public EntityReference<EntityRift> getHomeRift() {
@@ -148,44 +211,27 @@ public class EntityRifter extends EntityMob {
         this.homeRift.deserialize(compound.getCompoundTag("home_rift"));
     }
 
-    protected static boolean isCallingFromRider() {
-        StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
-        if (stackTrace.length <= 3) {
-            return false;
-        }
-        StackTraceElement caller = stackTrace[3];
-        if (caller.getClassName().equals(EntityLiving.class.getName())) {
-            String methodName = caller.getMethodName();
-            return methodName.equals("updateEntityActionState") || methodName.equals("func_70626_be");
-        }
-        return false;
-    }
-
-    private static class HookedNavigator extends PathNavigateGround {
-        HookedNavigator(EntityLiving entity, World world) {
-            super(entity, world);
-        }
-
-        @Override
-        public boolean setPath(@Nullable Path path, double speed) {
-            if (isCallingFromRider()) {
-                return false;
-            }
-            return super.setPath(path, speed);
+    @Override
+    public void onEnterRift(EntityRift rift) {
+        if (this.capturedEntity != null) {
+            this.capturedEntity.setPosition(this.posX, this.posY, this.posZ);
+            this.setCapturedEntity(null);
         }
     }
 
-    private static class HookedMoveHelper extends EntityMoveHelper {
-        HookedMoveHelper(EntityLiving entity) {
-            super(entity);
-        }
+    @Override
+    public void writeSpawnData(ByteBuf buffer) {
+        buffer.writeInt(this.capturedEntity != null ? this.capturedEntity.getEntityId() : -1);
+    }
 
-        @Override
-        public void read(EntityMoveHelper that) {
-            if (isCallingFromRider()) {
-                return;
+    @Override
+    public void readSpawnData(ByteBuf buffer) {
+        int capturedId = buffer.readInt();
+        if (capturedId != -1) {
+            Entity entity = this.world.getEntityByID(capturedId);
+            if (entity instanceof EntityLivingBase) {
+                this.setCapturedEntity((EntityLivingBase) entity);
             }
-            super.read(that);
         }
     }
 }
