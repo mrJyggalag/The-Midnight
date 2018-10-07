@@ -1,8 +1,8 @@
 package com.mushroom.midnight.common.registry;
 
 import com.mushroom.midnight.Midnight;
-import com.mushroom.midnight.common.biomes.BiomeBlackRidge;
-import com.mushroom.midnight.common.biomes.BiomeVigilantForest;
+import com.mushroom.midnight.common.biome.BiomeBlackRidge;
+import com.mushroom.midnight.common.biome.BiomeVigilantForest;
 
 import net.minecraft.init.Biomes;
 import net.minecraft.world.biome.Biome;
@@ -31,18 +31,18 @@ public class ModBiomes {
             RegUtil.applyName(new BiomeVigilantForest(
                 new Biome.BiomeProperties("vigilant_forest")
                     .setBaseHeight(0.125F)
-                    .setHeightVariation(0.05F)
+                    .setHeightVariation(0.07F)
             )),
             RegUtil.applyName(new BiomeBlackRidge(
                 new Biome.BiomeProperties("black_ridge")
-                    .setBaseHeight(1.3F)
+                    .setBaseHeight(4.5F)
                     .setHeightVariation(0.1F)
             ))
         );
     }
 
     public static void onInit() {
-        addSeedBiomes(BLACK_RIDGE, VIGILANT_FOREST);
+        addSeedBiomes(VIGILANT_FOREST);
     }
 
     public static void addSeedBiomes(Biome... biomes) {

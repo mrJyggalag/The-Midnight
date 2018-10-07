@@ -2,8 +2,8 @@ package com.mushroom.midnight.client;
 
 import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.client.particle.MidnightParticles;
-import com.mushroom.midnight.client.sound.HeartbeatSound;
-import com.mushroom.midnight.common.entities.EntityRift;
+import com.mushroom.midnight.client.sound.LoopingMidnightSound;
+import com.mushroom.midnight.common.entity.EntityRift;
 import com.mushroom.midnight.common.registry.ModDimensions;
 import com.mushroom.midnight.common.registry.ModSounds;
 import net.minecraft.client.Minecraft;
@@ -30,7 +30,7 @@ import java.util.Random;
 public class ClientEventHandler {
     private static final Minecraft MC = Minecraft.getMinecraft();
 
-    private static final HeartbeatSound HEARTBEAT_SOUND = new HeartbeatSound();
+    private static final ISound RUMBLE_SOUND = new LoopingMidnightSound(ModSounds.MIDNIGHT_RUMBLE, 1.0F);
 
     private static long lastAmbientSoundTime;
 
@@ -66,8 +66,8 @@ public class ClientEventHandler {
         long worldTime = player.world.getTotalWorldTime();
 
         SoundHandler soundHandler = MC.getSoundHandler();
-        if (!soundHandler.isSoundPlaying(HEARTBEAT_SOUND)) {
-            soundHandler.playSound(HEARTBEAT_SOUND);
+        if (!soundHandler.isSoundPlaying(RUMBLE_SOUND)) {
+            soundHandler.playSound(RUMBLE_SOUND);
         }
 
         if (worldTime - lastAmbientSoundTime > 120 && rand.nextInt(100) == 0) {
@@ -94,7 +94,7 @@ public class ClientEventHandler {
         if (entity.world.provider.getDimensionType() == ModDimensions.MIDNIGHT) {
             GlStateManager.setFog(GlStateManager.FogMode.EXP);
             event.setCanceled(true);
-            event.setDensity(0.02F);
+            event.setDensity(0.015F);
         }
     }
 

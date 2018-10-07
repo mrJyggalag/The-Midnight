@@ -16,15 +16,15 @@ public class MidnightSeedLayer extends GenLayer {
     public int[] getInts(int originX, int originY, int width, int height) {
         List<Biome> seedBiomes = ModBiomes.getSeedBiomes();
 
-        int[] data = IntCache.getIntCache(width * height);
+        int[] result = IntCache.getIntCache(width * height);
         for (int localY = 0; localY < height; localY++) {
             for (int localX = 0; localX < width; localX++) {
                 this.initChunkSeed(originX + localX, originY + localY);
                 Biome biome = seedBiomes.get(this.nextInt(seedBiomes.size()));
-                data[localX + localY * width] = Biome.getIdForBiome(biome);
+                result[localX + localY * width] = Biome.getIdForBiome(biome);
             }
         }
 
-        return data;
+        return result;
     }
 }

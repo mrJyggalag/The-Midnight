@@ -2,13 +2,18 @@ package com.mushroom.midnight.common.registry;
 
 import com.google.common.collect.Lists;
 import com.mushroom.midnight.Midnight;
-import com.mushroom.midnight.common.blocks.BlockBasic;
-import com.mushroom.midnight.common.blocks.BlockMidnightFurnace;
-import com.mushroom.midnight.common.blocks.BlockMidnightGrass;
-import com.mushroom.midnight.common.blocks.BlockMidnightLeaves;
-import com.mushroom.midnight.common.blocks.BlockMidnightLog;
-import com.mushroom.midnight.common.blocks.BlockShadowrootChest;
-import com.mushroom.midnight.common.blocks.BlockShadowrootCraftingTable;
+import com.mushroom.midnight.common.block.BlockBasic;
+import com.mushroom.midnight.common.block.BlockDoubleMidnightPlant;
+import com.mushroom.midnight.common.block.BlockGlowingDoublePlant;
+import com.mushroom.midnight.common.block.BlockGlowingPlant;
+import com.mushroom.midnight.common.block.BlockMidnightDirt;
+import com.mushroom.midnight.common.block.BlockMidnightFurnace;
+import com.mushroom.midnight.common.block.BlockMidnightGrass;
+import com.mushroom.midnight.common.block.BlockMidnightLeaves;
+import com.mushroom.midnight.common.block.BlockMidnightLog;
+import com.mushroom.midnight.common.block.BlockMidnightPlant;
+import com.mushroom.midnight.common.block.BlockShadowrootChest;
+import com.mushroom.midnight.common.block.BlockShadowrootCraftingTable;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -58,6 +63,12 @@ public class ModBlocks {
     public static final Block MIDNIGHT_DIRT = Blocks.AIR;
     public static final Block MIDNIGHT_GRASS = Blocks.AIR;
 
+    public static final Block TALL_MIDNIGHT_GRASS = Blocks.AIR;
+    public static final Block DOUBLE_MIDNIGHT_GRASS = Blocks.AIR;
+
+    public static final Block LUMEN_BUD = Blocks.AIR;
+    public static final Block DOUBLE_LUMEN_BUD = Blocks.AIR;
+
     @SubscribeEvent
     public static void registerBlocks(RegistryEvent.Register<Block> event) {
         blocks = Lists.newArrayList(
@@ -91,8 +102,12 @@ public class ModBlocks {
                 RegUtil.withName(new BlockShadowrootCraftingTable(), "shadowroot_crafting_table"),
                 RegUtil.withName(new BlockShadowrootChest(), "shadowroot_chest"),
                 RegUtil.withName(new BlockMidnightFurnace(), "midnight_furnace"),
-                RegUtil.withName(new BlockBasic(Material.GROUND).setSoundType(SoundType.GROUND), "midnight_dirt"),
-                RegUtil.withName(new BlockMidnightGrass(), "midnight_grass")
+                RegUtil.withName(new BlockMidnightDirt(), "midnight_dirt"),
+                RegUtil.withName(new BlockMidnightGrass(), "midnight_grass"),
+                RegUtil.withName(new BlockMidnightPlant(), "tall_midnight_grass"),
+                RegUtil.withName(new BlockDoubleMidnightPlant(), "double_midnight_grass"),
+                RegUtil.withName(new BlockGlowingPlant(), "lumen_bud"),
+                RegUtil.withName(new BlockGlowingDoublePlant(), "double_lumen_bud")
         );
 
         blocks.forEach(event.getRegistry()::register);
@@ -112,7 +127,9 @@ public class ModBlocks {
                 SHADOWROOT_CRAFTING_TABLE,
                 SHADOWROOT_CHEST,
                 MIDNIGHT_FURNACE,
-                MIDNIGHT_DIRT, MIDNIGHT_GRASS
+                MIDNIGHT_DIRT, MIDNIGHT_GRASS,
+                TALL_MIDNIGHT_GRASS, DOUBLE_MIDNIGHT_GRASS,
+                LUMEN_BUD, DOUBLE_LUMEN_BUD
         ));
     }
 

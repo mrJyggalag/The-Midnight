@@ -1,6 +1,6 @@
 package com.mushroom.midnight.common.world;
 
-import com.mushroom.midnight.common.biomes.IMidnightBiome;
+import com.mushroom.midnight.common.biome.IMidnightBiome;
 import com.mushroom.midnight.common.registry.ModBlocks;
 import com.mushroom.midnight.common.world.noise.OctaveNoiseSampler;
 import com.mushroom.midnight.common.world.util.BiomeWeightTable;
@@ -8,7 +8,6 @@ import com.mushroom.midnight.common.world.util.NoiseChunkPrimer;
 import net.minecraft.block.BlockFalling;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EnumCreatureType;
-import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldEntitySpawner;
@@ -180,11 +179,11 @@ public class MidnightChunkGenerator implements IChunkGenerator {
 
                 double surfaceNoise = perlinSurfaceNoise + (ridgedSurfaceNoise - perlinSurfaceNoise) * ridgeWeight;
                 surfaceNoise = (surfaceNoise + 1.5) / 3.0;
-                surfaceNoise = (surfaceNoise * heightVariation * 4.0) + baseHeight;
+                surfaceNoise = (surfaceNoise * heightVariation * 2.0) + baseHeight;
 
                 for (int localY = 0; localY < NOISE_HEIGHT + 1; localY++) {
                     double sampledNoise = this.worldNoiseBuffer[index];
-                    double density = sampledNoise * Math.pow(heightVariation * 4.0, 3.0);
+                    double density = sampledNoise * Math.pow(heightVariation * 2.0, 3.0);
 
                     double densityBias = surfaceNoise - localY;
                     if (localY < baseHeight) {
@@ -220,7 +219,7 @@ public class MidnightChunkGenerator implements IChunkGenerator {
                 Biome biome = this.biomeBuffer[index];
                 double depth = this.depthBuffer[index];
 
-                biome.genTerrainBlocks(this.world, this.random, primer, globalX + localX, globalZ + localZ, depth);
+                biome.genTerrainBlocks(this.world, this.random, primer, globalZ + localZ, globalX + localX, depth);
             }
         }
     }
