@@ -5,20 +5,26 @@ import com.mushroom.midnight.common.entity.task.EntityTaskRifterMelee;
 import com.mushroom.midnight.common.entity.task.EntityTaskRifterTransport;
 import com.mushroom.midnight.common.registry.ModDimensions;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAILookIdle;
 import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
 import net.minecraft.entity.ai.EntityAISwimming;
 import net.minecraft.entity.ai.EntityAIWatchClosest;
+import net.minecraft.entity.ai.EntityMoveHelper;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.pathfinding.Path;
+import net.minecraft.pathfinding.PathNavigate;
+import net.minecraft.pathfinding.PathNavigateGround;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.world.DimensionType;
 import net.minecraft.world.World;
 
+import javax.annotation.Nullable;
 import java.util.Comparator;
 import java.util.List;
 
@@ -29,7 +35,14 @@ public class EntityRifter extends EntityMob {
 
     public EntityRifter(World world) {
         super(world);
+        this.moveHelper = new HookedMoveHelper(this);
+
         this.homeRift = new EntityReference<>(world);
+    }
+
+    @Override
+    protected PathNavigate createNavigator(World world) {
+        return new HookedNavigator(this, world);
     }
 
     @Override
@@ -37,7 +50,7 @@ public class EntityRifter extends EntityMob {
         super.initEntityAI();
 
         this.tasks.addTask(0, new EntityAISwimming(this));
-        this.tasks.addTask(1, new EntityTaskRifterTransport(this, 1.1));
+        this.tasks.addTask(1, new EntityTaskRifterTransport(this, 1.0));
         this.tasks.addTask(2, new EntityTaskRifterCapture(this, 1.0));
         this.tasks.addTask(3, new EntityTaskRifterMelee(this, 1.0));
 
@@ -133,5 +146,46 @@ public class EntityRifter extends EntityMob {
     public void readEntityFromNBT(NBTTagCompound compound) {
         super.readEntityFromNBT(compound);
         this.homeRift.deserialize(compound.getCompoundTag("home_rift"));
+    }
+
+    protected static boolean isCallingFromRider() {
+        StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
+        if (stackTrace.length <= 3) {
+            return false;
+        }
+        StackTraceElement caller = stackTrace[3];
+        if (caller.getClassName().equals(EntityLiving.class.getName())) {
+            String methodName = caller.getMethodName();
+            return methodName.equals("updateEntityActionState") || methodName.equals("func_70626_be");
+        }
+        return false;
+    }
+
+    private static class HookedNavigator extends PathNavigateGround {
+        HookedNavigator(EntityLiving entity, World world) {
+            super(entity, world);
+        }
+
+        @Override
+        public boolean setPath(@Nullable Path path, double speed) {
+            if (isCallingFromRider()) {
+                return false;
+            }
+            return super.setPath(path, speed);
+        }
+    }
+
+    private static class HookedMoveHelper extends EntityMoveHelper {
+        HookedMoveHelper(EntityLiving entity) {
+            super(entity);
+        }
+
+        @Override
+        public void read(EntityMoveHelper that) {
+            if (isCallingFromRider()) {
+                return;
+            }
+            super.read(that);
+        }
     }
 }

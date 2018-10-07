@@ -20,6 +20,8 @@ public class EntityReference<T extends Entity> {
     @Nullable
     private WeakReference<T> cachedEntity;
 
+    private long lastLookupTime;
+
     public EntityReference(World world) {
         this.world = world;
     }
@@ -29,7 +31,7 @@ public class EntityReference<T extends Entity> {
         this.cachedEntity = new WeakReference<>(entity);
     }
 
-    public Optional<T> deref() {
+    public Optional<T> deref(boolean forceLoad) {
         if (this.entityId == null) {
             return Optional.empty();
         }
@@ -44,17 +46,21 @@ public class EntityReference<T extends Entity> {
             return Optional.of(cached);
         }
 
-        // TODO: Don't check every tick and take bool to force search!
-        Optional<Entity> entity = this.world.loadedEntityList.stream()
-                .filter(e -> e.getUniqueID().equals(this.entityId))
-                .findFirst();
-        entity.ifPresent(this::updateCachedEntity);
+        long totalWorldTime = this.world.getTotalWorldTime();
+        if (forceLoad || totalWorldTime - this.lastLookupTime > 20) {
+            // TODO: Don't check every tick and take bool to force search!
+            Optional<Entity> entity = this.world.loadedEntityList.stream()
+                    .filter(e -> e.getUniqueID().equals(this.entityId))
+                    .findFirst();
+            entity.ifPresent(this::updateCachedEntity);
+            this.lastLookupTime = totalWorldTime;
+        }
 
         return Optional.ofNullable(this.getCachedEntity());
     }
 
     public boolean isPresent() {
-        return this.deref().isPresent();
+        return this.deref(false).isPresent();
     }
 
     @SuppressWarnings("unchecked")

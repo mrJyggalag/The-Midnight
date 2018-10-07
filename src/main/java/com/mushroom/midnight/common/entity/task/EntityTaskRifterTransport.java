@@ -68,7 +68,7 @@ public class EntityTaskRifterTransport extends EntityAIBase {
         }
 
         if (this.path == null) {
-            Optional<EntityRift> derefRift = this.owner.getHomeRift().deref();
+            Optional<EntityRift> derefRift = this.owner.getHomeRift().deref(true);
             if (!derefRift.isPresent()) {
                 return null;
             }
@@ -88,7 +88,6 @@ public class EntityTaskRifterTransport extends EntityAIBase {
     @Nullable
     private Path computePathTowards(BlockPos surface) {
         Vec3d target = new Vec3d(surface);
-        // TODO: Path gets completely thrown off
         Vec3d pathPos = RandomPositionGenerator.findRandomTargetBlockTowards(this.owner, 24, 4, target);
         if (pathPos != null) {
             return this.owner.getNavigator().getPathToXYZ(pathPos.x, pathPos.y, pathPos.z);
