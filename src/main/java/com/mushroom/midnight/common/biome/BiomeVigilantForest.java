@@ -3,6 +3,7 @@ package com.mushroom.midnight.common.biome;
 import com.mushroom.midnight.common.world.decorator.VigilantDecorator;
 import com.mushroom.midnight.common.world.generator.WorldGenShadowrootTrees;
 import net.minecraft.world.gen.feature.WorldGenAbstractTree;
+import net.minecraft.world.gen.feature.WorldGenerator;
 
 import java.util.Random;
 
@@ -27,6 +28,7 @@ public class BiomeVigilantForest extends BiomeBase {
     public WorldGenAbstractTree getRandomTreeFeature(Random rand) {
         return SHADOWROOT_TREE_GEN;
     }
+
 
     //  @Override
     //  public void genBiomeTerrain(World worldIn, Random rand, ChunkPrimer chunkPrimerIn, int x, int z, double noiseVal) {

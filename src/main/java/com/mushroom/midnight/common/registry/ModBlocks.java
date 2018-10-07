@@ -14,6 +14,8 @@ import com.mushroom.midnight.common.block.BlockMidnightLog;
 import com.mushroom.midnight.common.block.BlockMidnightPlant;
 import com.mushroom.midnight.common.block.BlockShadowrootChest;
 import com.mushroom.midnight.common.block.BlockShadowrootCraftingTable;
+import com.mushroom.midnight.common.tile.base.TileEntityShadowrootChest;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -111,6 +113,8 @@ public class ModBlocks {
         );
 
         blocks.forEach(event.getRegistry()::register);
+
+        registerTile(TileEntityShadowrootChest.class, "tile_shadowroot_chest");
     }
 
     @SubscribeEvent
