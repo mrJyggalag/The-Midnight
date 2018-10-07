@@ -35,6 +35,7 @@ public class EntityRifter extends EntityMob implements IRiftTraveler, IEntityAdd
     private static final double RIFT_SEARCH_RADIUS = 48.0;
 
     private final EntityReference<EntityRift> homeRift;
+    private final AttachmentSolver dragSolver;
 
     public int pickUpCooldown;
 
@@ -43,6 +44,7 @@ public class EntityRifter extends EntityMob implements IRiftTraveler, IEntityAdd
     public EntityRifter(World world) {
         super(world);
         this.homeRift = new EntityReference<>(world);
+        this.dragSolver = new AttachmentSolver(this);
     }
 
     @Override
@@ -109,21 +111,20 @@ public class EntityRifter extends EntityMob implements IRiftTraveler, IEntityAdd
         float dragOffset = (this.width + passengerWidth) / 2.0F;
 
         float theta = (float) Math.toRadians(this.renderYawOffset);
-        double dragOriginX = this.posX + MathHelper.sin(theta) * dragOffset;
-        double dragOriginY = this.posY;
-        double dragOriginZ = this.posZ - MathHelper.cos(theta) * dragOffset;
+        double dragOriginX = MathHelper.sin(theta) * dragOffset;
+        double dragOriginZ = MathHelper.cos(theta) * dragOffset;
 
-        // TODO: Handle this better
-        entity.setPosition(dragOriginX, dragOriginY, dragOriginZ);
+        this.dragSolver.getAttachmentPoint().moveTo(dragOriginX, 0.0, dragOriginZ);
+
+        AttachmentSolver.Result result = this.dragSolver.updateAttachedEntity();
+        // TODO: Update animation and AI based on snapped position
+
         entity.setRenderYawOffset(this.rotationYaw);
 
         float deltaYaw = this.rotationYaw - this.prevRotationYaw;
 
         entity.rotationYaw += deltaYaw;
         entity.setRotationYawHead(entity.getRotationYawHead() + deltaYaw);
-
-        entity.onGround = true;
-        entity.fallDistance = 0.0F;
     }
 
     public boolean shouldCapture() {
