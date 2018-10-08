@@ -143,6 +143,7 @@ public class MidnightChunkGenerator implements IChunkGenerator {
                 float heightVariation = 0.0F;
                 float baseHeight = 0.0F;
                 float ridgeWeight = 0.0F;
+                float densityScale = 0.0F;
                 float totalWeight = 0.0F;
 
                 Biome originBiome = this.sampleNoiseBiome(localX, localZ);
@@ -152,6 +153,7 @@ public class MidnightChunkGenerator implements IChunkGenerator {
                         float neighborBaseHeight = neighborBiome.getBaseHeight();
                         float neighborHeightVariation = neighborBiome.getHeightVariation();
                         float neighborRidgeWeight = IMidnightBiome.getRidgeWeight(neighborBiome);
+                        float neighborDensityScale = IMidnightBiome.getDensityScale(neighborBiome);
 
                         float biomeWeight = this.weightTable.get(neighborX, neighborZ) / (neighborBaseHeight + 2.0F);
                         if (neighborBiome.getBaseHeight() > originBiome.getBaseHeight()) {
@@ -161,6 +163,7 @@ public class MidnightChunkGenerator implements IChunkGenerator {
                         heightVariation += neighborHeightVariation * biomeWeight;
                         baseHeight += neighborBaseHeight * biomeWeight;
                         ridgeWeight += neighborRidgeWeight * biomeWeight;
+                        densityScale += neighborDensityScale * biomeWeight;
 
                         totalWeight += biomeWeight;
                     }
@@ -169,6 +172,7 @@ public class MidnightChunkGenerator implements IChunkGenerator {
                 heightVariation /= totalWeight;
                 baseHeight /= totalWeight;
                 ridgeWeight /= totalWeight;
+                densityScale /= totalWeight;
                 baseHeight += heightOrigin;
 
                 heightVariation = heightVariation * 0.9F + 0.1F;
@@ -190,7 +194,7 @@ public class MidnightChunkGenerator implements IChunkGenerator {
                         densityBias *= 3.0;
                     }
 
-                    this.terrainBuffer[index] = density + densityBias;
+                    this.terrainBuffer[index] = (density + densityBias) * densityScale;
 
                     index++;
                 }

@@ -1,10 +1,13 @@
 package com.mushroom.midnight.common.world;
 
+import com.mushroom.midnight.common.registry.ModBiomes;
 import com.mushroom.midnight.common.world.layer.MidnightSeedLayer;
 import com.mushroom.midnight.common.world.layer.OutlineProducerLayer;
+import com.mushroom.midnight.common.world.layer.ReplaceRandomLayer;
 import com.mushroom.midnight.common.world.layer.RidgeMergeLayer;
 import com.mushroom.midnight.common.world.layer.RidgeSeedLayer;
 import net.minecraft.world.WorldType;
+import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.BiomeProvider;
 import net.minecraft.world.gen.layer.GenLayer;
 import net.minecraft.world.gen.layer.GenLayerFuzzyZoom;
@@ -35,11 +38,12 @@ public class MidnightBiomeProvider extends BiomeProvider {
 
         GenLayer layer = new MidnightSeedLayer(0);
         layer = new GenLayerVoronoiZoom(1000, layer);
-        layer = new GenLayerFuzzyZoom(2000, layer);
-        layer = GenLayerZoom.magnify(3000, layer, 2);
-        layer = new RidgeMergeLayer(4000, layer, ridgeLayer);
+        layer = new ReplaceRandomLayer(2000, 5, Biome.getIdForBiome(ModBiomes.OBSCURED_PEAKS), layer);
+        layer = new ReplaceRandomLayer(3000, 20, Biome.getIdForBiome(ModBiomes.WARPED_FIELDS), layer);
+        layer = new GenLayerFuzzyZoom(4000, layer);
+        layer = new RidgeMergeLayer(5000, layer, ridgeLayer);
 
-        layer = GenLayerZoom.magnify(5000, layer, 3);
+        layer = GenLayerZoom.magnify(6000, layer, 3);
 
         return layer;
     }

@@ -57,6 +57,11 @@ public class BiomeBase extends Biome implements IMidnightBiome {
         this.spawnableCaveCreatureList.clear();
 
         this.decorator.treesPerChunk = 0;
+        this.decorator.grassPerChunk = 0;
+        this.decorator.deadBushPerChunk = 0;
+        this.decorator.reedsPerChunk = 0;
+        this.decorator.cactiPerChunk = 0;
+        this.decorator.flowersPerChunk = 0;
 
         this.topBlock = ModBlocks.MIDNIGHT_GRASS.getDefaultState();
         this.fillerBlock = ModBlocks.MIDNIGHT_DIRT.getDefaultState();
@@ -64,6 +69,11 @@ public class BiomeBase extends Biome implements IMidnightBiome {
 
     @Override
     public float getRidgeWeight() {
+        return 1.0F;
+    }
+
+    @Override
+    public float getDensityScale() {
         return 1.0F;
     }
 
