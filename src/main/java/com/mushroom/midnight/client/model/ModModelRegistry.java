@@ -12,6 +12,7 @@ import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDoor;
 import net.minecraft.block.BlockLeaves;
+import net.minecraft.block.BlockSapling;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -55,14 +56,13 @@ public class ModModelRegistry {
                 .ignore(BlockLeaves.CHECK_DECAY, BlockLeaves.DECAYABLE)
                 .build()
         );
-        ModelLoader.setCustomStateMapper(ModBlocks.DEAD_WOOD_LEAVES, new StateMap.Builder()
-                .ignore(BlockLeaves.CHECK_DECAY, BlockLeaves.DECAYABLE)
-                .build()
-        );
 
         ModelLoader.setCustomStateMapper(ModBlocks.SHADOWROOT_DOOR, new StateMap.Builder().ignore(BlockDoor.POWERED).build());
         ModelLoader.setCustomStateMapper(ModBlocks.DARK_WILLOW_DOOR, new StateMap.Builder().ignore(BlockDoor.POWERED).build());
         ModelLoader.setCustomStateMapper(ModBlocks.DEAD_WOOD_DOOR, new StateMap.Builder().ignore(BlockDoor.POWERED).build());
+
+        ModelLoader.setCustomStateMapper(ModBlocks.SHADOWROOT_SAPLING, new StateMap.Builder().ignore(BlockSapling.STAGE).build());
+        ModelLoader.setCustomStateMapper(ModBlocks.DARK_WILLOW_SAPLING, new StateMap.Builder().ignore(BlockSapling.STAGE).build());
     }
 
     public static void onInit() {
@@ -72,8 +72,8 @@ public class ModModelRegistry {
         blockColors.registerBlockColorHandler(ModModelRegistry::computeGrassColor, ModBlocks.MIDNIGHT_GRASS);
         itemColors.registerItemColorHandler(ModModelRegistry::defaultGrassColor, ModBlocks.MIDNIGHT_GRASS);
 
-        blockColors.registerBlockColorHandler(ModModelRegistry::computeFoliageColor, ModBlocks.SHADOWROOT_LEAVES, ModBlocks.DARK_WILLOW_LEAVES, ModBlocks.DEAD_WOOD_LEAVES);
-        itemColors.registerItemColorHandler(ModModelRegistry::defaultFoliageColor, ModBlocks.SHADOWROOT_LEAVES, ModBlocks.DARK_WILLOW_LEAVES, ModBlocks.DEAD_WOOD_LEAVES);
+        blockColors.registerBlockColorHandler(ModModelRegistry::computeFoliageColor, ModBlocks.SHADOWROOT_LEAVES, ModBlocks.DARK_WILLOW_LEAVES);
+        itemColors.registerItemColorHandler(ModModelRegistry::defaultFoliageColor, ModBlocks.SHADOWROOT_LEAVES, ModBlocks.DARK_WILLOW_LEAVES);
 
         blockColors.registerBlockColorHandler(ModModelRegistry::computeFoliageColor, ModBlocks.TALL_MIDNIGHT_GRASS, ModBlocks.DOUBLE_MIDNIGHT_GRASS);
         itemColors.registerItemColorHandler(ModModelRegistry::defaultFoliageColor, ModBlocks.TALL_MIDNIGHT_GRASS, ModBlocks.DOUBLE_MIDNIGHT_GRASS);

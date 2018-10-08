@@ -13,10 +13,12 @@ import com.mushroom.midnight.common.block.BlockMidnightGrass;
 import com.mushroom.midnight.common.block.BlockMidnightLeaves;
 import com.mushroom.midnight.common.block.BlockMidnightLog;
 import com.mushroom.midnight.common.block.BlockMidnightPlant;
+import com.mushroom.midnight.common.block.BlockMidnightSapling;
 import com.mushroom.midnight.common.block.BlockMidnightTrapDoor;
 import com.mushroom.midnight.common.block.BlockNightstone;
 import com.mushroom.midnight.common.block.BlockShadowrootChest;
 import com.mushroom.midnight.common.block.BlockShadowrootCraftingTable;
+import com.mushroom.midnight.common.world.generator.WorldGenMidnightTree;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -45,7 +47,6 @@ public class ModBlocks {
     public static final Block SHADOWROOT_LEAVES = Blocks.AIR;
     public static final Block SHADOWROOT_PLANKS = Blocks.AIR;
     public static final Block DEAD_WOOD_LOG = Blocks.AIR;
-    public static final Block DEAD_WOOD_LEAVES = Blocks.AIR;
     public static final Block DEAD_WOOD_PLANKS = Blocks.AIR;
     public static final Block DARK_WILLOW_LOG = Blocks.AIR;
     public static final Block DARK_WILLOW_LEAVES = Blocks.AIR;
@@ -74,6 +75,9 @@ public class ModBlocks {
 
     public static final Block LUMEN_BUD = Blocks.AIR;
     public static final Block DOUBLE_LUMEN_BUD = Blocks.AIR;
+
+    public static final Block SHADOWROOT_SAPLING = Blocks.AIR;
+    public static final Block DARK_WILLOW_SAPLING = Blocks.AIR;
 
     public static final Block SHADOWROOT_DOOR = Blocks.AIR;
     public static final Block DEAD_WOOD_DOOR = Blocks.AIR;
@@ -124,6 +128,8 @@ public class ModBlocks {
                 RegUtil.withName(new BlockDoubleMidnightPlant(), "double_midnight_grass"),
                 RegUtil.withName(new BlockGlowingPlant(), "lumen_bud"),
                 RegUtil.withName(new BlockGlowingDoublePlant(), "double_lumen_bud"),
+                RegUtil.withName(new BlockMidnightSapling(() -> new WorldGenMidnightTree(SHADOWROOT_LOG, SHADOWROOT_LEAVES, 6)), "shadowroot_sapling"),
+                RegUtil.withName(new BlockMidnightSapling(() -> new WorldGenMidnightTree(DARK_WILLOW_LOG, DARK_WILLOW_LEAVES, 6)), "dark_willow_sapling"),
                 RegUtil.withName(new BlockMidnightDoor(() -> ModItems.SHADOWROOT_DOOR), "shadowroot_door"),
                 RegUtil.withName(new BlockMidnightDoor(() -> ModItems.DARK_WILLOW_DOOR), "dark_willow_door"),
                 RegUtil.withName(new BlockMidnightDoor(() -> ModItems.DEAD_WOOD_DOOR), "dead_wood_door"),
@@ -139,7 +145,7 @@ public class ModBlocks {
     public static void registerItems(RegistryEvent.Register<Item> event) {
         event.getRegistry().registerAll(itemBlocks(
                 SHADOWROOT_LOG, SHADOWROOT_LEAVES, SHADOWROOT_PLANKS,
-                DEAD_WOOD_LOG, DEAD_WOOD_LEAVES, DEAD_WOOD_PLANKS,
+                DEAD_WOOD_LOG, DEAD_WOOD_PLANKS,
                 DARK_WILLOW_LOG, DARK_WILLOW_LEAVES, DARK_WILLOW_PLANKS,
                 NIGHTSTONE, NIGHTSTONE_BRICKS, CHISELED_NIGHTSTONE_BRICKS,
                 DARK_PEARL_ORE, DARK_PEARL_BLOCK,
@@ -152,6 +158,7 @@ public class ModBlocks {
                 MIDNIGHT_DIRT, MIDNIGHT_GRASS,
                 TALL_MIDNIGHT_GRASS, DOUBLE_MIDNIGHT_GRASS,
                 LUMEN_BUD, DOUBLE_LUMEN_BUD,
+                SHADOWROOT_SAPLING, DARK_WILLOW_SAPLING,
                 SHADOWROOT_TRAPDOOR, DARK_WILLOW_TRAPDOOR, DEAD_WOOD_TRAPDOOR
         ));
     }
@@ -167,7 +174,6 @@ public class ModBlocks {
 
         OreDictionary.registerOre("treeLeaves", SHADOWROOT_LEAVES);
         OreDictionary.registerOre("treeLeaves", DARK_WILLOW_LEAVES);
-        OreDictionary.registerOre("treeLeaves", DEAD_WOOD_LEAVES);
 
         OreDictionary.registerOre("oreEbonys", EBONYS_ORE);
         OreDictionary.registerOre("blockEbonys", EBONYS_BLOCK);

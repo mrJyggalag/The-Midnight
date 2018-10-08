@@ -14,7 +14,6 @@ tile.midnight.shadowroot_leaves.name=Shadowroot Leaves
 
 tile.midnight.dead_wood_log.name=Dead Wood Log
 tile.midnight.dead_wood_planks.name=Dead Wood Planks
-tile.midnight.dead_wood_leaves.name=Dead Leaves
 
 tile.midnight.dark_willow_log.name=Dark Willow Log
 tile.midnight.dark_willow_planks.name=Dark Willow Planks
@@ -48,6 +47,9 @@ tile.midnight.double_lumen_bud.name=Double Lumen Bud
 tile.midnight.shadowroot_trapdoor.name=Shadowroot Trapdoor
 tile.midnight.dark_willow_trapdoor.name=Dark Willow Trapdoor
 tile.midnight.dead_wood_trapdoor.name=Dead Wood Trapdoor
+
+tile.midnight.shadowroot_sapling.name=Shadowroot Sapling
+tile.midnight.dark_willow_sapling.name=Dark Willow Sapling
 
 # Items
 

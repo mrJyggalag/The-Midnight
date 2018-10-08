@@ -49,7 +49,7 @@ public class BiomeBase extends Biome implements IMidnightBiome {
             8
     );
 
-    protected int grassColor = 0xBF8ECC;
+    protected int grassColor = 0xB084BC;
     protected int foliageColor = 0x8F6DBC;
 
     public BiomeBase(BiomeProperties properties) {
