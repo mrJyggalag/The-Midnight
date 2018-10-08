@@ -26,6 +26,7 @@ import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.oredict.OreDictionary;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -41,8 +42,10 @@ public class ModBlocks {
     public static final Block SHADOWROOT_LEAVES = Blocks.AIR;
     public static final Block SHADOWROOT_PLANKS = Blocks.AIR;
     public static final Block DEAD_WOOD_LOG = Blocks.AIR;
+    public static final Block DEAD_WOOD_LEAVES = Blocks.AIR;
     public static final Block DEAD_WOOD_PLANKS = Blocks.AIR;
     public static final Block DARK_WILLOW_LOG = Blocks.AIR;
+    public static final Block DARK_WILLOW_LEAVES = Blocks.AIR;
     public static final Block DARK_WILLOW_PLANKS = Blocks.AIR;
     public static final Block NIGHTSTONE = Blocks.AIR;
     public static final Block NIGHTSTONE_BRICKS = Blocks.AIR;
@@ -79,11 +82,13 @@ public class ModBlocks {
                         .setHardness(2.0F)
                         .setResistance(5.0F),
                 RegUtil.withName(new BlockMidnightLog(), "dead_wood_log"),
+                RegUtil.withName(new BlockMidnightLeaves(), "dead_wood_leaves"),
                 RegUtil.withName(new BlockBasic(Material.WOOD), "dead_wood_planks")
                         .setSoundType(SoundType.WOOD)
                         .setHardness(2.0F)
                         .setResistance(5.0F),
                 RegUtil.withName(new BlockMidnightLog(), "dark_willow_log"),
+                RegUtil.withName(new BlockMidnightLeaves(), "dark_willow_leaves"),
                 RegUtil.withName(new BlockBasic(Material.WOOD), "dark_willow_planks")
                         .setSoundType(SoundType.WOOD)
                         .setHardness(2.0F)
@@ -117,8 +122,8 @@ public class ModBlocks {
     public static void registerItems(RegistryEvent.Register<Item> event) {
         event.getRegistry().registerAll(itemBlocks(
                 SHADOWROOT_LOG, SHADOWROOT_LEAVES, SHADOWROOT_PLANKS,
-                DEAD_WOOD_LOG, DEAD_WOOD_PLANKS,
-                DARK_WILLOW_LOG, DARK_WILLOW_PLANKS,
+                DEAD_WOOD_LOG, DEAD_WOOD_LEAVES, DEAD_WOOD_PLANKS,
+                DARK_WILLOW_LOG, DARK_WILLOW_LEAVES, DARK_WILLOW_PLANKS,
                 NIGHTSTONE, NIGHTSTONE_BRICKS, CHISELED_NIGHTSTONE_BRICKS,
                 DARK_PEARL_ORE, DARK_PEARL_BLOCK,
                 EBONYS_ORE, EBONYS_BLOCK,
@@ -131,6 +136,30 @@ public class ModBlocks {
                 TALL_MIDNIGHT_GRASS, DOUBLE_MIDNIGHT_GRASS,
                 LUMEN_BUD, DOUBLE_LUMEN_BUD
         ));
+
+        OreDictionary.registerOre("logWood", SHADOWROOT_LOG);
+        OreDictionary.registerOre("logWood", DARK_WILLOW_LOG);
+        OreDictionary.registerOre("logWood", DEAD_WOOD_LOG);
+
+        OreDictionary.registerOre("plankWood", SHADOWROOT_PLANKS);
+        OreDictionary.registerOre("plankWood", DARK_WILLOW_PLANKS);
+        OreDictionary.registerOre("plankWood", DEAD_WOOD_PLANKS);
+
+        OreDictionary.registerOre("treeLeaves", SHADOWROOT_LEAVES);
+        OreDictionary.registerOre("treeLeaves", DARK_WILLOW_LEAVES);
+        OreDictionary.registerOre("treeLeaves", DEAD_WOOD_LEAVES);
+
+        OreDictionary.registerOre("oreEbonys", EBONYS_ORE);
+        OreDictionary.registerOre("blockEbonys", EBONYS_BLOCK);
+
+        OreDictionary.registerOre("oreNagrilite", NAGRILITE_ORE);
+        OreDictionary.registerOre("blockNagrilite", NAGRILITE_BLOCK);
+
+        OreDictionary.registerOre("oreTenebrum", TENEBRUM_ORE);
+        OreDictionary.registerOre("blockTenebrum", TENEBRUM_BLOCK);
+
+        OreDictionary.registerOre("chest", SHADOWROOT_CHEST);
+        OreDictionary.registerOre("chestWood", SHADOWROOT_CHEST);
     }
 
     private static Item[] itemBlocks(Block... blocks) {

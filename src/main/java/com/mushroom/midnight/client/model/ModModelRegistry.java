@@ -50,6 +50,14 @@ public class ModModelRegistry {
                 .ignore(BlockLeaves.CHECK_DECAY, BlockLeaves.DECAYABLE)
                 .build()
         );
+        ModelLoader.setCustomStateMapper(ModBlocks.DARK_WILLOW_LEAVES, new StateMap.Builder()
+                .ignore(BlockLeaves.CHECK_DECAY, BlockLeaves.DECAYABLE)
+                .build()
+        );
+        ModelLoader.setCustomStateMapper(ModBlocks.DEAD_WOOD_LEAVES, new StateMap.Builder()
+                .ignore(BlockLeaves.CHECK_DECAY, BlockLeaves.DECAYABLE)
+                .build()
+        );
     }
 
     public static void onInit() {
@@ -59,8 +67,11 @@ public class ModModelRegistry {
         blockColors.registerBlockColorHandler(ModModelRegistry::computeGrassColor, ModBlocks.MIDNIGHT_GRASS);
         itemColors.registerItemColorHandler(ModModelRegistry::defaultGrassColor, ModBlocks.MIDNIGHT_GRASS);
 
-        blockColors.registerBlockColorHandler(ModModelRegistry::computeFoliageColor, ModBlocks.SHADOWROOT_LEAVES, ModBlocks.TALL_MIDNIGHT_GRASS, ModBlocks.DOUBLE_MIDNIGHT_GRASS);
-        itemColors.registerItemColorHandler(ModModelRegistry::defaultFoliageColor, ModBlocks.SHADOWROOT_LEAVES, ModBlocks.TALL_MIDNIGHT_GRASS, ModBlocks.DOUBLE_MIDNIGHT_GRASS);
+        blockColors.registerBlockColorHandler(ModModelRegistry::computeFoliageColor, ModBlocks.SHADOWROOT_LEAVES, ModBlocks.DARK_WILLOW_LEAVES, ModBlocks.DEAD_WOOD_LEAVES);
+        itemColors.registerItemColorHandler(ModModelRegistry::defaultFoliageColor, ModBlocks.SHADOWROOT_LEAVES, ModBlocks.DARK_WILLOW_LEAVES, ModBlocks.DEAD_WOOD_LEAVES);
+
+        blockColors.registerBlockColorHandler(ModModelRegistry::computeFoliageColor, ModBlocks.TALL_MIDNIGHT_GRASS, ModBlocks.DOUBLE_MIDNIGHT_GRASS);
+        itemColors.registerItemColorHandler(ModModelRegistry::defaultFoliageColor, ModBlocks.TALL_MIDNIGHT_GRASS, ModBlocks.DOUBLE_MIDNIGHT_GRASS);
     }
 
     private static int computeGrassColor(IBlockState state, IBlockAccess world, BlockPos pos, int tintIndex) {

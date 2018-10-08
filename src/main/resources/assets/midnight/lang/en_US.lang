@@ -14,9 +14,11 @@ tile.midnight.shadowroot_leaves.name=Shadowroot Leaves
 
 tile.midnight.dead_wood_log.name=Dead Wood Log
 tile.midnight.dead_wood_planks.name=Dead Wood Planks
+tile.midnight.dead_wood_leaves.name=Dead Leaves
 
 tile.midnight.dark_willow_log.name=Dark Willow Log
 tile.midnight.dark_willow_planks.name=Dark Willow Planks
+tile.midnight.dark_willow_leaves.name=Dark Willow Leaves
 
 tile.midnight.nightstone_bricks.name=Nightstone Bricks
 tile.midnight.chiseled_nightstone_bricks.name=Chiseled Nightstone Bricks
@@ -46,6 +48,7 @@ tile.midnight.double_lumen_bud.name=Double Lumen Bud
 # Entities
 
 entity.midnight.rift.name=Midnight Rift
+entity.midnight.rifter.name=Rifter
 
 # Config
 
