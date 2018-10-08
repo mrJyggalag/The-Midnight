@@ -84,6 +84,7 @@ public abstract class EntityTaskRifterFollow extends EntityAIBase {
         if (distanceSq < followRange * followRange) {
             this.updateFollowVisible(target);
         } else if (!this.navigatingFromMemory && this.lastSeenPos != null) {
+            this.owner.getNavigator().clearPath();
             this.path = this.owner.getNavigator().getPathToPos(this.lastSeenPos);
             this.navigatingFromMemory = true;
         }
@@ -95,6 +96,7 @@ public abstract class EntityTaskRifterFollow extends EntityAIBase {
         if (this.shouldInvalidatePath(target) || this.navigatingFromMemory) {
             this.invalidCounter = 0;
 
+            this.owner.getNavigator().clearPath();
             this.path = this.owner.getNavigator().getPathToEntityLiving(target);
             if (this.path != null) {
                 this.lastSeenPos = target.getPosition();

@@ -14,7 +14,7 @@ import javax.annotation.Nullable;
 import java.util.Optional;
 
 public class EntityTaskRifterTransport extends EntityAIBase {
-    private static final int INVALIDATE_TIME = 10;
+    private static final int INVALIDATE_TIME = 20;
 
     private final EntityRifter owner;
     private final double transportSpeed;
@@ -68,6 +68,8 @@ public class EntityTaskRifterTransport extends EntityAIBase {
         }
 
         if (this.path == null) {
+            this.owner.getNavigator().clearPath();
+
             Optional<EntityRift> derefRift = this.owner.getHomeRift().deref(true);
             if (!derefRift.isPresent()) {
                 return null;
@@ -75,6 +77,7 @@ public class EntityTaskRifterTransport extends EntityAIBase {
 
             EntityRift homeRift = derefRift.get();
             BlockPos surface = WorldUtil.findSurfaceOrInput(homeRift.world, homeRift.getPosition(), 16).up();
+
             this.path = this.owner.getNavigator().getPathToPos(surface);
 
             if (this.path == null) {

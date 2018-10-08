@@ -52,8 +52,7 @@ public class DragSolver {
 
         float entityWidth = this.getTransformedWidth();
 
-        // TODO: Reduce
-        float dragOffset = (this.owner.width + entityWidth) / 2.0F + 5.2F;
+        float dragOffset = (this.owner.width + entityWidth) / 2.0F + 0.2F;
 
         float theta = (float) Math.toRadians(this.owner.renderYawOffset);
         double dragOriginX = MathHelper.sin(theta) * dragOffset;
