@@ -1,5 +1,6 @@
 package com.mushroom.midnight.common.entity;
 
+import com.google.common.collect.Lists;
 import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.common.capability.RifterCapturedCapability;
 import com.mushroom.midnight.common.entity.task.EntityTaskRifterCapture;
@@ -7,7 +8,6 @@ import com.mushroom.midnight.common.entity.task.EntityTaskRifterMelee;
 import com.mushroom.midnight.common.entity.task.EntityTaskRifterTransport;
 import com.mushroom.midnight.common.network.MessageCaptureEntity;
 import com.mushroom.midnight.common.registry.ModDimensions;
-import com.mushroom.midnight.common.util.EntityUtil;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -21,11 +21,12 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.DimensionType;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
@@ -35,7 +36,7 @@ public class EntityRifter extends EntityMob implements IRiftTraveler, IEntityAdd
     private static final double RIFT_SEARCH_RADIUS = 48.0;
 
     private final EntityReference<EntityRift> homeRift;
-    private final AttachmentSolver dragSolver;
+    private final DragSolver dragSolver;
 
     public int pickUpCooldown;
 
@@ -44,7 +45,7 @@ public class EntityRifter extends EntityMob implements IRiftTraveler, IEntityAdd
     public EntityRifter(World world) {
         super(world);
         this.homeRift = new EntityReference<>(world);
-        this.dragSolver = new AttachmentSolver(this);
+        this.dragSolver = new DragSolver(this);
     }
 
     @Override
@@ -93,38 +94,11 @@ public class EntityRifter extends EntityMob implements IRiftTraveler, IEntityAdd
             }
         }
 
-        if (this.capturedEntity != null) {
-            this.pullCapturedEntity(this.capturedEntity);
+        if (!this.world.isRemote || Midnight.proxy.isClientPlayer(this.capturedEntity)) {
+            this.dragSolver.solveDrag();
         }
 
         super.onLivingUpdate();
-    }
-
-    private void pullCapturedEntity(EntityLivingBase entity) {
-        if (entity.world.isRemote && !Midnight.proxy.isClientPlayer(entity)) {
-            return;
-        }
-
-        EntityUtil.Stance stance = EntityUtil.getStance(entity);
-        float passengerWidth = stance == EntityUtil.Stance.BIPEDAL ? entity.width : entity.height;
-
-        float dragOffset = (this.width + passengerWidth) / 2.0F;
-
-        float theta = (float) Math.toRadians(this.renderYawOffset);
-        double dragOriginX = MathHelper.sin(theta) * dragOffset;
-        double dragOriginZ = MathHelper.cos(theta) * dragOffset;
-
-        this.dragSolver.getAttachmentPoint().moveTo(dragOriginX, 0.0, dragOriginZ);
-
-        AttachmentSolver.Result result = this.dragSolver.updateAttachedEntity();
-        // TODO: Update animation and AI based on snapped position
-
-        entity.setRenderYawOffset(this.rotationYaw);
-
-        float deltaYaw = this.rotationYaw - this.prevRotationYaw;
-
-        entity.rotationYaw += deltaYaw;
-        entity.setRotationYawHead(entity.getRotationYawHead() + deltaYaw);
     }
 
     public boolean shouldCapture() {
@@ -176,6 +150,7 @@ public class EntityRifter extends EntityMob implements IRiftTraveler, IEntityAdd
         }
 
         this.capturedEntity = capturedEntity;
+        this.dragSolver.setDragged(capturedEntity);
 
         if (capturedEntity != null) {
             RifterCapturedCapability capability = capturedEntity.getCapability(Midnight.rifterCapturedCap, null);
@@ -217,9 +192,16 @@ public class EntityRifter extends EntityMob implements IRiftTraveler, IEntityAdd
     @Override
     public void onEnterRift(EntityRift rift) {
         if (this.capturedEntity != null) {
-            this.capturedEntity.setPosition(this.posX, this.posY, this.posZ);
             this.setCapturedEntity(null);
         }
+    }
+
+    @Override
+    public Collection<Entity> getAdditionalTeleportEntities() {
+        if (this.capturedEntity != null) {
+            return Lists.newArrayList(this.capturedEntity);
+        }
+        return Collections.emptyList();
     }
 
     @Override

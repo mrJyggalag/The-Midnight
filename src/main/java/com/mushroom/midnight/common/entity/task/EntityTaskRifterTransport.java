@@ -14,7 +14,7 @@ import javax.annotation.Nullable;
 import java.util.Optional;
 
 public class EntityTaskRifterTransport extends EntityAIBase {
-    private static final int INVALIDATE_TIME = 20;
+    private static final int INVALIDATE_TIME = 10;
 
     private final EntityRifter owner;
     private final double transportSpeed;
@@ -74,7 +74,7 @@ public class EntityTaskRifterTransport extends EntityAIBase {
             }
 
             EntityRift homeRift = derefRift.get();
-            BlockPos surface = WorldUtil.findSurfaceOrInput(homeRift.world, homeRift.getPosition(), 16);
+            BlockPos surface = WorldUtil.findSurfaceOrInput(homeRift.world, homeRift.getPosition(), 16).up();
             this.path = this.owner.getNavigator().getPathToPos(surface);
 
             if (this.path == null) {
@@ -90,8 +90,12 @@ public class EntityTaskRifterTransport extends EntityAIBase {
         Vec3d target = new Vec3d(surface);
         for (int i = 0; i < 16; i++) {
             Vec3d pathPos = RandomPositionGenerator.findRandomTargetBlockTowards(this.owner, 24, 4, target);
-            if (pathPos != null) {
-                return this.owner.getNavigator().getPathToXYZ(pathPos.x, pathPos.y, pathPos.z);
+            if (pathPos == null) {
+                continue;
+            }
+            Path path = this.owner.getNavigator().getPathToXYZ(pathPos.x, pathPos.y, pathPos.z);
+            if (path != null) {
+                return path;
             }
         }
         return null;

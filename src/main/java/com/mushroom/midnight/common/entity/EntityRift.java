@@ -123,12 +123,14 @@ public class EntityRift extends Entity implements IEntityAdditionalSpawnData {
                 }
             }
 
-            boolean shouldSpawnRifter = !this.spawnedRifter && this.world.provider.getDimensionType() != ModDimensions.MIDNIGHT;
-            if (shouldSpawnRifter && !this.isUnstable() && this.world.rand.nextInt(20) == 0) {
-                AxisAlignedBB existingRifterBounds = this.getEntityBoundingBox().grow(16.0);
-                List<EntityRifter> existingRifters = this.world.getEntitiesWithinAABB(EntityRifter.class, existingRifterBounds);
-                if (existingRifters.isEmpty()) {
-                    this.trySpawnRifter();
+            if (this.world.getGameRules().getBoolean("doMobSpawning")) {
+                boolean shouldSpawnRifter = !this.spawnedRifter && this.world.provider.getDimensionType() != ModDimensions.MIDNIGHT;
+                if (shouldSpawnRifter && !this.isUnstable() && this.world.rand.nextInt(20) == 0) {
+                    AxisAlignedBB existingRifterBounds = this.getEntityBoundingBox().grow(16.0);
+                    List<EntityRifter> existingRifters = this.world.getEntitiesWithinAABB(EntityRifter.class, existingRifterBounds);
+                    if (existingRifters.isEmpty()) {
+                        this.trySpawnRifter();
+                    }
                 }
             }
         }
@@ -242,6 +244,9 @@ public class EntityRift extends Entity implements IEntityAdditionalSpawnData {
         for (Entity entity : entities) {
             recursedEntities.add(entity);
             recursedEntities.addAll(entity.getRecursivePassengers());
+            if (entity instanceof IRiftTraveler) {
+                recursedEntities.addAll(((IRiftTraveler) entity).getAdditionalTeleportEntities());
+            }
         }
 
         for (Entity entity : recursedEntities) {
