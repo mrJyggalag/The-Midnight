@@ -39,9 +39,9 @@ public class MidnightBiomeProvider extends BiomeProvider {
 
         GenLayer layer = new MidnightSeedLayer(0);
         layer = new GenLayerVoronoiZoom(1000, layer);
-        layer = new ReplaceRandomLayer(2000, 5, Biome.getIdForBiome(ModBiomes.OBSCURED_PEAKS), layer);
-        layer = new ReplaceRandomLayer(3000, 20, Biome.getIdForBiome(ModBiomes.WARPED_FIELDS), layer);
-        layer = new ReplaceRandomLayer(4000, 20, Biome.getIdForBiome(ModBiomes.MOLTEN_CRATER), layer);
+        layer = new ReplaceRandomLayer(2000, 6, Biome.getIdForBiome(ModBiomes.OBSCURED_PEAKS), layer);
+        layer = new ReplaceRandomLayer(3000, 30, Biome.getIdForBiome(ModBiomes.WARPED_FIELDS), layer);
+        layer = new ReplaceRandomLayer(4000, 30, Biome.getIdForBiome(ModBiomes.MOLTEN_CRATER), layer);
         layer = new GenLayerFuzzyZoom(5000, layer);
         layer = new RidgeMergeLayer(6000, layer, ridgeLayer);
 

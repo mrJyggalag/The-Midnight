@@ -41,4 +41,9 @@ public class BiomeMoltenCrater extends BiomeBase {
         }
         return Blocks.OBSIDIAN.getDefaultState();
     }
+
+    @Override
+    public float getRidgeWeight() {
+        return 0.0F;
+    }
 }

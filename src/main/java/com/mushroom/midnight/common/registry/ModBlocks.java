@@ -14,6 +14,7 @@ import com.mushroom.midnight.common.block.BlockMidnightLeaves;
 import com.mushroom.midnight.common.block.BlockMidnightLog;
 import com.mushroom.midnight.common.block.BlockMidnightPlant;
 import com.mushroom.midnight.common.block.BlockMidnightTrapDoor;
+import com.mushroom.midnight.common.block.BlockNightstone;
 import com.mushroom.midnight.common.block.BlockShadowrootChest;
 import com.mushroom.midnight.common.block.BlockShadowrootCraftingTable;
 import net.minecraft.block.Block;
@@ -103,7 +104,7 @@ public class ModBlocks {
                         .setSoundType(SoundType.WOOD)
                         .setHardness(2.0F)
                         .setResistance(5.0F),
-                RegUtil.withName(new BlockBasic(Material.ROCK), "nightstone"),
+                RegUtil.withName(new BlockNightstone(), "nightstone"),
                 RegUtil.withName(new BlockBasic(Material.ROCK), "nightstone_bricks"),
                 RegUtil.withName(new BlockBasic(Material.ROCK), "chiseled_nightstone_bricks"),
                 RegUtil.withName(new BlockBasic(Material.ROCK), "dark_pearl_ore"),

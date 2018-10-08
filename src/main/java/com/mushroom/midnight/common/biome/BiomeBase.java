@@ -3,6 +3,7 @@ package com.mushroom.midnight.common.biome;
 import com.mushroom.midnight.common.registry.ModBlocks;
 import com.mushroom.midnight.common.world.generator.WorldGenDoubleMidnightPlant;
 import com.mushroom.midnight.common.world.generator.WorldGenMidnightPlant;
+import com.mushroom.midnight.common.world.generator.WorldGenShadowrootTrees;
 import net.minecraft.block.BlockBush;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -11,6 +12,7 @@ import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.chunk.ChunkPrimer;
+import net.minecraft.world.gen.feature.WorldGenAbstractTree;
 import net.minecraft.world.gen.feature.WorldGenerator;
 import net.minecraftforge.event.terraingen.DecorateBiomeEvent;
 import net.minecraftforge.event.terraingen.TerrainGen;
@@ -18,8 +20,9 @@ import net.minecraftforge.event.terraingen.TerrainGen;
 import java.util.Random;
 
 public class BiomeBase extends Biome implements IMidnightBiome {
-
     protected static final IBlockState NIGHT_STONE = ModBlocks.NIGHTSTONE.getDefaultState();
+
+    protected static final WorldGenShadowrootTrees SHADOWROOT_TREE_GEN = new WorldGenShadowrootTrees();
 
     protected static final WorldGenMidnightPlant GRASS_GENERATOR = new WorldGenMidnightPlant(
             ModBlocks.TALL_MIDNIGHT_GRASS.getDefaultState(),
@@ -62,6 +65,8 @@ public class BiomeBase extends Biome implements IMidnightBiome {
         this.decorator.reedsPerChunk = 0;
         this.decorator.cactiPerChunk = 0;
         this.decorator.flowersPerChunk = 0;
+
+        this.decorator.extraTreeChance = 0.0F;
 
         this.topBlock = ModBlocks.MIDNIGHT_GRASS.getDefaultState();
         this.fillerBlock = ModBlocks.MIDNIGHT_DIRT.getDefaultState();
@@ -155,6 +160,11 @@ public class BiomeBase extends Biome implements IMidnightBiome {
     @Override
     public int getFoliageColorAtPos(BlockPos pos) {
         return this.getModdedBiomeFoliageColor(this.foliageColor);
+    }
+
+    @Override
+    public WorldGenAbstractTree getRandomTreeFeature(Random rand) {
+        return SHADOWROOT_TREE_GEN;
     }
 
     @Override
