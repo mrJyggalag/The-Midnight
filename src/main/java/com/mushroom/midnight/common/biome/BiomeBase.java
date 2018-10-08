@@ -3,7 +3,7 @@ package com.mushroom.midnight.common.biome;
 import com.mushroom.midnight.common.registry.ModBlocks;
 import com.mushroom.midnight.common.world.generator.WorldGenDoubleMidnightPlant;
 import com.mushroom.midnight.common.world.generator.WorldGenMidnightPlant;
-import com.mushroom.midnight.common.world.generator.WorldGenShadowrootTrees;
+import com.mushroom.midnight.common.world.generator.WorldGenMidnightTree;
 import net.minecraft.block.BlockBush;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -22,7 +22,8 @@ import java.util.Random;
 public class BiomeBase extends Biome implements IMidnightBiome {
     protected static final IBlockState NIGHT_STONE = ModBlocks.NIGHTSTONE.getDefaultState();
 
-    protected static final WorldGenShadowrootTrees SHADOWROOT_TREE_GEN = new WorldGenShadowrootTrees();
+    protected static final WorldGenMidnightTree SHADOWROOT_TREE_GEN = new WorldGenMidnightTree(ModBlocks.SHADOWROOT_LOG, ModBlocks.SHADOWROOT_LEAVES, 6);
+    protected static final WorldGenMidnightTree DARK_WILLOW_TREE_GEN = new WorldGenMidnightTree(ModBlocks.DARK_WILLOW_LOG, ModBlocks.DARK_WILLOW_LEAVES, 6);
 
     protected static final WorldGenMidnightPlant GRASS_GENERATOR = new WorldGenMidnightPlant(
             ModBlocks.TALL_MIDNIGHT_GRASS.getDefaultState(),

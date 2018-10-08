@@ -20,7 +20,7 @@ public class BiomeVigilantForest extends BiomeBase {
 
     @Override
     public WorldGenAbstractTree getRandomTreeFeature(Random rand) {
-        return SHADOWROOT_TREE_GEN;
+        return rand.nextBoolean() ? SHADOWROOT_TREE_GEN : DARK_WILLOW_TREE_GEN;
     }
 
     @Override
