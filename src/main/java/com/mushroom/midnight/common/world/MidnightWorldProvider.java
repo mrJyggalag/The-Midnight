@@ -50,11 +50,6 @@ public class MidnightWorldProvider extends WorldProvider {
     }
 
     @Override
-    public boolean shouldClientCheckLighting() {
-        return false;
-    }
-
-    @Override
     public boolean shouldMapSpin(String entity, double x, double z, double rotation) {
         return true;
     }

@@ -106,7 +106,7 @@ public class MidnightChunkGenerator implements IChunkGenerator {
             chunkBiomes[i] = (byte) Biome.getIdForBiome(this.biomeBuffer[i]);
         }
 
-        chunk.generateSkylightMap();
+        chunk.resetRelightChecks();
 
         return chunk;
     }

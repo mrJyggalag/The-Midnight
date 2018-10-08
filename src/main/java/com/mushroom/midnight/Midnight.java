@@ -4,7 +4,9 @@ import com.mushroom.midnight.common.CommonProxy;
 import com.mushroom.midnight.common.capability.RiftCooldownCapability;
 import com.mushroom.midnight.common.capability.VoidStorage;
 import com.mushroom.midnight.common.registry.ModBiomes;
+import com.mushroom.midnight.common.registry.ModBlocks;
 import com.mushroom.midnight.common.registry.ModDimensions;
+import com.mushroom.midnight.common.registry.ModItems;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -55,6 +57,8 @@ public class Midnight {
     @Mod.EventHandler
     public void init(FMLInitializationEvent event) {
         ModBiomes.onInit();
+        ModItems.onInit();
+        ModBlocks.onInit();
 
         proxy.onInit();
     }

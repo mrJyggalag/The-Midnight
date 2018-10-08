@@ -45,6 +45,16 @@ tile.midnight.double_midnight_grass.name=Double Midnight Grass
 tile.midnight.lumen_bud.name=Lumen Bud
 tile.midnight.double_lumen_bud.name=Double Lumen Bud
 
+tile.midnight.shadowroot_trapdoor.name=Shadowroot Trapdoor
+tile.midnight.dark_willow_trapdoor.name=Dark Willow Trapdoor
+tile.midnight.dead_wood_trapdoor.name=Dead Wood Trapdoor
+
+# Items
+
+item.midnight.shadowroot_door.name=Shadowroot Door
+item.midnight.dark_willow_door.name=Dark Willow Door
+item.midnight.dead_wood_door.name=Dead Wood Door
+
 # Entities
 
 entity.midnight.rift.name=Midnight Rift
