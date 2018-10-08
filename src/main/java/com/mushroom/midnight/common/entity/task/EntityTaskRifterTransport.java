@@ -49,7 +49,6 @@ public class EntityTaskRifterTransport extends EntityAIBase {
     public void updateTask() {
         Path targetPath = this.computeFollowPath();
         if (targetPath == null) {
-            // TODO: Do something so we don't just pick them up again
             this.owner.setCapturedEntity(null);
             return;
         }

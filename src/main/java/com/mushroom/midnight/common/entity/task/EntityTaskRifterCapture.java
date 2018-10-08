@@ -24,12 +24,12 @@ public class EntityTaskRifterCapture extends EntityTaskRifterFollow {
 
     @Override
     protected boolean canInteract(EntityLivingBase target) {
-        return super.canInteract(target) && this.owner.pickUpCooldown <= 0;
+        return super.canInteract(target) && this.owner.captureCooldown <= 0;
     }
 
     @Override
     protected void handleInteract(EntityLivingBase target) {
-        this.owner.pickUpCooldown = EntityRifter.PICK_UP_COOLDOWN;
+        this.owner.captureCooldown = EntityRifter.CAPTURE_COOLDOWN;
         if (this.owner.attackEntityAsMob(target) && target.isEntityAlive()) {
             this.owner.setCapturedEntity(target);
         }

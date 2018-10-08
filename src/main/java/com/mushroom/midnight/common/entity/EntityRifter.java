@@ -31,14 +31,14 @@ import java.util.Comparator;
 import java.util.List;
 
 public class EntityRifter extends EntityMob implements IRiftTraveler, IEntityAdditionalSpawnData {
-    public static final int PICK_UP_COOLDOWN = 20;
+    public static final int CAPTURE_COOLDOWN = 15;
 
     private static final double RIFT_SEARCH_RADIUS = 48.0;
 
     private final EntityReference<EntityRift> homeRift;
     private final DragSolver dragSolver;
 
-    public int pickUpCooldown;
+    public int captureCooldown;
 
     private EntityLivingBase capturedEntity;
 
@@ -85,8 +85,8 @@ public class EntityRifter extends EntityMob implements IRiftTraveler, IEntityAdd
                 this.setCapturedEntity(null);
             }
 
-            if (this.pickUpCooldown > 0) {
-                this.pickUpCooldown--;
+            if (this.captureCooldown > 0) {
+                this.captureCooldown--;
             }
 
             if (this.world.provider.getDimensionType() == DimensionType.OVERWORLD) {
@@ -142,6 +142,8 @@ public class EntityRifter extends EntityMob implements IRiftTraveler, IEntityAdd
     }
 
     public void setCapturedEntity(EntityLivingBase capturedEntity) {
+        this.captureCooldown = CAPTURE_COOLDOWN;
+
         if (this.capturedEntity != null) {
             RifterCapturedCapability capability = this.capturedEntity.getCapability(Midnight.rifterCapturedCap, null);
             if (capability != null) {
