@@ -1,8 +1,12 @@
 package com.mushroom.midnight.common.biome;
 
-import com.mushroom.midnight.common.world.decorator.VigilantDecorator;
 import com.mushroom.midnight.common.world.generator.WorldGenShadowrootTrees;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.ChunkPos;
+import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenAbstractTree;
+import net.minecraftforge.event.terraingen.DecorateBiomeEvent;
+import net.minecraftforge.event.terraingen.TerrainGen;
 
 import java.util.Random;
 
@@ -13,10 +17,8 @@ public class BiomeVigilantForest extends BiomeBase {
     public BiomeVigilantForest(BiomeProperties properties) {
         super(properties);
 
-        this.decorator = new VigilantDecorator();
-
         this.decorator.treesPerChunk = 8;
-        this.decorator.grassPerChunk = 10;
+        this.decorator.grassPerChunk = 2;
         this.decorator.deadBushPerChunk = 0;
         this.decorator.reedsPerChunk = 0;
         this.decorator.cactiPerChunk = 0;
@@ -28,26 +30,14 @@ public class BiomeVigilantForest extends BiomeBase {
         return SHADOWROOT_TREE_GEN;
     }
 
-    //  @Override
-    //  public void genBiomeTerrain(World worldIn, Random rand, ChunkPrimer chunkPrimerIn, int x, int z, double noiseVal) {
-    //    super.genBiomeTerrain(worldIn, rand, chunkPrimerIn, x, z, noiseVal);
-    //    int xRand = rand.nextInt(32) - 16;
-    //    int zRand = rand.nextInt(32) - 16;
-    //
-    //    for (int height = 255; height >= 0; --height) {
-    //      IBlockState iblockstate2 = chunkPrimerIn.getBlockState(x +xRand, height, z + zRand);
-    //      if(iblockstate2.getBlock() == ModBlocks.MIDNIGHT_GRASS){
-    //        int randomChance = rand.nextInt(50);
-    //        if(randomChance == 0){
-    //          BlockPos pos = new BlockPos(x +xRand, height + 1, z + zRand);
-    //          chunkPrimerIn.setBlockState(pos.getX(), pos.getY(), pos.getZ(), Blocks.LIT_PUMPKIN.getDefaultState());
-    //        }
-    //        if(randomChance == 1){
-    //          BlockPos pos = new BlockPos(x +xRand, height + 1, z + zRand);
-    //          chunkPrimerIn.setBlockState(pos.getX(), pos.getY(), pos.getZ(), Blocks.PUMPKIN.getDefaultState());
-    //        }
-    //      }
-    //    }
-    //
-    //  }
+    @Override
+    public void decorate(World world, Random rand, BlockPos pos) {
+        ChunkPos chunkPos = new ChunkPos(pos);
+        if (TerrainGen.decorate(world, rand, chunkPos, DecorateBiomeEvent.Decorate.EventType.FLOWERS)) {
+            this.generateCoverPlant(world, rand, pos, 1, LUMEN_GENERATOR);
+            this.generateCoverPlant(world, rand, pos, 1, DOUBLE_LUMEN_GENERATOR);
+        }
+
+        super.decorate(world, rand, pos);
+    }
 }

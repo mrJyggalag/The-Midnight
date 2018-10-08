@@ -1,20 +1,49 @@
 package com.mushroom.midnight.common.biome;
 
 import com.mushroom.midnight.common.registry.ModBlocks;
-import com.mushroom.midnight.common.world.generator.WorldGenMidnightGrass;
+import com.mushroom.midnight.common.world.generator.WorldGenDoubleMidnightPlant;
+import com.mushroom.midnight.common.world.generator.WorldGenMidnightPlant;
+import net.minecraft.block.BlockBush;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.chunk.ChunkPrimer;
 import net.minecraft.world.gen.feature.WorldGenerator;
+import net.minecraftforge.event.terraingen.DecorateBiomeEvent;
+import net.minecraftforge.event.terraingen.TerrainGen;
 
 import java.util.Random;
 
 public class BiomeBase extends Biome implements IMidnightBiome {
 
     protected static final IBlockState NIGHT_STONE = ModBlocks.NIGHTSTONE.getDefaultState();
+
+    protected static final WorldGenMidnightPlant GRASS_GENERATOR = new WorldGenMidnightPlant(
+            ModBlocks.TALL_MIDNIGHT_GRASS.getDefaultState(),
+            ((BlockBush) ModBlocks.TALL_MIDNIGHT_GRASS)::canBlockStay,
+            128
+    );
+
+    protected static final WorldGenDoubleMidnightPlant DOUBLE_GRASS_GENERATOR = new WorldGenDoubleMidnightPlant(
+            ModBlocks.DOUBLE_MIDNIGHT_GRASS.getDefaultState(),
+            (world, pos, state) -> ModBlocks.DOUBLE_MIDNIGHT_GRASS.canPlaceBlockAt(world, pos),
+            64
+    );
+
+    protected static final WorldGenMidnightPlant LUMEN_GENERATOR = new WorldGenMidnightPlant(
+            ModBlocks.LUMEN_BUD.getDefaultState(),
+            ((BlockBush) ModBlocks.LUMEN_BUD)::canBlockStay,
+            12
+    );
+
+    protected static final WorldGenDoubleMidnightPlant DOUBLE_LUMEN_GENERATOR = new WorldGenDoubleMidnightPlant(
+            ModBlocks.DOUBLE_LUMEN_BUD.getDefaultState(),
+            (world, pos, state) -> ModBlocks.DOUBLE_LUMEN_BUD.canPlaceBlockAt(world, pos),
+            8
+    );
 
     protected int grassColor = 0xBF8ECC;
     protected int foliageColor = 0x8F6DBC;
@@ -95,6 +124,28 @@ public class BiomeBase extends Biome implements IMidnightBiome {
     }
 
     @Override
+    public void decorate(World world, Random rand, BlockPos pos) {
+        ChunkPos chunkPos = new ChunkPos(pos);
+        if (TerrainGen.decorate(world, rand, chunkPos, DecorateBiomeEvent.Decorate.EventType.GRASS)) {
+            this.generateCoverPlant(world, rand, pos, 1, DOUBLE_GRASS_GENERATOR);
+        }
+
+        super.decorate(world, rand, pos);
+    }
+
+    protected void generateCoverPlant(World world, Random rand, BlockPos pos, int count, WorldGenerator generator) {
+        for (int i = 0; i < count; ++i) {
+            int offsetX = rand.nextInt(16) + 8;
+            int offsetZ = rand.nextInt(16) + 8;
+            int maxY = world.getHeight(pos.add(offsetX, 0, offsetZ)).getY() + 32;
+            if (maxY > 0) {
+                int offsetY = rand.nextInt(maxY);
+                generator.generate(world, rand, pos.add(offsetX, offsetY, offsetZ));
+            }
+        }
+    }
+
+    @Override
     public int getGrassColorAtPos(BlockPos pos) {
         return this.getModdedBiomeGrassColor(this.grassColor);
     }
@@ -106,6 +157,6 @@ public class BiomeBase extends Biome implements IMidnightBiome {
 
     @Override
     public WorldGenerator getRandomWorldGenForGrass(Random rand) {
-        return new WorldGenMidnightGrass();
+        return GRASS_GENERATOR;
     }
 }
