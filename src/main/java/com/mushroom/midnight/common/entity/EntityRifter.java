@@ -5,6 +5,7 @@ import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.common.capability.RifterCapturedCapability;
 import com.mushroom.midnight.common.entity.task.EntityTaskRifterCapture;
 import com.mushroom.midnight.common.entity.task.EntityTaskRifterMelee;
+import com.mushroom.midnight.common.entity.task.EntityTaskRifterReturn;
 import com.mushroom.midnight.common.entity.task.EntityTaskRifterTransport;
 import com.mushroom.midnight.common.network.MessageCaptureEntity;
 import com.mushroom.midnight.common.registry.ModDimensions;
@@ -53,6 +54,8 @@ public class EntityRifter extends EntityMob implements IRiftTraveler, IEntityAdd
         super.initEntityAI();
 
         this.tasks.addTask(0, new EntityAISwimming(this));
+        this.tasks.addTask(0, new EntityTaskRifterReturn(this, 1.5));
+
         this.tasks.addTask(1, new EntityTaskRifterTransport(this, 1.0));
         this.tasks.addTask(2, new EntityTaskRifterCapture(this, 1.0));
         this.tasks.addTask(3, new EntityTaskRifterMelee(this, 1.0));

@@ -351,6 +351,13 @@ public class EntityRift extends Entity implements IEntityAdditionalSpawnData {
         return this.dataManager.get(USED);
     }
 
+    public int getTimeUntilClose() {
+        if (this.isUnstable()) {
+            return 0;
+        }
+        return Math.max(LIFETIME - this.ticksExisted, 0);
+    }
+
     public RiftGeometry getGeometry() {
         return this.geometry;
     }
