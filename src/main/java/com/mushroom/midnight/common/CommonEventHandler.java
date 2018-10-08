@@ -2,6 +2,7 @@ package com.mushroom.midnight.common;
 
 import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.common.capability.RiftCooldownCapability;
+import com.mushroom.midnight.common.capability.RifterCapturedCapability;
 import com.mushroom.midnight.common.world.RiftSpawnHandler;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -16,7 +17,10 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 public class CommonEventHandler {
     @SubscribeEvent
     public static void onAttachEntityCapabilities(AttachCapabilitiesEvent<Entity> event) {
-        event.addCapability(new ResourceLocation(Midnight.MODID, "rift_cooldown"), new RiftCooldownCapability.Impl());
+        event.addCapability(new ResourceLocation(Midnight.MODID, "rift_cooldown"), new RiftCooldownCapability());
+        if (event.getObject() instanceof EntityLivingBase) {
+            event.addCapability(new ResourceLocation(Midnight.MODID, "rifter_captured"), new RifterCapturedCapability());
+        }
     }
 
     @SubscribeEvent

@@ -24,6 +24,9 @@ public class MidnightClassTransformer implements IClassTransformer, Opcodes {
     private static final String SOURCE_LWJGL_NAME = "paulscode/sound/libraries/SourceLWJGLOpenAL";
     private static final String CHANNEL_LWJGL_NAME = "paulscode/sound/libraries/ChannelLWJGLOpenAL";
 
+    private static final String GL_STATE_MANAGER_NAME = "net/minecraft/client/renderer/GlStateManager";
+    private static final String ENTITY_LIVING_BASE_NAME = "net/minecraft/entity/EntityLivingBase";
+
     private static final Logger LOGGER = LogManager.getLogger(MidnightClassTransformer.class);
 
     @Override
@@ -33,6 +36,8 @@ public class MidnightClassTransformer implements IClassTransformer, Opcodes {
         }
         if (name.equals("paulscode.sound.libraries.SourceLWJGLOpenAL")) {
             return this.applyTransform(data, this::transformSoundSource);
+        } else if (name.equals("net.minecraft.client.renderer.entity.RenderLivingBase")) {
+            return this.applyTransform(data, this::transformRenderLivingBase);
         }
         return data;
     }
@@ -40,7 +45,7 @@ public class MidnightClassTransformer implements IClassTransformer, Opcodes {
     private boolean transformSoundSource(ClassNode node) {
         for (MethodNode method : node.methods) {
             if (method.name.equals("play")) {
-                this.insertBefore(method.instructions, this.invoke(SOURCE_LWJGL_NAME, "checkPitch"), () -> {
+                this.insertBefore(method.instructions, this.invoke(SOURCE_LWJGL_NAME, "checkPitch"::equals), () -> {
                     InsnList instructions = new InsnList();
                     instructions.add(new VarInsnNode(ALOAD, 0));
                     instructions.add(new FieldInsnNode(GETFIELD, SOURCE_LWJGL_NAME, "channelOpenAL", "L" + CHANNEL_LWJGL_NAME + ";"));
@@ -48,6 +53,21 @@ public class MidnightClassTransformer implements IClassTransformer, Opcodes {
                     instructions.add(new InsnNode(ICONST_0));
                     instructions.add(new MethodInsnNode(INVOKEVIRTUAL, "java/nio/IntBuffer", "get", "(I)I", false));
                     instructions.add(new MethodInsnNode(INVOKESTATIC, "com/mushroom/midnight/client/SoundReverbHandler", "onPlaySound", "(I)V", false));
+                    return instructions;
+                });
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean transformRenderLivingBase(ClassNode node) {
+        for (MethodNode method : node.methods) {
+            if (method.name.equals("applyRotations") || method.name.equals("func_77043_a")) {
+                this.insertAfter(method.instructions, this.invoke(GL_STATE_MANAGER_NAME, n -> n.equals("rotate") || n.equals("func_179114_b")), () -> {
+                    InsnList instructions = new InsnList();
+                    instructions.add(new VarInsnNode(ALOAD, 1));
+                    instructions.add(new MethodInsnNode(INVOKESTATIC, "com/mushroom/midnight/client/ClientEventHandler", "onApplyRotations", "(L" + ENTITY_LIVING_BASE_NAME + ";)V", false));
                     return instructions;
                 });
                 return true;
@@ -81,6 +101,16 @@ public class MidnightClassTransformer implements IClassTransformer, Opcodes {
         }
     }
 
+    private void insertAfter(InsnList instructions, Predicate<AbstractInsnNode> predicate, Supplier<InsnList> insert) {
+        AbstractInsnNode node = this.selectNode(instructions, predicate);
+        if (node != null) {
+            instructions.insert(node, insert.get());
+        } else {
+            StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
+            LOGGER.warn("Failed to find location to insert for {}", stackTrace[1].getMethodName());
+        }
+    }
+
     @Nullable
     private AbstractInsnNode selectNode(InsnList instructions, Predicate<AbstractInsnNode> predicate) {
         ListIterator<AbstractInsnNode> iterator = instructions.iterator();
@@ -93,7 +123,7 @@ public class MidnightClassTransformer implements IClassTransformer, Opcodes {
         return null;
     }
 
-    private Predicate<AbstractInsnNode> invoke(String owner, String name) {
-        return n -> n instanceof MethodInsnNode && ((MethodInsnNode) n).owner.equals(owner) && ((MethodInsnNode) n).name.equals(name);
+    private Predicate<AbstractInsnNode> invoke(String owner, Predicate<String> name) {
+        return n -> n instanceof MethodInsnNode && ((MethodInsnNode) n).owner.equals(owner) && name.test(((MethodInsnNode) n).name);
     }
 }

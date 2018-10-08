@@ -3,19 +3,21 @@ package com.mushroom.midnight.client;
 import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.client.particle.MidnightParticles;
 import com.mushroom.midnight.client.sound.LoopingMidnightSound;
+import com.mushroom.midnight.common.capability.RifterCapturedCapability;
 import com.mushroom.midnight.common.entity.EntityRift;
 import com.mushroom.midnight.common.registry.ModDimensions;
 import com.mushroom.midnight.common.registry.ModSounds;
+import com.mushroom.midnight.common.util.EntityUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.ISound;
 import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraft.client.audio.SoundHandler;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraftforge.client.event.EntityViewRenderEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -71,8 +73,7 @@ public class ClientEventHandler {
         }
 
         if (worldTime - lastAmbientSoundTime > 120 && rand.nextInt(100) == 0) {
-            SoundEvent[] ambientSounds = new SoundEvent[] { ModSounds.MIDNIGHT_AMBIENT };
-            ResourceLocation ambientSound = ambientSounds[rand.nextInt(ambientSounds.length)].getSoundName();
+            ResourceLocation ambientSound = ModSounds.MIDNIGHT_AMBIENT.getSoundName();
 
             float volume = rand.nextFloat() * 0.4F + 0.8F;
             float pitch = rand.nextFloat() * 0.6F + 0.7F;
@@ -111,6 +112,25 @@ public class ClientEventHandler {
             double velocityY = (random.nextDouble() - 0.5) * 0.04;
             double velocityZ = (random.nextDouble() - 0.5) * 0.04;
             MidnightParticles.SPORE.spawn(player.world, particleX, particleY, particleZ, velocityX, velocityY, velocityZ);
+        }
+    }
+
+    public static void onApplyRotations(EntityLivingBase entity) {
+        boolean captured = RifterCapturedCapability.isCaptured(entity);
+        if (captured) {
+            entity.limbSwing = 0.0F;
+            entity.limbSwingAmount = entity.prevLimbSwingAmount = 0.0F;
+
+            EntityUtil.Stance stance = EntityUtil.getStance(entity);
+            if (stance == EntityUtil.Stance.QUADRUPEDAL) {
+                GlStateManager.translate(0.0F, entity.height, 0.0F);
+                GlStateManager.rotate(180.0F, 0.0F, 1.0F, 0.0F);
+                GlStateManager.rotate(180.0F, 1.0F, 0.0F, 0.0F);
+            } else {
+                GlStateManager.translate(0.0F, entity.width / 2.0F, 0.0F);
+                GlStateManager.translate(0.0F, 0.0F, entity.height / 2.0F);
+                GlStateManager.rotate(-90.0F, 1.0F, 0.0F, 0.0F);
+            }
         }
     }
 }

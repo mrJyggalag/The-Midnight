@@ -2,6 +2,7 @@ package com.mushroom.midnight.common.registry;
 
 import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.common.entity.EntityRift;
+import com.mushroom.midnight.common.entity.EntityRifter;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -22,6 +23,14 @@ public class ModEntities {
                         .id(new ResourceLocation(Midnight.MODID, "rift"), currentEntityId++)
                         .name(Midnight.MODID + ".rift")
                         .tracker(1024, 20, false)
+                        .build(),
+                EntityEntryBuilder.create()
+                        .entity(EntityRifter.class)
+                        .factory(EntityRifter::new)
+                        .id(new ResourceLocation(Midnight.MODID, "rifter"), currentEntityId++)
+                        .name(Midnight.MODID + ".rifter")
+                        .tracker(80, 3, true)
+                        .egg(0, 0) // TODO: Egg color
                         .build()
         );
     }
