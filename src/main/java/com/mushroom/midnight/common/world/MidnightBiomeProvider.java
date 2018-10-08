@@ -1,6 +1,7 @@
 package com.mushroom.midnight.common.world;
 
 import com.mushroom.midnight.common.registry.ModBiomes;
+import com.mushroom.midnight.common.world.layer.CraterEdgeLayer;
 import com.mushroom.midnight.common.world.layer.MidnightSeedLayer;
 import com.mushroom.midnight.common.world.layer.OutlineProducerLayer;
 import com.mushroom.midnight.common.world.layer.ReplaceRandomLayer;
@@ -40,10 +41,13 @@ public class MidnightBiomeProvider extends BiomeProvider {
         layer = new GenLayerVoronoiZoom(1000, layer);
         layer = new ReplaceRandomLayer(2000, 5, Biome.getIdForBiome(ModBiomes.OBSCURED_PEAKS), layer);
         layer = new ReplaceRandomLayer(3000, 20, Biome.getIdForBiome(ModBiomes.WARPED_FIELDS), layer);
-        layer = new GenLayerFuzzyZoom(4000, layer);
-        layer = new RidgeMergeLayer(5000, layer, ridgeLayer);
+        layer = new ReplaceRandomLayer(4000, 20, Biome.getIdForBiome(ModBiomes.MOLTEN_CRATER), layer);
+        layer = new GenLayerFuzzyZoom(5000, layer);
+        layer = new RidgeMergeLayer(6000, layer, ridgeLayer);
 
-        layer = GenLayerZoom.magnify(6000, layer, 3);
+        layer = GenLayerZoom.magnify(7000, layer, 2);
+        layer = new CraterEdgeLayer(8000, layer);
+        layer = GenLayerZoom.magnify(9000, layer, 1);
 
         return layer;
     }

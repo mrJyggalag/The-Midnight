@@ -82,9 +82,9 @@ public class BiomeBase extends Biome implements IMidnightBiome {
         this.genBiomeTerrain(world, rand, primer, x, z, noiseVal);
     }
 
-    public void genBiomeTerrain(World worldIn, Random rand, ChunkPrimer primer, int z, int x, double noiseVal) {
-        int seaLevel = worldIn.getSeaLevel();
-        IBlockState topBlock = this.topBlock;
+    public void genBiomeTerrain(World world, Random rand, ChunkPrimer primer, int z, int x, double noiseVal) {
+        int seaLevel = world.getSeaLevel();
+        IBlockState topBlock = this.chooseTopBlock(rand);
         IBlockState fillerBlock = this.fillerBlock;
 
         int currentDepth = -1;
@@ -109,21 +109,9 @@ public class BiomeBase extends Biome implements IMidnightBiome {
                             fillerBlock = this.fillerBlock;
                         }
 
-                        if (height < seaLevel && (topBlock == null || topBlock.getMaterial() == Material.AIR)) {
-                            topBlock = WATER;
-                        }
-
                         currentDepth = fillerDepth;
 
-                        if (height >= seaLevel - 1) {
-                            primer.setBlockState(localX, height, localZ, topBlock);
-                        } else if (height < seaLevel - 7 - fillerDepth) {
-                            topBlock = AIR;
-                            fillerBlock = NIGHT_STONE;
-                            primer.setBlockState(localX, height, localZ, GRAVEL);
-                        } else {
-                            primer.setBlockState(localX, height, localZ, fillerBlock);
-                        }
+                        primer.setBlockState(localX, height, localZ, topBlock);
                     } else if (currentDepth > 0) {
                         --currentDepth;
                         primer.setBlockState(localX, height, localZ, fillerBlock);
@@ -131,6 +119,10 @@ public class BiomeBase extends Biome implements IMidnightBiome {
                 }
             }
         }
+    }
+
+    protected IBlockState chooseTopBlock(Random random) {
+        return this.topBlock;
     }
 
     @Override

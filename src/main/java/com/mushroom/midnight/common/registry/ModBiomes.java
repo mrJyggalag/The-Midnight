@@ -4,7 +4,8 @@ import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.common.biome.BiomeBlackRidge;
 import com.mushroom.midnight.common.biome.BiomeDeceitfulBog;
 import com.mushroom.midnight.common.biome.BiomeFungiForest;
-import com.mushroom.midnight.common.biome.BiomeMoltenCraters;
+import com.mushroom.midnight.common.biome.BiomeMoltenCrater;
+import com.mushroom.midnight.common.biome.BiomeMoltenCraterEdge;
 import com.mushroom.midnight.common.biome.BiomeObscuredPeaks;
 import com.mushroom.midnight.common.biome.BiomeVigilantForest;
 import com.mushroom.midnight.common.biome.BiomeWarpedFields;
@@ -27,7 +28,8 @@ public class ModBiomes {
     public static final Biome VIGILANT_FOREST = Biomes.DEFAULT;
     public static final Biome DECEITFUL_BOG = Biomes.DEFAULT;
     public static final Biome FUNGI_FOREST = Biomes.DEFAULT;
-    public static final Biome MOLTEN_CRATERS = Biomes.DEFAULT;
+    public static final Biome MOLTEN_CRATER = Biomes.DEFAULT;
+    public static final Biome MOLTEN_CRATER_EDGE = Biomes.DEFAULT;
     public static final Biome OBSCURED_PEAKS = Biomes.DEFAULT;
     public static final Biome WARPED_FIELDS = Biomes.DEFAULT;
 
@@ -38,7 +40,7 @@ public class ModBiomes {
         event.getRegistry().registerAll(
                 RegUtil.applyName(new BiomeVigilantForest(
                         new Biome.BiomeProperties("vigilant_forest")
-                                .setBaseHeight(0.125F)
+                                .setBaseHeight(0.155F)
                                 .setHeightVariation(0.07F)
                 )),
                 RegUtil.applyName(new BiomeBlackRidge(
@@ -48,18 +50,23 @@ public class ModBiomes {
                 )),
                 RegUtil.applyName(new BiomeDeceitfulBog(
                         new Biome.BiomeProperties("deceitful_bog")
-                                .setBaseHeight(0.05F)
+                                .setBaseHeight(0.125F)
                                 .setHeightVariation(0.03F)
                 )),
                 RegUtil.applyName(new BiomeFungiForest(
                         new Biome.BiomeProperties("fungi_forest")
-                                .setBaseHeight(0.145F)
+                                .setBaseHeight(0.175F)
                                 .setHeightVariation(0.07F)
                 )),
-                RegUtil.applyName(new BiomeMoltenCraters(
-                        new Biome.BiomeProperties("molten_craters")
-                                .setBaseHeight(0.1F)
-                                .setHeightVariation(0.1F)
+                RegUtil.applyName(new BiomeMoltenCrater(
+                        new Biome.BiomeProperties("molten_crater")
+                                .setBaseHeight(-1.7F)
+                                .setHeightVariation(0.0F)
+                )),
+                RegUtil.applyName(new BiomeMoltenCraterEdge(
+                        new Biome.BiomeProperties("molten_crater_edge")
+                                .setBaseHeight(-0.2F)
+                                .setHeightVariation(0.05F)
                 )),
                 RegUtil.applyName(new BiomeObscuredPeaks(
                         new Biome.BiomeProperties("obscured_peaks")
@@ -75,7 +82,7 @@ public class ModBiomes {
     }
 
     public static void onInit() {
-        addSeedBiomes(VIGILANT_FOREST, DECEITFUL_BOG, FUNGI_FOREST, MOLTEN_CRATERS);
+        addSeedBiomes(VIGILANT_FOREST, DECEITFUL_BOG, FUNGI_FOREST);
     }
 
     public static void addSeedBiomes(Biome... biomes) {
