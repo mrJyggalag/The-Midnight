@@ -15,7 +15,7 @@ import javax.annotation.Nullable;
 import java.util.Optional;
 
 public class EntityTaskRifterReturn extends EntityAIBase {
-    protected static final int RETURN_EARLY_TIME = 200;
+    protected static final int RETURN_EARLY_TIME = 80;
     protected static final int INVALIDATE_TIME = 20;
 
     protected final EntityRifter owner;

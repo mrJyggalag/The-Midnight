@@ -7,8 +7,11 @@ import com.mushroom.midnight.common.entity.task.EntityTaskRifterCapture;
 import com.mushroom.midnight.common.entity.task.EntityTaskRifterMelee;
 import com.mushroom.midnight.common.entity.task.EntityTaskRifterReturn;
 import com.mushroom.midnight.common.entity.task.EntityTaskRifterTransport;
+import com.mushroom.midnight.common.event.RifterCaptureEvent;
+import com.mushroom.midnight.common.event.RifterReleaseEvent;
 import com.mushroom.midnight.common.network.MessageCaptureEntity;
 import com.mushroom.midnight.common.registry.ModDimensions;
+import com.mushroom.midnight.common.registry.ModEffects;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -20,10 +23,12 @@ import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.world.DimensionType;
 import net.minecraft.world.World;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
 
 import java.util.Collection;
@@ -77,6 +82,8 @@ public class EntityRifter extends EntityMob implements IRiftTraveler, IEntityAdd
         this.getEntityAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(64.0);
         this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.2);
         this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(3.0);
+        this.getEntityAttribute(SharedMonsterAttributes.ARMOR).setBaseValue(4.0);
+        this.getEntityAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE).setBaseValue(1.0);
     }
 
     @Override
@@ -94,6 +101,9 @@ public class EntityRifter extends EntityMob implements IRiftTraveler, IEntityAdd
 
             if (this.world.provider.getDimensionType() == DimensionType.OVERWORLD) {
                 this.updateHomeRift();
+                if (this.ticksExisted % 20 == 0 && !this.homeRift.isPresent()) {
+                    this.attackEntityFrom(DamageSource.OUT_OF_WORLD, 2.0F);
+                }
             }
         }
 
@@ -147,26 +157,43 @@ public class EntityRifter extends EntityMob implements IRiftTraveler, IEntityAdd
     public void setCapturedEntity(EntityLivingBase capturedEntity) {
         this.captureCooldown = CAPTURE_COOLDOWN;
 
+        if (MinecraftForge.EVENT_BUS.post(new RifterReleaseEvent(this, this.capturedEntity))) {
+            return;
+        }
+
         if (this.capturedEntity != null) {
-            RifterCapturedCapability capability = this.capturedEntity.getCapability(Midnight.rifterCapturedCap, null);
-            if (capability != null) {
-                capability.setCaptured(false);
-            }
+            this.resetCapturedEntity(this.capturedEntity);
+        }
+
+        if (MinecraftForge.EVENT_BUS.post(new RifterCaptureEvent(this, capturedEntity))) {
+            return;
         }
 
         this.capturedEntity = capturedEntity;
         this.dragSolver.setDragged(capturedEntity);
 
         if (capturedEntity != null) {
-            RifterCapturedCapability capability = capturedEntity.getCapability(Midnight.rifterCapturedCap, null);
-            if (capability != null) {
-                capability.setCaptured(true);
-            }
+            this.initCapturedEntity(capturedEntity);
         }
 
         if (!this.world.isRemote) {
             MessageCaptureEntity message = new MessageCaptureEntity(this, capturedEntity);
             Midnight.NETWORK.sendToAllTracking(message, this);
+        }
+    }
+
+    private void initCapturedEntity(EntityLivingBase capturedEntity) {
+        RifterCapturedCapability capability = capturedEntity.getCapability(Midnight.rifterCapturedCap, null);
+        if (capability != null) {
+            capability.setCaptured(true);
+        }
+        capturedEntity.addPotionEffect(new PotionEffect(ModEffects.STUNNED, 60, 1, false, false));
+    }
+
+    private void resetCapturedEntity(EntityLivingBase capturedEntity) {
+        RifterCapturedCapability capability = capturedEntity.getCapability(Midnight.rifterCapturedCap, null);
+        if (capability != null) {
+            capability.setCaptured(false);
         }
     }
 

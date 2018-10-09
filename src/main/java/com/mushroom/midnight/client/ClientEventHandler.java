@@ -6,6 +6,7 @@ import com.mushroom.midnight.client.sound.LoopingMidnightSound;
 import com.mushroom.midnight.common.capability.RifterCapturedCapability;
 import com.mushroom.midnight.common.entity.EntityRift;
 import com.mushroom.midnight.common.registry.ModDimensions;
+import com.mushroom.midnight.common.registry.ModEffects;
 import com.mushroom.midnight.common.registry.ModSounds;
 import com.mushroom.midnight.common.util.EntityUtil;
 import net.minecraft.client.Minecraft;
@@ -13,6 +14,7 @@ import net.minecraft.client.audio.ISound;
 import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraft.client.audio.SoundHandler;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.settings.GameSettings;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -34,6 +36,11 @@ public class ClientEventHandler {
 
     private static final ISound RUMBLE_SOUND = new LoopingMidnightSound(ModSounds.MIDNIGHT_RUMBLE, 1.0F);
 
+    private static final float HOOK_SENSITIVITY = 0.2F;
+
+    private static boolean sensitivityHooked;
+    private static float lastSensitivity;
+
     private static long lastAmbientSoundTime;
 
     @SubscribeEvent
@@ -48,6 +55,18 @@ public class ClientEventHandler {
                 playAmbientSounds(player);
             } else {
                 pullSelfPlayer(player);
+            }
+
+            GameSettings settings = MC.gameSettings;
+            if (player.isPotionActive(ModEffects.STUNNED)) {
+                if (!sensitivityHooked || settings.mouseSensitivity != HOOK_SENSITIVITY) {
+                    lastSensitivity = settings.mouseSensitivity;
+                }
+                settings.mouseSensitivity = HOOK_SENSITIVITY;
+                sensitivityHooked = true;
+            } else if (sensitivityHooked) {
+                settings.mouseSensitivity = lastSensitivity;
+                sensitivityHooked = false;
             }
         }
     }
@@ -96,6 +115,10 @@ public class ClientEventHandler {
             GlStateManager.setFog(GlStateManager.FogMode.EXP);
             event.setCanceled(true);
             event.setDensity(0.015F);
+        } else if (entity instanceof EntityLivingBase && ((EntityLivingBase) entity).isPotionActive(ModEffects.STUNNED)) {
+            GlStateManager.setFog(GlStateManager.FogMode.EXP);
+            event.setCanceled(true);
+            event.setDensity(0.15F);
         }
     }
 
