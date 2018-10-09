@@ -32,7 +32,8 @@ public class RiftParticle extends Particle {
     public RiftParticle(RiftParticleSystem particleSystem, RiftParticleSystem.Ring ring, double x, double y, double z, float radius, float angleOffset, float verticalOffset, float rotateSpeed) {
         super(particleSystem.getEntity().world, x, y, z);
         this.setSize(0.2F, 0.2F);
-        this.setParticleTextureIndex(0);
+
+        this.setParticleTexture(MidnightParticleSprites.getSporeSprite());
 
         this.particleSystem = particleSystem;
         this.radius = radius;
@@ -48,7 +49,7 @@ public class RiftParticle extends Particle {
         this.particleGreen = shade;
         this.particleBlue = shade;
 
-        this.particleScale *= this.rand.nextFloat() * 0.6F + 2.0F;
+        this.particleScale *= (this.rand.nextFloat() * 0.6F + 2.0F) * 0.3F;
 
         this.canCollide = false;
     }
@@ -125,5 +126,10 @@ public class RiftParticle extends Particle {
         double targetY = rift.posY + rift.height / 2.0F + point.y;
         double targetZ = rift.posZ + point.z;
         return new Point3d(targetX, targetY, targetZ);
+    }
+
+    @Override
+    public int getFXLayer() {
+        return 1;
     }
 }

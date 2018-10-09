@@ -7,10 +7,10 @@ import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.world.gen.feature.WorldGenTrees;
 
-public class WorldGenShadowrootTrees extends WorldGenTrees {
+public class WorldGenMidnightTree extends WorldGenTrees {
 
-    public WorldGenShadowrootTrees() {
-        super(true, 6, ModBlocks.SHADOWROOT_LOG.getDefaultState(), ModBlocks.SHADOWROOT_LEAVES.getDefaultState(), false);
+    public WorldGenMidnightTree(Block log, Block leaves, int height) {
+        super(true, height, log.getDefaultState(), leaves.getDefaultState(), false);
     }
 
     @Override

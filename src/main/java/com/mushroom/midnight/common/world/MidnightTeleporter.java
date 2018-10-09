@@ -29,8 +29,8 @@ public class MidnightTeleporter implements ITeleporter {
 
         float angle = (float) Math.toRadians(entity.rotationYaw);
         // TODO: Find safe space to place player around rift
-        float displacementX = -MathHelper.sin(angle) * endpointRift.width;
-        float displacementZ = MathHelper.cos(angle) * endpointRift.width;
+        float displacementX = -MathHelper.sin(angle) * endpointRift.width / 2.0F;
+        float displacementZ = MathHelper.cos(angle) * endpointRift.width / 2.0F;
 
         entity.posX = endpointRift.posX + displacementX;
         entity.posY = endpointRift.posY + 0.5F;

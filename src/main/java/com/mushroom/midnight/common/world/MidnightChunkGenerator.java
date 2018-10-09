@@ -2,6 +2,7 @@ package com.mushroom.midnight.common.world;
 
 import com.mushroom.midnight.common.biome.IMidnightBiome;
 import com.mushroom.midnight.common.registry.ModBlocks;
+import com.mushroom.midnight.common.world.generator.WorldGenMidnightCaves;
 import com.mushroom.midnight.common.world.noise.OctaveNoiseSampler;
 import com.mushroom.midnight.common.world.util.BiomeWeightTable;
 import com.mushroom.midnight.common.world.util.NoiseChunkPrimer;
@@ -16,7 +17,9 @@ import net.minecraft.world.biome.BiomeProvider;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.ChunkPrimer;
 import net.minecraft.world.gen.IChunkGenerator;
+import net.minecraft.world.gen.MapGenBase;
 import net.minecraftforge.event.ForgeEventFactory;
+import net.minecraftforge.event.terraingen.InitMapGenEvent;
 import net.minecraftforge.event.terraingen.PopulateChunkEvent;
 import net.minecraftforge.event.terraingen.TerrainGen;
 
@@ -60,6 +63,8 @@ public class MidnightChunkGenerator implements IChunkGenerator {
 
     private final double[] depthBuffer = new double[256];
 
+    private final MapGenBase caveGenerator;
+
     private final NoiseChunkPrimer noisePrimer;
     private final BiomeWeightTable weightTable;
 
@@ -84,6 +89,8 @@ public class MidnightChunkGenerator implements IChunkGenerator {
 
         this.noisePrimer = new NoiseChunkPrimer(HORIZONTAL_GRANULARITY, VERTICAL_GRANULARITY, NOISE_WIDTH, NOISE_HEIGHT);
         this.weightTable = new BiomeWeightTable(BIOME_WEIGHT_RADIUS);
+
+        this.caveGenerator = TerrainGen.getModdedMapGen(new WorldGenMidnightCaves(), InitMapGenEvent.EventType.CAVE);
     }
 
     @Override
@@ -126,6 +133,8 @@ public class MidnightChunkGenerator implements IChunkGenerator {
         });
 
         this.coverSurface(primer, chunkX, chunkZ);
+
+        this.caveGenerator.generate(this.world, chunkX, chunkZ, primer);
     }
 
     protected void populateNoise(int chunkX, int chunkZ) {

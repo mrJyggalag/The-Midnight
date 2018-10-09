@@ -2,6 +2,7 @@ package com.mushroom.midnight.common.registry;
 
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
+import net.minecraft.potion.Potion;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.biome.Biome;
@@ -20,6 +21,13 @@ public class RegUtil {
         item.setRegistryName(registryName);
         item.setTranslationKey(registryName.getNamespace() + "." + registryName.getPath());
         return item;
+    }
+
+    public static <T extends Potion> T withName(T potion, String name) {
+        ResourceLocation registryName = GameData.checkPrefix(name);
+        potion.setRegistryName(registryName);
+        potion.setPotionName(registryName.getNamespace() + "." + registryName.getPath());
+        return potion;
     }
 
     public static <T extends Biome> T applyName(T biome) {
