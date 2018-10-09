@@ -97,7 +97,6 @@ public class ModBlocks {
                         .setHardness(2.0F)
                         .setResistance(5.0F),
                 RegUtil.withName(new BlockMidnightLog(), "dead_wood_log"),
-                RegUtil.withName(new BlockMidnightLeaves(), "dead_wood_leaves"),
                 RegUtil.withName(new BlockBasic(Material.WOOD), "dead_wood_planks")
                         .setSoundType(SoundType.WOOD)
                         .setHardness(2.0F)
