@@ -59,7 +59,7 @@ public class EntityRifter extends EntityMob implements IRiftTraveler, IEntityAdd
         super.initEntityAI();
 
         this.tasks.addTask(0, new EntityAISwimming(this));
-        this.tasks.addTask(0, new EntityTaskRifterReturn(this, 1.5));
+        this.tasks.addTask(0, new EntityTaskRifterReturn(this, 1.3));
 
         this.tasks.addTask(1, new EntityTaskRifterTransport(this, 1.0));
         this.tasks.addTask(2, new EntityTaskRifterCapture(this, 1.0));
@@ -207,6 +207,10 @@ public class EntityRifter extends EntityMob implements IRiftTraveler, IEntityAdd
 
     public EntityReference<EntityRift> getHomeRift() {
         return this.homeRift;
+    }
+
+    public DragSolver getDragSolver() {
+        return this.dragSolver;
     }
 
     @Override
