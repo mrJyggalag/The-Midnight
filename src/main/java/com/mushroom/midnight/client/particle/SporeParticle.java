@@ -10,14 +10,14 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class SporeParticle extends Particle {
     protected SporeParticle(World world, double x, double y, double z, double velocityX, double velocityY, double velocityZ) {
         super(world, x, y, z, velocityX, velocityY, velocityZ);
+        this.setParticleTexture(MidnightParticleSprites.getSporeSprite());
         float shade = this.rand.nextFloat() * 0.1F + 0.9F;
         this.particleRed = shade;
         this.particleGreen = shade;
         this.particleBlue = shade;
         this.particleAlpha = 0.0F;
-        this.setParticleTextureIndex(0);
         this.setSize(0.2F, 0.2F);
-        this.particleScale *= this.rand.nextFloat() * 0.6F + 1.0F;
+        this.particleScale *= (this.rand.nextFloat() * 0.6F + 1.0F) * 0.3F;
         this.motionX *= 0.1;
         this.motionY *= 0.1;
         this.motionZ *= 0.1;
@@ -57,6 +57,11 @@ public class SporeParticle extends Particle {
         int skylight = 10;
         int blocklight = 5;
         return skylight << 20 | blocklight << 4;
+    }
+
+    @Override
+    public int getFXLayer() {
+        return 1;
     }
 
     @SideOnly(Side.CLIENT)

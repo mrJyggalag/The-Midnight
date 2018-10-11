@@ -1,22 +1,55 @@
 package com.mushroom.midnight.common.biome;
 
 import com.mushroom.midnight.common.registry.ModBlocks;
-import com.mushroom.midnight.common.world.generator.WorldGenMidnightGrass;
+import com.mushroom.midnight.common.world.generator.WorldGenDoubleMidnightPlant;
+import com.mushroom.midnight.common.world.generator.WorldGenMidnightPlant;
+import com.mushroom.midnight.common.world.generator.WorldGenMidnightTree;
+import net.minecraft.block.BlockBush;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.chunk.ChunkPrimer;
+import net.minecraft.world.gen.feature.WorldGenAbstractTree;
 import net.minecraft.world.gen.feature.WorldGenerator;
+import net.minecraftforge.event.terraingen.DecorateBiomeEvent;
+import net.minecraftforge.event.terraingen.TerrainGen;
 
 import java.util.Random;
 
 public class BiomeBase extends Biome implements IMidnightBiome {
-
     protected static final IBlockState NIGHT_STONE = ModBlocks.NIGHTSTONE.getDefaultState();
 
-    protected int grassColor = 0xBF8ECC;
+    protected static final WorldGenMidnightTree SHADOWROOT_TREE_GEN = new WorldGenMidnightTree(ModBlocks.SHADOWROOT_LOG, ModBlocks.SHADOWROOT_LEAVES, 6);
+    protected static final WorldGenMidnightTree DARK_WILLOW_TREE_GEN = new WorldGenMidnightTree(ModBlocks.DARK_WILLOW_LOG, ModBlocks.DARK_WILLOW_LEAVES, 6);
+
+    protected static final WorldGenMidnightPlant GRASS_GENERATOR = new WorldGenMidnightPlant(
+            ModBlocks.TALL_MIDNIGHT_GRASS.getDefaultState(),
+            ((BlockBush) ModBlocks.TALL_MIDNIGHT_GRASS)::canBlockStay,
+            128
+    );
+
+    protected static final WorldGenDoubleMidnightPlant DOUBLE_GRASS_GENERATOR = new WorldGenDoubleMidnightPlant(
+            ModBlocks.DOUBLE_MIDNIGHT_GRASS.getDefaultState(),
+            (world, pos, state) -> ModBlocks.DOUBLE_MIDNIGHT_GRASS.canPlaceBlockAt(world, pos),
+            64
+    );
+
+    protected static final WorldGenMidnightPlant LUMEN_GENERATOR = new WorldGenMidnightPlant(
+            ModBlocks.LUMEN_BUD.getDefaultState(),
+            ((BlockBush) ModBlocks.LUMEN_BUD)::canBlockStay,
+            12
+    );
+
+    protected static final WorldGenDoubleMidnightPlant DOUBLE_LUMEN_GENERATOR = new WorldGenDoubleMidnightPlant(
+            ModBlocks.DOUBLE_LUMEN_BUD.getDefaultState(),
+            (world, pos, state) -> ModBlocks.DOUBLE_LUMEN_BUD.canPlaceBlockAt(world, pos),
+            8
+    );
+
+    protected int grassColor = 0xB084BC;
     protected int foliageColor = 0x8F6DBC;
 
     public BiomeBase(BiomeProperties properties) {
@@ -28,6 +61,13 @@ public class BiomeBase extends Biome implements IMidnightBiome {
         this.spawnableCaveCreatureList.clear();
 
         this.decorator.treesPerChunk = 0;
+        this.decorator.grassPerChunk = 0;
+        this.decorator.deadBushPerChunk = 0;
+        this.decorator.reedsPerChunk = 0;
+        this.decorator.cactiPerChunk = 0;
+        this.decorator.flowersPerChunk = 0;
+
+        this.decorator.extraTreeChance = 0.0F;
 
         this.topBlock = ModBlocks.MIDNIGHT_GRASS.getDefaultState();
         this.fillerBlock = ModBlocks.MIDNIGHT_DIRT.getDefaultState();
@@ -39,13 +79,18 @@ public class BiomeBase extends Biome implements IMidnightBiome {
     }
 
     @Override
+    public float getDensityScale() {
+        return 1.0F;
+    }
+
+    @Override
     public void genTerrainBlocks(World world, Random rand, ChunkPrimer primer, int x, int z, double noiseVal) {
         this.genBiomeTerrain(world, rand, primer, x, z, noiseVal);
     }
 
-    public void genBiomeTerrain(World worldIn, Random rand, ChunkPrimer primer, int z, int x, double noiseVal) {
-        int seaLevel = worldIn.getSeaLevel();
-        IBlockState topBlock = this.topBlock;
+    public void genBiomeTerrain(World world, Random rand, ChunkPrimer primer, int z, int x, double noiseVal) {
+        int seaLevel = world.getSeaLevel();
+        IBlockState topBlock = this.chooseTopBlock(rand);
         IBlockState fillerBlock = this.fillerBlock;
 
         int currentDepth = -1;
@@ -70,26 +115,40 @@ public class BiomeBase extends Biome implements IMidnightBiome {
                             fillerBlock = this.fillerBlock;
                         }
 
-                        if (height < seaLevel && (topBlock == null || topBlock.getMaterial() == Material.AIR)) {
-                            topBlock = WATER;
-                        }
-
                         currentDepth = fillerDepth;
 
-                        if (height >= seaLevel - 1) {
-                            primer.setBlockState(localX, height, localZ, topBlock);
-                        } else if (height < seaLevel - 7 - fillerDepth) {
-                            topBlock = AIR;
-                            fillerBlock = NIGHT_STONE;
-                            primer.setBlockState(localX, height, localZ, GRAVEL);
-                        } else {
-                            primer.setBlockState(localX, height, localZ, fillerBlock);
-                        }
+                        primer.setBlockState(localX, height, localZ, topBlock);
                     } else if (currentDepth > 0) {
                         --currentDepth;
                         primer.setBlockState(localX, height, localZ, fillerBlock);
                     }
                 }
+            }
+        }
+    }
+
+    protected IBlockState chooseTopBlock(Random random) {
+        return this.topBlock;
+    }
+
+    @Override
+    public void decorate(World world, Random rand, BlockPos pos) {
+        ChunkPos chunkPos = new ChunkPos(pos);
+        if (TerrainGen.decorate(world, rand, chunkPos, DecorateBiomeEvent.Decorate.EventType.GRASS)) {
+            this.generateCoverPlant(world, rand, pos, 1, DOUBLE_GRASS_GENERATOR);
+        }
+
+        super.decorate(world, rand, pos);
+    }
+
+    protected void generateCoverPlant(World world, Random rand, BlockPos pos, int count, WorldGenerator generator) {
+        for (int i = 0; i < count; ++i) {
+            int offsetX = rand.nextInt(16) + 8;
+            int offsetZ = rand.nextInt(16) + 8;
+            int maxY = world.getHeight(pos.add(offsetX, 0, offsetZ)).getY() + 32;
+            if (maxY > 0) {
+                int offsetY = rand.nextInt(maxY);
+                generator.generate(world, rand, pos.add(offsetX, offsetY, offsetZ));
             }
         }
     }
@@ -105,7 +164,12 @@ public class BiomeBase extends Biome implements IMidnightBiome {
     }
 
     @Override
+    public WorldGenAbstractTree getRandomTreeFeature(Random rand) {
+        return SHADOWROOT_TREE_GEN;
+    }
+
+    @Override
     public WorldGenerator getRandomWorldGenForGrass(Random rand) {
-        return new WorldGenMidnightGrass();
+        return GRASS_GENERATOR;
     }
 }
