@@ -1,12 +1,16 @@
-package com.mushroom.midnight.common.entity;
+package com.mushroom.midnight.common.entity.creature;
 
 import com.google.common.collect.Lists;
 import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.common.capability.RifterCapturedCapability;
+import com.mushroom.midnight.common.entity.EntityRift;
+import com.mushroom.midnight.common.entity.IRiftTraveler;
 import com.mushroom.midnight.common.entity.task.EntityTaskRifterCapture;
 import com.mushroom.midnight.common.entity.task.EntityTaskRifterMelee;
 import com.mushroom.midnight.common.entity.task.EntityTaskRifterReturn;
 import com.mushroom.midnight.common.entity.task.EntityTaskRifterTransport;
+import com.mushroom.midnight.common.entity.util.DragSolver;
+import com.mushroom.midnight.common.entity.util.EntityReference;
 import com.mushroom.midnight.common.event.RifterCaptureEvent;
 import com.mushroom.midnight.common.event.RifterReleaseEvent;
 import com.mushroom.midnight.common.network.MessageCaptureEntity;

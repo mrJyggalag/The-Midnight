@@ -70,7 +70,7 @@ public class RiftParticle extends Particle {
 
         // When stable, we have a return chance of MIN_RETURN_CHANCE, and by RETURN_DECAY_TIME, and chance of 1
         int gradient = (MIN_RETURN_CHANCE / RETURN_DECAY_TIME);
-        int returnChance = MathHelper.clamp(gradient * (RETURN_DECAY_TIME - rift.unstableTime), 1, MIN_RETURN_CHANCE);
+        int returnChance = MathHelper.clamp(gradient * (RETURN_DECAY_TIME - rift.getBridge().unstable.getTimer()), 1, MIN_RETURN_CHANCE);
         if (this.rand.nextInt(returnChance) == 0) {
             this.returning = true;
         }

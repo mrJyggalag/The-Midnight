@@ -1,7 +1,7 @@
 package com.mushroom.midnight.common.entity.task;
 
 import com.mushroom.midnight.common.capability.RifterCapturedCapability;
-import com.mushroom.midnight.common.entity.EntityRifter;
+import com.mushroom.midnight.common.entity.creature.EntityRifter;
 import net.minecraft.entity.EntityLivingBase;
 
 public class EntityTaskRifterMelee extends EntityTaskRifterFollow {

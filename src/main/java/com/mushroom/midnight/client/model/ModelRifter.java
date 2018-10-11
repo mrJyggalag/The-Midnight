@@ -1,6 +1,6 @@
 package com.mushroom.midnight.client.model;
 
-import com.mushroom.midnight.common.entity.EntityRifter;
+import com.mushroom.midnight.common.entity.creature.EntityRifter;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;

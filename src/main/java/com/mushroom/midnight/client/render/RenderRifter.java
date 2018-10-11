@@ -2,7 +2,7 @@ package com.mushroom.midnight.client.render;
 
 import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.client.model.ModelRifter;
-import com.mushroom.midnight.common.entity.EntityRifter;
+import com.mushroom.midnight.common.entity.creature.EntityRifter;
 import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.util.ResourceLocation;

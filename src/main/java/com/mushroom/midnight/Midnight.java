@@ -4,6 +4,9 @@ import com.mushroom.midnight.common.CommonProxy;
 import com.mushroom.midnight.common.capability.RiftCooldownCapability;
 import com.mushroom.midnight.common.capability.RifterCapturedCapability;
 import com.mushroom.midnight.common.capability.VoidStorage;
+import com.mushroom.midnight.common.network.MessageBridgeCreate;
+import com.mushroom.midnight.common.network.MessageBridgeRemoval;
+import com.mushroom.midnight.common.network.MessageBridgeState;
 import com.mushroom.midnight.common.network.MessageCaptureEntity;
 import com.mushroom.midnight.common.registry.ModBiomes;
 import com.mushroom.midnight.common.registry.ModBlocks;
@@ -49,10 +52,10 @@ public class Midnight {
     public static Midnight instance;
 
     @CapabilityInject(RiftCooldownCapability.class)
-    public static Capability<RiftCooldownCapability> riftCooldownCap = null;
+    public static Capability<RiftCooldownCapability> riftCooldownCap;
 
     @CapabilityInject(RifterCapturedCapability.class)
-    public static Capability<RifterCapturedCapability> rifterCapturedCap = null;
+    public static Capability<RifterCapturedCapability> rifterCapturedCap;
 
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event) {
@@ -60,6 +63,9 @@ public class Midnight {
         CapabilityManager.INSTANCE.register(RifterCapturedCapability.class, new VoidStorage<>(), RifterCapturedCapability::new);
 
         NETWORK.registerMessage(MessageCaptureEntity.Handler.class, MessageCaptureEntity.class, 0, Side.CLIENT);
+        NETWORK.registerMessage(MessageBridgeCreate.Handler.class, MessageBridgeCreate.class, 1, Side.CLIENT);
+        NETWORK.registerMessage(MessageBridgeState.Handler.class, MessageBridgeState.class, 2, Side.CLIENT);
+        NETWORK.registerMessage(MessageBridgeRemoval.Handler.class, MessageBridgeRemoval.class, 3, Side.CLIENT);
 
         EntityUtil.onPreInit();
         ModDimensions.register();

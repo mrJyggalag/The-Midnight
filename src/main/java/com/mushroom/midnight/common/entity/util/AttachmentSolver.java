@@ -1,4 +1,4 @@
-package com.mushroom.midnight.common.entity;
+package com.mushroom.midnight.common.entity.util;
 
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.MoverType;

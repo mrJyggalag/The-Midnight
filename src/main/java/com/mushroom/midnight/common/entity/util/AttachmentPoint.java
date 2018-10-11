@@ -1,4 +1,4 @@
-package com.mushroom.midnight.common.entity;
+package com.mushroom.midnight.common.entity.util;
 
 public class AttachmentPoint {
     private double x;

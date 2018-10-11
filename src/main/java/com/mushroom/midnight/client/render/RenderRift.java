@@ -1,6 +1,7 @@
 package com.mushroom.midnight.client.render;
 
 import com.mushroom.midnight.common.entity.EntityRift;
+import com.mushroom.midnight.common.entity.RiftBridge;
 import com.mushroom.midnight.common.entity.RiftGeometry;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
@@ -23,8 +24,9 @@ public class RenderRift extends Render<EntityRift> {
 
     @Override
     public void doRender(EntityRift entity, double x, double y, double z, float entityYaw, float partialTicks) {
-        float openProgress = entity.prevOpenProgress + (entity.openProgress - entity.prevOpenProgress) * partialTicks;
-        float unstableTime = entity.prevUnstableTime + (entity.unstableTime - entity.prevUnstableTime) * partialTicks;
+        RiftBridge bridge = entity.getBridge();
+        float openProgress = bridge.getOpenAnimation(partialTicks);
+        float unstableTime = bridge.getUnstableAnimation(partialTicks);
 
         if (openProgress > 0.0F) {
             float time = entity.ticksExisted + partialTicks;

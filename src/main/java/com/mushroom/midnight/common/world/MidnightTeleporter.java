@@ -3,6 +3,7 @@ package com.mushroom.midnight.common.world;
 import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.common.capability.RiftCooldownCapability;
 import com.mushroom.midnight.common.entity.EntityRift;
+import com.mushroom.midnight.common.entity.RiftBridge;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.math.MathHelper;
@@ -20,11 +21,20 @@ public class MidnightTeleporter implements ITeleporter {
 
     @Override
     public void placeEntity(World world, Entity entity, float yaw) {
-        EntityRift endpointRift = this.originRift.computeEndpointRift(world);
+        RiftBridge bridge = this.originRift.getBridge();
+        if (bridge == null) {
+            Midnight.LOGGER.warn("Unable to teleport entity through rift! Bridge not present on portal {}", this.originRift);
+            return;
+        }
 
         if (entity instanceof EntityPlayer) {
-            this.originRift.close();
-            endpointRift.close();
+            bridge.close();
+        }
+
+        EntityRift endpointRift = bridge.computeEndpoint(world.provider.getDimensionType());
+        if (endpointRift == null) {
+            Midnight.LOGGER.warn("Unable to teleport entity through rift! Endpoint not present from portal {}", this.originRift);
+            return;
         }
 
         float angle = (float) Math.toRadians(entity.rotationYaw);

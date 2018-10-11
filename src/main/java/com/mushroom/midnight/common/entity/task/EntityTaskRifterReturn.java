@@ -1,7 +1,7 @@
 package com.mushroom.midnight.common.entity.task;
 
 import com.mushroom.midnight.common.entity.EntityRift;
-import com.mushroom.midnight.common.entity.EntityRifter;
+import com.mushroom.midnight.common.entity.creature.EntityRifter;
 import com.mushroom.midnight.common.registry.ModDimensions;
 import com.mushroom.midnight.common.util.WorldUtil;
 import net.minecraft.entity.ai.EntityAIBase;
@@ -46,7 +46,7 @@ public class EntityTaskRifterReturn extends EntityAIBase {
             return false;
         }
         Optional<EntityRift> homeRift = this.owner.getHomeRift().deref(false);
-        return homeRift.isPresent() && homeRift.get().getTimeUntilClose() < RETURN_EARLY_TIME;
+        return homeRift.isPresent() && homeRift.get().getBridge().getTimeUntilClose() < RETURN_EARLY_TIME;
     }
 
     @Override

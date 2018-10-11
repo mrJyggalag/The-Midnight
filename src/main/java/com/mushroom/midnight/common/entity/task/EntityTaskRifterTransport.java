@@ -1,6 +1,6 @@
 package com.mushroom.midnight.common.entity.task;
 
-import com.mushroom.midnight.common.entity.EntityRifter;
+import com.mushroom.midnight.common.entity.creature.EntityRifter;
 
 public class EntityTaskRifterTransport extends EntityTaskRifterReturn {
     public EntityTaskRifterTransport(EntityRifter owner, double returnSpeed) {

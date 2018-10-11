@@ -5,7 +5,7 @@ import com.mushroom.midnight.client.IModelProvider;
 import com.mushroom.midnight.client.render.RenderRift;
 import com.mushroom.midnight.client.render.RenderRifter;
 import com.mushroom.midnight.common.entity.EntityRift;
-import com.mushroom.midnight.common.entity.EntityRifter;
+import com.mushroom.midnight.common.entity.creature.EntityRifter;
 import com.mushroom.midnight.common.registry.ModBlocks;
 import com.mushroom.midnight.common.registry.ModDimensions;
 import com.mushroom.midnight.common.registry.ModItems;

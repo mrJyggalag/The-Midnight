@@ -2,6 +2,8 @@ package com.mushroom.midnight.common.world;
 
 import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.common.entity.EntityRift;
+import com.mushroom.midnight.common.entity.RiftAttachment;
+import com.mushroom.midnight.common.entity.RiftBridge;
 import com.mushroom.midnight.common.registry.ModDimensions;
 import com.mushroom.midnight.common.util.WorldUtil;
 import net.minecraft.entity.player.EntityPlayer;
@@ -42,14 +44,14 @@ public class RiftSpawnHandler {
             return;
         }
 
-        World midnightWorld = DimensionManager.getWorld(ModDimensions.MIDNIGHT.getId());
+        World endpointWorld = DimensionManager.getWorld(ModDimensions.MIDNIGHT.getId());
 
         if (!world.isDaytime()) {
             Random random = world.rand;
             Set<BlockPos> spawnRegions = collectPlayerRegions(world.playerEntities);
 
-            if (midnightWorld != null) {
-                spawnRegions.addAll(collectPlayerRegions(midnightWorld.playerEntities));
+            if (endpointWorld != null) {
+                spawnRegions.addAll(collectPlayerRegions(endpointWorld.playerEntities));
             }
 
             for (BlockPos spawnRegion : spawnRegions) {
@@ -57,8 +59,8 @@ public class RiftSpawnHandler {
                     BlockPos riftPosition = generateRiftPosition(random, spawnRegion);
                     if (world.isBlockLoaded(riftPosition)) {
                         trySpawnRift(world, riftPosition);
-                    } else if (midnightWorld != null && midnightWorld.isBlockLoaded(riftPosition)) {
-                        trySpawnRift(midnightWorld, riftPosition);
+                    } else if (endpointWorld != null && endpointWorld.isBlockLoaded(riftPosition)) {
+                        trySpawnRift(endpointWorld, riftPosition);
                     }
                 }
             }
@@ -93,10 +95,18 @@ public class RiftSpawnHandler {
     }
 
     private static void spawnRift(World world, BlockPos pos) {
-        EntityRift rift = new EntityRift(world);
-
         float yaw = world.rand.nextFloat() * 360.0F;
-        rift.setPositionAndRotation(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, yaw, 0.0F);
+        RiftAttachment attachment = new RiftAttachment(pos, yaw);
+
+        RiftTracker trackerHandler = RiftTrackerHandler.getServer();
+        RiftBridge bridge = trackerHandler.createBridge(attachment);
+
+        EntityRift rift = new EntityRift(world);
+        rift.acceptBridge(bridge);
+        bridge.getAttachment().apply(rift);
+
+        trackerHandler.addBridge(bridge);
+
         world.spawnEntity(rift);
     }
 

@@ -7,6 +7,7 @@ import com.mushroom.midnight.common.event.RifterCaptureEvent;
 import com.mushroom.midnight.common.event.RifterReleaseEvent;
 import com.mushroom.midnight.common.registry.ModEffects;
 import com.mushroom.midnight.common.world.RiftSpawnHandler;
+import com.mushroom.midnight.common.world.RiftTrackerHandler;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -36,6 +37,13 @@ public class CommonEventHandler {
         RiftCooldownCapability cooldownCap = entity.getCapability(Midnight.riftCooldownCap, null);
         if (cooldownCap != null) {
             cooldownCap.update(entity);
+        }
+    }
+
+    @SubscribeEvent
+    public static void onWorldTick(TickEvent.WorldTickEvent event) {
+        if (event.phase == TickEvent.Phase.START && !event.world.isRemote) {
+            RiftTrackerHandler.getServer().update();
         }
     }
 

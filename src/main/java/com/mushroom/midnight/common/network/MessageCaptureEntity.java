@@ -1,7 +1,7 @@
 package com.mushroom.midnight.common.network;
 
 import com.mushroom.midnight.Midnight;
-import com.mushroom.midnight.common.entity.EntityRifter;
+import com.mushroom.midnight.common.entity.creature.EntityRifter;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;

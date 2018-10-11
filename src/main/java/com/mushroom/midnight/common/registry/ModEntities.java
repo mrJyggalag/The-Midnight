@@ -2,7 +2,7 @@ package com.mushroom.midnight.common.registry;
 
 import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.common.entity.EntityRift;
-import com.mushroom.midnight.common.entity.EntityRifter;
+import com.mushroom.midnight.common.entity.creature.EntityRifter;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;

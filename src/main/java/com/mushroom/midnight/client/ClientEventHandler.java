@@ -9,6 +9,7 @@ import com.mushroom.midnight.common.registry.ModDimensions;
 import com.mushroom.midnight.common.registry.ModEffects;
 import com.mushroom.midnight.common.registry.ModSounds;
 import com.mushroom.midnight.common.util.EntityUtil;
+import com.mushroom.midnight.common.world.RiftTrackerHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.ISound;
 import net.minecraft.client.audio.PositionedSoundRecord;
@@ -45,28 +46,33 @@ public class ClientEventHandler {
 
     @SubscribeEvent
     public static void onClientTick(TickEvent.ClientTickEvent event) {
-        if (event.phase == TickEvent.Phase.END && !MC.isGamePaused()) {
+        if (!MC.isGamePaused()) {
             EntityPlayer player = MC.player;
             if (player == null) {
                 return;
             }
-            if (player.world.provider.getDimensionType() == ModDimensions.MIDNIGHT) {
-                spawnAmbientParticles(player);
-                playAmbientSounds(player);
-            } else {
-                pullSelfPlayer(player);
-            }
 
-            GameSettings settings = MC.gameSettings;
-            if (player.isPotionActive(ModEffects.STUNNED)) {
-                if (!sensitivityHooked || settings.mouseSensitivity != HOOK_SENSITIVITY) {
-                    lastSensitivity = settings.mouseSensitivity;
+            if (event.phase == TickEvent.Phase.END) {
+                if (player.world.provider.getDimensionType() == ModDimensions.MIDNIGHT) {
+                    spawnAmbientParticles(player);
+                    playAmbientSounds(player);
+                } else {
+                    pullSelfPlayer(player);
                 }
-                settings.mouseSensitivity = HOOK_SENSITIVITY;
-                sensitivityHooked = true;
-            } else if (sensitivityHooked) {
-                settings.mouseSensitivity = lastSensitivity;
-                sensitivityHooked = false;
+
+                GameSettings settings = MC.gameSettings;
+                if (player.isPotionActive(ModEffects.STUNNED)) {
+                    if (!sensitivityHooked || settings.mouseSensitivity != HOOK_SENSITIVITY) {
+                        lastSensitivity = settings.mouseSensitivity;
+                    }
+                    settings.mouseSensitivity = HOOK_SENSITIVITY;
+                    sensitivityHooked = true;
+                } else if (sensitivityHooked) {
+                    settings.mouseSensitivity = lastSensitivity;
+                    sensitivityHooked = false;
+                }
+            } else if (event.phase == TickEvent.Phase.START) {
+                RiftTrackerHandler.getClient().update();
             }
         }
     }

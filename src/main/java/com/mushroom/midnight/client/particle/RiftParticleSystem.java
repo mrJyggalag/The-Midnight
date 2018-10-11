@@ -33,7 +33,7 @@ public class RiftParticleSystem implements ParticleSystem<EntityRift> {
             if (!this.rift.isUnstable()) {
                 this.spawnOrbitalParticles(this.rift, random);
             }
-        } else if (this.rift.openProgress == EntityRift.CLOSE_SPEED) {
+        } else if (this.rift.getBridge().open.getTimer() == EntityRift.CLOSE_SPEED) {
             int sporeCount = random.nextInt(3) + 8;
             for (int i = 0; i < sporeCount; i++) {
                 this.spawnSpore(this.rift, random, 1.0F);
