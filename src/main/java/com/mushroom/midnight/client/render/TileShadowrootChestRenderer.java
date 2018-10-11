@@ -12,11 +12,10 @@ import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.util.ResourceLocation;
 
 public class TileShadowrootChestRenderer extends TileEntitySpecialRenderer<TileEntityShadowrootChest> {
-  private static final ResourceLocation TEXTURE_NORMAL_DOUBLE = new ResourceLocation(Midnight.MODID, "textures/entity/chest/shadowroot_chest_double.png");
-  private static final ResourceLocation TEXTURE_NORMAL = new ResourceLocation(Midnight.MODID, "textures/entity/chest/shadowroot_chest.png");
+  private static final ResourceLocation TEXTURE_NORMAL_DOUBLE = new ResourceLocation(Midnight.MODID, "textures/entities/chest/shadowroot_chest_double.png");
+  private static final ResourceLocation TEXTURE_NORMAL = new ResourceLocation(Midnight.MODID, "textures/entities/chest/shadowroot_chest.png");
   private final ModelChest simpleChest = new ModelChest();
   private final ModelChest largeChest = new ModelLargeChest();
-  private boolean isChristmas;
 
   public TileShadowrootChestRenderer() {
   }
