@@ -2,6 +2,7 @@ package com.mushroom.midnight.common.registry;
 
 import com.google.common.collect.Lists;
 import com.mushroom.midnight.Midnight;
+import com.mushroom.midnight.common.item.ItemBasic;
 import com.mushroom.midnight.common.item.ItemMidnightDoor;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
@@ -22,6 +23,8 @@ public class ModItems {
     public static final Item DARK_WILLOW_DOOR = Items.AIR;
     public static final Item DEAD_WOOD_DOOR = Items.AIR;
 
+    public static final Item DARK_PEARL = Items.AIR;
+
     static List<Item> items;
 
     @SubscribeEvent
@@ -29,7 +32,8 @@ public class ModItems {
         items = Lists.newArrayList(
                 RegUtil.withName(new ItemMidnightDoor(ModBlocks.SHADOWROOT_DOOR).setCreativeTab(Midnight.MIDNIGHT_TAB), "shadowroot_door"),
                 RegUtil.withName(new ItemMidnightDoor(ModBlocks.DARK_WILLOW_DOOR).setCreativeTab(Midnight.MIDNIGHT_TAB), "dark_willow_door"),
-                RegUtil.withName(new ItemMidnightDoor(ModBlocks.DEAD_WOOD_DOOR).setCreativeTab(Midnight.MIDNIGHT_TAB), "dead_wood_door")
+                RegUtil.withName(new ItemMidnightDoor(ModBlocks.DEAD_WOOD_DOOR).setCreativeTab(Midnight.MIDNIGHT_TAB), "dead_wood_door"),
+                RegUtil.withName(new ItemBasic(), "dark_pearl")
         );
 
         items.forEach(event.getRegistry()::register);

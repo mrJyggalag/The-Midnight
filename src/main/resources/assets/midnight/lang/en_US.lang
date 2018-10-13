@@ -63,6 +63,8 @@ item.midnight.shadowroot_door.name=Shadowroot Door
 item.midnight.dark_willow_door.name=Dark Willow Door
 item.midnight.dead_wood_door.name=Dead Wood Door
 
+item.midnight.dark_pearl.name=Dark Pearl
+
 # Fluids
 
 fluid.midnight.miasma.name=Miasma

@@ -14,6 +14,7 @@ import com.mushroom.midnight.common.registry.ModDimensions;
 import com.mushroom.midnight.common.registry.ModFluids;
 import com.mushroom.midnight.common.registry.ModItems;
 import com.mushroom.midnight.common.util.EntityUtil;
+import com.mushroom.midnight.common.world.generator.MidnightOreGenerator;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -27,6 +28,7 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -80,6 +82,8 @@ public class Midnight {
 
     @Mod.EventHandler
     public void init(FMLInitializationEvent event) {
+        GameRegistry.registerWorldGenerator(new MidnightOreGenerator(), Integer.MAX_VALUE);
+
         ModBiomes.onInit();
         ModItems.onInit();
         ModBlocks.onInit();

@@ -12,6 +12,7 @@ import com.mushroom.midnight.common.block.BlockMiasmaSurface;
 import com.mushroom.midnight.common.block.BlockMidnightDirt;
 import com.mushroom.midnight.common.block.BlockMidnightDoor;
 import com.mushroom.midnight.common.block.BlockMidnightFurnace;
+import com.mushroom.midnight.common.block.BlockMidnightGem;
 import com.mushroom.midnight.common.block.BlockMidnightGrass;
 import com.mushroom.midnight.common.block.BlockMidnightLeaves;
 import com.mushroom.midnight.common.block.BlockMidnightLog;
@@ -60,12 +61,6 @@ public class ModBlocks {
     public static final Block CHISELED_NIGHTSTONE_BRICKS = Blocks.AIR;
     public static final Block DARK_PEARL_ORE = Blocks.AIR;
     public static final Block DARK_PEARL_BLOCK = Blocks.AIR;
-    public static final Block EBONYS_ORE = Blocks.AIR;
-    public static final Block EBONYS_BLOCK = Blocks.AIR;
-    public static final Block NAGRILITE_ORE = Blocks.AIR;
-    public static final Block NAGRILITE_BLOCK = Blocks.AIR;
-    public static final Block TENEBRUM_ORE = Blocks.AIR;
-    public static final Block TENEBRUM_BLOCK = Blocks.AIR;
 
     public static final Block SHADOWROOT_CRAFTING_TABLE = Blocks.AIR;
     public static final Block SHADOWROOT_CHEST = Blocks.AIR;
@@ -120,14 +115,8 @@ public class ModBlocks {
                 RegUtil.withName(new BlockNightstone(), "nightstone"),
                 RegUtil.withName(new BlockBasic(Material.ROCK), "nightstone_bricks"),
                 RegUtil.withName(new BlockBasic(Material.ROCK), "chiseled_nightstone_bricks"),
-                RegUtil.withName(new BlockBasic(Material.ROCK), "dark_pearl_ore"),
+                RegUtil.withName(new BlockMidnightGem(() -> ModItems.DARK_PEARL), "dark_pearl_ore"),
                 RegUtil.withName(new BlockBasic(Material.IRON), "dark_pearl_block"),
-                RegUtil.withName(new BlockBasic(Material.ROCK), "ebonys_ore"),
-                RegUtil.withName(new BlockBasic(Material.IRON), "ebonys_block"),
-                RegUtil.withName(new BlockBasic(Material.ROCK), "nagrilite_ore"),
-                RegUtil.withName(new BlockBasic(Material.IRON), "nagrilite_block"),
-                RegUtil.withName(new BlockBasic(Material.ROCK), "tenebrum_ore"),
-                RegUtil.withName(new BlockBasic(Material.IRON), "tenebrum_block"),
                 RegUtil.withName(new BlockShadowrootCraftingTable(), "shadowroot_crafting_table"),
                 RegUtil.withName(new BlockShadowrootChest(), "shadowroot_chest"),
                 RegUtil.withName(new BlockMidnightFurnace(), "midnight_furnace"),
@@ -168,9 +157,6 @@ public class ModBlocks {
                 DARK_WILLOW_LOG, DARK_WILLOW_LEAVES, DARK_WILLOW_PLANKS,
                 NIGHTSTONE, NIGHTSTONE_BRICKS, CHISELED_NIGHTSTONE_BRICKS,
                 DARK_PEARL_ORE, DARK_PEARL_BLOCK,
-                EBONYS_ORE, EBONYS_BLOCK,
-                NAGRILITE_ORE, NAGRILITE_BLOCK,
-                TENEBRUM_ORE, TENEBRUM_BLOCK,
                 SHADOWROOT_CRAFTING_TABLE,
                 SHADOWROOT_CHEST,
                 MIDNIGHT_FURNACE,
@@ -196,14 +182,14 @@ public class ModBlocks {
         OreDictionary.registerOre("treeLeaves", SHADOWROOT_LEAVES);
         OreDictionary.registerOre("treeLeaves", DARK_WILLOW_LEAVES);
 
-        OreDictionary.registerOre("oreEbonys", EBONYS_ORE);
+        /*OreDictionary.registerOre("oreEbonys", EBONYS_ORE);
         OreDictionary.registerOre("blockEbonys", EBONYS_BLOCK);
 
         OreDictionary.registerOre("oreNagrilite", NAGRILITE_ORE);
         OreDictionary.registerOre("blockNagrilite", NAGRILITE_BLOCK);
 
         OreDictionary.registerOre("oreTenebrum", TENEBRUM_ORE);
-        OreDictionary.registerOre("blockTenebrum", TENEBRUM_BLOCK);
+        OreDictionary.registerOre("blockTenebrum", TENEBRUM_BLOCK);*/
 
         OreDictionary.registerOre("chest", SHADOWROOT_CHEST);
         OreDictionary.registerOre("chestWood", SHADOWROOT_CHEST);
