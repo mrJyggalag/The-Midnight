@@ -29,6 +29,7 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.biome.BiomeColorHelper;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.fluids.BlockFluidClassic;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -66,6 +67,8 @@ public class ModModelRegistry {
 
         ModelLoader.setCustomStateMapper(ModBlocks.SHADOWROOT_SAPLING, new StateMap.Builder().ignore(BlockSapling.STAGE).build());
         ModelLoader.setCustomStateMapper(ModBlocks.DARK_WILLOW_SAPLING, new StateMap.Builder().ignore(BlockSapling.STAGE).build());
+
+        ModelLoader.setCustomStateMapper(ModBlocks.MIASMA, new StateMap.Builder().ignore(BlockFluidClassic.LEVEL).build());
     }
 
     public static void onInit() {

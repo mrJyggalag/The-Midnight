@@ -30,7 +30,7 @@ public class ModEntities {
                         .id(new ResourceLocation(Midnight.MODID, "rifter"), currentEntityId++)
                         .name(Midnight.MODID + ".rifter")
                         .tracker(80, 3, true)
-                        .egg(0, 0) // TODO: Egg color
+                        .egg(0x384740, 0x5E8C6C)
                         .build()
         );
     }

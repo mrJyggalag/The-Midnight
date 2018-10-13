@@ -22,8 +22,7 @@ public class WorldGenMidnightCaves extends MapGenCaves {
                     data.setBlockState(x, y - 1, z, top.getBlock().getDefaultState());
                 }
             } else {
-                // TODO: Custom lava block
-                data.setBlockState(x, y, z, BLK_LAVA);
+                data.setBlockState(x, y, z, ModBlocks.MIASMA.getDefaultState());
             }
         }
     }

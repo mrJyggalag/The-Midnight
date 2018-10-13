@@ -1,5 +1,6 @@
 package com.mushroom.midnight.common.biome;
 
+import com.mushroom.midnight.common.registry.ModBlocks;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
@@ -26,9 +27,9 @@ public class BiomeMoltenCrater extends BiomeBase {
             BlockPos surface = world.getTopSolidOrLiquidBlock(mutablePos);
             mutablePos.setY(surface.getY() - 1);
 
-            IBlockState lavaState = Blocks.FLOWING_LAVA.getDefaultState();
-            world.setBlockState(mutablePos, lavaState, 2);
-            world.immediateBlockTick(mutablePos, lavaState, rand);
+            IBlockState miasmaState = ModBlocks.MIASMA.getDefaultState();
+            world.setBlockState(mutablePos, miasmaState, 2);
+            world.immediateBlockTick(mutablePos, miasmaState, rand);
         }
 
         super.decorate(world, rand, pos);
@@ -37,7 +38,7 @@ public class BiomeMoltenCrater extends BiomeBase {
     @Override
     protected IBlockState chooseTopBlock(Random random) {
         if (random.nextInt(5) == 0) {
-            return Blocks.MAGMA.getDefaultState();
+            return ModBlocks.MIASMA_SURFACE.getDefaultState();
         }
         return Blocks.OBSIDIAN.getDefaultState();
     }

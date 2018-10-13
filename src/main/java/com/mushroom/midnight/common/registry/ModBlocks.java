@@ -7,6 +7,8 @@ import com.mushroom.midnight.common.block.BlockCrystal;
 import com.mushroom.midnight.common.block.BlockDoubleMidnightPlant;
 import com.mushroom.midnight.common.block.BlockGlowingDoublePlant;
 import com.mushroom.midnight.common.block.BlockGlowingPlant;
+import com.mushroom.midnight.common.block.BlockMiasmaFluid;
+import com.mushroom.midnight.common.block.BlockMiasmaSurface;
 import com.mushroom.midnight.common.block.BlockMidnightDirt;
 import com.mushroom.midnight.common.block.BlockMidnightDoor;
 import com.mushroom.midnight.common.block.BlockMidnightFurnace;
@@ -92,6 +94,9 @@ public class ModBlocks {
     public static final Block CRYSTAL = Blocks.AIR;
     public static final Block CRYSTAL_ROCK = Blocks.AIR;
 
+    public static final Block MIASMA_SURFACE = Blocks.AIR;
+    public static final Block MIASMA = Blocks.AIR;
+
     @SubscribeEvent
     public static void registerBlocks(RegistryEvent.Register<Block> event) {
         blocks = Lists.newArrayList(
@@ -145,7 +150,9 @@ public class ModBlocks {
                         .withSoundType(SoundType.GLASS)
                         .withHarvestLevel("pickaxe", 1)
                         .setLightLevel(1.0F)
-                        .setHardness(4.0F)
+                        .setHardness(4.0F),
+                RegUtil.withName(new BlockMiasmaSurface(), "miasma_surface"),
+                RegUtil.withName(new BlockMiasmaFluid(), "miasma")
         );
 
         blocks.forEach(event.getRegistry()::register);
@@ -172,7 +179,8 @@ public class ModBlocks {
                 LUMEN_BUD, DOUBLE_LUMEN_BUD,
                 SHADOWROOT_SAPLING, DARK_WILLOW_SAPLING,
                 SHADOWROOT_TRAPDOOR, DARK_WILLOW_TRAPDOOR, DEAD_WOOD_TRAPDOOR,
-                CRYSTAL, CRYSTAL_ROCK
+                CRYSTAL, CRYSTAL_ROCK,
+                MIASMA_SURFACE, MIASMA
         ));
     }
 
