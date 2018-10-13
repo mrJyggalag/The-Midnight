@@ -30,8 +30,8 @@ public class MidnightOreGenerator implements IWorldGenerator {
 
         BlockPos.MutableBlockPos pos = new BlockPos.MutableBlockPos();
 
-        int globalX = (chunkX << 4) + 8;
-        int globalZ = (chunkZ << 4) + 8;
+        int globalX = chunkX << 4;
+        int globalZ = chunkZ << 4;
 
         for (int i = 0; i < DARK_PEARL_PER_CHUNK; i++) {
             int offsetX = random.nextInt(16);
