@@ -82,8 +82,12 @@ public class ModBlocks {
     public static final Block DEWSHROOM = Blocks.AIR;
     public static final Block DOUBLE_DEWSHROOM = Blocks.AIR;
 
+    public static final Block DEWSHROOM_PLANKS = Blocks.AIR;
+
     public static final Block NIGHTSHROOM_STEM = Blocks.AIR;
     public static final Block NIGHTSHROOM_HAT = Blocks.AIR;
+
+    public static final Block NIGHTSHROOM_PLANKS = Blocks.AIR;
 
     public static final Block DEWSHROOM_STEM = Blocks.AIR;
     public static final Block DEWSHROOM_HAT = Blocks.AIR;
@@ -104,6 +108,9 @@ public class ModBlocks {
     public static final Block DEAD_WOOD_TRAPDOOR = Blocks.AIR;
     public static final Block DARK_WILLOW_TRAPDOOR = Blocks.AIR;
 
+    public static final Block NIGHTSHROOM_TRAPDOOR = Blocks.AIR;
+    public static final Block DEWSHROOM_TRAPDOOR = Blocks.AIR;
+
     public static final Block BLOOMCRYSTAL = Blocks.AIR;
     public static final Block BLOOMCRYSTAL_ROCK = Blocks.AIR;
 
@@ -112,8 +119,6 @@ public class ModBlocks {
 
     public static final Block MIASMA_SURFACE = Blocks.AIR;
     public static final Block MIASMA = Blocks.AIR;
-
-    // TODO: Grow small mushroom blocks into large mushrooms
 
     @SubscribeEvent
     public static void registerBlocks(RegistryEvent.Register<Block> event) {
@@ -144,6 +149,14 @@ public class ModBlocks {
                 RegUtil.withName(new BlockMidnightFungiHat(() -> NIGHTSHROOM), "nightshroom_hat"),
                 RegUtil.withName(new BlockMidnightFungiStem(), "dewshroom_stem"),
                 RegUtil.withName(new BlockMidnightFungiHat(() -> DEWSHROOM), "dewshroom_hat"),
+                RegUtil.withName(new BlockBasic(Material.WOOD), "nightshroom_planks")
+                        .withSoundType(SoundType.WOOD)
+                        .setHardness(2.0F)
+                        .setResistance(5.0F),
+                RegUtil.withName(new BlockBasic(Material.WOOD), "dewshroom_planks")
+                        .withSoundType(SoundType.WOOD)
+                        .setHardness(2.0F)
+                        .setResistance(5.0F),
                 RegUtil.withName(new BlockCrystal(), "bloomcrystal"),
                 RegUtil.withName(new BlockBasic(Material.ROCK), "bloomcrystal_rock")
                         .withSoundType(SoundType.GLASS)
@@ -183,6 +196,8 @@ public class ModBlocks {
                 RegUtil.withName(new BlockMidnightTrapDoor(), "shadowroot_trapdoor"),
                 RegUtil.withName(new BlockMidnightTrapDoor(), "dark_willow_trapdoor"),
                 RegUtil.withName(new BlockMidnightTrapDoor(), "dead_wood_trapdoor"),
+                RegUtil.withName(new BlockMidnightTrapDoor(), "nightshroom_trapdoor"),
+                RegUtil.withName(new BlockMidnightTrapDoor(), "dewshroom_trapdoor"),
                 RegUtil.withName(new BlockShadowrootCraftingTable(), "shadowroot_crafting_table"),
                 RegUtil.withName(new BlockShadowrootChest(), "shadowroot_chest"),
                 RegUtil.withName(new BlockMidnightFurnace(), "midnight_furnace")
@@ -210,10 +225,12 @@ public class ModBlocks {
                 DEWSHROOM, DOUBLE_DEWSHROOM,
                 NIGHTSHROOM_STEM, NIGHTSHROOM_HAT,
                 DEWSHROOM_STEM, DEWSHROOM_HAT,
+                NIGHTSHROOM_PLANKS, DEWSHROOM_PLANKS,
                 LUMEN_BUD, DOUBLE_LUMEN_BUD,
                 CRYSTAL_FLOWER,
                 SHADOWROOT_SAPLING, DARK_WILLOW_SAPLING,
                 SHADOWROOT_TRAPDOOR, DARK_WILLOW_TRAPDOOR, DEAD_WOOD_TRAPDOOR,
+                NIGHTSHROOM_TRAPDOOR, DEWSHROOM_TRAPDOOR,
                 BLOOMCRYSTAL, BLOOMCRYSTAL_ROCK,
                 ROUXE, ROUXE_ROCK,
                 MIASMA_SURFACE, MIASMA
