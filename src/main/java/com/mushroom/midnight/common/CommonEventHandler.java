@@ -7,15 +7,17 @@ import com.mushroom.midnight.common.event.RifterCaptureEvent;
 import com.mushroom.midnight.common.event.RifterReleaseEvent;
 import com.mushroom.midnight.common.registry.ModEffects;
 import com.mushroom.midnight.common.world.RiftSpawnHandler;
-import com.mushroom.midnight.common.world.RiftTrackerHandler;
+import com.mushroom.midnight.common.world.GlobalBridgeManager;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.GameRules;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
+import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
@@ -27,6 +29,14 @@ public class CommonEventHandler {
         event.addCapability(new ResourceLocation(Midnight.MODID, "rift_cooldown"), new RiftCooldownCapability());
         if (event.getObject() instanceof EntityLivingBase) {
             event.addCapability(new ResourceLocation(Midnight.MODID, "rifter_captured"), new RifterCapturedCapability());
+        }
+    }
+
+    @SubscribeEvent
+    public static void onWorldLoad(WorldEvent.Load event) {
+        GameRules gameRules = event.getWorld().getGameRules();
+        if (!gameRules.hasRule("doRiftSpawning")) {
+            gameRules.addGameRule("doRiftSpawning", "true", GameRules.ValueType.BOOLEAN_VALUE);
         }
     }
 
@@ -43,7 +53,7 @@ public class CommonEventHandler {
     @SubscribeEvent
     public static void onWorldTick(TickEvent.WorldTickEvent event) {
         if (event.phase == TickEvent.Phase.START && !event.world.isRemote) {
-            RiftTrackerHandler.getServer().update();
+            GlobalBridgeManager.getServer().update();
         }
     }
 

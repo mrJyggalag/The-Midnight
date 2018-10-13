@@ -2,8 +2,8 @@ package com.mushroom.midnight.common.network;
 
 import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.common.entity.RiftBridge;
-import com.mushroom.midnight.common.world.RiftTracker;
-import com.mushroom.midnight.common.world.RiftTrackerHandler;
+import com.mushroom.midnight.common.world.BridgeManager;
+import com.mushroom.midnight.common.world.GlobalBridgeManager;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
@@ -18,7 +18,7 @@ public class MessageBridgeState implements IMessage {
     }
 
     public MessageBridgeState(RiftBridge bridge) {
-        this.bridgeId = bridge.getBridgeId();
+        this.bridgeId = bridge.getId();
         this.data = Unpooled.buffer();
         bridge.writeState(this.data);
     }
@@ -39,7 +39,7 @@ public class MessageBridgeState implements IMessage {
         @Override
         public IMessage onMessage(MessageBridgeState message, MessageContext ctx) {
             Midnight.proxy.handleMessage(ctx, player -> {
-                RiftTracker trackerHandler = RiftTrackerHandler.getClient();
+                BridgeManager trackerHandler = GlobalBridgeManager.getClient();
                 RiftBridge bridge = trackerHandler.getBridge(message.bridgeId);
                 if (bridge != null) {
                     bridge.handleState(message.data);

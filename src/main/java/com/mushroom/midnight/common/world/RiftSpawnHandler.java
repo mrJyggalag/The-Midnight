@@ -24,7 +24,7 @@ public class RiftSpawnHandler {
     private static final double RIFT_SEPARATION = 64.0;
     private static final double PLAYER_SEPARATION = 16.0;
 
-    private static final int REGION_SPAWN_CHANCE = 120;
+    private static final int REGION_SPAWN_CHANCE = 240;
     private static final int REGION_RANGE = 64 >> 5;
 
     private static boolean warnedOverworldUnloaded;
@@ -41,6 +41,10 @@ public class RiftSpawnHandler {
                 Midnight.LOGGER.warn("Overworld unloaded! Cannot spawn Midnight rifts");
                 warnedOverworldUnloaded = true;
             }
+            return;
+        }
+
+        if (!world.getGameRules().getBoolean("doRiftSpawning")) {
             return;
         }
 
@@ -98,7 +102,7 @@ public class RiftSpawnHandler {
         float yaw = world.rand.nextFloat() * 360.0F;
         RiftAttachment attachment = new RiftAttachment(pos, yaw);
 
-        RiftTracker trackerHandler = RiftTrackerHandler.getServer();
+        BridgeManager trackerHandler = GlobalBridgeManager.getServer();
         RiftBridge bridge = trackerHandler.createBridge(attachment);
 
         EntityRift rift = new EntityRift(world);

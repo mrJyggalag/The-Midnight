@@ -2,6 +2,7 @@ package com.mushroom.midnight.common.entity.util;
 
 import com.mushroom.midnight.common.entity.EntityRift;
 import net.minecraft.entity.Entity;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.DimensionManager;
 
@@ -46,14 +47,36 @@ public class RiftEntityReference {
     @Nullable
     public EntityRift get() {
         EntityRift rift = this.rift != null ? this.rift.get() : null;
-        if (rift != null && !rift.isEntityAlive()) {
+        if (rift != null && this.isInvalid(rift)) {
             this.rift = null;
             return null;
         }
         return rift;
     }
 
+    private boolean isInvalid(EntityRift rift) {
+        if (!rift.world.isRemote) {
+            return DimensionManager.getWorld(rift.world.provider.getDimension()) == null;
+        }
+        return false;
+    }
+
     public boolean hasReference() {
         return this.entityId != null;
+    }
+
+    public NBTTagCompound serialize(NBTTagCompound compound) {
+        if (this.entityId != null) {
+            compound.setUniqueId("id", this.entityId);
+            compound.setInteger("dimension", this.dimension);
+        }
+        return compound;
+    }
+
+    public void deserialize(NBTTagCompound compound) {
+        if (compound.hasKey("idLeast")) {
+            this.entityId = compound.getUniqueId("id");
+            this.dimension = compound.getInteger("dimension");
+        }
     }
 }

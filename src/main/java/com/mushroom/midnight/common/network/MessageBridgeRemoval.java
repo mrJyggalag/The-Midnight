@@ -1,7 +1,7 @@
 package com.mushroom.midnight.common.network;
 
 import com.mushroom.midnight.Midnight;
-import com.mushroom.midnight.common.world.RiftTrackerHandler;
+import com.mushroom.midnight.common.world.GlobalBridgeManager;
 import io.netty.buffer.ByteBuf;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
@@ -30,7 +30,7 @@ public class MessageBridgeRemoval implements IMessage {
     public static class Handler implements IMessageHandler<MessageBridgeRemoval, IMessage> {
         @Override
         public IMessage onMessage(MessageBridgeRemoval message, MessageContext ctx) {
-            Midnight.proxy.handleMessage(ctx, p -> RiftTrackerHandler.getClient().removeBridge(message.handlerId));
+            Midnight.proxy.handleMessage(ctx, p -> GlobalBridgeManager.getClient().removeBridge(message.handlerId));
             return null;
         }
     }

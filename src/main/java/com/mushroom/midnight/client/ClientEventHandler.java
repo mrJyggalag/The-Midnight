@@ -9,7 +9,7 @@ import com.mushroom.midnight.common.registry.ModDimensions;
 import com.mushroom.midnight.common.registry.ModEffects;
 import com.mushroom.midnight.common.registry.ModSounds;
 import com.mushroom.midnight.common.util.EntityUtil;
-import com.mushroom.midnight.common.world.RiftTrackerHandler;
+import com.mushroom.midnight.common.world.GlobalBridgeManager;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.ISound;
 import net.minecraft.client.audio.PositionedSoundRecord;
@@ -72,7 +72,7 @@ public class ClientEventHandler {
                     sensitivityHooked = false;
                 }
             } else if (event.phase == TickEvent.Phase.START) {
-                RiftTrackerHandler.getClient().update();
+                GlobalBridgeManager.getClient().update();
             }
         }
     }

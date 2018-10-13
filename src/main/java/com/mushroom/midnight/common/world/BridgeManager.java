@@ -5,7 +5,7 @@ import com.mushroom.midnight.common.entity.RiftBridge;
 
 import javax.annotation.Nullable;
 
-public interface RiftTracker {
+public interface BridgeManager {
     void update();
 
     RiftBridge createBridge(RiftAttachment attachment);

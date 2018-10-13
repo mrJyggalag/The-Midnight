@@ -1,24 +1,18 @@
 package com.mushroom.midnight.common.entity;
 
-import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.common.entity.util.RiftEntityReference;
 import com.mushroom.midnight.common.entity.util.ToggleAnimation;
-import com.mushroom.midnight.common.network.MessageBridgeState;
 import com.mushroom.midnight.common.registry.ModDimensions;
 import com.mushroom.midnight.common.util.BitFlags;
 import io.netty.buffer.ByteBuf;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.DimensionType;
 import net.minecraft.world.World;
-import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.fml.common.FMLCommonHandler;
-import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 
-import java.util.ArrayList;
-import java.util.Collection;
+import javax.annotation.Nullable;
 
 public class RiftBridge {
     public final ToggleAnimation open = new ToggleAnimation(EntityRift.OPEN_TIME);
@@ -27,7 +21,7 @@ public class RiftBridge {
 
     public boolean exists = true;
 
-    private final int bridgeId;
+    private final int id;
     private RiftAttachment attachment;
 
     private boolean sentOpen;
@@ -39,11 +33,13 @@ public class RiftBridge {
     private int prevOpenTimer;
     private int prevUnstableTimer;
 
+    private final BridgeTracker tracker = new BridgeTracker(this);
+
     private final RiftEntityReference source = new RiftEntityReference();
     private final RiftEntityReference target = new RiftEntityReference();
 
-    public RiftBridge(int bridgeId, RiftAttachment attachment) {
-        this.bridgeId = bridgeId;
+    public RiftBridge(int id, RiftAttachment attachment) {
+        this.id = id;
         this.attachment = attachment;
 
         this.open.set(true);
@@ -66,6 +62,8 @@ public class RiftBridge {
     }
 
     public boolean tickState() {
+        this.tracker.update();
+
         this.trySpawnEndpoint(DimensionType.OVERWORLD);
         this.trySpawnEndpoint(ModDimensions.MIDNIGHT);
 
@@ -77,8 +75,14 @@ public class RiftBridge {
             this.unstable.set(true);
         }
 
-        if (this.isDirty()) {
-            this.broadcastState();
+        EntityRift source = this.getSource();
+        if (source != null && source.isDead) {
+            return true;
+        }
+
+        EntityRift target = this.getTarget();
+        if (target != null && target.isDead) {
+            return true;
         }
 
         return !this.open.get() && this.open.getTimer() <= 0;
@@ -110,11 +114,6 @@ public class RiftBridge {
         }
 
         return endpointReference.compute();
-    }
-
-    public void broadcastState() {
-        this.sendToTracking(new MessageBridgeState(this));
-        this.clearDirt();
     }
 
     public void writeState(ByteBuf buffer) {
@@ -157,8 +156,8 @@ public class RiftBridge {
                 || this.sentUsed != this.used;
     }
 
-    public int getBridgeId() {
-        return this.bridgeId;
+    public int getId() {
+        return this.id;
     }
 
     public void setAttachment(RiftAttachment attachment) {
@@ -184,35 +183,6 @@ public class RiftBridge {
         return Math.max(EntityRift.LIFETIME - this.ticks, 0);
     }
 
-    public void sendToTracking(IMessage message) {
-        MinecraftServer server = FMLCommonHandler.instance().getMinecraftServerInstance();
-
-        Collection<EntityPlayer> trackingPlayers = this.getTrackingPlayers(server);
-        for (EntityPlayer player : trackingPlayers) {
-            if (player instanceof EntityPlayerMP) {
-                Midnight.NETWORK.sendTo(message, (EntityPlayerMP) player);
-            }
-        }
-    }
-
-    private Collection<EntityPlayer> getTrackingPlayers(MinecraftServer server) {
-        Collection<EntityPlayer> trackingPlayers = new ArrayList<>();
-
-        EntityRift source = this.source.get();
-        if (source != null) {
-            WorldServer world = server.getWorld(source.dimension);
-            trackingPlayers.addAll(world.getEntityTracker().getTrackingPlayers(source));
-        }
-
-        EntityRift target = this.target.get();
-        if (target != null) {
-            WorldServer world = server.getWorld(target.dimension);
-            trackingPlayers.addAll(world.getEntityTracker().getTrackingPlayers(target));
-        }
-
-        return trackingPlayers;
-    }
-
     public void accept(EntityRift rift) {
         DimensionType endpointDimension = rift.world.provider.getDimensionType();
         this.getEndpointReference(endpointDimension).set(rift);
@@ -225,5 +195,61 @@ public class RiftBridge {
     public void close() {
         this.used = true;
         this.unstable.set(true);
+    }
+
+    public BridgeTracker getTracker() {
+        return this.tracker;
+    }
+
+    @Nullable
+    public EntityRift getSource() {
+        return this.source.get();
+    }
+
+    @Nullable
+    public EntityRift getTarget() {
+        return this.target.get();
+    }
+
+    public void remove() {
+        this.exists = false;
+        this.prevOpenTimer = this.open.getTimer();
+        this.prevUnstableTimer = this.unstable.getTimer();
+    }
+
+    public NBTTagCompound serialize(NBTTagCompound compound) {
+        compound.setInteger("id", this.id);
+        compound.setTag("attachment", this.attachment.serialize(new NBTTagCompound()));
+
+        compound.setTag("open", this.open.serialize(new NBTTagCompound()));
+        compound.setTag("unstable", this.unstable.serialize(new NBTTagCompound()));
+        compound.setBoolean("used", this.used);
+        compound.setInteger("ticks", this.ticks);
+
+        compound.setTag("source", this.source.serialize(new NBTTagCompound()));
+        compound.setTag("target", this.target.serialize(new NBTTagCompound()));
+
+        return compound;
+    }
+
+    public static RiftBridge deserialize(NBTTagCompound compound) {
+        int id = compound.getInteger("id");
+        RiftAttachment attachment = RiftAttachment.deserialize(compound.getCompoundTag("attachment"));
+
+        RiftBridge bridge = new RiftBridge(id, attachment);
+        bridge.open.deserialize(compound.getCompoundTag("open"));
+        bridge.unstable.deserialize(compound.getCompoundTag("unstable"));
+        bridge.used = compound.getBoolean("used");
+        bridge.ticks = compound.getInteger("ticks");
+
+        bridge.source.deserialize(compound.getCompoundTag("source"));
+        bridge.target.deserialize(compound.getCompoundTag("target"));
+
+        return bridge;
+    }
+
+    @Override
+    public String toString() {
+        return "RiftBridge{open=" + this.open + ", unstable=" + this.unstable + ", exists=" + this.exists + ", id=" + this.id + '}';
     }
 }

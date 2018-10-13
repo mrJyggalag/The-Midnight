@@ -7,7 +7,7 @@ import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 
 import javax.annotation.Nullable;
 
-public class RiftTrackerClient implements RiftTracker {
+public class BridgeManagerClient implements BridgeManager {
     private final Int2ObjectMap<RiftBridge> bridges = new Int2ObjectOpenHashMap<>();
 
     @Override
@@ -24,12 +24,15 @@ public class RiftTrackerClient implements RiftTracker {
 
     @Override
     public void addBridge(RiftBridge bridge) {
-        this.bridges.put(bridge.getBridgeId(), bridge);
+        this.bridges.put(bridge.getId(), bridge);
     }
 
     @Override
     public void removeBridge(int id) {
-        this.bridges.remove(id);
+        RiftBridge bridge = this.bridges.remove(id);
+        if (bridge != null) {
+            bridge.remove();
+        }
     }
 
     @Nullable

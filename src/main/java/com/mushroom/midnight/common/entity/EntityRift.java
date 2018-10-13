@@ -6,8 +6,8 @@ import com.mushroom.midnight.common.capability.RiftCooldownCapability;
 import com.mushroom.midnight.common.entity.creature.EntityRifter;
 import com.mushroom.midnight.common.registry.ModDimensions;
 import com.mushroom.midnight.common.world.MidnightTeleporter;
-import com.mushroom.midnight.common.world.RiftTracker;
-import com.mushroom.midnight.common.world.RiftTrackerHandler;
+import com.mushroom.midnight.common.world.BridgeManager;
+import com.mushroom.midnight.common.world.GlobalBridgeManager;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -26,7 +26,6 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
-// TODO: Rifts moving themselves after spawning, endpoint not instantly visible after teleporting
 public class EntityRift extends Entity implements IEntityAdditionalSpawnData {
     public static final int OPEN_TIME = 20;
     public static final int CLOSE_SPEED = 2;
@@ -34,7 +33,7 @@ public class EntityRift extends Entity implements IEntityAdditionalSpawnData {
 
     public static final int UNSTABLE_TIME = 100;
 
-    public static final int LIFETIME = 1200;
+    public static final int LIFETIME = 2400;
 
     public static final float PULL_RADIUS = 8.0F;
     public static final float PULL_INTENSITY = 5.0F;
@@ -48,6 +47,8 @@ public class EntityRift extends Entity implements IEntityAdditionalSpawnData {
     private RiftParticleSystem particleSystem;
 
     private boolean spawnedRifter;
+
+    private boolean invalid;
 
     public EntityRift(World world) {
         super(world);
@@ -69,6 +70,11 @@ public class EntityRift extends Entity implements IEntityAdditionalSpawnData {
 
     @Override
     public void onUpdate() {
+        if (this.invalid) {
+            this.setDead();
+            return;
+        }
+
         RiftBridge bridge = this.getBridge();
 
         super.onUpdate();
@@ -106,7 +112,7 @@ public class EntityRift extends Entity implements IEntityAdditionalSpawnData {
         }
 
         if (this.world.getGameRules().getBoolean("doMobSpawning")) {
-            if (!this.spawnedRifter && !this.isUnstable() && this.world.rand.nextInt(20) == 0) {
+            if (!this.spawnedRifter && !this.isUnstable() && this.world.rand.nextInt(40) == 0) {
                 AxisAlignedBB existingRifterBounds = this.getEntityBoundingBox().grow(16.0);
                 List<EntityRifter> existingRifters = this.world.getEntitiesWithinAABB(EntityRifter.class, existingRifterBounds);
                 if (existingRifters.isEmpty()) {
@@ -248,7 +254,7 @@ public class EntityRift extends Entity implements IEntityAdditionalSpawnData {
     }
 
     private RiftBridge createBridge() {
-        RiftTracker trackerHandler = RiftTrackerHandler.getServer();
+        BridgeManager trackerHandler = GlobalBridgeManager.getServer();
 
         RiftAttachment attachment = new RiftAttachment(this.getPosition(), this.rotationYaw);
         RiftBridge bridge = trackerHandler.createBridge(attachment);
@@ -271,7 +277,7 @@ public class EntityRift extends Entity implements IEntityAdditionalSpawnData {
         compound.setLong("geometry_seed", this.geometry.getSeed());
         compound.setBoolean("spawned_rifter", this.spawnedRifter);
         if (this.bridge != null) {
-            compound.setInteger("bridge_id", this.bridge.getBridgeId());
+            compound.setInteger("bridge_id", this.bridge.getId());
         }
     }
 
@@ -280,36 +286,46 @@ public class EntityRift extends Entity implements IEntityAdditionalSpawnData {
         this.initGeometry(compound.getLong("geometry_seed"));
         this.spawnedRifter = compound.getBoolean("spawned_rifter");
         if (compound.hasKey("bridge_id")) {
-            this.initBridge(compound.getInteger("bridge_id"));
+            this.invalid = this.initBridge(compound.getInteger("bridge_id"));
         }
     }
 
     @Override
     public void writeSpawnData(ByteBuf buffer) {
-        buffer.writeLong(this.geometry.getSeed());
-        buffer.writeInt(this.getBridge().getBridgeId());
+        buffer.writeBoolean(this.invalid);
+
+        if (!this.invalid) {
+            buffer.writeLong(this.geometry.getSeed());
+
+            RiftBridge bridge = this.getBridge();
+            buffer.writeInt(bridge.getId());
+        }
     }
 
     @Override
     public void readSpawnData(ByteBuf buffer) {
-        this.initGeometry(buffer.readLong());
-        this.initBridge(buffer.readInt());
+        this.invalid = buffer.readBoolean();
+        if (!this.invalid) {
+            this.initGeometry(buffer.readLong());
+            this.initBridge(buffer.readInt());
+        }
     }
 
-    private void initBridge(int bridgeId) {
-        RiftTracker tracker = RiftTrackerHandler.get(this.world.isRemote);
+    private boolean initBridge(int bridgeId) {
+        BridgeManager tracker = GlobalBridgeManager.get(this.world.isRemote);
 
         RiftBridge bridge = tracker.getBridge(bridgeId);
         if (bridge == null) {
-            if (!this.world.isRemote) {
-                Midnight.LOGGER.warn("Received invalid bridge id for loaded rift entity {}", bridgeId);
-                return;
-            } else {
+            if (this.world.isRemote) {
                 bridge = new RiftBridge(bridgeId, new RiftAttachment(this.getPosition(), this.rotationYaw));
-                RiftTrackerHandler.getClient().addBridge(bridge);
+                GlobalBridgeManager.getClient().addBridge(bridge);
+            } else {
+                return true;
             }
         }
 
         this.acceptBridge(bridge);
+
+        return false;
     }
 }
