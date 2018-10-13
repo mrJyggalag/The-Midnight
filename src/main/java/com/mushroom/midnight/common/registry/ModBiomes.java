@@ -2,6 +2,7 @@ package com.mushroom.midnight.common.registry;
 
 import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.common.biome.BiomeBlackRidge;
+import com.mushroom.midnight.common.biome.BiomeCrystalPlains;
 import com.mushroom.midnight.common.biome.BiomeDeceitfulBog;
 import com.mushroom.midnight.common.biome.BiomeFungiForest;
 import com.mushroom.midnight.common.biome.BiomeMoltenCrater;
@@ -32,6 +33,7 @@ public class ModBiomes {
     public static final Biome MOLTEN_CRATER_EDGE = Biomes.DEFAULT;
     public static final Biome OBSCURED_PEAKS = Biomes.DEFAULT;
     public static final Biome WARPED_FIELDS = Biomes.DEFAULT;
+    public static final Biome CRYSTAL_PLAINS = Biomes.DEFAULT;
 
     private static final List<Biome> SEED_BIOMES = new ArrayList<>();
 
@@ -77,6 +79,11 @@ public class ModBiomes {
                         new Biome.BiomeProperties("warped_fields")
                                 .setBaseHeight(0.1F)
                                 .setHeightVariation(0.8F)
+                )),
+                RegUtil.applyName(new BiomeCrystalPlains(
+                        new Biome.BiomeProperties("crystal_plains")
+                                .setBaseHeight(0.1F)
+                                .setHeightVariation(0.12F)
                 ))
         );
     }

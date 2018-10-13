@@ -12,8 +12,13 @@ public final class BlockBasic extends Block implements IModelProvider {
         this.setCreativeTab(Midnight.MIDNIGHT_TAB);
     }
 
-    @Override
-    public Block setSoundType(SoundType sound) {
-        return super.setSoundType(sound);
+    public BlockBasic withHarvestLevel(String tool, int level) {
+        this.setHarvestLevel(tool, level);
+        return this;
+    }
+
+    public BlockBasic withSoundType(SoundType sound) {
+        super.setSoundType(sound);
+        return this;
     }
 }

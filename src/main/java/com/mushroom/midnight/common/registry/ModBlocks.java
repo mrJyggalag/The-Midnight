@@ -3,6 +3,7 @@ package com.mushroom.midnight.common.registry;
 import com.google.common.collect.Lists;
 import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.common.block.BlockBasic;
+import com.mushroom.midnight.common.block.BlockCrystal;
 import com.mushroom.midnight.common.block.BlockDoubleMidnightPlant;
 import com.mushroom.midnight.common.block.BlockGlowingDoublePlant;
 import com.mushroom.midnight.common.block.BlockGlowingPlant;
@@ -18,9 +19,8 @@ import com.mushroom.midnight.common.block.BlockMidnightTrapDoor;
 import com.mushroom.midnight.common.block.BlockNightstone;
 import com.mushroom.midnight.common.block.BlockShadowrootChest;
 import com.mushroom.midnight.common.block.BlockShadowrootCraftingTable;
-import com.mushroom.midnight.common.world.generator.WorldGenMidnightTree;
 import com.mushroom.midnight.common.tile.base.TileEntityShadowrootChest;
-
+import com.mushroom.midnight.common.world.generator.WorldGenMidnightTree;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -89,24 +89,27 @@ public class ModBlocks {
     public static final Block DEAD_WOOD_TRAPDOOR = Blocks.AIR;
     public static final Block DARK_WILLOW_TRAPDOOR = Blocks.AIR;
 
+    public static final Block CRYSTAL = Blocks.AIR;
+    public static final Block CRYSTAL_ROCK = Blocks.AIR;
+
     @SubscribeEvent
     public static void registerBlocks(RegistryEvent.Register<Block> event) {
         blocks = Lists.newArrayList(
                 RegUtil.withName(new BlockMidnightLog(), "shadowroot_log"),
                 RegUtil.withName(new BlockMidnightLeaves(), "shadowroot_leaves"),
                 RegUtil.withName(new BlockBasic(Material.WOOD), "shadowroot_planks")
-                        .setSoundType(SoundType.WOOD)
+                        .withSoundType(SoundType.WOOD)
                         .setHardness(2.0F)
                         .setResistance(5.0F),
                 RegUtil.withName(new BlockMidnightLog(), "dead_wood_log"),
                 RegUtil.withName(new BlockBasic(Material.WOOD), "dead_wood_planks")
-                        .setSoundType(SoundType.WOOD)
+                        .withSoundType(SoundType.WOOD)
                         .setHardness(2.0F)
                         .setResistance(5.0F),
                 RegUtil.withName(new BlockMidnightLog(), "dark_willow_log"),
                 RegUtil.withName(new BlockMidnightLeaves(), "dark_willow_leaves"),
                 RegUtil.withName(new BlockBasic(Material.WOOD), "dark_willow_planks")
-                        .setSoundType(SoundType.WOOD)
+                        .withSoundType(SoundType.WOOD)
                         .setHardness(2.0F)
                         .setResistance(5.0F),
                 RegUtil.withName(new BlockNightstone(), "nightstone"),
@@ -136,7 +139,13 @@ public class ModBlocks {
                 RegUtil.withName(new BlockMidnightDoor(() -> ModItems.DEAD_WOOD_DOOR), "dead_wood_door"),
                 RegUtil.withName(new BlockMidnightTrapDoor(), "shadowroot_trapdoor"),
                 RegUtil.withName(new BlockMidnightTrapDoor(), "dark_willow_trapdoor"),
-                RegUtil.withName(new BlockMidnightTrapDoor(), "dead_wood_trapdoor")
+                RegUtil.withName(new BlockMidnightTrapDoor(), "dead_wood_trapdoor"),
+                RegUtil.withName(new BlockCrystal(), "crystal"),
+                RegUtil.withName(new BlockBasic(Material.ROCK), "crystal_rock")
+                        .withSoundType(SoundType.GLASS)
+                        .withHarvestLevel("pickaxe", 1)
+                        .setLightLevel(1.0F)
+                        .setHardness(4.0F)
         );
 
         blocks.forEach(event.getRegistry()::register);
@@ -162,7 +171,8 @@ public class ModBlocks {
                 TALL_MIDNIGHT_GRASS, DOUBLE_MIDNIGHT_GRASS,
                 LUMEN_BUD, DOUBLE_LUMEN_BUD,
                 SHADOWROOT_SAPLING, DARK_WILLOW_SAPLING,
-                SHADOWROOT_TRAPDOOR, DARK_WILLOW_TRAPDOOR, DEAD_WOOD_TRAPDOOR
+                SHADOWROOT_TRAPDOOR, DARK_WILLOW_TRAPDOOR, DEAD_WOOD_TRAPDOOR,
+                CRYSTAL, CRYSTAL_ROCK
         ));
     }
 

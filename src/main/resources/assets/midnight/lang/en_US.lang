@@ -51,6 +51,9 @@ tile.midnight.dead_wood_trapdoor.name=Dead Wood Trapdoor
 tile.midnight.shadowroot_sapling.name=Shadowroot Sapling
 tile.midnight.dark_willow_sapling.name=Dark Willow Sapling
 
+tile.midnight.crystal.name=Crystal
+tile.midnight.crystal_rock.name=Crystal Rock
+
 # Items
 
 item.midnight.shadowroot_door.name=Shadowroot Door
