@@ -5,6 +5,7 @@ import com.mushroom.midnight.client.particle.MidnightParticles;
 import com.mushroom.midnight.client.sound.LoopingMidnightSound;
 import com.mushroom.midnight.common.capability.RifterCapturedCapability;
 import com.mushroom.midnight.common.entity.EntityRift;
+import com.mushroom.midnight.common.registry.ModBiomes;
 import com.mushroom.midnight.common.registry.ModDimensions;
 import com.mushroom.midnight.common.registry.ModEffects;
 import com.mushroom.midnight.common.registry.ModSounds;
@@ -12,6 +13,7 @@ import com.mushroom.midnight.common.util.EntityUtil;
 import com.mushroom.midnight.common.world.GlobalBridgeManager;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.ISound;
+import net.minecraft.client.audio.MusicTicker;
 import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraft.client.audio.SoundHandler;
 import net.minecraft.client.renderer.GlStateManager;
@@ -21,13 +23,18 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
+import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.world.biome.Biome;
 import net.minecraftforge.client.event.EntityViewRenderEvent;
+import net.minecraftforge.client.event.sound.PlaySoundEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.relauncher.Side;
 
+import javax.annotation.Nullable;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
@@ -161,5 +168,35 @@ public class ClientEventHandler {
                 GlStateManager.rotate(-90.0F, 1.0F, 0.0F, 0.0F);
             }
         }
+    }
+
+    @SubscribeEvent
+    public static void onPlaySound(PlaySoundEvent event) {
+        if (!isMusicSound()) {
+            return;
+        }
+
+        if (MC.player != null && MC.player.world.provider.getDimensionType() == ModDimensions.MIDNIGHT) {
+            SoundEvent sound = getMusicSound(MC.player);
+            if (sound == null) {
+                event.setCanceled(true);
+                return;
+            }
+            event.setResultSound(PositionedSoundRecord.getMusicRecord(sound));
+        }
+    }
+
+    @Nullable
+    private static SoundEvent getMusicSound(EntityPlayer player) {
+        Biome biome = player.world.getBiome(player.getPosition());
+        if (biome == ModBiomes.CRYSTAL_PLAINS) {
+            return ModSounds.MIDNIGHT_MUSIC_CRYSTAL;
+        }
+        return ModSounds.MIDNIGHT_MUSIC_GENERIC;
+    }
+
+    private static boolean isMusicSound() {
+        StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
+        return Arrays.stream(stackTrace).anyMatch(e -> e.getClassName().equals(MusicTicker.class.getName()));
     }
 }

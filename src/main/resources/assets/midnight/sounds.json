@@ -10,5 +10,18 @@
   "midnight_rumble": {
     "category": "ambient",
     "sounds": ["midnight:ambient/midnight_rumble"]
+  },
+  "midnight_music_generic": {
+    "category": "music",
+    "sounds": []
+  },
+  "midnight_music_crystal": {
+    "category": "music",
+    "sounds": [
+      {
+        "name": "midnight:music/crystal",
+        "stream": true
+      }
+    ]
   }
 }
