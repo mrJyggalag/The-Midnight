@@ -13,7 +13,12 @@
   },
   "midnight_music_generic": {
     "category": "music",
-    "sounds": []
+    "sounds": [
+      {
+        "name": "midnight:music/ultraviolet",
+        "stream": true
+      }
+    ]
   },
   "midnight_music_crystal": {
     "category": "music",
