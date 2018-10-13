@@ -66,6 +66,7 @@ public class BiomeBase extends Biome implements IMidnightBiome {
         this.decorator.reedsPerChunk = 0;
         this.decorator.cactiPerChunk = 0;
         this.decorator.flowersPerChunk = 0;
+        this.decorator.mushroomsPerChunk = 0;
 
         this.decorator.extraTreeChance = 0.0F;
 

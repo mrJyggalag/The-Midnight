@@ -1,0 +1,16 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "cross"
+  },
+  "variants": {
+    "half": {
+      "upper": {
+        "textures": {"cross": "midnight:blocks/dewshroom_upper"}
+      },
+      "lower": {
+        "textures": {"cross": "midnight:blocks/dewshroom_lower"}
+      }
+    }
+  }
+}

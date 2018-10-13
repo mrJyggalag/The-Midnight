@@ -11,6 +11,9 @@ import com.mushroom.midnight.common.block.BlockMiasmaFluid;
 import com.mushroom.midnight.common.block.BlockMiasmaSurface;
 import com.mushroom.midnight.common.block.BlockMidnightDirt;
 import com.mushroom.midnight.common.block.BlockMidnightDoor;
+import com.mushroom.midnight.common.block.BlockMidnightFungi;
+import com.mushroom.midnight.common.block.BlockMidnightFungiHat;
+import com.mushroom.midnight.common.block.BlockMidnightFungiStem;
 import com.mushroom.midnight.common.block.BlockMidnightFurnace;
 import com.mushroom.midnight.common.block.BlockMidnightGem;
 import com.mushroom.midnight.common.block.BlockMidnightGrass;
@@ -23,6 +26,7 @@ import com.mushroom.midnight.common.block.BlockNightstone;
 import com.mushroom.midnight.common.block.BlockShadowrootChest;
 import com.mushroom.midnight.common.block.BlockShadowrootCraftingTable;
 import com.mushroom.midnight.common.tile.base.TileEntityShadowrootChest;
+import com.mushroom.midnight.common.world.generator.WorldGenMidnightFungi;
 import com.mushroom.midnight.common.world.generator.WorldGenMidnightTree;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
@@ -72,6 +76,18 @@ public class ModBlocks {
     public static final Block TALL_MIDNIGHT_GRASS = Blocks.AIR;
     public static final Block DOUBLE_MIDNIGHT_GRASS = Blocks.AIR;
 
+    public static final Block NIGHTSHROOM = Blocks.AIR;
+    public static final Block DOUBLE_NIGHTSHROOM = Blocks.AIR;
+
+    public static final Block DEWSHROOM = Blocks.AIR;
+    public static final Block DOUBLE_DEWSHROOM = Blocks.AIR;
+
+    public static final Block NIGHTSHROOM_STEM = Blocks.AIR;
+    public static final Block NIGHTSHROOM_HAT = Blocks.AIR;
+
+    public static final Block DEWSHROOM_STEM = Blocks.AIR;
+    public static final Block DEWSHROOM_HAT = Blocks.AIR;
+
     public static final Block LUMEN_BUD = Blocks.AIR;
     public static final Block DOUBLE_LUMEN_BUD = Blocks.AIR;
 
@@ -96,6 +112,8 @@ public class ModBlocks {
 
     public static final Block MIASMA_SURFACE = Blocks.AIR;
     public static final Block MIASMA = Blocks.AIR;
+
+    // TODO: Grow small mushroom blocks into large mushrooms
 
     @SubscribeEvent
     public static void registerBlocks(RegistryEvent.Register<Block> event) {
@@ -122,6 +140,10 @@ public class ModBlocks {
                         .withSoundType(SoundType.WOOD)
                         .setHardness(2.0F)
                         .setResistance(5.0F),
+                RegUtil.withName(new BlockMidnightFungiStem(), "nightshroom_stem"),
+                RegUtil.withName(new BlockMidnightFungiHat(() -> NIGHTSHROOM), "nightshroom_hat"),
+                RegUtil.withName(new BlockMidnightFungiStem(), "dewshroom_stem"),
+                RegUtil.withName(new BlockMidnightFungiHat(() -> DEWSHROOM), "dewshroom_hat"),
                 RegUtil.withName(new BlockCrystal(), "bloomcrystal"),
                 RegUtil.withName(new BlockBasic(Material.ROCK), "bloomcrystal_rock")
                         .withSoundType(SoundType.GLASS)
@@ -140,6 +162,16 @@ public class ModBlocks {
                 RegUtil.withName(new BlockBasic(Material.IRON), "dark_pearl_block"),
                 RegUtil.withName(new BlockMidnightPlant(), "tall_midnight_grass"),
                 RegUtil.withName(new BlockDoubleMidnightPlant(), "double_midnight_grass"),
+                RegUtil.withName(new BlockMidnightFungi(() -> new WorldGenMidnightFungi(
+                        ModBlocks.NIGHTSHROOM_STEM.getDefaultState(),
+                        ModBlocks.NIGHTSHROOM_HAT.getDefaultState()
+                )), "nightshroom"),
+                RegUtil.withName(new BlockDoubleMidnightPlant(), "double_nightshroom"),
+                RegUtil.withName(new BlockMidnightFungi(() -> new WorldGenMidnightFungi(
+                        ModBlocks.DEWSHROOM_STEM.getDefaultState(),
+                        ModBlocks.DEWSHROOM_HAT.getDefaultState()
+                )), "dewshroom"),
+                RegUtil.withName(new BlockDoubleMidnightPlant(), "double_dewshroom"),
                 RegUtil.withName(new BlockGlowingPlant(), "lumen_bud"),
                 RegUtil.withName(new BlockGlowingDoublePlant(), "double_lumen_bud"),
                 RegUtil.withName(new BlockGlowingPlant(), "crystal_flower"),
@@ -174,6 +206,10 @@ public class ModBlocks {
                 MIDNIGHT_FURNACE,
                 MIDNIGHT_DIRT, MIDNIGHT_GRASS,
                 TALL_MIDNIGHT_GRASS, DOUBLE_MIDNIGHT_GRASS,
+                NIGHTSHROOM, DOUBLE_NIGHTSHROOM,
+                DEWSHROOM, DOUBLE_DEWSHROOM,
+                NIGHTSHROOM_STEM, NIGHTSHROOM_HAT,
+                DEWSHROOM_STEM, DEWSHROOM_HAT,
                 LUMEN_BUD, DOUBLE_LUMEN_BUD,
                 CRYSTAL_FLOWER,
                 SHADOWROOT_SAPLING, DARK_WILLOW_SAPLING,

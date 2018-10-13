@@ -1,0 +1,47 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "cube_all",
+    "textures": {
+      "all": "midnight:blocks/nightshroom_hat_outside",
+      "inside": "midnight:blocks/nightshroom_hat_inside",
+      "outside": "midnight:blocks/nightshroom_hat_outside",
+      "stem": "midnight:blocks/nightshroom_stem"
+    },
+    "uvlock": true
+  },
+  "variants": {
+    "variant": {
+      "north_west": {"model": "midnight:mushroom_double_edge", "y": 270},
+      "north": {"model": "midnight:mushroom_edge"},
+      "north_east": {"model": "midnight:mushroom_double_edge"},
+      "west": {"model": "midnight:mushroom_edge", "y": 270},
+      "center": {"model": "midnight:mushroom_center"},
+      "east": {"model": "midnight:mushroom_edge", "y": 90},
+      "south_west": {"model": "midnight:mushroom_double_edge", "y": 180},
+      "south": {"model": "midnight:mushroom_edge", "y": 180},
+      "south_east": {"model": "midnight:mushroom_double_edge", "y": 90},
+      "stem": {
+        "model": "cube_column",
+        "textures": {
+          "end": "midnight:blocks/nightshroom_hat_inside",
+          "side": "midnight:blocks/nightshroom_stem"
+        }
+      },
+      "all_stem": {
+        "model": "cube_all",
+        "textures": {"all": "midnight:blocks/nightshroom_stem"}
+      },
+      "all_outside": {
+        "model": "cube_all",
+        "textures": {"all": "midnight:blocks/nightshroom_hat_outside"}
+      },
+      "all_inside": {
+        "model": "cube_all",
+        "textures": {"all": "midnight:blocks/nightshroom_hat_inside"}
+      }
+    },
+    "inventory": [{}]
+  }
+}
+
