@@ -51,8 +51,11 @@ tile.midnight.dead_wood_trapdoor.name=Dead Wood Trapdoor
 tile.midnight.shadowroot_sapling.name=Shadowroot Sapling
 tile.midnight.dark_willow_sapling.name=Dark Willow Sapling
 
-tile.midnight.crystal.name=Crystal
-tile.midnight.crystal_rock.name=Crystal Rock
+tile.midnight.bloomcrystal.name=Bloomcrystal
+tile.midnight.bloomcrystal_rock.name=Bloomcrystal Rock
+
+tile.midnight.rouxe.name=Rouxe Crystal
+tile.midnight.rouxe_rock.name=Rouxe Rock
 
 tile.midnight.miasma_surface.name=Miasma Surface
 tile.midnight.misama.name=Miasma

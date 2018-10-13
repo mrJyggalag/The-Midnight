@@ -3,7 +3,7 @@
   "defaults": {
     "model": "cube_all",
     "textures": {
-      "all": "midnight:blocks/crystal_rock"
+      "all": "midnight:blocks/rouxe_rock"
     }
   },
   "variants": {

@@ -12,7 +12,7 @@ import net.minecraftforge.event.terraingen.TerrainGen;
 import java.util.Random;
 
 public class BiomeCrystalPlains extends BiomeBase {
-    private static final WorldGenerator CRYSTAL_GENERATOR = new WorldGenCrystalCluster(3, 3, ModBlocks.CRYSTAL_ROCK.getDefaultState(), ModBlocks.CRYSTAL.getDefaultState());
+    private static final WorldGenerator CRYSTAL_GENERATOR = new WorldGenCrystalCluster(3, 3, ModBlocks.BLOOMCRYSTAL_ROCK.getDefaultState(), ModBlocks.BLOOMCRYSTAL.getDefaultState());
 
     public BiomeCrystalPlains(BiomeProperties properties) {
         super(properties);

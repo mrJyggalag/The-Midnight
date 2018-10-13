@@ -86,8 +86,11 @@ public class ModBlocks {
     public static final Block DEAD_WOOD_TRAPDOOR = Blocks.AIR;
     public static final Block DARK_WILLOW_TRAPDOOR = Blocks.AIR;
 
-    public static final Block CRYSTAL = Blocks.AIR;
-    public static final Block CRYSTAL_ROCK = Blocks.AIR;
+    public static final Block BLOOMCRYSTAL = Blocks.AIR;
+    public static final Block BLOOMCRYSTAL_ROCK = Blocks.AIR;
+
+    public static final Block ROUXE = Blocks.AIR;
+    public static final Block ROUXE_ROCK = Blocks.AIR;
 
     public static final Block MIASMA_SURFACE = Blocks.AIR;
     public static final Block MIASMA = Blocks.AIR;
@@ -117,8 +120,14 @@ public class ModBlocks {
                         .withSoundType(SoundType.WOOD)
                         .setHardness(2.0F)
                         .setResistance(5.0F),
-                RegUtil.withName(new BlockCrystal(), "crystal"),
-                RegUtil.withName(new BlockBasic(Material.ROCK), "crystal_rock")
+                RegUtil.withName(new BlockCrystal(), "bloomcrystal"),
+                RegUtil.withName(new BlockBasic(Material.ROCK), "bloomcrystal_rock")
+                        .withSoundType(SoundType.GLASS)
+                        .withHarvestLevel("pickaxe", 1)
+                        .setLightLevel(1.0F)
+                        .setHardness(4.0F),
+                RegUtil.withName(new BlockCrystal(), "rouxe"),
+                RegUtil.withName(new BlockBasic(Material.ROCK), "rouxe_rock")
                         .withSoundType(SoundType.GLASS)
                         .withHarvestLevel("pickaxe", 1)
                         .setLightLevel(1.0F)
@@ -165,7 +174,7 @@ public class ModBlocks {
                 LUMEN_BUD, DOUBLE_LUMEN_BUD,
                 SHADOWROOT_SAPLING, DARK_WILLOW_SAPLING,
                 SHADOWROOT_TRAPDOOR, DARK_WILLOW_TRAPDOOR, DEAD_WOOD_TRAPDOOR,
-                CRYSTAL, CRYSTAL_ROCK,
+                BLOOMCRYSTAL, BLOOMCRYSTAL_ROCK,
                 MIASMA_SURFACE, MIASMA
         ));
     }
