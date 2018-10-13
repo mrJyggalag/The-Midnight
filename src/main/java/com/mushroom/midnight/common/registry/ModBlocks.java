@@ -96,7 +96,7 @@ public class ModBlocks {
     public static void registerBlocks(RegistryEvent.Register<Block> event) {
         blocks = Lists.newArrayList(
                 RegUtil.withName(new BlockMidnightLog(), "shadowroot_log"),
-                RegUtil.withName(new BlockMidnightLeaves(), "shadowroot_leaves"),
+                RegUtil.withName(new BlockMidnightLeaves(() -> SHADOWROOT_SAPLING), "shadowroot_leaves"),
                 RegUtil.withName(new BlockBasic(Material.WOOD), "shadowroot_planks")
                         .withSoundType(SoundType.WOOD)
                         .setHardness(2.0F)
@@ -107,7 +107,7 @@ public class ModBlocks {
                         .setHardness(2.0F)
                         .setResistance(5.0F),
                 RegUtil.withName(new BlockMidnightLog(), "dark_willow_log"),
-                RegUtil.withName(new BlockMidnightLeaves(), "dark_willow_leaves"),
+                RegUtil.withName(new BlockMidnightLeaves(() -> DARK_WILLOW_SAPLING), "dark_willow_leaves"),
                 RegUtil.withName(new BlockBasic(Material.WOOD), "dark_willow_planks")
                         .withSoundType(SoundType.WOOD)
                         .setHardness(2.0F)
