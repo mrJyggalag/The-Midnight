@@ -75,6 +75,8 @@ public class ModBlocks {
     public static final Block LUMEN_BUD = Blocks.AIR;
     public static final Block DOUBLE_LUMEN_BUD = Blocks.AIR;
 
+    public static final Block CRYSTAL_FLOWER = Blocks.AIR;
+
     public static final Block SHADOWROOT_SAPLING = Blocks.AIR;
     public static final Block DARK_WILLOW_SAPLING = Blocks.AIR;
 
@@ -140,6 +142,7 @@ public class ModBlocks {
                 RegUtil.withName(new BlockDoubleMidnightPlant(), "double_midnight_grass"),
                 RegUtil.withName(new BlockGlowingPlant(), "lumen_bud"),
                 RegUtil.withName(new BlockGlowingDoublePlant(), "double_lumen_bud"),
+                RegUtil.withName(new BlockGlowingPlant(), "crystal_flower"),
                 RegUtil.withName(new BlockMidnightSapling(() -> new WorldGenMidnightTree(SHADOWROOT_LOG, SHADOWROOT_LEAVES, 6)), "shadowroot_sapling"),
                 RegUtil.withName(new BlockMidnightSapling(() -> new WorldGenMidnightTree(DARK_WILLOW_LOG, DARK_WILLOW_LEAVES, 6)), "dark_willow_sapling"),
                 RegUtil.withName(new BlockMidnightDoor(() -> ModItems.SHADOWROOT_DOOR), "shadowroot_door"),
@@ -172,9 +175,11 @@ public class ModBlocks {
                 MIDNIGHT_DIRT, MIDNIGHT_GRASS,
                 TALL_MIDNIGHT_GRASS, DOUBLE_MIDNIGHT_GRASS,
                 LUMEN_BUD, DOUBLE_LUMEN_BUD,
+                CRYSTAL_FLOWER,
                 SHADOWROOT_SAPLING, DARK_WILLOW_SAPLING,
                 SHADOWROOT_TRAPDOOR, DARK_WILLOW_TRAPDOOR, DEAD_WOOD_TRAPDOOR,
                 BLOOMCRYSTAL, BLOOMCRYSTAL_ROCK,
+                ROUXE, ROUXE_ROCK,
                 MIASMA_SURFACE, MIASMA
         ));
     }
