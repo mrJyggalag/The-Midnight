@@ -5,9 +5,9 @@ import com.mushroom.midnight.client.particle.RiftParticleSystem;
 import com.mushroom.midnight.common.capability.RiftCooldownCapability;
 import com.mushroom.midnight.common.entity.creature.EntityRifter;
 import com.mushroom.midnight.common.registry.ModDimensions;
-import com.mushroom.midnight.common.world.MidnightTeleporter;
 import com.mushroom.midnight.common.world.BridgeManager;
 import com.mushroom.midnight.common.world.GlobalBridgeManager;
+import com.mushroom.midnight.common.world.MidnightTeleporter;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -18,7 +18,6 @@ import net.minecraft.world.DimensionType;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.vecmath.Vector3d;
 import java.util.HashSet;
@@ -245,7 +244,6 @@ public class EntityRift extends Entity implements IEntityAdditionalSpawnData {
         return this.particleSystem;
     }
 
-    @Nonnull
     public RiftBridge getBridge() {
         if (!this.world.isRemote && this.bridge == null) {
             this.bridge = this.createBridge();

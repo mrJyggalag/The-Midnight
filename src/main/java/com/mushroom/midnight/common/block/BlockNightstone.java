@@ -23,6 +23,6 @@ public class BlockNightstone extends Block implements IModelProvider {
 
     @Override
     public boolean canSustainPlant(IBlockState state, IBlockAccess world, BlockPos pos, EnumFacing direction, IPlantable plantable) {
-        return plantable instanceof IGlowingPlant || plantable instanceof BlockSapling;
+        return plantable instanceof IMidnightFungi || plantable instanceof BlockSapling;
     }
 }

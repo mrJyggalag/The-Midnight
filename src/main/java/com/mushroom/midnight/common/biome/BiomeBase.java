@@ -49,6 +49,36 @@ public class BiomeBase extends Biome implements IMidnightBiome {
             8
     );
 
+    protected static final WorldGenMidnightPlant DEWSHROOM_GENERATOR = new WorldGenMidnightPlant(
+            ModBlocks.DEWSHROOM.getDefaultState(),
+            ((BlockBush) ModBlocks.DEWSHROOM)::canBlockStay,
+            16
+    );
+
+    protected static final WorldGenDoubleMidnightPlant DOUBLE_DEWSHROOM_GENERATOR = new WorldGenDoubleMidnightPlant(
+            ModBlocks.DOUBLE_DEWSHROOM.getDefaultState(),
+            (world, pos, state) -> ModBlocks.DOUBLE_DEWSHROOM.canPlaceBlockAt(world, pos),
+            8
+    );
+
+    protected static final WorldGenMidnightPlant NIGHTSHROOM_GENERATOR = new WorldGenMidnightPlant(
+            ModBlocks.NIGHTSHROOM.getDefaultState(),
+            ((BlockBush) ModBlocks.NIGHTSHROOM)::canBlockStay,
+            16
+    );
+
+    protected static final WorldGenDoubleMidnightPlant DOUBLE_NIGHTSHROOM_GENERATOR = new WorldGenDoubleMidnightPlant(
+            ModBlocks.DOUBLE_NIGHTSHROOM.getDefaultState(),
+            (world, pos, state) -> ModBlocks.DOUBLE_NIGHTSHROOM.canPlaceBlockAt(world, pos),
+            8
+    );
+
+    protected static final WorldGenerator CRYSTAL_FLOWER_GENERATOR = new WorldGenMidnightPlant(
+            ModBlocks.CRYSTAL_FLOWER.getDefaultState(),
+            ((BlockBush) ModBlocks.CRYSTAL_FLOWER)::canBlockStay,
+            12
+    );
+
     protected int grassColor = 0xB084BC;
     protected int foliageColor = 0x8F6DBC;
 

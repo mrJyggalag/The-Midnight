@@ -27,6 +27,11 @@ public class BiomeBlackRidge extends BiomeBase {
             this.generateCoverPlant(world, rand, pos, 2, DOUBLE_LUMEN_GENERATOR);
         }
 
+        if (TerrainGen.decorate(world, rand, chunkPos, DecorateBiomeEvent.Decorate.EventType.SHROOM)) {
+            this.generateCoverPlant(world, rand, pos, 2, DEWSHROOM_GENERATOR);
+            this.generateCoverPlant(world, rand, pos, 2, NIGHTSHROOM_GENERATOR);
+        }
+
         super.decorate(world, rand, pos);
     }
 }

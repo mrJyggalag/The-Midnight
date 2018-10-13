@@ -25,6 +25,10 @@ public class RenderRift extends Render<EntityRift> {
     @Override
     public void doRender(EntityRift entity, double x, double y, double z, float entityYaw, float partialTicks) {
         RiftBridge bridge = entity.getBridge();
+        if (bridge == null) {
+            return;
+        }
+
         float openProgress = bridge.getOpenAnimation(partialTicks);
         float unstableTime = bridge.getUnstableAnimation(partialTicks);
 

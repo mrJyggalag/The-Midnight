@@ -1,5 +1,6 @@
 package com.mushroom.midnight.common.block;
 
+import com.mushroom.midnight.common.registry.ModBlocks;
 import net.minecraft.block.BlockSapling;
 import net.minecraft.block.IGrowable;
 import net.minecraft.block.state.BlockStateContainer;
@@ -13,13 +14,18 @@ import net.minecraftforge.event.terraingen.TerrainGen;
 import java.util.Random;
 import java.util.function.Supplier;
 
-public class BlockMidnightFungi extends BlockMidnightPlant implements IGrowable {
+public class BlockMidnightFungi extends BlockMidnightPlant implements IGrowable, IMidnightFungi {
     private final Supplier<WorldGenerator> generatorSupplier;
 
     public BlockMidnightFungi(Supplier<WorldGenerator> generatorSupplier) {
         super();
         this.setDefaultState(this.blockState.getBaseState().withProperty(BlockSapling.STAGE, 0));
         this.generatorSupplier = generatorSupplier;
+    }
+
+    @Override
+    protected boolean canSustainBush(IBlockState state) {
+        return super.canSustainBush(state) || state.getBlock() == ModBlocks.NIGHTSTONE;
     }
 
     @Override

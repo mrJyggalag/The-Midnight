@@ -9,7 +9,7 @@ import net.minecraftforge.client.MinecraftForgeClient;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockGlowingDoublePlant extends BlockDoubleMidnightPlant implements IGlowingPlant {
+public class BlockGlowingDoublePlant extends BlockDoubleMidnightPlant implements IMidnightFungi {
     public BlockGlowingDoublePlant() {
         super();
         this.setLightLevel(0.8F);
