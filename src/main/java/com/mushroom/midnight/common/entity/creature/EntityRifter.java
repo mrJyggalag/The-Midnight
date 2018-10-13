@@ -24,6 +24,9 @@ import net.minecraft.entity.ai.EntityAILookIdle;
 import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
 import net.minecraft.entity.ai.EntityAISwimming;
 import net.minecraft.entity.ai.EntityAIWatchClosest;
+import net.minecraft.entity.ai.attributes.AttributeModifier;
+import net.minecraft.entity.ai.attributes.IAttribute;
+import net.minecraft.entity.ai.attributes.IAttributeInstance;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
@@ -39,8 +42,18 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.UUID;
 
 public class EntityRifter extends EntityMob implements IRiftTraveler, IEntityAdditionalSpawnData {
+    private static final UUID SPEED_MODIFIER_ID = UUID.fromString("3b8cda1f-c11d-478b-98b1-6144940c7ba1");
+    private static final AttributeModifier HOME_SPEED_MODIFIER = new AttributeModifier(SPEED_MODIFIER_ID, "home_speed_modifier", 0.1, 2);
+
+    private static final UUID ARMOR_MODIFIER_ID = UUID.fromString("8cea53c5-1b5c-4b7c-9c86-192bf255c3d4");
+    private static final AttributeModifier HOME_ARMOR_MODIFIER = new AttributeModifier(ARMOR_MODIFIER_ID, "home_armor_modifier", 2.0, 2);
+
+    private static final UUID ATTACK_MODIFIER_ID = UUID.fromString("0e13d84c-52ed-4335-a284-49596533f445");
+    private static final AttributeModifier HOME_ATTACK_MODIFIER = new AttributeModifier(ATTACK_MODIFIER_ID, "home_attacl_modifier", 3.0, 2);
+
     public static final int CAPTURE_COOLDOWN = 15;
 
     private static final double RIFT_SEARCH_RADIUS = 48.0;
@@ -85,7 +98,7 @@ public class EntityRifter extends EntityMob implements IRiftTraveler, IEntityAdd
         super.applyEntityAttributes();
         this.getEntityAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(64.0);
         this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.2);
-        this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(3.0);
+        this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(1.0);
         this.getEntityAttribute(SharedMonsterAttributes.ARMOR).setBaseValue(4.0);
         this.getEntityAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE).setBaseValue(1.0);
     }
@@ -93,6 +106,10 @@ public class EntityRifter extends EntityMob implements IRiftTraveler, IEntityAdd
     @Override
     public void onLivingUpdate() {
         if (!this.world.isRemote) {
+            this.applyHomeModifier(SharedMonsterAttributes.MOVEMENT_SPEED, HOME_SPEED_MODIFIER);
+            this.applyHomeModifier(SharedMonsterAttributes.ATTACK_DAMAGE, HOME_ATTACK_MODIFIER);
+            this.applyHomeModifier(SharedMonsterAttributes.ARMOR, HOME_ARMOR_MODIFIER);
+
             this.checkBurn();
 
             if (this.capturedEntity != null && !this.capturedEntity.isEntityAlive()) {
@@ -123,6 +140,18 @@ public class EntityRifter extends EntityMob implements IRiftTraveler, IEntityAdd
             return false;
         }
         return this.homeRift.isPresent();
+    }
+
+    private void applyHomeModifier(IAttribute attribute, AttributeModifier modifier) {
+        IAttributeInstance instance = this.getEntityAttribute(attribute);
+        boolean home = this.world.provider.getDimensionType() == ModDimensions.MIDNIGHT;
+        if (home != instance.hasModifier(modifier)) {
+            if (home) {
+                instance.applyModifier(modifier);
+            } else {
+                instance.removeModifier(modifier);
+            }
+        }
     }
 
     private void updateHomeRift() {
