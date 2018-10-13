@@ -73,10 +73,12 @@ tile.midnight.double_nightshroom.name=Double Nightshroom
 tile.midnight.nightshroom_stem.name=Nightshroom Stem
 tile.midnight.nightshroom_hat.name=Nightshroom Hat
 tile.midnight.nightshroom_planks.name=Nightshroom Planks
+tile.midnight.nightshroom_shelf.name=Nightshroom Shelf
 
 tile.midnight.dewshroom_stem.name=Dewshroom Stem
 tile.midnight.dewshroom_hat.name=Dewshroom Hat
 tile.midnight.dewshroom_planks.name=Dewshroom Planks
+tile.midnight.dewshroom_shelf.name=Dewshroom Shelf
 
 # Items
 

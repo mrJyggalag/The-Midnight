@@ -13,6 +13,7 @@ import com.mushroom.midnight.common.block.BlockMidnightDirt;
 import com.mushroom.midnight.common.block.BlockMidnightDoor;
 import com.mushroom.midnight.common.block.BlockMidnightFungi;
 import com.mushroom.midnight.common.block.BlockMidnightFungiHat;
+import com.mushroom.midnight.common.block.BlockMidnightFungiShelf;
 import com.mushroom.midnight.common.block.BlockMidnightFungiStem;
 import com.mushroom.midnight.common.block.BlockMidnightFurnace;
 import com.mushroom.midnight.common.block.BlockMidnightGem;
@@ -78,9 +79,11 @@ public class ModBlocks {
 
     public static final Block NIGHTSHROOM = Blocks.AIR;
     public static final Block DOUBLE_NIGHTSHROOM = Blocks.AIR;
+    public static final Block NIGHTSHROOM_SHELF = Blocks.AIR;
 
     public static final Block DEWSHROOM = Blocks.AIR;
     public static final Block DOUBLE_DEWSHROOM = Blocks.AIR;
+    public static final Block DEWSHROOM_SHELF = Blocks.AIR;
 
     public static final Block DEWSHROOM_PLANKS = Blocks.AIR;
 
@@ -185,6 +188,8 @@ public class ModBlocks {
                         ModBlocks.DEWSHROOM_HAT.getDefaultState()
                 )), "dewshroom"),
                 RegUtil.withName(new BlockDoubleMidnightPlant(), "double_dewshroom"),
+                RegUtil.withName(new BlockMidnightFungiShelf(), "nightshroom_shelf"),
+                RegUtil.withName(new BlockMidnightFungiShelf(), "dewshroom_shelf"),
                 RegUtil.withName(new BlockGlowingPlant(), "lumen_bud"),
                 RegUtil.withName(new BlockGlowingDoublePlant(), "double_lumen_bud"),
                 RegUtil.withName(new BlockGlowingPlant(), "crystal_flower"),
@@ -221,8 +226,8 @@ public class ModBlocks {
                 MIDNIGHT_FURNACE,
                 MIDNIGHT_DIRT, MIDNIGHT_GRASS,
                 TALL_MIDNIGHT_GRASS, DOUBLE_MIDNIGHT_GRASS,
-                NIGHTSHROOM, DOUBLE_NIGHTSHROOM,
-                DEWSHROOM, DOUBLE_DEWSHROOM,
+                NIGHTSHROOM, DOUBLE_NIGHTSHROOM, NIGHTSHROOM_SHELF,
+                DEWSHROOM, DOUBLE_DEWSHROOM, DEWSHROOM_SHELF,
                 NIGHTSHROOM_STEM, NIGHTSHROOM_HAT,
                 DEWSHROOM_STEM, DEWSHROOM_HAT,
                 NIGHTSHROOM_PLANKS, DEWSHROOM_PLANKS,
