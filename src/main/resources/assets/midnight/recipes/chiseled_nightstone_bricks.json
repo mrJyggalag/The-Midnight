@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "midnight:nightstone_bricks"
+    }
+  ],
+  "result": {
+    "item": "midnight:chiseled_nightstone_bricks",
+    "count": 4
+  }
+}
