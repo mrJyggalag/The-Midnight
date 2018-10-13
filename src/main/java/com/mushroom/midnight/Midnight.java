@@ -16,7 +16,6 @@ import com.mushroom.midnight.common.registry.ModItems;
 import com.mushroom.midnight.common.util.EntityUtil;
 import com.mushroom.midnight.common.world.generator.MidnightOreGenerator;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
@@ -45,7 +44,7 @@ public class Midnight {
     public static final CreativeTabs MIDNIGHT_TAB = new CreativeTabs(MODID) {
         @Override
         public ItemStack createIcon() {
-            return new ItemStack(Items.APPLE);
+            return new ItemStack(ModBlocks.MIDNIGHT_GRASS);
         }
     };
 

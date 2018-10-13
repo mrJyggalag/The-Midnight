@@ -95,6 +95,11 @@ public class ModBlocks {
     @SubscribeEvent
     public static void registerBlocks(RegistryEvent.Register<Block> event) {
         blocks = Lists.newArrayList(
+                RegUtil.withName(new BlockMidnightGrass(), "midnight_grass"),
+                RegUtil.withName(new BlockMidnightDirt(), "midnight_dirt"),
+                RegUtil.withName(new BlockNightstone(), "nightstone"),
+                RegUtil.withName(new BlockBasic(Material.ROCK), "nightstone_bricks"),
+                RegUtil.withName(new BlockBasic(Material.ROCK), "chiseled_nightstone_bricks"),
                 RegUtil.withName(new BlockMidnightLog(), "shadowroot_log"),
                 RegUtil.withName(new BlockMidnightLeaves(() -> SHADOWROOT_SAPLING), "shadowroot_leaves"),
                 RegUtil.withName(new BlockBasic(Material.WOOD), "shadowroot_planks")
@@ -112,16 +117,16 @@ public class ModBlocks {
                         .withSoundType(SoundType.WOOD)
                         .setHardness(2.0F)
                         .setResistance(5.0F),
-                RegUtil.withName(new BlockNightstone(), "nightstone"),
-                RegUtil.withName(new BlockBasic(Material.ROCK), "nightstone_bricks"),
-                RegUtil.withName(new BlockBasic(Material.ROCK), "chiseled_nightstone_bricks"),
+                RegUtil.withName(new BlockCrystal(), "crystal"),
+                RegUtil.withName(new BlockBasic(Material.ROCK), "crystal_rock")
+                        .withSoundType(SoundType.GLASS)
+                        .withHarvestLevel("pickaxe", 1)
+                        .setLightLevel(1.0F)
+                        .setHardness(4.0F),
+                RegUtil.withName(new BlockMiasmaSurface(), "miasma_surface"),
+                RegUtil.withName(new BlockMiasmaFluid(), "miasma"),
                 RegUtil.withName(new BlockMidnightGem(() -> ModItems.DARK_PEARL), "dark_pearl_ore"),
                 RegUtil.withName(new BlockBasic(Material.IRON), "dark_pearl_block"),
-                RegUtil.withName(new BlockShadowrootCraftingTable(), "shadowroot_crafting_table"),
-                RegUtil.withName(new BlockShadowrootChest(), "shadowroot_chest"),
-                RegUtil.withName(new BlockMidnightFurnace(), "midnight_furnace"),
-                RegUtil.withName(new BlockMidnightDirt(), "midnight_dirt"),
-                RegUtil.withName(new BlockMidnightGrass(), "midnight_grass"),
                 RegUtil.withName(new BlockMidnightPlant(), "tall_midnight_grass"),
                 RegUtil.withName(new BlockDoubleMidnightPlant(), "double_midnight_grass"),
                 RegUtil.withName(new BlockGlowingPlant(), "lumen_bud"),
@@ -134,14 +139,9 @@ public class ModBlocks {
                 RegUtil.withName(new BlockMidnightTrapDoor(), "shadowroot_trapdoor"),
                 RegUtil.withName(new BlockMidnightTrapDoor(), "dark_willow_trapdoor"),
                 RegUtil.withName(new BlockMidnightTrapDoor(), "dead_wood_trapdoor"),
-                RegUtil.withName(new BlockCrystal(), "crystal"),
-                RegUtil.withName(new BlockBasic(Material.ROCK), "crystal_rock")
-                        .withSoundType(SoundType.GLASS)
-                        .withHarvestLevel("pickaxe", 1)
-                        .setLightLevel(1.0F)
-                        .setHardness(4.0F),
-                RegUtil.withName(new BlockMiasmaSurface(), "miasma_surface"),
-                RegUtil.withName(new BlockMiasmaFluid(), "miasma")
+                RegUtil.withName(new BlockShadowrootCraftingTable(), "shadowroot_crafting_table"),
+                RegUtil.withName(new BlockShadowrootChest(), "shadowroot_chest"),
+                RegUtil.withName(new BlockMidnightFurnace(), "midnight_furnace")
         );
 
         blocks.forEach(event.getRegistry()::register);
