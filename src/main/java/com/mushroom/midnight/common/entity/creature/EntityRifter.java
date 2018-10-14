@@ -270,7 +270,7 @@ public class EntityRifter extends EntityMob implements IRiftTraveler, IEntityAdd
 
     @Override
     protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
-        return ModSounds.RIFTER_AMBIENT;
+        return ModSounds.RIFTER_HURT;
     }
 
     @Override

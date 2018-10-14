@@ -23,6 +23,7 @@ public class ModSounds {
     public static final SoundEvent RIFT_UNSTABLE = SoundEvents.BLOCK_PORTAL_AMBIENT;
 
     public static final SoundEvent RIFTER_AMBIENT = SoundEvents.ENTITY_ZOMBIE_AMBIENT;
+    public static final SoundEvent RIFTER_HURT = SoundEvents.ENTITY_ZOMBIE_HURT;
     public static final SoundEvent RIFTER_DEATH = SoundEvents.ENTITY_ZOMBIE_DEATH;
 
     @SubscribeEvent
@@ -36,6 +37,7 @@ public class ModSounds {
                 RegUtil.applyName(new SoundEvent(new ResourceLocation(Midnight.MODID, "rift_idle"))),
                 RegUtil.applyName(new SoundEvent(new ResourceLocation(Midnight.MODID, "rift_unstable"))),
                 RegUtil.applyName(new SoundEvent(new ResourceLocation(Midnight.MODID, "rifter_ambient"))),
+                RegUtil.applyName(new SoundEvent(new ResourceLocation(Midnight.MODID, "rifter_hurt"))),
                 RegUtil.applyName(new SoundEvent(new ResourceLocation(Midnight.MODID, "rifter_death")))
         );
     }

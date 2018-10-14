@@ -53,7 +53,19 @@
   },
   "midnight.rifter_ambient": {
     "category": "hostile",
-    "sounds": ["midnight:entity/rifter_ambient_1"]
+    "sounds": [
+      "midnight:entity/rifter_ambient_1",
+      "midnight:entity/rifter_ambient_2",
+      "midnight:entity/rifter_ambient_3"
+    ]
+  },
+  "midnight.rifter_hurt": {
+    "category": "hostile",
+    "sounds": [
+      "midnight:entity/rifter_hurt_1",
+      "midnight:entity/rifter_hurt_2",
+      "midnight:entity/rifter_hurt_3"
+    ]
   },
   "midnight.rifter_death": {
     "category": "hostile",
