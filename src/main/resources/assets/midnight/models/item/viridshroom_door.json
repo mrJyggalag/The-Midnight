@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "midnight:items/nightshroom_door"
+    "layer0": "midnight:items/viridshroom_door"
   }
 }

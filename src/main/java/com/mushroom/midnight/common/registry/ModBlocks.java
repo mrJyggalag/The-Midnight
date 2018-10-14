@@ -11,6 +11,7 @@ import com.mushroom.midnight.common.block.BlockMiasmaFluid;
 import com.mushroom.midnight.common.block.BlockMiasmaSurface;
 import com.mushroom.midnight.common.block.BlockMidnightDirt;
 import com.mushroom.midnight.common.block.BlockMidnightDoor;
+import com.mushroom.midnight.common.block.BlockDoubleMidnightFungi;
 import com.mushroom.midnight.common.block.BlockMidnightFungi;
 import com.mushroom.midnight.common.block.BlockMidnightFungiHat;
 import com.mushroom.midnight.common.block.BlockMidnightFungiShelf;
@@ -204,17 +205,17 @@ public class ModBlocks {
                         ModBlocks.NIGHTSHROOM_STEM.getDefaultState(),
                         ModBlocks.NIGHTSHROOM_HAT.getDefaultState()
                 )), "nightshroom"),
-                RegUtil.withName(new BlockDoubleMidnightPlant(), "double_nightshroom"),
+                RegUtil.withName(new BlockDoubleMidnightFungi(), "double_nightshroom"),
                 RegUtil.withName(new BlockMidnightFungi(() -> new WorldGenMidnightFungi(
                         ModBlocks.DEWSHROOM_STEM.getDefaultState(),
                         ModBlocks.DEWSHROOM_HAT.getDefaultState()
                 )), "dewshroom"),
-                RegUtil.withName(new BlockDoubleMidnightPlant(), "double_dewshroom"),
+                RegUtil.withName(new BlockDoubleMidnightFungi(), "double_dewshroom"),
                 RegUtil.withName(new BlockMidnightFungi(() -> new WorldGenMidnightFungi(
                         ModBlocks.VIRIDSHROOM_STEM.getDefaultState(),
                         ModBlocks.VIRIDSHROOM_HAT.getDefaultState()
                 )), "viridshroom"),
-                RegUtil.withName(new BlockDoubleMidnightPlant(), "double_viridshroom"),
+                RegUtil.withName(new BlockDoubleMidnightFungi(), "double_viridshroom"),
                 RegUtil.withName(new BlockMidnightFungiShelf(), "nightshroom_shelf"),
                 RegUtil.withName(new BlockMidnightFungiShelf(), "dewshroom_shelf"),
                 RegUtil.withName(new BlockMidnightFungiShelf(), "viridshroom_shelf"),

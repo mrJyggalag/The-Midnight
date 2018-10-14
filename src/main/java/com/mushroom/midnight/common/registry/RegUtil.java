@@ -6,6 +6,7 @@ import net.minecraft.potion.Potion;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.biome.Biome;
+import net.minecraftforge.fml.relauncher.ReflectionHelper;
 import net.minecraftforge.registries.GameData;
 
 public class RegUtil {
@@ -31,13 +32,15 @@ public class RegUtil {
     }
 
     public static <T extends Biome> T applyName(T biome) {
-        ResourceLocation registryName = GameData.checkPrefix(biome.getBiomeName());
+        String name = ReflectionHelper.getPrivateValue(Biome.class, biome, "biomeName", "field_76791_y");
+        ResourceLocation registryName = GameData.checkPrefix(name);
         biome.setRegistryName(registryName);
         return biome;
     }
 
     public static <T extends SoundEvent> T applyName(T sound) {
-        sound.setRegistryName(sound.getSoundName());
+        ResourceLocation name = ReflectionHelper.getPrivateValue(SoundEvent.class, sound, "soundName", "field_187506_b");
+        sound.setRegistryName(name);
         return sound;
     }
 }
