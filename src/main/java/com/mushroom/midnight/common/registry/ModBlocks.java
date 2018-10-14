@@ -22,6 +22,7 @@ import com.mushroom.midnight.common.block.BlockMidnightTrapDoor;
 import com.mushroom.midnight.common.block.BlockNightstone;
 import com.mushroom.midnight.common.block.BlockShadowrootChest;
 import com.mushroom.midnight.common.block.BlockShadowrootCraftingTable;
+import com.mushroom.midnight.common.tile.base.TileEntityMidnightFurnace;
 import com.mushroom.midnight.common.tile.base.TileEntityShadowrootChest;
 import com.mushroom.midnight.common.world.generator.WorldGenMidnightTree;
 import net.minecraft.block.Block;
@@ -65,6 +66,7 @@ public class ModBlocks {
     public static final Block SHADOWROOT_CRAFTING_TABLE = Blocks.AIR;
     public static final Block SHADOWROOT_CHEST = Blocks.AIR;
     public static final Block MIDNIGHT_FURNACE = Blocks.AIR;
+    public static final Block MIDNIGHT_FURNACE_LIT = Blocks.AIR;
 
     public static final Block MIDNIGHT_DIRT = Blocks.AIR;
     public static final Block MIDNIGHT_GRASS = Blocks.AIR;
@@ -153,12 +155,14 @@ public class ModBlocks {
                 RegUtil.withName(new BlockMidnightTrapDoor(), "dead_wood_trapdoor"),
                 RegUtil.withName(new BlockShadowrootCraftingTable(), "shadowroot_crafting_table"),
                 RegUtil.withName(new BlockShadowrootChest(), "shadowroot_chest"),
-                RegUtil.withName(new BlockMidnightFurnace(), "midnight_furnace")
+                RegUtil.withName(new BlockMidnightFurnace(false), "midnight_furnace"),
+                RegUtil.withName(new BlockMidnightFurnace(true), "midnight_furnace_lit")
         );
 
         blocks.forEach(event.getRegistry()::register);
 
         registerTile(TileEntityShadowrootChest.class, "tile_shadowroot_chest");
+        registerTile(TileEntityMidnightFurnace.class, "tile_midnight_furnace");
     }
 
     @SubscribeEvent
