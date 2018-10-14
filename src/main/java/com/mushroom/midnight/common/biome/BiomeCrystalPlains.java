@@ -41,8 +41,8 @@ public class BiomeCrystalPlains extends BiomeBase {
 
         ChunkPos chunkPos = new ChunkPos(pos);
         if (TerrainGen.decorate(world, rand, chunkPos, DecorateBiomeEvent.Decorate.EventType.FLOWERS)) {
-            this.generateCoverPlant(world, rand, pos, 2, LUMEN_GENERATOR);
-            this.generateCoverPlant(world, rand, pos, 2, DOUBLE_LUMEN_GENERATOR);
+            this.generateCoverPlant(world, rand, pos, 1, LUMEN_GENERATOR);
+            this.generateCoverPlant(world, rand, pos, 1, DOUBLE_LUMEN_GENERATOR);
 
             this.generateCoverPlant(world, rand, pos, 5, CRYSTAL_FLOWER_GENERATOR);
         }

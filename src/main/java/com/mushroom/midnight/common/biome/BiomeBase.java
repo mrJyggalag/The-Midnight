@@ -42,13 +42,13 @@ public class BiomeBase extends Biome implements IMidnightBiome {
     protected static final WorldGenMidnightPlant LUMEN_GENERATOR = new WorldGenMidnightPlant(
             ModBlocks.LUMEN_BUD.getDefaultState(),
             ((BlockBush) ModBlocks.LUMEN_BUD)::canBlockStay,
-            12
+            32
     );
 
     protected static final WorldGenDoubleMidnightPlant DOUBLE_LUMEN_GENERATOR = new WorldGenDoubleMidnightPlant(
             ModBlocks.DOUBLE_LUMEN_BUD.getDefaultState(),
             (world, pos, state) -> ModBlocks.DOUBLE_LUMEN_BUD.canPlaceBlockAt(world, pos),
-            8
+            16
     );
 
     protected static final WorldGenSmallFungi FUNGI_GENERATOR = new WorldGenSmallFungi(16);
