@@ -15,7 +15,7 @@ import java.util.Random;
 // Messy 'cleanup' of `WorldGenBigMushroom`
 // TODO: Rewrite
 public class WorldGenMidnightFungi extends WorldGenerator {
-    private static final Block[] SHELF_BLOCKS = new Block[] { ModBlocks.NIGHTSHROOM_SHELF, ModBlocks.DEWSHROOM_SHELF };
+    private static final Block[] SHELF_BLOCKS = new Block[] { ModBlocks.NIGHTSHROOM_SHELF, ModBlocks.DEWSHROOM_SHELF, ModBlocks.VIRIDSHROOM_SHELF };
 
     private final IBlockState stem;
     private final IBlockState cap;

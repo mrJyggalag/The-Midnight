@@ -1,0 +1,23 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "midnight:shelf",
+    "textures": {
+      "shelf": "midnight:blocks/viridshroom_shelf"
+    }
+  },
+  "variants": {
+    "facing": {
+      "north": {},
+      "east": {"y": 90},
+      "south": {"y": 180},
+      "west": {"y": 270},
+      "up": {
+        "model": "midnight:fan",
+        "textures": {
+          "fan": "midnight:blocks/viridshroom_shelf"
+        }
+      }
+    }
+  }
+}

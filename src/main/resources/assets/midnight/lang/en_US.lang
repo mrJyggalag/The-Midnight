@@ -47,8 +47,6 @@ tile.midnight.double_lumen_bud.name=Double Lumen Bud
 tile.midnight.shadowroot_trapdoor.name=Shadowroot Trapdoor
 tile.midnight.dark_willow_trapdoor.name=Dark Willow Trapdoor
 tile.midnight.dead_wood_trapdoor.name=Dead Wood Trapdoor
-tile.midnight.nightshroom_trapdoor.name=Nightshroom Trapdoor
-tile.midnight.dewshroom_trapdoor.name=Dewshroom Trapdoor
 
 tile.midnight.shadowroot_sapling.name=Shadowroot Sapling
 tile.midnight.dark_willow_sapling.name=Dark Willow Sapling
@@ -70,15 +68,26 @@ tile.midnight.double_dewshroom.name=Double Dewshroom
 tile.midnight.nightshroom.name=Nightshroom
 tile.midnight.double_nightshroom.name=Double Nightshroom
 
+tile.midnight.viridshroom.name=Viridshroom
+tile.midnight.double_viridshroom.name=Double Viridshroom
+
 tile.midnight.nightshroom_stem.name=Nightshroom Stem
 tile.midnight.nightshroom_hat.name=Nightshroom Hat
 tile.midnight.nightshroom_planks.name=Nightshroom Planks
 tile.midnight.nightshroom_shelf.name=Nightshroom Shelf
+tile.midnight.nightshroom_trapdoor.name=Nightshroom Trapdoor
 
 tile.midnight.dewshroom_stem.name=Dewshroom Stem
 tile.midnight.dewshroom_hat.name=Dewshroom Hat
 tile.midnight.dewshroom_planks.name=Dewshroom Planks
 tile.midnight.dewshroom_shelf.name=Dewshroom Shelf
+tile.midnight.dewshroom_trapdoor.name=Dewshroom Trapdoor
+
+tile.midnight.viridshroom_stem.name=Viridshroom Stem
+tile.midnight.viridshroom_hat.name=Viridshroom Hat
+tile.midnight.viridshroom_planks.name=Viridshroom Planks
+tile.midnight.viridshroom_shelf.name=Viridshroom Shelf
+tile.midnight.viridshroom_trapdoor.name=Viridshroom Trapdoor
 
 # Items
 
@@ -86,11 +95,15 @@ item.midnight.shadowroot_door.name=Shadowroot Door
 item.midnight.dark_willow_door.name=Dark Willow Door
 item.midnight.dead_wood_door.name=Dead Wood Door
 
+item.midnight.nightshroom_door.name=Nightshroom Door
+item.midnight.dewshroom_door.name=Dewshroom Door
+item.midnight.viridshroom_door.name=Viridshroom Door
+
 item.midnight.dark_pearl.name=Dark Pearl
 
 # Fluids
 
-fluid.midnight.miasma.name=Miasma
+fluid.midnight.miasma=Miasma
 
 # Entities
 

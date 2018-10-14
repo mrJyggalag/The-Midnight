@@ -2,6 +2,7 @@ package com.mushroom.midnight.common.world.generator;
 
 import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.common.registry.ModBlocks;
+import com.mushroom.midnight.common.registry.ModDimensions;
 import com.mushroom.midnight.common.world.noise.INoiseSampler;
 import com.mushroom.midnight.common.world.noise.OctaveNoiseSampler;
 import net.minecraft.util.math.BlockPos;
@@ -32,8 +33,12 @@ public class MidnightRouxeGenerator {
     private static final Map<World, INoiseSampler> NOISE_SAMPLERS = new WeakHashMap<>();
 
     @SubscribeEvent
-    public static void onDecorate(DecorateBiomeEvent.Post event) {
+    public static void onDecorate(DecorateBiomeEvent.Pre event) {
         World world = event.getWorld();
+        if (world.provider.getDimensionType() != ModDimensions.MIDNIGHT) {
+            return;
+        }
+
         INoiseSampler sampler = getNoiseSampler(world);
 
         ChunkPos chunkPos = event.getChunkPos();

@@ -23,6 +23,10 @@ public class ModItems {
     public static final Item DARK_WILLOW_DOOR = Items.AIR;
     public static final Item DEAD_WOOD_DOOR = Items.AIR;
 
+    public static final Item NIGHTSHROOM_DOOR = Items.AIR;
+    public static final Item DEWSHROOM_DOOR = Items.AIR;
+    public static final Item VIRIDSHROOM_DOOR = Items.AIR;
+
     public static final Item DARK_PEARL = Items.AIR;
 
     static List<Item> items;
@@ -33,6 +37,9 @@ public class ModItems {
                 RegUtil.withName(new ItemMidnightDoor(ModBlocks.SHADOWROOT_DOOR).setCreativeTab(Midnight.MIDNIGHT_TAB), "shadowroot_door"),
                 RegUtil.withName(new ItemMidnightDoor(ModBlocks.DARK_WILLOW_DOOR).setCreativeTab(Midnight.MIDNIGHT_TAB), "dark_willow_door"),
                 RegUtil.withName(new ItemMidnightDoor(ModBlocks.DEAD_WOOD_DOOR).setCreativeTab(Midnight.MIDNIGHT_TAB), "dead_wood_door"),
+                RegUtil.withName(new ItemMidnightDoor(ModBlocks.NIGHTSHROOM_DOOR).setCreativeTab(Midnight.MIDNIGHT_TAB), "nightshroom_door"),
+                RegUtil.withName(new ItemMidnightDoor(ModBlocks.DEWSHROOM_DOOR).setCreativeTab(Midnight.MIDNIGHT_TAB), "dewshroom_door"),
+                RegUtil.withName(new ItemMidnightDoor(ModBlocks.VIRIDSHROOM_DOOR).setCreativeTab(Midnight.MIDNIGHT_TAB), "viridshroom_door"),
                 RegUtil.withName(new ItemBasic(), "dark_pearl")
         );
 

@@ -28,10 +28,8 @@ public class BiomeWarpedFields extends BiomeBase {
         }
 
         if (TerrainGen.decorate(world, rand, chunkPos, DecorateBiomeEvent.Decorate.EventType.SHROOM)) {
-            this.generateCoverPlant(world, rand, pos, 2, DEWSHROOM_GENERATOR);
-            this.generateCoverPlant(world, rand, pos, 1, DOUBLE_DEWSHROOM_GENERATOR);
-            this.generateCoverPlant(world, rand, pos, 2, NIGHTSHROOM_GENERATOR);
-            this.generateCoverPlant(world, rand, pos, 1, DOUBLE_NIGHTSHROOM_GENERATOR);
+            this.generateCoverPlant(world, rand, pos, 2, FUNGI_GENERATOR);
+            this.generateCoverPlant(world, rand, pos, 1, DOUBLE_FUNGI_GENERATOR);
         }
     }
 }

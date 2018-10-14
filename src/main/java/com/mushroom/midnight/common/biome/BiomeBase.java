@@ -1,9 +1,11 @@
 package com.mushroom.midnight.common.biome;
 
 import com.mushroom.midnight.common.registry.ModBlocks;
+import com.mushroom.midnight.common.world.generator.WorldGenDoubleFungi;
 import com.mushroom.midnight.common.world.generator.WorldGenDoubleMidnightPlant;
 import com.mushroom.midnight.common.world.generator.WorldGenMidnightPlant;
 import com.mushroom.midnight.common.world.generator.WorldGenMidnightTree;
+import com.mushroom.midnight.common.world.generator.WorldGenSmallFungi;
 import net.minecraft.block.BlockBush;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -49,29 +51,8 @@ public class BiomeBase extends Biome implements IMidnightBiome {
             8
     );
 
-    protected static final WorldGenMidnightPlant DEWSHROOM_GENERATOR = new WorldGenMidnightPlant(
-            ModBlocks.DEWSHROOM.getDefaultState(),
-            ((BlockBush) ModBlocks.DEWSHROOM)::canBlockStay,
-            16
-    );
-
-    protected static final WorldGenDoubleMidnightPlant DOUBLE_DEWSHROOM_GENERATOR = new WorldGenDoubleMidnightPlant(
-            ModBlocks.DOUBLE_DEWSHROOM.getDefaultState(),
-            (world, pos, state) -> ModBlocks.DOUBLE_DEWSHROOM.canPlaceBlockAt(world, pos),
-            8
-    );
-
-    protected static final WorldGenMidnightPlant NIGHTSHROOM_GENERATOR = new WorldGenMidnightPlant(
-            ModBlocks.NIGHTSHROOM.getDefaultState(),
-            ((BlockBush) ModBlocks.NIGHTSHROOM)::canBlockStay,
-            16
-    );
-
-    protected static final WorldGenDoubleMidnightPlant DOUBLE_NIGHTSHROOM_GENERATOR = new WorldGenDoubleMidnightPlant(
-            ModBlocks.DOUBLE_NIGHTSHROOM.getDefaultState(),
-            (world, pos, state) -> ModBlocks.DOUBLE_NIGHTSHROOM.canPlaceBlockAt(world, pos),
-            8
-    );
+    protected static final WorldGenSmallFungi FUNGI_GENERATOR = new WorldGenSmallFungi(16);
+    protected static final WorldGenDoubleFungi DOUBLE_FUNGI_GENERATOR = new WorldGenDoubleFungi(8);
 
     protected static final WorldGenerator CRYSTAL_FLOWER_GENERATOR = new WorldGenMidnightPlant(
             ModBlocks.CRYSTAL_FLOWER.getDefaultState(),

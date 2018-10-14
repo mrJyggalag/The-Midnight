@@ -22,8 +22,7 @@ public class BiomeObscuredPeaks extends BiomeBase {
     public void decorate(World world, Random rand, BlockPos pos) {
         ChunkPos chunkPos = new ChunkPos(pos);
         if (TerrainGen.decorate(world, rand, chunkPos, DecorateBiomeEvent.Decorate.EventType.SHROOM)) {
-            this.generateCoverPlant(world, rand, pos, 2, DEWSHROOM_GENERATOR);
-            this.generateCoverPlant(world, rand, pos, 2, NIGHTSHROOM_GENERATOR);
+            this.generateCoverPlant(world, rand, pos, 3, FUNGI_GENERATOR);
         }
     }
 }

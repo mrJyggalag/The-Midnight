@@ -75,8 +75,6 @@ public class RiftBridge {
             this.unstable.set(true);
         }
 
-        System.out.println(this.unstable.getTimer());
-
         EntityRift source = this.getSource();
         if (source != null && source.isDead) {
             return true;

@@ -12,18 +12,24 @@ import net.minecraftforge.event.terraingen.TerrainGen;
 import java.util.Random;
 
 public class BiomeFungiForest extends BiomeBase {
-    protected static final WorldGenMidnightFungi LARGE_DEWSHROOM_GENERATOR = new WorldGenMidnightFungi(
-            ModBlocks.DEWSHROOM_STEM.getDefaultState(),
-            ModBlocks.DEWSHROOM_HAT.getDefaultState()
-    );
-    protected static final WorldGenMidnightFungi LARGE_NIGHTSHROOM_GENERATOR = new WorldGenMidnightFungi(
-            ModBlocks.NIGHTSHROOM_STEM.getDefaultState(),
-            ModBlocks.NIGHTSHROOM_HAT.getDefaultState()
-    );
+    protected static final WorldGenMidnightFungi[] LARGE_FUNGI_GENERATORS = new WorldGenMidnightFungi[] {
+            new WorldGenMidnightFungi(
+                    ModBlocks.DEWSHROOM_STEM.getDefaultState(),
+                    ModBlocks.DEWSHROOM_HAT.getDefaultState()
+            ),
+            new WorldGenMidnightFungi(
+                    ModBlocks.NIGHTSHROOM_STEM.getDefaultState(),
+                    ModBlocks.NIGHTSHROOM_HAT.getDefaultState()
+            ),
+            new WorldGenMidnightFungi(
+                    ModBlocks.VIRIDSHROOM_STEM.getDefaultState(),
+                    ModBlocks.VIRIDSHROOM_HAT.getDefaultState()
+            )
+    };
 
     public BiomeFungiForest(BiomeProperties properties) {
         super(properties);
-        this.decorator.grassPerChunk = 4;
+        this.decorator.grassPerChunk = 2;
 
         this.spawnableMonsterList.add(new SpawnListEntry(EntityRifter.class, 1, 0, 1));
     }
@@ -38,16 +44,14 @@ public class BiomeFungiForest extends BiomeBase {
                 int offsetZ = rand.nextInt(16) + 8;
 
                 BlockPos surface = world.getTopSolidOrLiquidBlock(pos.add(offsetX, 0, offsetZ));
-                WorldGenMidnightFungi generator = rand.nextBoolean() ? LARGE_DEWSHROOM_GENERATOR : LARGE_NIGHTSHROOM_GENERATOR;
+                WorldGenMidnightFungi generator = LARGE_FUNGI_GENERATORS[rand.nextInt(LARGE_FUNGI_GENERATORS.length)];
                 generator.generate(world, rand, surface);
             }
         }
 
         if (TerrainGen.decorate(world, rand, chunkPos, DecorateBiomeEvent.Decorate.EventType.SHROOM)) {
-            this.generateCoverPlant(world, rand, pos, 4, DEWSHROOM_GENERATOR);
-            this.generateCoverPlant(world, rand, pos, 2, DOUBLE_DEWSHROOM_GENERATOR);
-            this.generateCoverPlant(world, rand, pos, 4, NIGHTSHROOM_GENERATOR);
-            this.generateCoverPlant(world, rand, pos, 2, DOUBLE_NIGHTSHROOM_GENERATOR);
+            this.generateCoverPlant(world, rand, pos, 8, FUNGI_GENERATOR);
+            this.generateCoverPlant(world, rand, pos, 6, DOUBLE_FUNGI_GENERATOR);
         }
 
         super.decorate(world, rand, pos);

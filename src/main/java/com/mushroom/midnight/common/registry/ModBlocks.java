@@ -89,6 +89,15 @@ public class ModBlocks {
 
     public static final Block DEWSHROOM_PLANKS = Blocks.AIR;
 
+    public static final Block VIRIDSHROOM = Blocks.AIR;
+    public static final Block DOUBLE_VIRIDSHROOM = Blocks.AIR;
+    public static final Block VIRIDSHROOM_SHELF = Blocks.AIR;
+
+    public static final Block VIRIDSHROOM_PLANKS = Blocks.AIR;
+
+    public static final Block VIRIDSHROOM_STEM = Blocks.AIR;
+    public static final Block VIRIDSHROOM_HAT = Blocks.AIR;
+
     public static final Block NIGHTSHROOM_STEM = Blocks.AIR;
     public static final Block NIGHTSHROOM_HAT = Blocks.AIR;
 
@@ -109,12 +118,17 @@ public class ModBlocks {
     public static final Block DEAD_WOOD_DOOR = Blocks.AIR;
     public static final Block DARK_WILLOW_DOOR = Blocks.AIR;
 
+    public static final Block NIGHTSHROOM_DOOR = Blocks.AIR;
+    public static final Block DEWSHROOM_DOOR = Blocks.AIR;
+    public static final Block VIRIDSHROOM_DOOR = Blocks.AIR;
+
     public static final Block SHADOWROOT_TRAPDOOR = Blocks.AIR;
     public static final Block DEAD_WOOD_TRAPDOOR = Blocks.AIR;
     public static final Block DARK_WILLOW_TRAPDOOR = Blocks.AIR;
 
     public static final Block NIGHTSHROOM_TRAPDOOR = Blocks.AIR;
     public static final Block DEWSHROOM_TRAPDOOR = Blocks.AIR;
+    public static final Block VIRIDSHROOM_TRAPDOOR = Blocks.AIR;
 
     public static final Block BLOOMCRYSTAL = Blocks.AIR;
     public static final Block BLOOMCRYSTAL_ROCK = Blocks.AIR;
@@ -154,11 +168,17 @@ public class ModBlocks {
                 RegUtil.withName(new BlockMidnightFungiHat(() -> NIGHTSHROOM), "nightshroom_hat"),
                 RegUtil.withName(new BlockMidnightFungiStem(), "dewshroom_stem"),
                 RegUtil.withName(new BlockMidnightFungiHat(() -> DEWSHROOM), "dewshroom_hat"),
+                RegUtil.withName(new BlockMidnightFungiStem(), "viridshroom_stem"),
+                RegUtil.withName(new BlockMidnightFungiHat(() -> VIRIDSHROOM), "viridshroom_hat"),
                 RegUtil.withName(new BlockBasic(Material.WOOD), "nightshroom_planks")
                         .withSoundType(SoundType.WOOD)
                         .setHardness(2.0F)
                         .setResistance(5.0F),
                 RegUtil.withName(new BlockBasic(Material.WOOD), "dewshroom_planks")
+                        .withSoundType(SoundType.WOOD)
+                        .setHardness(2.0F)
+                        .setResistance(5.0F),
+                RegUtil.withName(new BlockBasic(Material.WOOD), "viridshroom_planks")
                         .withSoundType(SoundType.WOOD)
                         .setHardness(2.0F)
                         .setResistance(5.0F),
@@ -190,8 +210,14 @@ public class ModBlocks {
                         ModBlocks.DEWSHROOM_HAT.getDefaultState()
                 )), "dewshroom"),
                 RegUtil.withName(new BlockDoubleMidnightPlant(), "double_dewshroom"),
+                RegUtil.withName(new BlockMidnightFungi(() -> new WorldGenMidnightFungi(
+                        ModBlocks.VIRIDSHROOM_STEM.getDefaultState(),
+                        ModBlocks.VIRIDSHROOM_HAT.getDefaultState()
+                )), "viridshroom"),
+                RegUtil.withName(new BlockDoubleMidnightPlant(), "double_viridshroom"),
                 RegUtil.withName(new BlockMidnightFungiShelf(), "nightshroom_shelf"),
                 RegUtil.withName(new BlockMidnightFungiShelf(), "dewshroom_shelf"),
+                RegUtil.withName(new BlockMidnightFungiShelf(), "viridshroom_shelf"),
                 RegUtil.withName(new BlockGlowingPlant(), "lumen_bud"),
                 RegUtil.withName(new BlockGlowingDoublePlant(), "double_lumen_bud"),
                 RegUtil.withName(new BlockGlowingPlant(), "crystal_flower"),
@@ -200,11 +226,15 @@ public class ModBlocks {
                 RegUtil.withName(new BlockMidnightDoor(() -> ModItems.SHADOWROOT_DOOR), "shadowroot_door"),
                 RegUtil.withName(new BlockMidnightDoor(() -> ModItems.DARK_WILLOW_DOOR), "dark_willow_door"),
                 RegUtil.withName(new BlockMidnightDoor(() -> ModItems.DEAD_WOOD_DOOR), "dead_wood_door"),
+                RegUtil.withName(new BlockMidnightDoor(() -> ModItems.NIGHTSHROOM_DOOR), "nightshroom_door"),
+                RegUtil.withName(new BlockMidnightDoor(() -> ModItems.DEWSHROOM_DOOR), "dewshroom_door"),
+                RegUtil.withName(new BlockMidnightDoor(() -> ModItems.VIRIDSHROOM_DOOR), "viridshroom_door"),
                 RegUtil.withName(new BlockMidnightTrapDoor(), "shadowroot_trapdoor"),
                 RegUtil.withName(new BlockMidnightTrapDoor(), "dark_willow_trapdoor"),
                 RegUtil.withName(new BlockMidnightTrapDoor(), "dead_wood_trapdoor"),
                 RegUtil.withName(new BlockMidnightTrapDoor(), "nightshroom_trapdoor"),
                 RegUtil.withName(new BlockMidnightTrapDoor(), "dewshroom_trapdoor"),
+                RegUtil.withName(new BlockMidnightTrapDoor(), "viridshroom_trapdoor"),
                 RegUtil.withName(new BlockShadowrootCraftingTable(), "shadowroot_crafting_table"),
                 RegUtil.withName(new BlockShadowrootChest(), "shadowroot_chest"),
                 RegUtil.withName(new BlockMidnightFurnace(false), "midnight_furnace"),
@@ -232,14 +262,16 @@ public class ModBlocks {
                 TALL_MIDNIGHT_GRASS, DOUBLE_MIDNIGHT_GRASS,
                 NIGHTSHROOM, DOUBLE_NIGHTSHROOM, NIGHTSHROOM_SHELF,
                 DEWSHROOM, DOUBLE_DEWSHROOM, DEWSHROOM_SHELF,
+                VIRIDSHROOM, DOUBLE_VIRIDSHROOM, VIRIDSHROOM_SHELF,
                 NIGHTSHROOM_STEM, NIGHTSHROOM_HAT,
                 DEWSHROOM_STEM, DEWSHROOM_HAT,
-                NIGHTSHROOM_PLANKS, DEWSHROOM_PLANKS,
+                VIRIDSHROOM_STEM, VIRIDSHROOM_HAT,
+                NIGHTSHROOM_PLANKS, DEWSHROOM_PLANKS, VIRIDSHROOM_PLANKS,
                 LUMEN_BUD, DOUBLE_LUMEN_BUD,
                 CRYSTAL_FLOWER,
                 SHADOWROOT_SAPLING, DARK_WILLOW_SAPLING,
                 SHADOWROOT_TRAPDOOR, DARK_WILLOW_TRAPDOOR, DEAD_WOOD_TRAPDOOR,
-                NIGHTSHROOM_TRAPDOOR, DEWSHROOM_TRAPDOOR,
+                NIGHTSHROOM_TRAPDOOR, DEWSHROOM_TRAPDOOR, VIRIDSHROOM_TRAPDOOR,
                 BLOOMCRYSTAL, BLOOMCRYSTAL_ROCK,
                 ROUXE, ROUXE_ROCK,
                 MIASMA_SURFACE, MIASMA

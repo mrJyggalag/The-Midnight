@@ -191,7 +191,7 @@ public class ClientEventHandler {
     @SubscribeEvent
     public static void onSpawnEntity(EntityJoinWorldEvent event) {
         Entity entity = event.getEntity();
-        if (entity instanceof EntityRift) {
+        if (entity instanceof EntityRift && event.getWorld().isRemote) {
             MC.getSoundHandler().playSound(new IdleRiftSound((EntityRift) entity));
         }
     }

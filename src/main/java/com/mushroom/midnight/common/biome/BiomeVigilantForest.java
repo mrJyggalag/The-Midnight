@@ -35,8 +35,7 @@ public class BiomeVigilantForest extends BiomeBase {
         }
 
         if (TerrainGen.decorate(world, rand, chunkPos, DecorateBiomeEvent.Decorate.EventType.SHROOM)) {
-            this.generateCoverPlant(world, rand, pos, 1, DEWSHROOM_GENERATOR);
-            this.generateCoverPlant(world, rand, pos, 1, NIGHTSHROOM_GENERATOR);
+            this.generateCoverPlant(world, rand, pos, 1, FUNGI_GENERATOR);
         }
 
         super.decorate(world, rand, pos);
