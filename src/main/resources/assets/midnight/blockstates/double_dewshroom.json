@@ -6,10 +6,10 @@
   "variants": {
     "half": {
       "upper": {
-        "textures": {"cross": "midnight:blocks/viridshroom_upper"}
+        "textures": {"cross": "midnight:blocks/dewshroom_upper"}
       },
       "lower": {
-        "textures": {"cross": "midnight:blocks/viridshroom_lower"}
+        "textures": {"cross": "midnight:blocks/dewshroom_lower"}
       }
     }
   }
