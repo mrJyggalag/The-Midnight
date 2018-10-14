@@ -193,7 +193,7 @@ public class ClientEventHandler {
         if (MC.player != null && MC.player.world.provider.getDimensionType() == ModDimensions.MIDNIGHT) {
             SoundEvent sound = getMusicSound(MC.player);
             if (sound == null || playingMusic != null) {
-                event.setCanceled(true);
+                event.setResultSound(null);
                 return;
             }
 
