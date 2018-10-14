@@ -50,6 +50,7 @@ public class BlockMidnightFurnace extends BlockContainer implements IModelProvid
         super(Material.ROCK);
         this.setDefaultState(this.blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH));
         this.isBurning = isBurning;
+        setCreativeTab(Midnight.MIDNIGHT_TAB);
     }
 
     /**
