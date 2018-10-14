@@ -28,4 +28,5 @@ public class RenderRifter extends RenderLiving<EntityRifter> {
     protected ResourceLocation getEntityTexture(EntityRifter entity) {
         return TEXTURE;
     }
+
 }

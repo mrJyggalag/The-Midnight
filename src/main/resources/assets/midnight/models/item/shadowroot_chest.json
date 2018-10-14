@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:chest",
+  "textures": {
+    "all": "midnight:entities/chest/shadowroot_chest"
+  }
+}

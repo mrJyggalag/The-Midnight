@@ -1,5 +1,6 @@
 {
   "forge_marker": 1,
+  "parent": "chest",
   "defaults": {
     "textures": {
       "all": "midnight:blocks/entities/chest/shadowroot_chest"
