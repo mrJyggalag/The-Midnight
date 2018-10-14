@@ -42,6 +42,10 @@ public class ToggleAnimation {
         return this.timer;
     }
 
+    public float getScale() {
+        return this.timer / (float) this.length;
+    }
+
     public NBTTagCompound serialize(NBTTagCompound compound) {
         compound.setBoolean("state", this.state);
         compound.setShort("timer", (short) this.timer);

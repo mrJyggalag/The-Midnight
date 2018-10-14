@@ -1,22 +1,22 @@
 package com.mushroom.midnight.client.sound;
 
+import com.mushroom.midnight.client.IdleSoundController;
 import com.mushroom.midnight.common.registry.ModDimensions;
+import com.mushroom.midnight.common.registry.ModSounds;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.ITickableSound;
 import net.minecraft.client.audio.PositionedSound;
 import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class LoopingMidnightSound extends PositionedSound implements ITickableSound {
+public class MidnightIdleSound extends PositionedSound implements ITickableSound {
     private static final Minecraft MC = Minecraft.getMinecraft();
 
-    public LoopingMidnightSound(SoundEvent event, float volume) {
-        super(event, SoundCategory.AMBIENT);
+    public MidnightIdleSound() {
+        super(ModSounds.MIDNIGHT_IDLE, SoundCategory.AMBIENT);
         this.attenuationType = AttenuationType.NONE;
-        this.volume = volume;
         this.repeat = true;
     }
 
@@ -27,5 +27,6 @@ public class LoopingMidnightSound extends PositionedSound implements ITickableSo
 
     @Override
     public void update() {
+        this.volume = Math.max(1.0F - IdleSoundController.CAVE_ANIMATION.getScale(), 0.01F);
     }
 }

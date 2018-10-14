@@ -3,7 +3,6 @@ package com.mushroom.midnight.client;
 import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.client.particle.MidnightParticles;
 import com.mushroom.midnight.client.sound.IdleRiftSound;
-import com.mushroom.midnight.client.sound.LoopingMidnightSound;
 import com.mushroom.midnight.common.capability.RifterCapturedCapability;
 import com.mushroom.midnight.common.entity.EntityRift;
 import com.mushroom.midnight.common.registry.ModBiomes;
@@ -16,7 +15,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.ISound;
 import net.minecraft.client.audio.MusicTicker;
 import net.minecraft.client.audio.PositionedSoundRecord;
-import net.minecraft.client.audio.SoundHandler;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.settings.GameSettings;
 import net.minecraft.entity.Entity;
@@ -43,8 +41,6 @@ import java.util.Random;
 @Mod.EventBusSubscriber(modid = Midnight.MODID, value = Side.CLIENT)
 public class ClientEventHandler {
     private static final Minecraft MC = Minecraft.getMinecraft();
-
-    private static final ISound IDLE_SOUND = new LoopingMidnightSound(ModSounds.MIDNIGHT_IDLE, 1.0F);
 
     private static final float HOOK_SENSITIVITY = 0.2F;
 
@@ -104,19 +100,12 @@ public class ClientEventHandler {
     }
 
     private static void playAmbientSounds(EntityPlayer player) {
+        if (player.posY < 62 && !player.world.canSeeSky(player.getPosition())) {
+            return;
+        }
+
         Random rand = player.world.rand;
         long worldTime = player.world.getTotalWorldTime();
-
-        SoundHandler soundHandler = MC.getSoundHandler();
-        if (!soundHandler.isSoundPlaying(IDLE_SOUND)) {
-            // Fix very odd bug where playSound would complain that the sound is already playing
-            soundHandler.stopSound(IDLE_SOUND);
-            try {
-                soundHandler.playSound(IDLE_SOUND);
-            } catch (IllegalArgumentException e) {
-                // Ignore SoundHandler complaints
-            }
-        }
 
         if (worldTime - lastAmbientSoundTime > 120 && rand.nextInt(100) == 0) {
             ResourceLocation ambientSound = ModSounds.MIDNIGHT_AMBIENT.getSoundName();
@@ -129,7 +118,7 @@ public class ClientEventHandler {
             float z = (float) (player.posZ + rand.nextFloat() - 0.5F);
 
             ISound sound = new PositionedSoundRecord(ambientSound, SoundCategory.AMBIENT, volume, pitch, false, 0, ISound.AttenuationType.NONE, x, y, z);
-            soundHandler.playSound(sound);
+            MC.getSoundHandler().playSound(sound);
 
             lastAmbientSoundTime = worldTime;
         }

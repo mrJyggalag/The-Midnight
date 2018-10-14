@@ -9,7 +9,21 @@
   },
   "midnight_idle": {
     "category": "ambient",
-    "sounds": ["midnight:ambient/midnight_idle"]
+    "sounds": [
+      {
+        "name": "midnight:ambient/midnight_idle",
+        "stream": true
+      }
+    ]
+  },
+  "midnight_cave_idle": {
+    "category": "ambient",
+    "sounds": [
+      {
+        "name": "midnight:ambient/cave_idle",
+        "stream": true
+      }
+    ]
   },
   "midnight_music_generic": {
     "category": "music",

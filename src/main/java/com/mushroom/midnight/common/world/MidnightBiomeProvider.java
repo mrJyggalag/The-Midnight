@@ -38,6 +38,7 @@ public class MidnightBiomeProvider extends BiomeProvider {
         ridgeLayer = new OutlineProducerLayer(40, ridgeLayer);
 
         GenLayer layer = new MidnightSeedLayer(0);
+        layer = new ReplaceRandomLayer(100, 10, Biome.getIdForBiome(ModBiomes.FUNGI_FOREST), layer);
         layer = new GenLayerVoronoiZoom(1000, layer);
         layer = new ReplaceRandomLayer(2000, 6, Biome.getIdForBiome(ModBiomes.OBSCURED_PEAKS), layer);
         layer = new ReplaceRandomLayer(3000, 30, Biome.getIdForBiome(ModBiomes.WARPED_FIELDS), layer);

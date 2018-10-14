@@ -14,6 +14,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 public class ModSounds {
     public static final SoundEvent MIDNIGHT_AMBIENT = SoundEvents.AMBIENT_CAVE;
     public static final SoundEvent MIDNIGHT_IDLE = SoundEvents.AMBIENT_CAVE;
+    public static final SoundEvent MIDNIGHT_CAVE_IDLE = SoundEvents.AMBIENT_CAVE;
 
     public static final SoundEvent MIDNIGHT_MUSIC_GENERIC = SoundEvents.MUSIC_NETHER;
     public static final SoundEvent MIDNIGHT_MUSIC_CRYSTAL = SoundEvents.MUSIC_NETHER;
@@ -26,6 +27,7 @@ public class ModSounds {
         event.getRegistry().registerAll(
                 RegUtil.applyName(new SoundEvent(new ResourceLocation(Midnight.MODID, "midnight_ambient"))),
                 RegUtil.applyName(new SoundEvent(new ResourceLocation(Midnight.MODID, "midnight_idle"))),
+                RegUtil.applyName(new SoundEvent(new ResourceLocation(Midnight.MODID, "midnight_cave_idle"))),
                 RegUtil.applyName(new SoundEvent(new ResourceLocation(Midnight.MODID, "midnight_music_generic"))),
                 RegUtil.applyName(new SoundEvent(new ResourceLocation(Midnight.MODID, "midnight_music_crystal"))),
                 RegUtil.applyName(new SoundEvent(new ResourceLocation(Midnight.MODID, "midnight_rift_idle"))),

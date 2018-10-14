@@ -89,7 +89,7 @@ public class ModBiomes {
     }
 
     public static void onInit() {
-        addSeedBiomes(VIGILANT_FOREST, FUNGI_FOREST);
+        addSeedBiomes(VIGILANT_FOREST);
     }
 
     public static void addSeedBiomes(Biome... biomes) {
