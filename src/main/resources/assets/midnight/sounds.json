@@ -7,9 +7,9 @@
       "midnight:ambient/midnight_ambient_3"
     ]
   },
-  "midnight_rumble": {
+  "midnight_idle": {
     "category": "ambient",
-    "sounds": ["midnight:ambient/midnight_rumble"]
+    "sounds": ["midnight:ambient/midnight_idle"]
   },
   "midnight_music_generic": {
     "category": "music",

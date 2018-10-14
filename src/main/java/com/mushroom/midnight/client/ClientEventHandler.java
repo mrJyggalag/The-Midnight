@@ -44,7 +44,7 @@ import java.util.Random;
 public class ClientEventHandler {
     private static final Minecraft MC = Minecraft.getMinecraft();
 
-    private static final ISound RUMBLE_SOUND = new LoopingMidnightSound(ModSounds.MIDNIGHT_RUMBLE, 1.0F);
+    private static final ISound IDLE_SOUND = new LoopingMidnightSound(ModSounds.MIDNIGHT_IDLE, 1.0F);
 
     private static final float HOOK_SENSITIVITY = 0.2F;
 
@@ -108,11 +108,11 @@ public class ClientEventHandler {
         long worldTime = player.world.getTotalWorldTime();
 
         SoundHandler soundHandler = MC.getSoundHandler();
-        if (!soundHandler.isSoundPlaying(RUMBLE_SOUND)) {
+        if (!soundHandler.isSoundPlaying(IDLE_SOUND)) {
             // Fix very odd bug where playSound would complain that the sound is already playing
-            soundHandler.stopSound(RUMBLE_SOUND);
+            soundHandler.stopSound(IDLE_SOUND);
             try {
-                soundHandler.playSound(RUMBLE_SOUND);
+                soundHandler.playSound(IDLE_SOUND);
             } catch (IllegalArgumentException e) {
                 // Ignore SoundHandler complaints
             }
