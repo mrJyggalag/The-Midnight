@@ -19,6 +19,7 @@ public class BlockMidnightFungi extends BlockMidnightPlant implements IGrowable,
 
     public BlockMidnightFungi(Supplier<WorldGenerator> generatorSupplier) {
         super();
+        this.setLightLevel(0.8F);
         this.setDefaultState(this.blockState.getBaseState().withProperty(BlockSapling.STAGE, 0));
         this.generatorSupplier = generatorSupplier;
     }
