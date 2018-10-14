@@ -140,7 +140,7 @@ public class RiftSpawnHandler {
     private static BlockPos getCorrectedRiftPosition(World world, BlockPos pos) {
         BlockPos surface = WorldUtil.findSurface(world, pos, 6);
         if (surface != null) {
-            return surface.up();
+            return surface;
         }
         return null;
     }

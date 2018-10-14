@@ -12,8 +12,8 @@ import net.minecraftforge.event.terraingen.TerrainGen;
 import java.util.Random;
 
 public class BiomeCrystalPlains extends BiomeBase {
-    private static final WorldGenerator CRYSTAL_GENERATOR = new WorldGenCrystalCluster(3, 3, ModBlocks.BLOOMCRYSTAL_ROCK.getDefaultState(), ModBlocks.BLOOMCRYSTAL.getDefaultState());
-    private static final WorldGenerator CRYSTAL_SPIRE_GENERATOR = new WorldGenCrystalCluster(1, 3, ModBlocks.BLOOMCRYSTAL_ROCK.getDefaultState(), ModBlocks.BLOOMCRYSTAL.getDefaultState());
+    private static final WorldGenerator CRYSTAL_GENERATOR = new WorldGenCrystalCluster(3, 4, ModBlocks.BLOOMCRYSTAL_ROCK.getDefaultState(), ModBlocks.BLOOMCRYSTAL.getDefaultState());
+    private static final WorldGenerator CRYSTAL_SPIRE_GENERATOR = new WorldGenCrystalCluster(1, 4, ModBlocks.BLOOMCRYSTAL_ROCK.getDefaultState(), ModBlocks.BLOOMCRYSTAL.getDefaultState());
 
     public BiomeCrystalPlains(BiomeProperties properties) {
         super(properties);
@@ -27,14 +27,16 @@ public class BiomeCrystalPlains extends BiomeBase {
         for (int i = 0; i < count; i++) {
             int offsetX = rand.nextInt(16) + 8;
             int offsetZ = rand.nextInt(16) + 8;
-            CRYSTAL_GENERATOR.generate(world, rand, pos.add(offsetX, 0, offsetZ));
+            BlockPos surface = world.getTopSolidOrLiquidBlock(pos.add(offsetX, 0, offsetZ));
+            CRYSTAL_GENERATOR.generate(world, rand, surface);
         }
 
         int spireCount = rand.nextInt(2) + 2;
         for (int i = 0; i < spireCount; i++) {
             int offsetX = rand.nextInt(16) + 8;
             int offsetZ = rand.nextInt(16) + 8;
-            CRYSTAL_SPIRE_GENERATOR.generate(world, rand, pos.add(offsetX, 0, offsetZ));
+            BlockPos surface = world.getTopSolidOrLiquidBlock(pos.add(offsetX, 0, offsetZ));
+            CRYSTAL_SPIRE_GENERATOR.generate(world, rand, surface);
         }
 
         ChunkPos chunkPos = new ChunkPos(pos);

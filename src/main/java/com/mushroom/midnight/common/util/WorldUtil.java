@@ -18,6 +18,7 @@ public class WorldUtil {
                 return null;
             }
         }
+        mutablePos.move(EnumFacing.UP);
         return mutablePos.toImmutable();
     }
 

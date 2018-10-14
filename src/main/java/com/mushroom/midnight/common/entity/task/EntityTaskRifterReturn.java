@@ -85,7 +85,7 @@ public class EntityTaskRifterReturn extends EntityAIBase {
             }
 
             EntityRift homeRift = derefRift.get();
-            BlockPos surface = WorldUtil.findSurfaceOrInput(homeRift.world, homeRift.getPosition(), 16).up();
+            BlockPos surface = WorldUtil.findSurfaceOrInput(homeRift.world, homeRift.getPosition(), 16);
 
             this.path = this.owner.getNavigator().getPathToPos(surface);
 
