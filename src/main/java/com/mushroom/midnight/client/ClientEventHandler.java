@@ -53,6 +53,8 @@ public class ClientEventHandler {
 
     private static long lastAmbientSoundTime;
 
+    private static ISound playingMusic;
+
     @SubscribeEvent
     public static void onClientTick(TickEvent.ClientTickEvent event) {
         if (!MC.isGamePaused()) {
@@ -62,6 +64,10 @@ public class ClientEventHandler {
             }
 
             if (event.phase == TickEvent.Phase.END) {
+                if (playingMusic != null && !MC.getSoundHandler().isSoundPlaying(playingMusic)) {
+                    playingMusic = null;
+                }
+
                 if (player.world.provider.getDimensionType() == ModDimensions.MIDNIGHT) {
                     spawnAmbientParticles(player);
                     playAmbientSounds(player);
@@ -186,11 +192,14 @@ public class ClientEventHandler {
 
         if (MC.player != null && MC.player.world.provider.getDimensionType() == ModDimensions.MIDNIGHT) {
             SoundEvent sound = getMusicSound(MC.player);
-            if (sound == null) {
+            if (sound == null || playingMusic != null) {
                 event.setCanceled(true);
                 return;
             }
-            event.setResultSound(PositionedSoundRecord.getMusicRecord(sound));
+
+            playingMusic = PositionedSoundRecord.getMusicRecord(sound);
+
+            event.setResultSound(playingMusic);
         }
     }
 

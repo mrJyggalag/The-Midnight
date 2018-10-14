@@ -4,11 +4,13 @@ import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.client.IModelProvider;
 import com.mushroom.midnight.client.render.RenderRift;
 import com.mushroom.midnight.client.render.RenderRifter;
+import com.mushroom.midnight.common.block.BlockShadowrootChest;
 import com.mushroom.midnight.common.entity.EntityRift;
 import com.mushroom.midnight.common.entity.creature.EntityRifter;
 import com.mushroom.midnight.common.registry.ModBlocks;
 import com.mushroom.midnight.common.registry.ModDimensions;
 import com.mushroom.midnight.common.registry.ModItems;
+import com.mushroom.midnight.common.tile.base.TileEntityShadowrootChest;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import net.minecraft.block.Block;
@@ -21,6 +23,8 @@ import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.block.statemap.StateMap;
 import net.minecraft.client.renderer.color.BlockColors;
 import net.minecraft.client.renderer.color.ItemColors;
+import net.minecraft.client.renderer.tileentity.TileEntityItemStackRenderer;
+import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
@@ -76,6 +80,16 @@ public class ModModelRegistry {
         ModelLoader.setCustomStateMapper(ModBlocks.VIRIDSHROOM, new StateMap.Builder().ignore(BlockSapling.STAGE).build());
 
         ModelLoader.setCustomStateMapper(ModBlocks.MIASMA, new StateMap.Builder().ignore(BlockFluidClassic.LEVEL).build());
+
+        ModelLoader.setCustomStateMapper(ModBlocks.SHADOWROOT_CHEST, new StateMap.Builder().ignore(BlockShadowrootChest.FACING).build());
+
+        TileEntityShadowrootChest shadowrootChest = new TileEntityShadowrootChest();
+        Item.getItemFromBlock(ModBlocks.SHADOWROOT_CHEST).setTileEntityItemStackRenderer(new TileEntityItemStackRenderer() {
+            @Override
+            public void renderByItem(ItemStack stack) {
+                TileEntityRendererDispatcher.instance.render(shadowrootChest, 0.0, 0.0, 0.0, 0.0F, 1.0F);
+            }
+        });
     }
 
     public static void onInit() {

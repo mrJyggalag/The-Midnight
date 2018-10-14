@@ -1,16 +1,20 @@
 {
   "forge_marker": 1,
   "defaults": {
+    "model": "cube",
     "textures": {
-      "all": "midnight:blocks/shadowroot_crafting_table"
+      "all": "midnight:blocks/shadowroot_crafting_table_front",
+      "particle": "midnight:blocks/shadowroot_crafting_table_front",
+      "down": "midnight:blocks/shadowroot_planks",
+      "up": "midnight:blocks/shadowroot_crafting_table_top",
+      "north": "midnight:blocks/shadowroot_crafting_table_front",
+      "east": "midnight:blocks/shadowroot_crafting_table_side",
+      "south": "midnight:blocks/shadowroot_crafting_table_side",
+      "west": "midnight:blocks/shadowroot_crafting_table_front"
     }
   },
   "variants": {
-    "normal": {
-      "model": "cube_all"
-    },
-    "inventory": {
-      "model": "cube_all"
-    }
+    "normal": [{}],
+    "inventory": [{}]
   }
 }
