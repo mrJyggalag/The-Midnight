@@ -1,22 +1,27 @@
 package com.mushroom.midnight.common.world.generator;
 
+import com.mushroom.midnight.common.block.BlockMidnightFungiShelf;
 import com.mushroom.midnight.common.registry.ModBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockHugeMushroom;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenerator;
 
 import java.util.Random;
 
-// Messy cleanup of `WorldGenBigMushroom`
+// Messy 'cleanup' of `WorldGenBigMushroom`
+// TODO: Rewrite
 public class WorldGenMidnightFungi extends WorldGenerator {
+    private static final Block[] SHELF_BLOCKS = new Block[] { ModBlocks.NIGHTSHROOM_SHELF, ModBlocks.DEWSHROOM_SHELF };
+
     private final IBlockState stem;
     private final IBlockState cap;
 
     public WorldGenMidnightFungi(IBlockState stem, IBlockState cap) {
-        super(true);
+        super(false);
         this.stem = stem;
         this.cap = cap;
     }
@@ -35,7 +40,7 @@ public class WorldGenMidnightFungi extends WorldGenerator {
             return false;
         }
 
-        this.generateHat(world, pos, height, shape);
+        this.generateHat(world, rand, pos, height, shape);
         this.generateStem(world, pos, height);
 
         return true;
@@ -55,7 +60,7 @@ public class WorldGenMidnightFungi extends WorldGenerator {
         }
     }
 
-    private void generateHat(World world, BlockPos pos, int height, FungiShape shape) {
+    private void generateHat(World world, Random rand, BlockPos pos, int height, FungiShape shape) {
         int maxY = pos.getY() + height;
 
         int minHatY = shape == FungiShape.DOME ? maxY - 3 : maxY;
@@ -85,6 +90,7 @@ public class WorldGenMidnightFungi extends WorldGenerator {
                         if ((currentX == minX || currentX == maxX) && (currentZ == minZ || currentZ == maxZ)) {
                             continue;
                         }
+
                         edgeType = this.computeRoundEdge(pos, radius, minX, minZ, maxX, maxZ, currentX, currentZ, edgeType);
                     }
 
@@ -94,9 +100,11 @@ public class WorldGenMidnightFungi extends WorldGenerator {
 
                     if (pos.getY() >= maxY - 1 || edgeType != BlockHugeMushroom.EnumType.ALL_INSIDE) {
                         mutablePos.setPos(currentX, currentY, currentZ);
-                        IBlockState state = world.getBlockState(mutablePos);
+                        this.generateShelf(world, rand, mutablePos, edgeType);
 
-                        if (state.getBlock().canBeReplacedByLeaves(state, world, mutablePos)) {
+                        mutablePos.setPos(currentX, currentY, currentZ);
+                        IBlockState currentState = world.getBlockState(mutablePos);
+                        if (currentState.getBlock().canBeReplacedByLeaves(currentState, world, mutablePos)) {
                             this.setBlockAndNotifyAdequately(world, mutablePos, this.cap.withProperty(BlockHugeMushroom.VARIANT, edgeType));
                         }
                     }
@@ -125,6 +133,48 @@ public class WorldGenMidnightFungi extends WorldGenerator {
         }
 
         return edgeType;
+    }
+
+    private void generateShelf(World world, Random rand, BlockPos.MutableBlockPos mutablePos, BlockHugeMushroom.EnumType edgeType) {
+        EnumFacing[] horizontalOffsets = this.getHorizontalOffsets(edgeType);
+        if (horizontalOffsets.length > 0) {
+            if (rand.nextInt(4) == 0) {
+                EnumFacing horizontalOffset = horizontalOffsets[rand.nextInt(horizontalOffsets.length)];
+                mutablePos.move(horizontalOffset);
+                this.tryPlaceState(world, mutablePos, this.getShelfState(rand, horizontalOffset));
+            }
+        } else if (rand.nextInt(8) == 0) {
+            mutablePos.move(EnumFacing.UP);
+            this.tryPlaceState(world, mutablePos, this.getShelfState(rand, EnumFacing.UP));
+        }
+    }
+
+    private IBlockState getShelfState(Random rand, EnumFacing facing) {
+        return SHELF_BLOCKS[rand.nextInt(SHELF_BLOCKS.length)].getDefaultState().withProperty(BlockMidnightFungiShelf.FACING, facing);
+    }
+
+    private EnumFacing[] getHorizontalOffsets(BlockHugeMushroom.EnumType edgeType) {
+        switch (edgeType) {
+            case NORTH:
+                return new EnumFacing[] { EnumFacing.NORTH };
+            case NORTH_WEST:
+                return new EnumFacing[] { EnumFacing.NORTH, EnumFacing.WEST };
+            case NORTH_EAST:
+                return new EnumFacing[] { EnumFacing.NORTH, EnumFacing.EAST };
+            case EAST:
+                return new EnumFacing[] { EnumFacing.EAST };
+            case SOUTH_EAST:
+                return new EnumFacing[] { EnumFacing.SOUTH, EnumFacing.EAST };
+            case SOUTH:
+                return new EnumFacing[] { EnumFacing.SOUTH };
+            case SOUTH_WEST:
+                return new EnumFacing[] { EnumFacing.SOUTH, EnumFacing.WEST };
+            case WEST:
+                return new EnumFacing[] { EnumFacing.WEST };
+            case ALL_OUTSIDE:
+                return EnumFacing.HORIZONTALS;
+        }
+        return new EnumFacing[0];
     }
 
     private BlockHugeMushroom.EnumType computeEdge(int minX, int minZ, int maxX, int maxZ, int x, int z) {
@@ -171,6 +221,12 @@ public class WorldGenMidnightFungi extends WorldGenerator {
         }
 
         return true;
+    }
+
+    private void tryPlaceState(World world, BlockPos pos, IBlockState state) {
+        if (world.isAirBlock(pos)) {
+            this.setBlockAndNotifyAdequately(world, pos, state);
+        }
     }
 
     private enum FungiShape {

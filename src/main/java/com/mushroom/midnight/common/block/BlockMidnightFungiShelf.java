@@ -26,7 +26,8 @@ import java.util.Arrays;
 public class BlockMidnightFungiShelf extends Block implements IModelProvider {
     public static final PropertyDirection FACING = PropertyDirection.create("facing", f -> f != EnumFacing.DOWN);
 
-    private static final DirectionalBounds BOUNDS = new DirectionalBounds(0.1, 0.2, 0.0, 0.9, 0.6, 0.0);
+    private static final DirectionalBounds BOUNDS = new DirectionalBounds(0.0625, 0.3, 1.0, 0.9375, 0.7, 0.6);
+    private static final AxisAlignedBB VERTICAL_BOUNDS = new AxisAlignedBB(0.0625, 0.0, 0.0625, 0.9375, 0.4, 0.9375);
 
     public BlockMidnightFungiShelf() {
         super(Material.PLANTS);
@@ -88,7 +89,11 @@ public class BlockMidnightFungiShelf extends Block implements IModelProvider {
 
     @Override
     public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
-        return BOUNDS.get(state.getValue(FACING));
+        EnumFacing facing = state.getValue(FACING);
+        if (facing == EnumFacing.UP) {
+            return VERTICAL_BOUNDS;
+        }
+        return BOUNDS.get(facing);
     }
 
     @Nullable
@@ -130,5 +135,10 @@ public class BlockMidnightFungiShelf extends Block implements IModelProvider {
     @Override
     public BlockRenderLayer getRenderLayer() {
         return BlockRenderLayer.CUTOUT;
+    }
+
+    @Override
+    public boolean canBeReplacedByLeaves(IBlockState state, IBlockAccess world, BlockPos pos) {
+        return true;
     }
 }

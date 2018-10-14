@@ -11,8 +11,14 @@ import net.minecraftforge.event.terraingen.TerrainGen;
 import java.util.Random;
 
 public class BiomeFungiForest extends BiomeBase {
-    protected static final WorldGenMidnightFungi LARGE_DEWSHROOM_GENERATOR = new WorldGenMidnightFungi(ModBlocks.DEWSHROOM_STEM.getDefaultState(), ModBlocks.DEWSHROOM_HAT.getDefaultState());
-    protected static final WorldGenMidnightFungi LARGE_NIGHTSHROOM_GENERATOR = new WorldGenMidnightFungi(ModBlocks.NIGHTSHROOM_STEM.getDefaultState(), ModBlocks.NIGHTSHROOM_HAT.getDefaultState());
+    protected static final WorldGenMidnightFungi LARGE_DEWSHROOM_GENERATOR = new WorldGenMidnightFungi(
+            ModBlocks.DEWSHROOM_STEM.getDefaultState(),
+            ModBlocks.DEWSHROOM_HAT.getDefaultState()
+    );
+    protected static final WorldGenMidnightFungi LARGE_NIGHTSHROOM_GENERATOR = new WorldGenMidnightFungi(
+            ModBlocks.NIGHTSHROOM_STEM.getDefaultState(),
+            ModBlocks.NIGHTSHROOM_HAT.getDefaultState()
+    );
 
     public BiomeFungiForest(BiomeProperties properties) {
         super(properties);
