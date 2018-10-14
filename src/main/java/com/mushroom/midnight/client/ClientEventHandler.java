@@ -103,7 +103,13 @@ public class ClientEventHandler {
 
         SoundHandler soundHandler = MC.getSoundHandler();
         if (!soundHandler.isSoundPlaying(RUMBLE_SOUND)) {
-            soundHandler.playSound(RUMBLE_SOUND);
+            // Fix very odd bug where playSound would complain that the sound is already playing
+            soundHandler.stopSound(RUMBLE_SOUND);
+            try {
+                soundHandler.playSound(RUMBLE_SOUND);
+            } catch (IllegalArgumentException e) {
+                // Ignore SoundHandler complaints
+            }
         }
 
         if (worldTime - lastAmbientSoundTime > 120 && rand.nextInt(100) == 0) {
