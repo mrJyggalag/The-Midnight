@@ -4,6 +4,7 @@ import com.google.common.collect.Lists;
 import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.common.block.BlockBasic;
 import com.mushroom.midnight.common.block.BlockCrystal;
+import com.mushroom.midnight.common.block.BlockDoubleMidnightFungi;
 import com.mushroom.midnight.common.block.BlockDoubleMidnightPlant;
 import com.mushroom.midnight.common.block.BlockGlowingDoublePlant;
 import com.mushroom.midnight.common.block.BlockGlowingPlant;
@@ -11,7 +12,6 @@ import com.mushroom.midnight.common.block.BlockMiasmaFluid;
 import com.mushroom.midnight.common.block.BlockMiasmaSurface;
 import com.mushroom.midnight.common.block.BlockMidnightDirt;
 import com.mushroom.midnight.common.block.BlockMidnightDoor;
-import com.mushroom.midnight.common.block.BlockDoubleMidnightFungi;
 import com.mushroom.midnight.common.block.BlockMidnightFungi;
 import com.mushroom.midnight.common.block.BlockMidnightFungiHat;
 import com.mushroom.midnight.common.block.BlockMidnightFungiShelf;
@@ -66,6 +66,8 @@ public class ModBlocks {
     public static final Block NIGHTSTONE = Blocks.AIR;
     public static final Block NIGHTSTONE_BRICKS = Blocks.AIR;
     public static final Block CHISELED_NIGHTSTONE_BRICKS = Blocks.AIR;
+    public static final Block TRENCHSTONE = Blocks.AIR;
+
     public static final Block DARK_PEARL_ORE = Blocks.AIR;
     public static final Block DARK_PEARL_BLOCK = Blocks.AIR;
 
@@ -148,6 +150,9 @@ public class ModBlocks {
                 RegUtil.withName(new BlockNightstone(), "nightstone"),
                 RegUtil.withName(new BlockBasic(Material.ROCK), "nightstone_bricks"),
                 RegUtil.withName(new BlockBasic(Material.ROCK), "chiseled_nightstone_bricks"),
+                RegUtil.withName(new BlockBasic(Material.ROCK), "trenchstone")
+                        .withHarvestLevel("pickaxe", 2)
+                        .setHardness(3.0F),
                 RegUtil.withName(new BlockMidnightLog(), "shadowroot_log"),
                 RegUtil.withName(new BlockMidnightLeaves(() -> SHADOWROOT_SAPLING), "shadowroot_leaves"),
                 RegUtil.withName(new BlockBasic(Material.WOOD), "shadowroot_planks")
@@ -254,6 +259,7 @@ public class ModBlocks {
                 DEAD_WOOD_LOG, DEAD_WOOD_PLANKS,
                 DARK_WILLOW_LOG, DARK_WILLOW_LEAVES, DARK_WILLOW_PLANKS,
                 NIGHTSTONE, NIGHTSTONE_BRICKS, CHISELED_NIGHTSTONE_BRICKS,
+                TRENCHSTONE,
                 DARK_PEARL_ORE, DARK_PEARL_BLOCK,
                 SHADOWROOT_CRAFTING_TABLE,
                 SHADOWROOT_CHEST,

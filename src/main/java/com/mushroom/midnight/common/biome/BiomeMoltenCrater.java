@@ -2,7 +2,6 @@ package com.mushroom.midnight.common.biome;
 
 import com.mushroom.midnight.common.registry.ModBlocks;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
@@ -12,8 +11,8 @@ public class BiomeMoltenCrater extends BiomeBase {
     public BiomeMoltenCrater(BiomeProperties properties) {
         super(properties);
 
-        this.topBlock = Blocks.OBSIDIAN.getDefaultState();
-        this.fillerBlock = Blocks.OBSIDIAN.getDefaultState();
+        this.topBlock = ModBlocks.TRENCHSTONE.getDefaultState();
+        this.fillerBlock = ModBlocks.TRENCHSTONE.getDefaultState();
     }
 
     @Override
@@ -40,7 +39,7 @@ public class BiomeMoltenCrater extends BiomeBase {
         if (random.nextInt(5) == 0) {
             return ModBlocks.MIASMA_SURFACE.getDefaultState();
         }
-        return Blocks.OBSIDIAN.getDefaultState();
+        return ModBlocks.TRENCHSTONE.getDefaultState();
     }
 
     @Override
