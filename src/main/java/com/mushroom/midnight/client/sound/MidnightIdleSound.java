@@ -15,7 +15,7 @@ public class MidnightIdleSound extends PositionedSound implements ITickableSound
     private static final Minecraft MC = Minecraft.getMinecraft();
 
     public MidnightIdleSound() {
-        super(ModSounds.MIDNIGHT_IDLE, SoundCategory.AMBIENT);
+        super(ModSounds.IDLE, SoundCategory.AMBIENT);
         this.attenuationType = AttenuationType.NONE;
         this.repeat = true;
     }

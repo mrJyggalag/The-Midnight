@@ -15,7 +15,7 @@ public class MidnightCaveSound extends PositionedSound implements ITickableSound
     private static final Minecraft MC = Minecraft.getMinecraft();
 
     public MidnightCaveSound() {
-        super(ModSounds.MIDNIGHT_CAVE_IDLE, SoundCategory.AMBIENT);
+        super(ModSounds.CAVE_IDLE, SoundCategory.AMBIENT);
         this.attenuationType = AttenuationType.NONE;
         this.repeat = true;
     }

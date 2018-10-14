@@ -9,7 +9,7 @@ public class IdleRiftSound extends MovingSound {
     private final EntityRift rift;
 
     public IdleRiftSound(EntityRift rift) {
-        super(ModSounds.MIDNIGHT_RIFT_IDLE, SoundCategory.AMBIENT);
+        super(ModSounds.RIFT_IDLE, SoundCategory.AMBIENT);
         this.rift = rift;
         this.repeat = true;
         this.repeatDelay = 0;

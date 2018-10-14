@@ -96,7 +96,7 @@ public class EntityRift extends Entity implements IEntityAdditionalSpawnData {
             }
 
             if (this.wasStable && bridge.unstable.get()) {
-                this.playSound(ModSounds.MIDNIGHT_RIFT_UNSTABLE, 1.0F, 1.0F);
+                this.playSound(ModSounds.RIFT_UNSTABLE, 1.0F, 1.0F);
                 this.wasStable = false;
             }
         } else if (this.particleSystem != null) {

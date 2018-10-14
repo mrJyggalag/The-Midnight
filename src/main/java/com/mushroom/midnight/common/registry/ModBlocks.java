@@ -4,7 +4,6 @@ import com.google.common.collect.Lists;
 import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.common.block.BlockBasic;
 import com.mushroom.midnight.common.block.BlockCrystal;
-import com.mushroom.midnight.common.block.BlockDoubleMidnightFungi;
 import com.mushroom.midnight.common.block.BlockDoubleMidnightPlant;
 import com.mushroom.midnight.common.block.BlockGlowingDoublePlant;
 import com.mushroom.midnight.common.block.BlockGlowingPlant;
@@ -209,17 +208,17 @@ public class ModBlocks {
                         ModBlocks.NIGHTSHROOM_STEM.getDefaultState(),
                         ModBlocks.NIGHTSHROOM_HAT.getDefaultState()
                 )), "nightshroom"),
-                RegUtil.withName(new BlockDoubleMidnightFungi(), "double_nightshroom"),
+                RegUtil.withName(new BlockGlowingDoublePlant(), "double_nightshroom"),
                 RegUtil.withName(new BlockMidnightFungi(() -> new WorldGenMidnightFungi(
                         ModBlocks.DEWSHROOM_STEM.getDefaultState(),
                         ModBlocks.DEWSHROOM_HAT.getDefaultState()
                 )), "dewshroom"),
-                RegUtil.withName(new BlockDoubleMidnightFungi(), "double_dewshroom"),
+                RegUtil.withName(new BlockGlowingDoublePlant(), "double_dewshroom"),
                 RegUtil.withName(new BlockMidnightFungi(() -> new WorldGenMidnightFungi(
                         ModBlocks.VIRIDSHROOM_STEM.getDefaultState(),
                         ModBlocks.VIRIDSHROOM_HAT.getDefaultState()
                 )), "viridshroom"),
-                RegUtil.withName(new BlockDoubleMidnightFungi(), "double_viridshroom"),
+                RegUtil.withName(new BlockGlowingDoublePlant(), "double_viridshroom"),
                 RegUtil.withName(new BlockMidnightFungiShelf(), "nightshroom_shelf"),
                 RegUtil.withName(new BlockMidnightFungiShelf(), "dewshroom_shelf"),
                 RegUtil.withName(new BlockMidnightFungiShelf(), "viridshroom_shelf"),

@@ -1,5 +1,5 @@
 {
-  "midnight_ambient": {
+  "midnight.ambient": {
     "category": "ambient",
     "sounds": [
       "midnight:ambient/midnight_ambient_1",
@@ -7,7 +7,7 @@
       "midnight:ambient/midnight_ambient_3"
     ]
   },
-  "midnight_idle": {
+  "midnight.idle": {
     "category": "ambient",
     "sounds": [
       {
@@ -16,7 +16,7 @@
       }
     ]
   },
-  "midnight_cave_idle": {
+  "midnight.cave_idle": {
     "category": "ambient",
     "sounds": [
       {
@@ -25,7 +25,7 @@
       }
     ]
   },
-  "midnight_music_generic": {
+  "midnight.music_generic": {
     "category": "music",
     "sounds": [
       {
@@ -34,7 +34,7 @@
       }
     ]
   },
-  "midnight_music_crystal": {
+  "midnight.music_crystal": {
     "category": "music",
     "sounds": [
       {
@@ -43,12 +43,20 @@
       }
     ]
   },
-  "midnight_rift_idle": {
+  "midnight.rift_idle": {
     "category": "ambient",
     "sounds": ["midnight:rift_idle"]
   },
-  "midnight_rift_unstable": {
+  "midnight.rift_unstable": {
     "category": "ambient",
     "sounds": ["midnight:rift_unstable"]
+  },
+  "midnight.rifter_ambient": {
+    "category": "hostile",
+    "sounds": ["midnight:entity/rifter_ambient_1"]
+  },
+  "midnight.rifter_death": {
+    "category": "hostile",
+    "sounds": ["midnight:entity/rifter_death_1"]
   }
 }

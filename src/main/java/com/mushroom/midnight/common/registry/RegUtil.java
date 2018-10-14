@@ -1,5 +1,6 @@
 package com.mushroom.midnight.common.registry;
 
+import com.mushroom.midnight.Midnight;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.potion.Potion;
@@ -41,6 +42,10 @@ public class RegUtil {
     public static <T extends SoundEvent> T applyName(T sound) {
         ResourceLocation name = ReflectionHelper.getPrivateValue(SoundEvent.class, sound, "soundName", "field_187506_b");
         sound.setRegistryName(name);
+
+        ResourceLocation prefixedName = new ResourceLocation(name.getNamespace(), Midnight.MODID + "." + name.getPath());
+        ReflectionHelper.setPrivateValue(SoundEvent.class, sound, prefixedName, "soundName", "field_187506_b");
+
         return sound;
     }
 }

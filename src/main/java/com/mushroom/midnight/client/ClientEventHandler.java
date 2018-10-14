@@ -108,7 +108,7 @@ public class ClientEventHandler {
         long worldTime = player.world.getTotalWorldTime();
 
         if (worldTime - lastAmbientSoundTime > 120 && rand.nextInt(100) == 0) {
-            ResourceLocation ambientSound = ModSounds.MIDNIGHT_AMBIENT.getSoundName();
+            ResourceLocation ambientSound = ModSounds.AMBIENT.getSoundName();
 
             float volume = rand.nextFloat() * 0.4F + 0.8F;
             float pitch = rand.nextFloat() * 0.6F + 0.7F;
@@ -204,9 +204,9 @@ public class ClientEventHandler {
     private static SoundEvent getMusicSound(EntityPlayer player) {
         Biome biome = player.world.getBiome(player.getPosition());
         if (biome == ModBiomes.CRYSTAL_PLAINS) {
-            return ModSounds.MIDNIGHT_MUSIC_CRYSTAL;
+            return ModSounds.MUSIC_CRYSTAL;
         }
-        return ModSounds.MIDNIGHT_MUSIC_GENERIC;
+        return ModSounds.MUSIC_GENERIC;
     }
 
     private static boolean isMusicSound() {

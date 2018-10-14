@@ -24,8 +24,8 @@ import java.util.Random;
 public class BiomeBase extends Biome implements IMidnightBiome {
     protected static final IBlockState NIGHT_STONE = ModBlocks.NIGHTSTONE.getDefaultState();
 
-    protected static final WorldGenMidnightTree SHADOWROOT_TREE_GEN = new WorldGenMidnightTree(ModBlocks.SHADOWROOT_LOG, ModBlocks.SHADOWROOT_LEAVES, 6);
-    protected static final WorldGenMidnightTree DARK_WILLOW_TREE_GEN = new WorldGenMidnightTree(ModBlocks.DARK_WILLOW_LOG, ModBlocks.DARK_WILLOW_LEAVES, 6);
+    protected static final WorldGenMidnightTree SHADOWROOT_TREE_GEN = new WorldGenMidnightTree(ModBlocks.SHADOWROOT_LOG, ModBlocks.SHADOWROOT_LEAVES, 8);
+    protected static final WorldGenMidnightTree DARK_WILLOW_TREE_GEN = new WorldGenMidnightTree(ModBlocks.DARK_WILLOW_LOG, ModBlocks.DARK_WILLOW_LEAVES, 8);
 
     protected static final WorldGenMidnightPlant GRASS_GENERATOR = new WorldGenMidnightPlant(
             ModBlocks.TALL_MIDNIGHT_GRASS.getDefaultState(),

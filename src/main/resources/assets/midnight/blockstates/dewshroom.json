@@ -1,12 +1,27 @@
 {
   "forge_marker": 1,
   "defaults": {
-    "model": "cross",
-    "textures": {
-      "cross": "midnight:blocks/dewshroom"
+    "model": "forge:multi-layer",
+    "transform": "forge:default-block",
+    "custom": {
+      "base": "midnight:dewshroom#base",
+      "Cutout": "midnight:dewshroom#base",
+      "Translucent": "midnight:dewshroom#glow"
     }
   },
   "variants": {
-    "normal": [{}]
+    "normal": [{}],
+    "base": [
+      {
+        "model": "cross",
+        "textures": {"cross": "midnight:blocks/dewshroom"}
+      }
+    ],
+    "glow": [
+      {
+        "model": "cross",
+        "textures": {"cross": "midnight:blocks/dewshroom_glow"}
+      }
+    ]
   }
 }
