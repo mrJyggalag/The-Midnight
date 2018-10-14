@@ -3,7 +3,6 @@ package com.mushroom.midnight.common.registry;
 import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.common.biome.BiomeBlackRidge;
 import com.mushroom.midnight.common.biome.BiomeCrystalPlains;
-import com.mushroom.midnight.common.biome.BiomeDeceitfulBog;
 import com.mushroom.midnight.common.biome.BiomeFungiForest;
 import com.mushroom.midnight.common.biome.BiomeMoltenCrater;
 import com.mushroom.midnight.common.biome.BiomeMoltenCraterEdge;
@@ -50,11 +49,12 @@ public class ModBiomes {
                                 .setBaseHeight(4.5F)
                                 .setHeightVariation(0.1F)
                 )),
-                RegUtil.applyName(new BiomeDeceitfulBog(
+                // TODO: Reimplement
+                /*RegUtil.applyName(new BiomeDeceitfulBog(
                         new Biome.BiomeProperties("deceitful_bog")
                                 .setBaseHeight(0.125F)
                                 .setHeightVariation(0.03F)
-                )),
+                )),*/
                 RegUtil.applyName(new BiomeFungiForest(
                         new Biome.BiomeProperties("fungi_forest")
                                 .setBaseHeight(0.175F)
@@ -89,7 +89,7 @@ public class ModBiomes {
     }
 
     public static void onInit() {
-        addSeedBiomes(VIGILANT_FOREST, DECEITFUL_BOG, FUNGI_FOREST);
+        addSeedBiomes(VIGILANT_FOREST, FUNGI_FOREST);
     }
 
     public static void addSeedBiomes(Biome... biomes) {
