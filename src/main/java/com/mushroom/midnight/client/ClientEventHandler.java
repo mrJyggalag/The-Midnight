@@ -2,6 +2,7 @@ package com.mushroom.midnight.client;
 
 import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.client.particle.MidnightParticles;
+import com.mushroom.midnight.client.sound.IdleRiftSound;
 import com.mushroom.midnight.client.sound.LoopingMidnightSound;
 import com.mushroom.midnight.common.capability.RifterCapturedCapability;
 import com.mushroom.midnight.common.entity.EntityRift;
@@ -28,6 +29,7 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.client.event.EntityViewRenderEvent;
 import net.minecraftforge.client.event.sound.PlaySoundEvent;
+import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
@@ -183,6 +185,14 @@ public class ClientEventHandler {
                 return;
             }
             event.setResultSound(PositionedSoundRecord.getMusicRecord(sound));
+        }
+    }
+
+    @SubscribeEvent
+    public static void onSpawnEntity(EntityJoinWorldEvent event) {
+        Entity entity = event.getEntity();
+        if (entity instanceof EntityRift) {
+            MC.getSoundHandler().playSound(new IdleRiftSound((EntityRift) entity));
         }
     }
 

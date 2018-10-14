@@ -28,5 +28,13 @@
         "stream": true
       }
     ]
+  },
+  "midnight_rift_idle": {
+    "category": "ambient",
+    "sounds": ["midnight:rift_idle"]
+  },
+  "midnight_rift_unstable": {
+    "category": "ambient",
+    "sounds": ["midnight:rift_unstable"]
   }
 }

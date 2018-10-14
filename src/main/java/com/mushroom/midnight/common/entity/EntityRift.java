@@ -5,6 +5,7 @@ import com.mushroom.midnight.client.particle.RiftParticleSystem;
 import com.mushroom.midnight.common.capability.RiftCooldownCapability;
 import com.mushroom.midnight.common.entity.creature.EntityRifter;
 import com.mushroom.midnight.common.registry.ModDimensions;
+import com.mushroom.midnight.common.registry.ModSounds;
 import com.mushroom.midnight.common.world.BridgeManager;
 import com.mushroom.midnight.common.world.GlobalBridgeManager;
 import com.mushroom.midnight.common.world.MidnightTeleporter;
@@ -30,7 +31,7 @@ public class EntityRift extends Entity implements IEntityAdditionalSpawnData {
     public static final int CLOSE_SPEED = 2;
     public static final int CLOSE_TIME = OPEN_TIME / CLOSE_SPEED;
 
-    public static final int UNSTABLE_TIME = 100;
+    public static final int UNSTABLE_TIME = 110;
 
     public static final int LIFETIME = 2400;
 
@@ -44,6 +45,8 @@ public class EntityRift extends Entity implements IEntityAdditionalSpawnData {
     private RiftBridge bridge;
 
     private RiftParticleSystem particleSystem;
+
+    private boolean wasStable = true;
 
     private boolean spawnedRifter;
 
@@ -91,6 +94,11 @@ public class EntityRift extends Entity implements IEntityAdditionalSpawnData {
             if (bridge.open.getTimer() >= OPEN_TIME && !this.wasUsed()) {
                 this.teleportEntities();
             }
+
+            if (this.wasStable && bridge.unstable.get()) {
+                this.playSound(ModSounds.MIDNIGHT_RIFT_UNSTABLE, 1.0F, 1.0F);
+                this.wasStable = false;
+            }
         } else if (this.particleSystem != null) {
             this.particleSystem.updateParticles(this.world.rand);
         }
@@ -111,7 +119,7 @@ public class EntityRift extends Entity implements IEntityAdditionalSpawnData {
         }
 
         if (this.world.getGameRules().getBoolean("doMobSpawning")) {
-            if (!this.spawnedRifter && !this.isUnstable() && this.world.rand.nextInt(40) == 0) {
+            if (!this.spawnedRifter && !this.isUnstable() && this.world.rand.nextInt(500) == 0) {
                 AxisAlignedBB existingRifterBounds = this.getEntityBoundingBox().grow(16.0);
                 List<EntityRifter> existingRifters = this.world.getEntitiesWithinAABB(EntityRifter.class, existingRifterBounds);
                 if (existingRifters.isEmpty()) {
@@ -224,15 +232,27 @@ public class EntityRift extends Entity implements IEntityAdditionalSpawnData {
     }
 
     public boolean isOpen() {
-        return this.getBridge().open.get();
+        RiftBridge bridge = this.getBridge();
+        if (bridge == null) {
+            return false;
+        }
+        return bridge.open.get();
     }
 
     public boolean isUnstable() {
-        return this.getBridge().unstable.get();
+        RiftBridge bridge = this.getBridge();
+        if (bridge == null) {
+            return false;
+        }
+        return bridge.unstable.get();
     }
 
     public boolean wasUsed() {
-        return this.getBridge().used;
+        RiftBridge bridge = this.getBridge();
+        if (bridge == null) {
+            return false;
+        }
+        return bridge.used;
     }
 
     public RiftGeometry getGeometry() {

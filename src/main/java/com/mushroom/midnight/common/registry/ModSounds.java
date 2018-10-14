@@ -18,13 +18,18 @@ public class ModSounds {
     public static final SoundEvent MIDNIGHT_MUSIC_GENERIC = SoundEvents.MUSIC_NETHER;
     public static final SoundEvent MIDNIGHT_MUSIC_CRYSTAL = SoundEvents.MUSIC_NETHER;
 
+    public static final SoundEvent MIDNIGHT_RIFT_IDLE = SoundEvents.BLOCK_PORTAL_AMBIENT;
+    public static final SoundEvent MIDNIGHT_RIFT_UNSTABLE = SoundEvents.BLOCK_PORTAL_AMBIENT;
+
     @SubscribeEvent
     public static void onRegisterSounds(RegistryEvent.Register<SoundEvent> event) {
         event.getRegistry().registerAll(
                 RegUtil.applyName(new SoundEvent(new ResourceLocation(Midnight.MODID, "midnight_ambient"))),
                 RegUtil.applyName(new SoundEvent(new ResourceLocation(Midnight.MODID, "midnight_rumble"))),
                 RegUtil.applyName(new SoundEvent(new ResourceLocation(Midnight.MODID, "midnight_music_generic"))),
-                RegUtil.applyName(new SoundEvent(new ResourceLocation(Midnight.MODID, "midnight_music_crystal")))
+                RegUtil.applyName(new SoundEvent(new ResourceLocation(Midnight.MODID, "midnight_music_crystal"))),
+                RegUtil.applyName(new SoundEvent(new ResourceLocation(Midnight.MODID, "midnight_rift_idle"))),
+                RegUtil.applyName(new SoundEvent(new ResourceLocation(Midnight.MODID, "midnight_rift_unstable")))
         );
     }
 }
