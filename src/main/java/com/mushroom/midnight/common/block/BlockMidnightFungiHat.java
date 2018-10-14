@@ -20,7 +20,7 @@ public class BlockMidnightFungiHat extends BlockHugeMushroom implements IModelPr
         super(Material.WOOD, MapColor.LIGHT_BLUE, Blocks.AIR);
         this.saplingSupplier = saplingSupplier;
         this.setHardness(1.0F);
-        this.setLightLevel(0.8F);
+        this.setLightLevel(1.0F);
         this.setSoundType(SoundType.WOOD);
     }
 
