@@ -11,6 +11,7 @@ import java.util.Random;
 public class BiomeWarpedFields extends BiomeBase {
     public BiomeWarpedFields(BiomeProperties properties) {
         super(properties);
+        this.decorator.extraTreeChance = 0.5F;
     }
 
     @Override

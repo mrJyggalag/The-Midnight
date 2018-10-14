@@ -1,5 +1,6 @@
 package com.mushroom.midnight.common.biome;
 
+import com.mushroom.midnight.common.entity.creature.EntityRifter;
 import com.mushroom.midnight.common.registry.ModBlocks;
 import com.mushroom.midnight.common.world.generator.WorldGenMidnightFungi;
 import net.minecraft.util.math.BlockPos;
@@ -23,6 +24,8 @@ public class BiomeFungiForest extends BiomeBase {
     public BiomeFungiForest(BiomeProperties properties) {
         super(properties);
         this.decorator.grassPerChunk = 4;
+
+        this.spawnableMonsterList.add(new SpawnListEntry(EntityRifter.class, 1, 0, 1));
     }
 
     @Override

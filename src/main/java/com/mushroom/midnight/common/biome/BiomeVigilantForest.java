@@ -1,5 +1,6 @@
 package com.mushroom.midnight.common.biome;
 
+import com.mushroom.midnight.common.entity.creature.EntityRifter;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.World;
@@ -16,6 +17,8 @@ public class BiomeVigilantForest extends BiomeBase {
 
         this.decorator.treesPerChunk = 8;
         this.decorator.grassPerChunk = 2;
+
+        this.spawnableMonsterList.add(new SpawnListEntry(EntityRifter.class, 1, 0, 1));
     }
 
     @Override
