@@ -1,13 +1,11 @@
 package com.mushroom.midnight.common.block;
 
-import javax.annotation.Nullable;
-
 import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.client.IModelProvider;
 import com.mushroom.midnight.common.tile.base.TileEntityShadowrootChest;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockChest;
+import net.minecraft.block.SoundType;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.inventory.InventoryLargeChest;
@@ -20,10 +18,14 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.ILockableContainer;
 import net.minecraft.world.World;
 
+import javax.annotation.Nullable;
+
 public class BlockShadowrootChest extends BlockChest implements IModelProvider {
 
     public BlockShadowrootChest() {
         super(Type.BASIC);
+        this.setHardness(2.5F);
+        this.setSoundType(SoundType.WOOD);
         this.setCreativeTab(Midnight.MIDNIGHT_TAB);
     }
 

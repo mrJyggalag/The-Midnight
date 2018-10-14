@@ -27,7 +27,6 @@ public class BlockCrystal extends Block implements IModelProvider {
         super(Material.GLASS);
         this.setHardness(2.0F);
         this.setSoundType(SoundType.GLASS);
-        this.setLightLevel(0.8F);
         this.setHarvestLevel("pickaxe", 1);
         this.setTickRandomly(true);
         this.setCreativeTab(Midnight.MIDNIGHT_TAB);

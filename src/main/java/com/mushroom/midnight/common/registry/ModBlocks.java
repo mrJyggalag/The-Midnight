@@ -183,17 +183,16 @@ public class ModBlocks {
                         .withSoundType(SoundType.WOOD)
                         .setHardness(2.0F)
                         .setResistance(5.0F),
-                RegUtil.withName(new BlockCrystal(), "bloomcrystal"),
+                RegUtil.withName(new BlockCrystal().setLightLevel(1.0F), "bloomcrystal"),
                 RegUtil.withName(new BlockBasic(Material.ROCK), "bloomcrystal_rock")
                         .withSoundType(SoundType.GLASS)
                         .withHarvestLevel("pickaxe", 1)
-                        .setLightLevel(0.8F)
+                        .setLightLevel(1.0F)
                         .setHardness(4.0F),
                 RegUtil.withName(new BlockCrystal(), "rouxe"),
                 RegUtil.withName(new BlockBasic(Material.ROCK), "rouxe_rock")
                         .withSoundType(SoundType.GLASS)
                         .withHarvestLevel("pickaxe", 1)
-                        .setLightLevel(0.8F)
                         .setHardness(4.0F),
                 RegUtil.withName(new BlockMiasmaSurface(), "miasma_surface"),
                 RegUtil.withName(new BlockMiasmaFluid(), "miasma"),
