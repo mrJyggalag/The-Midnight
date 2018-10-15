@@ -72,40 +72,40 @@ tile.midnight.double_nightshroom.name=Double champignon de nuit
 
 tile.midnight.viridshroom.name=Champignon viride
 tile.midnight.double_viridshroom.name=Double champignon viride
-
+ee
 tile.midnight.nightshroom_stem.name=Soupe de champignon de nuit
 tile.midnight.nightshroom_hat.name=Chapeau en champignon de nuit
 tile.midnight.nightshroom_planks.name=Planches de champignon de nuit
 tile.midnight.nightshroom_shelf.name=Etagères en champignon de nuit
 tile.midnight.nightshroom_trapdoor.name=Trape en champignon de nuit
 
-tile.midnight.dewshroom_stem.name=Dewshroom Stem
-tile.midnight.dewshroom_hat.name=Dewshroom Hat
-tile.midnight.dewshroom_planks.name=Dewshroom Planks
-tile.midnight.dewshroom_shelf.name=Dewshroom Shelf
-tile.midnight.dewshroom_trapdoor.name=Dewshroom Trapdoor
+tile.midnight.dewshroom_stem.name=Soupe de champignon de rosée
+tile.midnight.dewshroom_hat.name=Chapeau en champignon de rosée
+tile.midnight.dewshroom_planks.name=Planches de champignon de rosée
+tile.midnight.dewshroom_shelf.name=Étagères en champignon de rosée
+tile.midnight.dewshroom_trapdoor.name=Trape en champignon de rosée
 
-tile.midnight.viridshroom_stem.name=Viridshroom Stem
-tile.midnight.viridshroom_hat.name=Viridshroom Hat
-tile.midnight.viridshroom_planks.name=Viridshroom Planks
-tile.midnight.viridshroom_shelf.name=Viridshroom Shelf
-tile.midnight.viridshroom_trapdoor.name=Viridshroom Trapdoor
+tile.midnight.viridshroom_stem.name=Soupe de champignon viride
+tile.midnight.viridshroom_hat.name=Chapeau en champignon viride
+tile.midnight.viridshroom_planks.name=Planches de champignon viride
+tile.midnight.viridshroom_shelf.name=Étagères en champignon viride
+tile.midnight.viridshroom_trapdoor.name=Trape en champignon viride
 
 # Items
 
-item.midnight.shadowroot_door.name=Shadowroot Door
-item.midnight.dark_willow_door.name=Dark Willow Door
-item.midnight.dead_wood_door.name=Dead Wood Door
+item.midnight.shadowroot_door.name=Porte en racine d'ombre
+item.midnight.dark_willow_door.name=Porte en saule noir
+item.midnight.dead_wood_door.name=Porte en bois mort
 
-item.midnight.nightshroom_door.name=Nightshroom Door
-item.midnight.dewshroom_door.name=Dewshroom Door
-item.midnight.viridshroom_door.name=Viridshroom Door
+item.midnight.nightshroom_door.name=Porte en champignon de nuit
+item.midnight.dewshroom_door.name=Porte en champignon de rosée
+item.midnight.viridshroom_door.name=Porte en champignon viride
 
-item.midnight.dark_pearl.name=Dark Pearl
+item.midnight.dark_pearl.name=Perle sombre
 
 # Fluids
 
-fluid.midnight.miasma=Miasma
+fluid.midnight.miasma=Miasmes
 
 # Entities
 
@@ -114,5 +114,5 @@ entity.midnight.rifter.name=Rifter
 
 # Config
 
-config.midnight.midnight_dimension_id=Midnight Dimension ID
-config.midnight.midnight_dimension_id.tooltip=The ID to be used for the Midnight Dimension
+config.midnight.midnight_dimension_id=ID de la dimension de Minuit
+config.midnight.midnight_dimension_id.tooltip=L'ID qui va être utilisé pour la dimension de Minuit
