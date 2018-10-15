@@ -1,0 +1,118 @@
+# Item Groups
+
+itemGroup.midnight=Minuit
+
+# Blocks
+
+tile.midnight.nightstone.name=Pierre de nuit
+tile.midnight.midnight_grass.name=Herbe de Minuit
+tile.midnight.midnight_dirt.name=Terre de Minuit
+
+tile.midnight.trenchstone.name=Pierre de tranchée
+
+tile.midnight.shadowroot_log.name=Bûche de racine d'ombre
+tile.midnight.shadowroot_planks.name=Planches de racine d'ombre
+tile.midnight.shadowroot_leaves.name=Feuilles de racine d'ombre
+
+tile.midnight.dead_wood_log.name=Bûche de bois mort
+tile.midnight.dead_wood_planks.name=Planches de bois mort
+
+tile.midnight.dark_willow_log.name=Bûche de Saule Noir
+tile.midnight.dark_willow_planks.name=Planches de Saule Noir
+tile.midnight.dark_willow_leaves.name=Feuilles de Saule Noir
+
+tile.midnight.nightstone_bricks.name=Briques en pierre de nuit
+tile.midnight.chiseled_nightstone_bricks.name=Briques ciselées en pierre de nuit
+
+tile.midnight.dark_pearl_ore.name=Minerai de perle noire
+tile.midnight.dark_pearl_block.name=Bloc de perle noire
+
+tile.midnight.ebonys_ore.name=Minerai d'Ebonys
+tile.midnight.ebonys_block.name=Bloc d'Ebonys
+
+tile.midnight.nagrilite_ore.name=Minerai de Nagrilite
+tile.midnight.nagrilite_block.name=Bloc de Nagrilite
+
+tile.midnight.tenebrum_ore.name=Minerai de Tenebrum
+tile.midnight.tenebrum_block.name=Bloc de Tenebrum
+
+tile.midnight.shadowroot_chest.name=Coffre en racine d'ombre
+tile.midnight.shadowroot_crafting_table.name=Etabli en racine d'ombre
+tile.midnight.midnight_furnace.name=Fourneau de Minuit
+
+tile.midnight.tall_midnight_grass.name=Hautes herbes de Minuit
+tile.midnight.double_midnight_grass.name=Double herbes de Minuit
+
+tile.midnight.lumen_bud.name=Bourgeon de Lumen
+tile.midnight.double_lumen_bud.name=Double bourgeon de Lumen
+
+tile.midnight.shadowroot_trapdoor.name=Trape en racine d'ombre
+tile.midnight.dark_willow_trapdoor.name=Trape en saule noir
+tile.midnight.dead_wood_trapdoor.name=Trape en bois mort
+
+tile.midnight.shadowroot_sapling.name=Pousse de racine d'ombre
+tile.midnight.dark_willow_sapling.name=Pousse de saule noir
+
+tile.midnight.bloomcrystal.name=Cristal de fleur
+tile.midnight.bloomcrystal_rock.name=Roche de Cristal de fleur
+
+tile.midnight.rouxe.name=Cristal de Rouxe
+tile.midnight.rouxe_rock.name=Roche de Rouxe
+
+tile.midnight.miasma_surface.name=Miasmes de Surface
+tile.midnight.misama.name=Miasmes
+
+tile.midnight.crystal_flower.name=Crystal de fleur
+
+tile.midnight.dewshroom.name=Champignon de rosée
+tile.midnight.double_dewshroom.name=Double champignon de rosée
+
+tile.midnight.nightshroom.name=Champignon de nuit
+tile.midnight.double_nightshroom.name=Double champignon de nuit
+
+tile.midnight.viridshroom.name=Champignon viride
+tile.midnight.double_viridshroom.name=Double champignon viride
+
+tile.midnight.nightshroom_stem.name=Soupe de champignon de nuit
+tile.midnight.nightshroom_hat.name=Chapeau en champignon de nuit
+tile.midnight.nightshroom_planks.name=Planches de champignon de nuit
+tile.midnight.nightshroom_shelf.name=Etagères en champignon de nuit
+tile.midnight.nightshroom_trapdoor.name=Trape en champignon de nuit
+
+tile.midnight.dewshroom_stem.name=Soupe de champignon de rosée
+tile.midnight.dewshroom_hat.name=Chapeau en champignon de rosée
+tile.midnight.dewshroom_planks.name=Planches de champignon de rosée
+tile.midnight.dewshroom_shelf.name=Étagères en champignon de rosée
+tile.midnight.dewshroom_trapdoor.name=Trape en champignon de rosée
+
+tile.midnight.viridshroom_stem.name=Soupe de champignon viride
+tile.midnight.viridshroom_hat.name=Chapeau en champignon viride
+tile.midnight.viridshroom_planks.name=Planches de champignon viride
+tile.midnight.viridshroom_shelf.name=Étagères en champignon viride
+tile.midnight.viridshroom_trapdoor.name=Trape en champignon viride
+
+# Items
+
+item.midnight.shadowroot_door.name=Porte en racine d'ombre
+item.midnight.dark_willow_door.name=Porte en saule noir
+item.midnight.dead_wood_door.name=Porte en bois mort
+
+item.midnight.nightshroom_door.name=Porte en champignon de nuit
+item.midnight.dewshroom_door.name=Porte en champignon de rosée
+item.midnight.viridshroom_door.name=Porte en champignon viride
+
+item.midnight.dark_pearl.name=Perle sombre
+
+# Fluids
+
+fluid.midnight.miasma=Miasmes
+
+# Entities
+
+entity.midnight.rift.name=Midnight Rift
+entity.midnight.rifter.name=Rifter
+
+# Config
+
+config.midnight.midnight_dimension_id=ID de la dimension de Minuit
+config.midnight.midnight_dimension_id.tooltip=L'ID qui va être utilisé pour la dimension de Minuit
