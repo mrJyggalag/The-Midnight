@@ -1,0 +1,118 @@
+# Item Groups
+
+itemGroup.midnight=Mitternacht
+
+# Blocks
+
+tile.midnight.nightstone.name=Nachtstein
+tile.midnight.midnight_grass.name=Mitternachtsgras
+tile.midnight.midnight_dirt.name=Mitternachtserde
+
+tile.midnight.trenchstone.name=Tiefstein
+
+tile.midnight.shadowroot_log.name=Schattenwurzelstamm
+tile.midnight.shadowroot_planks.name=Schattenwurzelbretter
+tile.midnight.shadowroot_leaves.name=Schattenwurzellaub
+
+tile.midnight.dead_wood_log.name=Verrotteter Baumstamm
+tile.midnight.dead_wood_planks.name=Verrottete Bretter
+
+tile.midnight.dark_willow_log.name=Dunkelweidenstamm
+tile.midnight.dark_willow_planks.name=Dunkelweidenbretter
+tile.midnight.dark_willow_leaves.name=Dunkelweidenlaub
+
+tile.midnight.nightstone_bricks.name=Nachtsteinziegel
+tile.midnight.chiseled_nightstone_bricks.name=Gemeißelte Nachtsteinziegel
+
+tile.midnight.dark_pearl_ore.name=Dunkelperlerz
+tile.midnight.dark_pearl_block.name=Dunkelperlblock
+
+tile.midnight.ebonys_ore.name=Ebonyserz
+tile.midnight.ebonys_block.name=Ebonysblock
+
+tile.midnight.nagrilite_ore.name=Nagriliterz
+tile.midnight.nagrilite_block.name=Nagrilitblock
+
+tile.midnight.tenebrum_ore.name=Tenebrumerz
+tile.midnight.tenebrum_block.name=Tenebrumblock
+
+tile.midnight.shadowroot_chest.name=Schattenwurzeltruhe
+tile.midnight.shadowroot_crafting_table.name=Schattenwurzelwerkbank
+tile.midnight.midnight_furnace.name=Mitternachtsofen
+
+tile.midnight.tall_midnight_grass.name=Hohes Mitternachtsgras
+tile.midnight.double_midnight_grass.name=Doppeltes Mitternachtsgras
+
+tile.midnight.lumen_bud.name=Lumenknospe
+tile.midnight.double_lumen_bud.name=Doppelte Lumenknospe
+
+tile.midnight.shadowroot_trapdoor.name=Schattenwurzelfalltür
+tile.midnight.dark_willow_trapdoor.name=Dunkelweidenfalltür
+tile.midnight.dead_wood_trapdoor.name=Verrottete Falltür
+
+tile.midnight.shadowroot_sapling.name=Schattenwurzelsetzling
+tile.midnight.dark_willow_sapling.name=Dunkelweidensetzling
+
+tile.midnight.bloomcrystal.name=Blütkristall
+tile.midnight.bloomcrystal_rock.name=Blütkristallblock
+
+tile.midnight.rouxe.name=Rouxkristall
+tile.midnight.rouxe_rock.name=Rouxfelsen
+
+tile.midnight.miasma_surface.name=Miasma-oberfläche
+tile.midnight.misama.name=Miasma
+
+tile.midnight.crystal_flower.name=Kristallblume
+
+tile.midnight.dewshroom.name=Dewpilz
+tile.midnight.double_dewshroom.name=Doppelter Dewpilz
+
+tile.midnight.nightshroom.name=Nachtspilz
+tile.midnight.double_nightshroom.name=Doppelter Nachtspilz
+
+tile.midnight.viridshroom.name=Viridpilz
+tile.midnight.double_viridshroom.name=Doppelter Viridpilz
+
+tile.midnight.nightshroom_stem.name=Nachtspilzstamm
+tile.midnight.nightshroom_hat.name=Nachtspilzkappe
+tile.midnight.nightshroom_planks.name=Nachtspilzbretter
+tile.midnight.nightshroom_shelf.name=Nachtspilzregal
+tile.midnight.nightshroom_trapdoor.name=Nachtspilzfalltür
+
+tile.midnight.dewshroom_stem.name=Dewpilzstamm
+tile.midnight.dewshroom_hat.name=Dewpilzkappe
+tile.midnight.dewshroom_planks.name=Dewpilzbretter
+tile.midnight.dewshroom_shelf.name=Dewpilzregal
+tile.midnight.dewshroom_trapdoor.name=Dewpilzfalltür
+
+tile.midnight.viridshroom_stem.name=Viridpilzstamm
+tile.midnight.viridshroom_hat.name=Viridpilzkappe
+tile.midnight.viridshroom_planks.name=Viridpilzbretter
+tile.midnight.viridshroom_shelf.name=Viridpilzregal
+tile.midnight.viridshroom_trapdoor.name=Viridpilzfalltür
+
+# Items
+
+item.midnight.shadowroot_door.name=Schattenwurzeltür
+item.midnight.dark_willow_door.name=Dunkelweidentür
+item.midnight.dead_wood_door.name=Verrottete Tür
+
+item.midnight.nightshroom_door.name=Nachtspilztür
+item.midnight.dewshroom_door.name=Dewpilztür
+item.midnight.viridshroom_door.name=Viridpilztür
+
+item.midnight.dark_pearl.name=Dunkle Perle
+
+# Fluids
+
+fluid.midnight.miasma=Miasma
+
+# Entities
+
+entity.midnight.rift.name=Mitternachtsriss
+entity.midnight.rifter.name=Reißer
+
+# Config
+
+config.midnight.midnight_dimension_id=Mitternacht Dimension ID
+config.midnight.midnight_dimension_id.tooltip=Die ID die für die Mitternacht Dimension benutzt wird
