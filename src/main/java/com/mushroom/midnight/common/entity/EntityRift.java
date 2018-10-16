@@ -192,7 +192,7 @@ public class EntityRift extends Entity implements IEntityAdditionalSpawnData {
     }
 
     public double getPullIntensity() {
-        if (this.wasUsed()) {
+        if (this.wasUsed() || !this.isBridgeValid()) {
             return 0.0;
         }
         return Math.pow((double) this.getBridge().unstable.getTimer() / UNSTABLE_TIME, 5.0) * PULL_INTENSITY;
@@ -232,27 +232,24 @@ public class EntityRift extends Entity implements IEntityAdditionalSpawnData {
     }
 
     public boolean isOpen() {
-        RiftBridge bridge = this.getBridge();
-        if (bridge == null) {
+        if (!this.isBridgeValid()) {
             return false;
         }
-        return bridge.open.get();
+        return this.getBridge().open.get();
     }
 
     public boolean isUnstable() {
-        RiftBridge bridge = this.getBridge();
-        if (bridge == null) {
+        if (!this.isBridgeValid()) {
             return false;
         }
-        return bridge.unstable.get();
+        return this.getBridge().unstable.get();
     }
 
     public boolean wasUsed() {
-        RiftBridge bridge = this.getBridge();
-        if (bridge == null) {
+        if (!this.isBridgeValid()) {
             return false;
         }
-        return bridge.used;
+        return this.getBridge().used;
     }
 
     public RiftGeometry getGeometry() {
@@ -262,6 +259,10 @@ public class EntityRift extends Entity implements IEntityAdditionalSpawnData {
     @Nullable
     public RiftParticleSystem getParticleSystem() {
         return this.particleSystem;
+    }
+
+    public boolean isBridgeValid() {
+        return this.bridge != null;
     }
 
     public RiftBridge getBridge() {

@@ -24,6 +24,10 @@ public class RiftParticleSystem implements ParticleSystem<EntityRift> {
 
     @Override
     public void updateParticles(Random random) {
+        if (!this.rift.isBridgeValid()) {
+            return;
+        }
+
         if (this.rift.world.provider.getDimensionType() != ModDimensions.MIDNIGHT && random.nextInt(10) == 0) {
             this.spawnSpore(this.rift, random, 3.0F);
         }

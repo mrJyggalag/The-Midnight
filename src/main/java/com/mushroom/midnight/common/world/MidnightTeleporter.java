@@ -6,7 +6,10 @@ import com.mushroom.midnight.common.entity.EntityRift;
 import com.mushroom.midnight.common.entity.RiftBridge;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ITeleporter;
 
@@ -37,19 +40,52 @@ public class MidnightTeleporter implements ITeleporter {
             return;
         }
 
-        float angle = (float) Math.toRadians(entity.rotationYaw);
-        // TODO: Find safe space to place player around rift
-        float displacementX = -MathHelper.sin(angle) * endpointRift.width / 2.0F;
-        float displacementZ = MathHelper.cos(angle) * endpointRift.width / 2.0F;
+        Vec3d placementPos = this.findPlacementPos(world, entity, endpointRift);
 
-        entity.posX = endpointRift.posX + displacementX;
-        entity.posY = endpointRift.posY + 0.5F;
-        entity.posZ = endpointRift.posZ + displacementZ;
+        entity.posX = placementPos.x + 0.5;
+        entity.posY = placementPos.y + 0.5;
+        entity.posZ = placementPos.z + 0.5;
         entity.fallDistance = 0.0F;
 
         RiftCooldownCapability capability = entity.getCapability(Midnight.riftCooldownCap, null);
         if (capability != null) {
             capability.setCooldown(COOLDOWN);
         }
+    }
+
+    private Vec3d findPlacementPos(World world, Entity entity, EntityRift endpointRift) {
+        float angle = (float) Math.toRadians(entity.rotationYaw);
+        float displacementX = -MathHelper.sin(angle) * endpointRift.width / 2.0F;
+        float displacementZ = MathHelper.cos(angle) * endpointRift.width / 2.0F;
+
+        Vec3d placementPos = new Vec3d(endpointRift.posX + displacementX, endpointRift.posY + 0.5, endpointRift.posZ + displacementZ);
+        if (!world.collidesWithAnyBlock(this.getEntityBoundAt(entity, placementPos))) {
+            return placementPos;
+        }
+
+        BlockPos placementBlockPos = new BlockPos(placementPos.x, placementPos.y, placementPos.z);
+        BlockPos minPos = placementBlockPos.add(-2, -2, -2);
+        BlockPos maxPos = placementBlockPos.add(2, 2, 2);
+        for (BlockPos pos : BlockPos.getAllInBoxMutable(minPos, maxPos)) {
+            Vec3d originPos = new Vec3d(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5);
+            AxisAlignedBB entityBound = this.getEntityBoundAt(entity, originPos);
+            if (entityBound.intersects(endpointRift.getEntityBoundingBox())) {
+                continue;
+            }
+            if (!world.collidesWithAnyBlock(entityBound)) {
+                return originPos;
+            }
+        }
+
+        BlockPos surface = world.getTopSolidOrLiquidBlock(placementBlockPos);
+        return new Vec3d(placementPos.x, surface.getY(), placementPos.z);
+    }
+
+    private AxisAlignedBB getEntityBoundAt(Entity entity, Vec3d pos) {
+        float halfWidth = entity.width / 2.0F;
+        return new AxisAlignedBB(
+                pos.x - halfWidth, pos.y, pos.z - halfWidth,
+                pos.x + halfWidth, pos.y + entity.height, pos.z + halfWidth
+        );
     }
 }

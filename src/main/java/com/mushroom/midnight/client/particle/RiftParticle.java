@@ -62,7 +62,7 @@ public class RiftParticle extends Particle {
 
         EntityRift rift = this.particleSystem.getEntity();
 
-        if (this.shouldExpire()) {
+        if (this.shouldExpire() || !rift.isBridgeValid()) {
             this.setExpired();
             this.particleSystem.returnParticle();
             return;
