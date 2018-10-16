@@ -4,7 +4,8 @@ import com.mushroom.midnight.common.registry.ModBlocks;
 import com.mushroom.midnight.common.world.generator.WorldGenDoubleFungi;
 import com.mushroom.midnight.common.world.generator.WorldGenDoubleMidnightPlant;
 import com.mushroom.midnight.common.world.generator.WorldGenMidnightPlant;
-import com.mushroom.midnight.common.world.generator.WorldGenMidnightTree;
+import com.mushroom.midnight.common.world.generator.WorldGenDefaultTree;
+import com.mushroom.midnight.common.world.generator.WorldGenShadowrootTree;
 import com.mushroom.midnight.common.world.generator.WorldGenSmallFungi;
 import net.minecraft.block.BlockBush;
 import net.minecraft.block.material.Material;
@@ -24,8 +25,8 @@ import java.util.Random;
 public class BiomeBase extends Biome implements IMidnightBiome {
     protected static final IBlockState NIGHT_STONE = ModBlocks.NIGHTSTONE.getDefaultState();
 
-    protected static final WorldGenMidnightTree SHADOWROOT_TREE_GEN = new WorldGenMidnightTree(ModBlocks.SHADOWROOT_LOG, ModBlocks.SHADOWROOT_LEAVES, 8);
-    protected static final WorldGenMidnightTree DARK_WILLOW_TREE_GEN = new WorldGenMidnightTree(ModBlocks.DARK_WILLOW_LOG, ModBlocks.DARK_WILLOW_LEAVES, 8);
+    protected static final WorldGenShadowrootTree SHADOWROOT_TREE_GEN =  new WorldGenShadowrootTree();
+    protected static final WorldGenDefaultTree DARK_WILLOW_TREE_GEN = new WorldGenDefaultTree(ModBlocks.DARK_WILLOW_LOG, ModBlocks.DARK_WILLOW_LEAVES, 8);
 
     protected static final WorldGenMidnightPlant GRASS_GENERATOR = new WorldGenMidnightPlant(
             ModBlocks.TALL_MIDNIGHT_GRASS.getDefaultState(),

@@ -29,7 +29,8 @@ import com.mushroom.midnight.common.block.BlockShadowrootCraftingTable;
 import com.mushroom.midnight.common.tile.base.TileEntityMidnightFurnace;
 import com.mushroom.midnight.common.tile.base.TileEntityShadowrootChest;
 import com.mushroom.midnight.common.world.generator.WorldGenMidnightFungi;
-import com.mushroom.midnight.common.world.generator.WorldGenMidnightTree;
+import com.mushroom.midnight.common.world.generator.WorldGenDefaultTree;
+import com.mushroom.midnight.common.world.generator.WorldGenShadowrootTree;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -225,8 +226,8 @@ public class ModBlocks {
                 RegUtil.withName(new BlockGlowingPlant(), "lumen_bud"),
                 RegUtil.withName(new BlockGlowingDoublePlant(), "double_lumen_bud"),
                 RegUtil.withName(new BlockGlowingPlant(), "crystal_flower"),
-                RegUtil.withName(new BlockMidnightSapling(() -> new WorldGenMidnightTree(SHADOWROOT_LOG, SHADOWROOT_LEAVES, 6)), "shadowroot_sapling"),
-                RegUtil.withName(new BlockMidnightSapling(() -> new WorldGenMidnightTree(DARK_WILLOW_LOG, DARK_WILLOW_LEAVES, 6)), "dark_willow_sapling"),
+                RegUtil.withName(new BlockMidnightSapling(() -> new WorldGenShadowrootTree()), "shadowroot_sapling"),
+                RegUtil.withName(new BlockMidnightSapling(() -> new WorldGenDefaultTree(DARK_WILLOW_LOG, DARK_WILLOW_LEAVES, 6)), "dark_willow_sapling"),
                 RegUtil.withName(new BlockMidnightDoor(() -> ModItems.SHADOWROOT_DOOR), "shadowroot_door"),
                 RegUtil.withName(new BlockMidnightDoor(() -> ModItems.DARK_WILLOW_DOOR), "dark_willow_door"),
                 RegUtil.withName(new BlockMidnightDoor(() -> ModItems.DEAD_WOOD_DOOR), "dead_wood_door"),
