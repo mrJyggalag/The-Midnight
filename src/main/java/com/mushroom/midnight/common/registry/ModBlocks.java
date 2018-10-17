@@ -28,8 +28,8 @@ import com.mushroom.midnight.common.block.BlockShadowrootChest;
 import com.mushroom.midnight.common.block.BlockShadowrootCraftingTable;
 import com.mushroom.midnight.common.tile.base.TileEntityMidnightFurnace;
 import com.mushroom.midnight.common.tile.base.TileEntityShadowrootChest;
-import com.mushroom.midnight.common.world.generator.WorldGenMidnightFungi;
 import com.mushroom.midnight.common.world.generator.WorldGenDefaultTree;
+import com.mushroom.midnight.common.world.generator.WorldGenMidnightFungi;
 import com.mushroom.midnight.common.world.generator.WorldGenShadowrootTree;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
@@ -202,7 +202,9 @@ public class ModBlocks {
                 RegUtil.withName(new BlockMiasmaSurface(), "miasma_surface"),
                 RegUtil.withName(new BlockMiasmaFluid(), "miasma"),
                 RegUtil.withName(new BlockMidnightGem(() -> ModItems.DARK_PEARL), "dark_pearl_ore"),
-                RegUtil.withName(new BlockBasic(Material.IRON), "dark_pearl_block"),
+                RegUtil.withName(new BlockBasic(Material.IRON), "dark_pearl_block")
+                        .withSoundType(SoundType.METAL)
+                        .setHardness(3.0F),
                 RegUtil.withName(new BlockMidnightPlant(), "tall_midnight_grass"),
                 RegUtil.withName(new BlockDoubleMidnightPlant(), "double_midnight_grass"),
                 RegUtil.withName(new BlockMidnightFungi(() -> new WorldGenMidnightFungi(
