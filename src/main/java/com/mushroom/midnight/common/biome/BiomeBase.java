@@ -1,6 +1,7 @@
 package com.mushroom.midnight.common.biome;
 
 import com.mushroom.midnight.common.registry.ModBlocks;
+import com.mushroom.midnight.common.world.generator.WorldGenDeadTree;
 import com.mushroom.midnight.common.world.generator.WorldGenDoubleFungi;
 import com.mushroom.midnight.common.world.generator.WorldGenDoubleMidnightPlant;
 import com.mushroom.midnight.common.world.generator.WorldGenMidnightPlant;
@@ -60,6 +61,8 @@ public class BiomeBase extends Biome implements IMidnightBiome {
             ((BlockBush) ModBlocks.CRYSTAL_FLOWER)::canBlockStay,
             12
     );
+
+    protected static final WorldGenerator DEAD_TREE_GENERATOR = new WorldGenDeadTree();
 
     protected int grassColor = 0xB084BC;
     protected int foliageColor = 0x8F6DBC;

@@ -41,5 +41,14 @@ public class BiomeVigilantForest extends BiomeBase {
         }
 
         super.decorate(world, rand, pos);
+
+        if (TerrainGen.decorate(world, rand, chunkPos, DecorateBiomeEvent.Decorate.EventType.DEAD_BUSH)) {
+            for (int i = 0; i < 6; i++) {
+                int offsetX = rand.nextInt(16) + 8;
+                int offsetZ = rand.nextInt(16) + 8;
+                BlockPos treePos = world.getHeight(pos.add(offsetX, 0, offsetZ));
+                DEAD_TREE_GENERATOR.generate(world, rand, treePos);
+            }
+        }
     }
 }

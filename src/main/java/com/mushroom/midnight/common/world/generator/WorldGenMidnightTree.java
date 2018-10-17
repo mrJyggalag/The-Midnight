@@ -63,17 +63,20 @@ public abstract class WorldGenMidnightTree extends WorldGenAbstractTree {
     }
 
     protected void placeLog(World world, BlockPos pos, BlockLog.EnumAxis axis) {
-        IBlockState state = world.getBlockState(pos);
-        if (state.getBlock().isAir(state, world, pos) || state.getBlock().isLeaves(state, world, pos) || state.getMaterial() == Material.VINE) {
+        if (this.canReplace(world, pos)) {
             this.setBlockAndNotifyAdequately(world, pos, this.log.withProperty(BlockMidnightLog.LOG_AXIS, axis));
         }
     }
 
     protected void placeLeaves(World world, BlockPos pos) {
-        IBlockState state = world.getBlockState(pos);
-        if (state.getBlock().isAir(state, world, pos) || state.getBlock().isLeaves(state, world, pos) || state.getMaterial() == Material.VINE) {
+        if (this.canReplace(world, pos)) {
             this.setBlockAndNotifyAdequately(world, pos, this.leaves);
         }
+    }
+
+    protected boolean canReplace(World world, BlockPos pos) {
+        IBlockState state = world.getBlockState(pos);
+        return state.getBlock().isAir(state, world, pos) || state.getBlock().isLeaves(state, world, pos) || state.getMaterial() == Material.VINE;
     }
 
     protected Set<BlockPos> produceBlob(BlockPos origin, double radius) {
