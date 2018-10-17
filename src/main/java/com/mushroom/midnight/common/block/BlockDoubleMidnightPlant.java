@@ -14,21 +14,37 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.common.IShearable;
 
-public class BlockDoubleMidnightPlant extends BlockBush implements IModelProvider {
+import javax.annotation.Nonnull;
+import java.util.Collections;
+import java.util.List;
+import java.util.Random;
+
+public class BlockDoubleMidnightPlant extends BlockBush implements IModelProvider, IShearable {
     private static final PropertyEnum<BlockDoublePlant.EnumBlockHalf> HALF = BlockDoublePlant.HALF;
 
-    public BlockDoubleMidnightPlant() {
+    private final PlantBehaviorType behaviorType;
+
+    public BlockDoubleMidnightPlant(PlantBehaviorType behaviorType) {
         super(Material.VINE);
+        this.behaviorType = behaviorType;
         this.setHardness(0.0F);
         this.setSoundType(SoundType.PLANT);
         this.setCreativeTab(Midnight.MIDNIGHT_TAB);
         this.setDefaultState(this.blockState.getBaseState().withProperty(HALF, BlockDoublePlant.EnumBlockHalf.LOWER));
+    }
+
+    public BlockDoubleMidnightPlant() {
+        this(PlantBehaviorType.FLOWER);
     }
 
     @Override
@@ -142,5 +158,32 @@ public class BlockDoubleMidnightPlant extends BlockBush implements IModelProvide
     @Override
     public BlockStateContainer createBlockState() {
         return new BlockStateContainer(this, HALF);
+    }
+
+    @Override
+    public boolean isShearable(@Nonnull ItemStack item, IBlockAccess world, BlockPos pos) {
+        return this.behaviorType.isShearable();
+    }
+
+    @Nonnull
+    @Override
+    public List<ItemStack> onSheared(@Nonnull ItemStack item, IBlockAccess world, BlockPos pos, int fortune) {
+        if (this.behaviorType.isShearable()) {
+            return NonNullList.withSize(1, new ItemStack(this));
+        }
+        return Collections.emptyList();
+    }
+
+    @Override
+    public boolean isReplaceable(IBlockAccess worldIn, BlockPos pos) {
+        return this.behaviorType.isReplacable();
+    }
+
+    @Override
+    public Item getItemDropped(IBlockState state, Random rand, int fortune) {
+        if (state.getValue(HALF) == BlockDoublePlant.EnumBlockHalf.UPPER || this.behaviorType.isShearable()) {
+            return Items.AIR;
+        }
+        return super.getItemDropped(state, rand, fortune);
     }
 }

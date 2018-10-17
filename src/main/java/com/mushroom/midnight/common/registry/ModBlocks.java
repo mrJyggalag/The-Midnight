@@ -26,6 +26,7 @@ import com.mushroom.midnight.common.block.BlockMidnightTrapDoor;
 import com.mushroom.midnight.common.block.BlockNightstone;
 import com.mushroom.midnight.common.block.BlockShadowrootChest;
 import com.mushroom.midnight.common.block.BlockShadowrootCraftingTable;
+import com.mushroom.midnight.common.block.PlantBehaviorType;
 import com.mushroom.midnight.common.tile.base.TileEntityMidnightFurnace;
 import com.mushroom.midnight.common.tile.base.TileEntityShadowrootChest;
 import com.mushroom.midnight.common.world.generator.WorldGenDefaultTree;
@@ -205,8 +206,8 @@ public class ModBlocks {
                 RegUtil.withName(new BlockBasic(Material.IRON), "dark_pearl_block")
                         .withSoundType(SoundType.METAL)
                         .setHardness(3.0F),
-                RegUtil.withName(new BlockMidnightPlant(), "tall_midnight_grass"),
-                RegUtil.withName(new BlockDoubleMidnightPlant(), "double_midnight_grass"),
+                RegUtil.withName(new BlockMidnightPlant(PlantBehaviorType.BUSH), "tall_midnight_grass"),
+                RegUtil.withName(new BlockDoubleMidnightPlant(PlantBehaviorType.BUSH), "double_midnight_grass"),
                 RegUtil.withName(new BlockMidnightFungi(() -> new WorldGenMidnightFungi(
                         ModBlocks.NIGHTSHROOM_STEM.getDefaultState(),
                         ModBlocks.NIGHTSHROOM_HAT.getDefaultState()
@@ -228,7 +229,7 @@ public class ModBlocks {
                 RegUtil.withName(new BlockGlowingPlant(), "lumen_bud"),
                 RegUtil.withName(new BlockGlowingDoublePlant(), "double_lumen_bud"),
                 RegUtil.withName(new BlockGlowingPlant(), "crystal_flower"),
-                RegUtil.withName(new BlockMidnightSapling(() -> new WorldGenShadowrootTree()), "shadowroot_sapling"),
+                RegUtil.withName(new BlockMidnightSapling(WorldGenShadowrootTree::new), "shadowroot_sapling"),
                 RegUtil.withName(new BlockMidnightSapling(() -> new WorldGenDefaultTree(DARK_WILLOW_LOG, DARK_WILLOW_LEAVES, 6)), "dark_willow_sapling"),
                 RegUtil.withName(new BlockMidnightDoor(() -> ModItems.SHADOWROOT_DOOR), "shadowroot_door"),
                 RegUtil.withName(new BlockMidnightDoor(() -> ModItems.DARK_WILLOW_DOOR), "dark_willow_door"),
