@@ -56,7 +56,7 @@ public class MidnightRouxeGenerator {
                 int offsetZ = random.nextInt(16);
                 mutablePos.setPos(globalX + offsetX, 0, globalZ + offsetZ);
 
-                int height = world.getHeight(mutablePos).getY() - 8;
+                int height = world.getHeight(mutablePos).getY() / 2;
                 if (height > 0) {
                     tryGenerateCrystal(world, mutablePos, random, height);
                 }

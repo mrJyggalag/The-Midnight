@@ -72,6 +72,8 @@ public class BiomeBase extends Biome implements IMidnightBiome {
         this.spawnableWaterCreatureList.clear();
         this.spawnableCaveCreatureList.clear();
 
+        // TODO: Probably replace the BiomeDecorator
+
         this.decorator.treesPerChunk = 0;
         this.decorator.grassPerChunk = 0;
         this.decorator.deadBushPerChunk = 0;
