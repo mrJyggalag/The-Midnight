@@ -29,6 +29,7 @@ import net.minecraftforge.client.event.EntityViewRenderEvent;
 import net.minecraftforge.client.event.sound.PlaySoundEvent;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.relauncher.Side;
@@ -128,6 +129,16 @@ public class ClientEventHandler {
             GlStateManager.setFog(GlStateManager.FogMode.EXP);
             event.setCanceled(true);
             event.setDensity(0.15F);
+        }
+    }
+
+    @SubscribeEvent(priority = EventPriority.LOWEST)
+    public static void onSetupFogColor(EntityViewRenderEvent.FogColors event) {
+        Entity entity = event.getEntity();
+        if (entity instanceof EntityLivingBase && ((EntityLivingBase) entity).isPotionActive(ModEffects.STUNNED)) {
+            event.setRed(0.1F);
+            event.setGreen(0.1F);
+            event.setBlue(0.1F);
         }
     }
 
