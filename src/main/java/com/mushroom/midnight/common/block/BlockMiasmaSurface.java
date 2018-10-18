@@ -11,6 +11,7 @@ import net.minecraft.world.IBlockAccess;
 public class BlockMiasmaSurface extends BlockMagma implements IModelProvider {
     public BlockMiasmaSurface() {
         super();
+        this.setHardness(0.5F);
         this.setCreativeTab(Midnight.MIDNIGHT_TAB);
     }
 
