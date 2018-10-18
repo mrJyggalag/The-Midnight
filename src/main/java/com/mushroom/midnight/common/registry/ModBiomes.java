@@ -31,6 +31,8 @@ public class ModBiomes {
 
     private static final List<Biome> SEED_BIOMES = new ArrayList<>();
 
+    // TODO: Lost rifter spawn
+
     @SubscribeEvent
     public static void onRegisterBiomes(RegistryEvent.Register<Biome> event) {
         event.getRegistry().registerAll(
