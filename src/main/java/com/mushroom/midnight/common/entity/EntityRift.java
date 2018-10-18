@@ -57,6 +57,7 @@ public class EntityRift extends Entity implements IEntityAdditionalSpawnData {
         this.setSize(1.8F, 4.0F);
         this.noClip = true;
         this.initGeometry(new Random().nextLong());
+        this.isImmuneToFire = true;
         if (world.isRemote) {
             this.particleSystem = new RiftParticleSystem(this);
         }
