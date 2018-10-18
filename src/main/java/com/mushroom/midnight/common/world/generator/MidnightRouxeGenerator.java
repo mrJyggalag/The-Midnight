@@ -3,6 +3,7 @@ package com.mushroom.midnight.common.world.generator;
 import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.common.registry.ModBlocks;
 import com.mushroom.midnight.common.registry.ModDimensions;
+import com.mushroom.midnight.common.world.feature.CrystalClusterFeature;
 import com.mushroom.midnight.common.world.noise.INoiseSampler;
 import com.mushroom.midnight.common.world.noise.OctaveNoiseSampler;
 import net.minecraft.util.math.BlockPos;
@@ -22,7 +23,7 @@ public class MidnightRouxeGenerator {
     private static final long SEED = 6035435416693430887L;
     private static final double[] SAMPLE_BUFFER = new double[1];
 
-    private static final WorldGenerator CRYSTAL_GENERATOR = new WorldGenCrystalCluster(2, 3,
+    private static final WorldGenerator CRYSTAL_GENERATOR = new CrystalClusterFeature(2, 3,
             ModBlocks.ROUXE_ROCK.getDefaultState(),
             ModBlocks.ROUXE.getDefaultState()
     );

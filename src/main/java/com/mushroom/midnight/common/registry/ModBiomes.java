@@ -1,14 +1,9 @@
 package com.mushroom.midnight.common.registry;
 
 import com.mushroom.midnight.Midnight;
-import com.mushroom.midnight.common.biome.BiomeBlackRidge;
-import com.mushroom.midnight.common.biome.BiomeCrystalPlains;
-import com.mushroom.midnight.common.biome.BiomeFungiForest;
-import com.mushroom.midnight.common.biome.BiomeMoltenCrater;
-import com.mushroom.midnight.common.biome.BiomeMoltenCraterEdge;
-import com.mushroom.midnight.common.biome.BiomeObscuredPeaks;
-import com.mushroom.midnight.common.biome.BiomeVigilantForest;
-import com.mushroom.midnight.common.biome.BiomeWarpedFields;
+import com.mushroom.midnight.common.biome.MidnightBiome;
+import com.mushroom.midnight.common.biome.MidnightBiomeConfigs;
+import com.mushroom.midnight.common.biome.MoltenCraterBiome;
 import net.minecraft.init.Biomes;
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.event.RegistryEvent;
@@ -39,15 +34,17 @@ public class ModBiomes {
     @SubscribeEvent
     public static void onRegisterBiomes(RegistryEvent.Register<Biome> event) {
         event.getRegistry().registerAll(
-                RegUtil.applyName(new BiomeVigilantForest(
+                RegUtil.applyName(new MidnightBiome(
                         new Biome.BiomeProperties("vigilant_forest")
                                 .setBaseHeight(0.155F)
-                                .setHeightVariation(0.07F)
+                                .setHeightVariation(0.07F),
+                        MidnightBiomeConfigs.VIGILANT_FOREST_CONFIG
                 )),
-                RegUtil.applyName(new BiomeBlackRidge(
+                RegUtil.applyName(new MidnightBiome(
                         new Biome.BiomeProperties("black_ridge")
                                 .setBaseHeight(4.5F)
-                                .setHeightVariation(0.1F)
+                                .setHeightVariation(0.1F),
+                        MidnightBiomeConfigs.BLACK_RIDGE_CONFIG
                 )),
                 // TODO: Reimplement
                 /*RegUtil.applyName(new BiomeDeceitfulBog(
@@ -55,35 +52,41 @@ public class ModBiomes {
                                 .setBaseHeight(0.125F)
                                 .setHeightVariation(0.03F)
                 )),*/
-                RegUtil.applyName(new BiomeFungiForest(
+                RegUtil.applyName(new MidnightBiome(
                         new Biome.BiomeProperties("fungi_forest")
                                 .setBaseHeight(0.175F)
-                                .setHeightVariation(0.07F)
+                                .setHeightVariation(0.07F),
+                        MidnightBiomeConfigs.FUNGI_FOREST_CONFIG
                 )),
-                RegUtil.applyName(new BiomeMoltenCrater(
+                RegUtil.applyName(new MoltenCraterBiome(
                         new Biome.BiomeProperties("molten_crater")
                                 .setBaseHeight(-1.7F)
-                                .setHeightVariation(0.0F)
+                                .setHeightVariation(0.0F),
+                        MidnightBiomeConfigs.MOLTEN_CRATER_CONFIG
                 )),
-                RegUtil.applyName(new BiomeMoltenCraterEdge(
+                RegUtil.applyName(new MidnightBiome(
                         new Biome.BiomeProperties("molten_crater_edge")
                                 .setBaseHeight(-0.2F)
-                                .setHeightVariation(0.05F)
+                                .setHeightVariation(0.05F),
+                        MidnightBiomeConfigs.MOLTEN_CRATER_CONFIG
                 )),
-                RegUtil.applyName(new BiomeObscuredPeaks(
+                RegUtil.applyName(new MidnightBiome(
                         new Biome.BiomeProperties("obscured_peaks")
                                 .setBaseHeight(5.0F)
-                                .setHeightVariation(0.5F)
+                                .setHeightVariation(0.5F),
+                        MidnightBiomeConfigs.OBSCURED_PEAKS_CONFIG
                 )),
-                RegUtil.applyName(new BiomeWarpedFields(
+                RegUtil.applyName(new MidnightBiome(
                         new Biome.BiomeProperties("warped_fields")
                                 .setBaseHeight(0.1F)
-                                .setHeightVariation(0.8F)
+                                .setHeightVariation(0.8F),
+                        MidnightBiomeConfigs.WARPED_FIELDS_CONFIG
                 )),
-                RegUtil.applyName(new BiomeCrystalPlains(
+                RegUtil.applyName(new MidnightBiome(
                         new Biome.BiomeProperties("crystal_plains")
                                 .setBaseHeight(0.1F)
-                                .setHeightVariation(0.12F)
+                                .setHeightVariation(0.12F),
+                        MidnightBiomeConfigs.CRYSTAL_PLAINS_CONFIG
                 ))
         );
     }

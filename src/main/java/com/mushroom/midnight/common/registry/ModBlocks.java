@@ -29,9 +29,9 @@ import com.mushroom.midnight.common.block.BlockShadowrootCraftingTable;
 import com.mushroom.midnight.common.block.PlantBehaviorType;
 import com.mushroom.midnight.common.tile.base.TileEntityMidnightFurnace;
 import com.mushroom.midnight.common.tile.base.TileEntityShadowrootChest;
-import com.mushroom.midnight.common.world.generator.WorldGenDefaultTree;
-import com.mushroom.midnight.common.world.generator.WorldGenMidnightFungi;
-import com.mushroom.midnight.common.world.generator.WorldGenShadowrootTree;
+import com.mushroom.midnight.common.world.feature.DefaultTreeFeature;
+import com.mushroom.midnight.common.world.feature.LargeFungiFeature;
+import com.mushroom.midnight.common.world.feature.ShadowrootTreeFeature;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -208,17 +208,17 @@ public class ModBlocks {
                         .setHardness(3.0F),
                 RegUtil.withName(new BlockMidnightPlant(PlantBehaviorType.BUSH), "tall_midnight_grass"),
                 RegUtil.withName(new BlockDoubleMidnightPlant(PlantBehaviorType.BUSH), "double_midnight_grass"),
-                RegUtil.withName(new BlockMidnightFungi(() -> new WorldGenMidnightFungi(
+                RegUtil.withName(new BlockMidnightFungi(() -> new LargeFungiFeature(
                         ModBlocks.NIGHTSHROOM_STEM.getDefaultState(),
                         ModBlocks.NIGHTSHROOM_HAT.getDefaultState()
                 )), "nightshroom"),
                 RegUtil.withName(new BlockGlowingDoublePlant(), "double_nightshroom"),
-                RegUtil.withName(new BlockMidnightFungi(() -> new WorldGenMidnightFungi(
+                RegUtil.withName(new BlockMidnightFungi(() -> new LargeFungiFeature(
                         ModBlocks.DEWSHROOM_STEM.getDefaultState(),
                         ModBlocks.DEWSHROOM_HAT.getDefaultState()
                 )), "dewshroom"),
                 RegUtil.withName(new BlockGlowingDoublePlant(), "double_dewshroom"),
-                RegUtil.withName(new BlockMidnightFungi(() -> new WorldGenMidnightFungi(
+                RegUtil.withName(new BlockMidnightFungi(() -> new LargeFungiFeature(
                         ModBlocks.VIRIDSHROOM_STEM.getDefaultState(),
                         ModBlocks.VIRIDSHROOM_HAT.getDefaultState()
                 )), "viridshroom"),
@@ -229,8 +229,8 @@ public class ModBlocks {
                 RegUtil.withName(new BlockGlowingPlant(), "lumen_bud"),
                 RegUtil.withName(new BlockGlowingDoublePlant(), "double_lumen_bud"),
                 RegUtil.withName(new BlockGlowingPlant(), "crystal_flower"),
-                RegUtil.withName(new BlockMidnightSapling(WorldGenShadowrootTree::new), "shadowroot_sapling"),
-                RegUtil.withName(new BlockMidnightSapling(() -> new WorldGenDefaultTree(DARK_WILLOW_LOG, DARK_WILLOW_LEAVES, 6)), "dark_willow_sapling"),
+                RegUtil.withName(new BlockMidnightSapling(ShadowrootTreeFeature::new), "shadowroot_sapling"),
+                RegUtil.withName(new BlockMidnightSapling(() -> new DefaultTreeFeature(DARK_WILLOW_LOG, DARK_WILLOW_LEAVES, 6)), "dark_willow_sapling"),
                 RegUtil.withName(new BlockMidnightDoor(() -> ModItems.SHADOWROOT_DOOR), "shadowroot_door"),
                 RegUtil.withName(new BlockMidnightDoor(() -> ModItems.DARK_WILLOW_DOOR), "dark_willow_door"),
                 RegUtil.withName(new BlockMidnightDoor(() -> ModItems.DEAD_WOOD_DOOR), "dead_wood_door"),

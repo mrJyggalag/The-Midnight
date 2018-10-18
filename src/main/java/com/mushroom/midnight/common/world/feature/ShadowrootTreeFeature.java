@@ -1,4 +1,4 @@
-package com.mushroom.midnight.common.world.generator;
+package com.mushroom.midnight.common.world.feature;
 
 import com.mushroom.midnight.common.registry.ModBlocks;
 import net.minecraft.block.BlockLog;
@@ -16,46 +16,46 @@ import java.util.Random;
 import java.util.Set;
 import java.util.function.IntFunction;
 
-public class WorldGenShadowrootTree extends WorldGenMidnightTree {
+public class ShadowrootTreeFeature extends MidnightTreeFeature {
     private static final int BRANCH_SPACING = 3;
 
-    public WorldGenShadowrootTree(IBlockState log, IBlockState leaves) {
+    public ShadowrootTreeFeature(IBlockState log, IBlockState leaves) {
         super(log, leaves);
     }
 
-    public WorldGenShadowrootTree() {
+    public ShadowrootTreeFeature() {
         this(ModBlocks.SHADOWROOT_LOG.getDefaultState(), ModBlocks.SHADOWROOT_LEAVES.getDefaultState());
     }
 
     @Override
-    public boolean generate(World world, Random rand, BlockPos pos) {
-        int height = rand.nextInt(8) + 10;
+    public boolean generate(World world, Random random, BlockPos origin) {
+        int height = random.nextInt(8) + 10;
 
         IntFunction<Integer> widthSupplier = y -> 1;
 
-        if (!this.canFit(world, pos, height, widthSupplier)) {
+        if (!this.canFit(world, origin, height, widthSupplier)) {
             return false;
         }
 
-        if (this.canGrow(world, pos)) {
-            BlockPos.MutableBlockPos mutablePos = new BlockPos.MutableBlockPos(pos);
+        if (this.canGrow(world, origin)) {
+            BlockPos.MutableBlockPos mutablePos = new BlockPos.MutableBlockPos(origin);
             for (int localY = 0; localY < height; localY++) {
-                mutablePos.setY(pos.getY() + localY);
+                mutablePos.setY(origin.getY() + localY);
                 this.placeLog(world, mutablePos);
             }
 
-            this.generateRoots(world, rand, pos);
+            this.generateRoots(world, random, origin);
 
-            Set<Branch> branches = this.collectBranches(world, rand, pos, height);
+            Set<Branch> branches = this.collectBranches(world, random, origin, height);
             for (Branch branch : branches) {
                 this.placeLog(world, branch.pos, branch.getAxis());
             }
 
-            Set<BlockPos> leafPositions = this.produceBlob(pos.up(height - 2), 1.5, 2.5);
-            leafPositions = this.droopLeaves(leafPositions, rand, 4);
+            Set<BlockPos> leafPositions = this.produceBlob(origin.up(height - 2), 1.5, 2.5);
+            leafPositions = this.droopLeaves(leafPositions, random, 4);
 
             for (Branch branch : branches) {
-                leafPositions.addAll(this.collectBranchLeaves(branch, rand));
+                leafPositions.addAll(this.collectBranchLeaves(branch, random));
             }
 
             for (BlockPos leafPos : leafPositions) {
@@ -68,18 +68,18 @@ public class WorldGenShadowrootTree extends WorldGenMidnightTree {
         return false;
     }
 
-    private void generateRoots(World world, Random rand, BlockPos pos) {
+    private void generateRoots(World world, Random random, BlockPos origin) {
         BlockPos.MutableBlockPos mutablePos = new BlockPos.MutableBlockPos();
 
         List<EnumFacing> availableSides = new ArrayList<>(4);
         Collections.addAll(availableSides, EnumFacing.HORIZONTALS);
 
-        int count = rand.nextInt(3) + 1;
+        int count = random.nextInt(3) + 1;
         for (int i = 0; i < count; i++) {
-            EnumFacing side = availableSides.remove(rand.nextInt(availableSides.size()));
-            BlockPos rootOrigin = pos.offset(side);
+            EnumFacing side = availableSides.remove(random.nextInt(availableSides.size()));
+            BlockPos rootOrigin = origin.offset(side);
 
-            int height = rand.nextInt(3) + 1;
+            int height = random.nextInt(3) + 1;
             for (int localY = 0; localY < height; localY++) {
                 mutablePos.setPos(rootOrigin.getX(), rootOrigin.getY() + localY, rootOrigin.getZ());
                 this.placeLog(world, mutablePos);
@@ -87,10 +87,10 @@ public class WorldGenShadowrootTree extends WorldGenMidnightTree {
         }
     }
 
-    private Set<BlockPos> droopLeaves(Set<BlockPos> leafPositions, Random rand, int amount) {
+    private Set<BlockPos> droopLeaves(Set<BlockPos> leafPositions, Random random, int amount) {
         Set<BlockPos> droopedLeaves = new HashSet<>(leafPositions);
         for (BlockPos pos : leafPositions) {
-            int droopAmount = rand.nextInt(amount);
+            int droopAmount = random.nextInt(amount);
             for (int i = 0; i < droopAmount; i++) {
                 droopedLeaves.add(pos.down(i));
             }
@@ -99,7 +99,7 @@ public class WorldGenShadowrootTree extends WorldGenMidnightTree {
         return droopedLeaves;
     }
 
-    private Set<Branch> collectBranches(World world, Random rand, BlockPos pos, int height) {
+    private Set<Branch> collectBranches(World world, Random random, BlockPos origin, int height) {
         int minBranchHeight = 3;
         int maxBranchHeight = height - 4;
         int heightRange = maxBranchHeight - minBranchHeight;
@@ -116,17 +116,17 @@ public class WorldGenShadowrootTree extends WorldGenMidnightTree {
 
             EnumFacing direction = null;
             while (direction == null || direction == lastDirection) {
-                direction = EnumFacing.HORIZONTALS[rand.nextInt(EnumFacing.HORIZONTALS.length)];
+                direction = EnumFacing.HORIZONTALS[random.nextInt(EnumFacing.HORIZONTALS.length)];
             }
             lastDirection = direction;
 
-            BlockPos branchPos = pos.up(y).offset(direction);
-            if (!this.isReplaceable(world, branchPos)) {
+            BlockPos branchPos = origin.up(y).offset(direction);
+            if (!this.canReplace(world, branchPos)) {
                 continue;
             }
 
             float outerAngle = direction.getHorizontalAngle();
-            float angle = (rand.nextFloat() * 90.0F) + outerAngle - 45.0F;
+            float angle = (random.nextFloat() * 90.0F) + outerAngle - 45.0F;
 
             branches.add(new Branch(branchPos, direction, angle));
         }
@@ -134,7 +134,7 @@ public class WorldGenShadowrootTree extends WorldGenMidnightTree {
         return branches;
     }
 
-    private Set<BlockPos> collectBranchLeaves(Branch branch, Random rand) {
+    private Set<BlockPos> collectBranchLeaves(Branch branch, Random random) {
         Set<BlockPos> branchLeaves = new HashSet<>();
 
         float theta = (float) Math.toRadians(branch.angle);
@@ -146,7 +146,7 @@ public class WorldGenShadowrootTree extends WorldGenMidnightTree {
             BlockPos origin = branch.pos.add(deltaX * step, droop, deltaZ * step);
 
             Set<BlockPos> stepLeaves = this.produceBlob(origin, 1.0);
-            branchLeaves.addAll(this.droopLeaves(stepLeaves, rand, step + 1));
+            branchLeaves.addAll(this.droopLeaves(stepLeaves, random, step + 1));
         }
 
         return branchLeaves;

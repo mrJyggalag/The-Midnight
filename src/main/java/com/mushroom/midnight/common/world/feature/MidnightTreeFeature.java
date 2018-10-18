@@ -1,29 +1,24 @@
-package com.mushroom.midnight.common.world.generator;
+package com.mushroom.midnight.common.world.feature;
 
-import com.mushroom.midnight.common.block.BlockMidnightLeaves;
-import com.mushroom.midnight.common.block.BlockMidnightLog;
 import com.mushroom.midnight.common.registry.ModBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLog;
-import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
-import net.minecraft.world.gen.feature.WorldGenAbstractTree;
 import net.minecraftforge.common.IPlantable;
 
 import java.util.HashSet;
 import java.util.Set;
 import java.util.function.IntFunction;
 
-public abstract class WorldGenMidnightTree extends WorldGenAbstractTree {
-    protected final IBlockState log;
-    protected final IBlockState leaves;
+public abstract class MidnightTreeFeature extends MidnightNaturalFeature {
+    private final IBlockState log;
+    private final IBlockState leaves;
 
-    public WorldGenMidnightTree(IBlockState log, IBlockState leaves) {
-        super(true);
+    protected MidnightTreeFeature(IBlockState log, IBlockState leaves) {
         this.log = log;
         this.leaves = leaves;
     }
@@ -36,7 +31,7 @@ public abstract class WorldGenMidnightTree extends WorldGenAbstractTree {
             for (int localZ = -width; localZ <= width; localZ++) {
                 for (int localX = -width; localX <= width; localX++) {
                     mutablePos.setPos(pos.getX() + localX, pos.getY() + localY, pos.getZ() + localZ);
-                    if (!this.isReplaceable(world, mutablePos)) {
+                    if (!this.canReplace(world, mutablePos)) {
                         return false;
                     }
                 }
@@ -59,24 +54,15 @@ public abstract class WorldGenMidnightTree extends WorldGenAbstractTree {
     }
 
     protected void placeLog(World world, BlockPos pos) {
-        this.placeLog(world, pos, BlockLog.EnumAxis.Y);
+        this.placeState(world, pos, this.log);
     }
 
     protected void placeLog(World world, BlockPos pos, BlockLog.EnumAxis axis) {
-        if (this.canReplace(world, pos)) {
-            this.setBlockAndNotifyAdequately(world, pos, this.log.withProperty(BlockMidnightLog.LOG_AXIS, axis));
-        }
+        this.placeState(world, pos, this.log.withProperty(BlockLog.LOG_AXIS, axis));
     }
 
     protected void placeLeaves(World world, BlockPos pos) {
-        if (this.canReplace(world, pos)) {
-            this.setBlockAndNotifyAdequately(world, pos, this.leaves);
-        }
-    }
-
-    protected boolean canReplace(World world, BlockPos pos) {
-        IBlockState state = world.getBlockState(pos);
-        return state.getBlock().isAir(state, world, pos) || state.getBlock().isLeaves(state, world, pos) || state.getMaterial() == Material.VINE;
+        this.placeState(world, pos, this.leaves);
     }
 
     protected Set<BlockPos> produceBlob(BlockPos origin, double radius) {
@@ -102,16 +88,5 @@ public abstract class WorldGenMidnightTree extends WorldGenAbstractTree {
         }
 
         return positions;
-    }
-
-    @Override
-    protected boolean canGrowInto(Block blockType) {
-        if (super.canGrowInto(blockType)) {
-            return true;
-        }
-        Material material = blockType.getDefaultState().getMaterial();
-        return material == Material.AIR || material == Material.LEAVES || material == Material.VINE
-                || blockType instanceof BlockMidnightLog || blockType instanceof BlockMidnightLeaves
-                || blockType == ModBlocks.MIDNIGHT_DIRT || blockType == ModBlocks.MIDNIGHT_GRASS;
     }
 }

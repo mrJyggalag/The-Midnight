@@ -1,23 +1,24 @@
-package com.mushroom.midnight.common.world.generator;
+package com.mushroom.midnight.common.world.feature;
 
 import com.mushroom.midnight.common.registry.ModBlocks;
 import com.mushroom.midnight.common.util.WorldUtil;
 import net.minecraft.block.BlockLog;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.init.Blocks;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 import java.util.Random;
 
-public class WorldGenDeadTree extends WorldGenMidnightTree {
-    public WorldGenDeadTree(IBlockState log, IBlockState leaves) {
-        super(log, leaves);
+public class DeadTreeFeature extends MidnightNaturalFeature {
+    private final IBlockState log;
+
+    public DeadTreeFeature(IBlockState log) {
+        this.log = log;
     }
 
-    public WorldGenDeadTree() {
-        this(ModBlocks.DEAD_WOOD_LOG.getDefaultState(), Blocks.AIR.getDefaultState());
+    public DeadTreeFeature() {
+        this(ModBlocks.DEAD_WOOD_LOG.getDefaultState());
     }
 
     @Override
@@ -37,14 +38,14 @@ public class WorldGenDeadTree extends WorldGenMidnightTree {
         }
 
         for (BlockPos pos : BlockPos.getAllInBoxMutable(basePos, endPos)) {
-            this.placeLog(world, pos, axis);
+            this.placeState(world, pos, this.log.withProperty(BlockLog.LOG_AXIS, axis));
         }
 
         int extrusionCount = rand.nextInt(3);
         for (int i = 0; i < extrusionCount; i++) {
             BlockPos intermediate = basePos.offset(direction, rand.nextInt(length));
             EnumFacing side = rand.nextBoolean() ? direction.rotateY() : direction.rotateYCCW();
-            this.placeLog(world, intermediate.offset(side), perpendicular);
+            this.placeState(world, intermediate.offset(side), this.log.withProperty(BlockLog.LOG_AXIS, perpendicular));
         }
 
         return true;

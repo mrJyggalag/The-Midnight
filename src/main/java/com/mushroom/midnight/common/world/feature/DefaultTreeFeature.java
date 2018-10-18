@@ -1,4 +1,4 @@
-package com.mushroom.midnight.common.world.generator;
+package com.mushroom.midnight.common.world.feature;
 
 import com.mushroom.midnight.common.block.BlockMidnightLeaves;
 import com.mushroom.midnight.common.block.BlockMidnightLog;
@@ -7,10 +7,9 @@ import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.world.gen.feature.WorldGenTrees;
 
-public class WorldGenDefaultTree extends WorldGenTrees {
-
-    public WorldGenDefaultTree(Block log, Block leaves, int height) {
-        super(true, height, log.getDefaultState(), leaves.getDefaultState(), false);
+public class DefaultTreeFeature extends WorldGenTrees implements IMidnightFeature {
+    public DefaultTreeFeature(Block log, Block leaves, int height) {
+        super(false, height, log.getDefaultState(), leaves.getDefaultState(), false);
     }
 
     @Override
