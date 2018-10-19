@@ -149,11 +149,16 @@ public class ModBlocks {
                 RegUtil.withName(new BlockMidnightGrass(), "midnight_grass"),
                 RegUtil.withName(new BlockMidnightDirt(), "midnight_dirt"),
                 RegUtil.withName(new BlockNightstone(), "nightstone"),
-                RegUtil.withName(new BlockBasic(Material.ROCK), "nightstone_bricks"),
-                RegUtil.withName(new BlockBasic(Material.ROCK), "chiseled_nightstone_bricks"),
+                RegUtil.withName(new BlockBasic(Material.ROCK), "nightstone_bricks")
+                        .setHardness(1.5F)
+                        .setResistance(10.0F),
+                RegUtil.withName(new BlockBasic(Material.ROCK), "chiseled_nightstone_bricks")
+                        .setHardness(1.5F)
+                        .setResistance(10.0F),
                 RegUtil.withName(new BlockBasic(Material.ROCK), "trenchstone")
                         .withHarvestLevel("pickaxe", 2)
-                        .setHardness(3.0F),
+                        .setHardness(5.0F)
+                        .setResistance(200.0F),
                 RegUtil.withName(new BlockMidnightLog(), "shadowroot_log"),
                 RegUtil.withName(new BlockMidnightLeaves(() -> SHADOWROOT_SAPLING), "shadowroot_leaves"),
                 RegUtil.withName(new BlockBasic(Material.WOOD), "shadowroot_planks")

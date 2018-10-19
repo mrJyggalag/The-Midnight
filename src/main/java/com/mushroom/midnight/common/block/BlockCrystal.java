@@ -24,7 +24,7 @@ public class BlockCrystal extends Block implements IModelProvider {
     private static final AxisAlignedBB BOUNDS = new AxisAlignedBB(0.1, 0.0, 0.1, 0.9, 0.8, 0.9);
 
     public BlockCrystal() {
-        super(Material.GLASS);
+        super(Material.ROCK);
         this.setHardness(2.0F);
         this.setSoundType(SoundType.GLASS);
         this.setHarvestLevel("pickaxe", 1);
