@@ -5,6 +5,7 @@ import com.mushroom.midnight.common.registry.ModBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockHugeMushroom;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.init.Blocks;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -33,8 +34,9 @@ public class LargeFungiFeature extends MidnightAbstractFeature {
             return false;
         }
 
+        // TODO: Delegate to check used by fungi 'plant' blocks
         Block groundBlock = world.getBlockState(origin.down()).getBlock();
-        if (groundBlock != ModBlocks.MIDNIGHT_DIRT && groundBlock != ModBlocks.MIDNIGHT_GRASS) {
+        if (groundBlock != ModBlocks.MIDNIGHT_DIRT && groundBlock != ModBlocks.MIDNIGHT_GRASS && groundBlock != ModBlocks.NIGHTSTONE && groundBlock != Blocks.MYCELIUM) {
             return false;
         }
 

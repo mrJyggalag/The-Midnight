@@ -23,6 +23,11 @@ public class BlockMidnightFungi extends BlockGlowingPlant implements IGrowable {
     }
 
     @Override
+    protected boolean canSustainBush(IBlockState state) {
+        return super.canSustainBush(state) || state.getBlock() == Blocks.MYCELIUM;
+    }
+
+    @Override
     public boolean canGrow(World world, BlockPos pos, IBlockState state, boolean isClient) {
         return true;
     }
