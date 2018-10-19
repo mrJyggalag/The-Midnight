@@ -6,6 +6,7 @@ import com.mushroom.midnight.common.biome.MidnightBiomeConfigs;
 import com.mushroom.midnight.common.biome.MoltenCraterBiome;
 import net.minecraft.init.Biomes;
 import net.minecraft.world.biome.Biome;
+import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -94,6 +95,15 @@ public class ModBiomes {
     }
 
     public static void onInit() {
+        BiomeDictionary.addTypes(VIGILANT_FOREST, BiomeDictionary.Type.FOREST, BiomeDictionary.Type.SPOOKY);
+        BiomeDictionary.addTypes(BLACK_RIDGE, BiomeDictionary.Type.MOUNTAIN, BiomeDictionary.Type.HILLS, BiomeDictionary.Type.SPARSE, BiomeDictionary.Type.SPOOKY);
+        BiomeDictionary.addTypes(FUNGI_FOREST, BiomeDictionary.Type.FOREST, BiomeDictionary.Type.SPOOKY);
+        BiomeDictionary.addTypes(MOLTEN_CRATER, BiomeDictionary.Type.HOT, BiomeDictionary.Type.SPARSE, BiomeDictionary.Type.SPOOKY);
+        BiomeDictionary.addTypes(MOLTEN_CRATER_EDGE, BiomeDictionary.Type.HOT, BiomeDictionary.Type.SPARSE, BiomeDictionary.Type.SPOOKY);
+        BiomeDictionary.addTypes(OBSCURED_PEAKS, BiomeDictionary.Type.MOUNTAIN, BiomeDictionary.Type.HILLS, BiomeDictionary.Type.SPARSE, BiomeDictionary.Type.SPOOKY);
+        BiomeDictionary.addTypes(WARPED_FIELDS, BiomeDictionary.Type.HILLS, BiomeDictionary.Type.SPOOKY);
+        BiomeDictionary.addTypes(CRYSTAL_PLAINS, BiomeDictionary.Type.PLAINS, BiomeDictionary.Type.MAGICAL);
+
         addSeedBiomes(VIGILANT_FOREST);
     }
 
