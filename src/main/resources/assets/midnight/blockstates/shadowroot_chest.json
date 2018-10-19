@@ -1,0 +1,12 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "midnight:empty",
+    "textures": {
+      "particle": "midnight:blocks/shadowroot_planks"
+    }
+  },
+  "variants": {
+    "normal": [{}]
+  }
+}
