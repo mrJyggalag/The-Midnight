@@ -297,9 +297,10 @@ public class ModBlocks {
         OreDictionary.registerOre("logWood", DARK_WILLOW_LOG);
         OreDictionary.registerOre("logWood", DEAD_WOOD_LOG);
 
-        OreDictionary.registerOre("plankWood", SHADOWROOT_PLANKS);
+        // TODO: Temporary solution. Trapdoor recipes get overridden by vanilla recipes if these are registered
+        /*OreDictionary.registerOre("plankWood", SHADOWROOT_PLANKS);
         OreDictionary.registerOre("plankWood", DARK_WILLOW_PLANKS);
-        OreDictionary.registerOre("plankWood", DEAD_WOOD_PLANKS);
+        OreDictionary.registerOre("plankWood", DEAD_WOOD_PLANKS);*/
 
         OreDictionary.registerOre("treeLeaves", SHADOWROOT_LEAVES);
         OreDictionary.registerOre("treeLeaves", DARK_WILLOW_LEAVES);
