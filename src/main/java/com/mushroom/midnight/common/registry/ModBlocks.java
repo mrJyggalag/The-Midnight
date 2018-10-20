@@ -23,6 +23,7 @@ import com.mushroom.midnight.common.block.BlockMidnightLog;
 import com.mushroom.midnight.common.block.BlockMidnightPlant;
 import com.mushroom.midnight.common.block.BlockMidnightSapling;
 import com.mushroom.midnight.common.block.BlockMidnightTrapDoor;
+import com.mushroom.midnight.common.block.BlockMushroomInside;
 import com.mushroom.midnight.common.block.BlockNightstone;
 import com.mushroom.midnight.common.block.BlockShadowrootChest;
 import com.mushroom.midnight.common.block.BlockShadowrootCraftingTable;
@@ -143,6 +144,8 @@ public class ModBlocks {
     public static final Block MIASMA_SURFACE = Blocks.AIR;
     public static final Block MIASMA = Blocks.AIR;
 
+    public static final Block MUSHROOM_INSIDE = Blocks.AIR;
+
     @SubscribeEvent
     public static void registerBlocks(RegistryEvent.Register<Block> event) {
         blocks = Lists.newArrayList(
@@ -251,7 +254,8 @@ public class ModBlocks {
                 RegUtil.withName(new BlockShadowrootCraftingTable(), "shadowroot_crafting_table"),
                 RegUtil.withName(new BlockShadowrootChest(), "shadowroot_chest"),
                 RegUtil.withName(new BlockMidnightFurnace(false), "midnight_furnace"),
-                RegUtil.withName(new BlockMidnightFurnace(true), "midnight_furnace_lit")
+                RegUtil.withName(new BlockMidnightFurnace(true), "midnight_furnace_lit"),
+                RegUtil.withName(new BlockMushroomInside(), "mushroom_inside")
         );
 
         blocks.forEach(event.getRegistry()::register);
