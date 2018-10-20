@@ -1,47 +1,47 @@
-package com.mushroom.midnight.common.world.generator;
+package com.mushroom.midnight.common.world.feature;
 
 import com.mushroom.midnight.common.block.BlockMidnightFungiShelf;
 import com.mushroom.midnight.common.registry.ModBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockHugeMushroom;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.init.Blocks;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraft.world.gen.feature.WorldGenerator;
 
 import java.util.Random;
 
 // Messy 'cleanup' of `WorldGenBigMushroom`
 // TODO: Rewrite
-public class WorldGenMidnightFungi extends WorldGenerator {
+public class LargeFungiFeature extends MidnightAbstractFeature {
     private static final Block[] SHELF_BLOCKS = new Block[] { ModBlocks.NIGHTSHROOM_SHELF, ModBlocks.DEWSHROOM_SHELF, ModBlocks.VIRIDSHROOM_SHELF };
 
     private final IBlockState stem;
     private final IBlockState cap;
 
-    public WorldGenMidnightFungi(IBlockState stem, IBlockState cap) {
-        super(false);
+    public LargeFungiFeature(IBlockState stem, IBlockState cap) {
         this.stem = stem;
         this.cap = cap;
     }
 
     @Override
-    public boolean generate(World world, Random rand, BlockPos pos) {
+    public boolean generate(World world, Random rand, BlockPos origin) {
         int height = rand.nextInt(6) + 4;
         FungiShape shape = rand.nextBoolean() ? FungiShape.DOME : FungiShape.FLAT;
 
-        if (!this.canGenerate(world, pos, height)) {
+        if (!this.canGenerate(world, origin, height)) {
             return false;
         }
 
-        Block groundBlock = world.getBlockState(pos.down()).getBlock();
-        if (groundBlock != ModBlocks.MIDNIGHT_DIRT && groundBlock != ModBlocks.MIDNIGHT_GRASS) {
+        // TODO: Delegate to check used by fungi 'plant' blocks
+        Block groundBlock = world.getBlockState(origin.down()).getBlock();
+        if (groundBlock != ModBlocks.MIDNIGHT_DIRT && groundBlock != ModBlocks.MIDNIGHT_GRASS && groundBlock != ModBlocks.NIGHTSTONE && groundBlock != Blocks.MYCELIUM) {
             return false;
         }
 
-        this.generateHat(world, rand, pos, height, shape);
-        this.generateStem(world, pos, height);
+        this.generateHat(world, rand, origin, height, shape);
+        this.generateStem(world, origin, height);
 
         return true;
     }

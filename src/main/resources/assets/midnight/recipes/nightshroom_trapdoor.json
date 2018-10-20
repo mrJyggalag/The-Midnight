@@ -8,6 +8,7 @@
     "#": {"item": "midnight:nightshroom_planks"}
   },
   "result": {
-    "item": "midnight:nightshroom_trapdoor"
+    "item": "midnight:nightshroom_trapdoor",
+    "count": 2
   }
 }

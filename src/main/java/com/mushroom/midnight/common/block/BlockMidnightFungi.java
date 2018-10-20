@@ -13,13 +13,18 @@ import net.minecraftforge.event.terraingen.TerrainGen;
 import java.util.Random;
 import java.util.function.Supplier;
 
-public class BlockMidnightFungi extends BlockGlowingPlant implements IGrowable, IMidnightFungi {
+public class BlockMidnightFungi extends BlockGlowingPlant implements IGrowable {
     private final Supplier<WorldGenerator> generatorSupplier;
 
     public BlockMidnightFungi(Supplier<WorldGenerator> generatorSupplier) {
         super();
         this.setDefaultState(this.blockState.getBaseState().withProperty(BlockSapling.STAGE, 0));
         this.generatorSupplier = generatorSupplier;
+    }
+
+    @Override
+    protected boolean canSustainBush(IBlockState state) {
+        return super.canSustainBush(state) || state.getBlock() == Blocks.MYCELIUM;
     }
 
     @Override

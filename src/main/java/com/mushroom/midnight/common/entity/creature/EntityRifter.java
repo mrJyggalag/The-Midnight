@@ -223,7 +223,7 @@ public class EntityRifter extends EntityMob implements IRiftTraveler, IEntityAdd
         if (capability != null) {
             capability.setCaptured(true);
         }
-        capturedEntity.addPotionEffect(new PotionEffect(ModEffects.STUNNED, 60, 1, false, false));
+        capturedEntity.addPotionEffect(new PotionEffect(ModEffects.STUNNED, 100, 1, false, false));
     }
 
     private void resetCapturedEntity(EntityLivingBase capturedEntity) {

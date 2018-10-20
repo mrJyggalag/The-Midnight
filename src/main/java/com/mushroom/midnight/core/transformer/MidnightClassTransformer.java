@@ -34,10 +34,10 @@ public class MidnightClassTransformer implements IClassTransformer, Opcodes {
         if (data == null) {
             return null;
         }
-        if (name.equals("paulscode.sound.libraries.SourceLWJGLOpenAL")) {
-            return this.applyTransform(data, this::transformSoundSource);
-        } else if (name.equals("net.minecraft.client.renderer.entity.RenderLivingBase")) {
-            return this.applyTransform(data, this::transformRenderLivingBase);
+        if (transformedName.equals("paulscode.sound.libraries.SourceLWJGLOpenAL")) {
+            return this.applyTransform(transformedName, data, this::transformSoundSource);
+        } else if (transformedName.equals("net.minecraft.client.renderer.entity.RenderLivingBase")) {
+            return this.applyTransform(transformedName, data, this::transformRenderLivingBase);
         }
         return data;
     }
@@ -76,7 +76,7 @@ public class MidnightClassTransformer implements IClassTransformer, Opcodes {
         return false;
     }
 
-    private byte[] applyTransform(byte[] data, Predicate<ClassNode> transformer) {
+    private byte[] applyTransform(String name, byte[] data, Predicate<ClassNode> transformer) {
         ClassNode node = new ClassNode();
         ClassReader reader = new ClassReader(data);
         reader.accept(node, 0);
@@ -87,6 +87,7 @@ public class MidnightClassTransformer implements IClassTransformer, Opcodes {
 
             return writer.toByteArray();
         } else {
+            LOGGER.warn("Unable to patch class {}", name);
             return data;
         }
     }

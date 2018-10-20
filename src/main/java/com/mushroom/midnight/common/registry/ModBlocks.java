@@ -26,10 +26,12 @@ import com.mushroom.midnight.common.block.BlockMidnightTrapDoor;
 import com.mushroom.midnight.common.block.BlockNightstone;
 import com.mushroom.midnight.common.block.BlockShadowrootChest;
 import com.mushroom.midnight.common.block.BlockShadowrootCraftingTable;
+import com.mushroom.midnight.common.block.PlantBehaviorType;
 import com.mushroom.midnight.common.tile.base.TileEntityMidnightFurnace;
 import com.mushroom.midnight.common.tile.base.TileEntityShadowrootChest;
-import com.mushroom.midnight.common.world.generator.WorldGenMidnightFungi;
-import com.mushroom.midnight.common.world.generator.WorldGenMidnightTree;
+import com.mushroom.midnight.common.world.feature.DefaultTreeFeature;
+import com.mushroom.midnight.common.world.feature.LargeFungiFeature;
+import com.mushroom.midnight.common.world.feature.ShadowrootTreeFeature;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -147,11 +149,16 @@ public class ModBlocks {
                 RegUtil.withName(new BlockMidnightGrass(), "midnight_grass"),
                 RegUtil.withName(new BlockMidnightDirt(), "midnight_dirt"),
                 RegUtil.withName(new BlockNightstone(), "nightstone"),
-                RegUtil.withName(new BlockBasic(Material.ROCK), "nightstone_bricks"),
-                RegUtil.withName(new BlockBasic(Material.ROCK), "chiseled_nightstone_bricks"),
+                RegUtil.withName(new BlockBasic(Material.ROCK), "nightstone_bricks")
+                        .setHardness(1.5F)
+                        .setResistance(10.0F),
+                RegUtil.withName(new BlockBasic(Material.ROCK), "chiseled_nightstone_bricks")
+                        .setHardness(1.5F)
+                        .setResistance(10.0F),
                 RegUtil.withName(new BlockBasic(Material.ROCK), "trenchstone")
                         .withHarvestLevel("pickaxe", 2)
-                        .setHardness(3.0F),
+                        .setHardness(5.0F)
+                        .setResistance(200.0F),
                 RegUtil.withName(new BlockMidnightLog(), "shadowroot_log"),
                 RegUtil.withName(new BlockMidnightLeaves(() -> SHADOWROOT_SAPLING), "shadowroot_leaves"),
                 RegUtil.withName(new BlockBasic(Material.WOOD), "shadowroot_planks")
@@ -201,20 +208,22 @@ public class ModBlocks {
                 RegUtil.withName(new BlockMiasmaSurface(), "miasma_surface"),
                 RegUtil.withName(new BlockMiasmaFluid(), "miasma"),
                 RegUtil.withName(new BlockMidnightGem(() -> ModItems.DARK_PEARL), "dark_pearl_ore"),
-                RegUtil.withName(new BlockBasic(Material.IRON), "dark_pearl_block"),
-                RegUtil.withName(new BlockMidnightPlant(), "tall_midnight_grass"),
-                RegUtil.withName(new BlockDoubleMidnightPlant(), "double_midnight_grass"),
-                RegUtil.withName(new BlockMidnightFungi(() -> new WorldGenMidnightFungi(
+                RegUtil.withName(new BlockBasic(Material.IRON), "dark_pearl_block")
+                        .withSoundType(SoundType.METAL)
+                        .setHardness(3.0F),
+                RegUtil.withName(new BlockMidnightPlant(PlantBehaviorType.BUSH), "tall_midnight_grass"),
+                RegUtil.withName(new BlockDoubleMidnightPlant(PlantBehaviorType.BUSH), "double_midnight_grass"),
+                RegUtil.withName(new BlockMidnightFungi(() -> new LargeFungiFeature(
                         ModBlocks.NIGHTSHROOM_STEM.getDefaultState(),
                         ModBlocks.NIGHTSHROOM_HAT.getDefaultState()
                 )), "nightshroom"),
                 RegUtil.withName(new BlockGlowingDoublePlant(), "double_nightshroom"),
-                RegUtil.withName(new BlockMidnightFungi(() -> new WorldGenMidnightFungi(
+                RegUtil.withName(new BlockMidnightFungi(() -> new LargeFungiFeature(
                         ModBlocks.DEWSHROOM_STEM.getDefaultState(),
                         ModBlocks.DEWSHROOM_HAT.getDefaultState()
                 )), "dewshroom"),
                 RegUtil.withName(new BlockGlowingDoublePlant(), "double_dewshroom"),
-                RegUtil.withName(new BlockMidnightFungi(() -> new WorldGenMidnightFungi(
+                RegUtil.withName(new BlockMidnightFungi(() -> new LargeFungiFeature(
                         ModBlocks.VIRIDSHROOM_STEM.getDefaultState(),
                         ModBlocks.VIRIDSHROOM_HAT.getDefaultState()
                 )), "viridshroom"),
@@ -225,8 +234,8 @@ public class ModBlocks {
                 RegUtil.withName(new BlockGlowingPlant(), "lumen_bud"),
                 RegUtil.withName(new BlockGlowingDoublePlant(), "double_lumen_bud"),
                 RegUtil.withName(new BlockGlowingPlant(), "crystal_flower"),
-                RegUtil.withName(new BlockMidnightSapling(() -> new WorldGenMidnightTree(SHADOWROOT_LOG, SHADOWROOT_LEAVES, 6)), "shadowroot_sapling"),
-                RegUtil.withName(new BlockMidnightSapling(() -> new WorldGenMidnightTree(DARK_WILLOW_LOG, DARK_WILLOW_LEAVES, 6)), "dark_willow_sapling"),
+                RegUtil.withName(new BlockMidnightSapling(ShadowrootTreeFeature::new), "shadowroot_sapling"),
+                RegUtil.withName(new BlockMidnightSapling(() -> new DefaultTreeFeature(DARK_WILLOW_LOG, DARK_WILLOW_LEAVES, 6)), "dark_willow_sapling"),
                 RegUtil.withName(new BlockMidnightDoor(() -> ModItems.SHADOWROOT_DOOR), "shadowroot_door"),
                 RegUtil.withName(new BlockMidnightDoor(() -> ModItems.DARK_WILLOW_DOOR), "dark_willow_door"),
                 RegUtil.withName(new BlockMidnightDoor(() -> ModItems.DEAD_WOOD_DOOR), "dead_wood_door"),
@@ -288,9 +297,10 @@ public class ModBlocks {
         OreDictionary.registerOre("logWood", DARK_WILLOW_LOG);
         OreDictionary.registerOre("logWood", DEAD_WOOD_LOG);
 
-        OreDictionary.registerOre("plankWood", SHADOWROOT_PLANKS);
+        // TODO: Temporary solution. Trapdoor recipes get overridden by vanilla recipes if these are registered
+        /*OreDictionary.registerOre("plankWood", SHADOWROOT_PLANKS);
         OreDictionary.registerOre("plankWood", DARK_WILLOW_PLANKS);
-        OreDictionary.registerOre("plankWood", DEAD_WOOD_PLANKS);
+        OreDictionary.registerOre("plankWood", DEAD_WOOD_PLANKS);*/
 
         OreDictionary.registerOre("treeLeaves", SHADOWROOT_LEAVES);
         OreDictionary.registerOre("treeLeaves", DARK_WILLOW_LEAVES);

@@ -41,7 +41,8 @@ public class BlockMidnightGrass extends Block implements IModelProvider {
             return;
         }
 
-        if (world.provider.getDimensionType() != ModDimensions.MIDNIGHT) {
+        BlockPos abovePos = pos.up();
+        if (world.provider.getDimensionType() != ModDimensions.MIDNIGHT || world.getBlockState(abovePos).getLightOpacity(world, abovePos) > 2) {
             world.setBlockState(pos, ModBlocks.MIDNIGHT_DIRT.getDefaultState());
             return;
         }

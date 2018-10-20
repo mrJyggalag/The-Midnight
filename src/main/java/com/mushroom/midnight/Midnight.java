@@ -32,7 +32,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-@Mod(modid = Midnight.MODID, name = Midnight.NAME, version = Midnight.VERSION)
+@Mod(modid = Midnight.MODID, name = Midnight.NAME, version = Midnight.VERSION, dependencies = "required:forge@[14.23.5.2768,)")
 @Mod.EventBusSubscriber(modid = Midnight.MODID)
 public class Midnight {
 

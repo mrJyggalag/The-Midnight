@@ -10,13 +10,13 @@ import com.mushroom.midnight.common.registry.ModDimensions;
 import com.mushroom.midnight.common.registry.ModEffects;
 import com.mushroom.midnight.common.registry.ModSounds;
 import com.mushroom.midnight.common.util.EntityUtil;
+import com.mushroom.midnight.common.util.ResetHookHandler;
 import com.mushroom.midnight.common.world.GlobalBridgeManager;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.ISound;
 import net.minecraft.client.audio.MusicTicker;
 import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.settings.GameSettings;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -29,6 +29,7 @@ import net.minecraftforge.client.event.EntityViewRenderEvent;
 import net.minecraftforge.client.event.sound.PlaySoundEvent;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.relauncher.Side;
@@ -43,9 +44,12 @@ public class ClientEventHandler {
     private static final Minecraft MC = Minecraft.getMinecraft();
 
     private static final float HOOK_SENSITIVITY = 0.2F;
+    private static final ResetHookHandler<Float> SENSITIVITY_HOOK = new ResetHookHandler<>(HOOK_SENSITIVITY)
+            .getValue(() -> MC.gameSettings.mouseSensitivity)
+            .setValue(sensitivity -> MC.gameSettings.mouseSensitivity = sensitivity);
 
-    private static boolean sensitivityHooked;
-    private static float lastSensitivity;
+    private static final long AMBIENT_SOUND_INTERVAL = 140;
+    private static final int AMBIENT_SOUND_CHANCE = 120;
 
     private static long lastAmbientSoundTime;
 
@@ -71,17 +75,7 @@ public class ClientEventHandler {
                     pullSelfPlayer(player);
                 }
 
-                GameSettings settings = MC.gameSettings;
-                if (player.isPotionActive(ModEffects.STUNNED)) {
-                    if (!sensitivityHooked || settings.mouseSensitivity != HOOK_SENSITIVITY) {
-                        lastSensitivity = settings.mouseSensitivity;
-                    }
-                    settings.mouseSensitivity = HOOK_SENSITIVITY;
-                    sensitivityHooked = true;
-                } else if (sensitivityHooked) {
-                    settings.mouseSensitivity = lastSensitivity;
-                    sensitivityHooked = false;
-                }
+                SENSITIVITY_HOOK.apply(player.isPotionActive(ModEffects.STUNNED));
             } else if (event.phase == TickEvent.Phase.START) {
                 GlobalBridgeManager.getClient().update();
             }
@@ -107,7 +101,7 @@ public class ClientEventHandler {
         Random rand = player.world.rand;
         long worldTime = player.world.getTotalWorldTime();
 
-        if (worldTime - lastAmbientSoundTime > 120 && rand.nextInt(100) == 0) {
+        if (worldTime - lastAmbientSoundTime > AMBIENT_SOUND_INTERVAL && rand.nextInt(AMBIENT_SOUND_CHANCE) == 0) {
             ResourceLocation ambientSound = ModSounds.AMBIENT.getSoundName();
 
             float volume = rand.nextFloat() * 0.4F + 0.8F;
@@ -135,6 +129,16 @@ public class ClientEventHandler {
             GlStateManager.setFog(GlStateManager.FogMode.EXP);
             event.setCanceled(true);
             event.setDensity(0.15F);
+        }
+    }
+
+    @SubscribeEvent(priority = EventPriority.LOWEST)
+    public static void onSetupFogColor(EntityViewRenderEvent.FogColors event) {
+        Entity entity = event.getEntity();
+        if (entity instanceof EntityLivingBase && ((EntityLivingBase) entity).isPotionActive(ModEffects.STUNNED)) {
+            event.setRed(0.1F);
+            event.setGreen(0.1F);
+            event.setBlue(0.1F);
         }
     }
 

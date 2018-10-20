@@ -3,7 +3,6 @@ package com.mushroom.midnight.common.block;
 import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.client.IModelProvider;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockSapling;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -23,6 +22,6 @@ public class BlockNightstone extends Block implements IModelProvider {
 
     @Override
     public boolean canSustainPlant(IBlockState state, IBlockAccess world, BlockPos pos, EnumFacing direction, IPlantable plantable) {
-        return plantable instanceof IMidnightFungi || plantable instanceof BlockSapling;
+        return true;
     }
 }

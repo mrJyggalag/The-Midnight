@@ -1,4 +1,4 @@
-package com.mushroom.midnight.common.world.generator;
+package com.mushroom.midnight.common.world.feature;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
@@ -6,18 +6,17 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
-import net.minecraft.world.gen.feature.WorldGenerator;
 
 import java.util.Random;
 
-public class WorldGenCrystalCluster extends WorldGenerator {
+public class CrystalClusterFeature extends MidnightAbstractFeature {
     private final int radius;
     private final int maxHeight;
 
     private final IBlockState rock;
     private final IBlockState crystal;
 
-    public WorldGenCrystalCluster(int radius, int maxHeight, IBlockState rock, IBlockState crystal) {
+    public CrystalClusterFeature(int radius, int maxHeight, IBlockState rock, IBlockState crystal) {
         this.radius = radius;
         this.maxHeight = maxHeight;
         this.rock = rock;
@@ -25,13 +24,13 @@ public class WorldGenCrystalCluster extends WorldGenerator {
     }
 
     @Override
-    public boolean generate(World world, Random rand, BlockPos pos) {
+    public boolean generate(World world, Random rand, BlockPos origin) {
         int size = (this.radius * 2) + 1;
 
         int[] heights = new int[size * size];
-        BlockPos basePos = this.populateHeights(world, rand, pos, heights, size);
+        BlockPos basePos = this.populateHeights(world, rand, origin, heights, size);
 
-        if (!this.canGenerate(world, pos, heights, size)) {
+        if (!this.canGenerate(world, origin, heights, size)) {
             return false;
         }
 
