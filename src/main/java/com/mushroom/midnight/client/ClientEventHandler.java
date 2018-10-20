@@ -16,10 +16,13 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.ISound;
 import net.minecraft.client.audio.MusicTicker;
 import net.minecraft.client.audio.PositionedSoundRecord;
+import net.minecraft.client.entity.EntityPlayerSP;
+import net.minecraft.client.network.NetHandlerPlayClient;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.network.play.client.CPacketEntityAction;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
@@ -58,7 +61,7 @@ public class ClientEventHandler {
     @SubscribeEvent
     public static void onClientTick(TickEvent.ClientTickEvent event) {
         if (!MC.isGamePaused()) {
-            EntityPlayer player = MC.player;
+            EntityPlayerSP player = MC.player;
             if (player == null) {
                 return;
             }
@@ -82,15 +85,23 @@ public class ClientEventHandler {
         }
     }
 
-    private static void pullSelfPlayer(EntityPlayer player) {
+    private static void pullSelfPlayer(EntityPlayerSP player) {
         AxisAlignedBB pullBounds = player.getEntityBoundingBox().grow(EntityRift.PULL_RADIUS);
         List<EntityRift> rifts = player.world.getEntitiesWithinAABB(EntityRift.class, pullBounds);
         for (EntityRift rift : rifts) {
             if (!rift.wasUsed()) {
                 double pullIntensity = rift.getPullIntensity();
+                if (pullIntensity > 0.0 && player.isPlayerSleeping()) {
+                    cancelSleep(player);
+                }
                 rift.pullEntity(pullIntensity, player);
             }
         }
+    }
+
+    private static void cancelSleep(EntityPlayerSP player) {
+        NetHandlerPlayClient handler = player.connection;
+        handler.sendPacket(new CPacketEntityAction(player, CPacketEntityAction.Action.STOP_SLEEPING));
     }
 
     private static void playAmbientSounds(EntityPlayer player) {
