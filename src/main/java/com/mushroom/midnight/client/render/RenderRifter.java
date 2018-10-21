@@ -20,7 +20,7 @@ public class RenderRifter extends RenderLiving<EntityRifter> {
     protected void preRenderCallback(EntityRifter entity, float partialTick) {
         super.preRenderCallback(entity, partialTick);
         if (entity.world.provider.getDimensionType() == ModDimensions.MIDNIGHT) {
-            GlStateManager.scale(1.2F, 1.2F, 1.2F);
+            GlStateManager.scale(1.4F, 1.4F, 1.4F);
         }
     }
 

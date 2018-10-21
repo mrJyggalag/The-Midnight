@@ -6,6 +6,7 @@ import com.mushroom.midnight.common.capability.RifterCapturedCapability;
 import com.mushroom.midnight.common.entity.EntityRift;
 import com.mushroom.midnight.common.entity.IRiftTraveler;
 import com.mushroom.midnight.common.entity.task.EntityTaskRifterCapture;
+import com.mushroom.midnight.common.entity.task.EntityTaskRifterKeepNearRift;
 import com.mushroom.midnight.common.entity.task.EntityTaskRifterMelee;
 import com.mushroom.midnight.common.entity.task.EntityTaskRifterReturn;
 import com.mushroom.midnight.common.entity.task.EntityTaskRifterTransport;
@@ -81,19 +82,16 @@ public class EntityRifter extends EntityMob implements IRiftTraveler, IEntityAdd
         this.tasks.addTask(0, new EntityAISwimming(this));
         this.tasks.addTask(0, new EntityTaskRifterReturn(this, 1.3));
 
+        this.tasks.addTask(1, new EntityTaskRifterKeepNearRift(this, 1.0));
         this.tasks.addTask(1, new EntityTaskRifterTransport(this, 1.0));
         this.tasks.addTask(2, new EntityTaskRifterCapture(this, 1.0));
         this.tasks.addTask(3, new EntityTaskRifterMelee(this, 1.0));
 
-        this.tasks.addTask(3, new EntityAIWatchClosest(this, EntityPlayer.class, 8.0F));
+        this.tasks.addTask(3, new EntityAIWatchClosest(this, EntityLivingBase.class, 8.0F));
         this.tasks.addTask(3, new EntityAILookIdle(this));
 
-        this.targetTasks.addTask(2, new EntityAINearestAttackableTarget<>(this, EntityLivingBase.class, 2, true, false, e -> {
-            if (e == null || RifterCapturedCapability.isCaptured(e)) {
-                return false;
-            }
-            return !(e instanceof EntityRifter);
-        }));
+        this.targetTasks.addTask(2, new EntityAINearestAttackableTarget<>(this, EntityPlayer.class, 2, true, false, this::shouldAttack));
+        this.targetTasks.addTask(3, new EntityAINearestAttackableTarget<>(this, EntityLivingBase.class, 4, true, false, this::shouldAttack));
     }
 
     @Override
@@ -184,10 +182,21 @@ public class EntityRifter extends EntityMob implements IRiftTraveler, IEntityAdd
     @Override
     public boolean attackEntityFrom(DamageSource source, float amount) {
         if (super.attackEntityFrom(source, amount)) {
+            Entity trueSource = source.getTrueSource();
+            if (trueSource instanceof EntityLivingBase && this.shouldAttack(trueSource)) {
+                this.setAttackTarget((EntityLivingBase) trueSource);
+            }
             this.setCapturedEntity(null);
             return true;
         }
         return false;
+    }
+
+    private boolean shouldAttack(Entity entity) {
+        if (entity == null || RifterCapturedCapability.isCaptured(entity)) {
+            return false;
+        }
+        return !(entity instanceof EntityRifter);
     }
 
     public void setCapturedEntity(EntityLivingBase capturedEntity) {
