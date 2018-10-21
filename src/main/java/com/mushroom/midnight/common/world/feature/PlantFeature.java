@@ -17,7 +17,7 @@ public class PlantFeature extends MidnightAbstractFeature {
     }
 
     @Override
-    public boolean generate(World world, Random rand, BlockPos origin) {
+    public boolean placeFeature(World world, Random rand, BlockPos origin) {
         if (this.predicate.canSpawn(world, origin, this.state)) {
             this.setBlockAndNotifyAdequately(world, origin, this.state);
             return true;

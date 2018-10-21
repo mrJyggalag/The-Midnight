@@ -22,7 +22,7 @@ public class DeadTreeFeature extends MidnightNaturalFeature {
     }
 
     @Override
-    public boolean generate(World world, Random rand, BlockPos origin) {
+    public boolean placeFeature(World world, Random rand, BlockPos origin) {
         EnumFacing direction = EnumFacing.HORIZONTALS[rand.nextInt(EnumFacing.HORIZONTALS.length)];
         BlockLog.EnumAxis axis = direction.getAxis() == EnumFacing.Axis.X ? BlockLog.EnumAxis.X : BlockLog.EnumAxis.Z;
         BlockLog.EnumAxis perpendicular = axis == BlockLog.EnumAxis.X ? BlockLog.EnumAxis.Z : BlockLog.EnumAxis.X;

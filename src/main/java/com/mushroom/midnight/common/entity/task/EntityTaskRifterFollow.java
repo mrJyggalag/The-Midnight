@@ -136,7 +136,7 @@ public abstract class EntityTaskRifterFollow extends EntityAIBase {
 
     @Override
     public boolean shouldContinueExecuting() {
-        return this.shouldFollow(this.owner.getAttackTarget());
+        return this.path != null && this.shouldFollow(this.owner.getAttackTarget());
     }
 
     @Override

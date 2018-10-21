@@ -28,7 +28,7 @@ public class ShadowrootTreeFeature extends MidnightTreeFeature {
     }
 
     @Override
-    public boolean generate(World world, Random random, BlockPos origin) {
+    public boolean placeFeature(World world, Random random, BlockPos origin) {
         int height = random.nextInt(8) + 10;
 
         IntFunction<Integer> widthSupplier = y -> 1;

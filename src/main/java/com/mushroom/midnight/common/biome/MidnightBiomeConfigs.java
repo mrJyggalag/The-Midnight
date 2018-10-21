@@ -109,7 +109,7 @@ public class MidnightBiomeConfigs {
             .build();
 
     public static final MidnightBiomeConfig FUNGI_FOREST_CONFIG = MidnightBiomeConfig.builder(VEGETATED_CONFIG)
-            .withFeature(LARGE_FUNGI_FEATURES, new SurfacePlacementConfig(4))
+            .withFeature(LARGE_FUNGI_FEATURES, new SurfacePlacementConfig(6))
             .withFeature(FUNGI_FEATURE, new ScatterPlacementConfig(8, 16))
             .withFeature(DOUBLE_FUNGI_FEATURE, new ScatterPlacementConfig(6, 8))
             .build();

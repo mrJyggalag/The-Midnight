@@ -18,7 +18,7 @@ public class DoublePlantFeature extends MidnightAbstractFeature {
     }
 
     @Override
-    public boolean generate(World world, Random rand, BlockPos origin) {
+    public boolean placeFeature(World world, Random rand, BlockPos origin) {
         if (this.predicate.canSpawn(world, origin, this.state)) {
             world.setBlockState(origin, this.state.withProperty(BlockDoublePlant.HALF, BlockDoublePlant.EnumBlockHalf.LOWER), 2 | 16);
             world.setBlockState(origin.up(), this.state.withProperty(BlockDoublePlant.HALF, BlockDoublePlant.EnumBlockHalf.UPPER), 2 | 16);

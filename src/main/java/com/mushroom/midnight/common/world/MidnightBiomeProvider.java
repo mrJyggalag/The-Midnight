@@ -23,7 +23,7 @@ public class MidnightBiomeProvider extends BiomeProvider {
 
     @Override
     public GenLayer[] getModdedBiomeGenerators(WorldType worldType, long seed, GenLayer[] original) {
-        GenLayer generationLayer = getBiomeProcedure();
+        GenLayer generationLayer = buildBiomeProcedure();
         GenLayerVoronoiZoom layer = new GenLayerVoronoiZoom(10, generationLayer);
         layer.initWorldGenSeed(seed);
 
@@ -31,7 +31,7 @@ public class MidnightBiomeProvider extends BiomeProvider {
         return super.getModdedBiomeGenerators(worldType, seed, layers);
     }
 
-    private static GenLayer getBiomeProcedure() {
+    private static GenLayer buildBiomeProcedure() {
         GenLayer ridgeLayer = new RidgeSeedLayer(10);
         ridgeLayer = new GenLayerVoronoiZoom(20, ridgeLayer);
         ridgeLayer = GenLayerZoom.magnify(30, ridgeLayer, 2);

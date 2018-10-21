@@ -13,7 +13,9 @@ public abstract class MidnightAbstractFeature extends WorldGenerator implements 
     }
 
     @Override
-    public abstract boolean generate(World world, Random rand, BlockPos origin);
+    public final boolean generate(World world, Random random, BlockPos origin) {
+        return this.placeFeature(world, random, origin);
+    }
 
     @Override
     protected void setBlockAndNotifyAdequately(World world, BlockPos pos, IBlockState state) {

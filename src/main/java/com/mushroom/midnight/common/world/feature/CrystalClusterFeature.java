@@ -24,7 +24,7 @@ public class CrystalClusterFeature extends MidnightAbstractFeature {
     }
 
     @Override
-    public boolean generate(World world, Random rand, BlockPos origin) {
+    public boolean placeFeature(World world, Random rand, BlockPos origin) {
         int size = (this.radius * 2) + 1;
 
         int[] heights = new int[size * size];

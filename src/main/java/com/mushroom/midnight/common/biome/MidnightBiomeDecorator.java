@@ -56,7 +56,7 @@ public class MidnightBiomeDecorator extends BiomeDecorator {
 
         IPlacementConfig config = entry.getPlacementConfig();
         if (TerrainGen.decorate(world, random, chunkPos, this.chunkPos, feature.getEventType())) {
-            config.apply(world, random, this.chunkPos, pos -> feature.generate(world, random, pos));
+            config.apply(world, random, this.chunkPos, pos -> feature.placeFeature(world, random, pos));
         }
     }
 }

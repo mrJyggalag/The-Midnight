@@ -6,8 +6,10 @@ import com.mushroom.midnight.common.capability.RifterCapturedCapability;
 import com.mushroom.midnight.common.entity.EntityRift;
 import com.mushroom.midnight.common.entity.IRiftTraveler;
 import com.mushroom.midnight.common.entity.task.EntityTaskRifterCapture;
+import com.mushroom.midnight.common.entity.task.EntityTaskRifterKeepNearRift;
 import com.mushroom.midnight.common.entity.task.EntityTaskRifterMelee;
 import com.mushroom.midnight.common.entity.task.EntityTaskRifterReturn;
+import com.mushroom.midnight.common.entity.task.EntityTaskRifterTeleport;
 import com.mushroom.midnight.common.entity.task.EntityTaskRifterTransport;
 import com.mushroom.midnight.common.entity.util.DragSolver;
 import com.mushroom.midnight.common.entity.util.EntityReference;
@@ -29,7 +31,9 @@ import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.IAttribute;
 import net.minecraft.entity.ai.attributes.IAttributeInstance;
 import net.minecraft.entity.monster.EntityMob;
+import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.MobEffects;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
@@ -55,7 +59,7 @@ public class EntityRifter extends EntityMob implements IRiftTraveler, IEntityAdd
     private static final AttributeModifier HOME_ARMOR_MODIFIER = new AttributeModifier(ARMOR_MODIFIER_ID, "home_armor_modifier", 2.0, 2);
 
     private static final UUID ATTACK_MODIFIER_ID = UUID.fromString("0e13d84c-52ed-4335-a284-49596533f445");
-    private static final AttributeModifier HOME_ATTACK_MODIFIER = new AttributeModifier(ATTACK_MODIFIER_ID, "home_attacl_modifier", 3.0, 2);
+    private static final AttributeModifier HOME_ATTACK_MODIFIER = new AttributeModifier(ATTACK_MODIFIER_ID, "home_attack_modifier", 3.0, 2);
 
     public static final int CAPTURE_COOLDOWN = 15;
 
@@ -81,19 +85,18 @@ public class EntityRifter extends EntityMob implements IRiftTraveler, IEntityAdd
         this.tasks.addTask(0, new EntityAISwimming(this));
         this.tasks.addTask(0, new EntityTaskRifterReturn(this, 1.3));
 
-        this.tasks.addTask(1, new EntityTaskRifterTransport(this, 1.0));
-        this.tasks.addTask(2, new EntityTaskRifterCapture(this, 1.0));
-        this.tasks.addTask(3, new EntityTaskRifterMelee(this, 1.0));
+        this.tasks.addTask(1, new EntityTaskRifterKeepNearRift(this, 1.0));
+        this.tasks.addTask(1, new EntityTaskRifterTeleport(this));
 
-        this.tasks.addTask(3, new EntityAIWatchClosest(this, EntityPlayer.class, 8.0F));
-        this.tasks.addTask(3, new EntityAILookIdle(this));
+        this.tasks.addTask(2, new EntityTaskRifterTransport(this, 1.0));
+        this.tasks.addTask(3, new EntityTaskRifterCapture(this, 1.0));
+        this.tasks.addTask(4, new EntityTaskRifterMelee(this, 1.0));
 
-        this.targetTasks.addTask(2, new EntityAINearestAttackableTarget<>(this, EntityLivingBase.class, 2, true, false, e -> {
-            if (e == null || RifterCapturedCapability.isCaptured(e)) {
-                return false;
-            }
-            return !(e instanceof EntityRifter);
-        }));
+        this.tasks.addTask(4, new EntityAIWatchClosest(this, EntityLivingBase.class, 8.0F));
+        this.tasks.addTask(4, new EntityAILookIdle(this));
+
+        this.targetTasks.addTask(2, new EntityAINearestAttackableTarget<>(this, EntityPlayer.class, 2, true, false, this::shouldAttack));
+        this.targetTasks.addTask(3, new EntityAINearestAttackableTarget<>(this, EntityAnimal.class, 4, true, false, this::shouldAttack));
     }
 
     @Override
@@ -184,10 +187,24 @@ public class EntityRifter extends EntityMob implements IRiftTraveler, IEntityAdd
     @Override
     public boolean attackEntityFrom(DamageSource source, float amount) {
         if (super.attackEntityFrom(source, amount)) {
+            Entity trueSource = source.getTrueSource();
+            if (trueSource instanceof EntityLivingBase && this.shouldAttack(trueSource)) {
+                this.setAttackTarget((EntityLivingBase) trueSource);
+            }
             this.setCapturedEntity(null);
             return true;
         }
         return false;
+    }
+
+    private boolean shouldAttack(Entity entity) {
+        if (entity == null || RifterCapturedCapability.isCaptured(entity)) {
+            return false;
+        }
+        if (entity instanceof EntityPlayer && ((EntityPlayer) entity).isPlayerSleeping()) {
+            return false;
+        }
+        return !(entity instanceof EntityRifter);
     }
 
     public void setCapturedEntity(EntityLivingBase capturedEntity) {
@@ -223,7 +240,8 @@ public class EntityRifter extends EntityMob implements IRiftTraveler, IEntityAdd
         if (capability != null) {
             capability.setCaptured(true);
         }
-        capturedEntity.addPotionEffect(new PotionEffect(ModEffects.STUNNED, 100, 1, false, false));
+        capturedEntity.addPotionEffect(new PotionEffect(ModEffects.STUNNED, 200, 1, false, false));
+        capturedEntity.addPotionEffect(new PotionEffect(MobEffects.SLOWNESS, 400, 2, false, false));
     }
 
     private void resetCapturedEntity(EntityLivingBase capturedEntity) {
