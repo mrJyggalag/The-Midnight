@@ -9,7 +9,7 @@ import java.util.Random;
 
 public class MiasmaSourceFeature extends MidnightAbstractFeature{
     @Override
-    public boolean generate(World world, Random rand, BlockPos origin) {
+    public boolean placeFeature(World world, Random rand, BlockPos origin) {
         origin = origin.down();
 
         IBlockState miasmaState = ModBlocks.MIASMA.getDefaultState();

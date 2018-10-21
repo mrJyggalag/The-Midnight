@@ -18,7 +18,7 @@ public class DoubleFungiFeature extends MidnightAbstractFeature {
     };
 
     @Override
-    public boolean generate(World world, Random rand, BlockPos origin) {
+    public boolean placeFeature(World world, Random rand, BlockPos origin) {
         IBlockState state = FUNGI_STATES[rand.nextInt(FUNGI_STATES.length)];
         if (((BlockBush) ModBlocks.NIGHTSHROOM).canBlockStay(world, origin, state)) {
             world.setBlockState(origin, state.withProperty(BlockDoublePlant.HALF, BlockDoublePlant.EnumBlockHalf.LOWER), 2 | 16);

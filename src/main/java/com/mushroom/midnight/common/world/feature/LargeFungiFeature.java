@@ -39,7 +39,7 @@ public class LargeFungiFeature extends MidnightNaturalFeature {
     }
 
     @Override
-    public boolean generate(World world, Random rand, BlockPos origin) {
+    public boolean placeFeature(World world, Random rand, BlockPos origin) {
         if (!this.canGrow(world, origin.down())) {
             return false;
         }
