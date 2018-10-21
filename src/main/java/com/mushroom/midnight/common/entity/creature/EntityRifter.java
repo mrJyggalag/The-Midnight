@@ -9,6 +9,7 @@ import com.mushroom.midnight.common.entity.task.EntityTaskRifterCapture;
 import com.mushroom.midnight.common.entity.task.EntityTaskRifterKeepNearRift;
 import com.mushroom.midnight.common.entity.task.EntityTaskRifterMelee;
 import com.mushroom.midnight.common.entity.task.EntityTaskRifterReturn;
+import com.mushroom.midnight.common.entity.task.EntityTaskRifterTeleport;
 import com.mushroom.midnight.common.entity.task.EntityTaskRifterTransport;
 import com.mushroom.midnight.common.entity.util.DragSolver;
 import com.mushroom.midnight.common.entity.util.EntityReference;
@@ -85,12 +86,14 @@ public class EntityRifter extends EntityMob implements IRiftTraveler, IEntityAdd
         this.tasks.addTask(0, new EntityTaskRifterReturn(this, 1.3));
 
         this.tasks.addTask(1, new EntityTaskRifterKeepNearRift(this, 1.0));
-        this.tasks.addTask(1, new EntityTaskRifterTransport(this, 1.0));
-        this.tasks.addTask(2, new EntityTaskRifterCapture(this, 1.0));
-        this.tasks.addTask(3, new EntityTaskRifterMelee(this, 1.0));
+        this.tasks.addTask(1, new EntityTaskRifterTeleport(this));
 
-        this.tasks.addTask(3, new EntityAIWatchClosest(this, EntityLivingBase.class, 8.0F));
-        this.tasks.addTask(3, new EntityAILookIdle(this));
+        this.tasks.addTask(2, new EntityTaskRifterTransport(this, 1.0));
+        this.tasks.addTask(3, new EntityTaskRifterCapture(this, 1.0));
+        this.tasks.addTask(4, new EntityTaskRifterMelee(this, 1.0));
+
+        this.tasks.addTask(4, new EntityAIWatchClosest(this, EntityLivingBase.class, 8.0F));
+        this.tasks.addTask(4, new EntityAILookIdle(this));
 
         this.targetTasks.addTask(2, new EntityAINearestAttackableTarget<>(this, EntityPlayer.class, 2, true, false, this::shouldAttack));
         this.targetTasks.addTask(3, new EntityAINearestAttackableTarget<>(this, EntityAnimal.class, 4, true, false, this::shouldAttack));
@@ -237,7 +240,7 @@ public class EntityRifter extends EntityMob implements IRiftTraveler, IEntityAdd
         if (capability != null) {
             capability.setCaptured(true);
         }
-        capturedEntity.addPotionEffect(new PotionEffect(ModEffects.STUNNED, 120, 1, false, false));
+        capturedEntity.addPotionEffect(new PotionEffect(ModEffects.STUNNED, 200, 1, false, false));
         capturedEntity.addPotionEffect(new PotionEffect(MobEffects.SLOWNESS, 400, 2, false, false));
     }
 
