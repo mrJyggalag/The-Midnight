@@ -116,3 +116,5 @@ entity.midnight.rifter.name=Rifter
 
 config.midnight.midnight_dimension_id=Midnight Dimension ID
 config.midnight.midnight_dimension_id.tooltip=The ID to be used for the Midnight Dimension
+
+status.midnight.rift_nearby=You may not rest now, there is an evil presence nearby

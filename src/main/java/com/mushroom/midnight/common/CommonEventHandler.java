@@ -3,24 +3,31 @@ package com.mushroom.midnight.common;
 import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.common.capability.RiftCooldownCapability;
 import com.mushroom.midnight.common.capability.RifterCapturedCapability;
+import com.mushroom.midnight.common.entity.EntityRift;
 import com.mushroom.midnight.common.event.RifterCaptureEvent;
 import com.mushroom.midnight.common.event.RifterReleaseEvent;
 import com.mushroom.midnight.common.registry.ModEffects;
-import com.mushroom.midnight.common.world.RiftSpawnHandler;
 import com.mushroom.midnight.common.world.GlobalBridgeManager;
+import com.mushroom.midnight.common.world.RiftSpawnHandler;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.GameRules;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
+import net.minecraftforge.event.entity.player.PlayerSleepInBedEvent;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
+
+import java.util.List;
 
 @Mod.EventBusSubscriber(modid = Midnight.MODID)
 public class CommonEventHandler {
@@ -87,6 +94,20 @@ public class CommonEventHandler {
         if (captured instanceof EntityPlayer) {
             EntityPlayer player = (EntityPlayer) captured;
             player.eyeHeight = player.getDefaultEyeHeight();
+        }
+    }
+
+    @SubscribeEvent
+    public static void onSleep(PlayerSleepInBedEvent event) {
+        if (event.getResultStatus() == null) {
+            EntityPlayer player = event.getEntityPlayer();
+            BlockPos bedPos = event.getPos();
+
+            List<EntityRift> rifts = player.world.getEntitiesWithinAABB(EntityRift.class, new AxisAlignedBB(bedPos).grow(6.0));
+            if (!rifts.isEmpty()) {
+                event.setResult(EntityPlayer.SleepResult.OTHER_PROBLEM);
+                player.sendStatusMessage(new TextComponentTranslation("status.midnight.rift_nearby"), true);
+            }
         }
     }
 }

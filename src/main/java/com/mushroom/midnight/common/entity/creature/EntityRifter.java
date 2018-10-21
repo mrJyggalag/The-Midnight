@@ -30,7 +30,9 @@ import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.IAttribute;
 import net.minecraft.entity.ai.attributes.IAttributeInstance;
 import net.minecraft.entity.monster.EntityMob;
+import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.MobEffects;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
@@ -56,7 +58,7 @@ public class EntityRifter extends EntityMob implements IRiftTraveler, IEntityAdd
     private static final AttributeModifier HOME_ARMOR_MODIFIER = new AttributeModifier(ARMOR_MODIFIER_ID, "home_armor_modifier", 2.0, 2);
 
     private static final UUID ATTACK_MODIFIER_ID = UUID.fromString("0e13d84c-52ed-4335-a284-49596533f445");
-    private static final AttributeModifier HOME_ATTACK_MODIFIER = new AttributeModifier(ATTACK_MODIFIER_ID, "home_attacl_modifier", 3.0, 2);
+    private static final AttributeModifier HOME_ATTACK_MODIFIER = new AttributeModifier(ATTACK_MODIFIER_ID, "home_attack_modifier", 3.0, 2);
 
     public static final int CAPTURE_COOLDOWN = 15;
 
@@ -91,7 +93,7 @@ public class EntityRifter extends EntityMob implements IRiftTraveler, IEntityAdd
         this.tasks.addTask(3, new EntityAILookIdle(this));
 
         this.targetTasks.addTask(2, new EntityAINearestAttackableTarget<>(this, EntityPlayer.class, 2, true, false, this::shouldAttack));
-        this.targetTasks.addTask(3, new EntityAINearestAttackableTarget<>(this, EntityLivingBase.class, 4, true, false, this::shouldAttack));
+        this.targetTasks.addTask(3, new EntityAINearestAttackableTarget<>(this, EntityAnimal.class, 4, true, false, this::shouldAttack));
     }
 
     @Override
@@ -196,6 +198,9 @@ public class EntityRifter extends EntityMob implements IRiftTraveler, IEntityAdd
         if (entity == null || RifterCapturedCapability.isCaptured(entity)) {
             return false;
         }
+        if (entity instanceof EntityPlayer && ((EntityPlayer) entity).isPlayerSleeping()) {
+            return false;
+        }
         return !(entity instanceof EntityRifter);
     }
 
@@ -232,7 +237,8 @@ public class EntityRifter extends EntityMob implements IRiftTraveler, IEntityAdd
         if (capability != null) {
             capability.setCaptured(true);
         }
-        capturedEntity.addPotionEffect(new PotionEffect(ModEffects.STUNNED, 100, 1, false, false));
+        capturedEntity.addPotionEffect(new PotionEffect(ModEffects.STUNNED, 120, 1, false, false));
+        capturedEntity.addPotionEffect(new PotionEffect(MobEffects.SLOWNESS, 400, 2, false, false));
     }
 
     private void resetCapturedEntity(EntityLivingBase capturedEntity) {
