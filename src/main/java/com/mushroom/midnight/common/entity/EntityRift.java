@@ -8,7 +8,6 @@ import com.mushroom.midnight.common.registry.ModDimensions;
 import com.mushroom.midnight.common.registry.ModSounds;
 import com.mushroom.midnight.common.world.BridgeManager;
 import com.mushroom.midnight.common.world.GlobalBridgeManager;
-import com.mushroom.midnight.common.world.MidnightTeleporter;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -33,7 +32,7 @@ public class EntityRift extends Entity implements IEntityAdditionalSpawnData {
 
     public static final int UNSTABLE_TIME = 110;
 
-    public static final int LIFETIME = 2400;
+    public static final int LIFETIME = 4000;
 
     public static final float PULL_RADIUS = 8.0F;
     public static final float PULL_INTENSITY = 5.0F;
@@ -120,7 +119,7 @@ public class EntityRift extends Entity implements IEntityAdditionalSpawnData {
         }
 
         if (this.world.getGameRules().getBoolean("doMobSpawning")) {
-            if (!this.spawnedRifter && !this.isUnstable() && this.world.rand.nextInt(500) == 0) {
+            if (!this.spawnedRifter && !this.isUnstable() && this.world.rand.nextInt(1000) == 0) {
                 AxisAlignedBB existingRifterBounds = this.getEntityBoundingBox().grow(16.0);
                 List<EntityRifter> existingRifters = this.world.getEntitiesWithinAABB(EntityRifter.class, existingRifterBounds);
                 if (existingRifters.isEmpty()) {
@@ -137,6 +136,8 @@ public class EntityRift extends Entity implements IEntityAdditionalSpawnData {
             float offsetZ = MathHelper.cos(theta) * this.width * 0.9F;
 
             EntityRifter rifter = new EntityRifter(this.world);
+            rifter.spawnedThroughRift = true;
+
             rifter.setPositionAndRotation(this.posX + offsetX, this.posY, this.posZ + offsetZ, (float) Math.toDegrees(theta), 0.0F);
 
             if (rifter.isNotColliding()) {
@@ -214,22 +215,34 @@ public class EntityRift extends Entity implements IEntityAdditionalSpawnData {
             return !(entity instanceof EntityRift);
         });
 
-        Set<Entity> recursedEntities = new HashSet<>();
-        for (Entity entity : entities) {
-            recursedEntities.add(entity);
-            recursedEntities.addAll(entity.getRecursivePassengers());
-            if (entity instanceof IRiftTraveler) {
-                recursedEntities.addAll(((IRiftTraveler) entity).getAdditionalTeleportEntities());
-            }
-        }
+        Set<RiftTravelEntry> recursedEntities = this.getRecursedTravelers(entities);
 
-        for (Entity entity : recursedEntities) {
+        for (RiftTravelEntry entry : recursedEntities) {
+            Entity entity = entry.getEntity();
             if (entity instanceof IRiftTraveler) {
                 ((IRiftTraveler) entity).onEnterRift(this);
             }
             entity.dismountRidingEntity();
-            entity.changeDimension(endpointDimension.getId(), new MidnightTeleporter(this));
+
+            entry.travel(this, endpointDimension);
         }
+    }
+
+    private Set<RiftTravelEntry> getRecursedTravelers(List<Entity> entities) {
+        Set<RiftTravelEntry> recursedEntities = new HashSet<>();
+        for (Entity entity : entities) {
+            if (entity instanceof IRiftTraveler) {
+                IRiftTraveler traveler = (IRiftTraveler) entity;
+                recursedEntities.add(traveler.createTravelEntry(this));
+                recursedEntities.addAll(traveler.getAdditionalTravelers(this));
+            } else {
+                recursedEntities.add(new RiftTravelEntry(entity));
+                for (Entity passenger : entity.getRecursivePassengers()) {
+                    recursedEntities.add(new RiftTravelEntry(passenger));
+                }
+            }
+        }
+        return recursedEntities;
     }
 
     public boolean isOpen() {
@@ -290,6 +303,14 @@ public class EntityRift extends Entity implements IEntityAdditionalSpawnData {
         } else {
             return ModDimensions.MIDNIGHT;
         }
+    }
+
+    public boolean isEndpointLoaded() {
+        RiftBridge bridge = this.getBridge();
+        if (bridge == null) {
+            return false;
+        }
+        return bridge.isEndpointLoaded(this.getEndpointDimension());
     }
 
     @Override

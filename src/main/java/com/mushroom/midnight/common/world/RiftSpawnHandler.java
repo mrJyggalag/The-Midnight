@@ -6,10 +6,12 @@ import com.mushroom.midnight.common.entity.RiftAttachment;
 import com.mushroom.midnight.common.entity.RiftBridge;
 import com.mushroom.midnight.common.registry.ModDimensions;
 import com.mushroom.midnight.common.util.WorldUtil;
+import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.EnumSkyBlock;
 import net.minecraft.world.World;
 import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.fml.common.FMLCommonHandler;
@@ -24,7 +26,7 @@ public class RiftSpawnHandler {
     private static final double RIFT_SEPARATION = 64.0;
     private static final double PLAYER_SEPARATION = 16.0;
 
-    private static final int REGION_SPAWN_CHANCE = 240;
+    private static final int REGION_SPAWN_CHANCE = 960;
     private static final int REGION_RANGE = 64 >> 5;
 
     private static boolean warnedOverworldUnloaded;
@@ -126,7 +128,15 @@ public class RiftSpawnHandler {
         }
 
         AxisAlignedBB bounds = new AxisAlignedBB(pos).grow(1.0, 0.0, 1.0).expand(0.0, 1.0, 0.0);
-        return world.getCollisionBoxes(null, bounds).isEmpty();
+        if (!world.getCollisionBoxes(null, bounds).isEmpty()) {
+            return false;
+        }
+
+        if (world.isMaterialInBB(bounds, Material.WATER) || world.isMaterialInBB(bounds, Material.LAVA)) {
+            return false;
+        }
+
+        return world.getLightFor(EnumSkyBlock.BLOCK, pos) < 4;
     }
 
     private static BlockPos generateRiftPosition(Random random, BlockPos region) {

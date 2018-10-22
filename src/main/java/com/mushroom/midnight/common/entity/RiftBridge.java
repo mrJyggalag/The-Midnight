@@ -9,6 +9,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.DimensionType;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 
@@ -114,6 +115,11 @@ public class RiftBridge {
         }
 
         return endpointReference.compute();
+    }
+
+    public boolean isEndpointLoaded(DimensionType endpointDimension) {
+        WorldServer world = DimensionManager.getWorld(endpointDimension.getId());
+        return world != null && world.isBlockLoaded(this.attachment.getPos());
     }
 
     public void writeState(ByteBuf buffer) {

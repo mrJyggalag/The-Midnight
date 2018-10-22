@@ -1,10 +1,12 @@
 package com.mushroom.midnight.common.entity.creature;
 
-import com.google.common.collect.Lists;
+import com.google.common.collect.ImmutableList;
 import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.common.capability.RifterCapturedCapability;
 import com.mushroom.midnight.common.entity.EntityRift;
 import com.mushroom.midnight.common.entity.IRiftTraveler;
+import com.mushroom.midnight.common.entity.RiftTravelEntry;
+import com.mushroom.midnight.common.entity.RiftVoidTravelEntry;
 import com.mushroom.midnight.common.entity.task.EntityTaskRifterCapture;
 import com.mushroom.midnight.common.entity.task.EntityTaskRifterKeepNearRift;
 import com.mushroom.midnight.common.entity.task.EntityTaskRifterMelee;
@@ -69,6 +71,8 @@ public class EntityRifter extends EntityMob implements IRiftTraveler, IEntityAdd
     private final DragSolver dragSolver;
 
     public int captureCooldown;
+
+    public boolean spawnedThroughRift;
 
     private EntityLivingBase capturedEntity;
 
@@ -300,12 +304,14 @@ public class EntityRifter extends EntityMob implements IRiftTraveler, IEntityAdd
     public void writeEntityToNBT(NBTTagCompound compound) {
         super.writeEntityToNBT(compound);
         compound.setTag("home_rift", this.homeRift.serialize(new NBTTagCompound()));
+        compound.setBoolean("spawned_through_rift", this.spawnedThroughRift);
     }
 
     @Override
     public void readEntityFromNBT(NBTTagCompound compound) {
         super.readEntityFromNBT(compound);
         this.homeRift.deserialize(compound.getCompoundTag("home_rift"));
+        this.spawnedThroughRift = compound.getBoolean("spawned_through_rift");
     }
 
     @Override
@@ -316,11 +322,27 @@ public class EntityRifter extends EntityMob implements IRiftTraveler, IEntityAdd
     }
 
     @Override
-    public Collection<Entity> getAdditionalTeleportEntities() {
+    public RiftTravelEntry createTravelEntry(EntityRift rift) {
+        return this.createTravelEntry(this, rift);
+    }
+
+    @Override
+    public Collection<RiftTravelEntry> getAdditionalTravelers(EntityRift rift) {
         if (this.capturedEntity != null) {
-            return Lists.newArrayList(this.capturedEntity);
+            return ImmutableList.of(this.createTravelEntry(this.capturedEntity, rift));
         }
         return Collections.emptyList();
+    }
+
+    private RiftTravelEntry createTravelEntry(Entity entity, EntityRift rift) {
+        if (this.shouldTravelDespawn(rift)) {
+            return new RiftVoidTravelEntry(entity);
+        }
+        return new RiftTravelEntry(entity);
+    }
+
+    private boolean shouldTravelDespawn(EntityRift rift) {
+        return this.spawnedThroughRift && !rift.isEndpointLoaded() && !(this.capturedEntity instanceof EntityPlayer);
     }
 
     @Override
