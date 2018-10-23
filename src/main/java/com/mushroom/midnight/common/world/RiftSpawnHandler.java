@@ -132,11 +132,15 @@ public class RiftSpawnHandler {
             return false;
         }
 
-        if (world.isMaterialInBB(bounds, Material.WATER) || world.isMaterialInBB(bounds, Material.LAVA)) {
-            return false;
-        }
+        if (world.provider.getDimensionType() == ModDimensions.MIDNIGHT) {
+            return true;
+        } else {
+            if (world.isMaterialInBB(bounds, Material.WATER) || world.isMaterialInBB(bounds, Material.LAVA)) {
+                return false;
+            }
 
-        return world.getLightFor(EnumSkyBlock.BLOCK, pos) < 4;
+            return world.getLightFor(EnumSkyBlock.BLOCK, pos) < 4;
+        }
     }
 
     private static BlockPos generateRiftPosition(Random random, BlockPos region) {

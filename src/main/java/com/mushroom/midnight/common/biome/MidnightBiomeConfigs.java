@@ -114,7 +114,7 @@ public class MidnightBiomeConfigs {
             .withFeature(DOUBLE_FUNGI_FEATURE, new ScatterPlacementConfig(6, 8))
             .build();
 
-    public static final MidnightBiomeConfig CRYSTAL_PLAINS_CONFIG = MidnightBiomeConfig.builder()
+    public static final MidnightBiomeConfig CRYSTAL_SPIRES_CONFIG = MidnightBiomeConfig.builder()
             .withFeature(SHADOWROOT_TREE_FEATURE, new SurfacePlacementConfig(-3, 1))
             .withFeature(BLOOMCRYSTAL_FEATURE, new SurfacePlacementConfig(2, 3))
             .withFeature(BLOOMCRYSTAL_SPIRE_FEATURE, new SurfacePlacementConfig(2, 3))
@@ -132,6 +132,29 @@ public class MidnightBiomeConfigs {
 
     public static final MidnightBiomeConfig MOLTEN_CRATER_CONFIG = MidnightBiomeConfig.builder()
             .withFeature(MIASMA_SOURCE_FEATURE, new SurfacePlacementConfig(16))
+            .withRidgeWeight(0.0F)
+            .build();
+
+    public static final MidnightBiomeConfig DECEITFUL_BOG_CONFIG = MidnightBiomeConfig.builder()
+            .withFeature(new IMidnightFeature[] {
+                    SHADOWROOT_TREE_FEATURE,
+                    DARK_WILLOW_TREE_FEATURE
+            }, new SurfacePlacementConfig(4))
+            .withFeature(TALL_GRASS_FEATURE, new ScatterPlacementConfig(2, 32))
+            .withFeature(FUNGI_FEATURE, new ScatterPlacementConfig(1, 4))
+            .withFeature(DEAD_TREE_FEATURE, new SurfacePlacementConfig(7))
+            .withRidgeWeight(0.0F)
+            .build();
+
+    public static final MidnightBiomeConfig PLAINS_CONFIG = MidnightBiomeConfig.builder()
+            .withFeature(TALL_GRASS_FEATURE, new ScatterPlacementConfig(2, 32))
+            .withRidgeWeight(0.0F)
+            .build();
+
+    public static final MidnightBiomeConfig PLATEAU_CONFIG = MidnightBiomeConfig.builder(ROCKY_CONFIG)
+            .build();
+
+    public static final MidnightBiomeConfig VALLEY_CONFIG = MidnightBiomeConfig.builder()
             .withRidgeWeight(0.0F)
             .build();
 }

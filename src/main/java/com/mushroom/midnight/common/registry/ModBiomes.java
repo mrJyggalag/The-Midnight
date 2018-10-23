@@ -1,8 +1,10 @@
 package com.mushroom.midnight.common.registry;
 
 import com.mushroom.midnight.Midnight;
+import com.mushroom.midnight.common.biome.BasicBiomeSpawnEntry;
 import com.mushroom.midnight.common.biome.MidnightBiome;
 import com.mushroom.midnight.common.biome.MidnightBiomeConfigs;
+import com.mushroom.midnight.common.biome.MidnightBiomeGroup;
 import com.mushroom.midnight.common.biome.MoltenCraterBiome;
 import net.minecraft.init.Biomes;
 import net.minecraft.world.biome.Biome;
@@ -11,11 +13,6 @@ import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
 
 @Mod.EventBusSubscriber(modid = Midnight.MODID)
 @GameRegistry.ObjectHolder(Midnight.MODID)
@@ -28,9 +25,10 @@ public class ModBiomes {
     public static final Biome MOLTEN_CRATER_EDGE = Biomes.DEFAULT;
     public static final Biome OBSCURED_PEAKS = Biomes.DEFAULT;
     public static final Biome WARPED_FIELDS = Biomes.DEFAULT;
-    public static final Biome CRYSTAL_PLAINS = Biomes.DEFAULT;
-
-    private static final List<Biome> SEED_BIOMES = new ArrayList<>();
+    public static final Biome CRYSTAL_SPIRES = Biomes.DEFAULT;
+    public static final Biome PLAINS = Biomes.DEFAULT;
+    public static final Biome PLATEAU = Biomes.DEFAULT;
+    public static final Biome VALLEY = Biomes.DEFAULT;
 
     // TODO: Lost rifter spawn
 
@@ -49,12 +47,12 @@ public class ModBiomes {
                                 .setHeightVariation(0.1F),
                         MidnightBiomeConfigs.BLACK_RIDGE_CONFIG
                 )),
-                // TODO: Reimplement
-                /*RegUtil.applyName(new BiomeDeceitfulBog(
+                RegUtil.applyName(new MidnightBiome(
                         new Biome.BiomeProperties("deceitful_bog")
                                 .setBaseHeight(0.125F)
-                                .setHeightVariation(0.03F)
-                )),*/
+                                .setHeightVariation(0.01F),
+                        MidnightBiomeConfigs.DECEITFUL_BOG_CONFIG
+                )),
                 RegUtil.applyName(new MidnightBiome(
                         new Biome.BiomeProperties("fungi_forest")
                                 .setBaseHeight(0.175F)
@@ -86,10 +84,28 @@ public class ModBiomes {
                         MidnightBiomeConfigs.WARPED_FIELDS_CONFIG
                 )),
                 RegUtil.applyName(new MidnightBiome(
-                        new Biome.BiomeProperties("crystal_plains")
+                        new Biome.BiomeProperties("crystal_spires")
                                 .setBaseHeight(0.1F)
                                 .setHeightVariation(0.12F),
-                        MidnightBiomeConfigs.CRYSTAL_PLAINS_CONFIG
+                        MidnightBiomeConfigs.CRYSTAL_SPIRES_CONFIG
+                )),
+                RegUtil.applyName(new MidnightBiome(
+                        new Biome.BiomeProperties("plains")
+                                .setBaseHeight(0.1F)
+                                .setHeightVariation(0.12F),
+                        MidnightBiomeConfigs.PLAINS_CONFIG
+                )),
+                RegUtil.applyName(new MidnightBiome(
+                        new Biome.BiomeProperties("plateau")
+                                .setBaseHeight(4.5F)
+                                .setHeightVariation(0.01F),
+                        MidnightBiomeConfigs.PLATEAU_CONFIG
+                )),
+                RegUtil.applyName(new MidnightBiome(
+                        new Biome.BiomeProperties("valley")
+                                .setBaseHeight(0.1F)
+                                .setHeightVariation(0.1F),
+                        MidnightBiomeConfigs.VALLEY_CONFIG
                 ))
         );
     }
@@ -102,16 +118,23 @@ public class ModBiomes {
         BiomeDictionary.addTypes(MOLTEN_CRATER_EDGE, BiomeDictionary.Type.HOT, BiomeDictionary.Type.SPARSE, BiomeDictionary.Type.SPOOKY);
         BiomeDictionary.addTypes(OBSCURED_PEAKS, BiomeDictionary.Type.MOUNTAIN, BiomeDictionary.Type.HILLS, BiomeDictionary.Type.SPARSE, BiomeDictionary.Type.SPOOKY);
         BiomeDictionary.addTypes(WARPED_FIELDS, BiomeDictionary.Type.HILLS, BiomeDictionary.Type.SPOOKY);
-        BiomeDictionary.addTypes(CRYSTAL_PLAINS, BiomeDictionary.Type.PLAINS, BiomeDictionary.Type.MAGICAL);
+        BiomeDictionary.addTypes(CRYSTAL_SPIRES, BiomeDictionary.Type.PLAINS, BiomeDictionary.Type.MAGICAL);
+        BiomeDictionary.addTypes(DECEITFUL_BOG, BiomeDictionary.Type.PLAINS, BiomeDictionary.Type.SWAMP, BiomeDictionary.Type.MAGICAL);
 
-        addSeedBiomes(VIGILANT_FOREST);
-    }
+        MidnightBiomeGroup.BASE.add(
+                new BasicBiomeSpawnEntry(VIGILANT_FOREST, 100),
+                new BasicBiomeSpawnEntry(FUNGI_FOREST, 70),
+                new BasicBiomeSpawnEntry(DECEITFUL_BOG, 100),
+                new BasicBiomeSpawnEntry(PLATEAU, 100),
+                new BasicBiomeSpawnEntry(PLAINS, 100)
+        );
 
-    public static void addSeedBiomes(Biome... biomes) {
-        SEED_BIOMES.addAll(Arrays.asList(biomes));
-    }
-
-    public static List<Biome> getSeedBiomes() {
-        return Collections.unmodifiableList(SEED_BIOMES);
+        MidnightBiomeGroup.SMALL.add(
+                new BasicBiomeSpawnEntry(OBSCURED_PEAKS, 10)
+                        .canReplace(biome -> biome == PLATEAU || biome == BLACK_RIDGE),
+                new BasicBiomeSpawnEntry(WARPED_FIELDS, 5),
+                new BasicBiomeSpawnEntry(CRYSTAL_SPIRES, 3),
+                new BasicBiomeSpawnEntry(MOLTEN_CRATER, 3)
+        );
     }
 }
