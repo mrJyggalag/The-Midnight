@@ -91,6 +91,8 @@ tile.midnight.viridshroom_planks.name=Viridshroom Planks
 tile.midnight.viridshroom_shelf.name=Viridshroom Shelf
 tile.midnight.viridshroom_trapdoor.name=Viridshroom Trapdoor
 
+tile.midnight.algae.name=Algae
+
 # Items
 
 item.midnight.shadowroot_door.name=Shadowroot Door

@@ -2,6 +2,7 @@ package com.mushroom.midnight.common.registry;
 
 import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.common.biome.BasicBiomeSpawnEntry;
+import com.mushroom.midnight.common.biome.DeceitfulBogBiome;
 import com.mushroom.midnight.common.biome.MidnightBiome;
 import com.mushroom.midnight.common.biome.MidnightBiomeConfigs;
 import com.mushroom.midnight.common.biome.MidnightBiomeGroup;
@@ -26,9 +27,9 @@ public class ModBiomes {
     public static final Biome OBSCURED_PEAKS = Biomes.DEFAULT;
     public static final Biome WARPED_FIELDS = Biomes.DEFAULT;
     public static final Biome CRYSTAL_SPIRES = Biomes.DEFAULT;
-    public static final Biome PLAINS = Biomes.DEFAULT;
-    public static final Biome PLATEAU = Biomes.DEFAULT;
-    public static final Biome VALLEY = Biomes.DEFAULT;
+    public static final Biome NIGHT_PLAINS = Biomes.DEFAULT;
+    public static final Biome OBSCURED_PLATEAU = Biomes.DEFAULT;
+    public static final Biome PHANTASMAL_VALLEY = Biomes.DEFAULT;
 
     // TODO: Lost rifter spawn
 
@@ -47,10 +48,10 @@ public class ModBiomes {
                                 .setHeightVariation(0.1F),
                         MidnightBiomeConfigs.BLACK_RIDGE_CONFIG
                 )),
-                RegUtil.applyName(new MidnightBiome(
+                RegUtil.applyName(new DeceitfulBogBiome(
                         new Biome.BiomeProperties("deceitful_bog")
                                 .setBaseHeight(0.125F)
-                                .setHeightVariation(0.01F),
+                                .setHeightVariation(0.2F),
                         MidnightBiomeConfigs.DECEITFUL_BOG_CONFIG
                 )),
                 RegUtil.applyName(new MidnightBiome(
@@ -73,7 +74,7 @@ public class ModBiomes {
                 )),
                 RegUtil.applyName(new MidnightBiome(
                         new Biome.BiomeProperties("obscured_peaks")
-                                .setBaseHeight(5.0F)
+                                .setBaseHeight(6.0F)
                                 .setHeightVariation(0.5F),
                         MidnightBiomeConfigs.OBSCURED_PEAKS_CONFIG
                 )),
@@ -90,22 +91,22 @@ public class ModBiomes {
                         MidnightBiomeConfigs.CRYSTAL_SPIRES_CONFIG
                 )),
                 RegUtil.applyName(new MidnightBiome(
-                        new Biome.BiomeProperties("plains")
+                        new Biome.BiomeProperties("night_plains")
                                 .setBaseHeight(0.1F)
-                                .setHeightVariation(0.12F),
-                        MidnightBiomeConfigs.PLAINS_CONFIG
+                                .setHeightVariation(0.3F),
+                        MidnightBiomeConfigs.NIGHT_PLAINS_CONFIG
                 )),
                 RegUtil.applyName(new MidnightBiome(
-                        new Biome.BiomeProperties("plateau")
-                                .setBaseHeight(4.5F)
+                        new Biome.BiomeProperties("obscured_plateau")
+                                .setBaseHeight(5.0F)
                                 .setHeightVariation(0.01F),
-                        MidnightBiomeConfigs.PLATEAU_CONFIG
+                        MidnightBiomeConfigs.BLACK_PLATEAU_CONFIG
                 )),
                 RegUtil.applyName(new MidnightBiome(
-                        new Biome.BiomeProperties("valley")
-                                .setBaseHeight(0.1F)
-                                .setHeightVariation(0.1F),
-                        MidnightBiomeConfigs.VALLEY_CONFIG
+                        new Biome.BiomeProperties("phantasmal_valley")
+                                .setBaseHeight(-0.8F)
+                                .setHeightVariation(0.05F),
+                        MidnightBiomeConfigs.PHANTASMAL_VALLEY_CONFIG
                 ))
         );
     }
@@ -124,14 +125,14 @@ public class ModBiomes {
         MidnightBiomeGroup.BASE.add(
                 new BasicBiomeSpawnEntry(VIGILANT_FOREST, 100),
                 new BasicBiomeSpawnEntry(FUNGI_FOREST, 70),
-                new BasicBiomeSpawnEntry(DECEITFUL_BOG, 100),
-                new BasicBiomeSpawnEntry(PLATEAU, 100),
-                new BasicBiomeSpawnEntry(PLAINS, 100)
+                new BasicBiomeSpawnEntry(DECEITFUL_BOG, 70),
+                new BasicBiomeSpawnEntry(OBSCURED_PLATEAU, 50),
+                new BasicBiomeSpawnEntry(NIGHT_PLAINS, 100)
         );
 
         MidnightBiomeGroup.SMALL.add(
                 new BasicBiomeSpawnEntry(OBSCURED_PEAKS, 10)
-                        .canReplace(biome -> biome == PLATEAU || biome == BLACK_RIDGE),
+                        .canReplace(biome -> biome == OBSCURED_PLATEAU || biome == BLACK_RIDGE),
                 new BasicBiomeSpawnEntry(WARPED_FIELDS, 5),
                 new BasicBiomeSpawnEntry(CRYSTAL_SPIRES, 3),
                 new BasicBiomeSpawnEntry(MOLTEN_CRATER, 3)

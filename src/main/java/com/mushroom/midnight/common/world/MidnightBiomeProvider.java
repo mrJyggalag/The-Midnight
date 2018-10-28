@@ -12,6 +12,7 @@ import net.minecraft.world.WorldType;
 import net.minecraft.world.biome.BiomeProvider;
 import net.minecraft.world.gen.layer.GenLayer;
 import net.minecraft.world.gen.layer.GenLayerFuzzyZoom;
+import net.minecraft.world.gen.layer.GenLayerSmooth;
 import net.minecraft.world.gen.layer.GenLayerVoronoiZoom;
 import net.minecraft.world.gen.layer.GenLayerZoom;
 import net.minecraft.world.storage.WorldInfo;
@@ -39,7 +40,7 @@ public class MidnightBiomeProvider extends BiomeProvider {
 
         GenLayer valleyLayer = new CellSeedLayer(50);
         valleyLayer = new GenLayerVoronoiZoom(60, valleyLayer);
-        valleyLayer = GenLayerZoom.magnify(70, valleyLayer, 1);
+        valleyLayer = GenLayerZoom.magnify(70, valleyLayer, 2);
         valleyLayer = new OutlineProducerLayer(80, valleyLayer);
 
         GenLayer layer = new MidnightSeedLayer(0);
@@ -55,6 +56,7 @@ public class MidnightBiomeProvider extends BiomeProvider {
         layer = new CraterEdgeLayer(7000, layer);
 
         layer = GenLayerZoom.magnify(8000, layer, 1);
+        layer = new GenLayerSmooth(9000, layer);
 
         return layer;
     }

@@ -6,8 +6,8 @@ import net.minecraft.world.gen.layer.GenLayer;
 import net.minecraft.world.gen.layer.IntCache;
 
 public class ValleyMergeLayer extends GenLayer {
-    private static final int VALLEY_ID = Biome.getIdForBiome(ModBiomes.VALLEY);
-    private static final int PLATEUA_ID = Biome.getIdForBiome(ModBiomes.PLATEAU);
+    private static final int VALLEY_ID = Biome.getIdForBiome(ModBiomes.PHANTASMAL_VALLEY);
+    private static final int PLATEUA_ID = Biome.getIdForBiome(ModBiomes.OBSCURED_PLATEAU);
 
     private final GenLayer ridgeParent;
 

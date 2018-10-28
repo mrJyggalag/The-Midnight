@@ -8,6 +8,10 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class BlockMushroomInside extends BlockAir {
+    public BlockMushroomInside() {
+        this.setLightLevel(1.0F);
+    }
+
     @Override
     public void neighborChanged(IBlockState state, World world, BlockPos pos, Block block, BlockPos fromPos) {
         int neighborCount = this.countHatNeighbors(world, pos);

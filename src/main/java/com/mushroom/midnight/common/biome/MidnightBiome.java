@@ -13,9 +13,6 @@ import java.util.Random;
 public class MidnightBiome extends Biome implements IMidnightBiome {
     protected final MidnightBiomeConfig config;
 
-    protected int grassColor = 0xB084BC;
-    protected int foliageColor = 0x8F6DBC;
-
     public MidnightBiome(BiomeProperties properties, MidnightBiomeConfig config) {
         super(properties);
 
@@ -43,9 +40,12 @@ public class MidnightBiome extends Biome implements IMidnightBiome {
 
     @Override
     public void genTerrainBlocks(World world, Random rand, ChunkPrimer primer, int z, int x, double noiseVal) {
+        IBlockState chosenTopBlock = this.chooseTopBlock(x, z, rand);
+        IBlockState chosenFillerBlock = this.config.getFillerBlock();
+
         int seaLevel = world.getSeaLevel();
-        IBlockState topBlock = this.chooseTopBlock(rand);
-        IBlockState fillerBlock = this.config.getFillerBlock();
+        IBlockState topBlock = chosenTopBlock;
+        IBlockState fillerBlock = chosenFillerBlock;
 
         int currentDepth = -1;
         int fillerDepth = (int) (noiseVal / 3.0D + 3.0D + rand.nextDouble() * 0.25D);
@@ -63,10 +63,10 @@ public class MidnightBiome extends Biome implements IMidnightBiome {
                     if (currentDepth == -1) {
                         if (fillerDepth <= 0) {
                             topBlock = AIR;
-                            fillerBlock = ModBlocks.NIGHTSHROOM.getDefaultState();
+                            fillerBlock = ModBlocks.NIGHTSTONE.getDefaultState();
                         } else if (height >= seaLevel - 4 && height <= seaLevel + 1) {
-                            topBlock = this.config.getTopBlock();
-                            fillerBlock = this.config.getFillerBlock();
+                            topBlock = chosenTopBlock;
+                            fillerBlock = chosenFillerBlock;
                         }
 
                         currentDepth = fillerDepth;
@@ -81,17 +81,17 @@ public class MidnightBiome extends Biome implements IMidnightBiome {
         }
     }
 
-    protected IBlockState chooseTopBlock(Random random) {
+    protected IBlockState chooseTopBlock(int x, int z, Random random) {
         return this.config.getTopBlock();
     }
 
     @Override
     public int getGrassColorAtPos(BlockPos pos) {
-        return this.getModdedBiomeGrassColor(this.grassColor);
+        return this.getModdedBiomeGrassColor(this.config.getGrassColor());
     }
 
     @Override
     public int getFoliageColorAtPos(BlockPos pos) {
-        return this.getModdedBiomeFoliageColor(this.foliageColor);
+        return this.getModdedBiomeFoliageColor(this.config.getFoliageColor());
     }
 }

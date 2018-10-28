@@ -14,14 +14,18 @@ public class MidnightBiomeConfig {
     private final IBlockState fillerBlock;
     private final float ridgeWeight;
     private final float densityScale;
+    private final int grassColor;
+    private final int foliageColor;
 
     private final ImmutableList<FeatureEntry> features;
 
-    private MidnightBiomeConfig(IBlockState topBlock, IBlockState fillerBlock, float ridgeWeight, float densityScale, ImmutableList<FeatureEntry> features) {
+    private MidnightBiomeConfig(IBlockState topBlock, IBlockState fillerBlock, float ridgeWeight, float densityScale, int grassColor, int foliageColor, ImmutableList<FeatureEntry> features) {
         this.topBlock = topBlock;
         this.fillerBlock = fillerBlock;
         this.ridgeWeight = ridgeWeight;
         this.densityScale = densityScale;
+        this.grassColor = grassColor;
+        this.foliageColor = foliageColor;
         this.features = features;
     }
 
@@ -53,11 +57,21 @@ public class MidnightBiomeConfig {
         return this.densityScale;
     }
 
+    public int getGrassColor() {
+        return this.grassColor;
+    }
+
+    public int getFoliageColor() {
+        return this.foliageColor;
+    }
+
     public static class Builder {
         private IBlockState topBlock = ModBlocks.MIDNIGHT_GRASS.getDefaultState();
         private IBlockState fillerBlock = ModBlocks.MIDNIGHT_DIRT.getDefaultState();
         private float ridgeWeight = 1.0F;
         private float densityScale = 1.0F;
+        private int grassColor = 0xB084BC;
+        private int foliageColor = 0x8F6DBC;
 
         private final ImmutableList.Builder<FeatureEntry> features = new ImmutableList.Builder<>();
 
@@ -102,8 +116,18 @@ public class MidnightBiomeConfig {
             return this;
         }
 
+        public Builder withGrassColor(int color) {
+            this.grassColor = color;
+            return this;
+        }
+
+        public Builder withFoliageColor(int color) {
+            this.foliageColor = color;
+            return this;
+        }
+
         public MidnightBiomeConfig build() {
-            return new MidnightBiomeConfig(this.topBlock, this.fillerBlock, this.ridgeWeight, this.densityScale, this.features.build());
+            return new MidnightBiomeConfig(this.topBlock, this.fillerBlock, this.ridgeWeight, this.densityScale, this.grassColor, this.foliageColor, this.features.build());
         }
     }
 

@@ -32,7 +32,8 @@ public class WorldGenMidnightCaves extends MapGenCaves {
     @Override
     protected boolean canReplaceBlock(IBlockState state, IBlockState aboveState) {
         Block block = state.getBlock();
-        return block == ModBlocks.NIGHTSTONE || block == ModBlocks.MIDNIGHT_GRASS || block == ModBlocks.MIDNIGHT_DIRT;
+        return block == ModBlocks.NIGHTSTONE || block == ModBlocks.TRENCHSTONE
+                || block == ModBlocks.MIDNIGHT_GRASS || block == ModBlocks.MIDNIGHT_DIRT;
     }
 
     @Override

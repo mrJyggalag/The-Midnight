@@ -33,7 +33,6 @@ public class BlockMidnightFungiHat extends Block implements IModelProvider {
         super(Material.WOOD);
         this.saplingSupplier = saplingSupplier;
         this.setHardness(1.0F);
-        this.setLightLevel(1.0F);
         this.setSoundType(SoundType.WOOD);
         this.setCreativeTab(Midnight.MIDNIGHT_TAB);
         this.setDefaultState(this.blockState.getBaseState()
@@ -106,5 +105,10 @@ public class BlockMidnightFungiHat extends Block implements IModelProvider {
             outerSides.add(EnumFacing.WEST);
         }
         return outerSides;
+    }
+
+    @Override
+    public float getAmbientOcclusionLightValue(IBlockState state) {
+        return 0.8F;
     }
 }

@@ -1,6 +1,7 @@
 package com.mushroom.midnight.common.biome;
 
 import com.mushroom.midnight.common.registry.ModBlocks;
+import com.mushroom.midnight.common.world.feature.BoulderFeature;
 import com.mushroom.midnight.common.world.feature.CrystalClusterFeature;
 import com.mushroom.midnight.common.world.feature.DeadTreeFeature;
 import com.mushroom.midnight.common.world.feature.DefaultTreeFeature;
@@ -74,6 +75,8 @@ public class MidnightBiomeConfigs {
             ModBlocks.BLOOMCRYSTAL.getDefaultState()
     );
 
+    public static final IMidnightFeature NIGHTSTONE_BOULDER_FEATURE = new BoulderFeature(ModBlocks.NIGHTSTONE.getDefaultState(), 2);
+
     public static final IMidnightFeature MIASMA_SOURCE_FEATURE = new MiasmaSourceFeature();
 
     public static final MidnightBiomeConfig VEGETATED_CONFIG = MidnightBiomeConfig.builder()
@@ -112,15 +115,17 @@ public class MidnightBiomeConfigs {
             .withFeature(LARGE_FUNGI_FEATURES, new SurfacePlacementConfig(6))
             .withFeature(FUNGI_FEATURE, new ScatterPlacementConfig(8, 16))
             .withFeature(DOUBLE_FUNGI_FEATURE, new ScatterPlacementConfig(6, 8))
+            .withGrassColor(0x8489B5)
             .build();
 
     public static final MidnightBiomeConfig CRYSTAL_SPIRES_CONFIG = MidnightBiomeConfig.builder()
             .withFeature(SHADOWROOT_TREE_FEATURE, new SurfacePlacementConfig(-3, 1))
-            .withFeature(BLOOMCRYSTAL_FEATURE, new SurfacePlacementConfig(2, 3))
+            .withFeature(BLOOMCRYSTAL_FEATURE, new SurfacePlacementConfig(3, 4))
             .withFeature(BLOOMCRYSTAL_SPIRE_FEATURE, new SurfacePlacementConfig(2, 3))
             .withFeature(LUMEN_FEATURE, new ScatterPlacementConfig(1, 32))
             .withFeature(DOUBLE_LUMEN_FEATURE, new ScatterPlacementConfig(1, 16))
             .withFeature(CRYSTAL_FLOWER_FEATURE, new ScatterPlacementConfig(5, 12))
+            .withGrassColor(0xBAA3C6)
             .build();
 
     public static final MidnightBiomeConfig WARPED_FIELDS_CONFIG = MidnightBiomeConfig.builder(VEGETATED_CONFIG)
@@ -133,6 +138,8 @@ public class MidnightBiomeConfigs {
     public static final MidnightBiomeConfig MOLTEN_CRATER_CONFIG = MidnightBiomeConfig.builder()
             .withFeature(MIASMA_SOURCE_FEATURE, new SurfacePlacementConfig(16))
             .withRidgeWeight(0.0F)
+            .withTopBlock(ModBlocks.TRENCHSTONE.getDefaultState())
+            .withFillerBlock(ModBlocks.TRENCHSTONE.getDefaultState())
             .build();
 
     public static final MidnightBiomeConfig DECEITFUL_BOG_CONFIG = MidnightBiomeConfig.builder()
@@ -143,18 +150,26 @@ public class MidnightBiomeConfigs {
             .withFeature(TALL_GRASS_FEATURE, new ScatterPlacementConfig(2, 32))
             .withFeature(FUNGI_FEATURE, new ScatterPlacementConfig(1, 4))
             .withFeature(DEAD_TREE_FEATURE, new SurfacePlacementConfig(7))
+            .withTopBlock(ModBlocks.MIDNIGHT_DIRT.getDefaultState())
+            .withGrassColor(0x8893AD)
             .withRidgeWeight(0.0F)
             .build();
 
-    public static final MidnightBiomeConfig PLAINS_CONFIG = MidnightBiomeConfig.builder()
+    public static final MidnightBiomeConfig NIGHT_PLAINS_CONFIG = MidnightBiomeConfig.builder()
             .withFeature(TALL_GRASS_FEATURE, new ScatterPlacementConfig(2, 32))
+            .withFeature(new IMidnightFeature[] {
+                    SHADOWROOT_TREE_FEATURE,
+                    DARK_WILLOW_TREE_FEATURE
+            }, new SurfacePlacementConfig(-5, 1))
+            .withFeature(NIGHTSTONE_BOULDER_FEATURE, new SurfacePlacementConfig(-3, 1))
             .withRidgeWeight(0.0F)
+            .withGrassColor(0xBAA3C6)
             .build();
 
-    public static final MidnightBiomeConfig PLATEAU_CONFIG = MidnightBiomeConfig.builder(ROCKY_CONFIG)
+    public static final MidnightBiomeConfig BLACK_PLATEAU_CONFIG = MidnightBiomeConfig.builder(ROCKY_CONFIG)
             .build();
 
-    public static final MidnightBiomeConfig VALLEY_CONFIG = MidnightBiomeConfig.builder()
+    public static final MidnightBiomeConfig PHANTASMAL_VALLEY_CONFIG = MidnightBiomeConfig.builder()
             .withRidgeWeight(0.0F)
             .build();
 }

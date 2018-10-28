@@ -1,0 +1,13 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "waterlily",
+    "textures": {
+      "particle": "midnight:blocks/algae",
+      "texture": "midnight:blocks/algae"
+    }
+  },
+  "variants": {
+    "normal": [{}, {"y": 90}, {"y": 180}, {"y": 270}]
+  }
+}
