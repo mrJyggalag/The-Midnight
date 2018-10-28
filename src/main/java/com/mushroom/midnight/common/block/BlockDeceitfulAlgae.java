@@ -13,10 +13,12 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
-public class BlockAlgae extends BlockBush implements IModelProvider {
+import javax.annotation.Nullable;
+
+public class BlockDeceitfulAlgae extends BlockBush implements IModelProvider {
     private static final AxisAlignedBB BOUNDS = new AxisAlignedBB(0.0625, 0.0, 0.0625, 0.9375, 0.09375, 0.9375);
 
-    public BlockAlgae() {
+    public BlockDeceitfulAlgae() {
         this.setHardness(0.0F);
         this.setSoundType(SoundType.PLANT);
         this.setCreativeTab(Midnight.MIDNIGHT_TAB);
@@ -25,6 +27,12 @@ public class BlockAlgae extends BlockBush implements IModelProvider {
     @Override
     public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
         return BOUNDS;
+    }
+
+    @Nullable
+    @Override
+    public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, IBlockAccess worldIn, BlockPos pos) {
+        return null;
     }
 
     @Override

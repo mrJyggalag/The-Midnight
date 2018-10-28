@@ -2,9 +2,10 @@ package com.mushroom.midnight.common.registry;
 
 import com.google.common.collect.Lists;
 import com.mushroom.midnight.Midnight;
-import com.mushroom.midnight.common.block.BlockAlgae;
 import com.mushroom.midnight.common.block.BlockBasic;
 import com.mushroom.midnight.common.block.BlockCrystal;
+import com.mushroom.midnight.common.block.BlockDeceitfulAlgae;
+import com.mushroom.midnight.common.block.BlockDeceitfulMoss;
 import com.mushroom.midnight.common.block.BlockDoubleMidnightPlant;
 import com.mushroom.midnight.common.block.BlockGlowingDoublePlant;
 import com.mushroom.midnight.common.block.BlockGlowingPlant;
@@ -147,7 +148,8 @@ public class ModBlocks {
 
     public static final Block MUSHROOM_INSIDE = Blocks.AIR;
 
-    public static final Block ALGAE = Blocks.AIR;
+    public static final Block DECEITFUL_ALGAE = Blocks.AIR;
+    public static final Block DECEITFUL_MOSS = Blocks.AIR;
 
     @SubscribeEvent
     public static void registerBlocks(RegistryEvent.Register<Block> event) {
@@ -259,7 +261,8 @@ public class ModBlocks {
                 RegUtil.withName(new BlockMidnightFurnace(false), "midnight_furnace"),
                 RegUtil.withName(new BlockMidnightFurnace(true), "midnight_furnace_lit"),
                 RegUtil.withName(new BlockMushroomInside(), "mushroom_inside"),
-                RegUtil.withName(new BlockAlgae(), "algae")
+                RegUtil.withName(new BlockDeceitfulAlgae(), "deceitful_algae"),
+                RegUtil.withName(new BlockDeceitfulMoss(), "deceitful_moss")
         );
 
         blocks.forEach(event.getRegistry()::register);
@@ -297,7 +300,7 @@ public class ModBlocks {
                 BLOOMCRYSTAL, BLOOMCRYSTAL_ROCK,
                 ROUXE, ROUXE_ROCK,
                 MIASMA_SURFACE, MIASMA,
-                ALGAE
+                DECEITFUL_ALGAE, DECEITFUL_MOSS
         ));
     }
 

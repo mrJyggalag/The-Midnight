@@ -3,8 +3,8 @@
   "defaults": {
     "model": "waterlily",
     "textures": {
-      "particle": "midnight:blocks/algae",
-      "texture": "midnight:blocks/algae"
+      "particle": "midnight:blocks/deceitful_algae",
+      "texture": "midnight:blocks/deceitful_algae"
     }
   },
   "variants": {
