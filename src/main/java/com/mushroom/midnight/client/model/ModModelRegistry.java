@@ -80,6 +80,7 @@ public class ModModelRegistry {
         ModelLoader.setCustomStateMapper(ModBlocks.VIRIDSHROOM, new StateMap.Builder().ignore(BlockSapling.STAGE).build());
 
         ModelLoader.setCustomStateMapper(ModBlocks.MIASMA, new StateMap.Builder().ignore(BlockFluidClassic.LEVEL).build());
+        ModelLoader.setCustomStateMapper(ModBlocks.DARK_WATER, new StateMap.Builder().ignore(BlockFluidClassic.LEVEL).build());
 
         ModelLoader.setCustomStateMapper(ModBlocks.SHADOWROOT_CHEST, new StateMap.Builder().ignore(BlockShadowrootChest.FACING).build());
 

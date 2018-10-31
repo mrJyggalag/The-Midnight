@@ -91,6 +91,7 @@ tile.midnight.viridshroom_planks.name=Viridshroom Planks
 tile.midnight.viridshroom_shelf.name=Viridshroom Shelf
 tile.midnight.viridshroom_trapdoor.name=Viridshroom Trapdoor
 
+tile.midnight.deceitful_peat.name=Deceitful Peat
 tile.midnight.deceitful_algae.name=Deceitful Algae
 tile.midnight.deceitful_moss.name=Deceitful Moss
 
@@ -109,6 +110,7 @@ item.midnight.dark_pearl.name=Dark Pearl
 # Fluids
 
 fluid.midnight.miasma=Miasma
+fluid.midnight.dark_water=Dark Water
 
 # Entities
 

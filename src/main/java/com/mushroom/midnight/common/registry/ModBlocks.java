@@ -4,8 +4,10 @@ import com.google.common.collect.Lists;
 import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.common.block.BlockBasic;
 import com.mushroom.midnight.common.block.BlockCrystal;
+import com.mushroom.midnight.common.block.BlockDarkWater;
 import com.mushroom.midnight.common.block.BlockDeceitfulAlgae;
 import com.mushroom.midnight.common.block.BlockDeceitfulMoss;
+import com.mushroom.midnight.common.block.BlockDeceitfulPeat;
 import com.mushroom.midnight.common.block.BlockDoubleMidnightPlant;
 import com.mushroom.midnight.common.block.BlockGlowingDoublePlant;
 import com.mushroom.midnight.common.block.BlockGlowingPlant;
@@ -145,9 +147,11 @@ public class ModBlocks {
 
     public static final Block MIASMA_SURFACE = Blocks.AIR;
     public static final Block MIASMA = Blocks.AIR;
+    public static final Block DARK_WATER = Blocks.AIR;
 
     public static final Block MUSHROOM_INSIDE = Blocks.AIR;
 
+    public static final Block DECEITFUL_PEAT = Blocks.AIR;
     public static final Block DECEITFUL_ALGAE = Blocks.AIR;
     public static final Block DECEITFUL_MOSS = Blocks.AIR;
 
@@ -215,6 +219,7 @@ public class ModBlocks {
                         .setHardness(4.0F),
                 RegUtil.withName(new BlockMiasmaSurface(), "miasma_surface"),
                 RegUtil.withName(new BlockMiasmaFluid(), "miasma"),
+                RegUtil.withName(new BlockDarkWater(), "dark_water"),
                 RegUtil.withName(new BlockMidnightGem(() -> ModItems.DARK_PEARL), "dark_pearl_ore"),
                 RegUtil.withName(new BlockBasic(Material.IRON), "dark_pearl_block")
                         .withSoundType(SoundType.METAL)
@@ -261,6 +266,7 @@ public class ModBlocks {
                 RegUtil.withName(new BlockMidnightFurnace(false), "midnight_furnace"),
                 RegUtil.withName(new BlockMidnightFurnace(true), "midnight_furnace_lit"),
                 RegUtil.withName(new BlockMushroomInside(), "mushroom_inside"),
+                RegUtil.withName(new BlockDeceitfulPeat(), "deceitful_peat"),
                 RegUtil.withName(new BlockDeceitfulAlgae(), "deceitful_algae"),
                 RegUtil.withName(new BlockDeceitfulMoss(), "deceitful_moss")
         );
@@ -300,7 +306,8 @@ public class ModBlocks {
                 BLOOMCRYSTAL, BLOOMCRYSTAL_ROCK,
                 ROUXE, ROUXE_ROCK,
                 MIASMA_SURFACE, MIASMA,
-                DECEITFUL_ALGAE, DECEITFUL_MOSS
+                DARK_WATER,
+                DECEITFUL_PEAT, DECEITFUL_ALGAE, DECEITFUL_MOSS
         ));
     }
 
