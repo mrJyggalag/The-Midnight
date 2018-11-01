@@ -43,6 +43,7 @@ public class MidnightChunkGenerator implements IChunkGenerator {
     private static final int BIOME_NOISE_SIZE = BUFFER_WIDTH + BIOME_WEIGHT_RADIUS * 2;
 
     private static final IBlockState STONE = ModBlocks.NIGHTSTONE.getDefaultState();
+    private static final IBlockState WATER = ModBlocks.DARK_WATER.getDefaultState();
 
     private final World world;
     private final Random random;
@@ -119,17 +120,16 @@ public class MidnightChunkGenerator implements IChunkGenerator {
     }
 
     protected void primeChunk(ChunkPrimer primer, int chunkX, int chunkZ) {
-        int originX = chunkX * HORIZONTAL_GRANULARITY - BIOME_NOISE_OFFSET;
-        int originZ = chunkZ * HORIZONTAL_GRANULARITY - BIOME_NOISE_OFFSET;
-        this.biomeNoiseBuffer = this.world.getBiomeProvider().getBiomesForGeneration(this.biomeNoiseBuffer, originX, originZ, BIOME_NOISE_SIZE, BIOME_NOISE_SIZE);
-
         this.populateNoise(chunkX, chunkZ);
+
+        int seaLevel = this.world.getSeaLevel();
         this.noisePrimer.primeChunk(primer, this.terrainBuffer, (density, x, y, z) -> {
             if (density > 0.0F) {
                 return STONE;
-            } else {
-                return null;
+            } else if (y < seaLevel) {
+                return WATER;
             }
+            return null;
         });
 
         this.coverSurface(primer, chunkX, chunkZ);
@@ -138,6 +138,10 @@ public class MidnightChunkGenerator implements IChunkGenerator {
     }
 
     protected void populateNoise(int chunkX, int chunkZ) {
+        int originX = chunkX * HORIZONTAL_GRANULARITY - BIOME_NOISE_OFFSET;
+        int originZ = chunkZ * HORIZONTAL_GRANULARITY - BIOME_NOISE_OFFSET;
+        this.biomeNoiseBuffer = this.world.getBiomeProvider().getBiomesForGeneration(this.biomeNoiseBuffer, originX, originZ, BIOME_NOISE_SIZE, BIOME_NOISE_SIZE);
+
         this.worldNoise.sample3D(this.worldNoiseBuffer, chunkX * NOISE_WIDTH, 0, chunkZ * NOISE_WIDTH, BUFFER_WIDTH, BUFFER_HEIGHT, BUFFER_WIDTH);
         this.surfaceNoise.sample2D(this.surfaceBuffer, chunkX * NOISE_WIDTH, chunkZ * NOISE_WIDTH, BUFFER_WIDTH, BUFFER_WIDTH);
         this.ridgedSurfaceNoise.sample2D(this.ridgedSurfaceBuffer, chunkX * NOISE_WIDTH, chunkZ * NOISE_WIDTH, BUFFER_WIDTH, BUFFER_WIDTH);

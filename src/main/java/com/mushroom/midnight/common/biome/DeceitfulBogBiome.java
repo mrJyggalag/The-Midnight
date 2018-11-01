@@ -14,8 +14,8 @@ public class DeceitfulBogBiome extends MidnightBiome {
     protected IBlockState chooseTopBlock(int x, int z, Random random) {
         double noise = GRASS_COLOR_NOISE.getValue(x * 0.03, z * 0.03);
         noise += (random.nextDouble() - 0.5) * 0.1;
-        if (noise > 0.0) {
-            return ModBlocks.DARK_WATER.getDefaultState();
+        if (noise > 0.05) {
+            return ModBlocks.MIDNIGHT_GRASS.getDefaultState();
         }
         return ModBlocks.DECEITFUL_PEAT.getDefaultState();
     }

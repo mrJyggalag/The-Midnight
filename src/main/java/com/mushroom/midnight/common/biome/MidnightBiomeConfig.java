@@ -19,7 +19,12 @@ public class MidnightBiomeConfig {
 
     private final ImmutableList<FeatureEntry> features;
 
-    private MidnightBiomeConfig(IBlockState topBlock, IBlockState fillerBlock, float ridgeWeight, float densityScale, int grassColor, int foliageColor, ImmutableList<FeatureEntry> features) {
+    private MidnightBiomeConfig(
+            IBlockState topBlock, IBlockState fillerBlock,
+            float ridgeWeight, float densityScale,
+            int grassColor, int foliageColor,
+            ImmutableList<FeatureEntry> features
+    ) {
         this.topBlock = topBlock;
         this.fillerBlock = fillerBlock;
         this.ridgeWeight = ridgeWeight;
@@ -127,7 +132,12 @@ public class MidnightBiomeConfig {
         }
 
         public MidnightBiomeConfig build() {
-            return new MidnightBiomeConfig(this.topBlock, this.fillerBlock, this.ridgeWeight, this.densityScale, this.grassColor, this.foliageColor, this.features.build());
+            return new MidnightBiomeConfig(
+                    this.topBlock, this.fillerBlock,
+                    this.ridgeWeight, this.densityScale,
+                    this.grassColor, this.foliageColor,
+                    this.features.build()
+            );
         }
     }
 

@@ -29,7 +29,7 @@ public class MidnightBiomeConfigs {
 
     public static final IMidnightFeature DOUBLE_GRASS_FEATURE = new DoublePlantFeature(
             ModBlocks.DOUBLE_MIDNIGHT_GRASS.getDefaultState(),
-            (worldIn, pos, state) -> ModBlocks.DOUBLE_MIDNIGHT_GRASS.canPlaceBlockAt(worldIn, pos)
+            (world, pos, state) -> ModBlocks.DOUBLE_MIDNIGHT_GRASS.canPlaceBlockAt(world, pos)
     );
 
     public static final IMidnightFeature LUMEN_FEATURE = new PlantFeature(
@@ -37,9 +37,14 @@ public class MidnightBiomeConfigs {
             ((BlockBush) ModBlocks.LUMEN_BUD)::canBlockStay
     );
 
+    public static final IMidnightFeature DECEITFUL_ALGAE_FEATURE = new PlantFeature(
+            ModBlocks.DECEITFUL_ALGAE.getDefaultState(),
+            (world, pos, state) -> ModBlocks.DECEITFUL_ALGAE.canPlaceBlockAt(world, pos)
+    );
+
     public static final IMidnightFeature DOUBLE_LUMEN_FEATURE = new DoublePlantFeature(
             ModBlocks.DOUBLE_LUMEN_BUD.getDefaultState(),
-            (worldIn, pos, state) -> ModBlocks.DOUBLE_LUMEN_BUD.canPlaceBlockAt(worldIn, pos)
+            (world, pos, state) -> ModBlocks.DOUBLE_LUMEN_BUD.canPlaceBlockAt(world, pos)
     );
 
     public static final IMidnightFeature FUNGI_FEATURE = new FungiFeature();
@@ -150,7 +155,8 @@ public class MidnightBiomeConfigs {
             .withFeature(TALL_GRASS_FEATURE, new ScatterPlacementConfig(2, 32))
             .withFeature(FUNGI_FEATURE, new ScatterPlacementConfig(1, 4))
             .withFeature(DEAD_TREE_FEATURE, new SurfacePlacementConfig(7))
-            .withTopBlock(ModBlocks.MIDNIGHT_DIRT.getDefaultState())
+            .withFeature(DECEITFUL_ALGAE_FEATURE, new ScatterPlacementConfig(8, 10))
+            .withTopBlock(ModBlocks.DECEITFUL_PEAT.getDefaultState())
             .withGrassColor(0x8893AD)
             .withRidgeWeight(0.0F)
             .build();

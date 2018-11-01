@@ -7,7 +7,6 @@ import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.init.Blocks;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
@@ -37,13 +36,17 @@ public class BlockDeceitfulAlgae extends BlockBush implements IModelProvider {
 
     @Override
     protected boolean canSustainBush(IBlockState state) {
-        return state.getBlock() == Blocks.WATER;
+        Material material = state.getMaterial();
+        return material == Material.WATER && state.getValue(BlockLiquid.LEVEL) == 0 || material == Material.ICE;
+    }
+
+    @Override
+    public boolean canPlaceBlockAt(World world, BlockPos pos) {
+        return this.canSustainBush(world.getBlockState(pos.down()));
     }
 
     @Override
     public boolean canBlockStay(World world, BlockPos pos, IBlockState state) {
-        IBlockState ground = world.getBlockState(pos.down());
-        Material material = ground.getMaterial();
-        return material == Material.WATER && ground.getValue(BlockLiquid.LEVEL) == 0 || material == Material.ICE;
+        return this.canSustainBush(world.getBlockState(pos.down()));
     }
 }

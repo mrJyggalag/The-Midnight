@@ -32,6 +32,7 @@ import com.mushroom.midnight.common.block.BlockNightstone;
 import com.mushroom.midnight.common.block.BlockShadowrootChest;
 import com.mushroom.midnight.common.block.BlockShadowrootCraftingTable;
 import com.mushroom.midnight.common.block.PlantBehaviorType;
+import com.mushroom.midnight.common.item.ItemDeceitfulAlgae;
 import com.mushroom.midnight.common.tile.base.TileEntityMidnightFurnace;
 import com.mushroom.midnight.common.tile.base.TileEntityShadowrootChest;
 import com.mushroom.midnight.common.world.feature.DefaultTreeFeature;
@@ -54,6 +55,7 @@ import net.minecraftforge.oredict.OreDictionary;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.function.Function;
 
 @GameRegistry.ObjectHolder(Midnight.MODID)
 @Mod.EventBusSubscriber(modid = Midnight.MODID)
@@ -307,8 +309,10 @@ public class ModBlocks {
                 ROUXE, ROUXE_ROCK,
                 MIASMA_SURFACE, MIASMA,
                 DARK_WATER,
-                DECEITFUL_PEAT, DECEITFUL_ALGAE, DECEITFUL_MOSS
+                DECEITFUL_PEAT, DECEITFUL_MOSS
         ));
+
+        event.getRegistry().registerAll(itemBlock(DECEITFUL_ALGAE, ItemDeceitfulAlgae::new));
     }
 
     public static void onInit() {
@@ -346,7 +350,11 @@ public class ModBlocks {
     }
 
     private static Item itemBlock(Block block) {
-        ItemBlock item = new ItemBlock(block);
+        return itemBlock(block, ItemBlock::new);
+    }
+
+    private static Item itemBlock(Block block, Function<Block, ItemBlock> supplier) {
+        ItemBlock item = supplier.apply(block);
         if (block.getRegistryName() == null) {
             throw new IllegalArgumentException("Cannot create ItemBlock for Block without registry name");
         }

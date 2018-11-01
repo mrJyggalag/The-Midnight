@@ -71,7 +71,11 @@ public class MidnightBiome extends Biome implements IMidnightBiome {
 
                         currentDepth = fillerDepth;
 
-                        primer.setBlockState(localX, height, localZ, topBlock);
+                        if (height >= seaLevel - 1) {
+                            primer.setBlockState(localX, height, localZ, topBlock);
+                        } else {
+                            primer.setBlockState(localX, height, localZ, fillerBlock);
+                        }
                     } else if (currentDepth > 0) {
                         --currentDepth;
                         primer.setBlockState(localX, height, localZ, fillerBlock);
