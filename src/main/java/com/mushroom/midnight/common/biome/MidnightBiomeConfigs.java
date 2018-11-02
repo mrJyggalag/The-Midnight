@@ -155,7 +155,7 @@ public class MidnightBiomeConfigs {
             .withFeature(TALL_GRASS_FEATURE, new ScatterPlacementConfig(2, 32))
             .withFeature(FUNGI_FEATURE, new ScatterPlacementConfig(1, 4))
             .withFeature(DEAD_TREE_FEATURE, new SurfacePlacementConfig(7))
-            .withFeature(DECEITFUL_ALGAE_FEATURE, new ScatterPlacementConfig(8, 10))
+            .withFeature(DECEITFUL_ALGAE_FEATURE, new ScatterPlacementConfig(10, 20))
             .withTopBlock(ModBlocks.DECEITFUL_PEAT.getDefaultState())
             .withGrassColor(0x8893AD)
             .withRidgeWeight(0.0F)
