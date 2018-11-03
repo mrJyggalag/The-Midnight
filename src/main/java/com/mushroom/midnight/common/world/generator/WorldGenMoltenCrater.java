@@ -17,7 +17,7 @@ import java.util.Arrays;
 import java.util.Random;
 
 public class WorldGenMoltenCrater extends MapGenBase {
-    private static final int SPAWN_CHANCE = 100;
+    private static final int SPAWN_CHANCE = 350;
 
     private static final int MIN_RADIUS = 16;
     private static final int MAX_RADIUS = 42;
