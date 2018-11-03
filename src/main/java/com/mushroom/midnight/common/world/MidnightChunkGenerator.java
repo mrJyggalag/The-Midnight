@@ -3,6 +3,7 @@ package com.mushroom.midnight.common.world;
 import com.mushroom.midnight.common.biome.IMidnightBiome;
 import com.mushroom.midnight.common.registry.ModBlocks;
 import com.mushroom.midnight.common.world.generator.WorldGenMidnightCaves;
+import com.mushroom.midnight.common.world.generator.WorldGenMoltenCrater;
 import com.mushroom.midnight.common.world.noise.OctaveNoiseSampler;
 import com.mushroom.midnight.common.world.util.BiomeWeightTable;
 import com.mushroom.midnight.common.world.util.NoiseChunkPrimer;
@@ -27,7 +28,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Random;
 
-public class MidnightChunkGenerator implements IChunkGenerator {
+public class MidnightChunkGenerator implements IChunkGenerator, PartialChunkGenerator {
     private static final int HORIZONTAL_GRANULARITY = 4;
     private static final int VERTICAL_GRANULARITY = 4;
 
@@ -65,6 +66,7 @@ public class MidnightChunkGenerator implements IChunkGenerator {
     private final double[] depthBuffer = new double[256];
 
     private final MapGenBase caveGenerator;
+    private final MapGenBase craterGenerator;
 
     private final NoiseChunkPrimer noisePrimer;
     private final BiomeWeightTable weightTable;
@@ -92,17 +94,12 @@ public class MidnightChunkGenerator implements IChunkGenerator {
         this.weightTable = new BiomeWeightTable(BIOME_WEIGHT_RADIUS);
 
         this.caveGenerator = TerrainGen.getModdedMapGen(new WorldGenMidnightCaves(), InitMapGenEvent.EventType.CAVE);
+        this.craterGenerator = TerrainGen.getModdedMapGen(new WorldGenMoltenCrater(this.random, this), InitMapGenEvent.EventType.CUSTOM);
     }
 
     @Override
     public Chunk generateChunk(int chunkX, int chunkZ) {
-        int globalX = chunkX << 4;
-        int globalZ = chunkZ << 4;
-
         this.random.setSeed(chunkX * 341873128712L + chunkZ * 132897987541L);
-
-        BiomeProvider biomeProvider = this.world.getBiomeProvider();
-        this.biomeBuffer = biomeProvider.getBiomes(this.biomeBuffer, globalX, globalZ, 16, 16);
 
         ChunkPrimer primer = new ChunkPrimer();
         this.primeChunk(primer, chunkX, chunkZ);
@@ -119,7 +116,24 @@ public class MidnightChunkGenerator implements IChunkGenerator {
         return chunk;
     }
 
-    protected void primeChunk(ChunkPrimer primer, int chunkX, int chunkZ) {
+    @Override
+    public void primeChunk(ChunkPrimer primer, int chunkX, int chunkZ) {
+        this.primeChunkBare(primer, chunkX, chunkZ);
+
+        int globalX = chunkX << 4;
+        int globalZ = chunkZ << 4;
+
+        BiomeProvider biomeProvider = this.world.getBiomeProvider();
+        this.biomeBuffer = biomeProvider.getBiomes(this.biomeBuffer, globalX, globalZ, 16, 16);
+
+        this.coverSurface(primer, chunkX, chunkZ);
+
+        this.caveGenerator.generate(this.world, chunkX, chunkZ, primer);
+        this.craterGenerator.generate(this.world, chunkX, chunkZ, primer);
+    }
+
+    @Override
+    public void primeChunkBare(ChunkPrimer primer, int chunkX, int chunkZ) {
         this.populateNoise(chunkX, chunkZ);
 
         int seaLevel = this.world.getSeaLevel();
@@ -131,10 +145,6 @@ public class MidnightChunkGenerator implements IChunkGenerator {
             }
             return null;
         });
-
-        this.coverSurface(primer, chunkX, chunkZ);
-
-        this.caveGenerator.generate(this.world, chunkX, chunkZ, primer);
     }
 
     protected void populateNoise(int chunkX, int chunkZ) {

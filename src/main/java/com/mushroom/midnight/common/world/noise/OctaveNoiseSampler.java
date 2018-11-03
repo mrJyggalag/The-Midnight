@@ -1,7 +1,5 @@
 package com.mushroom.midnight.common.world.noise;
 
-import net.minecraft.util.math.MathHelper;
-
 import java.util.Arrays;
 import java.util.Random;
 import java.util.function.Supplier;
@@ -36,12 +34,6 @@ public class OctaveNoiseSampler implements INoiseSampler {
         return count(count, () -> new RidgeNoiseSampler(random, exponent));
     }
 
-    private double maintainPrecision(double coordinate) {
-        long origin = MathHelper.lfloor(coordinate);
-        double intermediate = coordinate - (double) origin;
-        return intermediate + (origin % 16777216L);
-    }
-
     @Override
     public void setFrequency(double frequency) {
         this.frequency = frequency;
@@ -70,12 +62,9 @@ public class OctaveNoiseSampler implements INoiseSampler {
         for (int octave = 0; octave < this.octaveCount; octave++) {
             INoiseSampler sampler = this.layers[octave];
 
-            double sampleX = this.maintainPrecision(originX * currentFrequency);
-            double sampleY = this.maintainPrecision(originY * currentFrequency);
-
             sampler.setAmplitude(currentAmplitude);
             sampler.setFrequency(currentFrequency);
-            sampler.sample2D(buffer, sampleX, sampleY, sizeX, sizeY);
+            sampler.sample2D(buffer, originX, originY, sizeX, sizeY);
 
             currentAmplitude *= this.persistence;
             currentFrequency *= this.lacunarity;
@@ -92,13 +81,9 @@ public class OctaveNoiseSampler implements INoiseSampler {
         for (int octave = 0; octave < this.octaveCount; octave++) {
             INoiseSampler sampler = this.layers[octave];
 
-            double sampleX = this.maintainPrecision(originX * currentFrequency);
-            double sampleY = this.maintainPrecision(originY * currentFrequency);
-            double sampleZ = this.maintainPrecision(originZ * currentFrequency);
-
             sampler.setAmplitude(currentAmplitude);
             sampler.setFrequency(currentFrequency);
-            sampler.sample3D(buffer, sampleX, sampleY, sampleZ, sizeX, sizeY, sizeZ);
+            sampler.sample3D(buffer, originX, originY, originZ, sizeX, sizeY, sizeZ);
 
             currentAmplitude *= this.persistence;
             currentFrequency *= this.lacunarity;

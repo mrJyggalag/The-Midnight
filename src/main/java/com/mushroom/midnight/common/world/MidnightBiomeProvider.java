@@ -3,7 +3,6 @@ package com.mushroom.midnight.common.world;
 import com.mushroom.midnight.common.biome.MidnightBiomeGroup;
 import com.mushroom.midnight.common.world.layer.ApplyBiomeGroupLayer;
 import com.mushroom.midnight.common.world.layer.CellSeedLayer;
-import com.mushroom.midnight.common.world.layer.CraterEdgeLayer;
 import com.mushroom.midnight.common.world.layer.MidnightSeedLayer;
 import com.mushroom.midnight.common.world.layer.OutlineProducerLayer;
 import com.mushroom.midnight.common.world.layer.RidgeMergeLayer;
@@ -53,10 +52,9 @@ public class MidnightBiomeProvider extends BiomeProvider {
         layer = GenLayerZoom.magnify(5000, layer, 2);
 
         layer = new ValleyMergeLayer(6000, layer, valleyLayer);
-        layer = new CraterEdgeLayer(7000, layer);
 
-        layer = GenLayerZoom.magnify(8000, layer, 1);
-        layer = new GenLayerSmooth(9000, layer);
+        layer = GenLayerZoom.magnify(7000, layer, 1);
+        layer = new GenLayerSmooth(8000, layer);
 
         return layer;
     }

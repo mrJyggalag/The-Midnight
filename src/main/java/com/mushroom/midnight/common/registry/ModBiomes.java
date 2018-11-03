@@ -22,8 +22,6 @@ public class ModBiomes {
     public static final Biome VIGILANT_FOREST = Biomes.DEFAULT;
     public static final Biome DECEITFUL_BOG = Biomes.DEFAULT;
     public static final Biome FUNGI_FOREST = Biomes.DEFAULT;
-    public static final Biome MOLTEN_CRATER = Biomes.DEFAULT;
-    public static final Biome MOLTEN_CRATER_EDGE = Biomes.DEFAULT;
     public static final Biome OBSCURED_PEAKS = Biomes.DEFAULT;
     public static final Biome WARPED_FIELDS = Biomes.DEFAULT;
     public static final Biome CRYSTAL_SPIRES = Biomes.DEFAULT;
@@ -115,8 +113,6 @@ public class ModBiomes {
         BiomeDictionary.addTypes(VIGILANT_FOREST, BiomeDictionary.Type.FOREST, BiomeDictionary.Type.SPOOKY);
         BiomeDictionary.addTypes(BLACK_RIDGE, BiomeDictionary.Type.MOUNTAIN, BiomeDictionary.Type.HILLS, BiomeDictionary.Type.SPARSE, BiomeDictionary.Type.SPOOKY);
         BiomeDictionary.addTypes(FUNGI_FOREST, BiomeDictionary.Type.FOREST, BiomeDictionary.Type.SPOOKY);
-        BiomeDictionary.addTypes(MOLTEN_CRATER, BiomeDictionary.Type.HOT, BiomeDictionary.Type.SPARSE, BiomeDictionary.Type.SPOOKY);
-        BiomeDictionary.addTypes(MOLTEN_CRATER_EDGE, BiomeDictionary.Type.HOT, BiomeDictionary.Type.SPARSE, BiomeDictionary.Type.SPOOKY);
         BiomeDictionary.addTypes(OBSCURED_PEAKS, BiomeDictionary.Type.MOUNTAIN, BiomeDictionary.Type.HILLS, BiomeDictionary.Type.SPARSE, BiomeDictionary.Type.SPOOKY);
         BiomeDictionary.addTypes(WARPED_FIELDS, BiomeDictionary.Type.HILLS, BiomeDictionary.Type.SPOOKY);
         BiomeDictionary.addTypes(CRYSTAL_SPIRES, BiomeDictionary.Type.PLAINS, BiomeDictionary.Type.MAGICAL);
@@ -134,8 +130,7 @@ public class ModBiomes {
                 new BasicBiomeSpawnEntry(OBSCURED_PEAKS, 10)
                         .canReplace(biome -> biome == OBSCURED_PLATEAU || biome == BLACK_RIDGE),
                 new BasicBiomeSpawnEntry(WARPED_FIELDS, 5),
-                new BasicBiomeSpawnEntry(CRYSTAL_SPIRES, 3),
-                new BasicBiomeSpawnEntry(MOLTEN_CRATER, 3)
+                new BasicBiomeSpawnEntry(CRYSTAL_SPIRES, 3)
         );
     }
 }
