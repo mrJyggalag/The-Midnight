@@ -9,7 +9,7 @@ import net.minecraft.block.material.Material;
 public final class BlockBasic extends Block implements IModelProvider {
     public BlockBasic(Material material) {
         super(material);
-        this.setCreativeTab(Midnight.MIDNIGHT_TAB);
+        this.setCreativeTab(Midnight.BUILDING_TAB);
     }
 
     public BlockBasic withHarvestLevel(String tool, int level) {

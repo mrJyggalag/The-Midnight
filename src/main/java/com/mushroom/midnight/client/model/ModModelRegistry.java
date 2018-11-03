@@ -15,8 +15,10 @@ import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDoor;
+import net.minecraft.block.BlockFenceGate;
 import net.minecraft.block.BlockLeaves;
 import net.minecraft.block.BlockSapling;
+import net.minecraft.block.BlockWall;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -81,6 +83,16 @@ public class ModModelRegistry {
 
         ModelLoader.setCustomStateMapper(ModBlocks.MIASMA, new StateMap.Builder().ignore(BlockFluidClassic.LEVEL).build());
         ModelLoader.setCustomStateMapper(ModBlocks.DARK_WATER, new StateMap.Builder().ignore(BlockFluidClassic.LEVEL).build());
+
+        ModelLoader.setCustomStateMapper(ModBlocks.NIGHTSTONE_WALL, new StateMap.Builder().ignore(BlockWall.VARIANT).build());
+        ModelLoader.setCustomStateMapper(ModBlocks.NIGHTSTONE_BRICK_WALL, new StateMap.Builder().ignore(BlockWall.VARIANT).build());
+
+        ModelLoader.setCustomStateMapper(ModBlocks.SHADOWROOT_FENCE_GATE, new StateMap.Builder().ignore(BlockFenceGate.POWERED).build());
+        ModelLoader.setCustomStateMapper(ModBlocks.DEAD_WOOD_FENCE_GATE, new StateMap.Builder().ignore(BlockFenceGate.POWERED).build());
+        ModelLoader.setCustomStateMapper(ModBlocks.DARK_WILLOW_FENCE_GATE, new StateMap.Builder().ignore(BlockFenceGate.POWERED).build());
+        ModelLoader.setCustomStateMapper(ModBlocks.DEWSHROOM_FENCE_GATE, new StateMap.Builder().ignore(BlockFenceGate.POWERED).build());
+        ModelLoader.setCustomStateMapper(ModBlocks.VIRIDSHROOM_FENCE_GATE, new StateMap.Builder().ignore(BlockFenceGate.POWERED).build());
+        ModelLoader.setCustomStateMapper(ModBlocks.NIGHTSHROOM_FENCE_GATE, new StateMap.Builder().ignore(BlockFenceGate.POWERED).build());
 
         ModelLoader.setCustomStateMapper(ModBlocks.SHADOWROOT_CHEST, new StateMap.Builder().ignore(BlockShadowrootChest.FACING).build());
 

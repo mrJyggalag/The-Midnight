@@ -29,7 +29,7 @@ public class BlockCrystal extends Block implements IModelProvider {
         this.setSoundType(SoundType.GLASS);
         this.setHarvestLevel("pickaxe", 1);
         this.setTickRandomly(true);
-        this.setCreativeTab(Midnight.MIDNIGHT_TAB);
+        this.setCreativeTab(Midnight.DECORATION_TAB);
     }
 
     @Override

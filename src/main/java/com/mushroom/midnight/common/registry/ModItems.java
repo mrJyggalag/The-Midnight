@@ -34,12 +34,12 @@ public class ModItems {
     @SubscribeEvent
     public static void registerItems(RegistryEvent.Register<Item> event) {
         items = Lists.newArrayList(
-                RegUtil.withName(new ItemMidnightDoor(ModBlocks.SHADOWROOT_DOOR).setCreativeTab(Midnight.MIDNIGHT_TAB), "shadowroot_door"),
-                RegUtil.withName(new ItemMidnightDoor(ModBlocks.DARK_WILLOW_DOOR).setCreativeTab(Midnight.MIDNIGHT_TAB), "dark_willow_door"),
-                RegUtil.withName(new ItemMidnightDoor(ModBlocks.DEAD_WOOD_DOOR).setCreativeTab(Midnight.MIDNIGHT_TAB), "dead_wood_door"),
-                RegUtil.withName(new ItemMidnightDoor(ModBlocks.NIGHTSHROOM_DOOR).setCreativeTab(Midnight.MIDNIGHT_TAB), "nightshroom_door"),
-                RegUtil.withName(new ItemMidnightDoor(ModBlocks.DEWSHROOM_DOOR).setCreativeTab(Midnight.MIDNIGHT_TAB), "dewshroom_door"),
-                RegUtil.withName(new ItemMidnightDoor(ModBlocks.VIRIDSHROOM_DOOR).setCreativeTab(Midnight.MIDNIGHT_TAB), "viridshroom_door"),
+                RegUtil.withName(new ItemMidnightDoor(ModBlocks.SHADOWROOT_DOOR), "shadowroot_door"),
+                RegUtil.withName(new ItemMidnightDoor(ModBlocks.DARK_WILLOW_DOOR), "dark_willow_door"),
+                RegUtil.withName(new ItemMidnightDoor(ModBlocks.DEAD_WOOD_DOOR), "dead_wood_door"),
+                RegUtil.withName(new ItemMidnightDoor(ModBlocks.NIGHTSHROOM_DOOR), "nightshroom_door"),
+                RegUtil.withName(new ItemMidnightDoor(ModBlocks.DEWSHROOM_DOOR), "dewshroom_door"),
+                RegUtil.withName(new ItemMidnightDoor(ModBlocks.VIRIDSHROOM_DOOR), "viridshroom_door"),
                 RegUtil.withName(new ItemBasic(), "dark_pearl")
         );
 

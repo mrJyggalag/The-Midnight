@@ -1,0 +1,15 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "textures": {
+      "all": "midnight:blocks/dark_willow_planks"
+    }
+  },
+  "variants": {
+    "half": {
+      "bottom": {"model": "midnight:slab_lower"},
+      "top": {"model": "midnight:slab_upper"}
+    },
+    "inventory": {"model": "midnight:slab_lower"}
+  }
+}

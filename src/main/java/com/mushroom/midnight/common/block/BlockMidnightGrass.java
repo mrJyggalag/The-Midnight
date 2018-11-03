@@ -26,7 +26,7 @@ public class BlockMidnightGrass extends Block implements IModelProvider {
         this.setHardness(0.6F);
         this.setSoundType(SoundType.PLANT);
         this.setTickRandomly(true);
-        this.setCreativeTab(Midnight.MIDNIGHT_TAB);
+        this.setCreativeTab(Midnight.BUILDING_TAB);
     }
 
     @Override

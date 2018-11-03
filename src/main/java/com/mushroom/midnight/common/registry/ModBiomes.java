@@ -6,7 +6,6 @@ import com.mushroom.midnight.common.biome.DeceitfulBogBiome;
 import com.mushroom.midnight.common.biome.MidnightBiome;
 import com.mushroom.midnight.common.biome.MidnightBiomeConfigs;
 import com.mushroom.midnight.common.biome.MidnightBiomeGroup;
-import com.mushroom.midnight.common.biome.MoltenCraterBiome;
 import net.minecraft.init.Biomes;
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.common.BiomeDictionary;
@@ -58,18 +57,6 @@ public class ModBiomes {
                                 .setHeightVariation(0.07F),
                         MidnightBiomeConfigs.FUNGI_FOREST_CONFIG
                 )),
-                RegUtil.applyName(new MoltenCraterBiome(
-                        new Biome.BiomeProperties("molten_crater")
-                                .setBaseHeight(-1.7F)
-                                .setHeightVariation(0.0F),
-                        MidnightBiomeConfigs.MOLTEN_CRATER_CONFIG
-                )),
-                RegUtil.applyName(new MidnightBiome(
-                        new Biome.BiomeProperties("molten_crater_edge")
-                                .setBaseHeight(-0.2F)
-                                .setHeightVariation(0.05F),
-                        MidnightBiomeConfigs.MOLTEN_CRATER_CONFIG
-                )),
                 RegUtil.applyName(new MidnightBiome(
                         new Biome.BiomeProperties("obscured_peaks")
                                 .setBaseHeight(6.0F)
@@ -116,7 +103,10 @@ public class ModBiomes {
         BiomeDictionary.addTypes(OBSCURED_PEAKS, BiomeDictionary.Type.MOUNTAIN, BiomeDictionary.Type.HILLS, BiomeDictionary.Type.SPARSE, BiomeDictionary.Type.SPOOKY);
         BiomeDictionary.addTypes(WARPED_FIELDS, BiomeDictionary.Type.HILLS, BiomeDictionary.Type.SPOOKY);
         BiomeDictionary.addTypes(CRYSTAL_SPIRES, BiomeDictionary.Type.PLAINS, BiomeDictionary.Type.MAGICAL);
-        BiomeDictionary.addTypes(DECEITFUL_BOG, BiomeDictionary.Type.PLAINS, BiomeDictionary.Type.SWAMP, BiomeDictionary.Type.MAGICAL);
+        BiomeDictionary.addTypes(DECEITFUL_BOG, BiomeDictionary.Type.SWAMP, BiomeDictionary.Type.SPOOKY);
+        BiomeDictionary.addTypes(NIGHT_PLAINS, BiomeDictionary.Type.PLAINS, BiomeDictionary.Type.SPOOKY);
+        BiomeDictionary.addTypes(OBSCURED_PLATEAU, BiomeDictionary.Type.MOUNTAIN, BiomeDictionary.Type.SPARSE, BiomeDictionary.Type.SPOOKY);
+        BiomeDictionary.addTypes(PHANTASMAL_VALLEY, BiomeDictionary.Type.PLAINS, BiomeDictionary.Type.SPOOKY);
 
         MidnightBiomeGroup.BASE.add(
                 new BasicBiomeSpawnEntry(VIGILANT_FOREST, 100),

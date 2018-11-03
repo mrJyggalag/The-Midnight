@@ -20,7 +20,7 @@ public class BlockDeceitfulAlgae extends BlockBush implements IModelProvider {
     public BlockDeceitfulAlgae() {
         this.setHardness(0.0F);
         this.setSoundType(SoundType.PLANT);
-        this.setCreativeTab(Midnight.MIDNIGHT_TAB);
+        this.setCreativeTab(Midnight.DECORATION_TAB);
     }
 
     @Override

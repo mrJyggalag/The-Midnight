@@ -33,7 +33,7 @@ public class BlockMidnightFungiShelf extends Block implements IModelProvider {
         super(Material.PLANTS);
         this.setHardness(0.0F);
         this.setSoundType(SoundType.PLANT);
-        this.setCreativeTab(Midnight.MIDNIGHT_TAB);
+        this.setCreativeTab(Midnight.DECORATION_TAB);
     }
 
     @Override

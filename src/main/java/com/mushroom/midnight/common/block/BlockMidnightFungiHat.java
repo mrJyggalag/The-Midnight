@@ -32,9 +32,9 @@ public class BlockMidnightFungiHat extends Block implements IModelProvider {
     public BlockMidnightFungiHat(Supplier<Block> saplingSupplier) {
         super(Material.WOOD);
         this.saplingSupplier = saplingSupplier;
-        this.setHardness(1.0F);
+        this.setHardness(0.5F);
         this.setSoundType(SoundType.WOOD);
-        this.setCreativeTab(Midnight.MIDNIGHT_TAB);
+        this.setCreativeTab(Midnight.BUILDING_TAB);
         this.setDefaultState(this.blockState.getBaseState()
                 .withProperty(UP, false)
                 .withProperty(DOWN, false)

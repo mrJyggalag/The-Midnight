@@ -16,7 +16,7 @@ public class BlockMidnightDirt extends Block implements IModelProvider {
         super(Material.GROUND);
         this.setHardness(0.5F);
         this.setSoundType(SoundType.GROUND);
-        this.setCreativeTab(Midnight.MIDNIGHT_TAB);
+        this.setCreativeTab(Midnight.BUILDING_TAB);
     }
 
     @Override

@@ -23,7 +23,7 @@ public class BlockMidnightGem extends Block implements IModelProvider {
         this.setHardness(1.5F);
         this.setResistance(10.0F);
         this.setSoundType(SoundType.STONE);
-        this.setCreativeTab(Midnight.MIDNIGHT_TAB);
+        this.setCreativeTab(Midnight.BUILDING_TAB);
         this.gemSupplier = gemSupplier;
     }
 

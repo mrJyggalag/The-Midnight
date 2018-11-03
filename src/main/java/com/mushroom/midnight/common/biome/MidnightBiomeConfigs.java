@@ -140,13 +140,6 @@ public class MidnightBiomeConfigs {
             .withRidgeWeight(0.0F)
             .build();
 
-    public static final MidnightBiomeConfig MOLTEN_CRATER_CONFIG = MidnightBiomeConfig.builder()
-            .withFeature(MIASMA_SOURCE_FEATURE, new SurfacePlacementConfig(16))
-            .withRidgeWeight(0.0F)
-            .withTopBlock(ModBlocks.TRENCHSTONE.getDefaultState())
-            .withFillerBlock(ModBlocks.TRENCHSTONE.getDefaultState())
-            .build();
-
     public static final MidnightBiomeConfig DECEITFUL_BOG_CONFIG = MidnightBiomeConfig.builder()
             .withFeature(new IMidnightFeature[] {
                     SHADOWROOT_TREE_FEATURE,

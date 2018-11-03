@@ -41,10 +41,17 @@ public class Midnight {
     public static final String VERSION = "@VERSION@";
     public static final Logger LOGGER = LogManager.getLogger(NAME);
     public static final SimpleNetworkWrapper NETWORK = new SimpleNetworkWrapper(MODID);
-    public static final CreativeTabs MIDNIGHT_TAB = new CreativeTabs(MODID) {
+
+    public static final CreativeTabs BUILDING_TAB = new CreativeTabs("midnight_building") {
         @Override
         public ItemStack createIcon() {
             return new ItemStack(ModBlocks.MIDNIGHT_GRASS);
+        }
+    };
+    public static final CreativeTabs DECORATION_TAB = new CreativeTabs("midnight_decoration") {
+        @Override
+        public ItemStack createIcon() {
+            return new ItemStack(ModBlocks.ROUXE);
         }
     };
 

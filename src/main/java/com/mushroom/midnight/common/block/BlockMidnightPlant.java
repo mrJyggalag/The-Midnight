@@ -30,7 +30,7 @@ public class BlockMidnightPlant extends BlockBush implements IModelProvider, ISh
         this.behaviorType = behaviorType;
         this.setHardness(0.0F);
         this.setSoundType(SoundType.PLANT);
-        this.setCreativeTab(Midnight.MIDNIGHT_TAB);
+        this.setCreativeTab(Midnight.DECORATION_TAB);
     }
 
     public BlockMidnightPlant() {

@@ -11,6 +11,6 @@ public class BlockMidnightTrapDoor extends BlockTrapDoor implements IModelProvid
         super(Material.WOOD);
         this.setHardness(3.0F);
         this.setSoundType(SoundType.WOOD);
-        this.setCreativeTab(Midnight.MIDNIGHT_TAB);
+        this.setCreativeTab(Midnight.DECORATION_TAB);
     }
 }
