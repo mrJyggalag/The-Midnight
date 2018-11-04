@@ -20,8 +20,8 @@ public class BlockMidnightGem extends Block implements IModelProvider {
 
     public BlockMidnightGem(Supplier<Item> gemSupplier) {
         super(Material.ROCK);
-        this.setHardness(1.5F);
-        this.setResistance(10.0F);
+        this.setHardness(3.0F);
+        this.setResistance(5.0F);
         this.setSoundType(SoundType.STONE);
         this.setCreativeTab(Midnight.BUILDING_TAB);
         this.gemSupplier = gemSupplier;
