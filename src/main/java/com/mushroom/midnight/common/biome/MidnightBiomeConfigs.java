@@ -145,8 +145,9 @@ public class MidnightBiomeConfigs {
                     SHADOWROOT_TREE_FEATURE,
                     DARK_WILLOW_TREE_FEATURE
             }, new SurfacePlacementConfig(4))
-            .withFeature(TALL_GRASS_FEATURE, new ScatterPlacementConfig(2, 32))
-            .withFeature(FUNGI_FEATURE, new ScatterPlacementConfig(1, 4))
+            .withFeature(TALL_GRASS_FEATURE, new ScatterPlacementConfig(6, 32))
+            .withFeature(DOUBLE_GRASS_FEATURE, new ScatterPlacementConfig(4, 32))
+            .withFeature(FUNGI_FEATURE, new ScatterPlacementConfig(2, 4))
             .withFeature(DEAD_TREE_FEATURE, new SurfacePlacementConfig(7))
             .withFeature(DECEITFUL_ALGAE_FEATURE, new ScatterPlacementConfig(10, 20))
             .withTopBlock(ModBlocks.DECEITFUL_PEAT.getDefaultState())
