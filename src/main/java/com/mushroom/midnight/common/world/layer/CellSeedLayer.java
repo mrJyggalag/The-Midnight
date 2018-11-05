@@ -3,8 +3,8 @@ package com.mushroom.midnight.common.world.layer;
 import net.minecraft.world.gen.layer.GenLayer;
 import net.minecraft.world.gen.layer.IntCache;
 
-public class RidgeSeedLayer extends GenLayer {
-    public RidgeSeedLayer(long seed) {
+public class CellSeedLayer extends GenLayer {
+    public CellSeedLayer(long seed) {
         super(seed);
     }
 

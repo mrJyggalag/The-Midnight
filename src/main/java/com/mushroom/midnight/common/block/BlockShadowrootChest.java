@@ -27,7 +27,7 @@ public class BlockShadowrootChest extends BlockChest implements IModelProvider {
         super(Type.BASIC);
         this.setHardness(2.5F);
         this.setSoundType(SoundType.WOOD);
-        this.setCreativeTab(Midnight.MIDNIGHT_TAB);
+        this.setCreativeTab(Midnight.DECORATION_TAB);
     }
 
     @Nullable

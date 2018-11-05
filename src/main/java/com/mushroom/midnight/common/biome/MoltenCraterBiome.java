@@ -11,7 +11,7 @@ public class MoltenCraterBiome extends MidnightBiome {
     }
 
     @Override
-    protected IBlockState chooseTopBlock(Random random) {
+    protected IBlockState chooseTopBlock(int x, int z, Random random) {
         if (random.nextInt(5) == 0) {
             return ModBlocks.MIASMA_SURFACE.getDefaultState();
         }

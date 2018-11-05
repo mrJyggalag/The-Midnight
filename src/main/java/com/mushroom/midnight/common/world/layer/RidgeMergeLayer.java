@@ -6,6 +6,9 @@ import net.minecraft.world.gen.layer.GenLayer;
 import net.minecraft.world.gen.layer.IntCache;
 
 public class RidgeMergeLayer extends GenLayer {
+    private static final int RIDGE_ID = Biome.getIdForBiome(ModBiomes.BLACK_RIDGE);
+    private static final int PLATEUA_ID = Biome.getIdForBiome(ModBiomes.OBSCURED_PLATEAU);
+
     private final GenLayer ridgeParent;
 
     public RidgeMergeLayer(long seed, GenLayer parent, GenLayer ridgeParent) {
@@ -23,10 +26,11 @@ public class RidgeMergeLayer extends GenLayer {
         for (int localY = 0; localY < height; localY++) {
             for (int localX = 0; localX < width; localX++) {
                 int index = localX + localY * width;
-                if (ridge[index] == 1) {
-                    result[index] = Biome.getIdForBiome(ModBiomes.BLACK_RIDGE);
+                int parentValue = parent[index];
+                if (ridge[index] == 1 && parentValue != PLATEUA_ID) {
+                    result[index] = RIDGE_ID;
                 } else {
-                    result[index] = parent[index];
+                    result[index] = parentValue;
                 }
             }
         }

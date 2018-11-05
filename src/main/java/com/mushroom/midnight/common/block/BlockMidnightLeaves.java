@@ -26,7 +26,7 @@ public class BlockMidnightLeaves extends BlockLeaves implements IModelProvider {
 
     public BlockMidnightLeaves(Supplier<Block> saplingSupplier) {
         super();
-        this.setCreativeTab(Midnight.MIDNIGHT_TAB);
+        this.setCreativeTab(Midnight.DECORATION_TAB);
         this.setDefaultState(this.blockState.getBaseState().withProperty(DECAYABLE, true).withProperty(CHECK_DECAY, true));
         this.saplingSupplier = saplingSupplier;
     }

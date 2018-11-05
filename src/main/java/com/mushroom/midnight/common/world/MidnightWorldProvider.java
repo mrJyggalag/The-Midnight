@@ -148,4 +148,9 @@ public class MidnightWorldProvider extends WorldProvider {
     public boolean canDoLightning(Chunk chunk) {
         return false;
     }
+
+    @Override
+    public boolean canRespawnHere() {
+        return false;
+    }
 }

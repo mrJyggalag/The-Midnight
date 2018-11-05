@@ -25,7 +25,7 @@ public class BlockShadowrootCraftingTable extends Block implements IModelProvide
         super(Material.WOOD);
         this.setHardness(2.5F);
         this.setSoundType(SoundType.WOOD);
-        this.setCreativeTab(Midnight.MIDNIGHT_TAB);
+        this.setCreativeTab(Midnight.DECORATION_TAB);
     }
 
     @Override

@@ -57,14 +57,14 @@ public class PerlinNoiseSampler implements INoiseSampler {
         int index = 0;
 
         for (int localY = 0; localY < sizeY; ++localY) {
-            double scaledY = originY + localY * this.frequency + this.offsetZ;
+            double scaledY = this.maintainPrecision((originY + localY) * this.frequency) + this.offsetZ;
             int floorY = MathHelper.floor(scaledY);
             int permY = floorY & 255;
             double interY = scaledY - floorY;
             double easedY = this.ease(interY);
 
             for (int localX = 0; localX < sizeX; ++localX) {
-                double scaledX = originX + localX * this.frequency + this.offsetX;
+                double scaledX = this.maintainPrecision((originX + localX) * this.frequency) + this.offsetX;
                 int floorX = MathHelper.floor(scaledX);
                 int permX = floorX & 255;
                 double interX = scaledX - floorX;
@@ -88,21 +88,21 @@ public class PerlinNoiseSampler implements INoiseSampler {
         int index = 0;
 
         for (int localZ = 0; localZ < sizeZ; ++localZ) {
-            double scaledZ = originZ + localZ * this.frequency + this.offsetZ;
+            double scaledZ = this.maintainPrecision((originZ + localZ) * this.frequency) + this.offsetZ;
             int floorZ = MathHelper.floor(scaledZ);
             int permZ = floorZ & 255;
             double interZ = scaledZ - floorZ;
             double easedZ = this.ease(interZ);
 
             for (int localX = 0; localX < sizeX; ++localX) {
-                double scaledX = originX + localX * this.frequency+ this.offsetX;
+                double scaledX = this.maintainPrecision((originX + localX) * this.frequency) + this.offsetX;
                 int floorX = MathHelper.floor(scaledX);
                 int permX = floorX & 255;
                 double interX = scaledX - floorX;
                 double easedX = this.ease(interX);
 
                 for (int localY = 0; localY < sizeY; ++localY) {
-                    double scaledY = originY + localY * this.frequency + this.offsetY;
+                    double scaledY = this.maintainPrecision((originY + localY) * this.frequency) + this.offsetY;
                     int floorY = MathHelper.floor(scaledY);
                     int permY = floorY & 255;
                     double interY = scaledY - floorY;

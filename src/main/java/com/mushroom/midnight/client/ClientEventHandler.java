@@ -218,7 +218,7 @@ public class ClientEventHandler {
     @Nullable
     private static SoundEvent getMusicSound(EntityPlayer player) {
         Biome biome = player.world.getBiome(player.getPosition());
-        if (biome == ModBiomes.CRYSTAL_PLAINS) {
+        if (biome == ModBiomes.CRYSTAL_SPIRES) {
             return ModSounds.MUSIC_CRYSTAL;
         }
         return ModSounds.MUSIC_GENERIC;

@@ -9,8 +9,8 @@ import net.minecraft.block.material.Material;
 public class BlockMidnightFungiStem extends Block implements IModelProvider {
     public BlockMidnightFungiStem() {
         super(Material.WOOD);
-        this.setHardness(0.5F);
+        this.setHardness(2.0F);
         this.setSoundType(SoundType.WOOD);
-        this.setCreativeTab(Midnight.MIDNIGHT_TAB);
+        this.setCreativeTab(Midnight.BUILDING_TAB);
     }
 }

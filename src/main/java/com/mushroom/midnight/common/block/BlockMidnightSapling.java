@@ -31,7 +31,7 @@ public class BlockMidnightSapling extends BlockBush implements IModelProvider, I
         this.setSoundType(SoundType.PLANT);
 
         this.setDefaultState(this.blockState.getBaseState().withProperty(BlockSapling.STAGE, 0));
-        this.setCreativeTab(Midnight.MIDNIGHT_TAB);
+        this.setCreativeTab(Midnight.DECORATION_TAB);
 
         this.generatorSupplier = generatorSupplier;
     }

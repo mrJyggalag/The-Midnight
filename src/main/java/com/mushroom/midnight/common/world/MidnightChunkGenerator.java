@@ -3,6 +3,7 @@ package com.mushroom.midnight.common.world;
 import com.mushroom.midnight.common.biome.IMidnightBiome;
 import com.mushroom.midnight.common.registry.ModBlocks;
 import com.mushroom.midnight.common.world.generator.WorldGenMidnightCaves;
+import com.mushroom.midnight.common.world.generator.WorldGenMoltenCrater;
 import com.mushroom.midnight.common.world.noise.OctaveNoiseSampler;
 import com.mushroom.midnight.common.world.util.BiomeWeightTable;
 import com.mushroom.midnight.common.world.util.NoiseChunkPrimer;
@@ -27,7 +28,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Random;
 
-public class MidnightChunkGenerator implements IChunkGenerator {
+public class MidnightChunkGenerator implements IChunkGenerator, PartialChunkGenerator {
     private static final int HORIZONTAL_GRANULARITY = 4;
     private static final int VERTICAL_GRANULARITY = 4;
 
@@ -43,6 +44,7 @@ public class MidnightChunkGenerator implements IChunkGenerator {
     private static final int BIOME_NOISE_SIZE = BUFFER_WIDTH + BIOME_WEIGHT_RADIUS * 2;
 
     private static final IBlockState STONE = ModBlocks.NIGHTSTONE.getDefaultState();
+    private static final IBlockState WATER = ModBlocks.DARK_WATER.getDefaultState();
 
     private final World world;
     private final Random random;
@@ -64,6 +66,7 @@ public class MidnightChunkGenerator implements IChunkGenerator {
     private final double[] depthBuffer = new double[256];
 
     private final MapGenBase caveGenerator;
+    private final MapGenBase craterGenerator;
 
     private final NoiseChunkPrimer noisePrimer;
     private final BiomeWeightTable weightTable;
@@ -91,17 +94,12 @@ public class MidnightChunkGenerator implements IChunkGenerator {
         this.weightTable = new BiomeWeightTable(BIOME_WEIGHT_RADIUS);
 
         this.caveGenerator = TerrainGen.getModdedMapGen(new WorldGenMidnightCaves(), InitMapGenEvent.EventType.CAVE);
+        this.craterGenerator = TerrainGen.getModdedMapGen(new WorldGenMoltenCrater(this.random, this), InitMapGenEvent.EventType.CUSTOM);
     }
 
     @Override
     public Chunk generateChunk(int chunkX, int chunkZ) {
-        int globalX = chunkX << 4;
-        int globalZ = chunkZ << 4;
-
         this.random.setSeed(chunkX * 341873128712L + chunkZ * 132897987541L);
-
-        BiomeProvider biomeProvider = this.world.getBiomeProvider();
-        this.biomeBuffer = biomeProvider.getBiomes(this.biomeBuffer, globalX, globalZ, 16, 16);
 
         ChunkPrimer primer = new ChunkPrimer();
         this.primeChunk(primer, chunkX, chunkZ);
@@ -118,26 +116,42 @@ public class MidnightChunkGenerator implements IChunkGenerator {
         return chunk;
     }
 
-    protected void primeChunk(ChunkPrimer primer, int chunkX, int chunkZ) {
-        int originX = chunkX * HORIZONTAL_GRANULARITY - BIOME_NOISE_OFFSET;
-        int originZ = chunkZ * HORIZONTAL_GRANULARITY - BIOME_NOISE_OFFSET;
-        this.biomeNoiseBuffer = this.world.getBiomeProvider().getBiomesForGeneration(this.biomeNoiseBuffer, originX, originZ, BIOME_NOISE_SIZE, BIOME_NOISE_SIZE);
+    @Override
+    public void primeChunk(ChunkPrimer primer, int chunkX, int chunkZ) {
+        this.primeChunkBare(primer, chunkX, chunkZ);
 
-        this.populateNoise(chunkX, chunkZ);
-        this.noisePrimer.primeChunk(primer, this.terrainBuffer, (density, x, y, z) -> {
-            if (density > 0.0F) {
-                return STONE;
-            } else {
-                return null;
-            }
-        });
+        int globalX = chunkX << 4;
+        int globalZ = chunkZ << 4;
+
+        BiomeProvider biomeProvider = this.world.getBiomeProvider();
+        this.biomeBuffer = biomeProvider.getBiomes(this.biomeBuffer, globalX, globalZ, 16, 16);
 
         this.coverSurface(primer, chunkX, chunkZ);
 
         this.caveGenerator.generate(this.world, chunkX, chunkZ, primer);
+        this.craterGenerator.generate(this.world, chunkX, chunkZ, primer);
+    }
+
+    @Override
+    public void primeChunkBare(ChunkPrimer primer, int chunkX, int chunkZ) {
+        this.populateNoise(chunkX, chunkZ);
+
+        int seaLevel = this.world.getSeaLevel();
+        this.noisePrimer.primeChunk(primer, this.terrainBuffer, (density, x, y, z) -> {
+            if (density > 0.0F) {
+                return STONE;
+            } else if (y < seaLevel) {
+                return WATER;
+            }
+            return null;
+        });
     }
 
     protected void populateNoise(int chunkX, int chunkZ) {
+        int originX = chunkX * HORIZONTAL_GRANULARITY - BIOME_NOISE_OFFSET;
+        int originZ = chunkZ * HORIZONTAL_GRANULARITY - BIOME_NOISE_OFFSET;
+        this.biomeNoiseBuffer = this.world.getBiomeProvider().getBiomesForGeneration(this.biomeNoiseBuffer, originX, originZ, BIOME_NOISE_SIZE, BIOME_NOISE_SIZE);
+
         this.worldNoise.sample3D(this.worldNoiseBuffer, chunkX * NOISE_WIDTH, 0, chunkZ * NOISE_WIDTH, BUFFER_WIDTH, BUFFER_HEIGHT, BUFFER_WIDTH);
         this.surfaceNoise.sample2D(this.surfaceBuffer, chunkX * NOISE_WIDTH, chunkZ * NOISE_WIDTH, BUFFER_WIDTH, BUFFER_WIDTH);
         this.ridgedSurfaceNoise.sample2D(this.ridgedSurfaceBuffer, chunkX * NOISE_WIDTH, chunkZ * NOISE_WIDTH, BUFFER_WIDTH, BUFFER_WIDTH);
