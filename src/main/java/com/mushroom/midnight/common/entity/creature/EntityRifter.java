@@ -41,7 +41,6 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.world.DimensionType;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
@@ -130,7 +129,7 @@ public class EntityRifter extends EntityMob implements IRiftTraveler, IEntityAdd
                 this.captureCooldown--;
             }
 
-            if (this.world.provider.getDimensionType() == DimensionType.OVERWORLD) {
+            if (this.world.provider.getDimensionType() != ModDimensions.MIDNIGHT) {
                 this.updateHomeRift();
                 if (this.ticksExisted % 20 == 0 && !this.homeRift.isPresent()) {
                     this.attackEntityFrom(DamageSource.OUT_OF_WORLD, 2.0F);
@@ -146,7 +145,7 @@ public class EntityRifter extends EntityMob implements IRiftTraveler, IEntityAdd
     }
 
     public boolean shouldCapture() {
-        if (this.world.isDaytime() || this.world.provider.getDimensionType() == ModDimensions.MIDNIGHT) {
+        if (this.world.provider.getDimensionType() == ModDimensions.MIDNIGHT) {
             return false;
         }
         return this.homeRift.isPresent();

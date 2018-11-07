@@ -117,8 +117,7 @@ public class RiftSpawnHandler {
     }
 
     private static boolean canRiftSpawn(World world, BlockPos pos) {
-        AxisAlignedBB playerBounds = new AxisAlignedBB(pos).grow(PLAYER_SEPARATION);
-        if (!world.getEntitiesWithinAABB(EntityPlayer.class, playerBounds).isEmpty()) {
+        if (world.isAnyPlayerWithinRangeAt(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, PLAYER_SEPARATION)) {
             return false;
         }
 
