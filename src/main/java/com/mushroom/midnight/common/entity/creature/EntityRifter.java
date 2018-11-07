@@ -65,6 +65,7 @@ public class EntityRifter extends EntityMob implements IRiftTraveler, IEntityAdd
     public static final int CAPTURE_COOLDOWN = 15;
 
     private static final double RIFT_SEARCH_RADIUS = 48.0;
+    private static final float DROP_DAMAGE_THRESHOLD = 2.0F;
 
     private final EntityReference<EntityRift> homeRift;
     private final DragSolver dragSolver;
@@ -189,14 +190,26 @@ public class EntityRifter extends EntityMob implements IRiftTraveler, IEntityAdd
 
     @Override
     public boolean attackEntityFrom(DamageSource source, float amount) {
-        if (super.attackEntityFrom(source, amount)) {
-            Entity trueSource = source.getTrueSource();
+        Entity trueSource = source.getTrueSource();
+        if (source.isProjectile()) {
             if (trueSource instanceof EntityLivingBase && this.shouldAttack(trueSource)) {
                 this.setAttackTarget((EntityLivingBase) trueSource);
             }
-            this.setCapturedEntity(null);
+            return false;
+        }
+
+        if (super.attackEntityFrom(source, amount)) {
+            if (trueSource instanceof EntityLivingBase && this.shouldAttack(trueSource)) {
+                this.setAttackTarget((EntityLivingBase) trueSource);
+            }
+
+            if (amount > DROP_DAMAGE_THRESHOLD) {
+                this.setCapturedEntity(null);
+            }
+
             return true;
         }
+
         return false;
     }
 
