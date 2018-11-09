@@ -47,7 +47,7 @@ public class ModBiomes {
                 )),
                 RegUtil.applyName(new DeceitfulBogBiome(
                         new Biome.BiomeProperties("deceitful_bog")
-                                .setBaseHeight(-0.35F)
+                                .setBaseHeight(-0.38F)
                                 .setHeightVariation(0.3F),
                         MidnightBiomeConfigs.DECEITFUL_BOG_CONFIG
                 )),

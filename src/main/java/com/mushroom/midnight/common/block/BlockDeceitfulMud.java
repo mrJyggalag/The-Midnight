@@ -16,10 +16,10 @@ import net.minecraftforge.common.IPlantable;
 
 import javax.annotation.Nullable;
 
-public class BlockDeceitfulPeat extends Block implements IModelProvider {
+public class BlockDeceitfulMud extends Block implements IModelProvider {
     private static final AxisAlignedBB BOUNDS = new AxisAlignedBB(0.0, 0.0, 0.0, 1.0, 0.875, 1.0);
 
-    public BlockDeceitfulPeat() {
+    public BlockDeceitfulMud() {
         super(Material.GROUND);
         this.setHardness(0.5F);
         this.setSoundType(SoundType.GROUND);

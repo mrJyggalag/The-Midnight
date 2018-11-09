@@ -12,6 +12,8 @@ import java.util.Random;
 
 public class MidnightBiome extends Biome implements IMidnightBiome {
     protected final MidnightBiomeConfig config;
+    private final SurfaceConfig surfaceConfig;
+    private final SurfaceConfig localSurfaceConfig;
 
     public MidnightBiome(BiomeProperties properties, MidnightBiomeConfig config) {
         super(properties);
@@ -24,8 +26,11 @@ public class MidnightBiome extends Biome implements IMidnightBiome {
         this.config = config;
         this.decorator = new MidnightBiomeDecorator(config);
 
-        this.topBlock = config.getTopBlock();
-        this.fillerBlock = config.getFillerBlock();
+        this.surfaceConfig = config.getSurfaceConfig();
+        this.localSurfaceConfig = new SurfaceConfig(this.surfaceConfig);
+
+        this.topBlock = this.surfaceConfig.getTopState();
+        this.fillerBlock = this.surfaceConfig.getFillerState();
     }
 
     @Override
@@ -40,8 +45,11 @@ public class MidnightBiome extends Biome implements IMidnightBiome {
 
     @Override
     public void genTerrainBlocks(World world, Random rand, ChunkPrimer primer, int z, int x, double noiseVal) {
-        IBlockState chosenTopBlock = this.chooseTopBlock(x, z, rand);
-        IBlockState chosenFillerBlock = this.config.getFillerBlock();
+        this.configureSurface(this.localSurfaceConfig, this.surfaceConfig, x, z, rand);
+
+        IBlockState chosenTopBlock = this.localSurfaceConfig.getTopState();
+        IBlockState chosenFillerBlock = this.localSurfaceConfig.getFillerState();
+        IBlockState chosenWetBlock = this.localSurfaceConfig.getWetState();
 
         int seaLevel = world.getSeaLevel();
         IBlockState topBlock = chosenTopBlock;
@@ -57,6 +65,7 @@ public class MidnightBiome extends Biome implements IMidnightBiome {
                 primer.setBlockState(localX, height, localZ, BEDROCK);
             } else {
                 IBlockState state = primer.getBlockState(localX, height, localZ);
+                boolean wet = height < seaLevel - 1;
                 if (state.getMaterial() == Material.AIR) {
                     currentDepth = -1;
                 } else if (state.getBlock() == ModBlocks.NIGHTSTONE) {
@@ -71,22 +80,18 @@ public class MidnightBiome extends Biome implements IMidnightBiome {
 
                         currentDepth = fillerDepth;
 
-                        if (height >= seaLevel - 1) {
-                            primer.setBlockState(localX, height, localZ, topBlock);
-                        } else {
-                            primer.setBlockState(localX, height, localZ, fillerBlock);
-                        }
+                        primer.setBlockState(localX, height, localZ, wet ? chosenWetBlock : topBlock);
                     } else if (currentDepth > 0) {
                         --currentDepth;
-                        primer.setBlockState(localX, height, localZ, fillerBlock);
+                        primer.setBlockState(localX, height, localZ, wet ? chosenWetBlock : fillerBlock);
                     }
                 }
             }
         }
     }
 
-    protected IBlockState chooseTopBlock(int x, int z, Random random) {
-        return this.config.getTopBlock();
+    protected SurfaceConfig configureSurface(SurfaceConfig config, SurfaceConfig parent, int x, int z, Random random) {
+        return config;
     }
 
     @Override

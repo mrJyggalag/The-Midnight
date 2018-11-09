@@ -7,7 +7,7 @@ import com.mushroom.midnight.common.block.BlockCrystal;
 import com.mushroom.midnight.common.block.BlockDarkWater;
 import com.mushroom.midnight.common.block.BlockDeceitfulAlgae;
 import com.mushroom.midnight.common.block.BlockDeceitfulMoss;
-import com.mushroom.midnight.common.block.BlockDeceitfulPeat;
+import com.mushroom.midnight.common.block.BlockDeceitfulMud;
 import com.mushroom.midnight.common.block.BlockDoubleMidnightPlant;
 import com.mushroom.midnight.common.block.BlockGlowingDoublePlant;
 import com.mushroom.midnight.common.block.BlockGlowingPlant;
@@ -163,6 +163,7 @@ public class ModBlocks {
     public static final Block MUSHROOM_INSIDE = Blocks.AIR;
 
     public static final Block DECEITFUL_PEAT = Blocks.AIR;
+    public static final Block DECEITFUL_MUD = Blocks.AIR;
     public static final Block DECEITFUL_ALGAE = Blocks.AIR;
     public static final Block DECEITFUL_MOSS = Blocks.AIR;
 
@@ -252,7 +253,8 @@ public class ModBlocks {
                 RegUtil.withName(new BlockMidnightSapling(() -> new DefaultTreeFeature(DARK_WILLOW_LOG, DARK_WILLOW_LEAVES, 6)), "dark_willow_sapling"),
                 RegUtil.withName(new BlockDarkWater(), "dark_water"),
                 RegUtil.withName(new BlockMushroomInside(), "mushroom_inside"),
-                RegUtil.withName(new BlockDeceitfulPeat(), "deceitful_peat"),
+                RegUtil.withName(new BlockDeceitfulMud(), "deceitful_mud"),
+                RegUtil.withName(new BlockMidnightDirt(), "deceitful_peat"),
                 RegUtil.withName(new BlockDeceitfulAlgae(), "deceitful_algae"),
                 RegUtil.withName(new BlockDeceitfulMoss(), "deceitful_moss")
         ));
@@ -407,7 +409,7 @@ public class ModBlocks {
                 ROUXE, ROUXE_ROCK,
                 MIASMA_SURFACE, MIASMA,
                 DARK_WATER,
-                DECEITFUL_PEAT, DECEITFUL_MOSS,
+                DECEITFUL_PEAT, DECEITFUL_MUD, DECEITFUL_MOSS,
                 SHADOWROOT_STAIRS, DEAD_WOOD_STAIRS, DARK_WILLOW_STAIRS,
                 NIGHTSTONE_STAIRS, NIGHTSTONE_BRICK_STAIRS,
                 DEWSHROOM_STAIRS, VIRIDSHROOM_STAIRS, NIGHTSHROOM_STAIRS,
