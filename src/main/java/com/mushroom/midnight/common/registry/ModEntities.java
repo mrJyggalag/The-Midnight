@@ -2,6 +2,7 @@ package com.mushroom.midnight.common.registry;
 
 import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.common.entity.EntityRift;
+import com.mushroom.midnight.common.entity.creature.EntityHunter;
 import com.mushroom.midnight.common.entity.creature.EntityRifter;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.RegistryEvent;
@@ -31,6 +32,14 @@ public class ModEntities {
                         .name(Midnight.MODID + ".rifter")
                         .tracker(80, 3, true)
                         .egg(0x384740, 0x5E8C6C)
+                        .build(),
+                EntityEntryBuilder.create()
+                        .entity(EntityHunter.class)
+                        .factory(EntityHunter::new)
+                        .id(new ResourceLocation(Midnight.MODID, "hunter"), currentEntityId++)
+                        .name(Midnight.MODID + ".hunter")
+                        .tracker(80, 2, true)
+                        .egg(0, 0)
                         .build()
         );
     }
