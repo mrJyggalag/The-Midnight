@@ -117,7 +117,7 @@ public class ModelHunter extends ModelBase {
         float globalSpeed = 1.0F;
         float globalDegree = 1.0F;
 
-        this.animator.bob(this.Body, globalSpeed * 0.5F, globalDegree * 1.2F, false, 0.0F, 0.0F, limbSwing, limbSwingAmount);
+        this.animator.bob(this.Body, globalSpeed * 0.5F, globalDegree * 1.5F, false, 0.0F, 0.0F, limbSwing, limbSwingAmount);
         this.Body.rotationPointY += 13.0F;
 
         this.animator.chainFlap(this.leftWing, globalSpeed * 0.5F, globalDegree * 0.6F, true, -2, limbSwing, limbSwingAmount);

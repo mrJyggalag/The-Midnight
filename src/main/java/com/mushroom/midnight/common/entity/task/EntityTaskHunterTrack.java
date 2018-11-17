@@ -3,28 +3,28 @@ package com.mushroom.midnight.common.entity.task;
 import com.mushroom.midnight.common.entity.creature.EntityHunter;
 import com.mushroom.midnight.common.entity.util.FlyingTargetGenerator;
 import com.mushroom.midnight.common.entity.util.IRandomTargetGenerator;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.pathfinding.Path;
 import net.minecraft.util.math.BlockPos;
 
 import javax.annotation.Nullable;
 
-public class EntityTaskHunterIdle extends EntityAIBase {
+public class EntityTaskHunterTrack extends EntityAIBase {
     private final EntityHunter owner;
     private final double speed;
 
-    private final IRandomTargetGenerator targetGenerator;
+    private final IRandomTargetGenerator trackTargetGenerator;
 
-    public EntityTaskHunterIdle(EntityHunter owner, double speed) {
+    public EntityTaskHunterTrack(EntityHunter owner, double speed) {
         this.owner = owner;
         this.speed = speed;
-
-        this.targetGenerator = new FlyingTargetGenerator(owner, 20, 40, 38, 42);
+        this.trackTargetGenerator = new FlyingTargetGenerator(owner, 6, 10, 14, 16);
     }
 
     @Override
     public boolean shouldExecute() {
-        return this.owner.getNavigator().noPath();
+        return this.owner.getNavigator().noPath() && this.owner.getAttackTarget() != null;
     }
 
     @Override
@@ -34,11 +34,16 @@ public class EntityTaskHunterIdle extends EntityAIBase {
 
     @Override
     public void startExecuting() {
+        EntityLivingBase target = this.owner.getAttackTarget();
+        if (target == null) {
+            return;
+        }
+
         Path path = null;
 
         int retries = 0;
         while (retries++ < 16 && path == null) {
-            path = this.produceWanderPath();
+            path = this.produceTrackPath(target);
         }
 
         if (path != null) {
@@ -47,9 +52,8 @@ public class EntityTaskHunterIdle extends EntityAIBase {
     }
 
     @Nullable
-    private Path produceWanderPath() {
-        BlockPos homePos = this.owner.hasHome() ? this.owner.getHomePosition() : null;
-        BlockPos flightPos = this.targetGenerator.generate(homePos);
+    private Path produceTrackPath(EntityLivingBase target) {
+        BlockPos flightPos = this.trackTargetGenerator.generate(target.getPosition());
         if (flightPos == null) {
             return null;
         }

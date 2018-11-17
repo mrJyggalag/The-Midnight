@@ -2,6 +2,9 @@ package com.mushroom.midnight.common.entity.creature;
 
 import com.mushroom.midnight.common.entity.NavigatorFlying;
 import com.mushroom.midnight.common.entity.task.EntityTaskHunterIdle;
+import com.mushroom.midnight.common.entity.task.EntityTaskHunterSwoop;
+import com.mushroom.midnight.common.entity.task.EntityTaskHunterTarget;
+import com.mushroom.midnight.common.entity.task.EntityTaskHunterTrack;
 import com.mushroom.midnight.common.util.MeanValueRecorder;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLiving;
@@ -10,7 +13,9 @@ import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityLookHelper;
 import net.minecraft.entity.ai.EntityMoveHelper;
 import net.minecraft.entity.monster.EntityMob;
+import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.passive.EntityFlying;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.pathfinding.PathNavigate;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -21,11 +26,13 @@ public class EntityHunter extends EntityMob implements EntityFlying {
     public float roll;
     public float prevRoll;
 
+    public int swoopCooldown;
+
     private final MeanValueRecorder deltaYaw = new MeanValueRecorder(20);
 
     public EntityHunter(World world) {
         super(world);
-        this.setSize(1.5F, 1.5F);
+        this.setSize(1.0F, 1.0F);
         this.moveHelper = new MoveHelper(this);
         this.lookHelper = new LookHelper(this);
     }
@@ -43,26 +50,28 @@ public class EntityHunter extends EntityMob implements EntityFlying {
     protected void applyEntityAttributes() {
         super.applyEntityAttributes();
         this.getAttributeMap().registerAttribute(SharedMonsterAttributes.FLYING_SPEED);
-        this.getEntityAttribute(SharedMonsterAttributes.FLYING_SPEED).setBaseValue(0.08);
+        this.getEntityAttribute(SharedMonsterAttributes.FLYING_SPEED).setBaseValue(0.12);
         this.getEntityAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(64.0);
     }
 
     @Override
     protected void initEntityAI() {
+        this.tasks.addTask(1, new EntityTaskHunterSwoop(this, 1.3));
+        this.tasks.addTask(2, new EntityTaskHunterTrack(this, 0.7));
         this.tasks.addTask(100, new EntityTaskHunterIdle(this, 0.6));
+
+        this.targetTasks.addTask(1, new EntityTaskHunterTarget<>(this, EntityPlayer.class));
+        this.targetTasks.addTask(2, new EntityTaskHunterTarget<>(this, EntityAnimal.class));
     }
 
     @Override
     public void onUpdate() {
         super.onUpdate();
 
-        if (this.world.isRemote) {
-            this.deltaYaw.record(this.rotationYaw - this.prevRotationYaw);
-            float deltaYaw = this.deltaYaw.computeMean();
-
-            this.prevRoll = this.roll;
-            this.roll = MathHelper.clamp(-deltaYaw * 8.0F, -45.0F, 45.0F);
-        } else {
+        if (!this.world.isRemote) {
+            if (this.swoopCooldown > 0) {
+                this.swoopCooldown--;
+            }
             /*Path path = this.getNavigator().getPath();
             if (path != null) {
                 for (int i = 0; i < path.getCurrentPathLength(); i++) {
@@ -71,6 +80,12 @@ public class EntityHunter extends EntityMob implements EntityFlying {
                     worldServer.spawnParticle(EnumParticleTypes.REDSTONE, true, point.x + 0.5, point.y + 0.5, point.z + 0.5, 1, 0.0, 0.0, 0.0, 0.0);
                 }
             }*/
+        } else {
+            this.deltaYaw.record(this.rotationYaw - this.prevRotationYaw);
+            float deltaYaw = this.deltaYaw.computeMean();
+
+            this.prevRoll = this.roll;
+            this.roll = MathHelper.clamp(-deltaYaw * 8.0F, -45.0F, 45.0F);
         }
     }
 
@@ -85,7 +100,7 @@ public class EntityHunter extends EntityMob implements EntityFlying {
     @Override
     public void travel(float strafe, float vertical, float forward) {
         if (this.isServerWorld() || this.canPassengerSteer()) {
-            double speed = this.getEntityAttribute(SharedMonsterAttributes.FLYING_SPEED).getAttributeValue() * 0.2;
+            double speed = this.getAIMoveSpeed() * 0.3;
 
             Vec3d lookVector = this.getLookVec();
             Vec3d moveVector = lookVector.normalize().scale(speed);
@@ -119,8 +134,8 @@ public class EntityHunter extends EntityMob implements EntityFlying {
     }
 
     private static class MoveHelper extends EntityMoveHelper {
-        private static final float CLOSE_TURN_SPEED = 90.0F;
-        private static final float FAR_TURN_SPEED = 4.0F;
+        private static final float CLOSE_TURN_SPEED = 150.0F;
+        private static final float FAR_TURN_SPEED = 6.5F;
 
         private static final float CLOSE_TURN_DISTANCE = 2.0F;
         private static final float FAR_TURN_DISTANCE = 7.0F;
@@ -154,6 +169,10 @@ public class EntityHunter extends EntityMob implements EntityFlying {
 
                 float targetPitch = (float) -Math.toDegrees(Math.atan2(deltaY, deltaHorizontal));
                 this.entity.rotationPitch = this.limitAngle(this.entity.rotationPitch, targetPitch, turnSpeed);
+
+                double flySpeed = this.entity.getEntityAttribute(SharedMonsterAttributes.FLYING_SPEED).getAttributeValue();
+                double resultSpeed = this.speed * flySpeed;
+                this.entity.setAIMoveSpeed((float) resultSpeed);
             } else {
                 this.entity.setMoveForward(0.0F);
             }
@@ -162,7 +181,8 @@ public class EntityHunter extends EntityMob implements EntityFlying {
         private float computeTurnSpeed(float distance) {
             float lerpRange = FAR_TURN_DISTANCE - CLOSE_TURN_DISTANCE;
             float alpha = MathHelper.clamp((distance - CLOSE_TURN_DISTANCE) / lerpRange, 0.0F, 1.0F);
-            return CLOSE_TURN_SPEED + (FAR_TURN_SPEED - CLOSE_TURN_SPEED) * alpha;
+            float turnSpeed = CLOSE_TURN_SPEED + (FAR_TURN_SPEED - CLOSE_TURN_SPEED) * alpha;
+            return turnSpeed * (float) this.speed;
         }
     }
 

@@ -123,7 +123,7 @@ public class ModModelRegistry {
     }
 
     private static int computeGrassColor(IBlockState state, IBlockAccess world, BlockPos pos, int tintIndex) {
-        if (world == null || pos == null || MC.world.provider.getDimensionType() != ModDimensions.MIDNIGHT) {
+        if (world == null || pos == null || !isMidnight()) {
             return DEFAULT_FOLIAGE_COLOR;
         }
         return BiomeColorHelper.getGrassColorAtPos(world, pos);
@@ -134,7 +134,7 @@ public class ModModelRegistry {
     }
 
     private static int computeFoliageColor(IBlockState state, IBlockAccess world, BlockPos pos, int tintIndex) {
-        if (world == null || pos == null || MC.world.provider.getDimensionType() != ModDimensions.MIDNIGHT) {
+        if (world == null || pos == null || !isMidnight()) {
             return DEFAULT_FOLIAGE_COLOR;
         }
         return BiomeColorHelper.getFoliageColorAtPos(world, pos);
@@ -142,6 +142,10 @@ public class ModModelRegistry {
 
     private static int defaultFoliageColor(ItemStack stack, int tintIndex) {
         return DEFAULT_FOLIAGE_COLOR;
+    }
+
+    private static boolean isMidnight() {
+        return MC.world != null && MC.world.provider.getDimensionType() == ModDimensions.MIDNIGHT;
     }
 
     @SideOnly(Side.CLIENT)
