@@ -28,8 +28,6 @@ public class ModBiomes {
     public static final Biome OBSCURED_PLATEAU = Biomes.DEFAULT;
     public static final Biome PHANTASMAL_VALLEY = Biomes.DEFAULT;
 
-    // TODO: Lost rifter spawn
-
     @SubscribeEvent
     public static void onRegisterBiomes(RegistryEvent.Register<Biome> event) {
         event.getRegistry().registerAll(

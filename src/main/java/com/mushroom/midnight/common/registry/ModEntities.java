@@ -4,6 +4,8 @@ import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.common.entity.EntityRift;
 import com.mushroom.midnight.common.entity.creature.EntityHunter;
 import com.mushroom.midnight.common.entity.creature.EntityRifter;
+import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntitySpawnPlacementRegistry;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -42,5 +44,7 @@ public class ModEntities {
                         .egg(0x2C3964, 0x19203A)
                         .build()
         );
+
+        EntitySpawnPlacementRegistry.setPlacementType(EntityHunter.class, EntityLiving.SpawnPlacementType.IN_AIR);
     }
 }

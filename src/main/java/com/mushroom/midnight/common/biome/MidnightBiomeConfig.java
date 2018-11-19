@@ -3,9 +3,9 @@ package com.mushroom.midnight.common.biome;
 import com.google.common.collect.ImmutableList;
 import com.mushroom.midnight.common.world.feature.IMidnightFeature;
 import com.mushroom.midnight.common.world.feature.config.IPlacementConfig;
+import net.minecraft.world.biome.Biome;
 
 import java.util.Collection;
-import java.util.Collections;
 
 public class MidnightBiomeConfig {
     private final SurfaceConfig surfaceConfig;
@@ -15,12 +15,16 @@ public class MidnightBiomeConfig {
     private final int foliageColor;
 
     private final ImmutableList<FeatureEntry> features;
+    private final ImmutableList<Biome.SpawnListEntry> monsterSpawns;
+    private final ImmutableList<Biome.SpawnListEntry> creatureSpawns;
 
     private MidnightBiomeConfig(
             SurfaceConfig surfaceConfig,
             float ridgeWeight, float densityScale,
             int grassColor, int foliageColor,
-            ImmutableList<FeatureEntry> features
+            ImmutableList<FeatureEntry> features,
+            ImmutableList<Biome.SpawnListEntry> monsterSpawns,
+            ImmutableList<Biome.SpawnListEntry> creatureSpawns
     ) {
         this.surfaceConfig = surfaceConfig;
         this.ridgeWeight = ridgeWeight;
@@ -28,6 +32,8 @@ public class MidnightBiomeConfig {
         this.grassColor = grassColor;
         this.foliageColor = foliageColor;
         this.features = features;
+        this.monsterSpawns = monsterSpawns;
+        this.creatureSpawns = creatureSpawns;
     }
 
     public static Builder builder() {
@@ -39,7 +45,15 @@ public class MidnightBiomeConfig {
     }
 
     public Collection<FeatureEntry> getFeatures() {
-        return Collections.unmodifiableCollection(this.features);
+        return this.features;
+    }
+
+    public Collection<Biome.SpawnListEntry> getMonsterSpawns() {
+        return this.monsterSpawns;
+    }
+
+    public Collection<Biome.SpawnListEntry> getCreatureSpawns() {
+        return this.creatureSpawns;
     }
 
     public float getRidgeWeight() {
@@ -70,6 +84,8 @@ public class MidnightBiomeConfig {
         private int foliageColor = 0x8F6DBC;
 
         private final ImmutableList.Builder<FeatureEntry> features = new ImmutableList.Builder<>();
+        private final ImmutableList.Builder<Biome.SpawnListEntry> monsterSpawns = new ImmutableList.Builder<>();
+        private final ImmutableList.Builder<Biome.SpawnListEntry> creatureSpawns = new ImmutableList.Builder<>();
 
         Builder() {
         }
@@ -116,12 +132,24 @@ public class MidnightBiomeConfig {
             return this;
         }
 
+        public Builder withMonster(Biome.SpawnListEntry entry) {
+            this.monsterSpawns.add(entry);
+            return this;
+        }
+
+        public Builder withCreature(Biome.SpawnListEntry entry) {
+            this.creatureSpawns.add(entry);
+            return this;
+        }
+
         public MidnightBiomeConfig build() {
             return new MidnightBiomeConfig(
                     this.surfaceConfig,
                     this.ridgeWeight, this.densityScale,
                     this.grassColor, this.foliageColor,
-                    this.features.build()
+                    this.features.build(),
+                    this.monsterSpawns.build(),
+                    this.creatureSpawns.build()
             );
         }
     }
