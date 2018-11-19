@@ -41,7 +41,6 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.world.DimensionType;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
@@ -55,7 +54,7 @@ import java.util.UUID;
 
 public class EntityRifter extends EntityMob implements IRiftTraveler, IEntityAdditionalSpawnData {
     private static final UUID SPEED_MODIFIER_ID = UUID.fromString("3b8cda1f-c11d-478b-98b1-6144940c7ba1");
-    private static final AttributeModifier HOME_SPEED_MODIFIER = new AttributeModifier(SPEED_MODIFIER_ID, "home_speed_modifier", 0.1, 2);
+    private static final AttributeModifier HOME_SPEED_MODIFIER = new AttributeModifier(SPEED_MODIFIER_ID, "home_speed_modifier", 0.15, 2);
 
     private static final UUID ARMOR_MODIFIER_ID = UUID.fromString("8cea53c5-1b5c-4b7c-9c86-192bf255c3d4");
     private static final AttributeModifier HOME_ARMOR_MODIFIER = new AttributeModifier(ARMOR_MODIFIER_ID, "home_armor_modifier", 2.0, 2);
@@ -66,6 +65,7 @@ public class EntityRifter extends EntityMob implements IRiftTraveler, IEntityAdd
     public static final int CAPTURE_COOLDOWN = 15;
 
     private static final double RIFT_SEARCH_RADIUS = 48.0;
+    private static final float DROP_DAMAGE_THRESHOLD = 2.0F;
 
     private final EntityReference<EntityRift> homeRift;
     private final DragSolver dragSolver;
@@ -107,7 +107,7 @@ public class EntityRifter extends EntityMob implements IRiftTraveler, IEntityAdd
     protected void applyEntityAttributes() {
         super.applyEntityAttributes();
         this.getEntityAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(64.0);
-        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.2);
+        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.25);
         this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(1.0);
         this.getEntityAttribute(SharedMonsterAttributes.ARMOR).setBaseValue(4.0);
         this.getEntityAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE).setBaseValue(1.0);
@@ -130,7 +130,7 @@ public class EntityRifter extends EntityMob implements IRiftTraveler, IEntityAdd
                 this.captureCooldown--;
             }
 
-            if (this.world.provider.getDimensionType() == DimensionType.OVERWORLD) {
+            if (this.world.provider.getDimensionType() != ModDimensions.MIDNIGHT) {
                 this.updateHomeRift();
                 if (this.ticksExisted % 20 == 0 && !this.homeRift.isPresent()) {
                     this.attackEntityFrom(DamageSource.OUT_OF_WORLD, 2.0F);
@@ -146,7 +146,7 @@ public class EntityRifter extends EntityMob implements IRiftTraveler, IEntityAdd
     }
 
     public boolean shouldCapture() {
-        if (this.world.isDaytime() || this.world.provider.getDimensionType() == ModDimensions.MIDNIGHT) {
+        if (this.world.provider.getDimensionType() == ModDimensions.MIDNIGHT) {
             return false;
         }
         return this.homeRift.isPresent();
@@ -190,14 +190,26 @@ public class EntityRifter extends EntityMob implements IRiftTraveler, IEntityAdd
 
     @Override
     public boolean attackEntityFrom(DamageSource source, float amount) {
-        if (super.attackEntityFrom(source, amount)) {
-            Entity trueSource = source.getTrueSource();
+        Entity trueSource = source.getTrueSource();
+        if (source.isProjectile()) {
             if (trueSource instanceof EntityLivingBase && this.shouldAttack(trueSource)) {
                 this.setAttackTarget((EntityLivingBase) trueSource);
             }
-            this.setCapturedEntity(null);
+            return false;
+        }
+
+        if (super.attackEntityFrom(source, amount)) {
+            if (trueSource instanceof EntityLivingBase && this.shouldAttack(trueSource)) {
+                this.setAttackTarget((EntityLivingBase) trueSource);
+            }
+
+            if (amount > DROP_DAMAGE_THRESHOLD) {
+                this.setCapturedEntity(null);
+            }
+
             return true;
         }
+
         return false;
     }
 

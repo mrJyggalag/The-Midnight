@@ -3,7 +3,7 @@
   "defaults": {
     "model": "cube_all",
     "textures": {
-      "all": "midnight:blocks/midnight_dirt"
+      "all": "midnight:blocks/deceitful_peat"
     }
   },
   "variants": {

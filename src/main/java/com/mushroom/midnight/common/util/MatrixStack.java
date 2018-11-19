@@ -3,6 +3,7 @@ package com.mushroom.midnight.common.util;
 import javax.vecmath.AxisAngle4d;
 import javax.vecmath.Matrix4d;
 import javax.vecmath.Point3d;
+import javax.vecmath.Point3f;
 import javax.vecmath.Vector3d;
 import java.util.EmptyStackException;
 import java.util.Stack;
@@ -23,6 +24,13 @@ public class MatrixStack {
         Matrix4d matrix = new Matrix4d();
         matrix.setIdentity();
         this.matrixStack.push(matrix);
+    }
+
+    public void identity() {
+        while (this.matrixStack.size() > 1) {
+            this.matrixPool.push(this.matrixStack.pop());
+        }
+        this.matrixStack.peek().setIdentity();
     }
 
     public void push() {
@@ -55,6 +63,11 @@ public class MatrixStack {
     }
 
     public void transform(Point3d point) {
+        Matrix4d matrix = this.matrixStack.peek();
+        matrix.transform(point);
+    }
+
+    public void transform(Point3f point) {
         Matrix4d matrix = this.matrixStack.peek();
         matrix.transform(point);
     }

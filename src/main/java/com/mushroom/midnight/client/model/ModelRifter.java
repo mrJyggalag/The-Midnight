@@ -4,7 +4,6 @@ import com.mushroom.midnight.common.entity.creature.EntityRifter;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
-import net.minecraft.util.math.MathHelper;
 
 public class ModelRifter extends ModelBase {
     private final ModelRenderer Abdomen;
@@ -20,6 +19,8 @@ public class ModelRifter extends ModelBase {
     private final ModelRenderer hipLeft;
     private final ModelRenderer upperLegLeft;
     private final ModelRenderer lowerLegLeft;
+
+    private final ModelPartAnimator animator = new ModelPartAnimator();
 
     public ModelRifter() {
         this.textureWidth = 64;
@@ -97,11 +98,11 @@ public class ModelRifter extends ModelBase {
         this.Head.rotateAngleY = (float) Math.toRadians(yaw);
         this.Head.rotateAngleX = (float) Math.toRadians(pitch);
 
-        this.upperArmRight.rotateAngleZ = this.computeAnimation(0.1F, 0.4F, false, 0.0F, -1.0F, age, 0.1F);
-        this.upperArmLeft.rotateAngleZ = this.computeAnimation(0.1F, 0.4F, true, 0.0F, -1.0F, age, 0.1F);
+        this.animator.flap(this.upperArmRight, 0.1F, 0.4F, false, 0.0F, -1.0F, age, 0.1F);
+        this.animator.flap(this.upperArmLeft, 0.1F, 0.4F, true, 0.0F, -1.0F, age, 0.1F);
 
-        this.lowerArmRight.rotateAngleZ = this.computeAnimation(0.1F, 0.4F, true, 0.4F, -1.0F, age, 0.1F);
-        this.lowerArmLeft.rotateAngleZ = this.computeAnimation(0.1F, 0.4F, false, 0.4F, -1.0F, age, 0.1F);
+        this.animator.flap(this.lowerArmRight, 0.1F, 0.4F, true, 0.4F, -1.0F, age, 0.1F);
+        this.animator.flap(this.lowerArmLeft, 0.1F, 0.4F, false, 0.4F, -1.0F, age, 0.1F);
 
         boolean dragging = false;
         if (entity instanceof EntityRifter) {
@@ -111,33 +112,24 @@ public class ModelRifter extends ModelBase {
         float globalSpeed = 0.6F;
         float globalDegree = 1.4F;
 
-        this.Abdomen.rotationPointY = 7.0F + this.computeAnimation(globalSpeed * 2.0F, globalDegree, false, 0.0F, 0.0F, limbSwing, limbSwingAmount);
+        this.Abdomen.rotationPointY = 7.0F + this.animator.computeAnimation(globalSpeed * 2.0F, globalDegree, false, 0.0F, 0.0F, limbSwing, limbSwingAmount);
 
-        this.upperLegRight.rotateAngleX = this.computeAnimation(globalSpeed, globalDegree * 1.2F, false, 0.0F, -0.6F, limbSwing, limbSwingAmount);
-        this.upperLegLeft.rotateAngleX = this.computeAnimation(globalSpeed, globalDegree * 1.2F, true, 0.0F, 0.6F, limbSwing, limbSwingAmount);
-
-        this.lowerLegRight.rotateAngleX = this.computeAnimation(globalSpeed, globalDegree * 0.65F, false, -2.2F, 1.0F, limbSwing, limbSwingAmount);
-        this.lowerLegLeft.rotateAngleX = this.computeAnimation(globalSpeed, globalDegree * 0.65F, true, -2.2F, -1.0F, limbSwing, limbSwingAmount);
+        this.animator.walk(this.upperLegRight, globalSpeed, globalDegree * 1.2F, false, 0.0F, -0.6F, limbSwing, limbSwingAmount);
+        this.animator.walk(this.upperLegLeft, globalSpeed, globalDegree * 1.2F, true, 0.0F, 0.6F, limbSwing, limbSwingAmount);
+        this.animator.walk(this.lowerLegRight, globalSpeed, globalDegree * 0.65F, false, -2.2F, 1.0F, limbSwing, limbSwingAmount);
+        this.animator.walk(this.lowerLegLeft, globalSpeed, globalDegree * 0.65F, true, -2.2F, -1.0F, limbSwing, limbSwingAmount);
 
         if (!dragging) {
-            this.upperArmRight.rotateAngleX = this.computeAnimation(globalSpeed, globalDegree * 0.8F, true, 0.0F, 0.0F, limbSwing, limbSwingAmount);
-            this.upperArmLeft.rotateAngleX = this.computeAnimation(globalSpeed, globalDegree * 0.8F, false, 0.0F, 0.0F, limbSwing, limbSwingAmount);
-
-            this.lowerArmRight.rotateAngleX = this.computeAnimation(globalSpeed, globalDegree * 0.6F, true, -1.4F, 0.7F, limbSwing, limbSwingAmount);
-            this.lowerArmLeft.rotateAngleX = this.computeAnimation(globalSpeed, globalDegree * 0.6F, false, -1.4F, -0.7F, limbSwing, limbSwingAmount);
+            this.animator.walk(this.upperArmRight, globalSpeed, globalDegree * 0.8F, true, 0.0F, 0.0F, limbSwing, limbSwingAmount);
+            this.animator.walk(this.upperArmLeft, globalSpeed, globalDegree * 0.8F, false, 0.0F, 0.0F, limbSwing, limbSwingAmount);
+            this.animator.walk(this.lowerArmRight, globalSpeed, globalDegree * 0.6F, true, -1.4F, 0.7F, limbSwing, limbSwingAmount);
+            this.animator.walk(this.lowerArmLeft, globalSpeed, globalDegree * 0.6F, false, -1.4F, -0.7F, limbSwing, limbSwingAmount);
         } else {
             this.upperArmRight.rotateAngleX = 0.4F;
             this.upperArmLeft.rotateAngleX = 0.4F;
             this.lowerArmRight.rotateAngleX = 0.3F;
             this.lowerArmLeft.rotateAngleX = 0.3F;
         }
-    }
-
-    private float computeAnimation(float speed, float degree, boolean invert, float offset, float weight, float limbSwing, float limbSwingAmount) {
-        float theta = limbSwing * speed + offset;
-        float scaledWeight = weight * limbSwingAmount;
-        float rotation = (MathHelper.cos(theta) * degree * limbSwingAmount) + scaledWeight;
-        return invert ? -rotation : rotation;
     }
 
     private void setRotateAngle(ModelRenderer cuboid, float x, float y, float z) {

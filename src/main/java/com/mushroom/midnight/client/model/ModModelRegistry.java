@@ -2,10 +2,12 @@ package com.mushroom.midnight.client.model;
 
 import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.client.IModelProvider;
+import com.mushroom.midnight.client.render.RenderHunter;
 import com.mushroom.midnight.client.render.RenderRift;
 import com.mushroom.midnight.client.render.RenderRifter;
 import com.mushroom.midnight.common.block.BlockShadowrootChest;
 import com.mushroom.midnight.common.entity.EntityRift;
+import com.mushroom.midnight.common.entity.creature.EntityHunter;
 import com.mushroom.midnight.common.entity.creature.EntityRifter;
 import com.mushroom.midnight.common.registry.ModBlocks;
 import com.mushroom.midnight.common.registry.ModDimensions;
@@ -54,6 +56,7 @@ public class ModModelRegistry {
     public static void onRegisterModels(ModelRegistryEvent event) {
         RenderingRegistry.registerEntityRenderingHandler(EntityRift.class, RenderRift::new);
         RenderingRegistry.registerEntityRenderingHandler(EntityRifter.class, RenderRifter::new);
+        RenderingRegistry.registerEntityRenderingHandler(EntityHunter.class, RenderHunter::new);
 
         ModItems.getItems().stream().filter(i -> i instanceof IModelProvider).forEach(ModModelRegistry::registerItemModel);
         ModBlocks.getBlocks().stream().filter(b -> b instanceof IModelProvider).forEach(ModModelRegistry::registerBlockModel);
@@ -120,7 +123,7 @@ public class ModModelRegistry {
     }
 
     private static int computeGrassColor(IBlockState state, IBlockAccess world, BlockPos pos, int tintIndex) {
-        if (world == null || pos == null || MC.world.provider.getDimensionType() != ModDimensions.MIDNIGHT) {
+        if (world == null || pos == null || !isMidnight()) {
             return DEFAULT_FOLIAGE_COLOR;
         }
         return BiomeColorHelper.getGrassColorAtPos(world, pos);
@@ -131,7 +134,7 @@ public class ModModelRegistry {
     }
 
     private static int computeFoliageColor(IBlockState state, IBlockAccess world, BlockPos pos, int tintIndex) {
-        if (world == null || pos == null || MC.world.provider.getDimensionType() != ModDimensions.MIDNIGHT) {
+        if (world == null || pos == null || !isMidnight()) {
             return DEFAULT_FOLIAGE_COLOR;
         }
         return BiomeColorHelper.getFoliageColorAtPos(world, pos);
@@ -139,6 +142,10 @@ public class ModModelRegistry {
 
     private static int defaultFoliageColor(ItemStack stack, int tintIndex) {
         return DEFAULT_FOLIAGE_COLOR;
+    }
+
+    private static boolean isMidnight() {
+        return MC.world != null && MC.world.provider.getDimensionType() == ModDimensions.MIDNIGHT;
     }
 
     @SideOnly(Side.CLIENT)

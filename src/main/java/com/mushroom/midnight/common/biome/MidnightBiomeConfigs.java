@@ -84,6 +84,13 @@ public class MidnightBiomeConfigs {
 
     public static final IMidnightFeature MIASMA_SOURCE_FEATURE = new MiasmaSourceFeature();
 
+    public static final SurfaceConfig VEGETATED_SURFACE_CONFIG = new SurfaceConfig();
+
+    public static final SurfaceConfig ROCKY_SURFACE_CONFIG = new SurfaceConfig()
+            .withTopState(ModBlocks.NIGHTSTONE.getDefaultState())
+            .withFillerState(ModBlocks.NIGHTSTONE.getDefaultState())
+            .withWetState(ModBlocks.NIGHTSTONE.getDefaultState());
+
     public static final MidnightBiomeConfig VEGETATED_CONFIG = MidnightBiomeConfig.builder()
             .withFeature(TALL_GRASS_FEATURE, new ScatterPlacementConfig(6, 64))
             .withFeature(DOUBLE_GRASS_FEATURE, new ScatterPlacementConfig(3, 32))
@@ -96,8 +103,7 @@ public class MidnightBiomeConfigs {
             .withFeature(LUMEN_FEATURE, new ScatterPlacementConfig(1, 32))
             .withFeature(DOUBLE_LUMEN_FEATURE, new ScatterPlacementConfig(1, 16))
             .withFeature(FUNGI_FEATURE, new ScatterPlacementConfig(2, 16))
-            .withTopBlock(ModBlocks.NIGHTSTONE.getDefaultState())
-            .withFillerBlock(ModBlocks.NIGHTSTONE.getDefaultState())
+            .withSurface(ROCKY_SURFACE_CONFIG)
             .build();
 
     public static final MidnightBiomeConfig BLACK_RIDGE_CONFIG = MidnightBiomeConfig.builder(ROCKY_CONFIG)
@@ -145,11 +151,11 @@ public class MidnightBiomeConfigs {
                     SHADOWROOT_TREE_FEATURE,
                     DARK_WILLOW_TREE_FEATURE
             }, new SurfacePlacementConfig(4))
-            .withFeature(TALL_GRASS_FEATURE, new ScatterPlacementConfig(2, 32))
-            .withFeature(FUNGI_FEATURE, new ScatterPlacementConfig(1, 4))
+            .withFeature(TALL_GRASS_FEATURE, new ScatterPlacementConfig(6, 32))
+            .withFeature(DOUBLE_GRASS_FEATURE, new ScatterPlacementConfig(4, 32))
+            .withFeature(FUNGI_FEATURE, new ScatterPlacementConfig(2, 4))
             .withFeature(DEAD_TREE_FEATURE, new SurfacePlacementConfig(7))
             .withFeature(DECEITFUL_ALGAE_FEATURE, new ScatterPlacementConfig(10, 20))
-            .withTopBlock(ModBlocks.DECEITFUL_PEAT.getDefaultState())
             .withGrassColor(0x8893AD)
             .withRidgeWeight(0.0F)
             .build();

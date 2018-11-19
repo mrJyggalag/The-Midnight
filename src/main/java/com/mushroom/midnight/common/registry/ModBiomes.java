@@ -47,8 +47,8 @@ public class ModBiomes {
                 )),
                 RegUtil.applyName(new DeceitfulBogBiome(
                         new Biome.BiomeProperties("deceitful_bog")
-                                .setBaseHeight(-0.35F)
-                                .setHeightVariation(0.2F),
+                                .setBaseHeight(-0.38F)
+                                .setHeightVariation(0.3F),
                         MidnightBiomeConfigs.DECEITFUL_BOG_CONFIG
                 )),
                 RegUtil.applyName(new MidnightBiome(
@@ -89,7 +89,7 @@ public class ModBiomes {
                 )),
                 RegUtil.applyName(new MidnightBiome(
                         new Biome.BiomeProperties("phantasmal_valley")
-                                .setBaseHeight(-0.8F)
+                                .setBaseHeight(-1.2F)
                                 .setHeightVariation(0.05F),
                         MidnightBiomeConfigs.PHANTASMAL_VALLEY_CONFIG
                 ))

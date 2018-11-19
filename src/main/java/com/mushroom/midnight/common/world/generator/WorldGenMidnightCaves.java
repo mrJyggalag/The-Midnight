@@ -10,7 +10,7 @@ import net.minecraft.world.chunk.ChunkPrimer;
 import net.minecraft.world.gen.MapGenCaves;
 
 public class WorldGenMidnightCaves extends MapGenCaves {
-    private static final float RADIUS_SCALE = 2.5F;
+    private static final float RADIUS_SCALE = 2.2F;
 
     @Override
     protected void digBlock(ChunkPrimer data, int x, int y, int z, int chunkX, int chunkZ, boolean foundTop, IBlockState state, IBlockState up) {

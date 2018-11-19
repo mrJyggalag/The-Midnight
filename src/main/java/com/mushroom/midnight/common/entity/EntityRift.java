@@ -201,7 +201,7 @@ public class EntityRift extends Entity implements IEntityAdditionalSpawnData {
     }
 
     private void teleportEntities() {
-        AxisAlignedBB bounds = this.getEntityBoundingBox().grow(-0.4);
+        AxisAlignedBB bounds = this.getEntityBoundingBox().grow(-0.4, 0.0, -0.4);
         DimensionType endpointDimension = this.getEndpointDimension();
 
         List<Entity> entities = this.world.getEntitiesInAABBexcluding(this, bounds, entity -> {

@@ -1,17 +1,14 @@
 package com.mushroom.midnight.common.biome;
 
 import com.google.common.collect.ImmutableList;
-import com.mushroom.midnight.common.registry.ModBlocks;
 import com.mushroom.midnight.common.world.feature.IMidnightFeature;
 import com.mushroom.midnight.common.world.feature.config.IPlacementConfig;
-import net.minecraft.block.state.IBlockState;
 
 import java.util.Collection;
 import java.util.Collections;
 
 public class MidnightBiomeConfig {
-    private final IBlockState topBlock;
-    private final IBlockState fillerBlock;
+    private final SurfaceConfig surfaceConfig;
     private final float ridgeWeight;
     private final float densityScale;
     private final int grassColor;
@@ -20,13 +17,12 @@ public class MidnightBiomeConfig {
     private final ImmutableList<FeatureEntry> features;
 
     private MidnightBiomeConfig(
-            IBlockState topBlock, IBlockState fillerBlock,
+            SurfaceConfig surfaceConfig,
             float ridgeWeight, float densityScale,
             int grassColor, int foliageColor,
             ImmutableList<FeatureEntry> features
     ) {
-        this.topBlock = topBlock;
-        this.fillerBlock = fillerBlock;
+        this.surfaceConfig = surfaceConfig;
         this.ridgeWeight = ridgeWeight;
         this.densityScale = densityScale;
         this.grassColor = grassColor;
@@ -46,14 +42,6 @@ public class MidnightBiomeConfig {
         return Collections.unmodifiableCollection(this.features);
     }
 
-    public IBlockState getTopBlock() {
-        return this.topBlock;
-    }
-
-    public IBlockState getFillerBlock() {
-        return this.fillerBlock;
-    }
-
     public float getRidgeWeight() {
         return this.ridgeWeight;
     }
@@ -70,9 +58,12 @@ public class MidnightBiomeConfig {
         return this.foliageColor;
     }
 
+    public SurfaceConfig getSurfaceConfig() {
+        return this.surfaceConfig;
+    }
+
     public static class Builder {
-        private IBlockState topBlock = ModBlocks.MIDNIGHT_GRASS.getDefaultState();
-        private IBlockState fillerBlock = ModBlocks.MIDNIGHT_DIRT.getDefaultState();
+        private SurfaceConfig surfaceConfig = new SurfaceConfig();
         private float ridgeWeight = 1.0F;
         private float densityScale = 1.0F;
         private int grassColor = 0xB084BC;
@@ -84,8 +75,7 @@ public class MidnightBiomeConfig {
         }
 
         Builder(MidnightBiomeConfig config) {
-            this.topBlock = config.topBlock;
-            this.fillerBlock = config.fillerBlock;
+            this.surfaceConfig = config.surfaceConfig;
             this.ridgeWeight = config.ridgeWeight;
             this.densityScale = config.densityScale;
             this.features.addAll(config.features);
@@ -101,13 +91,8 @@ public class MidnightBiomeConfig {
             return this;
         }
 
-        public Builder withTopBlock(IBlockState state) {
-            this.topBlock = state;
-            return this;
-        }
-
-        public Builder withFillerBlock(IBlockState state) {
-            this.fillerBlock = state;
+        public Builder withSurface(SurfaceConfig surfaceConfig) {
+            this.surfaceConfig = surfaceConfig;
             return this;
         }
 
@@ -133,7 +118,7 @@ public class MidnightBiomeConfig {
 
         public MidnightBiomeConfig build() {
             return new MidnightBiomeConfig(
-                    this.topBlock, this.fillerBlock,
+                    this.surfaceConfig,
                     this.ridgeWeight, this.densityScale,
                     this.grassColor, this.foliageColor,
                     this.features.build()
