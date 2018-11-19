@@ -1,13 +1,18 @@
 package com.mushroom.midnight.common.entity.creature;
 
+import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.common.entity.NavigatorFlying;
 import com.mushroom.midnight.common.entity.task.EntityTaskHunterIdle;
 import com.mushroom.midnight.common.entity.task.EntityTaskHunterSwoop;
 import com.mushroom.midnight.common.entity.task.EntityTaskHunterTarget;
 import com.mushroom.midnight.common.entity.task.EntityTaskHunterTrack;
+import com.mushroom.midnight.common.entity.util.ChainSolver;
+import com.mushroom.midnight.common.network.MessageHunterAttack;
 import com.mushroom.midnight.common.util.MeanValueRecorder;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.MoverType;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityLookHelper;
@@ -16,19 +21,45 @@ import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.passive.EntityFlying;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.MobEffects;
 import net.minecraft.pathfinding.PathNavigate;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
+import javax.vecmath.Point3f;
+
 public class EntityHunter extends EntityMob implements EntityFlying {
+    public static final int ATTACK_ANIMATION_TICKS = 10;
+
     public float roll;
     public float prevRoll;
 
     public int swoopCooldown;
 
+    public boolean attacking;
+
+    public int attackAnimation;
+    public int prevAttackAnimation;
+
     private final MeanValueRecorder deltaYaw = new MeanValueRecorder(20);
+    private final ChainSolver<EntityHunter> chainSolver = new ChainSolver<>(
+            new Point3f(0.0F, 0.0F, 0.5875F),
+            new Point3f[] {
+                    new Point3f(0.0F, 0.0F, 0.775F),
+                    new Point3f(0.0F, 0.0F, 1.65F),
+                    new Point3f(0.0F, 0.0F, 2.525F)
+            },
+            0.5F,
+            0.5F,
+            (entity, matrix) -> {
+                matrix.rotate(entity.rotationYaw, 0.0F, 1.0F, 0.0F);
+                matrix.rotate(entity.roll, 0.0F, 0.0F, 1.0F);
+                matrix.rotate(-entity.rotationPitch, 1.0F, 0.0F, 0.0F);
+            }
+    );
 
     public EntityHunter(World world) {
         super(world);
@@ -52,6 +83,7 @@ public class EntityHunter extends EntityMob implements EntityFlying {
         this.getAttributeMap().registerAttribute(SharedMonsterAttributes.FLYING_SPEED);
         this.getEntityAttribute(SharedMonsterAttributes.FLYING_SPEED).setBaseValue(0.12);
         this.getEntityAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(64.0);
+        this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(6.0);
     }
 
     @Override
@@ -72,20 +104,29 @@ public class EntityHunter extends EntityMob implements EntityFlying {
             if (this.swoopCooldown > 0) {
                 this.swoopCooldown--;
             }
-            /*Path path = this.getNavigator().getPath();
-            if (path != null) {
-                for (int i = 0; i < path.getCurrentPathLength(); i++) {
-                    PathPoint point = path.getPathPointFromIndex(i);
-                    WorldServer worldServer = (WorldServer) this.world;
-                    worldServer.spawnParticle(EnumParticleTypes.REDSTONE, true, point.x + 0.5, point.y + 0.5, point.z + 0.5, 1, 0.0, 0.0, 0.0, 0.0);
-                }
-            }*/
         } else {
+            this.updateAttackAnimation();
+
             this.deltaYaw.record(this.rotationYaw - this.prevRotationYaw);
             float deltaYaw = this.deltaYaw.computeMean();
 
             this.prevRoll = this.roll;
             this.roll = MathHelper.clamp(-deltaYaw * 8.0F, -45.0F, 45.0F);
+
+//            this.chainSolver.update(this);
+        }
+    }
+
+    private void updateAttackAnimation() {
+        this.prevAttackAnimation = this.attackAnimation;
+
+        if (this.attacking) {
+            if (this.attackAnimation < ATTACK_ANIMATION_TICKS) {
+                this.attackAnimation += 1;
+            } else {
+                this.attackAnimation = 0;
+                this.attacking = false;
+            }
         }
     }
 
@@ -131,6 +172,31 @@ public class EntityHunter extends EntityMob implements EntityFlying {
 
         this.limbSwingAmount += (moveAmount - this.limbSwingAmount) * 0.4F;
         this.limbSwing += this.limbSwingAmount;
+    }
+
+    @Override
+    public boolean attackEntityAsMob(Entity entity) {
+        if (super.attackEntityAsMob(entity)) {
+            if (entity instanceof EntityLivingBase) {
+                EntityLivingBase living = (EntityLivingBase) entity;
+
+                float theta = (float) Math.toRadians(this.rotationYaw);
+                living.knockBack(this, 0.3F, MathHelper.sin(theta), -MathHelper.cos(theta));
+
+                living.addPotionEffect(new PotionEffect(MobEffects.SLOWNESS, 10 * 20));
+                living.addPotionEffect(new PotionEffect(MobEffects.WITHER, 6 * 20));
+
+                Midnight.NETWORK.sendToAllTracking(new MessageHunterAttack(this), this);
+            }
+
+            return true;
+        }
+
+        return false;
+    }
+
+    public ChainSolver<EntityHunter> getChainSolver() {
+        return this.chainSolver;
     }
 
     private static class MoveHelper extends EntityMoveHelper {

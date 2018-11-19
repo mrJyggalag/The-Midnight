@@ -39,7 +39,7 @@ public class ModEntities {
                         .id(new ResourceLocation(Midnight.MODID, "hunter"), currentEntityId++)
                         .name(Midnight.MODID + ".hunter")
                         .tracker(80, 2, true)
-                        .egg(0, 0)
+                        .egg(0x2C3964, 0x19203A)
                         .build()
         );
     }

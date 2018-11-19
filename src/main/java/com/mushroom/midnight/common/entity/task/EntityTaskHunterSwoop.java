@@ -7,7 +7,6 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.pathfinding.Path;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
 
 import javax.annotation.Nullable;
 
@@ -15,6 +14,8 @@ public class EntityTaskHunterSwoop extends EntityAIBase {
     private static final int SWOOP_COOLDOWN = 160;
 
     private static final int MAX_SWOOP_TICKS = 120;
+
+    private static final int ATTACK_OFFSET_Y = 1;
 
     private final EntityHunter owner;
     private final double speed;
@@ -70,9 +71,6 @@ public class EntityTaskHunterSwoop extends EntityAIBase {
         if (this.canAttack(target)) {
             this.owner.attackEntityAsMob(target);
 
-            float theta = (float) Math.toRadians(this.owner.rotationYaw);
-            target.knockBack(this.owner, 0.3F, MathHelper.sin(theta), -MathHelper.cos(theta));
-
             this.rising = true;
             this.recalculatePath(target);
         }
@@ -100,7 +98,7 @@ public class EntityTaskHunterSwoop extends EntityAIBase {
             }
             return null;
         } else {
-            return this.owner.getNavigator().getPathToEntityLiving(target);
+            return this.owner.getNavigator().getPathToPos(target.getPosition().up(ATTACK_OFFSET_Y));
         }
     }
 
@@ -124,13 +122,13 @@ public class EntityTaskHunterSwoop extends EntityAIBase {
     }
 
     private boolean canAttack(EntityLivingBase target) {
-        double distanceSq = this.owner.getDistanceSq(target);
+        double distanceSq = target.getDistanceSq(this.owner.getPosition().down(ATTACK_OFFSET_Y));
         double attackReach = this.getAttackReach(target);
         return distanceSq < attackReach * attackReach;
     }
 
     private double getAttackReach(EntityLivingBase target) {
-        double meanWidth = (this.owner.width + target.width) / 2.0;
+        double meanWidth = (2.0 + target.width) / 2.0;
         return meanWidth + 0.5;
     }
 }
