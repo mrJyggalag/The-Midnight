@@ -1,7 +1,6 @@
 package com.mushroom.midnight.common.world.generator;
 
 import com.mushroom.midnight.common.registry.ModBlocks;
-import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.math.BlockPos;
@@ -32,10 +31,8 @@ public class WorldGenMidnightCaves extends MapGenCaves {
 
     @Override
     protected boolean canReplaceBlock(IBlockState state, IBlockState aboveState) {
-        Block block = state.getBlock();
         Material material = state.getMaterial();
-        return (block == ModBlocks.NIGHTSTONE || block == ModBlocks.TRENCHSTONE
-                || block == ModBlocks.MIDNIGHT_GRASS || block == ModBlocks.MIDNIGHT_DIRT)
+        return (material == Material.ROCK || material == Material.GROUND || material == Material.GRASS)
                 && material != Material.WATER && material != Material.LAVA;
     }
 

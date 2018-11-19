@@ -19,7 +19,7 @@ public class EntityTaskHunterIdle extends EntityAIBase {
         this.owner = owner;
         this.speed = speed;
 
-        this.targetGenerator = new FlyingTargetGenerator(owner, 20, 40, 38, 42);
+        this.targetGenerator = new FlyingTargetGenerator(owner, 20, 40, EntityHunter.FLIGHT_HEIGHT - 2, EntityHunter.FLIGHT_HEIGHT + 2);
     }
 
     @Override

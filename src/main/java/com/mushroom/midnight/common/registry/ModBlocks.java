@@ -42,7 +42,7 @@ import com.mushroom.midnight.common.item.ItemDeceitfulAlgae;
 import com.mushroom.midnight.common.item.ItemMidnightSlab;
 import com.mushroom.midnight.common.tile.base.TileEntityMidnightFurnace;
 import com.mushroom.midnight.common.tile.base.TileEntityShadowrootChest;
-import com.mushroom.midnight.common.world.feature.DefaultTreeFeature;
+import com.mushroom.midnight.common.world.feature.DarkWillowTreeFeature;
 import com.mushroom.midnight.common.world.feature.LargeFungiFeature;
 import com.mushroom.midnight.common.world.feature.ShadowrootTreeFeature;
 import net.minecraft.block.Block;
@@ -250,7 +250,7 @@ public class ModBlocks {
                 RegUtil.withName(new BlockGlowingDoublePlant(), "double_lumen_bud"),
                 RegUtil.withName(new BlockGlowingPlant(), "crystal_flower"),
                 RegUtil.withName(new BlockMidnightSapling(ShadowrootTreeFeature::new), "shadowroot_sapling"),
-                RegUtil.withName(new BlockMidnightSapling(() -> new DefaultTreeFeature(DARK_WILLOW_LOG, DARK_WILLOW_LEAVES, 6)), "dark_willow_sapling"),
+                RegUtil.withName(new BlockMidnightSapling(DarkWillowTreeFeature::new), "dark_willow_sapling"),
                 RegUtil.withName(new BlockDarkWater(), "dark_water"),
                 RegUtil.withName(new BlockMushroomInside(), "mushroom_inside"),
                 RegUtil.withName(new BlockDeceitfulMud(), "deceitful_mud"),

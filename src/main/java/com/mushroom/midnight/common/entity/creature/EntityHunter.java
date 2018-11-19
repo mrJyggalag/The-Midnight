@@ -34,6 +34,8 @@ import javax.vecmath.Point3f;
 public class EntityHunter extends EntityMob implements EntityFlying {
     public static final int ATTACK_ANIMATION_TICKS = 10;
 
+    public static final int FLIGHT_HEIGHT = 40;
+
     public float roll;
     public float prevRoll;
 
@@ -197,6 +199,17 @@ public class EntityHunter extends EntityMob implements EntityFlying {
 
     public ChainSolver<EntityHunter> getChainSolver() {
         return this.chainSolver;
+    }
+
+    @Override
+    public boolean getCanSpawnHere() {
+        // TODO
+        return false;
+    }
+
+    @Override
+    public int getMaxSpawnedInChunk() {
+        return 1;
     }
 
     private static class MoveHelper extends EntityMoveHelper {

@@ -296,6 +296,11 @@ public class EntityRifter extends EntityMob implements IRiftTraveler, IEntityAdd
         return super.getCanSpawnHere();
     }
 
+    @Override
+    public int getMaxSpawnedInChunk() {
+        return 1;
+    }
+
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {

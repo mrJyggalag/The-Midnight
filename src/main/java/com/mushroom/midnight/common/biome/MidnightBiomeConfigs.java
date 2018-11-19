@@ -1,10 +1,12 @@
 package com.mushroom.midnight.common.biome;
 
+import com.mushroom.midnight.common.entity.creature.EntityHunter;
+import com.mushroom.midnight.common.entity.creature.EntityRifter;
 import com.mushroom.midnight.common.registry.ModBlocks;
 import com.mushroom.midnight.common.world.feature.BoulderFeature;
 import com.mushroom.midnight.common.world.feature.CrystalClusterFeature;
+import com.mushroom.midnight.common.world.feature.DarkWillowTreeFeature;
 import com.mushroom.midnight.common.world.feature.DeadTreeFeature;
-import com.mushroom.midnight.common.world.feature.DefaultTreeFeature;
 import com.mushroom.midnight.common.world.feature.DoubleFungiFeature;
 import com.mushroom.midnight.common.world.feature.DoublePlantFeature;
 import com.mushroom.midnight.common.world.feature.FungiFeature;
@@ -16,10 +18,11 @@ import com.mushroom.midnight.common.world.feature.ShadowrootTreeFeature;
 import com.mushroom.midnight.common.world.feature.config.ScatterPlacementConfig;
 import com.mushroom.midnight.common.world.feature.config.SurfacePlacementConfig;
 import net.minecraft.block.BlockBush;
+import net.minecraft.world.biome.Biome;
 
 public class MidnightBiomeConfigs {
     public static final IMidnightFeature SHADOWROOT_TREE_FEATURE = new ShadowrootTreeFeature();
-    public static final IMidnightFeature DARK_WILLOW_TREE_FEATURE = new DefaultTreeFeature(ModBlocks.DARK_WILLOW_LOG, ModBlocks.DARK_WILLOW_LEAVES, 8);
+    public static final IMidnightFeature DARK_WILLOW_TREE_FEATURE = new DarkWillowTreeFeature();
     public static final IMidnightFeature DEAD_TREE_FEATURE = new DeadTreeFeature();
 
     public static final IMidnightFeature TALL_GRASS_FEATURE = new PlantFeature(
@@ -104,6 +107,7 @@ public class MidnightBiomeConfigs {
             .withFeature(DOUBLE_LUMEN_FEATURE, new ScatterPlacementConfig(1, 16))
             .withFeature(FUNGI_FEATURE, new ScatterPlacementConfig(2, 16))
             .withSurface(ROCKY_SURFACE_CONFIG)
+            .withMonster(new Biome.SpawnListEntry(EntityHunter.class, 1, 0, 2))
             .build();
 
     public static final MidnightBiomeConfig BLACK_RIDGE_CONFIG = MidnightBiomeConfig.builder(ROCKY_CONFIG)
@@ -120,12 +124,14 @@ public class MidnightBiomeConfigs {
                     DARK_WILLOW_TREE_FEATURE
             }, new SurfacePlacementConfig(8))
             .withFeature(DEAD_TREE_FEATURE, new SurfacePlacementConfig(6))
+            .withMonster(new Biome.SpawnListEntry(EntityRifter.class, 1, 0, 1))
             .build();
 
     public static final MidnightBiomeConfig FUNGI_FOREST_CONFIG = MidnightBiomeConfig.builder(VEGETATED_CONFIG)
             .withFeature(LARGE_FUNGI_FEATURES, new SurfacePlacementConfig(6))
             .withFeature(FUNGI_FEATURE, new ScatterPlacementConfig(8, 16))
             .withFeature(DOUBLE_FUNGI_FEATURE, new ScatterPlacementConfig(6, 8))
+            .withMonster(new Biome.SpawnListEntry(EntityRifter.class, 1, 0, 1))
             .withGrassColor(0x8489B5)
             .build();
 
@@ -142,6 +148,7 @@ public class MidnightBiomeConfigs {
     public static final MidnightBiomeConfig WARPED_FIELDS_CONFIG = MidnightBiomeConfig.builder(VEGETATED_CONFIG)
             .withFeature(SHADOWROOT_TREE_FEATURE, new SurfacePlacementConfig(-3, 1))
             .withFeature(CRYSTAL_FLOWER_FEATURE, new ScatterPlacementConfig(1, 12))
+            .withMonster(new Biome.SpawnListEntry(EntityHunter.class, 1, 0, 2))
             .withDensityScale(0.5F)
             .withRidgeWeight(0.0F)
             .build();
@@ -167,14 +174,17 @@ public class MidnightBiomeConfigs {
                     DARK_WILLOW_TREE_FEATURE
             }, new SurfacePlacementConfig(-5, 1))
             .withFeature(NIGHTSTONE_BOULDER_FEATURE, new SurfacePlacementConfig(-3, 1))
+            .withMonster(new Biome.SpawnListEntry(EntityHunter.class, 1, 0, 2))
             .withRidgeWeight(0.0F)
             .withGrassColor(0xBAA3C6)
             .build();
 
     public static final MidnightBiomeConfig BLACK_PLATEAU_CONFIG = MidnightBiomeConfig.builder(ROCKY_CONFIG)
+            .withMonster(new Biome.SpawnListEntry(EntityHunter.class, 1, 0, 2))
             .build();
 
     public static final MidnightBiomeConfig PHANTASMAL_VALLEY_CONFIG = MidnightBiomeConfig.builder()
+            .withMonster(new Biome.SpawnListEntry(EntityHunter.class, 1, 0, 2))
             .withRidgeWeight(0.0F)
             .build();
 }

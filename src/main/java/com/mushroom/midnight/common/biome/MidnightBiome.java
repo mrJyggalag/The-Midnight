@@ -23,6 +23,9 @@ public class MidnightBiome extends Biome implements IMidnightBiome {
         this.spawnableWaterCreatureList.clear();
         this.spawnableCaveCreatureList.clear();
 
+        this.spawnableMonsterList.addAll(config.getMonsterSpawns());
+        this.spawnableCreatureList.addAll(config.getCreatureSpawns());
+
         this.config = config;
         this.decorator = new MidnightBiomeDecorator(config);
 
