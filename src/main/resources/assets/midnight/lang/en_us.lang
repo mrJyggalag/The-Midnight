@@ -151,6 +151,9 @@ item.midnight.viridshroom_door.name=Viridshroom Door
 
 item.midnight.dark_pearl.name=Dark Pearl
 
+item.midnight.raw_suavis.name=Raw Suavis
+item.midnight.cook_suavis.name=Cook Suavis
+
 # Fluids
 
 fluid.midnight.miasma=Miasma
