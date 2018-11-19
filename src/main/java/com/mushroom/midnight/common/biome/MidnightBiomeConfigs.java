@@ -5,8 +5,8 @@ import com.mushroom.midnight.common.entity.creature.EntityRifter;
 import com.mushroom.midnight.common.registry.ModBlocks;
 import com.mushroom.midnight.common.world.feature.BoulderFeature;
 import com.mushroom.midnight.common.world.feature.CrystalClusterFeature;
+import com.mushroom.midnight.common.world.feature.DarkWillowTreeFeature;
 import com.mushroom.midnight.common.world.feature.DeadTreeFeature;
-import com.mushroom.midnight.common.world.feature.DefaultTreeFeature;
 import com.mushroom.midnight.common.world.feature.DoubleFungiFeature;
 import com.mushroom.midnight.common.world.feature.DoublePlantFeature;
 import com.mushroom.midnight.common.world.feature.FungiFeature;
@@ -22,7 +22,7 @@ import net.minecraft.world.biome.Biome;
 
 public class MidnightBiomeConfigs {
     public static final IMidnightFeature SHADOWROOT_TREE_FEATURE = new ShadowrootTreeFeature();
-    public static final IMidnightFeature DARK_WILLOW_TREE_FEATURE = new DefaultTreeFeature(ModBlocks.DARK_WILLOW_LOG, ModBlocks.DARK_WILLOW_LEAVES, 8);
+    public static final IMidnightFeature DARK_WILLOW_TREE_FEATURE = new DarkWillowTreeFeature();
     public static final IMidnightFeature DEAD_TREE_FEATURE = new DeadTreeFeature();
 
     public static final IMidnightFeature TALL_GRASS_FEATURE = new PlantFeature(

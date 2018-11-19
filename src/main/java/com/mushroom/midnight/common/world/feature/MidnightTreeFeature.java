@@ -15,8 +15,8 @@ import java.util.Set;
 import java.util.function.IntFunction;
 
 public abstract class MidnightTreeFeature extends MidnightNaturalFeature {
-    private final IBlockState log;
-    private final IBlockState leaves;
+    protected final IBlockState log;
+    protected final IBlockState leaves;
 
     protected MidnightTreeFeature(IBlockState log, IBlockState leaves) {
         this.log = log;
