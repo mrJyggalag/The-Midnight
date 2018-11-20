@@ -28,6 +28,7 @@ public class ModItems {
     public static final Item VIRIDSHROOM_DOOR = Items.AIR;
 
     public static final Item DARK_PEARL = Items.AIR;
+    public static final Item SHADOWROOT_STICK = Items.AIR;
 
     static List<Item> items;
 
@@ -40,7 +41,8 @@ public class ModItems {
                 RegUtil.withName(new ItemMidnightDoor(ModBlocks.NIGHTSHROOM_DOOR), "nightshroom_door"),
                 RegUtil.withName(new ItemMidnightDoor(ModBlocks.DEWSHROOM_DOOR), "dewshroom_door"),
                 RegUtil.withName(new ItemMidnightDoor(ModBlocks.VIRIDSHROOM_DOOR), "viridshroom_door"),
-                RegUtil.withName(new ItemBasic(), "dark_pearl")
+                RegUtil.withName(new ItemBasic(), "dark_pearl"),
+                RegUtil.withName(new ItemBasic(), "shadowroot_stick")
         );
 
         items.forEach(event.getRegistry()::register);
