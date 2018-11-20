@@ -1,6 +1,7 @@
 # Item Groups
 
-itemGroup.midnight=Minuit
+itemGroup.midnight_building=Midnight Construction
+itemGroup.midnight_decoration=Midnight Décoration
 
 # Blocks
 
@@ -38,10 +39,10 @@ tile.midnight.tenebrum_block.name=Bloc de Tenebrum
 
 tile.midnight.shadowroot_chest.name=Coffre en racine d'ombre
 tile.midnight.shadowroot_crafting_table.name=Etabli en racine d'ombre
-tile.midnight.midnight_furnace.name=Fourneau de Minuit
+tile.midnight.midnight_furnace.name=Fourneau de Midnight
 
-tile.midnight.tall_midnight_grass.name=Hautes herbes de Minuit
-tile.midnight.double_midnight_grass.name=Double herbes de Minuit
+tile.midnight.tall_midnight_grass.name=Hautes herbes de Midnight
+tile.midnight.double_midnight_grass.name=Double herbes de Midnight
 
 tile.midnight.lumen_bud.name=Bourgeon de Lumen
 tile.midnight.double_lumen_bud.name=Double bourgeon de Lumen
@@ -53,8 +54,8 @@ tile.midnight.dead_wood_trapdoor.name=Trape en bois mort
 tile.midnight.shadowroot_sapling.name=Pousse de racine d'ombre
 tile.midnight.dark_willow_sapling.name=Pousse de saule noir
 
-tile.midnight.bloomcrystal.name=Cristal de fleur
-tile.midnight.bloomcrystal_rock.name=Roche de Cristal de fleur
+tile.midnight.bloomcrystal.name=Cristal de bloom
+tile.midnight.bloomcrystal_rock.name=Roche de Cristal de Bloom
 
 tile.midnight.rouxe.name=Cristal de Rouxe
 tile.midnight.rouxe_rock.name=Roche de Rouxe
@@ -73,23 +74,65 @@ tile.midnight.double_nightshroom.name=Double champignon de nuit
 tile.midnight.viridshroom.name=Champignon viride
 tile.midnight.double_viridshroom.name=Double champignon viride
 
-tile.midnight.nightshroom_stem.name=Soupe de champignon de nuit
+tile.midnight.nightshroom_stem.name=Tronc de champignon de nuit
 tile.midnight.nightshroom_hat.name=Chapeau en champignon de nuit
 tile.midnight.nightshroom_planks.name=Planches de champignon de nuit
 tile.midnight.nightshroom_shelf.name=Etagères en champignon de nuit
 tile.midnight.nightshroom_trapdoor.name=Trape en champignon de nuit
 
-tile.midnight.dewshroom_stem.name=Soupe de champignon de rosée
+tile.midnight.dewshroom_stem.name=Tronc de champignon de rosée
 tile.midnight.dewshroom_hat.name=Chapeau en champignon de rosée
 tile.midnight.dewshroom_planks.name=Planches de champignon de rosée
 tile.midnight.dewshroom_shelf.name=Étagères en champignon de rosée
 tile.midnight.dewshroom_trapdoor.name=Trape en champignon de rosée
 
-tile.midnight.viridshroom_stem.name=Soupe de champignon viride
+tile.midnight.viridshroom_stem.name=Tronc de champignon viride
 tile.midnight.viridshroom_hat.name=Chapeau en champignon viride
 tile.midnight.viridshroom_planks.name=Planches de champignon viride
 tile.midnight.viridshroom_shelf.name=Étagères en champignon viride
 tile.midnight.viridshroom_trapdoor.name=Trape en champignon viride
+
+tile.midnight.deceitful_peat.name=Deceitful Peat
+tile.midnight.deceitful_algae.name=Deceitful Algae
+tile.midnight.deceitful_moss.name=Deceitful Moss
+tile.midnight.shadowroot_slab.name=Dalle en racine d’ombre
+tile.midnight.shadowroot_double_slab.name=Double Dalle en racine d’ombre
+tile.midnight.dead_wood_slab.name=Dalle en bois Mort
+tile.midnight.dead_wood_double_slab.name=Double Dalle en bois Mort
+tile.midnight.dark_willow_slab.name=Dalle en saule noir
+tile.midnight.dark_willow_double_slab.name=Double Dalle en saule noir
+tile.midnight.nightstone_slab.name=Dalle en Pierre de Nuit
+tile.midnight.nightstone_double_slab.name=Double Dalle en Pierre de Nuit
+tile.midnight.nightstone_brick_slab.name=Dalle en Brique de Pierre de Nuit
+tile.midnight.nightstone_brick_double_slab.name=Double Dalle en Brique de Pierre de Nuit
+tile.midnight.dewshroom_slab.name=Dalle en Champignon de rosée
+tile.midnight.dewshroom_double_slab.name=Double Dalle en Champignon de rosée
+tile.midnight.viridshroom_slab.name=Dalle en Champignon viride
+tile.midnight.viridshroom_double_slab.name=Double Dalle en Champignon viride
+tile.midnight.nightshroom_slab.name=Dalle en Champignon de nuit
+tile.midnight.nightshroom_double_slab.name=Double Dalle en Champignon de nuit
+tile.midnight.shadowroot_stairs.name=Escaliers en racine d’ombre
+tile.midnight.dead_wood_stairs.name=Escaliers en bois mort
+tile.midnight.dark_willow_stairs.name=Escaliers en saule noir
+tile.midnight.nightstone_stairs.name=Escaliers en pierre de nuit
+tile.midnight.nightstone_brick_stairs.name=Escaliers en brique de pierre de nuit
+tile.midnight.dewshroom_stairs.name=Escaliers en Champignon de rosée
+tile.midnight.viridshroom_stairs.name=Escaliers en Champignon viride
+tile.midnight.nightshroom_stairs.name=Escaliers en Champignon de nuit
+tile.midnight.shadowroot_fence.name=Barrières en racine d’ombre
+tile.midnight.dead_wood_fence.name=Barrières en bois mort
+tile.midnight.dark_willow_fence.name=Barrières en saule noir
+tile.midnight.nightstone_wall.name=Muret en pierre de nuit
+tile.midnight.nightstone_brick_wall.name=Muret en briques de pierre de nuit
+tile.midnight.dewshroom_fence.name=Barrières en Champignon de rosée
+tile.midnight.viridshroom_fence.name=Barrières en Champignon viride
+tile.midnight.nightshroom_fence.name=Barrières en Champignon de nuit
+tile.midnight.shadowroot_fence_gate.name=Portillon en racine d’ombre
+tile.midnight.dead_wood_fence_gate.name=Portillon en bois mort
+tile.midnight.dark_willow_fence_gate.name=Portillon en saule noir
+tile.midnight.dewshroom_fence_gate.name=Portillon en Champignon de rosée
+tile.midnight.viridshroom_fence_gate.name=Portillon en Champignon viride
+tile.midnight.nightshroom_fence_gate.name=Portillon en Champignon de nuit
 
 # Items
 
@@ -103,14 +146,17 @@ item.midnight.viridshroom_door.name=Porte en champignon viride
 
 item.midnight.dark_pearl.name=Perle sombre
 
+fluid.midnight.dark_water=Eau Sombre
+
 # Fluids
 
 fluid.midnight.miasma=Miasmes
 
 # Entities
 
-entity.midnight.rift.name=Midnight Rift
+entity.midnight.rift.name=Faille de Midnight
 entity.midnight.rifter.name=Rifter
+entity.midnight.hunter.name=Chasseur de Midnight
 
 # Config
 
