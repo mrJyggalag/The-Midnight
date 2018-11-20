@@ -2,42 +2,7 @@ package com.mushroom.midnight.common.registry;
 
 import com.google.common.collect.Lists;
 import com.mushroom.midnight.Midnight;
-import com.mushroom.midnight.common.block.BlockBasic;
-import com.mushroom.midnight.common.block.BlockCrystal;
-import com.mushroom.midnight.common.block.BlockDarkWater;
-import com.mushroom.midnight.common.block.BlockDeceitfulAlgae;
-import com.mushroom.midnight.common.block.BlockDeceitfulMoss;
-import com.mushroom.midnight.common.block.BlockDeceitfulMud;
-import com.mushroom.midnight.common.block.BlockDoubleMidnightPlant;
-import com.mushroom.midnight.common.block.BlockGlowingDoublePlant;
-import com.mushroom.midnight.common.block.BlockGlowingPlant;
-import com.mushroom.midnight.common.block.BlockMiasmaFluid;
-import com.mushroom.midnight.common.block.BlockMiasmaSurface;
-import com.mushroom.midnight.common.block.BlockMidnightDirt;
-import com.mushroom.midnight.common.block.BlockMidnightDoor;
-import com.mushroom.midnight.common.block.BlockMidnightDoubleSlab;
-import com.mushroom.midnight.common.block.BlockMidnightFence;
-import com.mushroom.midnight.common.block.BlockMidnightFenceGate;
-import com.mushroom.midnight.common.block.BlockMidnightFungi;
-import com.mushroom.midnight.common.block.BlockMidnightFungiHat;
-import com.mushroom.midnight.common.block.BlockMidnightFungiShelf;
-import com.mushroom.midnight.common.block.BlockMidnightFungiStem;
-import com.mushroom.midnight.common.block.BlockMidnightFurnace;
-import com.mushroom.midnight.common.block.BlockMidnightGem;
-import com.mushroom.midnight.common.block.BlockMidnightGrass;
-import com.mushroom.midnight.common.block.BlockMidnightLeaves;
-import com.mushroom.midnight.common.block.BlockMidnightLog;
-import com.mushroom.midnight.common.block.BlockMidnightPlant;
-import com.mushroom.midnight.common.block.BlockMidnightSapling;
-import com.mushroom.midnight.common.block.BlockMidnightSlab;
-import com.mushroom.midnight.common.block.BlockMidnightStairs;
-import com.mushroom.midnight.common.block.BlockMidnightTrapDoor;
-import com.mushroom.midnight.common.block.BlockMidnightWall;
-import com.mushroom.midnight.common.block.BlockMushroomInside;
-import com.mushroom.midnight.common.block.BlockNightstone;
-import com.mushroom.midnight.common.block.BlockShadowrootChest;
-import com.mushroom.midnight.common.block.BlockShadowrootCraftingTable;
-import com.mushroom.midnight.common.block.PlantBehaviorType;
+import com.mushroom.midnight.common.block.*;
 import com.mushroom.midnight.common.item.ItemDeceitfulAlgae;
 import com.mushroom.midnight.common.item.ItemMidnightSlab;
 import com.mushroom.midnight.common.tile.base.TileEntityMidnightFurnace;
@@ -210,6 +175,8 @@ public class ModBlocks {
     public static final Block VIRIDSHROOM_FENCE_GATE = Blocks.AIR;
     public static final Block NIGHTSHROOM_FENCE_GATE = Blocks.AIR;
 
+    public static final Block SUAVIS = Blocks.AIR;
+
     @SubscribeEvent
     public static void registerBlocks(RegistryEvent.Register<Block> event) {
         blocks.addAll(Lists.newArrayList(
@@ -368,7 +335,8 @@ public class ModBlocks {
                 RegUtil.withName(new BlockMidnightFenceGate(() -> DARK_WILLOW_PLANKS.getDefaultState()), "dark_willow_fence_gate"),
                 RegUtil.withName(new BlockMidnightFenceGate(() -> DEWSHROOM_PLANKS.getDefaultState()), "dewshroom_fence_gate"),
                 RegUtil.withName(new BlockMidnightFenceGate(() -> VIRIDSHROOM_PLANKS.getDefaultState()), "viridshroom_fence_gate"),
-                RegUtil.withName(new BlockMidnightFenceGate(() -> NIGHTSHROOM_PLANKS.getDefaultState()), "nightshroom_fence_gate")
+                RegUtil.withName(new BlockMidnightFenceGate(() -> NIGHTSHROOM_PLANKS.getDefaultState()), "nightshroom_fence_gate"),
+                RegUtil.withName(new BlockSuavis(), "suavis")
         ));
 
         blocks.forEach(event.getRegistry()::register);
@@ -417,7 +385,8 @@ public class ModBlocks {
                 NIGHTSTONE_WALL, NIGHTSTONE_BRICK_WALL,
                 DEWSHROOM_FENCE, VIRIDSHROOM_FENCE, NIGHTSHROOM_FENCE,
                 SHADOWROOT_FENCE_GATE, DEAD_WOOD_FENCE_GATE, DARK_WILLOW_FENCE_GATE,
-                DEWSHROOM_FENCE_GATE, VIRIDSHROOM_FENCE_GATE, NIGHTSHROOM_FENCE_GATE
+                DEWSHROOM_FENCE_GATE, VIRIDSHROOM_FENCE_GATE, NIGHTSHROOM_FENCE_GATE,
+                SUAVIS
         ));
 
         registry.register(itemBlock(DECEITFUL_ALGAE, ItemDeceitfulAlgae::new));

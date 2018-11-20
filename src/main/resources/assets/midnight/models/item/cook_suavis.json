@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "midnight:items/cook_suavis"
+    "layer0": "midnight:items/suavis_slice_cooked"
   }
 }

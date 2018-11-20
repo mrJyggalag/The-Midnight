@@ -1,0 +1,14 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "grass",
+    "textures": {
+      "top": "midnight:blocks/suavis_top",
+      "side": "midnight:blocks/suavis_side"
+    }
+  },
+  "variants": {
+    "normal": {},
+    "inventory": {}
+  }
+}
