@@ -1,2 +1,2 @@
-# Midnight
-This is the repository for the Midnight mod, originally made for SpookyJam 2018
+# The Midnight
+This is the repository for The Midnight mod, originally made for SpookyJam 2018
