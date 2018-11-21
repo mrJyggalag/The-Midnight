@@ -40,6 +40,11 @@ public class MidnightBiomeConfigs {
             ((BlockBush) ModBlocks.LUMEN_BUD)::canBlockStay
     );
 
+    public static final IMidnightFeature SUAVIS_FEATURE = new PlantFeature(
+            ModBlocks.SUAVIS.getDefaultState(),
+            ((BlockBush) ModBlocks.SUAVIS)::canBlockStay
+    );
+
     public static final IMidnightFeature DECEITFUL_ALGAE_FEATURE = new PlantFeature(
             ModBlocks.DECEITFUL_ALGAE.getDefaultState(),
             (world, pos, state) -> ModBlocks.DECEITFUL_ALGAE.canPlaceBlockAt(world, pos)
@@ -102,6 +107,15 @@ public class MidnightBiomeConfigs {
             .withFeature(FUNGI_FEATURE, new ScatterPlacementConfig(1, 16))
             .build();
 
+    public static final MidnightBiomeConfig VIGILANT_FOREST_VEGETATED_CONFIG = MidnightBiomeConfig.builder()
+            .withFeature(TALL_GRASS_FEATURE, new ScatterPlacementConfig(6, 64))
+            .withFeature(DOUBLE_GRASS_FEATURE, new ScatterPlacementConfig(3, 32))
+            .withFeature(LUMEN_FEATURE, new ScatterPlacementConfig(1, 32))
+            .withFeature(DOUBLE_LUMEN_FEATURE, new ScatterPlacementConfig(1, 16))
+            .withFeature(FUNGI_FEATURE, new ScatterPlacementConfig(1, 16))
+            .withFeature(SUAVIS_FEATURE, new ScatterPlacementConfig(1, 8))
+            .build();
+
     public static final MidnightBiomeConfig ROCKY_CONFIG = MidnightBiomeConfig.builder()
             .withFeature(LUMEN_FEATURE, new ScatterPlacementConfig(1, 32))
             .withFeature(DOUBLE_LUMEN_FEATURE, new ScatterPlacementConfig(1, 16))
@@ -118,7 +132,7 @@ public class MidnightBiomeConfigs {
             .withFeature(FUNGI_FEATURE, new ScatterPlacementConfig(2, 16))
             .build();
 
-    public static final MidnightBiomeConfig VIGILANT_FOREST_CONFIG = MidnightBiomeConfig.builder(VEGETATED_CONFIG)
+    public static final MidnightBiomeConfig VIGILANT_FOREST_CONFIG = MidnightBiomeConfig.builder(VIGILANT_FOREST_VEGETATED_CONFIG)
             .withFeature(new IMidnightFeature[] {
                     SHADOWROOT_TREE_FEATURE,
                     DARK_WILLOW_TREE_FEATURE

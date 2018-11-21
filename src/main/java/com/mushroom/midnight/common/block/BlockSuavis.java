@@ -19,10 +19,8 @@ import net.minecraft.world.World;
 
 import java.util.Random;
 
-public class BlockSuavis extends Block implements IModelProvider {
+public class BlockSuavis extends BlockGlowingPlant{
     public BlockSuavis() {
-        super(Material.GOURD);
-        this.setCreativeTab(Midnight.DECORATION_TAB);
     }
 
     @Override
