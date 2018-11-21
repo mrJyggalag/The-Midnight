@@ -139,6 +139,8 @@ tile.midnight.dewshroom_fence_gate.name=Dewshroom Fence Gate
 tile.midnight.viridshroom_fence_gate.name=Viridshroom Fence Gate
 tile.midnight.nightshroom_fence_gate.name=Nightshroom Fence Gate
 
+tile.midnight.suavis.name=Suavis
+
 # Items
 
 item.midnight.shadowroot_door.name=Shadowroot Door
@@ -150,6 +152,9 @@ item.midnight.dewshroom_door.name=Dewshroom Door
 item.midnight.viridshroom_door.name=Viridshroom Door
 
 item.midnight.dark_pearl.name=Dark Pearl
+
+item.midnight.raw_suavis.name=Raw Suavis
+item.midnight.cook_suavis.name=Cook Suavis
 
 # Fluids
 

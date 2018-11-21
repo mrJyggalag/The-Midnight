@@ -3,7 +3,9 @@ package com.mushroom.midnight.common.registry;
 import com.google.common.collect.Lists;
 import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.common.item.ItemBasic;
+import com.mushroom.midnight.common.item.ItemCookSuavis;
 import com.mushroom.midnight.common.item.ItemMidnightDoor;
+import com.mushroom.midnight.common.item.ItemRawSuavis;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraftforge.event.RegistryEvent;
@@ -30,6 +32,9 @@ public class ModItems {
     public static final Item DARK_PEARL = Items.AIR;
     public static final Item SHADOWROOT_STICK = Items.AIR;
 
+    public static final Item RAW_SUAVIS = Items.AIR;
+    public static final Item COOK_SUAVIS = Items.AIR;
+
     static List<Item> items;
 
     @SubscribeEvent
@@ -42,7 +47,9 @@ public class ModItems {
                 RegUtil.withName(new ItemMidnightDoor(ModBlocks.DEWSHROOM_DOOR), "dewshroom_door"),
                 RegUtil.withName(new ItemMidnightDoor(ModBlocks.VIRIDSHROOM_DOOR), "viridshroom_door"),
                 RegUtil.withName(new ItemBasic(), "dark_pearl"),
-                RegUtil.withName(new ItemBasic(), "shadowroot_stick")
+                RegUtil.withName(new ItemBasic(), "shadowroot_stick"),
+                RegUtil.withName(new ItemRawSuavis(), "raw_suavis"),
+                RegUtil.withName(new ItemCookSuavis(), "cook_suavis")
         );
 
         items.forEach(event.getRegistry()::register);
