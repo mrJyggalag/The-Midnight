@@ -56,6 +56,12 @@ public class Midnight {
             return new ItemStack(ModBlocks.ROUXE);
         }
     };
+    public static final CreativeTabs MIDNIGHT_ITEMS = new CreativeTabs("midnight_items") {
+        @Override
+        public ItemStack createIcon() {
+            return new ItemStack(ModItems.SHADOWROOT_STICK);
+        }
+    };
 
     @SidedProxy(serverSide = "com.mushroom.midnight.common.CommonProxy", clientSide = "com.mushroom.midnight.client.ClientProxy")
     public static CommonProxy proxy;

@@ -7,6 +7,6 @@ import net.minecraft.item.ItemFood;
 public class ItemFoodBasic extends ItemFood implements IModelProvider {
     public ItemFoodBasic(int amount, float saturation, boolean isWolfFood) {
         super(amount, saturation, isWolfFood);
-        this.setCreativeTab(Midnight.BUILDING_TAB);
+        this.setCreativeTab(Midnight.MIDNIGHT_ITEMS);
     }
 }

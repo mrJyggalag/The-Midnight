@@ -7,6 +7,6 @@ import net.minecraft.item.Item;
 public class ItemBasic extends Item implements IModelProvider {
     public ItemBasic() {
         super();
-        this.setCreativeTab(Midnight.BUILDING_TAB);
+        this.setCreativeTab(Midnight.MIDNIGHT_ITEMS);
     }
 }

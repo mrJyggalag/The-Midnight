@@ -2,6 +2,7 @@
 
 itemGroup.midnight_building=Midnight Building
 itemGroup.midnight_decoration=Midnight Decoration
+itemGroup.midnight_items=Midnight Items
 
 # Blocks
 
@@ -152,6 +153,7 @@ item.midnight.dewshroom_door.name=Dewshroom Door
 item.midnight.viridshroom_door.name=Viridshroom Door
 
 item.midnight.dark_pearl.name=Dark Pearl
+item.midnight.shadowroot_stick.name=Shadowroot Stick
 
 item.midnight.raw_suavis.name=Raw Suavis
 item.midnight.cook_suavis.name=Cook Suavis
