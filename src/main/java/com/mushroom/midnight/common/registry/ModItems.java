@@ -30,6 +30,7 @@ public class ModItems {
     public static final Item VIRIDSHROOM_DOOR = Items.AIR;
 
     public static final Item DARK_PEARL = Items.AIR;
+    public static final Item SHADOWROOT_STICK = Items.AIR;
 
     public static final Item RAW_SUAVIS = Items.AIR;
     public static final Item COOK_SUAVIS = Items.AIR;
@@ -46,6 +47,7 @@ public class ModItems {
                 RegUtil.withName(new ItemMidnightDoor(ModBlocks.DEWSHROOM_DOOR), "dewshroom_door"),
                 RegUtil.withName(new ItemMidnightDoor(ModBlocks.VIRIDSHROOM_DOOR), "viridshroom_door"),
                 RegUtil.withName(new ItemBasic(), "dark_pearl"),
+                RegUtil.withName(new ItemBasic(), "shadowroot_stick")
                 RegUtil.withName(new ItemRawSuavis(), "raw_suavis"),
                 RegUtil.withName(new ItemCookSuavis(), "cook_suavis")
         );
