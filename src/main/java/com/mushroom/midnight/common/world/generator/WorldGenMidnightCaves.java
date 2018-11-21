@@ -32,8 +32,10 @@ public class WorldGenMidnightCaves extends MapGenCaves {
     @Override
     protected boolean canReplaceBlock(IBlockState state, IBlockState aboveState) {
         Material material = state.getMaterial();
+        Material aboveMaterial = aboveState.getMaterial();
         return (material == Material.ROCK || material == Material.GROUND || material == Material.GRASS)
-                && material != Material.WATER && material != Material.LAVA;
+                && material != Material.WATER && material != Material.LAVA
+                && aboveMaterial != Material.WATER && aboveMaterial != Material.LAVA;
     }
 
     @Override

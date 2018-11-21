@@ -1,0 +1,10 @@
+package com.mushroom.midnight.common.registry;
+
+import net.minecraft.item.ItemStack;
+import net.minecraftforge.fml.common.registry.GameRegistry;
+
+public class ModRecipes {
+    public static void onInit() {
+        GameRegistry.addSmelting(ModItems.RAW_SUAVIS, new ItemStack(ModItems.COOK_SUAVIS), 0.1F);
+    }
+}

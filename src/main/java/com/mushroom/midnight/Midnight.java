@@ -14,6 +14,7 @@ import com.mushroom.midnight.common.registry.ModBlocks;
 import com.mushroom.midnight.common.registry.ModDimensions;
 import com.mushroom.midnight.common.registry.ModFluids;
 import com.mushroom.midnight.common.registry.ModItems;
+import com.mushroom.midnight.common.registry.ModRecipes;
 import com.mushroom.midnight.common.util.EntityUtil;
 import com.mushroom.midnight.common.world.generator.MidnightOreGenerator;
 import net.minecraft.creativetab.CreativeTabs;
@@ -95,6 +96,7 @@ public class Midnight {
         ModBiomes.onInit();
         ModItems.onInit();
         ModBlocks.onInit();
+        ModRecipes.onInit();
 
         proxy.onInit();
     }

@@ -5,6 +5,7 @@ import com.mushroom.midnight.common.block.BlockMidnightLeaves;
 import com.mushroom.midnight.common.block.BlockMidnightLog;
 import com.mushroom.midnight.common.registry.ModBlocks;
 import com.mushroom.midnight.common.util.WorldUtil;
+import net.minecraft.block.BlockAir;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.server.MinecraftServer;
@@ -107,7 +108,7 @@ public class DarkWillowTreeFeature extends MidnightTreeFeature {
             return new Template.BlockInfo(pos, this.log, null);
         } else if (state.getBlock() instanceof BlockMidnightLeaves) {
             return new Template.BlockInfo(pos, this.leaves, null);
-        } else if (state.getBlock() == Blocks.STRUCTURE_BLOCK || state.getBlock() == Blocks.AIR) {
+        } else if (state.getBlock() == Blocks.STRUCTURE_BLOCK || state.getBlock() instanceof BlockAir) {
             return null;
         }
         return info;
