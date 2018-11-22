@@ -24,35 +24,25 @@ public class BreakBlockEvent {
         EntityPlayer player = event.getPlayer();
         World world = event.getWorld();
         BlockPos pos = event.getPos();
-        Item[] pickaxes = {Items.DIAMOND_PICKAXE, Items.GOLDEN_PICKAXE, Items.IRON_PICKAXE, Items.STONE_PICKAXE, Items.WOODEN_PICKAXE};
         ItemStack iteminmainhand = player.getHeldItemMainhand();
         if (event.getState().getBlock() == ModBlocks.SUAVIS) {
             if (!player.isCreative()) {
-                boolean haspickaxe = false;
-                for (Item pickaxe: pickaxes) {
-                    if (iteminmainhand.getItem() == pickaxe) {
-                        haspickaxe = true;
-                        boolean isenchanted = false;
-                        if (iteminmainhand.isItemEnchanted()) {
-                            isenchanted = true;
-                            NBTTagList enchants = (NBTTagList) iteminmainhand.getEnchantmentTagList();
-                            boolean hassilktouch = false;
-                            for (int i = 0; i < enchants.tagCount(); i++) {
-                                NBTTagCompound enchant = ((NBTTagList) enchants).getCompoundTagAt(i);
-                                if (enchant.getInteger("id") == 33) {
-                                    hassilktouch = true;
-                                }
-                            }
-                            if (!hassilktouch) {
-                                createNauseaCloud(world, pos);
-                            }
-                        }
-                        if (!isenchanted) {
-                            createNauseaCloud(world, pos);
+                boolean isenchanted = false;
+                if (iteminmainhand.isItemEnchanted()) {
+                    isenchanted = true;
+                    NBTTagList enchants = (NBTTagList) iteminmainhand.getEnchantmentTagList();
+                    boolean hassilktouch = false;
+                    for (int i = 0; i < enchants.tagCount(); i++) {
+                        NBTTagCompound enchant = ((NBTTagList) enchants).getCompoundTagAt(i);
+                        if (enchant.getInteger("id") == 33) {
+                            hassilktouch = true;
                         }
                     }
+                    if (!hassilktouch) {
+                        createNauseaCloud(world, pos);
+                    }
                 }
-                if (!haspickaxe) {
+                if (!isenchanted) {
                     createNauseaCloud(world, pos);
                 }
             }
