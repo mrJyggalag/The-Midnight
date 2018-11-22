@@ -39,19 +39,18 @@ public class BlockSuavis extends Block  implements IModelProvider {
         return MathHelper.clamp(this.quantityDropped(random) + random.nextInt(fortune + 1), 1, 4);
     }
 
-    @Override
-    public void breakBlock(World world, BlockPos pos, IBlockState state) {
-        super.breakBlock(world, pos, state);
-
-        EntityAreaEffectCloud entity = new EntityAreaEffectCloud(world, pos.getX(), pos.getY(), pos.getZ());
-        entity.setRadius(3.0F);
-        entity.setRadiusOnUse(-0.5F);
-        entity.setWaitTime(10);
-        entity.setRadiusPerTick(-entity.getRadius() / (float) entity.getDuration());
-        entity.setPotion(PotionTypes.EMPTY);
-        entity.setColor(3495830);
-        entity.addEffect(new PotionEffect(MobEffects.NAUSEA, 20 * 30, 0, false, true));
-
-        world.spawnEntity(entity);
-    }
+//    @Override
+//    public void breakBlock(World world, BlockPos pos, IBlockState state) {
+//        super.breakBlock(world, pos, state);
+//
+//        EntityAreaEffectCloud entity = new EntityAreaEffectCloud(world, pos.getX(), pos.getY(), pos.getZ());
+//        entity.setRadius(3.0F);
+//        entity.setRadiusOnUse(-0.5F);
+//        entity.setWaitTime(10);
+//        entity.setRadiusPerTick(-entity.getRadius() / (float) entity.getDuration());
+//        entity.setPotion(PotionTypes.EMPTY);
+//        entity.setColor(3495830);
+//        entity.addEffect(new PotionEffect(MobEffects.NAUSEA, 20 * 30, 0, false, true));
+//        world.spawnEntity(entity);
+//    }
 }
