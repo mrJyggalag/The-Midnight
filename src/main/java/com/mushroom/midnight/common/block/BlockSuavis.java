@@ -49,6 +49,7 @@ public class BlockSuavis extends Block  implements IModelProvider {
         entity.setWaitTime(10);
         entity.setRadiusPerTick(-entity.getRadius() / (float) entity.getDuration());
         entity.setPotion(PotionTypes.EMPTY);
+        entity.setColor(3495830);
         entity.addEffect(new PotionEffect(MobEffects.NAUSEA, 20 * 30, 0, false, true));
 
         world.spawnEntity(entity);
