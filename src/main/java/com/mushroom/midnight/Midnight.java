@@ -59,7 +59,7 @@ public class Midnight {
     public static final CreativeTabs MIDNIGHT_ITEMS = new CreativeTabs("midnight_items") {
         @Override
         public ItemStack createIcon() {
-            return new ItemStack(ModItems.SHADOWROOT_STICK);
+            return new ItemStack(ModItems.DARK_STICK);
         }
     };
 

@@ -153,7 +153,8 @@ item.midnight.dewshroom_door.name=Dewshroom Door
 item.midnight.viridshroom_door.name=Viridshroom Door
 
 item.midnight.dark_pearl.name=Dark Pearl
-item.midnight.shadowroot_stick.name=Shadowroot Stick
+item.midnight.dark_stick.name=Dark Stick
+item.midnight.rockshroom_clump=Rockshroom Clump
 
 item.midnight.raw_suavis.name=Raw Suavis
 item.midnight.cook_suavis.name=Cook Suavis
