@@ -152,9 +152,12 @@ item.midnight.nightshroom_door.name=Nightshroom Door
 item.midnight.dewshroom_door.name=Dewshroom Door
 item.midnight.viridshroom_door.name=Viridshroom Door
 
+item.midnight.geode.name=Geode
 item.midnight.dark_pearl.name=Dark Pearl
 item.midnight.dark_stick.name=Dark Stick
-item.midnight.rockshroom_clump=Rockshroom Clump
+item.midnight.rockshroom_clump.name=Rockshroom Clump
+item.midnight.tenebrum_ingot.name=Tenebrum Ingot
+item.midnight.tenebrum_nugget.name=Tenebrum Nugget
 
 item.midnight.raw_suavis.name=Raw Suavis Slice
 item.midnight.cook_suavis.name=Cooked Suavis Slice

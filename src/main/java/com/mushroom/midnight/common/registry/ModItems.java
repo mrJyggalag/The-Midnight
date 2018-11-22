@@ -29,9 +29,12 @@ public class ModItems {
     public static final Item DEWSHROOM_DOOR = Items.AIR;
     public static final Item VIRIDSHROOM_DOOR = Items.AIR;
 
+    public static final Item GEODE = Items.AIR;
     public static final Item DARK_PEARL = Items.AIR;
     public static final Item DARK_STICK = Items.AIR;
     public static final Item ROCKSHROOM_CLUMP = Items.AIR;
+    public static final Item TENEBRUM_INGOT = Items.AIR;
+    public static final Item TENEBRUM_NUGGET = Items.AIR;
 
     public static final Item RAW_SUAVIS = Items.AIR;
     public static final Item COOK_SUAVIS = Items.AIR;
@@ -47,9 +50,12 @@ public class ModItems {
                 RegUtil.withName(new ItemMidnightDoor(ModBlocks.NIGHTSHROOM_DOOR), "nightshroom_door"),
                 RegUtil.withName(new ItemMidnightDoor(ModBlocks.DEWSHROOM_DOOR), "dewshroom_door"),
                 RegUtil.withName(new ItemMidnightDoor(ModBlocks.VIRIDSHROOM_DOOR), "viridshroom_door"),
+                RegUtil.withName(new ItemBasic(), "geode"),
                 RegUtil.withName(new ItemBasic(), "dark_pearl"),
                 RegUtil.withName(new ItemBasic(), "dark_stick"),
                 RegUtil.withName(new ItemBasic(), "rockshroom_clump"),
+                RegUtil.withName(new ItemBasic(), "tenebrum_ingot"),
+                RegUtil.withName(new ItemBasic(), "tenebrum_nugget"),
                 RegUtil.withName(new ItemRawSuavis(), "raw_suavis"),
                 RegUtil.withName(new ItemCookSuavis(), "cook_suavis")
         );
