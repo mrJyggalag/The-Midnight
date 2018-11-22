@@ -1,5 +1,6 @@
 package com.mushroom.midnight.common.world.feature;
 
+import com.mushroom.midnight.Midnight;
 import net.minecraft.block.Block;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -19,13 +20,11 @@ public class BlockPlacementLikePumpkinFeature extends MidnightAbstractFeature {
 
     @Override
     public boolean placeFeature(World world, Random random, BlockPos origin) {
-        for (int i = 0; i < 64; ++i)
-        {
-            BlockPos blockpos = origin.add(random.nextInt(8) - random.nextInt(8), random.nextInt(4) - random.nextInt(4), random.nextInt(8) - random.nextInt(8));
-
-            if (world.getBlockState(blockpos.down()).getBlock() == this.placeon && this.togenerate.canPlaceBlockAt(world, blockpos))
-            {
-                world.setBlockState(blockpos, this.togenerate.getDefaultState(), 2);
+        int chance = Math.round(random.nextInt(2));
+        Midnight.LOGGER.info(chance);
+        if (chance == 1) {
+            if (world.getBlockState(origin.down()).getBlock() == this.placeon && this.togenerate.canPlaceBlockAt(world, origin)) {
+                this.setBlockAndNotifyAdequately(world, origin, this.togenerate.getDefaultState());
             }
         }
 
