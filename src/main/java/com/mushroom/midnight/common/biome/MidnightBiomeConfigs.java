@@ -31,7 +31,8 @@ public class MidnightBiomeConfigs {
 
     public static final IMidnightFeature SUAVIS_FEATURE = new BlockPlacementLikePumpkinFeature(
             ModBlocks.SUAVIS,
-            ModBlocks.MIDNIGHT_GRASS
+            ModBlocks.MIDNIGHT_GRASS,
+            2
     );
 
     public static final IMidnightFeature DECEITFUL_ALGAE_FEATURE = new PlantFeature(
