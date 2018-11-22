@@ -3,18 +3,7 @@ package com.mushroom.midnight.common.biome;
 import com.mushroom.midnight.common.entity.creature.EntityHunter;
 import com.mushroom.midnight.common.entity.creature.EntityRifter;
 import com.mushroom.midnight.common.registry.ModBlocks;
-import com.mushroom.midnight.common.world.feature.BoulderFeature;
-import com.mushroom.midnight.common.world.feature.CrystalClusterFeature;
-import com.mushroom.midnight.common.world.feature.DarkWillowTreeFeature;
-import com.mushroom.midnight.common.world.feature.DeadTreeFeature;
-import com.mushroom.midnight.common.world.feature.DoubleFungiFeature;
-import com.mushroom.midnight.common.world.feature.DoublePlantFeature;
-import com.mushroom.midnight.common.world.feature.FungiFeature;
-import com.mushroom.midnight.common.world.feature.IMidnightFeature;
-import com.mushroom.midnight.common.world.feature.LargeFungiFeature;
-import com.mushroom.midnight.common.world.feature.MiasmaSourceFeature;
-import com.mushroom.midnight.common.world.feature.PlantFeature;
-import com.mushroom.midnight.common.world.feature.ShadowrootTreeFeature;
+import com.mushroom.midnight.common.world.feature.*;
 import com.mushroom.midnight.common.world.feature.config.ScatterPlacementConfig;
 import com.mushroom.midnight.common.world.feature.config.SurfacePlacementConfig;
 import net.minecraft.block.BlockBush;
@@ -40,9 +29,10 @@ public class MidnightBiomeConfigs {
             ((BlockBush) ModBlocks.LUMEN_BUD)::canBlockStay
     );
 
-    public static final IMidnightFeature SUAVIS_FEATURE = new PlantFeature(
-            ModBlocks.SUAVIS.getDefaultState(),
-            ((BlockBush) ModBlocks.SUAVIS)::canBlockStay
+    public static final IMidnightFeature SUAVIS_FEATURE = new MelonLikeFeature(
+            ModBlocks.SUAVIS,
+            ModBlocks.MIDNIGHT_GRASS,
+            2
     );
 
     public static final IMidnightFeature DECEITFUL_ALGAE_FEATURE = new PlantFeature(

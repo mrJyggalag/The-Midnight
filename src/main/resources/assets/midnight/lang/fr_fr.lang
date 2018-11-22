@@ -2,6 +2,7 @@
 
 itemGroup.midnight_building=Midnight Construction
 itemGroup.midnight_decoration=Midnight Décoration
+itemGroup.midnight_items=Midnight Objets
 
 # Blocks
 
@@ -134,6 +135,8 @@ tile.midnight.dewshroom_fence_gate.name=Portillon en Champignon de rosée
 tile.midnight.viridshroom_fence_gate.name=Portillon en Champignon viride
 tile.midnight.nightshroom_fence_gate.name=Portillon en Champignon de nuit
 
+tile.midnight.suavis.name=Suavis
+
 # Items
 
 item.midnight.shadowroot_door.name=Porte en racine d'ombre
@@ -145,12 +148,15 @@ item.midnight.dewshroom_door.name=Porte en champignon de rosée
 item.midnight.viridshroom_door.name=Porte en champignon viride
 
 item.midnight.dark_pearl.name=Perle sombre
+item.midnight.shadowroot_stick.name=Bâton en bois de midnight
 
-fluid.midnight.dark_water=Eau Sombre
+item.midnight.raw_suavis.name=Suavis Cru
+item.midnight.cook_suavis.name=Suavis Cuit
 
 # Fluids
 
 fluid.midnight.miasma=Miasmes
+fluid.midnight.dark_water=Eau Sombre
 
 # Entities
 
@@ -162,3 +168,5 @@ entity.midnight.hunter.name=Chasseur de Midnight
 
 config.midnight.midnight_dimension_id=ID de la dimension de Minuit
 config.midnight.midnight_dimension_id.tooltip=L'ID qui va être utilisé pour la dimension de Minuit
+
+status.midnight.rift_nearby=Vous ne pouvez pas rester ici pour l'instant, il y a une présence démoniaque à proximitée
