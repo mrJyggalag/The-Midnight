@@ -40,10 +40,10 @@ public class MidnightBiomeConfigs {
             ((BlockBush) ModBlocks.LUMEN_BUD)::canBlockStay
     );
 
-    public static final IMidnightFeature SUAVIS_FEATURE = new PlantFeature(
-            ModBlocks.SUAVIS.getDefaultState(),
-            ((BlockBush) ModBlocks.SUAVIS)::canBlockStay
-    );
+//    public static final IMidnightFeature SUAVIS_FEATURE = new PlantFeature(
+//            ModBlocks.SUAVIS.getDefaultState(),
+//            ((BlockBush) ModBlocks.SUAVIS)::canBlockStay
+//    );
 
     public static final IMidnightFeature DECEITFUL_ALGAE_FEATURE = new PlantFeature(
             ModBlocks.DECEITFUL_ALGAE.getDefaultState(),
@@ -113,7 +113,7 @@ public class MidnightBiomeConfigs {
             .withFeature(LUMEN_FEATURE, new ScatterPlacementConfig(1, 32))
             .withFeature(DOUBLE_LUMEN_FEATURE, new ScatterPlacementConfig(1, 16))
             .withFeature(FUNGI_FEATURE, new ScatterPlacementConfig(1, 16))
-            .withFeature(SUAVIS_FEATURE, new ScatterPlacementConfig(1, 8))
+//            .withFeature(SUAVIS_FEATURE, new ScatterPlacementConfig(1, 8))
             .build();
 
     public static final MidnightBiomeConfig ROCKY_CONFIG = MidnightBiomeConfig.builder()

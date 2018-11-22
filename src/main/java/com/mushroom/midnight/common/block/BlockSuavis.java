@@ -1,5 +1,7 @@
 package com.mushroom.midnight.common.block;
 
+import com.mushroom.midnight.Midnight;
+import com.mushroom.midnight.client.IModelProvider;
 import com.mushroom.midnight.common.registry.ModItems;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.MapColor;
@@ -16,10 +18,12 @@ import net.minecraft.world.World;
 
 import java.util.Random;
 
-public class BlockSuavis extends Block {
+public class BlockSuavis extends Block  implements IModelProvider {
 
-    public BlockSuavis(Material material, MapColor color) {
+    public BlockSuavis() {
         super(Material.GOURD, MapColor.LIGHT_BLUE);
+        this.setLightLevel(0.8F);
+        this.setCreativeTab(Midnight.DECORATION_TAB);
     }
 
     @Override
@@ -46,7 +50,6 @@ public class BlockSuavis extends Block {
         entity.setRadiusPerTick(-entity.getRadius() / (float) entity.getDuration());
         entity.setPotion(PotionTypes.EMPTY);
         entity.addEffect(new PotionEffect(MobEffects.NAUSEA, 20 * 30, 0, false, true));
-        setLightLevel(15);
 
         world.spawnEntity(entity);
     }
