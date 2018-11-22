@@ -29,7 +29,7 @@ public class MidnightBiomeConfigs {
             ((BlockBush) ModBlocks.LUMEN_BUD)::canBlockStay
     );
 
-    public static final IMidnightFeature SUAVIS_FEATURE = new BlockPlacementLikePumpkinFeature(
+    public static final IMidnightFeature SUAVIS_FEATURE = new MelonLikeFeature(
             ModBlocks.SUAVIS,
             ModBlocks.MIDNIGHT_GRASS,
             2

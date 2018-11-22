@@ -8,20 +8,21 @@ import net.minecraftforge.event.terraingen.DecorateBiomeEvent;
 
 import java.util.Random;
 
-public class BlockPlacementLikePumpkinFeature extends MidnightAbstractFeature {
+public class MelonLikeFeature extends MidnightAbstractFeature {
     private final Block togenerate;
     private final Block placeon;
+    private final int chanceon;
 
 
-    public BlockPlacementLikePumpkinFeature (Block blocktogenerate, Block blocktoplaceon) {
+    public MelonLikeFeature(Block blocktogenerate, Block blocktoplaceon, int numberofchance) {
         this.togenerate = blocktogenerate;
         this.placeon = blocktoplaceon;
+        this.chanceon = numberofchance;
     }
 
     @Override
     public boolean placeFeature(World world, Random random, BlockPos origin) {
-        int chance = Math.round(random.nextInt(2));
-        Midnight.LOGGER.info(chance);
+        int chance = Math.round(random.nextInt(this.chanceon));
         if (chance == 1) {
             if (world.getBlockState(origin.down()).getBlock() == this.placeon && this.togenerate.canPlaceBlockAt(world, origin)) {
                 this.setBlockAndNotifyAdequately(world, origin, this.togenerate.getDefaultState());
