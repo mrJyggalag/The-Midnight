@@ -337,7 +337,7 @@ public class ModBlocks {
                 RegUtil.withName(new BlockMidnightFenceGate(() -> DEWSHROOM_PLANKS.getDefaultState()), "dewshroom_fence_gate"),
                 RegUtil.withName(new BlockMidnightFenceGate(() -> VIRIDSHROOM_PLANKS.getDefaultState()), "viridshroom_fence_gate"),
                 RegUtil.withName(new BlockMidnightFenceGate(() -> NIGHTSHROOM_PLANKS.getDefaultState()), "nightshroom_fence_gate"),
-                RegUtil.withName(new BlockSuavis(Material.GOURD, MapColor.LIGHT_BLUE), "suavis")
+                RegUtil.withName(new BlockSuavis(), "suavis")
         ));
 
         blocks.forEach(event.getRegistry()::register);
