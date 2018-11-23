@@ -1,5 +1,6 @@
 package com.mushroom.midnight.common.block;
 
+import com.mushroom.midnight.Midnight;
 import net.minecraft.block.BlockDoor;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -21,6 +22,7 @@ public class BlockMidnightDoor extends BlockDoor {
         this.setHardness(3.0F);
         this.setSoundType(SoundType.WOOD);
         this.itemSupplier = itemSupplier;
+        this.setCreativeTab(Midnight.BUILDING_TAB);
     }
 
     @Override
