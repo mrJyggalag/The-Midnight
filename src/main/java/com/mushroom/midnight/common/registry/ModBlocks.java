@@ -436,11 +436,11 @@ public class ModBlocks {
         OreDictionary.registerOre("treeLeaves", SHADOWROOT_LEAVES);
         OreDictionary.registerOre("treeLeaves", DARK_WILLOW_LEAVES);
 
-        /*OreDictionary.registerOre("oreEbonys", EBONYS_ORE);
+        OreDictionary.registerOre("oreEbonys", EBONYS_ORE);
         OreDictionary.registerOre("blockEbonys", EBONYS_BLOCK);
 
         OreDictionary.registerOre("oreNagrilite", NAGRILITE_ORE);
-        OreDictionary.registerOre("blockNagrilite", NAGRILITE_BLOCK);*/
+        OreDictionary.registerOre("blockNagrilite", NAGRILITE_BLOCK);
 
         OreDictionary.registerOre("oreTenebrum", TENEBRUM_ORE);
         OreDictionary.registerOre("blockTenebrum", TENEBRUM_BLOCK);
