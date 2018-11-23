@@ -4,6 +4,7 @@ import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.client.IModelProvider;
 import com.mushroom.midnight.common.registry.ModItems;
 import net.minecraft.block.Block;
+import net.minecraft.block.SoundType;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -18,6 +19,7 @@ public class BlockSuavis extends Block  implements IModelProvider {
         super(Material.GOURD, MapColor.LIGHT_BLUE);
         this.setLightLevel(0.8F);
         this.setCreativeTab(Midnight.DECORATION_TAB);
+        this.setSoundType(SoundType.SLIME);
     }
 
     @Override
