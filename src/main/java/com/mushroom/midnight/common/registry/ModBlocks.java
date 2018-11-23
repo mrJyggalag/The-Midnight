@@ -53,6 +53,8 @@ public class ModBlocks {
 
     public static final Block DARK_PEARL_ORE = Blocks.AIR;
     public static final Block DARK_PEARL_BLOCK = Blocks.AIR;
+    public static final Block TENEBRUM_ORE = Blocks.AIR;
+    public static final Block TENEBRUM_BLOCK = Blocks.AIR;
 
     public static final Block SHADOWROOT_CRAFTING_TABLE = Blocks.AIR;
     public static final Block SHADOWROOT_CHEST = Blocks.AIR;
@@ -246,7 +248,8 @@ public class ModBlocks {
                         .setHardness(4.0F),
                 RegUtil.withName(new BlockMiasmaSurface(), "miasma_surface"),
                 RegUtil.withName(new BlockMiasmaFluid(), "miasma"),
-                RegUtil.withName(new BlockMidnightGem(() -> ModItems.DARK_PEARL), "dark_pearl_ore")
+                RegUtil.withName(new BlockMidnightGem(() -> ModItems.DARK_PEARL), "dark_pearl_ore"),
+                RegUtil.withName(new BlockMidnightOre(), "tenebrum_ore")
         ));
 
         blocks.addAll(Lists.newArrayList(
@@ -257,6 +260,9 @@ public class ModBlocks {
                         .setHardness(1.5F)
                         .setResistance(10.0F),
                 RegUtil.withName(new BlockBasic(Material.IRON), "dark_pearl_block")
+                        .withSoundType(SoundType.METAL)
+                        .setHardness(3.0F),
+                RegUtil.withName(new BlockBasic(Material.IRON), "tenebrum_block")
                         .withSoundType(SoundType.METAL)
                         .setHardness(3.0F),
                 RegUtil.withName(new BlockBasic(Material.WOOD), "shadowroot_planks")
@@ -357,6 +363,7 @@ public class ModBlocks {
                 NIGHTSTONE, NIGHTSTONE_BRICKS, CHISELED_NIGHTSTONE_BRICKS,
                 TRENCHSTONE,
                 DARK_PEARL_ORE, DARK_PEARL_BLOCK,
+                TENEBRUM_ORE, TENEBRUM_BLOCK,
                 SHADOWROOT_CRAFTING_TABLE,
                 SHADOWROOT_CHEST,
                 MIDNIGHT_FURNACE,
@@ -419,10 +426,10 @@ public class ModBlocks {
         OreDictionary.registerOre("blockEbonys", EBONYS_BLOCK);
 
         OreDictionary.registerOre("oreNagrilite", NAGRILITE_ORE);
-        OreDictionary.registerOre("blockNagrilite", NAGRILITE_BLOCK);
+        OreDictionary.registerOre("blockNagrilite", NAGRILITE_BLOCK);*/
 
         OreDictionary.registerOre("oreTenebrum", TENEBRUM_ORE);
-        OreDictionary.registerOre("blockTenebrum", TENEBRUM_BLOCK);*/
+        OreDictionary.registerOre("blockTenebrum", TENEBRUM_BLOCK);
 
         OreDictionary.registerOre("chest", SHADOWROOT_CHEST);
         OreDictionary.registerOre("chestWood", SHADOWROOT_CHEST);
