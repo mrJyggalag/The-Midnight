@@ -144,13 +144,13 @@ tile.midnight.suavis.name=Suavis
 
 # Items
 
-item.midnight.shadowroot_door.name=Shadowroot Door
-item.midnight.dark_willow_door.name=Dark Willow Door
-item.midnight.dead_wood_door.name=Dead Wood Door
+tile.midnight.shadowroot_door.name=Shadowroot Door
+tile.midnight.dark_willow_door.name=Dark Willow Door
+tile.midnight.dead_wood_door.name=Dead Wood Door
 
-item.midnight.nightshroom_door.name=Nightshroom Door
-item.midnight.dewshroom_door.name=Dewshroom Door
-item.midnight.viridshroom_door.name=Viridshroom Door
+tile.midnight.nightshroom_door.name=Nightshroom Door
+tile.midnight.dewshroom_door.name=Dewshroom Door
+tile.midnight.viridshroom_door.name=Viridshroom Door
 
 item.midnight.geode.name=Geode
 item.midnight.dark_pearl.name=Dark Pearl
