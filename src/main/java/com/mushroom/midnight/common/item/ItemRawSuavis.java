@@ -16,7 +16,7 @@ public class ItemRawSuavis extends ItemFoodBasic {
     @Override
     protected void onFoodEaten(ItemStack stack, World worldIn, EntityPlayer player) {
         if (!worldIn.isRemote) {
-            player.addPotionEffect(new PotionEffect(MobEffects.NAUSEA, (20*5), 0, false, true));
+            player.addPotionEffect(new PotionEffect(MobEffects.NAUSEA, (20*15), 0, false, true));
         }
     }
 
