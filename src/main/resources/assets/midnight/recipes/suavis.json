@@ -6,10 +6,10 @@
   ],
   "key": {
     "A": {
-      "item": "midnight:midnight:raw_suavis"
+      "item": "midnight:raw_suavis"
     }
   },
   "result": {
-    "item": "midnight:midnight:suavis"
+    "item": "midnight:suavis"
   }
 }
