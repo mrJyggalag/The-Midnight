@@ -19,7 +19,7 @@ import net.minecraft.world.World;
 public class ItemMidnightDoor extends ItemBlock implements IModelProvider {
     public ItemMidnightDoor(Block block) {
         super(block);
-        this.setCreativeTab(Midnight.DECORATION_TAB);
+        this.setCreativeTab(Midnight.BUILDING_TAB);
     }
 
     @Override
