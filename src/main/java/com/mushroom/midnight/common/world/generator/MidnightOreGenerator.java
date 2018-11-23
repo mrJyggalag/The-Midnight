@@ -18,6 +18,7 @@ public class MidnightOreGenerator implements IWorldGenerator {
 
     private static final WorldGenerator DARK_PEARL_GENERATOR = new WorldGenMinable(ModBlocks.DARK_PEARL_ORE.getDefaultState(), 4, BlockMatcher.forBlock(ModBlocks.NIGHTSTONE));
     private static final WorldGenerator TENEBRUM_GENERATOR = new WorldGenMinable(ModBlocks.TENEBRUM_ORE.getDefaultState(), 4, BlockMatcher.forBlock(ModBlocks.NIGHTSTONE));
+    private static final WorldGenerator TENEBRUM_GENERATOR = new WorldGenMinable(ModBlocks.TENEBRUM_ORE.getDefaultState(), 4, BlockMatcher.forBlock(ModBlocks.NIGHTSTONE));
 
     private static final int DARK_PEARL_PER_CHUNK = 12;
     private static final int TENEBRUM_PER_CHUNK = 12;
