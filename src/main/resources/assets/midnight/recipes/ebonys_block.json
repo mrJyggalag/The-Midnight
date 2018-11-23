@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "AAA",
+    "AAA",
+    "AAA"
+  ],
+  "key": {
+    "A": {
+      "item": "midnight:ebonys"
+    }
+  },
+  "result": {
+    "item": "midnight:ebonys_block"
+  }
+}

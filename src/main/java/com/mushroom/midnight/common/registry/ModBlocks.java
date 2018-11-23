@@ -57,6 +57,8 @@ public class ModBlocks {
     public static final Block TENEBRUM_BLOCK = Blocks.AIR;
     public static final Block NAGRILITE_ORE = Blocks.AIR;
     public static final Block NAGRILITE_BLOCK = Blocks.AIR;
+    public static final Block EBONYS_ORE = Blocks.AIR;
+    public static final Block EBONYS_BLOCK = Blocks.AIR;
 
     public static final Block SHADOWROOT_CRAFTING_TABLE = Blocks.AIR;
     public static final Block SHADOWROOT_CHEST = Blocks.AIR;
@@ -252,7 +254,8 @@ public class ModBlocks {
                 RegUtil.withName(new BlockMiasmaFluid(), "miasma"),
                 RegUtil.withName(new BlockMidnightGem(() -> ModItems.DARK_PEARL), "dark_pearl_ore"),
                 RegUtil.withName(new BlockMidnightOre(), "tenebrum_ore"),
-                RegUtil.withName(new BlockMidnightOre(), "nagrilite_ore")
+                RegUtil.withName(new BlockMidnightOre(), "nagrilite_ore"),
+                RegUtil.withName(new BlockMidnightGem(() -> ModItems.EBONYS), "ebonys_ore")
         ));
 
         blocks.addAll(Lists.newArrayList(
@@ -269,6 +272,9 @@ public class ModBlocks {
                         .withSoundType(SoundType.METAL)
                         .setHardness(3.0F),
                 RegUtil.withName(new BlockBasic(Material.IRON), "nagrilite_block")
+                        .withSoundType(SoundType.METAL)
+                        .setHardness(3.0F),
+                RegUtil.withName(new BlockBasic(Material.IRON), "ebonys_block")
                         .withSoundType(SoundType.METAL)
                         .setHardness(3.0F),
                 RegUtil.withName(new BlockBasic(Material.WOOD), "shadowroot_planks")
@@ -371,6 +377,7 @@ public class ModBlocks {
                 DARK_PEARL_ORE, DARK_PEARL_BLOCK,
                 TENEBRUM_ORE, TENEBRUM_BLOCK,
                 NAGRILITE_ORE, NAGRILITE_BLOCK,
+                EBONYS_ORE, EBONYS_BLOCK,
                 SHADOWROOT_CRAFTING_TABLE,
                 SHADOWROOT_CHEST,
                 MIDNIGHT_FURNACE,
