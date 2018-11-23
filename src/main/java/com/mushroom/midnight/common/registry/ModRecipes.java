@@ -6,5 +6,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 public class ModRecipes {
     public static void onInit() {
         GameRegistry.addSmelting(ModItems.RAW_SUAVIS, new ItemStack(ModItems.COOK_SUAVIS), 0.1F);
+
+        GameRegistry.addSmelting(ModBlocks.TENEBRUM_ORE, new ItemStack(ModItems.TENEBRUM_INGOT), 0.5F);
     }
 }
