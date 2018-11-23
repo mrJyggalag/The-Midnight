@@ -22,7 +22,7 @@ public class BlockMidnightDoor extends BlockDoor {
         this.setHardness(3.0F);
         this.setSoundType(SoundType.WOOD);
         this.itemSupplier = itemSupplier;
-        this.setCreativeTab(Midnight.BUILDING_TAB);
+        this.setCreativeTab(Midnight.DECORATION_TAB);
     }
 
     @Override

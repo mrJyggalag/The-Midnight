@@ -10,7 +10,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemRawSuavis extends ItemFoodBasic {
     public ItemRawSuavis() {
-        super(3, 0F, false);
+        super(3, 0.3F, false);
     }
 
     @Override
