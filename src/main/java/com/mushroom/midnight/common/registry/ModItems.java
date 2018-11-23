@@ -35,6 +35,9 @@ public class ModItems {
     public static final Item ROCKSHROOM_CLUMP = Items.AIR;
     public static final Item TENEBRUM_INGOT = Items.AIR;
     public static final Item TENEBRUM_NUGGET = Items.AIR;
+    public static final Item NAGRILITE_INGOT = Items.AIR;
+    public static final Item NAGRILITE_NUGGET = Items.AIR;
+    public static final Item EBONYS = Items.AIR;
 
     public static final Item RAW_SUAVIS = Items.AIR;
     public static final Item COOK_SUAVIS = Items.AIR;
@@ -56,6 +59,9 @@ public class ModItems {
                 RegUtil.withName(new ItemBasic(), "rockshroom_clump"),
                 RegUtil.withName(new ItemBasic(), "tenebrum_ingot"),
                 RegUtil.withName(new ItemBasic(), "tenebrum_nugget"),
+                RegUtil.withName(new ItemBasic(), "nagrilite_ingot"),
+                RegUtil.withName(new ItemBasic(), "nagrilite_nugget"),
+                RegUtil.withName(new ItemBasic(), "ebonys"),
                 RegUtil.withName(new ItemRawSuavis(), "raw_suavis"),
                 RegUtil.withName(new ItemCookSuavis(), "cook_suavis")
         );
