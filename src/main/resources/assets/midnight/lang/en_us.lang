@@ -166,13 +166,19 @@ item.midnight.ebonys.name=Ebonys
 item.midnight.raw_suavis.name=Raw Suavis Slice
 item.midnight.cook_suavis.name=Cooked Suavis Slice
 
-# Tools and Weapons
+# Tools, Weapons and Armors
 
 item.midnight.shadowroot_pickaxe.name=Shadowroot Pickaxe
 item.midnight.tenebrum_pickaxe.name=Tenebrum Pickaxe
 item.midnight.nagrilite_pickaxe.name=Nagrilite Pickaxe
 item.midnight.ebonys_pickaxe.name=Ebonys Pickaxe
 item.midnight.nightstone_pickaxe.name=Nightstone Pickaxe
+
+item.midnight.shadowroot_shovel.name=Shadowroot Shovel
+item.midnight.tenebrum_shovel.name=Tenebrum Shovel
+item.midnight.nagrilite_shovel.name=Nagrilite Shovel
+item.midnight.ebonys_shovel.name=Ebonys Shovel
+item.midnight.nightstone_shovel.name=Nightstone Shovel
 
 # Fluids
 

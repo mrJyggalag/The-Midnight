@@ -7,6 +7,7 @@ import com.mushroom.midnight.common.item.ItemCookSuavis;
 import com.mushroom.midnight.common.item.ItemMidnightDoor;
 import com.mushroom.midnight.common.item.ItemRawSuavis;
 import com.mushroom.midnight.common.item.tools.ItemMidnightPickaxe;
+import com.mushroom.midnight.common.item.tools.ItemMidnightShovel;
 import com.mushroom.midnight.common.util.MidnightToolMaterials;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
@@ -49,6 +50,11 @@ public class ModItems {
     public static final Item EBONYS_PICKAXE = Items.AIR;
     public static final Item NAGRILITE_PICKAXE = Items.AIR;
     public static final Item TENEBRUM_PICKAXE = Items.AIR;
+    public static final Item SHADOWROOT_SHOVEL = Items.AIR;
+    public static final Item NIGHTSTONE_SHOVEL = Items.AIR;
+    public static final Item EBONYS_SHOVEL = Items.AIR;
+    public static final Item NAGRILITE_SHOVEL = Items.AIR;
+    public static final Item TENEBRUM_SHOVEL = Items.AIR;
 
     static List<Item> items;
 
@@ -76,7 +82,12 @@ public class ModItems {
                 RegUtil.withName(new ItemMidnightPickaxe(MidnightToolMaterials.NIGHTSTONE), "nightstone_pickaxe"),
                 RegUtil.withName(new ItemMidnightPickaxe(MidnightToolMaterials.EBONYS), "ebonys_pickaxe"),
                 RegUtil.withName(new ItemMidnightPickaxe(MidnightToolMaterials.NAGRILITE), "nagrilite_pickaxe"),
-                RegUtil.withName(new ItemMidnightPickaxe(MidnightToolMaterials.TENEBRUM), "tenebrum_pickaxe")
+                RegUtil.withName(new ItemMidnightPickaxe(MidnightToolMaterials.TENEBRUM), "tenebrum_pickaxe"),
+                RegUtil.withName(new ItemMidnightShovel(MidnightToolMaterials.SHADOWROOT), "shadowroot_shovel"),
+                RegUtil.withName(new ItemMidnightShovel(MidnightToolMaterials.NIGHTSTONE), "nightstone_shovel"),
+                RegUtil.withName(new ItemMidnightShovel(MidnightToolMaterials.EBONYS), "ebonys_shovel"),
+                RegUtil.withName(new ItemMidnightShovel(MidnightToolMaterials.NAGRILITE), "nagrilite_shovel"),
+                RegUtil.withName(new ItemMidnightShovel(MidnightToolMaterials.TENEBRUM), "tenebrum_shovel")
         );
 
         items.forEach(event.getRegistry()::register);
