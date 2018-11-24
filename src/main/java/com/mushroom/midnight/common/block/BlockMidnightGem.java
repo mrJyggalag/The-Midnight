@@ -18,12 +18,13 @@ import java.util.function.Supplier;
 public class BlockMidnightGem extends Block implements IModelProvider {
     private final Supplier<Item> gemSupplier;
 
-    public BlockMidnightGem(Supplier<Item> gemSupplier) {
+    public BlockMidnightGem(Supplier<Item> gemSupplier, int harvestlevel) {
         super(Material.ROCK);
         this.setHardness(3.0F);
         this.setResistance(5.0F);
         this.setSoundType(SoundType.STONE);
         this.setCreativeTab(Midnight.BUILDING_TAB);
+        this.setHarvestLevel("pickaxe", harvestlevel);
         this.gemSupplier = gemSupplier;
     }
 

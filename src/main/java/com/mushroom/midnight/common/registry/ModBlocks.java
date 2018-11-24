@@ -12,7 +12,6 @@ import com.mushroom.midnight.common.world.feature.LargeFungiFeature;
 import com.mushroom.midnight.common.world.feature.ShadowrootTreeFeature;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
-import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
@@ -252,10 +251,10 @@ public class ModBlocks {
                         .setHardness(4.0F),
                 RegUtil.withName(new BlockMiasmaSurface(), "miasma_surface"),
                 RegUtil.withName(new BlockMiasmaFluid(), "miasma"),
-                RegUtil.withName(new BlockMidnightGem(() -> ModItems.DARK_PEARL), "dark_pearl_ore"),
-                RegUtil.withName(new BlockMidnightOre(), "tenebrum_ore"),
-                RegUtil.withName(new BlockMidnightOre(), "nagrilite_ore"),
-                RegUtil.withName(new BlockMidnightGem(() -> ModItems.EBONYS), "ebonys_ore")
+                RegUtil.withName(new BlockMidnightGem(() -> ModItems.DARK_PEARL,0), "dark_pearl_ore"),
+                RegUtil.withName(new BlockMidnightOre(2), "tenebrum_ore"),
+                RegUtil.withName(new BlockMidnightOre(2), "nagrilite_ore"),
+                RegUtil.withName(new BlockMidnightGem(() -> ModItems.EBONYS,1), "ebonys_ore")
         ));
 
         blocks.addAll(Lists.newArrayList(
