@@ -64,6 +64,12 @@ public class Midnight {
             return new ItemStack(ModItems.DARK_STICK);
         }
     };
+    public static final CreativeTabs MIDNIGHT_TOOLS = new CreativeTabs("midnight_tools") {
+        @Override
+        public ItemStack createIcon() {
+            return new ItemStack(ModItems.SHADOWROOT_PICKAXE);
+        }
+    };
 
     @SidedProxy(serverSide = "com.mushroom.midnight.common.CommonProxy", clientSide = "com.mushroom.midnight.client.ClientProxy")
     public static CommonProxy proxy;

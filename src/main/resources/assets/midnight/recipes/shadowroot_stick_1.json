@@ -1,5 +1,5 @@
 {
-  "type": "crafting_shaped",
+  "type": "minecraft:crafting_shaped",
   "pattern": [
     "#",
     "#"
@@ -10,6 +10,6 @@
     }
   },
   "result": {
-    "item": "midnight:shadowroot_stick"
+    "item": "midnight:dark_stick"
   }
 }

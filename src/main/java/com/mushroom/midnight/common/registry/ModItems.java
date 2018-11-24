@@ -6,6 +6,11 @@ import com.mushroom.midnight.common.item.ItemBasic;
 import com.mushroom.midnight.common.item.ItemCookSuavis;
 import com.mushroom.midnight.common.item.ItemMidnightDoor;
 import com.mushroom.midnight.common.item.ItemRawSuavis;
+import com.mushroom.midnight.common.item.tools.ItemMidnightAxe;
+import com.mushroom.midnight.common.item.tools.ItemMidnightHoe;
+import com.mushroom.midnight.common.item.tools.ItemMidnightPickaxe;
+import com.mushroom.midnight.common.item.tools.ItemMidnightShovel;
+import com.mushroom.midnight.common.util.MidnightToolMaterials;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraftforge.event.RegistryEvent;
@@ -42,6 +47,27 @@ public class ModItems {
     public static final Item RAW_SUAVIS = Items.AIR;
     public static final Item COOK_SUAVIS = Items.AIR;
 
+    public static final Item SHADOWROOT_PICKAXE = Items.AIR;
+    public static final Item NIGHTSTONE_PICKAXE = Items.AIR;
+    public static final Item EBONYS_PICKAXE = Items.AIR;
+    public static final Item NAGRILITE_PICKAXE = Items.AIR;
+    public static final Item TENEBRUM_PICKAXE = Items.AIR;
+    public static final Item SHADOWROOT_SHOVEL = Items.AIR;
+    public static final Item NIGHTSTONE_SHOVEL = Items.AIR;
+    public static final Item EBONYS_SHOVEL = Items.AIR;
+    public static final Item NAGRILITE_SHOVEL = Items.AIR;
+    public static final Item TENEBRUM_SHOVEL = Items.AIR;
+    public static final Item SHADOWROOT_AXE = Items.AIR;
+    public static final Item NIGHTSTONE_AXE = Items.AIR;
+    public static final Item EBONYS_AXE = Items.AIR;
+    public static final Item NAGRILITE_AXE = Items.AIR;
+    public static final Item TENEBRUM_AXE = Items.AIR;
+    public static final Item SHADOWROOT_HOE = Items.AIR;
+    public static final Item NIGHTSTONE_HOE = Items.AIR;
+    public static final Item EBONYS_HOE = Items.AIR;
+    public static final Item NAGRILITE_HOE = Items.AIR;
+    public static final Item TENEBRUM_HOE = Items.AIR;
+
     static List<Item> items;
 
     @SubscribeEvent
@@ -63,7 +89,27 @@ public class ModItems {
                 RegUtil.withName(new ItemBasic(), "nagrilite_nugget"),
                 RegUtil.withName(new ItemBasic(), "ebonys"),
                 RegUtil.withName(new ItemRawSuavis(), "raw_suavis"),
-                RegUtil.withName(new ItemCookSuavis(), "cook_suavis")
+                RegUtil.withName(new ItemCookSuavis(), "cook_suavis"),
+                RegUtil.withName(new ItemMidnightPickaxe(MidnightToolMaterials.SHADOWROOT), "shadowroot_pickaxe"),
+                RegUtil.withName(new ItemMidnightPickaxe(MidnightToolMaterials.NIGHTSTONE), "nightstone_pickaxe"),
+                RegUtil.withName(new ItemMidnightPickaxe(MidnightToolMaterials.EBONYS), "ebonys_pickaxe"),
+                RegUtil.withName(new ItemMidnightPickaxe(MidnightToolMaterials.NAGRILITE), "nagrilite_pickaxe"),
+                RegUtil.withName(new ItemMidnightPickaxe(MidnightToolMaterials.TENEBRUM), "tenebrum_pickaxe"),
+                RegUtil.withName(new ItemMidnightShovel(MidnightToolMaterials.SHADOWROOT), "shadowroot_shovel"),
+                RegUtil.withName(new ItemMidnightShovel(MidnightToolMaterials.NIGHTSTONE), "nightstone_shovel"),
+                RegUtil.withName(new ItemMidnightShovel(MidnightToolMaterials.EBONYS), "ebonys_shovel"),
+                RegUtil.withName(new ItemMidnightShovel(MidnightToolMaterials.NAGRILITE), "nagrilite_shovel"),
+                RegUtil.withName(new ItemMidnightShovel(MidnightToolMaterials.TENEBRUM), "tenebrum_shovel"),
+                RegUtil.withName(new ItemMidnightAxe(MidnightToolMaterials.SHADOWROOT, 6.0F, -3.2F), "shadowroot_axe"),
+                RegUtil.withName(new ItemMidnightAxe(MidnightToolMaterials.NIGHTSTONE, 7.0F, -3.1F), "nightstone_axe"),
+                RegUtil.withName(new ItemMidnightAxe(MidnightToolMaterials.EBONYS, 8.0F, -3.0F), "ebonys_axe"),
+                RegUtil.withName(new ItemMidnightAxe(MidnightToolMaterials.NAGRILITE, 9.0F, -2.9F), "nagrilite_axe"),
+                RegUtil.withName(new ItemMidnightAxe(MidnightToolMaterials.TENEBRUM, 10.0F, -2.8F), "tenebrum_axe"),
+                RegUtil.withName(new ItemMidnightHoe(MidnightToolMaterials.SHADOWROOT), "shadowroot_hoe"),
+                RegUtil.withName(new ItemMidnightHoe(MidnightToolMaterials.NIGHTSTONE), "nightstone_hoe"),
+                RegUtil.withName(new ItemMidnightHoe(MidnightToolMaterials.EBONYS), "ebonys_hoe"),
+                RegUtil.withName(new ItemMidnightHoe(MidnightToolMaterials.NAGRILITE), "nagrilite_hoe"),
+                RegUtil.withName(new ItemMidnightHoe(MidnightToolMaterials.TENEBRUM), "tenebrum_hoe")
         );
 
         items.forEach(event.getRegistry()::register);

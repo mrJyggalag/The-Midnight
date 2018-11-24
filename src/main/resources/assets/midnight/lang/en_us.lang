@@ -3,6 +3,7 @@
 itemGroup.midnight_building=Midnight Building
 itemGroup.midnight_decoration=Midnight Decoration
 itemGroup.midnight_items=Midnight Items
+itemGroup.midnight_tools=Midnight Tools
 
 # Blocks
 
@@ -164,6 +165,32 @@ item.midnight.ebonys.name=Ebonys
 
 item.midnight.raw_suavis.name=Raw Suavis Slice
 item.midnight.cook_suavis.name=Cooked Suavis Slice
+
+# Tools, Weapons and Armors
+
+item.midnight.shadowroot_pickaxe.name=Shadowroot Pickaxe
+item.midnight.tenebrum_pickaxe.name=Tenebrum Pickaxe
+item.midnight.nagrilite_pickaxe.name=Nagrilite Pickaxe
+item.midnight.ebonys_pickaxe.name=Ebonys Pickaxe
+item.midnight.nightstone_pickaxe.name=Nightstone Pickaxe
+
+item.midnight.shadowroot_shovel.name=Shadowroot Shovel
+item.midnight.tenebrum_shovel.name=Tenebrum Shovel
+item.midnight.nagrilite_shovel.name=Nagrilite Shovel
+item.midnight.ebonys_shovel.name=Ebonys Shovel
+item.midnight.nightstone_shovel.name=Nightstone Shovel
+
+item.midnight.shadowroot_axe.name=Shadowroot Axe
+item.midnight.tenebrum_axe.name=Tenebrum Axe
+item.midnight.nagrilite_axe.name=Nagrilite Axe
+item.midnight.ebonys_axe.name=Ebonys Axe
+item.midnight.nightstone_axe.name=Nightstone Axe
+
+item.midnight.shadowroot_hoe.name=Shadowroot Hoe
+item.midnight.tenebrum_hoe.name=Tenebrum Hoe
+item.midnight.nagrilite_hoe.name=Nagrilite Hoe
+item.midnight.ebonys_hoe.name=Ebonys Hoe
+item.midnight.nightstone_hoe.name=Nightstone Hoe
 
 # Fluids
 

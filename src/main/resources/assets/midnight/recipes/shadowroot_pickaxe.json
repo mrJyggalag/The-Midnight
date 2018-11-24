@@ -1,15 +1,19 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    "#",
-    "#"
+    "AAA",
+    " S ",
+    " S "
   ],
   "key": {
-    "#": {
+    "A": {
       "item": "midnight:shadowroot_planks"
+    },
+    "S": {
+      "item": "midnight:dark_stick"
     }
   },
   "result": {
-    "item": "midnight:dark_stick"
+    "item": "midnight:shadowroot_pickaxe"
   }
 }
