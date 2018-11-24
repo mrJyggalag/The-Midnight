@@ -6,6 +6,8 @@ import com.mushroom.midnight.common.item.ItemBasic;
 import com.mushroom.midnight.common.item.ItemCookSuavis;
 import com.mushroom.midnight.common.item.ItemMidnightDoor;
 import com.mushroom.midnight.common.item.ItemRawSuavis;
+import com.mushroom.midnight.common.item.tools.ItemMidnightPickaxe;
+import com.mushroom.midnight.common.util.MidnightToolMaterials;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraftforge.event.RegistryEvent;
@@ -42,6 +44,12 @@ public class ModItems {
     public static final Item RAW_SUAVIS = Items.AIR;
     public static final Item COOK_SUAVIS = Items.AIR;
 
+    public static final Item SHADOWROOT_PICKAXE = Items.AIR;
+    public static final Item NIGHTSTONE_PICKAXE = Items.AIR;
+    public static final Item EBONYS_PICKAXE = Items.AIR;
+    public static final Item NAGRILITE_PICKAXE = Items.AIR;
+    public static final Item TENEBRUM_PICKAXE = Items.AIR;
+
     static List<Item> items;
 
     @SubscribeEvent
@@ -63,7 +71,12 @@ public class ModItems {
                 RegUtil.withName(new ItemBasic(), "nagrilite_nugget"),
                 RegUtil.withName(new ItemBasic(), "ebonys"),
                 RegUtil.withName(new ItemRawSuavis(), "raw_suavis"),
-                RegUtil.withName(new ItemCookSuavis(), "cook_suavis")
+                RegUtil.withName(new ItemCookSuavis(), "cook_suavis"),
+                RegUtil.withName(new ItemMidnightPickaxe(MidnightToolMaterials.SHADOWROOT), "shadowroot_pickaxe"),
+                RegUtil.withName(new ItemMidnightPickaxe(MidnightToolMaterials.NIGHTSTONE), "nightstone_pickaxe"),
+                RegUtil.withName(new ItemMidnightPickaxe(MidnightToolMaterials.EBONYS), "ebonys_pickaxe"),
+                RegUtil.withName(new ItemMidnightPickaxe(MidnightToolMaterials.NAGRILITE), "nagrilite_pickaxe"),
+                RegUtil.withName(new ItemMidnightPickaxe(MidnightToolMaterials.TENEBRUM), "tenebrum_pickaxe")
         );
 
         items.forEach(event.getRegistry()::register);
