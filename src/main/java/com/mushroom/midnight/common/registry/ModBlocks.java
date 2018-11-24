@@ -253,9 +253,12 @@ public class ModBlocks {
                 RegUtil.withName(new BlockMiasmaSurface(), "miasma_surface"),
                 RegUtil.withName(new BlockMiasmaFluid(), "miasma"),
                 RegUtil.withName(new BlockMidnightGem(() -> ModItems.DARK_PEARL), "dark_pearl_ore"),
-                RegUtil.withName(new BlockMidnightOre(), "tenebrum_ore"),
-                RegUtil.withName(new BlockMidnightOre(), "nagrilite_ore"),
+                RegUtil.withName(new BlockMidnightOre(), "tenebrum_ore")
+                        .withHarvestLevel("pickaxe", 2),
+                RegUtil.withName(new BlockMidnightOre(), "nagrilite_ore")
+                        .withHarvestLevel("pickaxe", 2),
                 RegUtil.withName(new BlockMidnightGem(() -> ModItems.EBONYS), "ebonys_ore")
+                        .withHarvestLevel("pickaxe", 1),
         ));
 
         blocks.addAll(Lists.newArrayList(
