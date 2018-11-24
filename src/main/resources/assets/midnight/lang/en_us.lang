@@ -186,6 +186,12 @@ item.midnight.nagrilite_axe.name=Nagrilite Axe
 item.midnight.ebonys_axe.name=Ebonys Axe
 item.midnight.nightstone_axe.name=Nightstone Axe
 
+item.midnight.shadowroot_hoe.name=Shadowroot Hoe
+item.midnight.tenebrum_hoe.name=Tenebrum Hoe
+item.midnight.nagrilite_hoe.name=Nagrilite Hoe
+item.midnight.ebonys_hoe.name=Ebonys Hoe
+item.midnight.nightstone_hoe.name=Nightstone Hoe
+
 # Fluids
 
 fluid.midnight.miasma=Miasma
