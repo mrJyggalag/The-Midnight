@@ -180,6 +180,12 @@ item.midnight.nagrilite_shovel.name=Nagrilite Shovel
 item.midnight.ebonys_shovel.name=Ebonys Shovel
 item.midnight.nightstone_shovel.name=Nightstone Shovel
 
+item.midnight.shadowroot_axe.name=Shadowroot Axe
+item.midnight.tenebrum_axe.name=Tenebrum Axe
+item.midnight.nagrilite_axe.name=Nagrilite Axe
+item.midnight.ebonys_axe.name=Ebonys Axe
+item.midnight.nightstone_axe.name=Nightstone Axe
+
 # Fluids
 
 fluid.midnight.miasma=Miasma

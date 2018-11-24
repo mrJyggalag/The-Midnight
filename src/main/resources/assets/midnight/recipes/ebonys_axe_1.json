@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " AA",
+    " SA",
+    " S "
+  ],
+  "key": {
+    "A": {
+      "item": "midnight:ebonys"
+    },
+    "S": {
+      "item": "midnight:dark_stick"
+    }
+  },
+  "result": {
+    "item": "midnight:ebonys_axe"
+  }
+}

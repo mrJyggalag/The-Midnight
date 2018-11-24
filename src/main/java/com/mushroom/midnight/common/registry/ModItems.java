@@ -6,6 +6,7 @@ import com.mushroom.midnight.common.item.ItemBasic;
 import com.mushroom.midnight.common.item.ItemCookSuavis;
 import com.mushroom.midnight.common.item.ItemMidnightDoor;
 import com.mushroom.midnight.common.item.ItemRawSuavis;
+import com.mushroom.midnight.common.item.tools.ItemMidnightAxe;
 import com.mushroom.midnight.common.item.tools.ItemMidnightPickaxe;
 import com.mushroom.midnight.common.item.tools.ItemMidnightShovel;
 import com.mushroom.midnight.common.util.MidnightToolMaterials;
@@ -55,6 +56,11 @@ public class ModItems {
     public static final Item EBONYS_SHOVEL = Items.AIR;
     public static final Item NAGRILITE_SHOVEL = Items.AIR;
     public static final Item TENEBRUM_SHOVEL = Items.AIR;
+    public static final Item SHADOWROOT_AXE = Items.AIR;
+    public static final Item NIGHTSTONE_AXE = Items.AIR;
+    public static final Item EBONYS_AXE = Items.AIR;
+    public static final Item NAGRILITE_AXE = Items.AIR;
+    public static final Item TENEBRUM_AXE = Items.AIR;
 
     static List<Item> items;
 
@@ -87,7 +93,12 @@ public class ModItems {
                 RegUtil.withName(new ItemMidnightShovel(MidnightToolMaterials.NIGHTSTONE), "nightstone_shovel"),
                 RegUtil.withName(new ItemMidnightShovel(MidnightToolMaterials.EBONYS), "ebonys_shovel"),
                 RegUtil.withName(new ItemMidnightShovel(MidnightToolMaterials.NAGRILITE), "nagrilite_shovel"),
-                RegUtil.withName(new ItemMidnightShovel(MidnightToolMaterials.TENEBRUM), "tenebrum_shovel")
+                RegUtil.withName(new ItemMidnightShovel(MidnightToolMaterials.TENEBRUM), "tenebrum_shovel"),
+                RegUtil.withName(new ItemMidnightAxe(MidnightToolMaterials.SHADOWROOT, 6.0F, -3.2F), "shadowroot_axe"),
+                RegUtil.withName(new ItemMidnightAxe(MidnightToolMaterials.NIGHTSTONE, 7.0F, -3.1F), "nightstone_axe"),
+                RegUtil.withName(new ItemMidnightAxe(MidnightToolMaterials.EBONYS, 8.0F, -3.0F), "ebonys_axe"),
+                RegUtil.withName(new ItemMidnightAxe(MidnightToolMaterials.NAGRILITE, 9.0F, -2.9F), "nagrilite_axe"),
+                RegUtil.withName(new ItemMidnightAxe(MidnightToolMaterials.TENEBRUM, 10.0F, -2.8F), "tenebrum_axe")
         );
 
         items.forEach(event.getRegistry()::register);
