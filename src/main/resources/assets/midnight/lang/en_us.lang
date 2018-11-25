@@ -199,6 +199,16 @@ item.midnight.nagrilite_sword.name=Nagrilite Sword
 item.midnight.ebonys_sword.name=Ebonys Sword
 item.midnight.nightstone_sword.name=Nightstone Sword
 
+item.midnight.rockshroom_helmet.name=Rockshroom Helmet
+item.midnight.rockshroom_chestplate.name=Rockshroom Chestplate
+item.midnight.rockshroom_leggings.name=Rockshroom Leggings
+item.midnight.rockshroom_boots.name=Rockshroom Boots
+
+item.midnight.tenebrum_helmet.name=Tenebrum Helmet
+item.midnight.tenebrum_chestplate.name=Tenebrum Chestplate
+item.midnight.tenebrum_leggings.name=Tenebrum Leggings
+item.midnight.tenebrum_boots.name=Tenebrum Boots
+
 # Fluids
 
 fluid.midnight.miasma=Miasma
