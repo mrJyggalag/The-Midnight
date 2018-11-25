@@ -6,10 +6,7 @@ import com.mushroom.midnight.common.item.ItemBasic;
 import com.mushroom.midnight.common.item.ItemCookSuavis;
 import com.mushroom.midnight.common.item.ItemMidnightDoor;
 import com.mushroom.midnight.common.item.ItemRawSuavis;
-import com.mushroom.midnight.common.item.tools.ItemMidnightAxe;
-import com.mushroom.midnight.common.item.tools.ItemMidnightHoe;
-import com.mushroom.midnight.common.item.tools.ItemMidnightPickaxe;
-import com.mushroom.midnight.common.item.tools.ItemMidnightShovel;
+import com.mushroom.midnight.common.item.tools.*;
 import com.mushroom.midnight.common.util.MidnightToolMaterials;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
@@ -68,6 +65,12 @@ public class ModItems {
     public static final Item NAGRILITE_HOE = Items.AIR;
     public static final Item TENEBRUM_HOE = Items.AIR;
 
+    public static final Item SHADOWROOT_SWORD = Items.AIR;
+    public static final Item NIGHTSTONE_SWORD = Items.AIR;
+    public static final Item EBONYS_SWORD = Items.AIR;
+    public static final Item NAGRILITE_SWORD = Items.AIR;
+    public static final Item TENEBRUM_SWORD = Items.AIR;
+
     static List<Item> items;
 
     @SubscribeEvent
@@ -109,7 +112,12 @@ public class ModItems {
                 RegUtil.withName(new ItemMidnightHoe(MidnightToolMaterials.NIGHTSTONE), "nightstone_hoe"),
                 RegUtil.withName(new ItemMidnightHoe(MidnightToolMaterials.EBONYS), "ebonys_hoe"),
                 RegUtil.withName(new ItemMidnightHoe(MidnightToolMaterials.NAGRILITE), "nagrilite_hoe"),
-                RegUtil.withName(new ItemMidnightHoe(MidnightToolMaterials.TENEBRUM), "tenebrum_hoe")
+                RegUtil.withName(new ItemMidnightHoe(MidnightToolMaterials.TENEBRUM), "tenebrum_hoe"),
+                RegUtil.withName(new ItemMidnightSword(MidnightToolMaterials.SHADOWROOT), "shadowroot_sword"),
+                RegUtil.withName(new ItemMidnightSword(MidnightToolMaterials.NIGHTSTONE), "nightstone_sword"),
+                RegUtil.withName(new ItemMidnightSword(MidnightToolMaterials.EBONYS), "ebonys_sword"),
+                RegUtil.withName(new ItemMidnightSword(MidnightToolMaterials.NAGRILITE), "nagrilite_sword"),
+                RegUtil.withName(new ItemMidnightSword(MidnightToolMaterials.TENEBRUM), "tenebrum_sword")
         );
 
         items.forEach(event.getRegistry()::register);
