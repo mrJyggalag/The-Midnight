@@ -6,10 +6,15 @@ import com.mushroom.midnight.common.item.ItemBasic;
 import com.mushroom.midnight.common.item.ItemCookSuavis;
 import com.mushroom.midnight.common.item.ItemMidnightDoor;
 import com.mushroom.midnight.common.item.ItemRawSuavis;
+import com.mushroom.midnight.common.item.armors.ItemMidnightBoots;
+import com.mushroom.midnight.common.item.armors.ItemMidnightChestplate;
+import com.mushroom.midnight.common.item.armors.ItemMidnightHelmet;
+import com.mushroom.midnight.common.item.armors.ItemMidnightLeggings;
 import com.mushroom.midnight.common.item.tools.ItemMidnightAxe;
 import com.mushroom.midnight.common.item.tools.ItemMidnightHoe;
 import com.mushroom.midnight.common.item.tools.ItemMidnightPickaxe;
 import com.mushroom.midnight.common.item.tools.ItemMidnightShovel;
+import com.mushroom.midnight.common.util.MidnightArmorMaterials;
 import com.mushroom.midnight.common.util.MidnightToolMaterials;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
@@ -68,6 +73,15 @@ public class ModItems {
     public static final Item NAGRILITE_HOE = Items.AIR;
     public static final Item TENEBRUM_HOE = Items.AIR;
 
+    public static final Item ROCKSHROOM_HELMET = Items.AIR;
+    public static final Item ROCKSHROOM_CHESTPLATE = Items.AIR;
+    public static final Item ROCKSHROOM_LEGGINGS = Items.AIR;
+    public static final Item ROCKSHROOM_BOOTS = Items.AIR;
+    public static final Item TENEBRUM_HELMET = Items.AIR;
+    public static final Item TENEBRUM_CHESTPLATE = Items.AIR;
+    public static final Item TENEBRUM_LEGGINGS = Items.AIR;
+    public static final Item TENEBRUM_BOOTS = Items.AIR;
+
     static List<Item> items;
 
     @SubscribeEvent
@@ -109,7 +123,15 @@ public class ModItems {
                 RegUtil.withName(new ItemMidnightHoe(MidnightToolMaterials.NIGHTSTONE), "nightstone_hoe"),
                 RegUtil.withName(new ItemMidnightHoe(MidnightToolMaterials.EBONYS), "ebonys_hoe"),
                 RegUtil.withName(new ItemMidnightHoe(MidnightToolMaterials.NAGRILITE), "nagrilite_hoe"),
-                RegUtil.withName(new ItemMidnightHoe(MidnightToolMaterials.TENEBRUM), "tenebrum_hoe")
+                RegUtil.withName(new ItemMidnightHoe(MidnightToolMaterials.TENEBRUM), "tenebrum_hoe"),
+                RegUtil.withName(new ItemMidnightHelmet(MidnightArmorMaterials.ROCKSHROOM), "rockshroom_helmet"),
+                RegUtil.withName(new ItemMidnightChestplate(MidnightArmorMaterials.ROCKSHROOM), "rockshroom_chestplate"),
+                RegUtil.withName(new ItemMidnightLeggings(MidnightArmorMaterials.ROCKSHROOM), "rockshroom_leggings"),
+                RegUtil.withName(new ItemMidnightBoots(MidnightArmorMaterials.ROCKSHROOM), "rockshroom_boots"),
+                RegUtil.withName(new ItemMidnightHelmet(MidnightArmorMaterials.TENEBRUM), "tenebrum_helmet"),
+                RegUtil.withName(new ItemMidnightChestplate(MidnightArmorMaterials.TENEBRUM), "tenebrum_chestplate"),
+                RegUtil.withName(new ItemMidnightLeggings(MidnightArmorMaterials.TENEBRUM), "tenebrum_leggings"),
+                RegUtil.withName(new ItemMidnightBoots(MidnightArmorMaterials.TENEBRUM), "tenebrum_boots")
         );
 
         items.forEach(event.getRegistry()::register);
