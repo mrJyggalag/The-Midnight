@@ -1,7 +1,10 @@
 package com.mushroom.midnight.common.tile.base;
 
+import com.mushroom.midnight.common.block.BlockBasic;
 import com.mushroom.midnight.common.block.BlockMidnightFurnace;
 
+import com.mushroom.midnight.common.registry.ModBlocks;
+import com.mushroom.midnight.common.registry.ModItems;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockFurnace;
 import net.minecraft.block.material.Material;
@@ -370,31 +373,23 @@ public class TileEntityMidnightFurnace  extends TileEntityLockable implements IT
       if (burnTime >= 0) return burnTime;
       Item item = stack.getItem();
 
-      if (item == Item.getItemFromBlock(Blocks.WOODEN_SLAB))
+      if (item == Item.getItemFromBlock(ModBlocks.SHADOWROOT_SLAB))
       {
         return 150;
       }
-      else if (item == Item.getItemFromBlock(Blocks.WOOL))
+      if (item == Item.getItemFromBlock(ModBlocks.DARK_WILLOW_SLAB))
       {
-        return 100;
+        return 150;
       }
-      else if (item == Item.getItemFromBlock(Blocks.CARPET))
-      {
-        return 67;
-      }
-      else if (item == Item.getItemFromBlock(Blocks.LADDER))
-      {
-        return 300;
-      }
-      else if (item == Item.getItemFromBlock(Blocks.WOODEN_BUTTON))
-      {
-        return 100;
-      }
+      if (item == Item.getItemFromBlock(ModBlocks.DEAD_WOOD_SLAB))
+        {
+            return 150;
+        }
       else if (Block.getBlockFromItem(item).getDefaultState().getMaterial() == Material.WOOD)
       {
         return 300;
       }
-      else if (item == Item.getItemFromBlock(Blocks.COAL_BLOCK))
+      else if (item == Item.getItemFromBlock(ModBlocks.DARK_PEARL_BLOCK))
       {
         return 16000;
       }
@@ -410,49 +405,19 @@ public class TileEntityMidnightFurnace  extends TileEntityLockable implements IT
       {
         return 200;
       }
-      else if (item == Items.STICK)
+      else if (item == ModItems.DARK_STICK)
       {
         return 100;
       }
-      else if (item != Items.BOW && item != Items.FISHING_ROD)
-      {
-        if (item == Items.SIGN)
-        {
-          return 200;
-        }
-        else if (item == Items.COAL)
+      else if (item == ModItems.DARK_PEARL)
         {
           return 1600;
         }
-        else if (item == Items.LAVA_BUCKET)
-        {
-          return 20000;
-        }
-        else if (item != Item.getItemFromBlock(Blocks.SAPLING) && item != Items.BOWL)
-        {
-          if (item == Items.BLAZE_ROD)
-          {
-            return 2400;
-          }
-          else if (item instanceof ItemDoor && item != Items.IRON_DOOR)
-          {
-            return 200;
-          }
           else
           {
             return item instanceof ItemBoat ? 400 : 0;
           }
         }
-        else
-        {
-          return 100;
-        }
-      }
-      else
-      {
-        return 300;
-      }
-    }
   }
 
   public static boolean isItemFuel(ItemStack stack)
