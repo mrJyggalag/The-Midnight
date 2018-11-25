@@ -11,6 +11,7 @@ import com.mushroom.midnight.common.item.armors.ItemMidnightBoots;
 import com.mushroom.midnight.common.item.armors.ItemMidnightChestplate;
 import com.mushroom.midnight.common.item.armors.ItemMidnightHelmet;
 import com.mushroom.midnight.common.item.armors.ItemMidnightLeggings;
+import com.mushroom.midnight.common.util.MidnightArmorMaterials;
 import com.mushroom.midnight.common.util.MidnightToolMaterials;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
@@ -130,8 +131,7 @@ public class ModItems {
                 RegUtil.withName(new ItemMidnightSword(MidnightToolMaterials.NIGHTSTONE), "nightstone_sword"),
                 RegUtil.withName(new ItemMidnightSword(MidnightToolMaterials.EBONYS), "ebonys_sword"),
                 RegUtil.withName(new ItemMidnightSword(MidnightToolMaterials.NAGRILITE), "nagrilite_sword"),
-                RegUtil.withName(new ItemMidnightSword(MidnightToolMaterials.TENEBRUM), "tenebrum_sword")
-                RegUtil.withName(new ItemMidnightHoe(MidnightToolMaterials.TENEBRUM), "tenebrum_hoe"),
+                RegUtil.withName(new ItemMidnightSword(MidnightToolMaterials.TENEBRUM), "tenebrum_sword"),
                 RegUtil.withName(new ItemMidnightHelmet(MidnightArmorMaterials.ROCKSHROOM), "rockshroom_helmet"),
                 RegUtil.withName(new ItemMidnightChestplate(MidnightArmorMaterials.ROCKSHROOM), "rockshroom_chestplate"),
                 RegUtil.withName(new ItemMidnightLeggings(MidnightArmorMaterials.ROCKSHROOM), "rockshroom_leggings"),
