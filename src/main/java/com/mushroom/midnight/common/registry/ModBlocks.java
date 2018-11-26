@@ -109,6 +109,8 @@ public class ModBlocks {
     public static final Block DEAD_WOOD_DOOR = Blocks.AIR;
     public static final Block DARK_WILLOW_DOOR = Blocks.AIR;
 
+    public static final Block TENEBRUM_DOOR = Blocks.AIR;
+
     public static final Block NIGHTSHROOM_DOOR = Blocks.AIR;
     public static final Block DEWSHROOM_DOOR = Blocks.AIR;
     public static final Block VIRIDSHROOM_DOOR = Blocks.AIR;
@@ -116,6 +118,8 @@ public class ModBlocks {
     public static final Block SHADOWROOT_TRAPDOOR = Blocks.AIR;
     public static final Block DEAD_WOOD_TRAPDOOR = Blocks.AIR;
     public static final Block DARK_WILLOW_TRAPDOOR = Blocks.AIR;
+
+    public static final Block TENEBRUM_TRAPDOOR = Blocks.AIR;
 
     public static final Block NIGHTSHROOM_TRAPDOOR = Blocks.AIR;
     public static final Block DEWSHROOM_TRAPDOOR = Blocks.AIR;
