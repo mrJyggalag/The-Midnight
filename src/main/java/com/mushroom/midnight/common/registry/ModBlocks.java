@@ -109,7 +109,7 @@ public class ModBlocks {
     public static final Block DEAD_WOOD_DOOR = Blocks.AIR;
     public static final Block DARK_WILLOW_DOOR = Blocks.AIR;
 
-    public static final Block TENEBRUM_DOOR = Blocks.AIR;
+    // public static final Block TENEBRUM_DOOR = Blocks.AIR;
 
     public static final Block NIGHTSHROOM_DOOR = Blocks.AIR;
     public static final Block DEWSHROOM_DOOR = Blocks.AIR;
@@ -119,7 +119,7 @@ public class ModBlocks {
     public static final Block DEAD_WOOD_TRAPDOOR = Blocks.AIR;
     public static final Block DARK_WILLOW_TRAPDOOR = Blocks.AIR;
 
-    public static final Block TENEBRUM_TRAPDOOR = Blocks.AIR;
+    // public static final Block TENEBRUM_TRAPDOOR = Blocks.AIR;
 
     public static final Block NIGHTSHROOM_TRAPDOOR = Blocks.AIR;
     public static final Block DEWSHROOM_TRAPDOOR = Blocks.AIR;
@@ -307,14 +307,14 @@ public class ModBlocks {
                 RegUtil.withName(new BlockMidnightDoor(() -> ModItems.SHADOWROOT_DOOR), "shadowroot_door"),
                 RegUtil.withName(new BlockMidnightDoor(() -> ModItems.DARK_WILLOW_DOOR), "dark_willow_door"),
                 RegUtil.withName(new BlockMidnightDoor(() -> ModItems.DEAD_WOOD_DOOR), "dead_wood_door"),
-                RegUtil.withName(new BlockMidnightDoor(() -> ModItems.TENEBRUM_DOOR), "tenebrum_door"),
+                // RegUtil.withName(new BlockMidnightDoor(() -> ModItems.TENEBRUM_DOOR), "tenebrum_door"),
                 RegUtil.withName(new BlockMidnightDoor(() -> ModItems.NIGHTSHROOM_DOOR), "nightshroom_door"),
                 RegUtil.withName(new BlockMidnightDoor(() -> ModItems.DEWSHROOM_DOOR), "dewshroom_door"),
                 RegUtil.withName(new BlockMidnightDoor(() -> ModItems.VIRIDSHROOM_DOOR), "viridshroom_door"),
                 RegUtil.withName(new BlockMidnightTrapDoor(), "shadowroot_trapdoor"),
                 RegUtil.withName(new BlockMidnightTrapDoor(), "dark_willow_trapdoor"),
                 RegUtil.withName(new BlockMidnightTrapDoor(), "dead_wood_trapdoor"),
-                RegUtil.withName(new BlockMidnightTrapDoor(), "tenebrum_trapdoor"),
+                // RegUtil.withName(new BlockMidnightTrapDoor(), "tenebrum_trapdoor"),
                 RegUtil.withName(new BlockMidnightTrapDoor(), "nightshroom_trapdoor"),
                 RegUtil.withName(new BlockMidnightTrapDoor(), "dewshroom_trapdoor"),
                 RegUtil.withName(new BlockMidnightTrapDoor(), "viridshroom_trapdoor"),
