@@ -48,9 +48,10 @@ tile.midnight.double_midnight_grass.name=Double herbes de Midnight
 tile.midnight.lumen_bud.name=Bourgeon de Lumen
 tile.midnight.double_lumen_bud.name=Double bourgeon de Lumen
 
-tile.midnight.shadowroot_trapdoor.name=Trape en racine d'ombre
-tile.midnight.dark_willow_trapdoor.name=Trape en saule noir
-tile.midnight.dead_wood_trapdoor.name=Trape en bois mort
+tile.midnight.shadowroot_trapdoor.name=Trappe en racine d'ombre
+tile.midnight.dark_willow_trapdoor.name=Trappe en saule noir
+tile.midnight.dead_wood_trapdoor.name=Trappe en bois mort
+tile.midnight.tenebrum_trapdoor.name=Trappe en Tenebrum
 
 tile.midnight.shadowroot_sapling.name=Pousse de racine d'ombre
 tile.midnight.dark_willow_sapling.name=Pousse de saule noir
@@ -79,19 +80,19 @@ tile.midnight.nightshroom_stem.name=Tronc de champignon de nuit
 tile.midnight.nightshroom_hat.name=Chapeau en champignon de nuit
 tile.midnight.nightshroom_planks.name=Planches de champignon de nuit
 tile.midnight.nightshroom_shelf.name=Etagères en champignon de nuit
-tile.midnight.nightshroom_trapdoor.name=Trape en champignon de nuit
+tile.midnight.nightshroom_trapdoor.name=Trappe en champignon de nuit
 
 tile.midnight.dewshroom_stem.name=Tronc de champignon de rosée
 tile.midnight.dewshroom_hat.name=Chapeau en champignon de rosée
 tile.midnight.dewshroom_planks.name=Planches de champignon de rosée
 tile.midnight.dewshroom_shelf.name=Étagères en champignon de rosée
-tile.midnight.dewshroom_trapdoor.name=Trape en champignon de rosée
+tile.midnight.dewshroom_trapdoor.name=Trappe en champignon de rosée
 
 tile.midnight.viridshroom_stem.name=Tronc de champignon viride
 tile.midnight.viridshroom_hat.name=Chapeau en champignon viride
 tile.midnight.viridshroom_planks.name=Planches de champignon viride
 tile.midnight.viridshroom_shelf.name=Étagères en champignon viride
-tile.midnight.viridshroom_trapdoor.name=Trape en champignon viride
+tile.midnight.viridshroom_trapdoor.name=Trappe en champignon viride
 
 tile.midnight.deceitful_peat.name=Deceitful Peat
 tile.midnight.deceitful_algae.name=Deceitful Algae
@@ -142,6 +143,7 @@ tile.midnight.suavis.name=Suavis
 item.midnight.shadowroot_door.name=Porte en racine d'ombre
 item.midnight.dark_willow_door.name=Porte en saule noir
 item.midnight.dead_wood_door.name=Porte en bois mort
+item.midnight.tenebrum_door.name=Porte en Tenebrum
 
 item.midnight.nightshroom_door.name=Porte en champignon de nuit
 item.midnight.dewshroom_door.name=Porte en champignon de rosée
