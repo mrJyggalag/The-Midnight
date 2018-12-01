@@ -35,7 +35,7 @@ public class ModItems {
     public static final Item NIGHTSHROOM_DOOR = Items.AIR;
     public static final Item DEWSHROOM_DOOR = Items.AIR;
     public static final Item VIRIDSHROOM_DOOR = Items.AIR;
-    // public static final Item TENEBRUM_DOOR =Items.AIR;
+    public static final Item TENEBRUM_DOOR =Items.AIR;
 
     public static final Item GEODE = Items.AIR;
     public static final Item DARK_PEARL = Items.AIR;
@@ -97,7 +97,7 @@ public class ModItems {
                 RegUtil.withName(new ItemMidnightDoor(ModBlocks.NIGHTSHROOM_DOOR), "nightshroom_door"),
                 RegUtil.withName(new ItemMidnightDoor(ModBlocks.DEWSHROOM_DOOR), "dewshroom_door"),
                 RegUtil.withName(new ItemMidnightDoor(ModBlocks.VIRIDSHROOM_DOOR), "viridshroom_door"),
-                // RegUtil.withName(new ItemMidnightDoor(ModBlocks.TENEBRUM_DOOR), "tenebrum_door"),
+                RegUtil.withName(new ItemMidnightDoor(ModBlocks.TENEBRUM_DOOR), "tenebrum_door"),
                 RegUtil.withName(new ItemBasic(), "geode"),
                 RegUtil.withName(new ItemBasic(), "dark_pearl"),
                 RegUtil.withName(new ItemBasic(), "dark_stick"),
