@@ -53,6 +53,7 @@ tile.midnight.double_lumen_bud.name=Double Lumen Bud
 tile.midnight.shadowroot_trapdoor.name=Shadowroot Trapdoor
 tile.midnight.dark_willow_trapdoor.name=Dark Willow Trapdoor
 tile.midnight.dead_wood_trapdoor.name=Dead Wood Trapdoor
+tile.midnight.tenebrum_trapdoor.name=Tenebrum Trapdoor
 
 tile.midnight.shadowroot_sapling.name=Shadowroot Sapling
 tile.midnight.dark_willow_sapling.name=Dark Willow Sapling
@@ -149,6 +150,7 @@ tile.midnight.suavis.name=Suavis
 tile.midnight.shadowroot_door.name=Shadowroot Door
 tile.midnight.dark_willow_door.name=Dark Willow Door
 tile.midnight.dead_wood_door.name=Dead Wood Door
+tile.midnight.tenebrum_door.name=Tenebrum Door
 
 tile.midnight.nightshroom_door.name=Nightshroom Door
 tile.midnight.dewshroom_door.name=Dewshroom Door

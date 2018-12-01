@@ -73,6 +73,7 @@ public class ModModelRegistry {
         ModelLoader.setCustomStateMapper(ModBlocks.SHADOWROOT_DOOR, new StateMap.Builder().ignore(BlockDoor.POWERED).build());
         ModelLoader.setCustomStateMapper(ModBlocks.DARK_WILLOW_DOOR, new StateMap.Builder().ignore(BlockDoor.POWERED).build());
         ModelLoader.setCustomStateMapper(ModBlocks.DEAD_WOOD_DOOR, new StateMap.Builder().ignore(BlockDoor.POWERED).build());
+        ModelLoader.setCustomStateMapper(ModBlocks.TENEBRUM_DOOR, new StateMap.Builder().ignore(BlockDoor.POWERED).build());
         ModelLoader.setCustomStateMapper(ModBlocks.NIGHTSHROOM_DOOR, new StateMap.Builder().ignore(BlockDoor.POWERED).build());
         ModelLoader.setCustomStateMapper(ModBlocks.DEWSHROOM_DOOR, new StateMap.Builder().ignore(BlockDoor.POWERED).build());
         ModelLoader.setCustomStateMapper(ModBlocks.VIRIDSHROOM_DOOR, new StateMap.Builder().ignore(BlockDoor.POWERED).build());

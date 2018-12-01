@@ -54,7 +54,10 @@ public class ItemDeceitfulAlgae extends ItemBlock {
 
                 if (this.placeBlockAt(stack, player, world, placePos, sideHit, hitX, hitY, hitZ, placeState)) {
                     this.applyPlaceEffect(world, player, placePos);
-                    stack.shrink(1);
+
+                    if (!player.capabilities.isCreativeMode) {
+                        stack.shrink(1);
+                    }
 
                     return new ActionResult<>(EnumActionResult.SUCCESS, stack);
                 }
