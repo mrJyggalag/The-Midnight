@@ -81,7 +81,7 @@ public class EntityRifter extends EntityMob implements IRiftTraveler, IEntityAdd
         super(world);
         this.homeRift = new EntityReference<>(world);
         this.dragSolver = new DragSolver(this);
-        if (world.provider.getDimensionType() == ModDimensions.MIDNIGHT) {
+        if (world != null && world.provider.getDimensionType() == ModDimensions.MIDNIGHT) {
             setSize(0.84f, 2.8f); // scaled by 1.4
         } else {
             setSize(0.6f, 2f);
