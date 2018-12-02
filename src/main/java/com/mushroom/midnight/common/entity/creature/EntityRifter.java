@@ -27,6 +27,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAILookIdle;
 import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
+import net.minecraft.entity.ai.EntityAIOpenDoor;
 import net.minecraft.entity.ai.EntityAISwimming;
 import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
@@ -37,6 +38,7 @@ import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.pathfinding.PathNavigateGround;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
@@ -82,8 +84,13 @@ public class EntityRifter extends EntityMob implements IRiftTraveler, IEntityAdd
         super(world);
         this.homeRift = new EntityReference<>(world);
         this.dragSolver = new DragSolver(this);
+
         float scaleModifier = world.provider.getDimensionType() == ModDimensions.MIDNIGHT ? HOME_SCALE_MODIFIER : 1.0F;
-        this.setSize(0.6F * scaleModifier, 2.0F * scaleModifier);
+        this.setSize(0.6F * scaleModifier, 1.8F * scaleModifier);
+
+        PathNavigateGround navigator = (PathNavigateGround) this.getNavigator();
+        navigator.setBreakDoors(true);
+        navigator.setEnterDoors(true);
     }
 
     @Override
@@ -99,6 +106,8 @@ public class EntityRifter extends EntityMob implements IRiftTraveler, IEntityAdd
         this.tasks.addTask(2, new EntityTaskRifterTransport(this, 1.0));
         this.tasks.addTask(3, new EntityTaskRifterCapture(this, 1.0));
         this.tasks.addTask(4, new EntityTaskRifterMelee(this, 1.0));
+
+        this.tasks.addTask(4, new EntityAIOpenDoor(this, false));
 
         this.tasks.addTask(4, new EntityAIWatchClosest(this, EntityLivingBase.class, 8.0F));
         this.tasks.addTask(4, new EntityAILookIdle(this));
