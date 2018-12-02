@@ -37,6 +37,7 @@ public class BlockShadowrootChest extends BlockChest implements IModelProvider {
     }
 
     @Override
+    @SuppressWarnings("deprecation")
     public int getWeakPower(IBlockState blockState, IBlockAccess blockAccess, BlockPos pos, EnumFacing side) {
         if (!blockState.canProvidePower())
         {
@@ -193,7 +194,8 @@ public class BlockShadowrootChest extends BlockChest implements IModelProvider {
     }
 
     @Override
+    @SuppressWarnings("deprecation")
     public EnumBlockRenderType getRenderType(IBlockState state) {
-        return EnumBlockRenderType.INVISIBLE;
+        return EnumBlockRenderType.ENTITYBLOCK_ANIMATED;
     }
 }
