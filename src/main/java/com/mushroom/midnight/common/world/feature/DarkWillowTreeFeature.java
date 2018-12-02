@@ -83,6 +83,8 @@ public class DarkWillowTreeFeature extends MidnightTreeFeature {
             return false;
         }
 
+        this.notifyGrowth(world, origin);
+
         template.addBlocksToWorld(world, correctedOrigin, this::processState, placementSettings, 2 | 16);
 
         this.processDataBlocks(world, data);

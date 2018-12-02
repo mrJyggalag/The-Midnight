@@ -38,6 +38,8 @@ public class ShadowrootTreeFeature extends MidnightTreeFeature {
         }
 
         if (this.canGrow(world, origin)) {
+            this.notifyGrowth(world, origin);
+
             BlockPos.MutableBlockPos mutablePos = new BlockPos.MutableBlockPos(origin);
             for (int localY = 0; localY < height; localY++) {
                 mutablePos.setY(origin.getY() + localY);

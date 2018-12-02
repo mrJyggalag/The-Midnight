@@ -45,12 +45,14 @@ public abstract class MidnightTreeFeature extends MidnightNaturalFeature {
         BlockPos groundPos = pos.down();
         IBlockState groundState = world.getBlockState(groundPos);
         Block groundBlock = groundState.getBlock();
-        if (groundBlock.canSustainPlant(groundState, world, groundPos, EnumFacing.UP, (IPlantable) ModBlocks.SHADOWROOT_SAPLING)) {
-            groundBlock.onPlantGrow(groundState, world, groundPos, pos);
-            return true;
-        } else {
-            return false;
-        }
+        return groundBlock.canSustainPlant(groundState, world, groundPos, EnumFacing.UP, (IPlantable) ModBlocks.SHADOWROOT_SAPLING);
+    }
+
+    protected void notifyGrowth(World world, BlockPos pos) {
+        BlockPos groundPos = pos.down();
+        IBlockState groundState = world.getBlockState(groundPos);
+        Block groundBlock = groundState.getBlock();
+        groundBlock.onPlantGrow(groundState, world, groundPos, pos);
     }
 
     protected void placeLog(World world, BlockPos pos) {
