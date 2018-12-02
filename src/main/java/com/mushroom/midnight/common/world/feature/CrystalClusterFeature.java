@@ -30,7 +30,7 @@ public class CrystalClusterFeature extends MidnightAbstractFeature {
         int[] heights = new int[size * size];
         BlockPos basePos = this.populateHeights(world, rand, origin, heights, size);
 
-        if (!this.canGenerate(world, origin, heights, size)) {
+        if (basePos == null || !this.canGenerate(world, origin, heights, size)) {
             return false;
         }
 
@@ -63,9 +63,14 @@ public class CrystalClusterFeature extends MidnightAbstractFeature {
                 int height = MathHelper.floor(alpha * this.maxHeight);
                 if (height > 0) {
                     BlockPos surfacePos = this.findSurfaceBelow(world, origin.add(localX, 0, localZ), 16);
+                    if (surfacePos == null) {
+                        return null;
+                    }
+
                     if (surfacePos.getY() < basePos.getY()) {
                         basePos.setY(surfacePos.getY());
                     }
+
                     heights[index] = height;
                 }
             }
@@ -110,7 +115,7 @@ public class CrystalClusterFeature extends MidnightAbstractFeature {
             }
             currentState = nextState;
         }
-        return origin.toImmutable();
+        return null;
     }
 
     private void trySetBlock(World world, BlockPos pos, IBlockState state) {

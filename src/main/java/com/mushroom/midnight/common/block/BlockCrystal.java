@@ -94,4 +94,12 @@ public class BlockCrystal extends Block implements IModelProvider {
     public BlockFaceShape getBlockFaceShape(IBlockAccess world, IBlockState state, BlockPos pos, EnumFacing face) {
         return BlockFaceShape.UNDEFINED;
     }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public int getPackedLightmapCoords(IBlockState state, IBlockAccess source, BlockPos pos) {
+        int skyLight = 15;
+        int blockLight = 15;
+        return skyLight << 20 | blockLight << 4;
+    }
 }

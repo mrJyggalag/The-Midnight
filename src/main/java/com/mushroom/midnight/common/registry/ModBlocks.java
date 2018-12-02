@@ -285,10 +285,12 @@ public class ModBlocks {
                         .withHarvestLevel("pickaxe", 1)
                         .setLightLevel(1.0F)
                         .setHardness(4.0F),
-                RegUtil.withName(new BlockCrystal(), "rouxe"),
+                RegUtil.withName(new BlockCrystal().setLightLevel(0.2F), "rouxe"),
                 RegUtil.withName(new BlockBasic(Material.ROCK), "rouxe_rock")
                         .withSoundType(SoundType.GLASS)
                         .withHarvestLevel("pickaxe", 1)
+                        .withGlow()
+                        .setLightLevel(0.2F)
                         .setHardness(4.0F),
                 RegUtil.withName(new BlockMiasmaSurface(), "miasma_surface"),
                 RegUtil.withName(new BlockMiasmaFluid(), "miasma"),
