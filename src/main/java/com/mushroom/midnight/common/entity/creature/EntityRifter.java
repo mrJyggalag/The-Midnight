@@ -21,6 +21,7 @@ import com.mushroom.midnight.common.network.MessageCaptureEntity;
 import com.mushroom.midnight.common.registry.ModDimensions;
 import com.mushroom.midnight.common.registry.ModEffects;
 import com.mushroom.midnight.common.registry.ModSounds;
+import com.mushroom.midnight.common.world.MidnightWorldProvider;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -80,6 +81,11 @@ public class EntityRifter extends EntityMob implements IRiftTraveler, IEntityAdd
         super(world);
         this.homeRift = new EntityReference<>(world);
         this.dragSolver = new DragSolver(this);
+        if (world != null && world.provider.getDimensionType() == ModDimensions.MIDNIGHT) {
+            setSize(0.84f, 2.8f); // scaled by 1.4
+        } else {
+            setSize(0.6f, 2f);
+        }
     }
 
     @Override

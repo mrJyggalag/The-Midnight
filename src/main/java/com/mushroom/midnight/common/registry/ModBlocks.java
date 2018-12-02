@@ -314,7 +314,7 @@ public class ModBlocks {
                 RegUtil.withName(new BlockMidnightTrapDoor(), "shadowroot_trapdoor"),
                 RegUtil.withName(new BlockMidnightTrapDoor(), "dark_willow_trapdoor"),
                 RegUtil.withName(new BlockMidnightTrapDoor(), "dead_wood_trapdoor"),
-                RegUtil.withName(new BlockMidnightTrapDoor(), "tenebrum_trapdoor"),
+                RegUtil.withName(new BlockMidnightTrapDoor(true), "tenebrum_trapdoor"),
                 RegUtil.withName(new BlockMidnightTrapDoor(), "nightshroom_trapdoor"),
                 RegUtil.withName(new BlockMidnightTrapDoor(), "dewshroom_trapdoor"),
                 RegUtil.withName(new BlockMidnightTrapDoor(), "viridshroom_trapdoor"),
