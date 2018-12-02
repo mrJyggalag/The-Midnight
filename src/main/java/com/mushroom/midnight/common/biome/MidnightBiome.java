@@ -63,12 +63,15 @@ public class MidnightBiome extends Biome implements IMidnightBiome {
         int localZ = z & 15;
         int localX = x & 15;
 
+        boolean wet = false;
         for (int height = 255; height >= 0; --height) {
             if (height <= rand.nextInt(5)) {
                 primer.setBlockState(localX, height, localZ, BEDROCK);
             } else {
                 IBlockState state = primer.getBlockState(localX, height, localZ);
-                boolean wet = height < seaLevel - 1;
+                if (state.getMaterial() == Material.WATER) {
+                    wet = true;
+                }
                 if (state.getMaterial() == Material.AIR) {
                     currentDepth = -1;
                 } else if (state.getBlock() == ModBlocks.NIGHTSTONE) {
