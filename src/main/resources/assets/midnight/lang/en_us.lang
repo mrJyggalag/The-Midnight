@@ -39,6 +39,8 @@ tile.midnight.nagrilite_block.name=Nagrilite Block
 
 tile.midnight.tenebrum_ore.name=Tenebrum Ore
 tile.midnight.tenebrum_block.name=Tenebrum Block
+tile.midnight.tenebrum_door.name=Tenebrum Door
+tile.midnight.tenebrum_trapdoor.name=Tenebrum Trapdoor
 
 tile.midnight.shadowroot_chest.name=Shadowroot Chest
 tile.midnight.shadowroot_crafting_table.name=Shadowroot Crafting Table
@@ -153,6 +155,8 @@ tile.midnight.dead_wood_door.name=Dead Wood Door
 tile.midnight.nightshroom_door.name=Nightshroom Door
 tile.midnight.dewshroom_door.name=Dewshroom Door
 tile.midnight.viridshroom_door.name=Viridshroom Door
+
+tile.midnight.tenebrum_door.name=Tenebrum Door
 
 item.midnight.geode.name=Geode
 item.midnight.dark_pearl.name=Dark Pearl
