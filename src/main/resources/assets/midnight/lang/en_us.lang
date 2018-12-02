@@ -47,10 +47,10 @@ tile.midnight.shadowroot_crafting_table.name=Shadowroot Crafting Table
 tile.midnight.midnight_furnace.name=Midnight Furnace
 
 tile.midnight.tall_midnight_grass.name=Tall Midnight Grass
-tile.midnight.double_midnight_grass.name=Double Midnight Grass
+tile.midnight.double_midnight_grass.name=Tall Midnight Grass
 
 tile.midnight.lumen_bud.name=Lumen Bud
-tile.midnight.double_lumen_bud.name=Double Lumen Bud
+tile.midnight.double_lumen_bud.name=Tall Lumen Bud
 
 tile.midnight.shadowroot_trapdoor.name=Shadowroot Trapdoor
 tile.midnight.dark_willow_trapdoor.name=Dark Willow Trapdoor
@@ -72,13 +72,13 @@ tile.midnight.misama.name=Miasma
 tile.midnight.crystal_flower.name=Crystal Flower
 
 tile.midnight.dewshroom.name=Dewshroom
-tile.midnight.double_dewshroom.name=Double Dewshroom
+tile.midnight.double_dewshroom.name=Tall Dewshroom
 
 tile.midnight.nightshroom.name=Nightshroom
-tile.midnight.double_nightshroom.name=Double Nightshroom
+tile.midnight.double_nightshroom.name=Tall Nightshroom
 
 tile.midnight.viridshroom.name=Viridshroom
-tile.midnight.double_viridshroom.name=Double Viridshroom
+tile.midnight.double_viridshroom.name=Tall Viridshroom
 
 tile.midnight.nightshroom_stem.name=Nightshroom Stem
 tile.midnight.nightshroom_hat.name=Nightshroom Hat
