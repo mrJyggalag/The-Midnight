@@ -8,8 +8,6 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import javax.annotation.Nullable;
-
 import static com.mushroom.midnight.Midnight.MODID;
 
 public abstract class GenericEffect extends Potion {
@@ -24,15 +22,16 @@ public abstract class GenericEffect extends Potion {
 		return this;
 	}
 
-	@Nullable private ResourceLocation getIcon() {
-		return icon;
+	public GenericEffect withIcon(ResourceLocation rl) {
+		icon = new ResourceLocation(rl.getNamespace(), "textures/potions/" + rl.getPath() + ".png");
+		return this;
 	}
 
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void renderInventoryEffect(int x, int y, PotionEffect effect, Minecraft mc) {
-		if (getIcon() != null && mc.currentScreen != null) {
-			mc.renderEngine.bindTexture(getIcon());
+		if (icon != null && mc.currentScreen != null) {
+			mc.renderEngine.bindTexture(icon);
 			Gui.drawModalRectWithCustomSizedTexture(x + 6, y + 7, 0, 0, 18, 18, 18, 18);
 		}
 	}
@@ -40,8 +39,8 @@ public abstract class GenericEffect extends Potion {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void renderHUDEffect(int x, int y, PotionEffect effect, Minecraft mc, float alpha) {
-		if (getIcon() != null && !mc.gameSettings.showDebugInfo) {
-			mc.renderEngine.bindTexture(getIcon());
+		if (icon != null && !mc.gameSettings.showDebugInfo) {
+			mc.renderEngine.bindTexture(icon);
 			Gui.drawModalRectWithCustomSizedTexture(x + 3, y + 3, 0, 0, 18, 18, 18, 18);
 		}
 	}
