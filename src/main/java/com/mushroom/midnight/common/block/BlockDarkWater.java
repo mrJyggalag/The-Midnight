@@ -8,5 +8,6 @@ import net.minecraftforge.fluids.BlockFluidClassic;
 public class BlockDarkWater extends BlockFluidClassic implements IModelProvider {
     public BlockDarkWater() {
         super(ModFluids.DARK_WATER, Material.WATER);
+        this.setLightOpacity(3);
     }
 }
