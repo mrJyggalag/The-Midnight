@@ -24,6 +24,7 @@ import com.mushroom.midnight.common.block.BlockMidnightFungiShelf;
 import com.mushroom.midnight.common.block.BlockMidnightFungiStem;
 import com.mushroom.midnight.common.block.BlockMidnightFurnace;
 import com.mushroom.midnight.common.block.BlockMidnightGem;
+import com.mushroom.midnight.common.block.BlockMidnightGlass;
 import com.mushroom.midnight.common.block.BlockMidnightGrass;
 import com.mushroom.midnight.common.block.BlockMidnightLeaves;
 import com.mushroom.midnight.common.block.BlockMidnightLog;
@@ -167,6 +168,8 @@ public class ModBlocks {
 
     public static final Block ROUXE = Blocks.AIR;
     public static final Block ROUXE_ROCK = Blocks.AIR;
+
+    public static final Block CRYSTAL_GLASS = Blocks.AIR;
 
     public static final Block MIASMA_SURFACE = Blocks.AIR;
     public static final Block MIASMA = Blocks.AIR;
@@ -319,6 +322,7 @@ public class ModBlocks {
                 RegUtil.withName(new BlockBasic(Material.IRON), "ebonys_block")
                         .withSoundType(SoundType.METAL)
                         .setHardness(3.0F),
+                RegUtil.withName(new BlockMidnightGlass(), "crystal_glass"),
                 RegUtil.withName(new BlockBasic(Material.WOOD), "shadowroot_planks")
                         .withSoundType(SoundType.WOOD)
                         .setHardness(2.0F)
@@ -441,6 +445,7 @@ public class ModBlocks {
                 NIGHTSHROOM_TRAPDOOR, DEWSHROOM_TRAPDOOR, VIRIDSHROOM_TRAPDOOR,
                 BLOOMCRYSTAL, BLOOMCRYSTAL_ROCK,
                 ROUXE, ROUXE_ROCK,
+                CRYSTAL_GLASS,
                 MIASMA_SURFACE, MIASMA,
                 DARK_WATER,
                 DECEITFUL_PEAT, DECEITFUL_MUD, DECEITFUL_MOSS,

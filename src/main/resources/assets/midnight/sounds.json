@@ -70,5 +70,23 @@
   "midnight.rifter_death": {
     "category": "hostile",
     "sounds": ["midnight:entity/rifter_death_1"]
+  },
+  "midnight.mud_dig": {
+    "category": "block",
+    "sounds": [
+      "midnight:blocks/dig/mud_1",
+      "midnight:blocks/dig/mud_2",
+      "midnight:blocks/dig/mud_3",
+      "midnight:blocks/dig/mud_4"
+    ]
+  },
+  "midnight.mud_step": {
+    "category": "block",
+    "sounds": [
+      "midnight:blocks/step/mud_1",
+      "midnight:blocks/step/mud_2",
+      "midnight:blocks/step/mud_3",
+      "midnight:blocks/step/mud_4"
+    ]
   }
 }
