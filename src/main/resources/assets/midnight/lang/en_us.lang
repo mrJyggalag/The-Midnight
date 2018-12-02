@@ -245,3 +245,6 @@ biome.midnight.crystal_spires.name=Crystal Spires
 biome.midnight.night_plains.name=Night Plains
 biome.midnight.obscured_plateau.name=Obscured Plateau
 biome.midnight.phantasmal_valley.name=Phantasmal Valley
+
+# Potions
+potion.midnight.stunned.name=Stunned

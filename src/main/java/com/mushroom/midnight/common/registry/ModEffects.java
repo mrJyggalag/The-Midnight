@@ -17,7 +17,7 @@ public class ModEffects {
     @SubscribeEvent
     public static void onRegisterEffects(RegistryEvent.Register<Potion> event) {
         event.getRegistry().registerAll(
-                RegUtil.withName(new StunnedEffect(), "stunned").registerModifiers()
+                RegUtil.withName(new StunnedEffect(), "stunned").withIcon("stunned")
         );
     }
 }

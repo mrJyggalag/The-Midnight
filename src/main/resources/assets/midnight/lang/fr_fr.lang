@@ -172,3 +172,6 @@ config.midnight.midnight_dimension_id=ID de la dimension de Minuit
 config.midnight.midnight_dimension_id.tooltip=L'ID qui va être utilisé pour la dimension de Minuit
 
 status.midnight.rift_nearby=Vous ne pouvez pas rester ici pour l'instant, il y a une présence démoniaque à proximitée
+
+# Potions
+potion.midnight.stunned.name=Etourdi
