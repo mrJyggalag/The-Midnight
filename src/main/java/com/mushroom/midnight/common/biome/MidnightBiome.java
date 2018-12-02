@@ -1,8 +1,10 @@
 package com.mushroom.midnight.common.biome;
 
+import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.common.registry.ModBlocks;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
@@ -34,6 +36,11 @@ public class MidnightBiome extends Biome implements IMidnightBiome {
 
         this.topBlock = this.surfaceConfig.getTopState();
         this.fillerBlock = this.surfaceConfig.getFillerState();
+    }
+
+    @Override
+    public String getBiomeName() {
+        return I18n.format("biome." + Midnight.MODID + "." + super.getBiomeName() + ".name");
     }
 
     @Override

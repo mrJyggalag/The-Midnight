@@ -232,3 +232,16 @@ config.midnight.midnight_dimension_id=Midnight Dimension ID
 config.midnight.midnight_dimension_id.tooltip=The ID to be used for the Midnight Dimension
 
 status.midnight.rift_nearby=You may not rest now, there is an evil presence nearby
+
+# Biomes
+
+biome.midnight.vigilant_forest.name=Vigilant Forest
+biome.midnight.black_ridge.name=Black Ridge
+biome.midnight.deceitful_bog.name=Deceitful Bog
+biome.midnight.fungi_forest.name=Fungi Forest
+biome.midnight.obscured_peaks.name=Obscured Peaks
+biome.midnight.warped_fields.name=Warped Fields
+biome.midnight.crystal_spires.name=Crystal Spires
+biome.midnight.night_plains.name=Night Plains
+biome.midnight.obscured_plateau.name=Obscured Plateau
+biome.midnight.phantasmal_valley.name=Phantasmal Valley
