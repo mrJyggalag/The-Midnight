@@ -2,7 +2,44 @@ package com.mushroom.midnight.common.registry;
 
 import com.google.common.collect.Lists;
 import com.mushroom.midnight.Midnight;
-import com.mushroom.midnight.common.block.*;
+import com.mushroom.midnight.common.block.BlockBasic;
+import com.mushroom.midnight.common.block.BlockCrystal;
+import com.mushroom.midnight.common.block.BlockDarkWater;
+import com.mushroom.midnight.common.block.BlockDeceitfulAlgae;
+import com.mushroom.midnight.common.block.BlockDeceitfulMoss;
+import com.mushroom.midnight.common.block.BlockDeceitfulMud;
+import com.mushroom.midnight.common.block.BlockDoubleMidnightPlant;
+import com.mushroom.midnight.common.block.BlockGlowingDoublePlant;
+import com.mushroom.midnight.common.block.BlockGlowingPlant;
+import com.mushroom.midnight.common.block.BlockMiasmaFluid;
+import com.mushroom.midnight.common.block.BlockMiasmaSurface;
+import com.mushroom.midnight.common.block.BlockMidnightDirt;
+import com.mushroom.midnight.common.block.BlockMidnightDoor;
+import com.mushroom.midnight.common.block.BlockMidnightDoubleSlab;
+import com.mushroom.midnight.common.block.BlockMidnightFence;
+import com.mushroom.midnight.common.block.BlockMidnightFenceGate;
+import com.mushroom.midnight.common.block.BlockMidnightFungi;
+import com.mushroom.midnight.common.block.BlockMidnightFungiHat;
+import com.mushroom.midnight.common.block.BlockMidnightFungiShelf;
+import com.mushroom.midnight.common.block.BlockMidnightFungiStem;
+import com.mushroom.midnight.common.block.BlockMidnightFurnace;
+import com.mushroom.midnight.common.block.BlockMidnightGem;
+import com.mushroom.midnight.common.block.BlockMidnightGrass;
+import com.mushroom.midnight.common.block.BlockMidnightLeaves;
+import com.mushroom.midnight.common.block.BlockMidnightLog;
+import com.mushroom.midnight.common.block.BlockMidnightOre;
+import com.mushroom.midnight.common.block.BlockMidnightPlant;
+import com.mushroom.midnight.common.block.BlockMidnightSapling;
+import com.mushroom.midnight.common.block.BlockMidnightSlab;
+import com.mushroom.midnight.common.block.BlockMidnightStairs;
+import com.mushroom.midnight.common.block.BlockMidnightTrapDoor;
+import com.mushroom.midnight.common.block.BlockMidnightWall;
+import com.mushroom.midnight.common.block.BlockMushroomInside;
+import com.mushroom.midnight.common.block.BlockNightstone;
+import com.mushroom.midnight.common.block.BlockShadowrootChest;
+import com.mushroom.midnight.common.block.BlockShadowrootCraftingTable;
+import com.mushroom.midnight.common.block.BlockSuavis;
+import com.mushroom.midnight.common.block.PlantBehaviorType;
 import com.mushroom.midnight.common.item.ItemDeceitfulAlgae;
 import com.mushroom.midnight.common.item.ItemMidnightSlab;
 import com.mushroom.midnight.common.tile.base.TileEntityMidnightFurnace;
@@ -255,10 +292,10 @@ public class ModBlocks {
                         .setHardness(4.0F),
                 RegUtil.withName(new BlockMiasmaSurface(), "miasma_surface"),
                 RegUtil.withName(new BlockMiasmaFluid(), "miasma"),
-                RegUtil.withName(new BlockMidnightGem(() -> ModItems.DARK_PEARL,0), "dark_pearl_ore"),
+                RegUtil.withName(new BlockMidnightGem(() -> ModItems.DARK_PEARL, 0), "dark_pearl_ore"),
                 RegUtil.withName(new BlockMidnightOre(2), "tenebrum_ore"),
                 RegUtil.withName(new BlockMidnightOre(2), "nagrilite_ore"),
-                RegUtil.withName(new BlockMidnightGem(() -> ModItems.EBONYS,1), "ebonys_ore")
+                RegUtil.withName(new BlockMidnightGem(() -> ModItems.EBONYS, 1), "ebonys_ore")
         ));
 
         blocks.addAll(Lists.newArrayList(
@@ -307,7 +344,7 @@ public class ModBlocks {
                 RegUtil.withName(new BlockMidnightDoor(() -> ModItems.SHADOWROOT_DOOR), "shadowroot_door"),
                 RegUtil.withName(new BlockMidnightDoor(() -> ModItems.DARK_WILLOW_DOOR), "dark_willow_door"),
                 RegUtil.withName(new BlockMidnightDoor(() -> ModItems.DEAD_WOOD_DOOR), "dead_wood_door"),
-                RegUtil.withName(new BlockMidnightDoor(() -> ModItems.TENEBRUM_DOOR), "tenebrum_door"),
+                RegUtil.withName(new BlockMidnightDoor(true, () -> ModItems.TENEBRUM_DOOR), "tenebrum_door"),
                 RegUtil.withName(new BlockMidnightDoor(() -> ModItems.NIGHTSHROOM_DOOR), "nightshroom_door"),
                 RegUtil.withName(new BlockMidnightDoor(() -> ModItems.DEWSHROOM_DOOR), "dewshroom_door"),
                 RegUtil.withName(new BlockMidnightDoor(() -> ModItems.VIRIDSHROOM_DOOR), "viridshroom_door"),

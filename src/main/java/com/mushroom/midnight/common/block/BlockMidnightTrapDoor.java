@@ -11,10 +11,10 @@ public class BlockMidnightTrapDoor extends BlockTrapDoor implements IModelProvid
         this(false);
     }
 
-    public BlockMidnightTrapDoor(boolean isMetal) {
-        super(isMetal ? Material.IRON : Material.WOOD);
-        this.setHardness(isMetal ? 5f : 3f);
-        this.setSoundType(isMetal ? SoundType.METAL : SoundType.WOOD);
+    public BlockMidnightTrapDoor(boolean metallic) {
+        super(metallic ? Material.IRON : Material.WOOD);
+        this.setHardness(metallic ? 5.0F : 3.0F);
+        this.setSoundType(metallic ? SoundType.METAL : SoundType.WOOD);
         this.setCreativeTab(Midnight.DECORATION_TAB);
     }
 }

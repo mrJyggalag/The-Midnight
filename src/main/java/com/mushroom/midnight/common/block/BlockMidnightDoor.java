@@ -18,11 +18,15 @@ public class BlockMidnightDoor extends BlockDoor {
     private final Supplier<Item> itemSupplier;
 
     public BlockMidnightDoor(Supplier<Item> itemSupplier) {
-        super(Material.WOOD);
-        this.setHardness(3.0F);
-        this.setSoundType(SoundType.WOOD);
-        this.itemSupplier = itemSupplier;
+        this(false, itemSupplier);
+    }
+
+    public BlockMidnightDoor(boolean metallic, Supplier<Item> itemSupplier) {
+        super(metallic ? Material.IRON : Material.WOOD);
+        this.setHardness(metallic ? 5.0F : 3.0F);
+        this.setSoundType(metallic ? SoundType.METAL : SoundType.WOOD);
         this.setCreativeTab(Midnight.DECORATION_TAB);
+        this.itemSupplier = itemSupplier;
     }
 
     @Override
