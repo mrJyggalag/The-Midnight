@@ -87,6 +87,7 @@ public class ModBlocks {
     public static final Block NIGHTSTONE_BRICKS = Blocks.AIR;
     public static final Block CHISELED_NIGHTSTONE_BRICKS = Blocks.AIR;
     public static final Block TRENCHSTONE = Blocks.AIR;
+    public static final Block TRENCHSTONE_BRICKS = Blocks.AIR;
 
     public static final Block DARK_PEARL_ORE = Blocks.AIR;
     public static final Block DARK_PEARL_BLOCK = Blocks.AIR;
@@ -187,6 +188,8 @@ public class ModBlocks {
     public static final Block DARK_WILLOW_SLAB = Blocks.AIR;
     public static final Block NIGHTSTONE_SLAB = Blocks.AIR;
     public static final Block NIGHTSTONE_BRICK_SLAB = Blocks.AIR;
+    public static final Block TRENCHSTONE_SLAB = Blocks.AIR;
+    public static final Block TRENCHSTONE_BRICK_SLAB = Blocks.AIR;
     public static final Block DEWSHROOM_SLAB = Blocks.AIR;
     public static final Block VIRIDSHROOM_SLAB = Blocks.AIR;
     public static final Block NIGHTSHROOM_SLAB = Blocks.AIR;
@@ -196,6 +199,8 @@ public class ModBlocks {
     public static final Block DARK_WILLOW_DOUBLE_SLAB = Blocks.AIR;
     public static final Block NIGHTSTONE_DOUBLE_SLAB = Blocks.AIR;
     public static final Block NIGHTSTONE_BRICK_DOUBLE_SLAB = Blocks.AIR;
+    public static final Block TRENCHSTONE_DOUBLE_SLAB = Blocks.AIR;
+    public static final Block TRENCHSTONE_BRICK_DOUBLE_SLAB = Blocks.AIR;
     public static final Block DEWSHROOM_DOUBLE_SLAB = Blocks.AIR;
     public static final Block VIRIDSHROOM_DOUBLE_SLAB = Blocks.AIR;
     public static final Block NIGHTSHROOM_DOUBLE_SLAB = Blocks.AIR;
@@ -205,6 +210,8 @@ public class ModBlocks {
     public static final Block DARK_WILLOW_STAIRS = Blocks.AIR;
     public static final Block NIGHTSTONE_STAIRS = Blocks.AIR;
     public static final Block NIGHTSTONE_BRICK_STAIRS = Blocks.AIR;
+    public static final Block TRENCHSTONE_STAIRS = Blocks.AIR;
+    public static final Block TRENCHTONE_BRICK_STAIRS = Blocks.AIR;
     public static final Block DEWSHROOM_STAIRS = Blocks.AIR;
     public static final Block VIRIDSHROOM_STAIRS = Blocks.AIR;
     public static final Block NIGHTSHROOM_STAIRS = Blocks.AIR;
@@ -214,6 +221,8 @@ public class ModBlocks {
     public static final Block DARK_WILLOW_FENCE = Blocks.AIR;
     public static final Block NIGHTSTONE_WALL = Blocks.AIR;
     public static final Block NIGHTSTONE_BRICK_WALL = Blocks.AIR;
+    public static final Block TRENCHSTONE_WALL = Blocks.AIR;
+    public static final Block TRENCHSTONE_BRICK_WALL = Blocks.AIR;
     public static final Block DEWSHROOM_FENCE = Blocks.AIR;
     public static final Block VIRIDSHROOM_FENCE = Blocks.AIR;
     public static final Block NIGHTSHROOM_FENCE = Blocks.AIR;
@@ -305,10 +314,14 @@ public class ModBlocks {
 
         blocks.addAll(Lists.newArrayList(
                 RegUtil.withName(new BlockBasic(Material.ROCK), "nightstone_bricks")
-                        .setHardness(1.5F)
+                        .setHardness(2F)
                         .setResistance(10.0F),
+                RegUtil.withName(new BlockBasic(Material.ROCK), "trenchstone_bricks")
+                        .withHarvestLevel("pickaxe", 2)
+                        .setHardness(5.0F)
+                        .setResistance(200.0F),
                 RegUtil.withName(new BlockBasic(Material.ROCK), "chiseled_nightstone_bricks")
-                        .setHardness(1.5F)
+                        .setHardness(2F)
                         .setResistance(10.0F),
                 RegUtil.withName(new BlockBasic(Material.IRON), "dark_pearl_block")
                         .withSoundType(SoundType.METAL)
@@ -370,6 +383,8 @@ public class ModBlocks {
                 RegUtil.withName(new BlockMidnightSlab(() -> DARK_WILLOW_PLANKS.getDefaultState()), "dark_willow_slab"),
                 RegUtil.withName(new BlockMidnightSlab(() -> NIGHTSTONE.getDefaultState()), "nightstone_slab"),
                 RegUtil.withName(new BlockMidnightSlab(() -> NIGHTSTONE_BRICKS.getDefaultState()), "nightstone_brick_slab"),
+                RegUtil.withName(new BlockMidnightSlab(() -> TRENCHSTONE.getDefaultState()), "trenchstone_slab"),
+                RegUtil.withName(new BlockMidnightSlab(() -> TRENCHSTONE_BRICKS.getDefaultState()), "trenchstone_brick_slab"),
                 RegUtil.withName(new BlockMidnightSlab(() -> DEWSHROOM_PLANKS.getDefaultState()), "dewshroom_slab"),
                 RegUtil.withName(new BlockMidnightSlab(() -> VIRIDSHROOM_PLANKS.getDefaultState()), "viridshroom_slab"),
                 RegUtil.withName(new BlockMidnightSlab(() -> NIGHTSHROOM_PLANKS.getDefaultState()), "nightshroom_slab"),
@@ -378,6 +393,8 @@ public class ModBlocks {
                 RegUtil.withName(new BlockMidnightDoubleSlab(() -> DARK_WILLOW_SLAB), "dark_willow_double_slab"),
                 RegUtil.withName(new BlockMidnightDoubleSlab(() -> NIGHTSTONE_SLAB), "nightstone_double_slab"),
                 RegUtil.withName(new BlockMidnightDoubleSlab(() -> NIGHTSTONE_BRICK_SLAB), "nightstone_brick_double_slab"),
+                RegUtil.withName(new BlockMidnightDoubleSlab(() -> TRENCHSTONE_SLAB), "trenchstone_double_slab"),
+                RegUtil.withName(new BlockMidnightDoubleSlab(() -> TRENCHSTONE_BRICK_SLAB), "trenchstone_brick_double_slab"),
                 RegUtil.withName(new BlockMidnightDoubleSlab(() -> DEWSHROOM_SLAB), "dewshroom_double_slab"),
                 RegUtil.withName(new BlockMidnightDoubleSlab(() -> VIRIDSHROOM_SLAB), "viridshroom_double_slab"),
                 RegUtil.withName(new BlockMidnightDoubleSlab(() -> NIGHTSHROOM_SLAB), "nightshroom_double_slab"),
@@ -386,6 +403,8 @@ public class ModBlocks {
                 RegUtil.withName(new BlockMidnightStairs(() -> DARK_WILLOW_PLANKS.getDefaultState()), "dark_willow_stairs"),
                 RegUtil.withName(new BlockMidnightStairs(() -> NIGHTSTONE.getDefaultState()), "nightstone_stairs"),
                 RegUtil.withName(new BlockMidnightStairs(() -> NIGHTSTONE_BRICKS.getDefaultState()), "nightstone_brick_stairs"),
+                RegUtil.withName(new BlockMidnightStairs(() -> TRENCHSTONE.getDefaultState()), "trenchstone_stairs"),
+                RegUtil.withName(new BlockMidnightStairs(() -> TRENCHSTONE_BRICKS.getDefaultState()), "trenchstone_brick_stairs"),
                 RegUtil.withName(new BlockMidnightStairs(() -> DEWSHROOM_PLANKS.getDefaultState()), "dewshroom_stairs"),
                 RegUtil.withName(new BlockMidnightStairs(() -> VIRIDSHROOM_PLANKS.getDefaultState()), "viridshroom_stairs"),
                 RegUtil.withName(new BlockMidnightStairs(() -> NIGHTSHROOM_PLANKS.getDefaultState()), "nightshroom_stairs"),
@@ -394,6 +413,8 @@ public class ModBlocks {
                 RegUtil.withName(new BlockMidnightFence(() -> DARK_WILLOW_PLANKS.getDefaultState()), "dark_willow_fence"),
                 RegUtil.withName(new BlockMidnightWall(() -> NIGHTSTONE.getDefaultState()), "nightstone_wall"),
                 RegUtil.withName(new BlockMidnightWall(() -> NIGHTSTONE_BRICKS.getDefaultState()), "nightstone_brick_wall"),
+                RegUtil.withName(new BlockMidnightWall(() -> TRENCHSTONE.getDefaultState()), "trenchstone_wall"),
+                RegUtil.withName(new BlockMidnightWall(() -> TRENCHSTONE_BRICKS.getDefaultState()), "trenchstone_brick_wall"),
                 RegUtil.withName(new BlockMidnightFence(() -> DEWSHROOM_PLANKS.getDefaultState()), "dewshroom_fence"),
                 RegUtil.withName(new BlockMidnightFence(() -> VIRIDSHROOM_PLANKS.getDefaultState()), "viridshroom_fence"),
                 RegUtil.withName(new BlockMidnightFence(() -> NIGHTSHROOM_PLANKS.getDefaultState()), "nightshroom_fence"),
@@ -421,7 +442,7 @@ public class ModBlocks {
                 DEAD_WOOD_LOG, DEAD_WOOD_PLANKS,
                 DARK_WILLOW_LOG, DARK_WILLOW_LEAVES, DARK_WILLOW_PLANKS,
                 NIGHTSTONE, NIGHTSTONE_BRICKS, CHISELED_NIGHTSTONE_BRICKS,
-                TRENCHSTONE,
+                TRENCHSTONE, TRENCHSTONE_BRICKS,
                 DARK_PEARL_ORE, DARK_PEARL_BLOCK,
                 TENEBRUM_ORE, TENEBRUM_BLOCK,
                 NAGRILITE_ORE, NAGRILITE_BLOCK,
@@ -451,9 +472,11 @@ public class ModBlocks {
                 DECEITFUL_PEAT, DECEITFUL_MUD, DECEITFUL_MOSS,
                 SHADOWROOT_STAIRS, DEAD_WOOD_STAIRS, DARK_WILLOW_STAIRS,
                 NIGHTSTONE_STAIRS, NIGHTSTONE_BRICK_STAIRS,
+                TRENCHSTONE_STAIRS, TRENCHTONE_BRICK_STAIRS,
                 DEWSHROOM_STAIRS, VIRIDSHROOM_STAIRS, NIGHTSHROOM_STAIRS,
                 SHADOWROOT_FENCE, DEAD_WOOD_FENCE, DARK_WILLOW_FENCE,
                 NIGHTSTONE_WALL, NIGHTSTONE_BRICK_WALL,
+                TRENCHSTONE_WALL, TRENCHSTONE_BRICK_WALL,
                 DEWSHROOM_FENCE, VIRIDSHROOM_FENCE, NIGHTSHROOM_FENCE,
                 SHADOWROOT_FENCE_GATE, DEAD_WOOD_FENCE_GATE, DARK_WILLOW_FENCE_GATE,
                 DEWSHROOM_FENCE_GATE, VIRIDSHROOM_FENCE_GATE, NIGHTSHROOM_FENCE_GATE,
@@ -467,6 +490,8 @@ public class ModBlocks {
         registry.register(itemBlock(DARK_WILLOW_SLAB, b -> new ItemMidnightSlab(b, DARK_WILLOW_DOUBLE_SLAB)));
         registry.register(itemBlock(NIGHTSTONE_SLAB, b -> new ItemMidnightSlab(b, NIGHTSTONE_DOUBLE_SLAB)));
         registry.register(itemBlock(NIGHTSTONE_BRICK_SLAB, b -> new ItemMidnightSlab(b, NIGHTSTONE_BRICK_DOUBLE_SLAB)));
+        registry.register(itemBlock(TRENCHSTONE_SLAB, b -> new ItemMidnightSlab(b, TRENCHSTONE_DOUBLE_SLAB)));
+        registry.register(itemBlock(TRENCHSTONE_BRICK_SLAB, b -> new ItemMidnightSlab(b, TRENCHSTONE_BRICK_DOUBLE_SLAB)));
         registry.register(itemBlock(DEWSHROOM_SLAB, b -> new ItemMidnightSlab(b, DEWSHROOM_DOUBLE_SLAB)));
         registry.register(itemBlock(VIRIDSHROOM_SLAB, b -> new ItemMidnightSlab(b, VIRIDSHROOM_DOUBLE_SLAB)));
         registry.register(itemBlock(NIGHTSHROOM_SLAB, b -> new ItemMidnightSlab(b, NIGHTSHROOM_DOUBLE_SLAB)));

@@ -14,7 +14,7 @@ import net.minecraftforge.common.IPlantable;
 public class BlockNightstone extends Block implements IModelProvider {
     public BlockNightstone() {
         super(Material.ROCK);
-        this.setHardness(1.5F);
+        this.setHardness(2F);
         this.setResistance(10.0F);
         this.setSoundType(SoundType.STONE);
         this.setCreativeTab(Midnight.BUILDING_TAB);
