@@ -44,6 +44,11 @@ public class MidnightBiomeConfigs {
             ((BlockBush) ModBlocks.LUMEN_BUD)::canBlockStay
     );
 
+    public static final IMidnightFeature BLADESHROOM_FEATURE = new PlantFeature(
+            ModBlocks.BLADESHROOM.getDefaultState(),
+            ((BlockBush) ModBlocks.BLADESHROOM)::canBlockStay
+    );
+
     public static final IMidnightFeature SUAVIS_FEATURE = new GourdFeature(
             ModBlocks.SUAVIS.getDefaultState(),
             ModBlocks.MIDNIGHT_GRASS,
@@ -143,8 +148,9 @@ public class MidnightBiomeConfigs {
 
     public static final MidnightBiomeConfig FUNGI_FOREST_CONFIG = MidnightBiomeConfig.builder(VEGETATED_CONFIG)
             .withFeature(LARGE_FUNGI_FEATURES, new SurfacePlacementConfig(6))
-            .withFeature(FUNGI_FEATURE, new ScatterPlacementConfig(8, 16))
-            .withFeature(DOUBLE_FUNGI_FEATURE, new ScatterPlacementConfig(6, 8))
+            .withFeature(FUNGI_FEATURE, new ScatterPlacementConfig(6, 16))
+            .withFeature(DOUBLE_FUNGI_FEATURE, new ScatterPlacementConfig(4, 8))
+            .withFeature(BLADESHROOM_FEATURE, new ScatterPlacementConfig(1, 32))
             .withMonster(new Biome.SpawnListEntry(EntityRifter.class, 1, 0, 1))
             .withGrassColor(0x8489B5)
             .build();

@@ -38,6 +38,7 @@ import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.pathfinding.PathNavigate;
 import net.minecraft.pathfinding.PathNavigateGround;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
@@ -87,10 +88,14 @@ public class EntityRifter extends EntityMob implements IRiftTraveler, IEntityAdd
 
         float scaleModifier = world.provider.getDimensionType() == ModDimensions.MIDNIGHT ? HOME_SCALE_MODIFIER : 1.0F;
         this.setSize(0.6F * scaleModifier, 1.8F * scaleModifier);
+    }
 
-        PathNavigateGround navigator = (PathNavigateGround) this.getNavigator();
+    @Override
+    protected PathNavigate createNavigator(World world) {
+        PathNavigateGround navigator = new PathNavigateGround(this, world);
         navigator.setBreakDoors(true);
         navigator.setEnterDoors(true);
+        return navigator;
     }
 
     @Override

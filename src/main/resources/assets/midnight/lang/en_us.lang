@@ -81,6 +81,8 @@ tile.midnight.double_nightshroom.name=Tall Nightshroom
 tile.midnight.viridshroom.name=Viridshroom
 tile.midnight.double_viridshroom.name=Tall Viridshroom
 
+tile.midnight.bladeshroom.name=Bladeshroom
+
 tile.midnight.nightshroom_stem.name=Nightshroom Stem
 tile.midnight.nightshroom_hat.name=Nightshroom Cap
 tile.midnight.nightshroom_planks.name=Nightshroom Planks
@@ -179,6 +181,8 @@ item.midnight.ebonys.name=Ebonys
 
 item.midnight.raw_suavis.name=Raw Suavis Slice
 item.midnight.cook_suavis.name=Cooked Suavis Slice
+
+item.midnight.bladeshroom_cap.name=Bladeshroom Cap
 
 # Tools, Weapons and Armors
 

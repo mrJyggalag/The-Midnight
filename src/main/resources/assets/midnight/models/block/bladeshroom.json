@@ -1,9 +1,8 @@
 {
   "credit": "Made with Blockbench",
+  "parent": "block/block",
   "textures": {
-    "0": "bladeshroom/bladeshroom_model",
-    "1": "bladeshroom/bladeshroom_cap",
-    "particle": "bladeshroom/bladeshroom_model"
+    "0": "midnight:blocks/bladeshroom_model"
   },
   "elements": [
     {
@@ -16,18 +15,6 @@
         "west": {"uv": [2, 0, 4, 8], "texture": "#0"},
         "up": {"uv": [9, 2, 11, 4], "texture": "#0"},
         "down": {"uv": [9, 2, 11, 4], "texture": "#0"}
-      }
-    },
-    {
-      "from": [0, 8.25, 0],
-      "to": [16, 8.25, 16],
-      "faces": {
-        "north": {"uv": [16, 7, 16, 7], "texture": "#1"},
-        "east": {"uv": [0, 0, 0, 0], "texture": "#1"},
-        "south": {"uv": [0, 0, 0, 0], "texture": "#1"},
-        "west": {"uv": [0, 0, 0, 0], "texture": "#1"},
-        "up": {"uv": [0, 0, 16, 16], "texture": "#1"},
-        "down": {"uv": [0, 0, 16, 16], "texture": "#1"}
       }
     }
   ]

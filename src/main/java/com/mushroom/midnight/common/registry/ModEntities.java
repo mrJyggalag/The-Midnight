@@ -1,6 +1,7 @@
 package com.mushroom.midnight.common.registry;
 
 import com.mushroom.midnight.Midnight;
+import com.mushroom.midnight.common.entity.EntityBladeshroomCap;
 import com.mushroom.midnight.common.entity.EntityRift;
 import com.mushroom.midnight.common.entity.creature.EntityHunter;
 import com.mushroom.midnight.common.entity.creature.EntityRifter;
@@ -42,6 +43,13 @@ public class ModEntities {
                         .name(Midnight.MODID + ".hunter")
                         .tracker(80, 2, true)
                         .egg(0x2C3964, 0x19203A)
+                        .build(),
+                EntityEntryBuilder.create()
+                        .entity(EntityBladeshroomCap.class)
+                        .factory(EntityBladeshroomCap::new)
+                        .id(new ResourceLocation(Midnight.MODID, "bladeshroom_cap"), currentEntityId++)
+                        .name(Midnight.MODID + ".bladeshroom_cap")
+                        .tracker(64, 1, true)
                         .build()
         );
 
