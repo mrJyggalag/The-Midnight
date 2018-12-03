@@ -23,6 +23,7 @@ public class BlockSuavis extends Block implements IModelProvider {
         super(Material.GOURD, MapColor.LIGHT_BLUE);
         this.setLightLevel(0.8F);
         this.setCreativeTab(Midnight.DECORATION_TAB);
+        setHardness(1f);
         this.setSoundType(SoundType.SLIME);
     }
 
