@@ -45,7 +45,7 @@ tile.midnight.shadowroot_crafting_table.name=Shadowroot Crafting Table
 tile.midnight.midnight_furnace.name=Midnight Furnace
 
 tile.midnight.tall_midnight_grass.name=Tall Midnight Grass
-tile.midnight.double_midnight_grass.name=Tall Midnight Grass
+tile.midnight.double_midnight_grass.name=Double Tall Midnight Grass
 
 tile.midnight.lumen_bud.name=Lumen Bud
 tile.midnight.double_lumen_bud.name=Tall Lumen Bud
@@ -81,19 +81,19 @@ tile.midnight.viridshroom.name=Viridshroom
 tile.midnight.double_viridshroom.name=Tall Viridshroom
 
 tile.midnight.nightshroom_stem.name=Nightshroom Stem
-tile.midnight.nightshroom_hat.name=Nightshroom Hat
+tile.midnight.nightshroom_hat.name=Nightshroom Cap
 tile.midnight.nightshroom_planks.name=Nightshroom Planks
 tile.midnight.nightshroom_shelf.name=Nightshroom Shelf
 tile.midnight.nightshroom_trapdoor.name=Nightshroom Trapdoor
 
 tile.midnight.dewshroom_stem.name=Dewshroom Stem
-tile.midnight.dewshroom_hat.name=Dewshroom Hat
+tile.midnight.dewshroom_hat.name=Dewshroom Cap
 tile.midnight.dewshroom_planks.name=Dewshroom Planks
 tile.midnight.dewshroom_shelf.name=Dewshroom Shelf
 tile.midnight.dewshroom_trapdoor.name=Dewshroom Trapdoor
 
 tile.midnight.viridshroom_stem.name=Viridshroom Stem
-tile.midnight.viridshroom_hat.name=Viridshroom Hat
+tile.midnight.viridshroom_hat.name=Viridshroom Cap
 tile.midnight.viridshroom_planks.name=Viridshroom Planks
 tile.midnight.viridshroom_shelf.name=Viridshroom Shelf
 tile.midnight.viridshroom_trapdoor.name=Viridshroom Trapdoor
