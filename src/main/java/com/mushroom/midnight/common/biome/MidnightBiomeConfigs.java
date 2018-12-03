@@ -3,7 +3,20 @@ package com.mushroom.midnight.common.biome;
 import com.mushroom.midnight.common.entity.creature.EntityHunter;
 import com.mushroom.midnight.common.entity.creature.EntityRifter;
 import com.mushroom.midnight.common.registry.ModBlocks;
-import com.mushroom.midnight.common.world.feature.*;
+import com.mushroom.midnight.common.world.feature.BoulderFeature;
+import com.mushroom.midnight.common.world.feature.CrystalClusterFeature;
+import com.mushroom.midnight.common.world.feature.DarkWillowTreeFeature;
+import com.mushroom.midnight.common.world.feature.DeadLogFeature;
+import com.mushroom.midnight.common.world.feature.DeadTreeFeature;
+import com.mushroom.midnight.common.world.feature.DoubleFungiFeature;
+import com.mushroom.midnight.common.world.feature.DoublePlantFeature;
+import com.mushroom.midnight.common.world.feature.FungiFeature;
+import com.mushroom.midnight.common.world.feature.GourdFeature;
+import com.mushroom.midnight.common.world.feature.IMidnightFeature;
+import com.mushroom.midnight.common.world.feature.LargeFungiFeature;
+import com.mushroom.midnight.common.world.feature.MiasmaSourceFeature;
+import com.mushroom.midnight.common.world.feature.PlantFeature;
+import com.mushroom.midnight.common.world.feature.ShadowrootTreeFeature;
 import com.mushroom.midnight.common.world.feature.config.ScatterPlacementConfig;
 import com.mushroom.midnight.common.world.feature.config.SurfacePlacementConfig;
 import net.minecraft.block.BlockBush;
@@ -13,6 +26,7 @@ public class MidnightBiomeConfigs {
     public static final IMidnightFeature SHADOWROOT_TREE_FEATURE = new ShadowrootTreeFeature();
     public static final IMidnightFeature DARK_WILLOW_TREE_FEATURE = new DarkWillowTreeFeature();
     public static final IMidnightFeature DEAD_TREE_FEATURE = new DeadTreeFeature();
+    public static final IMidnightFeature DEAD_LOG_FEATURE = new DeadLogFeature();
 
     public static final IMidnightFeature TALL_GRASS_FEATURE = new PlantFeature(
             ModBlocks.TALL_MIDNIGHT_GRASS.getDefaultState(),
@@ -97,15 +111,6 @@ public class MidnightBiomeConfigs {
             .withFeature(FUNGI_FEATURE, new ScatterPlacementConfig(1, 16))
             .build();
 
-    public static final MidnightBiomeConfig VIGILANT_FOREST_VEGETATED_CONFIG = MidnightBiomeConfig.builder()
-            .withFeature(TALL_GRASS_FEATURE, new ScatterPlacementConfig(6, 64))
-            .withFeature(DOUBLE_GRASS_FEATURE, new ScatterPlacementConfig(3, 32))
-            .withFeature(LUMEN_FEATURE, new ScatterPlacementConfig(1, 32))
-            .withFeature(DOUBLE_LUMEN_FEATURE, new ScatterPlacementConfig(1, 16))
-            .withFeature(FUNGI_FEATURE, new ScatterPlacementConfig(1, 16))
-            .withFeature(SUAVIS_FEATURE, new ScatterPlacementConfig(1, 8))
-            .build();
-
     public static final MidnightBiomeConfig ROCKY_CONFIG = MidnightBiomeConfig.builder()
             .withFeature(LUMEN_FEATURE, new ScatterPlacementConfig(1, 32))
             .withFeature(DOUBLE_LUMEN_FEATURE, new ScatterPlacementConfig(1, 16))
@@ -122,12 +127,14 @@ public class MidnightBiomeConfigs {
             .withFeature(FUNGI_FEATURE, new ScatterPlacementConfig(2, 16))
             .build();
 
-    public static final MidnightBiomeConfig VIGILANT_FOREST_CONFIG = MidnightBiomeConfig.builder(VIGILANT_FOREST_VEGETATED_CONFIG)
+    public static final MidnightBiomeConfig VIGILANT_FOREST_CONFIG = MidnightBiomeConfig.builder(VEGETATED_CONFIG)
             .withFeature(new IMidnightFeature[] {
                     SHADOWROOT_TREE_FEATURE,
                     DARK_WILLOW_TREE_FEATURE
             }, new SurfacePlacementConfig(8))
-            .withFeature(DEAD_TREE_FEATURE, new SurfacePlacementConfig(6))
+            .withFeature(SUAVIS_FEATURE, new ScatterPlacementConfig(1, 8))
+            .withFeature(DEAD_LOG_FEATURE, new SurfacePlacementConfig(6))
+            .withFeature(DEAD_TREE_FEATURE, new SurfacePlacementConfig(-5, 1))
             .withMonster(new Biome.SpawnListEntry(EntityRifter.class, 1, 0, 1))
             .build();
 
@@ -158,6 +165,7 @@ public class MidnightBiomeConfigs {
             .build();
 
     public static final MidnightBiomeConfig DECEITFUL_BOG_CONFIG = MidnightBiomeConfig.builder()
+            .withFeature(DEAD_TREE_FEATURE, new SurfacePlacementConfig(-1, 1))
             .withFeature(new IMidnightFeature[] {
                     SHADOWROOT_TREE_FEATURE,
                     DARK_WILLOW_TREE_FEATURE
@@ -165,7 +173,7 @@ public class MidnightBiomeConfigs {
             .withFeature(TALL_GRASS_FEATURE, new ScatterPlacementConfig(6, 32))
             .withFeature(DOUBLE_GRASS_FEATURE, new ScatterPlacementConfig(4, 32))
             .withFeature(FUNGI_FEATURE, new ScatterPlacementConfig(2, 4))
-            .withFeature(DEAD_TREE_FEATURE, new SurfacePlacementConfig(7))
+            .withFeature(DEAD_LOG_FEATURE, new SurfacePlacementConfig(5))
             .withFeature(DECEITFUL_ALGAE_FEATURE, new ScatterPlacementConfig(10, 20))
             .withGrassColor(0x8893AD)
             .withRidgeWeight(0.0F)
@@ -175,7 +183,7 @@ public class MidnightBiomeConfigs {
             .withFeature(TALL_GRASS_FEATURE, new ScatterPlacementConfig(2, 32))
             .withFeature(new IMidnightFeature[] {
                     SHADOWROOT_TREE_FEATURE,
-                    DARK_WILLOW_TREE_FEATURE
+                    DEAD_TREE_FEATURE
             }, new SurfacePlacementConfig(-5, 1))
             .withFeature(NIGHTSTONE_BOULDER_FEATURE, new SurfacePlacementConfig(-3, 1))
             .withMonster(new Biome.SpawnListEntry(EntityHunter.class, 1, 0, 2))
