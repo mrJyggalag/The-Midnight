@@ -36,8 +36,8 @@ repositories {
 }
 
 dependencies {
-    deobfCompile "mezz.jei:jei_1.12.2:4.8.0.110:api"
-    runtime "mezz.jei:jei_1.12.2:4.8.0.110"
+    deobfCompile "mezz.jei:jei_1.12.2:4.13.1.225:api"
+    runtime "mezz.jei:jei_1.12.2:4.13.1.225"
 }
 
 processResources {
