@@ -211,7 +211,7 @@ public class ModBlocks {
     public static final Block NIGHTSTONE_STAIRS = Blocks.AIR;
     public static final Block NIGHTSTONE_BRICK_STAIRS = Blocks.AIR;
     public static final Block TRENCHSTONE_STAIRS = Blocks.AIR;
-    public static final Block TRENCHTONE_BRICK_STAIRS = Blocks.AIR;
+    public static final Block TRENCHSTONE_BRICK_STAIRS = Blocks.AIR;
     public static final Block DEWSHROOM_STAIRS = Blocks.AIR;
     public static final Block VIRIDSHROOM_STAIRS = Blocks.AIR;
     public static final Block NIGHTSHROOM_STAIRS = Blocks.AIR;
@@ -472,7 +472,7 @@ public class ModBlocks {
                 DECEITFUL_PEAT, DECEITFUL_MUD, DECEITFUL_MOSS,
                 SHADOWROOT_STAIRS, DEAD_WOOD_STAIRS, DARK_WILLOW_STAIRS,
                 NIGHTSTONE_STAIRS, NIGHTSTONE_BRICK_STAIRS,
-                TRENCHSTONE_STAIRS, TRENCHTONE_BRICK_STAIRS,
+                TRENCHSTONE_STAIRS, TRENCHSTONE_BRICK_STAIRS,
                 DEWSHROOM_STAIRS, VIRIDSHROOM_STAIRS, NIGHTSHROOM_STAIRS,
                 SHADOWROOT_FENCE, DEAD_WOOD_FENCE, DARK_WILLOW_FENCE,
                 NIGHTSTONE_WALL, NIGHTSTONE_BRICK_WALL,
