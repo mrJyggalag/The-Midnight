@@ -24,7 +24,8 @@ public class TemplateCompiler {
 
     private final Collection<BiConsumer<PlacementSettings, Random>> settingConfigurators = new ArrayList<>();
     private ITemplateProcessor processor;
-    private IDataProcessor dataProcessor;
+    private TemplateDataProcessor dataProcessor;
+    private final Collection<TemplatePostProcessor> postProcessors = new ArrayList<>();
 
     public static TemplateCompiler of(ResourceLocation... templates) {
         return new TemplateCompiler().withTemplates(templates);
@@ -45,8 +46,13 @@ public class TemplateCompiler {
         return this;
     }
 
-    public TemplateCompiler withDataProcessor(IDataProcessor processor) {
+    public TemplateCompiler withDataProcessor(TemplateDataProcessor processor) {
         this.dataProcessor = processor;
+        return this;
+    }
+
+    public TemplateCompiler withPostProcessor(TemplatePostProcessor processor) {
+        this.postProcessors.add(processor);
         return this;
     }
 
@@ -70,7 +76,7 @@ public class TemplateCompiler {
         BlockPos anchor = this.computeAnchor(template, settings);
         BlockPos anchoredOrigin = anchor != null ? origin.subtract(anchor) : origin;
 
-        return new CompiledTemplate(template, settings, anchoredOrigin, this.processor, this.dataProcessor);
+        return new CompiledTemplate(template, settings, anchoredOrigin, this.processor, this.dataProcessor, this.postProcessors);
     }
 
     @Nullable
@@ -92,9 +98,5 @@ public class TemplateCompiler {
             configurator.accept(settings, random);
         }
         return settings;
-    }
-
-    public interface IDataProcessor {
-        void process(World world, BlockPos pos, String key);
     }
 }

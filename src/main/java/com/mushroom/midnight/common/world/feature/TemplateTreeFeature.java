@@ -27,7 +27,11 @@ public class TemplateTreeFeature extends MidnightTreeFeature {
 
     public TemplateTreeFeature(ResourceLocation[] templates, IBlockState log, IBlockState leaves) {
         super(log, leaves);
-        this.templateCompiler = TemplateCompiler.of(templates)
+        this.templateCompiler = this.buildCompiler(templates);
+    }
+
+    protected TemplateCompiler buildCompiler(ResourceLocation[] templates) {
+        return TemplateCompiler.of(templates)
                 .withAnchor(ANCHOR_KEY)
                 .withSettingConfigurator(RotatedSettingConfigurator.INSTANCE)
                 .withProcessor(this::processState)
@@ -58,7 +62,7 @@ public class TemplateTreeFeature extends MidnightTreeFeature {
 
         this.notifyGrowth(world, origin);
 
-        template.addTo(world, 2 | 16);
+        template.addTo(world, rand, 2 | 16);
 
         return true;
     }

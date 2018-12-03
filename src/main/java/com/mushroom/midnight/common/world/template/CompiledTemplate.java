@@ -11,34 +11,52 @@ import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
+import java.util.Random;
 
 public class CompiledTemplate {
     private final Template template;
     private final PlacementSettings settings;
-
     private final BlockPos origin;
+
     private final ITemplateProcessor processor;
-    private final TemplateCompiler.IDataProcessor dataProcessor;
+    private final TemplateDataProcessor dataProcessor;
+    private final Collection<TemplatePostProcessor> postProcessors;
 
     private final Map<BlockPos, String> dataBlocks;
 
-    CompiledTemplate(Template template, PlacementSettings settings, BlockPos origin, ITemplateProcessor processor, TemplateCompiler.IDataProcessor dataProcessor) {
+    CompiledTemplate(
+            Template template, PlacementSettings settings, BlockPos origin,
+            ITemplateProcessor processor,
+            TemplateDataProcessor dataProcessor,
+            Collection<TemplatePostProcessor> postProcessors
+    ) {
         this.template = template;
         this.settings = settings;
         this.origin = origin;
 
         this.processor = processor != null ? processor : new BlockRotationProcessor(origin, settings);
         this.dataProcessor = dataProcessor;
+        this.postProcessors = postProcessors;
 
         this.dataBlocks = this.template.getDataBlocks(origin, settings);
     }
 
-    public void addTo(World world, int flags) {
+    public void addTo(World world, Random random, int flags) {
         this.template.addBlocksToWorld(world, this.origin, this.processor, this.settings, flags);
 
         if (this.dataProcessor != null) {
             for (Map.Entry<BlockPos, String> entry : this.dataBlocks.entrySet()) {
                 this.dataProcessor.process(world, entry.getKey(), entry.getValue());
+            }
+        }
+
+        for (TemplatePostProcessor processor : this.postProcessors) {
+            for (Template.BlockInfo info : this.template.blocks) {
+                BlockPos pos = Template.transformedBlockPos(this.settings, info.pos).add(this.origin);
+                Template.BlockInfo processedInfo = this.processor.processBlock(world, pos, info);
+                if (processedInfo != null) {
+                    processor.process(world, random, pos, processedInfo.blockState);
+                }
             }
         }
     }
