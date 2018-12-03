@@ -15,6 +15,7 @@ import com.mushroom.midnight.common.world.feature.GourdFeature;
 import com.mushroom.midnight.common.world.feature.IMidnightFeature;
 import com.mushroom.midnight.common.world.feature.LargeFungiFeature;
 import com.mushroom.midnight.common.world.feature.MiasmaSourceFeature;
+import com.mushroom.midnight.common.world.feature.MossFeature;
 import com.mushroom.midnight.common.world.feature.PlantFeature;
 import com.mushroom.midnight.common.world.feature.ShadowrootTreeFeature;
 import com.mushroom.midnight.common.world.feature.config.ScatterPlacementConfig;
@@ -53,6 +54,8 @@ public class MidnightBiomeConfigs {
             ModBlocks.DECEITFUL_ALGAE.getDefaultState(),
             (world, pos, state) -> ModBlocks.DECEITFUL_ALGAE.canPlaceBlockAt(world, pos)
     );
+
+    public static final IMidnightFeature DECEITFUL_MOSS_FEATURE = new MossFeature(ModBlocks.DECEITFUL_MOSS.getDefaultState());
 
     public static final IMidnightFeature DOUBLE_LUMEN_FEATURE = new DoublePlantFeature(
             ModBlocks.DOUBLE_LUMEN_BUD.getDefaultState(),
@@ -172,6 +175,7 @@ public class MidnightBiomeConfigs {
             }, new SurfacePlacementConfig(4))
             .withFeature(TALL_GRASS_FEATURE, new ScatterPlacementConfig(6, 32))
             .withFeature(DOUBLE_GRASS_FEATURE, new ScatterPlacementConfig(4, 32))
+            .withFeature(DECEITFUL_MOSS_FEATURE, new ScatterPlacementConfig(16, 32))
             .withFeature(FUNGI_FEATURE, new ScatterPlacementConfig(2, 4))
             .withFeature(DEAD_LOG_FEATURE, new SurfacePlacementConfig(5))
             .withFeature(DECEITFUL_ALGAE_FEATURE, new ScatterPlacementConfig(10, 20))

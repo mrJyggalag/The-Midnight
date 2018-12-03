@@ -27,7 +27,7 @@ import javax.annotation.Nullable;
 import java.util.Arrays;
 
 public class BlockDeceitfulMoss extends Block implements IModelProvider {
-    private static final PropertyEnum<EnumFacing> FACING = BlockDirectional.FACING;
+    public static final PropertyEnum<EnumFacing> FACING = BlockDirectional.FACING;
     private static final DirectionalBounds BOUNDS = new DirectionalBounds(0.0, 0.0, 0.875, 1.0, 1.0, 1.0);
 
     public BlockDeceitfulMoss() {
