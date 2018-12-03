@@ -314,14 +314,14 @@ public class ModBlocks {
 
         blocks.addAll(Lists.newArrayList(
                 RegUtil.withName(new BlockBasic(Material.ROCK), "nightstone_bricks")
-                        .setHardness(2F)
+                        .setHardness(1.5F)
                         .setResistance(10.0F),
                 RegUtil.withName(new BlockBasic(Material.ROCK), "trenchstone_bricks")
                         .withHarvestLevel("pickaxe", 2)
                         .setHardness(5.0F)
                         .setResistance(200.0F),
                 RegUtil.withName(new BlockBasic(Material.ROCK), "chiseled_nightstone_bricks")
-                        .setHardness(2F)
+                        .setHardness(1.5F)
                         .setResistance(10.0F),
                 RegUtil.withName(new BlockBasic(Material.IRON), "dark_pearl_block")
                         .withSoundType(SoundType.METAL)
