@@ -14,7 +14,6 @@ import com.mushroom.midnight.common.world.feature.FungiFeature;
 import com.mushroom.midnight.common.world.feature.GourdFeature;
 import com.mushroom.midnight.common.world.feature.IMidnightFeature;
 import com.mushroom.midnight.common.world.feature.LargeFungiFeature;
-import com.mushroom.midnight.common.world.feature.MiasmaSourceFeature;
 import com.mushroom.midnight.common.world.feature.MossFeature;
 import com.mushroom.midnight.common.world.feature.PlantFeature;
 import com.mushroom.midnight.common.world.feature.ShadowrootTreeFeature;
@@ -95,16 +94,12 @@ public class MidnightBiomeConfigs {
             ModBlocks.BLOOMCRYSTAL.getDefaultState()
     );
 
-    public static final IMidnightFeature BLOOMCRYSTAL_SPIRE_FEATURE = new CrystalClusterFeature(1, 4,
+    public static final IMidnightFeature BLOOMCRYSTAL_SPIRE_FEATURE = new CrystalClusterFeature(4, 13,
             ModBlocks.BLOOMCRYSTAL_ROCK.getDefaultState(),
             ModBlocks.BLOOMCRYSTAL.getDefaultState()
     );
 
     public static final IMidnightFeature NIGHTSTONE_BOULDER_FEATURE = new BoulderFeature(ModBlocks.NIGHTSTONE.getDefaultState(), 2);
-
-    public static final IMidnightFeature MIASMA_SOURCE_FEATURE = new MiasmaSourceFeature();
-
-    public static final SurfaceConfig VEGETATED_SURFACE_CONFIG = new SurfaceConfig();
 
     public static final SurfaceConfig ROCKY_SURFACE_CONFIG = new SurfaceConfig()
             .withTopState(ModBlocks.NIGHTSTONE.getDefaultState())
@@ -157,7 +152,7 @@ public class MidnightBiomeConfigs {
 
     public static final MidnightBiomeConfig CRYSTAL_SPIRES_CONFIG = MidnightBiomeConfig.builder()
             .withFeature(SHADOWROOT_TREE_FEATURE, new SurfacePlacementConfig(-3, 1))
-            .withFeature(BLOOMCRYSTAL_FEATURE, new SurfacePlacementConfig(3, 4))
+            .withFeature(BLOOMCRYSTAL_FEATURE, new SurfacePlacementConfig(3))
             .withFeature(BLOOMCRYSTAL_SPIRE_FEATURE, new SurfacePlacementConfig(2, 3))
             .withFeature(LUMEN_FEATURE, new ScatterPlacementConfig(1, 32))
             .withFeature(DOUBLE_LUMEN_FEATURE, new ScatterPlacementConfig(1, 16))
