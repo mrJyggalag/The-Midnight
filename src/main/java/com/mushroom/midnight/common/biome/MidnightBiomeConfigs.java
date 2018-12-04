@@ -171,6 +171,7 @@ public class MidnightBiomeConfigs {
             .withMonster(new Biome.SpawnListEntry(EntityHunter.class, 1, 0, 2))
             .withDensityScale(0.5F)
             .withRidgeWeight(0.0F)
+            .wet()
             .build();
 
     public static final MidnightBiomeConfig DECEITFUL_BOG_CONFIG = MidnightBiomeConfig.builder()
@@ -187,6 +188,7 @@ public class MidnightBiomeConfigs {
             .withFeature(DECEITFUL_ALGAE_FEATURE, new ScatterPlacementConfig(10, 20))
             .withGrassColor(0x8893AD)
             .withRidgeWeight(0.0F)
+            .wet()
             .build();
 
     public static final MidnightBiomeConfig NIGHT_PLAINS_CONFIG = MidnightBiomeConfig.builder()
@@ -208,5 +210,6 @@ public class MidnightBiomeConfigs {
     public static final MidnightBiomeConfig PHANTASMAL_VALLEY_CONFIG = MidnightBiomeConfig.builder()
             .withMonster(new Biome.SpawnListEntry(EntityHunter.class, 1, 0, 2))
             .withRidgeWeight(0.0F)
+            .wet()
             .build();
 }
