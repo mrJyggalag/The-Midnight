@@ -130,6 +130,9 @@ public class WorldGenMoltenCrater extends MapGenBase {
     }
 
     private void carveCraterBlock(ChunkPrimer primer, int poolLevel, int localX, int localY, int localZ) {
+        if (primer.getBlockState(localX, localY, localZ) == AIR_STATE) {
+            return;
+        }
         if (localY <= poolLevel) {
             primer.setBlockState(localX, localY, localZ, MIASMA_STATE);
         } else {
