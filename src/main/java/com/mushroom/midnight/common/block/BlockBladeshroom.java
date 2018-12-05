@@ -16,6 +16,7 @@ import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
@@ -136,6 +137,11 @@ public class BlockBladeshroom extends BlockMidnightPlant implements IGrowable {
     @Override
     public void grow(World world, Random rand, BlockPos pos, IBlockState state) {
         this.incrementStage(world, pos, state);
+    }
+
+    @Override
+    public ItemStack getPickBlock(IBlockState state, RayTraceResult target, World world, BlockPos pos, EntityPlayer player) {
+        return new ItemStack(ModItems.BLADESHROOM_SPORES);
     }
 
     public enum Stage implements IStringSerializable {
