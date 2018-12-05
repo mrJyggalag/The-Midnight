@@ -49,6 +49,7 @@ public class ModItems {
     public static final Item EBONYS = Items.AIR;
 
     public static final Item BLADESHROOM_CAP = Items.AIR;
+    public static final Item BLADESHROOM_SPORES = Items.AIR;
 
     public static final Item RAW_SUAVIS = Items.AIR;
     public static final Item COOK_SUAVIS = Items.AIR;
@@ -111,6 +112,7 @@ public class ModItems {
                 RegUtil.withName(new ItemBasic(), "nagrilite_nugget"),
                 RegUtil.withName(new ItemBasic(), "ebonys"),
                 RegUtil.withName(new ItemBladeshroomCap(), "bladeshroom_cap"),
+                RegUtil.withName(new ItemBasic(), "bladeshroom_spores"),
                 RegUtil.withName(new ItemRawSuavis(), "raw_suavis"),
                 RegUtil.withName(new ItemCookSuavis(), "cook_suavis"),
                 RegUtil.withName(new ItemMidnightPickaxe(MidnightToolMaterials.SHADOWROOT), "shadowroot_pickaxe"),
