@@ -1,5 +1,6 @@
 package com.mushroom.midnight.common.entity.creature;
 
+import com.mushroom.midnight.common.registry.ModLootTables;
 import com.mushroom.midnight.common.entity.navigation.CustomPathNavigateGround;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.EntityAIAttackMelee;
@@ -13,7 +14,10 @@ import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.pathfinding.PathNavigate;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
+
+import javax.annotation.Nullable;
 
 public class EntityNova extends EntityMob {
     public EntityNova(World world) {
@@ -42,5 +46,11 @@ public class EntityNova extends EntityMob {
         this.targetTasks.addTask(1, new EntityAIHurtByTarget(this, true));
         this.targetTasks.addTask(2, new EntityAINearestAttackableTarget<>(this, EntityPlayer.class, true));
         this.targetTasks.addTask(3, new EntityAINearestAttackableTarget<>(this, EntityLivingBase.class, 10, true, false, p -> true));
+    }
+
+    @Override
+    @Nullable
+    protected ResourceLocation getLootTable() {
+        return ModLootTables.LOOT_TABLE_NOVA;
     }
 }
