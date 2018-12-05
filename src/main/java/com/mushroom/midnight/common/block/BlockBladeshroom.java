@@ -12,6 +12,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
@@ -27,8 +28,9 @@ public class BlockBladeshroom extends BlockMidnightPlant {
     private static final AxisAlignedBB CAPLESS_BOUNDS = new AxisAlignedBB(0.25, 0.0, 0.25, 0.75, 0.5, 0.75);
 
     public BlockBladeshroom() {
-        this.setDefaultState(this.blockState.getBaseState().withProperty(HAS_CAP, true));
+        this.setDefaultState(this.blockState.getBaseState().withProperty(HAS_CAP, false));
         this.setTickRandomly(true);
+        this.setCreativeTab(null);
     }
 
     @Override
@@ -47,6 +49,28 @@ public class BlockBladeshroom extends BlockMidnightPlant {
         }
 
         return false;
+    }
+
+    @Override
+    public void getDrops(NonNullList<ItemStack> drops, IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
+        if (state.getValue(HAS_CAP)) {
+            drops.add(new ItemStack(ModItems.BLADESHROOM_CAP));
+        }
+
+        Random random = world instanceof World ? ((World) world).rand : RANDOM;
+        drops.add(new ItemStack(ModItems.BLADESHROOM_SPORES, this.quantityDropped(state, fortune, random)));
+    }
+
+    @Override
+    public int quantityDropped(IBlockState state, int fortune, Random random) {
+        int quantity = 0;
+        if (state.getValue(HAS_CAP)) {
+            quantity += 1;
+        }
+        if (random.nextInt(3) == 0) {
+            quantity += 1;
+        }
+        return quantity;
     }
 
     @Override
