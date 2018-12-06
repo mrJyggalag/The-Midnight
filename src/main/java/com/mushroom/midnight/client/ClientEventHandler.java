@@ -22,6 +22,7 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.network.play.client.CPacketEntityAction;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
@@ -132,6 +133,9 @@ public class ClientEventHandler {
     @SubscribeEvent
     public static void onSetupFogDensity(EntityViewRenderEvent.RenderFogEvent.FogDensity event) {
         Entity entity = event.getEntity();
+        if (FluidImmersionRenderer.immersedState.getBlock() != Blocks.AIR) {
+            return;
+        }
         if (entity.world.provider.getDimensionType() == ModDimensions.MIDNIGHT) {
             GlStateManager.setFog(GlStateManager.FogMode.EXP);
             event.setCanceled(true);
