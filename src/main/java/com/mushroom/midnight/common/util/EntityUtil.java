@@ -5,6 +5,9 @@ import net.minecraft.entity.monster.EntityCaveSpider;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.monster.EntitySpider;
 import net.minecraft.entity.passive.EntityAnimal;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemArmor;
+import net.minecraft.item.ItemStack;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -37,6 +40,21 @@ public class EntityUtil {
         }
         float height = Math.max(entity.height, entity.getEyeHeight());
         return height > entity.width ? Stance.BIPEDAL : Stance.QUADRUPEDAL;
+    }
+
+    public static boolean isCoveredBy(EntityLivingBase entity, ItemArmor.ArmorMaterial material) {
+        for (ItemStack armorStack : entity.getArmorInventoryList()) {
+            if (armorStack.isEmpty()) {
+                return false;
+            }
+            Item armorItem = armorStack.getItem();
+            if (armorItem instanceof ItemArmor) {
+                if (material != ((ItemArmor) armorItem).getArmorMaterial()) {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
     public enum Stance {

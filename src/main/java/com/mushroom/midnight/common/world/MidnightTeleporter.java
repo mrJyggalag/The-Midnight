@@ -4,7 +4,10 @@ import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.common.capability.RiftCooldownCapability;
 import com.mushroom.midnight.common.entity.EntityRift;
 import com.mushroom.midnight.common.entity.RiftBridge;
+import com.mushroom.midnight.common.registry.ModArmorMaterials;
+import com.mushroom.midnight.common.util.EntityUtil;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
@@ -30,7 +33,7 @@ public class MidnightTeleporter implements ITeleporter {
             return;
         }
 
-        if (entity instanceof EntityPlayer) {
+        if (entity instanceof EntityPlayer && !EntityUtil.isCoveredBy((EntityLivingBase) entity, ModArmorMaterials.TENEBRUM)) {
             bridge.close();
         }
 
