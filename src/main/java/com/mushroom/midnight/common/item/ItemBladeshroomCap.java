@@ -24,7 +24,7 @@ import net.minecraft.world.World;
 
 public class ItemBladeshroomCap extends Item implements IModelProvider {
     public ItemBladeshroomCap() {
-        this.maxStackSize = 16;
+        this.maxStackSize = 64;
         this.setCreativeTab(Midnight.MIDNIGHT_ITEMS);
 
         BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(this, new DispenserBehavior());

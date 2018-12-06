@@ -1,0 +1,21 @@
+{
+	"parent": "midnight:recipes/root",
+	"rewards": {
+		"recipes": [
+			"midnight:dewshroom_door",
+			"midnight:dewshroom_slab",
+			"midnight:dewshroom_stairs",
+			"midnight:dewshroom_trapdoor"
+		]
+	},
+	"criteria": {
+		"requirement_1": {
+			"trigger": "minecraft:inventory_changed",
+			"conditions": {
+				"items": [{
+					"item": "midnight:dewshroom_planks"
+				}]
+			}
+		}
+	}
+}

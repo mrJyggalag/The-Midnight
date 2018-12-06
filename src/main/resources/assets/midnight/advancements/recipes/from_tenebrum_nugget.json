@@ -1,0 +1,18 @@
+{
+	"parent": "midnight:recipes/root",
+	"rewards": {
+		"recipes": [
+			"midnight:tenebrum_nuggets_to_ingot"
+		]
+	},
+	"criteria": {
+		"requirement_1": {
+			"trigger": "minecraft:inventory_changed",
+			"conditions": {
+				"items": [{
+					"item": "midnight:tenebrum_nugget"
+				}]
+			}
+		}
+	}
+}

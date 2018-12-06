@@ -1,0 +1,27 @@
+{
+	"parent": "midnight:recipes/root",
+	"rewards": {
+		"recipes": [ 
+			"midnight:dead_wood_fence",
+			"midnight:dead_wood_fence_gate"
+		]
+	},
+	"criteria": {
+		"requirement_1": {
+			"trigger": "minecraft:inventory_changed",
+			"conditions": {
+				"items": [{
+					"item": "midnight:dead_wood_planks"
+				}]
+			}
+		},
+		"requirement_2": {
+			"trigger": "minecraft:inventory_changed",
+			"conditions": {
+				"items": [{
+					"item": "midnight:dark_stick"
+				}]
+			}
+		}
+	}
+}

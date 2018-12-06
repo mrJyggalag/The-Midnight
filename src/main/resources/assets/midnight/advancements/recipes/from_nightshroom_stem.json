@@ -1,0 +1,18 @@
+{
+	"parent": "midnight:recipes/root",
+	"rewards": {
+		"recipes": [ 
+			"midnight:nightshroom_planks"
+		]
+	},
+	"criteria": {
+		"requirement_1": {
+			"trigger": "minecraft:inventory_changed",
+			"conditions": {
+				"items": [{
+					"item": "midnight:nightshroom_stem"
+				}]
+			}
+		}
+	}
+}
