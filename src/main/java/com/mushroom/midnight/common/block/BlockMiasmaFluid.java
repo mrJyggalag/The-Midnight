@@ -37,7 +37,7 @@ public class BlockMiasmaFluid extends BlockMixableFluid implements IModelProvide
     protected IBlockState getMixState(IBlockState otherState) {
         if (otherState.getMaterial() == Material.WATER) {
             return ModBlocks.NIGHTSTONE.getDefaultState();
-        } else if (otherState.getBlock() == Blocks.LAVA) {
+        } else if (otherState.getBlock() == Blocks.LAVA || otherState.getBlock() == Blocks.FLOWING_LAVA) {
             return ModBlocks.MIASMA_SURFACE.getDefaultState();
         }
         return null;

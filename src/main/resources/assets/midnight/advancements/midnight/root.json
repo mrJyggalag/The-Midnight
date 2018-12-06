@@ -1,25 +1,22 @@
 {
   "display": {
     "icon": {
-      "item": "midnight:advancement_rift"
+      "item": "midnight:midnight_grass"
     },
     "title": {
-      "translate": "advancement.into_darkness.title"
+      "translate": "advancement.midnight.title"
     },
     "description": {
-      "translate": "advancement.into_darkness.desc"
+      "translate": "advancement.midnight.desc"
     },
     "background": "midnight:textures/blocks/nightstone.png",
-    "show_toast": true,
-    "announce_to_chat": true,
+    "show_toast": false,
+    "announce_to_chat": false,
     "frame": "task"
   },
   "criteria": {
-    "enter_midnight": {
-      "trigger": "minecraft:changed_dimension",
-      "conditions": {
-        "to": "midnight"
-      }
+    "auto": {
+      "trigger": "location"
     }
   }
 }

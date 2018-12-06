@@ -272,6 +272,9 @@ potion.midnight.stunned.name=Stunned
 
 # Advancements
 
+advancement.midnight.title=The Midnight
+advancement.midnight.desc=Advancements for the Midnight Dimension
+
 advancement.into_darkness.title=Into Darkness
 advancement.into_darkness.desc=Enter the Midnight dimension
 

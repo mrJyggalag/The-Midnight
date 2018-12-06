@@ -13,7 +13,7 @@
     "show_toast": true,
     "announce_to_chat": true
   },
-  "parent": "midnight:midnight/root",
+  "parent": "midnight:midnight/into_darkness",
   "criteria": {
     "gathered_suavis": {
       "trigger": "midnight:harvested_suavis"
