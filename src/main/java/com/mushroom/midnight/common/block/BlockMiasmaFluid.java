@@ -6,6 +6,7 @@ import com.mushroom.midnight.common.registry.ModFluids;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
+import net.minecraft.init.Blocks;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
@@ -36,6 +37,8 @@ public class BlockMiasmaFluid extends BlockMixableFluid implements IModelProvide
     protected IBlockState getMixState(IBlockState otherState) {
         if (otherState.getMaterial() == Material.WATER) {
             return ModBlocks.NIGHTSTONE.getDefaultState();
+        } else if (otherState.getBlock() == Blocks.LAVA) {
+            return ModBlocks.MIASMA_SURFACE.getDefaultState();
         }
         return null;
     }
