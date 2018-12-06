@@ -19,6 +19,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.gen.structure.template.PlacementSettings;
 import net.minecraft.world.gen.structure.template.Template;
 import net.minecraft.world.gen.structure.template.TemplateManager;
+import net.minecraftforge.event.terraingen.DecorateBiomeEvent;
 
 import javax.annotation.Nullable;
 import java.util.HashMap;
@@ -187,6 +188,11 @@ public class LargeFungiFeature extends MidnightNaturalFeature {
             }
         }
         return null;
+    }
+
+    @Override
+    public DecorateBiomeEvent.Decorate.EventType getEventType() {
+        return DecorateBiomeEvent.Decorate.EventType.BIG_SHROOM;
     }
 
     private enum FungiShape {

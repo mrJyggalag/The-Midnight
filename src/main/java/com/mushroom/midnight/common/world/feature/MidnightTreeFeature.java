@@ -9,6 +9,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.common.IPlantable;
+import net.minecraftforge.event.terraingen.DecorateBiomeEvent;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -90,5 +91,10 @@ public abstract class MidnightTreeFeature extends MidnightNaturalFeature {
         }
 
         return positions;
+    }
+
+    @Override
+    public DecorateBiomeEvent.Decorate.EventType getEventType() {
+        return DecorateBiomeEvent.Decorate.EventType.TREE;
     }
 }
