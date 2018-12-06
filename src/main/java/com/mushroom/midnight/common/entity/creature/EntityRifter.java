@@ -239,6 +239,11 @@ public class EntityRifter extends EntityMob implements IRiftTraveler, IEntityAdd
         return false;
     }
 
+    @Override
+    protected float getSoundVolume() {
+        return 1.5F;
+    }
+
     private boolean shouldAttack(Entity entity) {
         if (entity == null || RifterCapturedCapability.isCaptured(entity)) {
             return false;

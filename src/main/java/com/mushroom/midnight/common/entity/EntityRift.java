@@ -15,6 +15,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.DimensionType;
+import net.minecraft.world.EnumSkyBlock;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
 
@@ -110,7 +111,7 @@ public class EntityRift extends Entity implements IEntityAdditionalSpawnData {
     }
 
     private void updateOverworldBehavior() {
-        if (this.world.isDaytime()) {
+        if (this.world.isDaytime() || this.world.getLightFor(EnumSkyBlock.BLOCK, this.getPosition()) > 5) {
             this.getBridge().unstable.set(true);
         }
 

@@ -47,6 +47,7 @@ public class EntityTaskRifterTeleport extends EntityAIBase {
         if (target != null) {
             this.owner.rotationYaw = attackTarget.rotationYaw;
             this.owner.setPositionAndUpdate(target.getX() + 0.5, target.getY(), target.getZ() + 0.5);
+            this.owner.playLivingSound();
 
             this.owner.getNavigator().clearPath();
         }

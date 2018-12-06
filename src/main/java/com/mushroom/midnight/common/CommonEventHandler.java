@@ -6,6 +6,7 @@ import com.mushroom.midnight.common.capability.RifterCapturedCapability;
 import com.mushroom.midnight.common.entity.EntityRift;
 import com.mushroom.midnight.common.event.RifterCaptureEvent;
 import com.mushroom.midnight.common.event.RifterReleaseEvent;
+import com.mushroom.midnight.common.registry.ModDimensions;
 import com.mushroom.midnight.common.registry.ModEffects;
 import com.mushroom.midnight.common.world.GlobalBridgeManager;
 import com.mushroom.midnight.common.world.RiftSpawnHandler;
@@ -17,8 +18,10 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.world.DimensionType;
 import net.minecraft.world.GameRules;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
+import net.minecraftforge.event.entity.PlaySoundAtEntityEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.PlayerSleepInBedEvent;
@@ -31,6 +34,9 @@ import java.util.List;
 
 @Mod.EventBusSubscriber(modid = Midnight.MODID)
 public class CommonEventHandler {
+    public static final float SOUND_TRAVEL_DISTANCE_MULTIPLIER = 2.0F;
+    private static final ThreadLocal<DimensionType> TICKING_DIMENSION = ThreadLocal.withInitial(() -> null);
+
     @SubscribeEvent
     public static void onAttachEntityCapabilities(AttachCapabilitiesEvent<Entity> event) {
         event.addCapability(new ResourceLocation(Midnight.MODID, "rift_cooldown"), new RiftCooldownCapability());
@@ -59,8 +65,13 @@ public class CommonEventHandler {
 
     @SubscribeEvent
     public static void onWorldTick(TickEvent.WorldTickEvent event) {
-        if (event.phase == TickEvent.Phase.START && !event.world.isRemote) {
-            GlobalBridgeManager.getServer().update();
+        if (event.phase == TickEvent.Phase.START) {
+            if (!event.world.isRemote) {
+                GlobalBridgeManager.getServer().update();
+            }
+            TICKING_DIMENSION.set(event.world.provider.getDimensionType());
+        } else {
+            TICKING_DIMENSION.set(null);
         }
     }
 
@@ -108,6 +119,13 @@ public class CommonEventHandler {
                 event.setResult(EntityPlayer.SleepResult.OTHER_PROBLEM);
                 player.sendStatusMessage(new TextComponentTranslation("status.midnight.rift_nearby"), true);
             }
+        }
+    }
+
+    @SubscribeEvent
+    public static void onPlaySound(PlaySoundAtEntityEvent event) {
+        if (TICKING_DIMENSION.get() == ModDimensions.MIDNIGHT) {
+            event.setVolume(event.getVolume() * SOUND_TRAVEL_DISTANCE_MULTIPLIER);
         }
     }
 }

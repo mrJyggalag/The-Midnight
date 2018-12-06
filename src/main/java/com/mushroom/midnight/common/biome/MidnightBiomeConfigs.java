@@ -18,6 +18,7 @@ import com.mushroom.midnight.common.world.feature.LargeFungiFeature;
 import com.mushroom.midnight.common.world.feature.MossFeature;
 import com.mushroom.midnight.common.world.feature.PlantFeature;
 import com.mushroom.midnight.common.world.feature.ShadowrootTreeFeature;
+import com.mushroom.midnight.common.world.feature.SpikeFeature;
 import com.mushroom.midnight.common.world.feature.config.ScatterPlacementConfig;
 import com.mushroom.midnight.common.world.feature.config.SurfacePlacementConfig;
 import net.minecraft.block.BlockBush;
@@ -101,6 +102,9 @@ public class MidnightBiomeConfigs {
     );
 
     public static final IMidnightFeature NIGHTSTONE_BOULDER_FEATURE = new BoulderFeature(ModBlocks.NIGHTSTONE.getDefaultState(), 2);
+    public static final IMidnightFeature NIGHTSTONE_SPIKE_FEATURE = new SpikeFeature(ModBlocks.NIGHTSTONE.getDefaultState());
+
+    public static final IMidnightFeature TRENCHSTONE_BOULDER_FEATURE = new BoulderFeature(ModBlocks.TRENCHSTONE.getDefaultState(), 2);
 
     public static final SurfaceConfig ROCKY_SURFACE_CONFIG = new SurfaceConfig()
             .withTopState(ModBlocks.NIGHTSTONE.getDefaultState())
@@ -116,9 +120,10 @@ public class MidnightBiomeConfigs {
             .build();
 
     public static final MidnightBiomeConfig ROCKY_CONFIG = MidnightBiomeConfig.builder()
-            .withFeature(LUMEN_FEATURE, new ScatterPlacementConfig(1, 32))
+            .withFeature(LUMEN_FEATURE, new ScatterPlacementConfig(1, 16))
             .withFeature(DOUBLE_LUMEN_FEATURE, new ScatterPlacementConfig(1, 16))
-            .withFeature(FUNGI_FEATURE, new ScatterPlacementConfig(2, 16))
+            .withFeature(FUNGI_FEATURE, new ScatterPlacementConfig(1, 16))
+            .withFeature(TRENCHSTONE_BOULDER_FEATURE, new SurfacePlacementConfig(-3, 1))
             .withSurface(ROCKY_SURFACE_CONFIG)
             .withMonster(new Biome.SpawnListEntry(EntityHunter.class, 1, 0, 2))
             .build();
@@ -127,8 +132,8 @@ public class MidnightBiomeConfigs {
             .build();
 
     public static final MidnightBiomeConfig OBSCURED_PEAKS_CONFIG = MidnightBiomeConfig.builder(ROCKY_CONFIG)
-            .withFeature(LUMEN_FEATURE, new ScatterPlacementConfig(1, 32))
-            .withFeature(FUNGI_FEATURE, new ScatterPlacementConfig(2, 16))
+            .withFeature(LUMEN_FEATURE, new ScatterPlacementConfig(1, 16))
+            .withFeature(FUNGI_FEATURE, new ScatterPlacementConfig(1, 16))
             .build();
 
     public static final MidnightBiomeConfig VIGILANT_FOREST_CONFIG = MidnightBiomeConfig.builder(VEGETATED_CONFIG)
@@ -193,7 +198,10 @@ public class MidnightBiomeConfigs {
                     SHADOWROOT_TREE_FEATURE,
                     DEAD_TREE_FEATURE
             }, new SurfacePlacementConfig(-5, 1))
-            .withFeature(NIGHTSTONE_BOULDER_FEATURE, new SurfacePlacementConfig(-3, 1))
+            .withFeature(new IMidnightFeature[] {
+                    NIGHTSTONE_BOULDER_FEATURE,
+                    NIGHTSTONE_SPIKE_FEATURE
+            }, new SurfacePlacementConfig(-3, 1))
             .withMonster(new Biome.SpawnListEntry(EntityHunter.class, 1, 0, 2))
             .withRidgeWeight(0.0F)
             .withGrassColor(0xBAA3C6)
