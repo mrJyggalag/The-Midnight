@@ -7,6 +7,7 @@ import com.mushroom.midnight.common.entity.EntityRift;
 import com.mushroom.midnight.common.entity.IRiftTraveler;
 import com.mushroom.midnight.common.entity.RiftTravelEntry;
 import com.mushroom.midnight.common.entity.RiftVoidTravelEntry;
+import com.mushroom.midnight.common.entity.TargetIdleTracker;
 import com.mushroom.midnight.common.entity.navigation.CustomPathNavigateGround;
 import com.mushroom.midnight.common.entity.task.EntityTaskRifterCapture;
 import com.mushroom.midnight.common.entity.task.EntityTaskRifterKeepNearRift;
@@ -77,6 +78,8 @@ public class EntityRifter extends EntityMob implements IRiftTraveler, IEntityAdd
     private final EntityReference<EntityRift> homeRift;
     private final DragSolver dragSolver;
 
+    private final TargetIdleTracker targetIdleTracker = new TargetIdleTracker(this, 3.0);
+
     public int captureCooldown;
 
     public boolean spawnedThroughRift;
@@ -133,6 +136,8 @@ public class EntityRifter extends EntityMob implements IRiftTraveler, IEntityAdd
     @Override
     public void onLivingUpdate() {
         if (!this.world.isRemote) {
+            this.targetIdleTracker.update();
+
             this.applyHomeModifier(SharedMonsterAttributes.MOVEMENT_SPEED, HOME_SPEED_MODIFIER);
             this.applyHomeModifier(SharedMonsterAttributes.ATTACK_DAMAGE, HOME_ATTACK_MODIFIER);
             this.applyHomeModifier(SharedMonsterAttributes.ARMOR, HOME_ARMOR_MODIFIER);
@@ -160,6 +165,10 @@ public class EntityRifter extends EntityMob implements IRiftTraveler, IEntityAdd
         }
 
         super.onLivingUpdate();
+    }
+
+    public int getTargetIdleTime() {
+        return this.targetIdleTracker.getIdleTime();
     }
 
     public boolean shouldCapture() {
@@ -397,5 +406,7 @@ public class EntityRifter extends EntityMob implements IRiftTraveler, IEntityAdd
 
     @Override
     @Nullable
-    protected ResourceLocation getLootTable() { return ModLootTables.LOOT_TABLE_RIFTER; }
+    protected ResourceLocation getLootTable() {
+        return ModLootTables.LOOT_TABLE_RIFTER;
+    }
 }

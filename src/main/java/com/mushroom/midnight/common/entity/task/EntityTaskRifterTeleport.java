@@ -4,16 +4,18 @@ import com.mushroom.midnight.common.entity.creature.EntityRifter;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.EntityAIBase;
-import net.minecraft.entity.ai.RandomPositionGenerator;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class EntityTaskRifterTeleport extends EntityAIBase {
-    private static final double MIN_EXECUTE_DISTANCE = 12;
-    private static final int TELEPORT_DISTANCE = 8;
+    private static final double MAX_DISTANCE_SQ = 24 * 24;
+
+    private static final int MIN_IDLE_TIME = 40;
 
     private final EntityRifter owner;
 
@@ -23,27 +25,15 @@ public class EntityTaskRifterTeleport extends EntityAIBase {
 
     @Override
     public boolean shouldExecute() {
-        if (this.owner.getRNG().nextInt(40) != 0) {
+        if (this.owner.getRNG().nextInt(10) != 0) {
             return false;
         }
         EntityLivingBase target = this.owner.getAttackTarget();
-        return target != null && target.getDistanceSq(this.owner) > MIN_EXECUTE_DISTANCE * MIN_EXECUTE_DISTANCE && !this.canBeSeen();
-    }
-
-    private boolean canBeSeen() {
-        List<EntityPlayer> players = this.owner.world.getEntitiesWithinAABB(EntityPlayer.class, this.owner.getEntityBoundingBox().grow(24.0));
-        for (EntityPlayer player : players) {
-            Vec3d playerLook = player.getLook(1.0F);
-
-            Vec3d deltaPos = player.getPositionVector().subtract(this.owner.getPositionVector());
-            deltaPos = deltaPos.normalize();
-
-            if (playerLook.dotProduct(deltaPos) < 0) {
-                return true;
-            }
+        if (target == null || this.owner.getTargetIdleTime() < MIN_IDLE_TIME) {
+            return false;
         }
-
-        return false;
+        double distanceSq = target.getDistanceSq(this.owner);
+        return distanceSq < MAX_DISTANCE_SQ && !this.canBeSeen();
     }
 
     @Override
@@ -53,37 +43,73 @@ public class EntityTaskRifterTeleport extends EntityAIBase {
             return;
         }
 
-        Vec3d target = this.computeTeleportTarget(attackTarget);
+        BlockPos target = this.computeTeleportTarget(attackTarget);
         if (target != null) {
-            this.owner.setPositionAndUpdate(target.x, target.y, target.z);
+            this.owner.rotationYaw = attackTarget.rotationYaw;
+            this.owner.setPositionAndUpdate(target.getX() + 0.5, target.getY(), target.getZ() + 0.5);
+
             this.owner.getNavigator().clearPath();
         }
     }
 
-    private Vec3d computeTeleportTarget(EntityLivingBase target) {
-        Vec3d targetPoint = new Vec3d(target.posX, target.posY, target.posZ);
-        for (int i = 0; i < 64; i++) {
-            Vec3d teleportTarget = RandomPositionGenerator.findRandomTargetBlockTowards(this.owner, TELEPORT_DISTANCE, 3, targetPoint);
-            if (teleportTarget == null) {
-                continue;
-            }
-            if (!this.owner.world.collidesWithAnyBlock(this.getEntityBoundAt(this.owner, teleportTarget))) {
-                return teleportTarget;
+    private BlockPos computeTeleportTarget(EntityLivingBase target) {
+        BlockPos origin = target.getPosition();
+        List<BlockPos> validPositions = new ArrayList<>();
+
+        for (BlockPos pos : BlockPos.getAllInBoxMutable(origin.add(-2, -2, -2), origin.add(2, 2, 2))) {
+            Vec3d vector = new Vec3d(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5);
+            if (!this.canBeSeenBy(vector, target) && this.isTargetValid(pos)) {
+                validPositions.add(pos.toImmutable());
             }
         }
-        return null;
+
+        if (validPositions.isEmpty()) {
+            return null;
+        }
+
+        return validPositions.get(this.owner.getRNG().nextInt(validPositions.size()));
     }
 
-    private AxisAlignedBB getEntityBoundAt(Entity entity, Vec3d pos) {
+    private boolean isTargetValid(BlockPos target) {
+        if (this.owner.world.collidesWithAnyBlock(this.getEntityBoundAt(this.owner, target))) {
+            return false;
+        }
+        return this.owner.getNavigator().getPathToPos(target) != null;
+    }
+
+    private AxisAlignedBB getEntityBoundAt(Entity entity, BlockPos pos) {
+        double x = pos.getX() + 0.5;
+        double y = pos.getY();
+        double z = pos.getZ() + 0.5;
         float halfWidth = entity.width / 2.0F;
         return new AxisAlignedBB(
-                pos.x - halfWidth, pos.y, pos.z - halfWidth,
-                pos.x + halfWidth, pos.y + entity.height, pos.z + halfWidth
+                x - halfWidth, y, z - halfWidth,
+                x + halfWidth, y + entity.height, z + halfWidth
         );
     }
 
     @Override
     public boolean shouldContinueExecuting() {
         return false;
+    }
+
+    private boolean canBeSeen() {
+        List<EntityPlayer> players = this.owner.world.getEntitiesWithinAABB(EntityPlayer.class, this.owner.getEntityBoundingBox().grow(24.0));
+        for (EntityPlayer player : players) {
+            if (this.canBeSeenBy(this.owner.getPositionVector(), player)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private boolean canBeSeenBy(Vec3d position, EntityLivingBase entity) {
+        Vec3d playerLook = entity.getLook(1.0F);
+
+        Vec3d deltaPos = entity.getPositionVector().subtract(position);
+        deltaPos = deltaPos.normalize();
+
+        return playerLook.dotProduct(deltaPos) < 0.0;
     }
 }
