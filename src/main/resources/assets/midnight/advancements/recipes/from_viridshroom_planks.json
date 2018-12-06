@@ -1,0 +1,21 @@
+{
+	"parent": "midnight:recipes/root",
+	"rewards": {
+		"recipes": [
+			"midnight:viridshroom_door",
+			"midnight:viridshroom_slab",
+			"midnight:viridshroom_stairs",
+			"midnight:viridshroom_trapdoor"
+		]
+	},
+	"criteria": {
+		"requirement_1": {
+			"trigger": "minecraft:inventory_changed",
+			"conditions": {
+				"items": [{
+					"item": "midnight:viridshroom_planks"
+				}]
+			}
+		}
+	}
+}

@@ -6,7 +6,8 @@
   ],
   "key": {
     "#": {
-      "item": "midnight:shadowroot_planks"
+      "type": "forge:ore_dict",
+	  "ore": "plankWoodMidnight"
     }
   },
   "result": {

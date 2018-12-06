@@ -1,0 +1,18 @@
+{
+	"parent": "midnight:recipes/root",
+	"rewards": {
+		"recipes": [ 
+			"midnight:ebonys_block"
+		]
+	},
+	"criteria": {
+		"requirement_1": {
+			"trigger": "minecraft:inventory_changed",
+			"conditions": {
+				"items": [{
+					"item": "midnight:ebonys"
+				}]
+			}
+		}
+	}
+}

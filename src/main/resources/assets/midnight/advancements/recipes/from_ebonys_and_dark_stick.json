@@ -1,0 +1,30 @@
+{
+	"parent": "midnight:recipes/root",
+	"rewards": {
+		"recipes": [ 
+			"midnight:ebonys_axe",
+			"midnight:ebonys_hoe",
+			"midnight:ebonys_pickaxe",
+			"midnight:ebonys_shovel",
+			"midnight:ebonys_sword"
+		]
+	},
+	"criteria": {
+		"requirement_1": {
+			"trigger": "minecraft:inventory_changed",
+			"conditions": {
+				"items": [{
+					"item": "midnight:ebonys"
+				}]
+			}
+		},
+		"requirement_2": {
+			"trigger": "minecraft:inventory_changed",
+			"conditions": {
+				"items": [{
+					"item": "midnight:dark_stick"
+				}]
+			}
+		}
+	}
+}
