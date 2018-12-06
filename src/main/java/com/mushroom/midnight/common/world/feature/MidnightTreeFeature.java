@@ -2,6 +2,7 @@ package com.mushroom.midnight.common.world.feature;
 
 import com.mushroom.midnight.common.registry.ModBlocks;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockLeaves;
 import net.minecraft.block.BlockLog;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.EnumFacing;
@@ -21,6 +22,9 @@ public abstract class MidnightTreeFeature extends MidnightNaturalFeature {
 
     protected MidnightTreeFeature(IBlockState log, IBlockState leaves) {
         this.log = log;
+        if (leaves.getBlock() instanceof BlockLeaves) {
+            leaves = leaves.withProperty(BlockLeaves.CHECK_DECAY, false);
+        }
         this.leaves = leaves;
     }
 
