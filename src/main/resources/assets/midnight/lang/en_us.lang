@@ -267,10 +267,19 @@ biome.midnight.obscured_plateau.name=Obscured Plateau
 biome.midnight.phantasmal_valley.name=Phantasmal Valley
 
 # Potions
+
 potion.midnight.stunned.name=Stunned
 
 # Advancements
-advancement.midnight.title=The Midnight
-advancement.midnight.desc=Welcome to The Midnight!
+
 advancement.into_darkness.title=Into Darkness
 advancement.into_darkness.desc=Enter the Midnight dimension
+
+advancement.inebriated.title=Inebriated
+advancement.inebriated.desc=Break a Suavis plant
+
+advancement.shroomikens.title=Shroomikens
+advancement.shroomikens.desc=Throw a Bladeshroom Cap
+
+advancement.fungi_forest.title=Light Up
+advancement.fungi_forest.desc=Find the Fungi Forest biome

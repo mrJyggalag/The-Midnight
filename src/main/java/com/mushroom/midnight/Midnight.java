@@ -1,10 +1,10 @@
 package com.mushroom.midnight;
 
+import com.google.common.reflect.Reflection;
 import com.mushroom.midnight.common.CommonProxy;
 import com.mushroom.midnight.common.capability.RiftCooldownCapability;
 import com.mushroom.midnight.common.capability.RifterCapturedCapability;
 import com.mushroom.midnight.common.capability.VoidStorage;
-import com.mushroom.midnight.common.event.BreakBlockEvent;
 import com.mushroom.midnight.common.network.MessageBridgeCreate;
 import com.mushroom.midnight.common.network.MessageBridgeRemoval;
 import com.mushroom.midnight.common.network.MessageBridgeState;
@@ -12,6 +12,7 @@ import com.mushroom.midnight.common.network.MessageCaptureEntity;
 import com.mushroom.midnight.common.network.MessageHunterAttack;
 import com.mushroom.midnight.common.registry.ModBiomes;
 import com.mushroom.midnight.common.registry.ModBlocks;
+import com.mushroom.midnight.common.registry.ModCriterion;
 import com.mushroom.midnight.common.registry.ModDimensions;
 import com.mushroom.midnight.common.registry.ModFluids;
 import com.mushroom.midnight.common.registry.ModItems;
@@ -20,7 +21,6 @@ import com.mushroom.midnight.common.util.EntityUtil;
 import com.mushroom.midnight.common.world.generator.MidnightOreGenerator;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.common.capabilities.CapabilityManager;
@@ -95,7 +95,6 @@ public class Midnight {
 
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event) {
-        MinecraftForge.EVENT_BUS.register(BreakBlockEvent.class);
         CapabilityManager.INSTANCE.register(RiftCooldownCapability.class, new VoidStorage<>(), RiftCooldownCapability::new);
         CapabilityManager.INSTANCE.register(RifterCapturedCapability.class, new VoidStorage<>(), RifterCapturedCapability::new);
 
@@ -104,6 +103,8 @@ public class Midnight {
         NETWORK.registerMessage(MessageBridgeState.Handler.class, MessageBridgeState.class, 2, Side.CLIENT);
         NETWORK.registerMessage(MessageBridgeRemoval.Handler.class, MessageBridgeRemoval.class, 3, Side.CLIENT);
         NETWORK.registerMessage(MessageHunterAttack.Handler.class, MessageHunterAttack.class, 4, Side.CLIENT);
+
+        Reflection.initialize(ModCriterion.class);
 
         EntityUtil.onPreInit();
         ModFluids.register();

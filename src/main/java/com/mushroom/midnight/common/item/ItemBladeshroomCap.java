@@ -3,12 +3,14 @@ package com.mushroom.midnight.common.item;
 import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.client.IModelProvider;
 import com.mushroom.midnight.common.entity.EntityBladeshroomCap;
+import com.mushroom.midnight.common.registry.ModCriterion;
 import com.mushroom.midnight.common.registry.ModSounds;
 import net.minecraft.block.BlockDispenser;
 import net.minecraft.dispenser.BehaviorProjectileDispense;
 import net.minecraft.dispenser.IPosition;
 import net.minecraft.entity.IProjectile;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -50,6 +52,10 @@ public class ItemBladeshroomCap extends Item implements IModelProvider {
             }
 
             world.spawnEntity(entity);
+
+            if (player instanceof EntityPlayerMP) {
+                ModCriterion.THROWN_BLADESHROOM.trigger((EntityPlayerMP) player);
+            }
         }
 
         player.addStat(StatList.getObjectUseStats(this));
