@@ -21,6 +21,7 @@ import com.mushroom.midnight.common.event.RifterReleaseEvent;
 import com.mushroom.midnight.common.network.MessageCaptureEntity;
 import com.mushroom.midnight.common.registry.ModDimensions;
 import com.mushroom.midnight.common.registry.ModEffects;
+import com.mushroom.midnight.common.registry.ModLootTables;
 import com.mushroom.midnight.common.registry.ModSounds;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.Entity;
@@ -42,6 +43,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.pathfinding.PathNavigate;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.world.World;
@@ -392,4 +394,8 @@ public class EntityRifter extends EntityMob implements IRiftTraveler, IEntityAdd
             }
         }
     }
+
+    @Override
+    @Nullable
+    protected ResourceLocation getLootTable() { return ModLootTables.LOOT_TABLE_RIFTER; }
 }
