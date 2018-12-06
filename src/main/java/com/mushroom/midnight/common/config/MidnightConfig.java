@@ -17,6 +17,11 @@ public class MidnightConfig {
     @Config.RequiresMcRestart
     public static int midnightDimensionId = -23;
 
+    @Config.Name("rift_shaders")
+    @Config.LangKey("config.midnight.rift_shaders")
+    @Config.Comment("If true, rifts will be rendered with custom shaders for standard effects. If false, a simpler texture will be rendered.")
+    public static boolean riftShaders = true;
+
     @SubscribeEvent
     public static void configChanged(ConfigChangedEvent.OnConfigChangedEvent event) {
         if (event.getModID().equals(Midnight.MODID)) {

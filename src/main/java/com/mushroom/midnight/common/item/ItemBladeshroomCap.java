@@ -4,11 +4,11 @@ import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.client.IModelProvider;
 import com.mushroom.midnight.common.entity.EntityBladeshroomCap;
 import com.mushroom.midnight.common.registry.ModSounds;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.block.BlockDispenser;
 import net.minecraft.dispenser.BehaviorProjectileDispense;
 import net.minecraft.dispenser.IPosition;
 import net.minecraft.entity.IProjectile;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -31,7 +31,9 @@ public class ItemBladeshroomCap extends Item implements IModelProvider {
     @Override
     public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
         CooldownTracker cd = player.getCooldownTracker();
-        if (cd.hasCooldown(this)) { return super.onItemRightClick(world, player, hand); }
+        if (cd.hasCooldown(this)) {
+            return super.onItemRightClick(world, player, hand);
+        }
         cd.setCooldown(this, 10);
         ItemStack heldItem = player.getHeldItem(hand);
         if (!player.capabilities.isCreativeMode) {
@@ -43,6 +45,10 @@ public class ItemBladeshroomCap extends Item implements IModelProvider {
         if (!world.isRemote) {
             EntityBladeshroomCap entity = new EntityBladeshroomCap(world, player);
             entity.shoot(player, player.rotationPitch, player.rotationYaw, 0.0F, 1.5F, 1.0F);
+            if (player.capabilities.isCreativeMode) {
+                entity.pickupStatus = EntityArrow.PickupStatus.CREATIVE_ONLY;
+            }
+
             world.spawnEntity(entity);
         }
 

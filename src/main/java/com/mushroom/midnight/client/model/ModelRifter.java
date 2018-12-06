@@ -110,7 +110,7 @@ public class ModelRifter extends ModelBase {
         }
 
         float globalSpeed = 0.6F;
-        float globalDegree = 1.4F;
+        float globalDegree = 1.2F;
 
         this.Abdomen.rotationPointY = 7.0F + this.animator.computeAnimation(globalSpeed * 2.0F, globalDegree, false, 0.0F, 0.0F, limbSwing, limbSwingAmount);
 

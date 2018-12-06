@@ -1,0 +1,24 @@
+{
+  "vertex": "midnight:rift",
+  "fragment": "midnight:rift",
+  "attributes": ["Position"],
+  "samplers": [
+    {"name": "NoiseSampler"}
+  ],
+  "uniforms": [
+    {"name": "Time", "type": "float", "count": 1, "values": [0]},
+    {"name": "FogMode", "type": "int", "count": 1, "values": [0]},
+    {"name": "vertices[0]", "type": "float", "count": 2, "values": [0, 0]},
+    {"name": "vertices[1]", "type": "float", "count": 2, "values": [0, 0]},
+    {"name": "vertices[2]", "type": "float", "count": 2, "values": [0, 0]},
+    {"name": "vertices[3]", "type": "float", "count": 2, "values": [0, 0]},
+    {"name": "vertices[4]", "type": "float", "count": 2, "values": [0, 0]},
+    {"name": "vertices[5]", "type": "float", "count": 2, "values": [0, 0]},
+    {"name": "vertices[6]", "type": "float", "count": 2, "values": [0, 0]},
+    {"name": "vertices[7]", "type": "float", "count": 2, "values": [0, 0]},
+    {"name": "vertices[8]", "type": "float", "count": 2, "values": [0, 0]},
+    {"name": "vertices[9]", "type": "float", "count": 2, "values": [0, 0]},
+    {"name": "vertices[10]", "type": "float", "count": 2, "values": [0, 0]},
+    {"name": "vertices[11]", "type": "float", "count": 2, "values": [0, 0]}
+  ]
+}
