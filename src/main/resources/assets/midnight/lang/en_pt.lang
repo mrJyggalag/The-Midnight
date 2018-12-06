@@ -13,6 +13,7 @@ tile.midnight.midnight_grass.name=Midnight Chunk o' Grass
 tile.midnight.midnight_dirt.name=Midnight Filth
 
 tile.midnight.trenchstone.name=Stone o' Davy Jones
+tile.midnight.trenchstone_bricks.name=Bricks o' Stone o' Davy Jones
 
 tile.midnight.shadowroot_log.name=Shadaroot Timber
 tile.midnight.shadowroot_planks.name=Planks o' Shadaroot Timber
@@ -53,6 +54,7 @@ tile.midnight.double_lumen_bud.name=Double Lumen Bud
 tile.midnight.shadowroot_trapdoor.name=Hatch o' Shadaroot
 tile.midnight.dark_willow_trapdoor.name=Hatch o' Dark Willa'
 tile.midnight.dead_wood_trapdoor.name=Hatch o' Drowned Timber
+tile.midnight.tenebrum_trapdoor.name=Hatch o' Seaweed Platin'
 
 tile.midnight.shadowroot_sapling.name=Shadaroot Meager Shrub
 tile.midnight.dark_willow_sapling.name=Dark Willa' Meager Shrub
@@ -62,6 +64,8 @@ tile.midnight.bloomcrystal_rock.name=Rock o' Bloomin' Shiny
 
 tile.midnight.rouxe.name=Crimson Shiny
 tile.midnight.rouxe_rock.name=Rock o' Crimson Shiny
+
+tile.midnight.crystal_glass.name=Shiny Porthole
 
 tile.midnight.miasma_surface.name=Land o' Strange Rum
 tile.midnight.misama.name=Strange Rum
@@ -149,6 +153,7 @@ tile.midnight.suavis.name=Glowin' Gourd
 tile.midnight.shadowroot_door.name=Door o' Shadaroot Timber
 tile.midnight.dark_willow_door.name=Door o' Dark Willa' Timber
 tile.midnight.dead_wood_door.name=Door o' Drowned Timber
+tile.midnight.tenebrum_door.name=Door o' Seaweed Platin'
 
 tile.midnight.nightshroom_door.name=Door o' Nightshroom
 tile.midnight.dewshroom_door.name=Door o' Dewshroom
@@ -166,6 +171,9 @@ item.midnight.ebonys.name=Depressin' Shiny
 
 item.midnight.raw_suavis.name=Glowin' Gourd Piece
 item.midnight.cook_suavis.name=Fried Glowin' Gourd
+
+item.midnight.bladeshroom_cap.name=Tossin' Hat
+item.midnight.bladeshroom_spores.name=Tossin' Hat Shroom Seeds
 
 # Tools, Weapons and Armors
 
@@ -219,6 +227,8 @@ fluid.midnight.dark_water=Mutinous Bilge
 entity.midnight.rift.name=Land Sinkhole
 entity.midnight.rifter.name=Davy Jones
 entity.midnight.hunter.name=Betwitched 'Gull
+entity.midnight.bladeshroom_cap.name=Tossin' Hat
+entity.midnight.nova.name=
 
 # Config
 
@@ -226,3 +236,19 @@ config.midnight.midnight_dimension_id=Midnight Dimension ID
 config.midnight.midnight_dimension_id.tooltip=The ID to be used for the Midnight Dimension
 
 status.midnight.rift_nearby=Don't rest now, somethin' wretched is near ya
+
+# Biomes
+
+biome.midnight.vigilant_forest.name=Vigilant Forest
+biome.midnight.black_ridge.name=Black Ridge
+biome.midnight.deceitful_bog.name=Deceitful Bog
+biome.midnight.fungi_forest.name=Fungi Forest
+biome.midnight.obscured_peaks.name=Obscured Peaks
+biome.midnight.warped_fields.name=Warped Fields
+biome.midnight.crystal_spires.name=Crystal Spires
+biome.midnight.night_plains.name=Night Plains
+biome.midnight.obscured_plateau.name=Obscured Plateau
+biome.midnight.phantasmal_valley.name=Phantasmal Valley
+
+# Potions
+potion.midnight.stunned.name=Knocked Out
