@@ -1,7 +1,7 @@
 {
   "forge_marker": 1,
   "defaults": {
-	"model": "ladder",
+    "model": "ladder",
     "textures": {
       "texture": "midnight:blocks/dark_willow_ladder"
     }
@@ -9,11 +9,10 @@
   "variants": {
     "normal": [{}],
     "facing": {
-		"north": {},
-		"east": {"y": 90},
-		"south": {"y": 180},
-		"west": {"y": 270}
-	},
-    "inventory": [{}]
+      "north": {},
+      "east": {"y": 90},
+      "south": {"y": 180},
+      "west": {"y": 270}
+    }
   }
 }
