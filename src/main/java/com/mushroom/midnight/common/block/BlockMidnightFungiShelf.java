@@ -104,7 +104,11 @@ public class BlockMidnightFungiShelf extends Block implements IModelProvider {
 
     @Override
     public IBlockState getStateFromMeta(int meta) {
-        return this.getDefaultState().withProperty(FACING, EnumFacing.byIndex(meta));
+        EnumFacing facing = EnumFacing.byIndex(meta);
+        if (facing == EnumFacing.DOWN) {
+            return this.getDefaultState();
+        }
+        return this.getDefaultState().withProperty(FACING, facing);
     }
 
     @Override

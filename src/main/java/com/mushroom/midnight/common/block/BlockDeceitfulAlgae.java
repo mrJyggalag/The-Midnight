@@ -11,6 +11,7 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.common.EnumPlantType;
 
 import javax.annotation.Nullable;
 
@@ -48,5 +49,10 @@ public class BlockDeceitfulAlgae extends BlockBush implements IModelProvider {
     @Override
     public boolean canBlockStay(World world, BlockPos pos, IBlockState state) {
         return this.canSustainBush(world.getBlockState(pos.down()));
+    }
+
+    @Override
+    public EnumPlantType getPlantType(IBlockAccess world, BlockPos pos) {
+        return EnumPlantType.Water;
     }
 }

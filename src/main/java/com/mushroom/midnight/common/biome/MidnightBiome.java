@@ -1,6 +1,7 @@
 package com.mushroom.midnight.common.biome;
 
 import com.mushroom.midnight.Midnight;
+import com.mushroom.midnight.common.event.BuildBiomeConfigEvent;
 import com.mushroom.midnight.common.registry.ModBlocks;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -9,6 +10,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.chunk.ChunkPrimer;
+import net.minecraftforge.common.MinecraftForge;
 
 import java.util.Random;
 
@@ -17,8 +19,13 @@ public class MidnightBiome extends Biome implements IMidnightBiome {
     private final SurfaceConfig surfaceConfig;
     private final SurfaceConfig localSurfaceConfig;
 
-    public MidnightBiome(BiomeProperties properties, MidnightBiomeConfig config) {
+    public MidnightBiome(BiomeProperties properties, MidnightBiomeConfig sourceConfig) {
         super(properties);
+
+        BuildBiomeConfigEvent event = new BuildBiomeConfigEvent(MidnightBiomeConfig.builder(sourceConfig));
+        MinecraftForge.EVENT_BUS.post(event);
+
+        MidnightBiomeConfig config = event.getBuilder().build();
 
         this.spawnableMonsterList.clear();
         this.spawnableCreatureList.clear();
