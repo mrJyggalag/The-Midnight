@@ -22,7 +22,7 @@ public class MidnightBiome extends Biome implements IMidnightBiome {
     public MidnightBiome(BiomeProperties properties, MidnightBiomeConfig sourceConfig) {
         super(properties);
 
-        BuildBiomeConfigEvent event = new BuildBiomeConfigEvent(MidnightBiomeConfig.builder(sourceConfig));
+        BuildBiomeConfigEvent event = new BuildBiomeConfigEvent(this, MidnightBiomeConfig.builder(sourceConfig));
         MinecraftForge.EVENT_BUS.post(event);
 
         MidnightBiomeConfig config = event.getBuilder().build();
