@@ -39,10 +39,10 @@ public class BlockBladeshroom extends BlockMidnightPlant implements IGrowable {
         this.setCreativeTab(null);
     }
 
-    @Override
     @Nullable
-    public PathNodeType getAiPathNodeType(IBlockState state, IBlockAccess world, BlockPos pos, @Nullable EntityLiving entity) {
-        return state.getValue(STAGE) == Stage.CAPPED ? PathNodeType.DAMAGE_CACTUS : super.getAiPathNodeType(state, world, pos, entity);
+    @Override
+    public PathNodeType getAiPathNodeType(IBlockState state, IBlockAccess world, BlockPos pos) {
+        return state.getValue(STAGE) == Stage.CAPPED ? PathNodeType.DAMAGE_CACTUS : super.getAiPathNodeType(state, world, pos);
     }
 
     @Override
