@@ -8,9 +8,9 @@ import net.minecraft.world.storage.loot.LootTableList;
 import net.minecraft.world.storage.loot.conditions.LootCondition;
 import net.minecraftforge.event.LootTableLoadEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.relauncher.ReflectionHelper;
 
 import java.lang.reflect.Field;
 import java.util.List;
@@ -21,7 +21,7 @@ import static com.mushroom.midnight.Midnight.MODID;
 public class FishingLoot {
     private static final Field poolConditions;
     static {
-        poolConditions = ObfuscationReflectionHelper.findField(LootPool.class, "field_186454_b");
+        poolConditions = ReflectionHelper.findField(LootPool.class, "poolConditions", "field_186454_b");
         poolConditions.setAccessible(true);
     }
 
