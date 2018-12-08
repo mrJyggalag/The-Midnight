@@ -4,6 +4,7 @@ import com.google.common.collect.Lists;
 import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.common.block.BlockBasic;
 import com.mushroom.midnight.common.block.BlockBladeshroom;
+import com.mushroom.midnight.common.block.BlockBogweed;
 import com.mushroom.midnight.common.block.BlockCrystal;
 import com.mushroom.midnight.common.block.BlockDarkWater;
 import com.mushroom.midnight.common.block.BlockDeceitfulAlgae;
@@ -147,6 +148,7 @@ public class ModBlocks {
     public static final Block DOUBLE_LUMEN_BUD = Blocks.AIR;
 
     public static final Block BLADESHROOM = Blocks.AIR;
+    public static final Block BOGWEED = Blocks.AIR;
 
     public static final Block CRYSTAL_FLOWER = Blocks.AIR;
 
@@ -289,6 +291,7 @@ public class ModBlocks {
                 RegUtil.withName(new BlockGlowingPlant(), "lumen_bud"),
                 RegUtil.withName(new BlockGlowingDoublePlant(), "double_lumen_bud"),
                 RegUtil.withName(new BlockBladeshroom(), "bladeshroom"),
+                RegUtil.withName(new BlockBogweed(), "bogweed"),
                 RegUtil.withName(new BlockGlowingPlant(), "crystal_flower"),
                 RegUtil.withName(new BlockMidnightSapling(ShadowrootTreeFeature::new), "shadowroot_sapling"),
                 RegUtil.withName(new BlockMidnightSapling(DarkWillowTreeFeature::new), "dark_willow_sapling"),
@@ -482,7 +485,7 @@ public class ModBlocks {
                 NIGHTSHROOM_PLANKS, DEWSHROOM_PLANKS, VIRIDSHROOM_PLANKS,
                 ROCKSHROOM, ROCKSHROOM_BRICKS,
                 LUMEN_BUD, DOUBLE_LUMEN_BUD,
-                CRYSTAL_FLOWER,
+                BOGWEED, CRYSTAL_FLOWER,
                 SHADOWROOT_SAPLING, DARK_WILLOW_SAPLING,
                 SHADOWROOT_TRAPDOOR, DARK_WILLOW_TRAPDOOR, DEAD_WOOD_TRAPDOOR, TENEBRUM_TRAPDOOR,
                 NIGHTSHROOM_TRAPDOOR, DEWSHROOM_TRAPDOOR, VIRIDSHROOM_TRAPDOOR,

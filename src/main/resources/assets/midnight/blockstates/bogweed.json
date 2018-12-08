@@ -1,0 +1,27 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "forge:multi-layer",
+    "transform": "forge:default-block",
+    "custom": {
+      "base": "midnight:bogweed#base",
+      "Cutout": "midnight:bogweed#base",
+      "Translucent": "midnight:bogweed#glow"
+    }
+  },
+  "variants": {
+    "normal": [{}],
+    "base": [
+      {
+        "model": "cross",
+        "textures": {"cross": "midnight:blocks/bogweed"}
+      }
+    ],
+    "glow": [
+      {
+        "model": "cross",
+        "textures": {"cross": "midnight:blocks/bogweed_glow"}
+      }
+    ]
+  }
+}

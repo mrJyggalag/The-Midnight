@@ -63,6 +63,11 @@ public class MidnightBiomeConfigs {
 
     public static final IMidnightFeature DECEITFUL_MOSS_FEATURE = new MossFeature(ModBlocks.DECEITFUL_MOSS.getDefaultState());
 
+    public static final IMidnightFeature BOGWEED_FEATURE = new PlantFeature(
+            ModBlocks.BOGWEED.getDefaultState(),
+            ((BlockBush) ModBlocks.BOGWEED)::canBlockStay
+    );
+
     public static final IMidnightFeature DOUBLE_LUMEN_FEATURE = new DoublePlantFeature(
             ModBlocks.DOUBLE_LUMEN_BUD.getDefaultState(),
             (world, pos, state) -> ModBlocks.DOUBLE_LUMEN_BUD.canPlaceBlockAt(world, pos)
@@ -181,8 +186,9 @@ public class MidnightBiomeConfigs {
                     SHADOWROOT_TREE_FEATURE,
                     DARK_WILLOW_TREE_FEATURE
             }, new SurfacePlacementConfig(4))
-            .withFeature(TALL_GRASS_FEATURE, new ScatterPlacementConfig(6, 32))
-            .withFeature(DOUBLE_GRASS_FEATURE, new ScatterPlacementConfig(4, 32))
+            .withFeature(BOGWEED_FEATURE, new ScatterPlacementConfig(2, 32))
+            .withFeature(TALL_GRASS_FEATURE, new ScatterPlacementConfig(5, 32))
+            .withFeature(DOUBLE_GRASS_FEATURE, new ScatterPlacementConfig(3, 32))
             .withFeature(DECEITFUL_MOSS_FEATURE, new ScatterPlacementConfig(16, 32))
             .withFeature(FUNGI_FEATURE, new ScatterPlacementConfig(2, 4))
             .withFeature(DEAD_LOG_FEATURE, new SurfacePlacementConfig(5))
