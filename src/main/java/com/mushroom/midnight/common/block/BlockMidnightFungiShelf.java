@@ -67,7 +67,7 @@ public class BlockMidnightFungiShelf extends Block implements IModelProvider {
 
     @Override
     public IBlockState getStateForPlacement(World world, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer) {
-        return this.getDefaultState().withProperty(FACING, canAttachTo(world, pos, facing) ? facing : EnumFacing.DOWN);
+        return this.getDefaultState().withProperty(FACING, canAttachTo(world, pos, facing) ? facing : EnumFacing.UP);
     }
 
     @Override
@@ -122,8 +122,8 @@ public class BlockMidnightFungiShelf extends Block implements IModelProvider {
     }
 
     @Override
-    public IBlockState withMirror(IBlockState state, Mirror mirrorIn) {
-        return state.withRotation(mirrorIn.toRotation(state.getValue(FACING)));
+    public IBlockState withMirror(IBlockState state, Mirror mirror) {
+        return state.withRotation(mirror.toRotation(state.getValue(FACING)));
     }
 
     @Override

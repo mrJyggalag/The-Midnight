@@ -202,12 +202,6 @@ public class EntityRifter extends EntityMob implements IRiftTraveler, IEntityAdd
     @Override
     public boolean attackEntityFrom(DamageSource source, float amount) {
         Entity trueSource = source.getTrueSource();
-        if (source.isProjectile()) {
-            if (trueSource instanceof EntityLivingBase && this.shouldAttack(trueSource)) {
-                this.setAttackTarget((EntityLivingBase) trueSource);
-            }
-            return false;
-        }
 
         if (super.attackEntityFrom(source, amount)) {
             if (trueSource instanceof EntityLivingBase && this.shouldAttack(trueSource)) {
