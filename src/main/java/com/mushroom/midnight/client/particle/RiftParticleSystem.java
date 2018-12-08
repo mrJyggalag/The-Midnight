@@ -57,7 +57,7 @@ public class RiftParticleSystem implements ParticleSystem<EntityRift> {
         double particleX = rift.posX + velocityX * displacementScale;
         double particleY = rift.posY + rift.height / 2.0F + velocityY * displacementScale;
         double particleZ = rift.posZ + velocityZ * displacementScale;
-        MidnightParticles.SPORE.spawn(rift.world, particleX, particleY, particleZ, velocityX, velocityY, velocityZ);
+        MidnightParticles.AMBIENT_SPORE.spawn(rift.world, particleX, particleY, particleZ, velocityX, velocityY, velocityZ);
     }
 
     private void updateRings(Random random) {

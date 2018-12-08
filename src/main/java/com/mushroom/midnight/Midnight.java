@@ -11,6 +11,7 @@ import com.mushroom.midnight.common.network.MessageBridgeRemoval;
 import com.mushroom.midnight.common.network.MessageBridgeState;
 import com.mushroom.midnight.common.network.MessageCaptureEntity;
 import com.mushroom.midnight.common.network.MessageHunterAttack;
+import com.mushroom.midnight.common.network.MessageRockshroomBroken;
 import com.mushroom.midnight.common.registry.ModBiomes;
 import com.mushroom.midnight.common.registry.ModBlocks;
 import com.mushroom.midnight.common.registry.ModCriterion;
@@ -105,6 +106,7 @@ public class Midnight {
         NETWORK.registerMessage(MessageBridgeState.Handler.class, MessageBridgeState.class, 2, Side.CLIENT);
         NETWORK.registerMessage(MessageBridgeRemoval.Handler.class, MessageBridgeRemoval.class, 3, Side.CLIENT);
         NETWORK.registerMessage(MessageHunterAttack.Handler.class, MessageHunterAttack.class, 4, Side.CLIENT);
+        NETWORK.registerMessage(MessageRockshroomBroken.Handler.class, MessageRockshroomBroken.class, 5, Side.CLIENT);
 
         Reflection.initialize(ModCriterion.class);
 

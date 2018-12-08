@@ -169,7 +169,7 @@ public class ClientEventHandler {
             double velocityX = (random.nextDouble() - 0.5) * 0.04;
             double velocityY = (random.nextDouble() - 0.5) * 0.04;
             double velocityZ = (random.nextDouble() - 0.5) * 0.04;
-            MidnightParticles.SPORE.spawn(player.world, particleX, particleY, particleZ, velocityX, velocityY, velocityZ);
+            MidnightParticles.AMBIENT_SPORE.spawn(player.world, particleX, particleY, particleZ, velocityX, velocityY, velocityZ);
         }
     }
 

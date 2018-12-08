@@ -6,6 +6,7 @@ import net.minecraft.client.particle.Particle;
 import net.minecraft.world.World;
 
 public enum MidnightParticles {
+    AMBIENT_SPORE(new AmbientSporeParticle.Factory()),
     SPORE(new SporeParticle.Factory());
 
     IParticleFactory factory;
