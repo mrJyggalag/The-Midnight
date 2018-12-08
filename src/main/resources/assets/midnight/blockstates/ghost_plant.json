@@ -1,0 +1,12 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "cross",
+    "textures": {
+      "cross": "midnight:blocks/ghost_plant"
+    }
+  },
+  "variants": {
+    "normal": [{}]
+  }
+}

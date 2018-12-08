@@ -68,6 +68,11 @@ public class MidnightBiomeConfigs {
             ((BlockBush) ModBlocks.BOGWEED)::canBlockStay
     );
 
+    public static final IMidnightFeature GHOST_PLANT_FEATURE = new PlantFeature(
+            ModBlocks.GHOST_PLANT.getDefaultState(),
+            ((BlockBush) ModBlocks.GHOST_PLANT)::canBlockStay
+    );
+
     public static final IMidnightFeature DOUBLE_LUMEN_FEATURE = new DoublePlantFeature(
             ModBlocks.DOUBLE_LUMEN_BUD.getDefaultState(),
             (world, pos, state) -> ModBlocks.DOUBLE_LUMEN_BUD.canPlaceBlockAt(world, pos)
@@ -116,7 +121,11 @@ public class MidnightBiomeConfigs {
             .withFillerState(ModBlocks.NIGHTSTONE.getDefaultState())
             .withWetState(ModBlocks.NIGHTSTONE.getDefaultState());
 
-    public static final MidnightBiomeConfig VEGETATED_CONFIG = MidnightBiomeConfig.builder()
+    public static final MidnightBiomeConfig LIVABLE_CONFIG = MidnightBiomeConfig.builder()
+            .withFeature(GHOST_PLANT_FEATURE, new ScatterPlacementConfig(1, 4))
+            .build();
+
+    public static final MidnightBiomeConfig VEGETATED_CONFIG = MidnightBiomeConfig.builder(LIVABLE_CONFIG)
             .withFeature(TALL_GRASS_FEATURE, new ScatterPlacementConfig(6, 64))
             .withFeature(DOUBLE_GRASS_FEATURE, new ScatterPlacementConfig(3, 32))
             .withFeature(LUMEN_FEATURE, new ScatterPlacementConfig(1, 32))
@@ -124,7 +133,7 @@ public class MidnightBiomeConfigs {
             .withFeature(FUNGI_FEATURE, new ScatterPlacementConfig(1, 16))
             .build();
 
-    public static final MidnightBiomeConfig ROCKY_CONFIG = MidnightBiomeConfig.builder()
+    public static final MidnightBiomeConfig ROCKY_CONFIG = MidnightBiomeConfig.builder(LIVABLE_CONFIG)
             .withFeature(LUMEN_FEATURE, new ScatterPlacementConfig(1, 16))
             .withFeature(DOUBLE_LUMEN_FEATURE, new ScatterPlacementConfig(1, 16))
             .withFeature(FUNGI_FEATURE, new ScatterPlacementConfig(1, 16))
@@ -161,7 +170,7 @@ public class MidnightBiomeConfigs {
             .withGrassColor(0x8489B5)
             .build();
 
-    public static final MidnightBiomeConfig CRYSTAL_SPIRES_CONFIG = MidnightBiomeConfig.builder()
+    public static final MidnightBiomeConfig CRYSTAL_SPIRES_CONFIG = MidnightBiomeConfig.builder(LIVABLE_CONFIG)
             .withFeature(SHADOWROOT_TREE_FEATURE, new SurfacePlacementConfig(-3, 1))
             .withFeature(BLOOMCRYSTAL_FEATURE, new SurfacePlacementConfig(3))
             .withFeature(BLOOMCRYSTAL_SPIRE_FEATURE, new SurfacePlacementConfig(2, 3))
@@ -180,7 +189,7 @@ public class MidnightBiomeConfigs {
             .wet()
             .build();
 
-    public static final MidnightBiomeConfig DECEITFUL_BOG_CONFIG = MidnightBiomeConfig.builder()
+    public static final MidnightBiomeConfig DECEITFUL_BOG_CONFIG = MidnightBiomeConfig.builder(LIVABLE_CONFIG)
             .withFeature(DEAD_TREE_FEATURE, new SurfacePlacementConfig(-1, 1))
             .withFeature(new IMidnightFeature[] {
                     SHADOWROOT_TREE_FEATURE,
@@ -198,7 +207,7 @@ public class MidnightBiomeConfigs {
             .wet()
             .build();
 
-    public static final MidnightBiomeConfig NIGHT_PLAINS_CONFIG = MidnightBiomeConfig.builder()
+    public static final MidnightBiomeConfig NIGHT_PLAINS_CONFIG = MidnightBiomeConfig.builder(LIVABLE_CONFIG)
             .withFeature(TALL_GRASS_FEATURE, new ScatterPlacementConfig(2, 32))
             .withFeature(new IMidnightFeature[] {
                     SHADOWROOT_TREE_FEATURE,
@@ -217,7 +226,7 @@ public class MidnightBiomeConfigs {
             .withMonster(new Biome.SpawnListEntry(EntityHunter.class, 1, 0, 2))
             .build();
 
-    public static final MidnightBiomeConfig PHANTASMAL_VALLEY_CONFIG = MidnightBiomeConfig.builder()
+    public static final MidnightBiomeConfig PHANTASMAL_VALLEY_CONFIG = MidnightBiomeConfig.builder(LIVABLE_CONFIG)
             .withMonster(new Biome.SpawnListEntry(EntityHunter.class, 1, 0, 2))
             .withRidgeWeight(0.0F)
             .wet()

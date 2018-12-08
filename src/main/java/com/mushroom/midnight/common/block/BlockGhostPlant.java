@@ -2,15 +2,13 @@ package com.mushroom.midnight.common.block;
 
 import com.mushroom.midnight.common.registry.ModBlocks;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
-import net.minecraftforge.client.MinecraftForgeClient;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockGlowingPlant extends BlockMidnightPlant {
-    public BlockGlowingPlant() {
+public class BlockGhostPlant extends BlockMidnightPlant {
+    public BlockGhostPlant() {
         super();
         this.setLightLevel(0.8F);
     }
@@ -21,18 +19,10 @@ public class BlockGlowingPlant extends BlockMidnightPlant {
     }
 
     @Override
-    public boolean canRenderInLayer(IBlockState state, BlockRenderLayer layer) {
-        return layer == BlockRenderLayer.TRANSLUCENT || layer == BlockRenderLayer.CUTOUT;
-    }
-
-    @Override
     @SideOnly(Side.CLIENT)
     public int getPackedLightmapCoords(IBlockState state, IBlockAccess source, BlockPos pos) {
-        if (MinecraftForgeClient.getRenderLayer() == BlockRenderLayer.CUTOUT) {
-            return source.getCombinedLight(pos, 0);
-        }
-        int skyLight = 14;
-        int blockLight = 14;
+        int skyLight = 12;
+        int blockLight = 12;
         return skyLight << 20 | blockLight << 4;
     }
 }
