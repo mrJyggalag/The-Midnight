@@ -205,7 +205,9 @@ public class EntityRifter extends EntityMob implements IRiftTraveler, IEntityAdd
 
         if (super.attackEntityFrom(source, amount)) {
             if (trueSource instanceof EntityLivingBase && this.shouldAttack(trueSource)) {
-                this.setAttackTarget((EntityLivingBase) trueSource);
+                if (this.shouldChangeTarget(this.getAttackTarget(), (EntityLivingBase) trueSource)) {
+                    this.setAttackTarget((EntityLivingBase) trueSource);
+                }
             }
 
             if (amount > DROP_DAMAGE_THRESHOLD) {
@@ -231,6 +233,16 @@ public class EntityRifter extends EntityMob implements IRiftTraveler, IEntityAdd
             return false;
         }
         return !(entity instanceof EntityRifter);
+    }
+
+    private boolean shouldChangeTarget(@Nullable EntityLivingBase from, EntityLivingBase to) {
+        if (from == null) {
+            return true;
+        }
+        if (to instanceof EntityPlayer && !(from instanceof EntityPlayer)) {
+            return true;
+        }
+        return to.getHealth() > from.getHealth();
     }
 
     public void setCapturedEntity(EntityLivingBase capturedEntity) {

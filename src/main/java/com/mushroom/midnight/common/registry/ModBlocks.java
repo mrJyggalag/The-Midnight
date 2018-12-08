@@ -40,6 +40,7 @@ import com.mushroom.midnight.common.block.BlockMidnightTrapDoor;
 import com.mushroom.midnight.common.block.BlockMidnightWall;
 import com.mushroom.midnight.common.block.BlockMushroomInside;
 import com.mushroom.midnight.common.block.BlockNightstone;
+import com.mushroom.midnight.common.block.BlockRockshroom;
 import com.mushroom.midnight.common.block.BlockShadowrootChest;
 import com.mushroom.midnight.common.block.BlockShadowrootCraftingTable;
 import com.mushroom.midnight.common.block.BlockSuavis;
@@ -138,6 +139,9 @@ public class ModBlocks {
 
     public static final Block DEWSHROOM_STEM = Blocks.AIR;
     public static final Block DEWSHROOM_HAT = Blocks.AIR;
+
+    public static final Block ROCKSHROOM = Blocks.AIR;
+    public static final Block ROCKSHROOM_BRICKS = Blocks.AIR;
 
     public static final Block LUMEN_BUD = Blocks.AIR;
     public static final Block DOUBLE_LUMEN_BUD = Blocks.AIR;
@@ -261,6 +265,7 @@ public class ModBlocks {
                 RegUtil.withName(new BlockMidnightFungiHat(() -> DEWSHROOM), "dewshroom_hat"),
                 RegUtil.withName(new BlockMidnightFungiStem(), "viridshroom_stem"),
                 RegUtil.withName(new BlockMidnightFungiHat(() -> VIRIDSHROOM), "viridshroom_hat"),
+                RegUtil.withName(new BlockRockshroom(), "rockshroom"),
                 RegUtil.withName(new BlockMidnightPlant(PlantBehaviorType.BUSH), "tall_midnight_grass"),
                 RegUtil.withName(new BlockDoubleMidnightPlant(PlantBehaviorType.BUSH), "double_midnight_grass"),
                 RegUtil.withName(new BlockMidnightFungi(() -> new LargeFungiFeature(
@@ -331,6 +336,9 @@ public class ModBlocks {
                         .setHardness(5.0F)
                         .setResistance(200.0F),
                 RegUtil.withName(new BlockBasic(Material.ROCK), "chiseled_nightstone_bricks")
+                        .setHardness(1.5F)
+                        .setResistance(10.0F),
+                RegUtil.withName(new BlockBasic(Material.ROCK), "rockshroom_bricks")
                         .setHardness(1.5F)
                         .setResistance(10.0F),
                 RegUtil.withName(new BlockBasic(Material.IRON), "dark_pearl_block")
@@ -472,6 +480,7 @@ public class ModBlocks {
                 DEWSHROOM_STEM, DEWSHROOM_HAT,
                 VIRIDSHROOM_STEM, VIRIDSHROOM_HAT,
                 NIGHTSHROOM_PLANKS, DEWSHROOM_PLANKS, VIRIDSHROOM_PLANKS,
+                ROCKSHROOM, ROCKSHROOM_BRICKS,
                 LUMEN_BUD, DOUBLE_LUMEN_BUD,
                 CRYSTAL_FLOWER,
                 SHADOWROOT_SAPLING, DARK_WILLOW_SAPLING,
