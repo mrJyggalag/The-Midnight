@@ -22,7 +22,7 @@ public class BuildBiomeConfigEvent extends Event {
         this.builder = builder;
     }
 
-    public Biome getBiome() {
+    public MidnightBiome getBiome() {
         return this.biome;
     }
 
