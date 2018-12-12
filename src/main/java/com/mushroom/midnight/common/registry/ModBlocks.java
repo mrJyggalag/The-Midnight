@@ -249,7 +249,11 @@ public class ModBlocks {
     public static final Block SUAVIS = Blocks.AIR;
 
     public static final Block SHADOWROOT_LADDER = Blocks.AIR;
+    public static final Block DEAD_WOOD_LADDER = Blocks.AIR;
     public static final Block DARK_WILLOW_LADDER = Blocks.AIR;
+    public static final Block DEWSHROOM_LADDER = Blocks.AIR;
+    public static final Block VIRIDSHROOM_LADDER = Blocks.AIR;
+    public static final Block NIGHTSHROOM_LADDER = Blocks.AIR;
 
     @SubscribeEvent
     public static void registerBlocks(RegistryEvent.Register<Block> event) {
@@ -448,7 +452,11 @@ public class ModBlocks {
                 RegUtil.withName(new BlockMidnightFenceGate(() -> NIGHTSHROOM_PLANKS.getDefaultState()), "nightshroom_fence_gate"),
                 RegUtil.withName(new BlockSuavis(), "suavis"),
                 RegUtil.withName(new BlockMidnightLadder(), "shadowroot_ladder"),
-                RegUtil.withName(new BlockMidnightLadder(), "dark_willow_ladder")
+                RegUtil.withName(new BlockMidnightLadder(), "dead_wood_ladder"),
+                RegUtil.withName(new BlockMidnightLadder(), "dark_willow_ladder"),
+                RegUtil.withName(new BlockMidnightLadder(), "dewshroom_ladder"),
+                RegUtil.withName(new BlockMidnightLadder(), "viridshroom_ladder"),
+                RegUtil.withName(new BlockMidnightLadder(), "nightshroom_ladder")
         ));
 
         blocks.forEach(event.getRegistry()::register);
@@ -505,7 +513,8 @@ public class ModBlocks {
                 DEWSHROOM_FENCE, VIRIDSHROOM_FENCE, NIGHTSHROOM_FENCE,
                 SHADOWROOT_FENCE_GATE, DEAD_WOOD_FENCE_GATE, DARK_WILLOW_FENCE_GATE,
                 DEWSHROOM_FENCE_GATE, VIRIDSHROOM_FENCE_GATE, NIGHTSHROOM_FENCE_GATE,
-                SUAVIS, SHADOWROOT_LADDER, DARK_WILLOW_LADDER
+                SUAVIS, SHADOWROOT_LADDER, DEAD_WOOD_LADDER, DARK_WILLOW_LADDER,
+                DEWSHROOM_LADDER, VIRIDSHROOM_LADDER, NIGHTSHROOM_LADDER
         ));
 
         registry.register(itemBlock(DECEITFUL_ALGAE, ItemDeceitfulAlgae::new));

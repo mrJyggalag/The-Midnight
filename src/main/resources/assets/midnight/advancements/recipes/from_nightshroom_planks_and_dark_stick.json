@@ -3,7 +3,8 @@
 	"rewards": {
 		"recipes": [ 
 			"midnight:nightshroom_fence",
-			"midnight:nightshroom_fence_gate"
+			"midnight:nightshroom_fence_gate",
+			"midnight:nightshroom_ladder"
 		]
 	},
 	"criteria": {
