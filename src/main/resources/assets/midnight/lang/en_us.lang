@@ -194,6 +194,7 @@ item.midnight.ebonys.name=Ebonys
 
 item.midnight.raw_suavis.name=Raw Suavis Slice
 item.midnight.cook_suavis.name=Cooked Suavis Slice
+item.midnight.raw_deceitful_snapper.name=Raw Deceitful Snapper
 
 item.midnight.bladeshroom_cap.name=Bladeshroom Cap
 item.midnight.bladeshroom_spores.name=Bladeshroom Spores
@@ -261,6 +262,9 @@ config.midnight.midnight_dimension_id.tooltip=The ID to be used for the Midnight
 config.midnight.rift_shaders=Rift Shaders
 config.midnight.rift_shaders.tooltip=If true, rifts will be rendered with custom shaders for standard effects. If false, a simpler texture will be rendered.
 
+config.midnight.bladeshroom_damage_chance=Bladeshroom Damage Chance
+config.midnight.bladeshroom_damage_chance.tooltip=The chance to take damages when picking a bladeshroom cap
+
 status.midnight.rift_nearby=You may not rest now, there is an evil presence nearby
 
 # Biomes
@@ -279,6 +283,9 @@ biome.midnight.phantasmal_valley.name=Phantasmal Valley
 # Potions
 
 potion.midnight.stunned.name=Stunned
+
+# DamageSources
+death.midnight.bladeshroom_cap=%s died of Bladeshroom Spines
 
 # Advancements
 
