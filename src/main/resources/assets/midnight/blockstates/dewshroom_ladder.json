@@ -3,7 +3,7 @@
   "defaults": {
     "model": "ladder",
     "textures": {
-      "texture": "midnight:blocks/shadowroot_ladder"
+      "texture": "midnight:blocks/dewshroom_ladder"
     }
   },
   "variants": {
@@ -14,6 +14,6 @@
       "south": {"y": 180},
       "west": {"y": 270}
     },
-	"inventory": [{"model":"builtin/generated","textures":{"layer0":"midnight:blocks/shadowroot_ladder"},"transform":"forge:default-item"}]
+    "inventory": [{"model":"builtin/generated","textures":{"layer0":"midnight:blocks/dewshroom_ladder"},"transform":"forge:default-item"}]
   }
 }
