@@ -1,6 +1,5 @@
 package com.mushroom.midnight.common.item;
 
-import com.mushroom.midnight.common.helper.Helper;
 import com.mushroom.midnight.common.util.MidnightDamageSource;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.entity.EntityLivingBase;
@@ -26,7 +25,7 @@ public class ItemRawDeceitfulSnapper extends ItemFoodBasic {
 
     @Override
     public ItemStack onItemUseFinish(ItemStack stack, World world, @Nullable EntityLivingBase entity) {
-        if (!world.isRemote && entity instanceof EntityPlayerMP && Helper.isNotFakePlayer(entity)) {
+        if (!world.isRemote && entity instanceof EntityPlayerMP) {
             EntityPlayerMP player = (EntityPlayerMP) entity;
             if (player.world.rand.nextInt(5) == 0) {
                 PotionEffect eff = player.getActivePotionEffect(MobEffects.SLOWNESS);
