@@ -7,13 +7,11 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
 
 public class MidnightDamageSource extends DamageSource {
-    private final String deathMessage;
-    public MidnightDamageSource(String deathMessage) {
-        super("midnight_damage");
-        this.deathMessage = deathMessage;
+    public MidnightDamageSource(String damageType) {
+        super("damageType");
     }
     @Override
     public ITextComponent getDeathMessage(EntityLivingBase entity) {
-        return new TextComponentTranslation("death."+ Midnight.MODID + "." + deathMessage, entity.getDisplayName());
+        return new TextComponentTranslation("death."+ Midnight.MODID + "." + damageType, entity.getDisplayName());
     }
 }
