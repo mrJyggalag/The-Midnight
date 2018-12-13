@@ -32,7 +32,7 @@ public class ItemRawDeceitfulSnapper extends ItemFoodBasic {
                 PotionEffect eff = player.getActivePotionEffect(MobEffects.SLOWNESS);
                 player.addPotionEffect(new PotionEffect(MobEffects.SLOWNESS, 200, 5, false, true));
                 player.attackEntityFrom(DECEITFUL_SNAPPER_DAMAGE, player.world.rand.nextInt(3) + 1);
-                player.sendStatusMessage(new TextComponentTranslation("status.midnight.chomped_up"), true);
+                player.sendStatusMessage(new TextComponentTranslation("status.midnight.snapped"), true);
                 world.playSound(null, player.posX, player.posY, player.posZ, SoundEvents.EVOCATION_FANGS_ATTACK, SoundCategory.PLAYERS, 0.5F, world.rand.nextFloat() * 0.1F + 0.9F);
             } else {
                 player.getFoodStats().addStats(this, stack);
@@ -40,7 +40,7 @@ public class ItemRawDeceitfulSnapper extends ItemFoodBasic {
                 onFoodEaten(stack, world, player);
                 stack.shrink(1);
                 player.addStat(StatList.getObjectUseStats(this));
-                CriteriaTriggers.CONSUME_ITEM.trigger((EntityPlayerMP) player, stack);
+                CriteriaTriggers.CONSUME_ITEM.trigger(player, stack);
             }
         }
         return stack;

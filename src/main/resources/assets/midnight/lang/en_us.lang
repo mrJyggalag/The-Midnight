@@ -266,7 +266,7 @@ config.midnight.bladeshroom_damage_chance=Bladeshroom Damage Chance
 config.midnight.bladeshroom_damage_chance.tooltip=The chance to take damage when picking a bladeshroom cap
 
 status.midnight.rift_nearby=You may not rest now, there is an evil presence nearby
-status.midnight.chomped_up=The fish snapped you
+status.midnight.snapped=The fish snapped you
 
 # Biomes
 
