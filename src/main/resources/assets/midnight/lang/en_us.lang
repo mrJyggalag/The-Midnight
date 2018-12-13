@@ -35,6 +35,8 @@ tile.midnight.dark_pearl_block.name=Dark Pearl Block
 tile.midnight.ebonys_ore.name=Ebonys Ore
 tile.midnight.ebonys_block.name=Ebonys Block
 
+tile.midnight.archaic_ore.name=Archaic Ore
+
 tile.midnight.nagrilite_ore.name=Nagrilite Ore
 tile.midnight.nagrilite_block.name=Nagrilite Block
 
@@ -191,6 +193,7 @@ item.midnight.tenebrum_nugget.name=Tenebrum Nugget
 item.midnight.nagrilite_ingot.name=Nagrilite Ingot
 item.midnight.nagrilite_nugget.name=Nagrilite Nugget
 item.midnight.ebonys.name=Ebonys
+item.midnight.archaic_shard.name=Archaic Shard
 
 item.midnight.raw_suavis.name=Raw Suavis Slice
 item.midnight.cook_suavis.name=Cooked Suavis Slice
@@ -266,6 +269,7 @@ config.midnight.bladeshroom_damage_chance=Bladeshroom Damage Chance
 config.midnight.bladeshroom_damage_chance.tooltip=The chance to take damage when picking a bladeshroom cap
 
 status.midnight.rift_nearby=You may not rest now, there is an evil presence nearby
+status.midnight.snapped=The fish snapped you
 
 # Biomes
 
@@ -285,7 +289,8 @@ biome.midnight.phantasmal_valley.name=Phantasmal Valley
 potion.midnight.stunned.name=Stunned
 
 # DamageSources
-death.midnight.bladeshroom_cap=%s was pricked to death by a bladeshroom
+death.midnight.bladeshroom=%s was pricked to death by a bladeshroom
+death.midnight.deceitful_snapper=%s were chomped up
 
 # Advancements
 
@@ -303,3 +308,6 @@ advancement.shroomikens.desc=Throw a Bladeshroom Cap
 
 advancement.fungi_forest.title=Light Up
 advancement.fungi_forest.desc=Find the Fungi Forest biome
+
+advancement.snapped_by_snapper.title=TODO
+advancement.snapped_by_snapper.desc=TODO

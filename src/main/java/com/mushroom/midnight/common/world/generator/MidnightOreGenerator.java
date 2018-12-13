@@ -20,11 +20,13 @@ public class MidnightOreGenerator implements IWorldGenerator {
     private static final WorldGenerator TENEBRUM_GENERATOR = new WorldGenMinable(ModBlocks.TENEBRUM_ORE.getDefaultState(), 4, BlockMatcher.forBlock(ModBlocks.NIGHTSTONE));
     private static final WorldGenerator NAGRILITE_GENERATOR = new WorldGenMinable(ModBlocks.NAGRILITE_ORE.getDefaultState(), 4, BlockMatcher.forBlock(ModBlocks.NIGHTSTONE));
     private static final WorldGenerator EBONYS_GENERATOR = new WorldGenMinable(ModBlocks.EBONYS_ORE.getDefaultState(), 4, BlockMatcher.forBlock(ModBlocks.NIGHTSTONE));
+    private static final WorldGenerator ARCHAIC_GENERATOR = new WorldGenMinable(ModBlocks.ARCHAIC_ORE.getDefaultState(), 4, BlockMatcher.forBlock(ModBlocks.NIGHTSTONE));
 
     private static final int DARK_PEARL_PER_CHUNK = 12;
     private static final int TENEBRUM_PER_CHUNK = 12;
     private static final int NAGRILITE_PER_CHUNK = 12;
     private static final int EBONYS_PER_CHUNK = 12;
+    private static final int ARCHAIC_PER_CHUNK = 12;
 
     @Override
     public void generate(Random random, int chunkX, int chunkZ, World world, IChunkGenerator generator, IChunkProvider provider) {
@@ -67,6 +69,13 @@ public class MidnightOreGenerator implements IWorldGenerator {
             int offsetZ = random.nextInt(16);
             pos.setPos(globalX + offsetX, offsetY, globalZ + offsetZ);
             EBONYS_GENERATOR.generate(world, random, pos);
+        }
+        for (int f = 0; f < ARCHAIC_PER_CHUNK; f++) {
+            int offsetX = random.nextInt(16);
+            int offsetY = random.nextInt(40);
+            int offsetZ = random.nextInt(16);
+            pos.setPos(globalX + offsetX, offsetY, globalZ + offsetZ);
+            ARCHAIC_GENERATOR.generate(world, random, pos);
         }
     }
 }

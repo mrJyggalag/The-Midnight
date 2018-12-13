@@ -9,5 +9,6 @@ public class ModRecipes {
         GameRegistry.addSmelting(ModBlocks.TENEBRUM_ORE, new ItemStack(ModItems.TENEBRUM_INGOT), 0.5F);
         GameRegistry.addSmelting(ModBlocks.NAGRILITE_ORE, new ItemStack(ModItems.NAGRILITE_INGOT), 0.5F);
         GameRegistry.addSmelting(ModBlocks.EBONYS_ORE, new ItemStack(ModItems.EBONYS), 0.5F);
+        GameRegistry.addSmelting(ModBlocks.ARCHAIC_ORE, new ItemStack(ModItems.ARCHAIC_SHARD), 0.5F);
     }
 }
