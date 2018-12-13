@@ -53,6 +53,7 @@ public class ModItems {
     public static final Item NAGRILITE_INGOT = Items.AIR;
     public static final Item NAGRILITE_NUGGET = Items.AIR;
     public static final Item EBONYS = Items.AIR;
+    public static final Item ARCHAIC_SHARD = Items.AIR;
 
     public static final Item BLADESHROOM_CAP = Items.AIR;
     public static final Item BLADESHROOM_SPORES = Items.AIR;
@@ -120,6 +121,7 @@ public class ModItems {
                 RegUtil.withName(new ItemBasic(), "nagrilite_ingot"),
                 RegUtil.withName(new ItemBasic(), "nagrilite_nugget"),
                 RegUtil.withName(new ItemBasic(), "ebonys"),
+                RegUtil.withName(new ItemBasic(), "archaic_shard"),
                 RegUtil.withName(new ItemBladeshroomCap(), "bladeshroom_cap"),
                 RegUtil.withName(new ItemMidnightSeed(() -> ModBlocks.BLADESHROOM.getDefaultState()), "bladeshroom_spores"),
                 RegUtil.withName(new ItemRawSuavis(), "raw_suavis"),

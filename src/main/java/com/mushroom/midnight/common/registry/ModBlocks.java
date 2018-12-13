@@ -102,6 +102,7 @@ public class ModBlocks {
     public static final Block NAGRILITE_BLOCK = Blocks.AIR;
     public static final Block EBONYS_ORE = Blocks.AIR;
     public static final Block EBONYS_BLOCK = Blocks.AIR;
+    public static final Block ARCHAIC_ORE = Blocks.AIR;
 
     public static final Block SHADOWROOT_CRAFTING_TABLE = Blocks.AIR;
     public static final Block SHADOWROOT_CHEST = Blocks.AIR;
@@ -331,7 +332,8 @@ public class ModBlocks {
                 RegUtil.withName(new BlockMidnightGem(() -> ModItems.DARK_PEARL, 0), "dark_pearl_ore"),
                 RegUtil.withName(new BlockMidnightOre(2), "tenebrum_ore"),
                 RegUtil.withName(new BlockMidnightOre(2), "nagrilite_ore"),
-                RegUtil.withName(new BlockMidnightGem(() -> ModItems.EBONYS, 1), "ebonys_ore")
+                RegUtil.withName(new BlockMidnightGem(() -> ModItems.EBONYS, 1), "ebonys_ore"),
+                RegUtil.withName(new BlockMidnightGem(() -> ModItems.ARCHAIC_SHARD, 2), "archaic_ore")
         ));
 
         blocks.addAll(Lists.newArrayList(
@@ -479,6 +481,7 @@ public class ModBlocks {
                 TENEBRUM_ORE, TENEBRUM_BLOCK,
                 NAGRILITE_ORE, NAGRILITE_BLOCK,
                 EBONYS_ORE, EBONYS_BLOCK,
+                ARCHAIC_ORE,
                 SHADOWROOT_CRAFTING_TABLE,
                 SHADOWROOT_CHEST,
                 MIDNIGHT_FURNACE,
@@ -549,6 +552,8 @@ public class ModBlocks {
 
         OreDictionary.registerOre("oreEbonys", EBONYS_ORE);
         OreDictionary.registerOre("blockEbonys", EBONYS_BLOCK);
+
+        OreDictionary.registerOre("oreArchaic", ARCHAIC_ORE);
 
         OreDictionary.registerOre("oreNagrilite", NAGRILITE_ORE);
         OreDictionary.registerOre("blockNagrilite", NAGRILITE_BLOCK);
