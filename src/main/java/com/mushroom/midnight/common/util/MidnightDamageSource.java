@@ -8,7 +8,7 @@ import net.minecraft.util.text.TextComponentTranslation;
 
 public class MidnightDamageSource extends DamageSource {
     public MidnightDamageSource(String damageType) {
-        super("damageType");
+        super(damageType);
     }
     @Override
     public ITextComponent getDeathMessage(EntityLivingBase entity) {
