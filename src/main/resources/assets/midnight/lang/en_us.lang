@@ -266,6 +266,7 @@ config.midnight.bladeshroom_damage_chance=Bladeshroom Damage Chance
 config.midnight.bladeshroom_damage_chance.tooltip=The chance to take damage when picking a bladeshroom cap
 
 status.midnight.rift_nearby=You may not rest now, there is an evil presence nearby
+status.midnight.chomped_up=The fish snapped you
 
 # Biomes
 
@@ -285,7 +286,8 @@ biome.midnight.phantasmal_valley.name=Phantasmal Valley
 potion.midnight.stunned.name=Stunned
 
 # DamageSources
-death.midnight.bladeshroom_cap=%s was pricked to death by a bladeshroom
+death.midnight.bladeshroom=%s was pricked to death by a bladeshroom
+death.midnight.deceitful_snapper=%s were chomped up
 
 # Advancements
 

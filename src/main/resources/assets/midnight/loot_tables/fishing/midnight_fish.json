@@ -18,17 +18,17 @@
         {
           "type": "item",
           "name": "midnight:raw_deceitful_snapper",
-          "weight": 40
-        },
-        {
-          "type": "item",
-          "name": "midnight:deceitful_moss",
           "conditions": [
             {
               "condition": "midnight:in_biome",
               "biome": "midnight:deceitful_bog"
             }
           ],
+          "weight": 40
+        },
+        {
+          "type": "item",
+          "name": "midnight:deceitful_moss",
           "weight": 40
         }
       ]
