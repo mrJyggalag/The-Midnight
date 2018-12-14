@@ -197,7 +197,7 @@ item.midnight.archaic_shard.name=Archaic Shard
 
 item.midnight.raw_suavis.name=Raw Suavis Slice
 item.midnight.cook_suavis.name=Cooked Suavis Slice
-item.midnight.raw_deceitful_snapper.name=Raw Deceitful Snapper
+item.midnight.raw_deceitful_snapper.name=Deceitful Snapper
 
 item.midnight.bladeshroom_cap.name=Bladeshroom Cap
 item.midnight.bladeshroom_spores.name=Bladeshroom Spores
@@ -269,7 +269,7 @@ config.midnight.bladeshroom_damage_chance=Bladeshroom Damage Chance
 config.midnight.bladeshroom_damage_chance.tooltip=The chance to take damage when picking a bladeshroom cap
 
 status.midnight.rift_nearby=You may not rest now, there is an evil presence nearby
-status.midnight.snapped=The fish snapped you
+status.midnight.snapped=The fish snapped at you
 
 # Biomes
 
@@ -290,7 +290,7 @@ potion.midnight.stunned.name=Stunned
 
 # DamageSources
 death.midnight.bladeshroom=%s was pricked to death by a bladeshroom
-death.midnight.deceitful_snapper=%s were chomped up
+death.midnight.deceitful_snapper=%s was chomped up
 
 # Advancements
 
