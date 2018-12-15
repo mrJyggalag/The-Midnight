@@ -333,7 +333,7 @@ public class ModBlocks {
                 RegUtil.withName(new BlockMidnightOre(2), "tenebrum_ore"),
                 RegUtil.withName(new BlockMidnightOre(2), "nagrilite_ore"),
                 RegUtil.withName(new BlockMidnightGem(() -> ModItems.EBONYS, 1), "ebonys_ore"),
-                RegUtil.withName(new BlockMidnightGem(() -> ModItems.ARCHAIC_SHARD, 2), "archaic_ore")
+                RegUtil.withName(new BlockMidnightGem(() -> ModItems.ARCHAIC_SHARD, 0), "archaic_ore")
         ));
 
         blocks.addAll(Lists.newArrayList(
