@@ -106,7 +106,7 @@ public class MidnightBiomeConfigs {
             ModBlocks.BLOOMCRYSTAL.getDefaultState()
     );
 
-    public static final IMidnightFeature NIGHTSTONE_BOULDER_FEATURE = new BoulderFeature(ModBlocks.NIGHTSTONE.getDefaultState(), 2, 0.1f);
+    public static final IMidnightFeature NIGHTSTONE_BOULDER_FEATURE = new BoulderFeature(ModBlocks.NIGHTSTONE.getDefaultState(), 2, 0f);
     public static final IMidnightFeature NIGHTSTONE_SPIKE_FEATURE = new SpikeFeature(ModBlocks.NIGHTSTONE.getDefaultState());
 
     public static final IMidnightFeature TRENCHSTONE_BOULDER_FEATURE = new BoulderFeature(ModBlocks.TRENCHSTONE.getDefaultState(), 2, 0.1f);
