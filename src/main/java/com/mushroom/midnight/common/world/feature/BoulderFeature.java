@@ -1,6 +1,5 @@
 package com.mushroom.midnight.common.world.feature;
 
-import com.mushroom.midnight.common.registry.ModBlocks;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -8,15 +7,11 @@ import net.minecraft.world.World;
 
 import java.util.Random;
 
-public class BoulderFeature extends MidnightAbstractFeature {
-    private final IBlockState state;
-    private final float radius;
-    private final float chanceArchaicOreInside;
+public abstract class BoulderFeature extends MidnightAbstractFeature {
+    protected final float radius;
 
-    public BoulderFeature(IBlockState state, float radius, float chanceArchaicOreInside) {
-        this.state = state;
+    protected BoulderFeature(float radius) {
         this.radius = radius;
-        this.chanceArchaicOreInside = chanceArchaicOreInside;
     }
 
     @Override
@@ -39,15 +34,16 @@ public class BoulderFeature extends MidnightAbstractFeature {
     private void generateBlob(World world, Random random, BlockPos origin, float radius) {
         float radiusSquare = radius * radius;
         int radiusCeil = MathHelper.ceil(radius);
-        float radiusSquareIn = radius <= 1F ? 0f : (radius - 1F) * (radius - 1F);
 
         BlockPos minPos = origin.add(-radiusCeil, -radiusCeil, -radiusCeil);
         BlockPos maxPos = origin.add(radiusCeil, radiusCeil, radiusCeil);
         double dist;
         for (BlockPos pos : BlockPos.getAllInBox(minPos, maxPos)) {
             if ((dist = pos.distanceSq(origin)) <= radiusSquare) {
-                setBlockAndNotifyAdequately(world, pos, chanceArchaicOreInside > 0F && dist <= radiusSquareIn && random.nextFloat() < chanceArchaicOreInside ? ModBlocks.ARCHAIC_ORE.getDefaultState() : state);
+                setBlockAndNotifyAdequately(world, pos, getStateForPlacement(world, origin, pos, dist, radiusSquare, random));
             }
         }
     }
+
+    protected abstract IBlockState getStateForPlacement(World world, BlockPos origin, BlockPos pos, double dist, float radiusSquare, Random random);
 }
