@@ -28,7 +28,7 @@ public class ItemRawDeceitfulSnapper extends ItemFoodBasic {
     public ItemStack onItemUseFinish(ItemStack stack, World world, @Nullable EntityLivingBase entity) {
         if (!world.isRemote && entity instanceof EntityPlayerMP) {
             EntityPlayerMP player = (EntityPlayerMP) entity;
-            if (player.world.rand.nextInt(5) == 0) {
+            if (player.world.rand.nextInt(3) == 0) {
                 PotionEffect eff = player.getActivePotionEffect(MobEffects.SLOWNESS);
                 player.addPotionEffect(new PotionEffect(MobEffects.SLOWNESS, 200, 5, false, true));
                 player.attackEntityFrom(DECEITFUL_SNAPPER_DAMAGE, player.world.rand.nextInt(3) + 1);
