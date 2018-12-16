@@ -39,14 +39,14 @@ public class BoulderFeature extends MidnightAbstractFeature {
     private void generateBlob(World world, Random random, BlockPos origin, float radius) {
         float radiusSquare = radius * radius;
         int radiusCeil = MathHelper.ceil(radius);
-        float radiusSquareIn = radius <= 1f ? 0f : (radius - 1F) * (radius - 1F);
+        float radiusSquareIn = radius <= 1F ? 0f : (radius - 1F) * (radius - 1F);
 
         BlockPos minPos = origin.add(-radiusCeil, -radiusCeil, -radiusCeil);
         BlockPos maxPos = origin.add(radiusCeil, radiusCeil, radiusCeil);
         double dist;
         for (BlockPos pos : BlockPos.getAllInBox(minPos, maxPos)) {
             if ((dist = pos.distanceSq(origin)) <= radiusSquare) {
-                setBlockAndNotifyAdequately(world, pos, dist <= radiusSquareIn && random.nextFloat() < chanceArchaicOreInside ? ModBlocks.ARCHAIC_ORE.getDefaultState() : state);
+                setBlockAndNotifyAdequately(world, pos, chanceArchaicOreInside > 0F && dist <= radiusSquareIn && random.nextFloat() < chanceArchaicOreInside ? ModBlocks.ARCHAIC_ORE.getDefaultState() : state);
             }
         }
     }
