@@ -28,6 +28,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 
 import java.util.Random;
+import java.util.function.Consumer;
 
 public class MidnightBiomeConfigs {
     public static final IMidnightFeature SHADOWROOT_TREE_FEATURE = new ShadowrootTreeFeature();
@@ -76,6 +77,11 @@ public class MidnightBiomeConfigs {
     public static final IMidnightFeature GHOST_PLANT_FEATURE = new PlantFeature(
             ModBlocks.GHOST_PLANT.getDefaultState(),
             ((BlockBush) ModBlocks.GHOST_PLANT)::canBlockStay
+    );
+
+    public static final IMidnightFeature FINGERED_GRASS_FEATURE = new PlantFeature(
+            ModBlocks.FINGERED_GRASS.getDefaultState(),
+            ((BlockBush) ModBlocks.FINGERED_GRASS)::canBlockStay
     );
 
     public static final IMidnightFeature DOUBLE_LUMEN_FEATURE = new DoublePlantFeature(
@@ -137,23 +143,21 @@ public class MidnightBiomeConfigs {
             .withFillerState(ModBlocks.NIGHTSTONE.getDefaultState())
             .withWetState(ModBlocks.NIGHTSTONE.getDefaultState());
 
-    public static final MidnightBiomeConfig LIVABLE_CONFIG = MidnightBiomeConfig.builder()
-            .withFeature(GHOST_PLANT_FEATURE, new ScatterPlacementConfig(1, 4))
-            .build();
-
-    public static final MidnightBiomeConfig VEGETATED_CONFIG = MidnightBiomeConfig.builder(LIVABLE_CONFIG)
+    public static final MidnightBiomeConfig VEGETATED_CONFIG = MidnightBiomeConfig.builder()
             .withFeature(TALL_GRASS_FEATURE, new ScatterPlacementConfig(6, 64))
             .withFeature(DOUBLE_GRASS_FEATURE, new ScatterPlacementConfig(3, 32))
             .withFeature(LUMEN_FEATURE, new ScatterPlacementConfig(1, 32))
             .withFeature(DOUBLE_LUMEN_FEATURE, new ScatterPlacementConfig(1, 16))
             .withFeature(FUNGI_FEATURE, new ScatterPlacementConfig(1, 16))
+            .withFeature(GHOST_PLANT_FEATURE, new ScatterPlacementConfig(3, 6))
             .build();
 
-    public static final MidnightBiomeConfig ROCKY_CONFIG = MidnightBiomeConfig.builder(LIVABLE_CONFIG)
+    public static final MidnightBiomeConfig ROCKY_CONFIG = MidnightBiomeConfig.builder()
             .withFeature(LUMEN_FEATURE, new ScatterPlacementConfig(1, 16))
             .withFeature(DOUBLE_LUMEN_FEATURE, new ScatterPlacementConfig(1, 16))
             .withFeature(FUNGI_FEATURE, new ScatterPlacementConfig(1, 16))
             .withFeature(TRENCHSTONE_BOULDER_FEATURE, new SurfacePlacementConfig(-3, 1))
+            .withFeature(GHOST_PLANT_FEATURE, new ScatterPlacementConfig(3, 6))
             .withSurface(ROCKY_SURFACE_CONFIG)
             .withMonster(new Biome.SpawnListEntry(EntityHunter.class, 1, 0, 2))
             .build();
@@ -186,13 +190,14 @@ public class MidnightBiomeConfigs {
             .withGrassColor(0x8489B5)
             .build();
 
-    public static final MidnightBiomeConfig CRYSTAL_SPIRES_CONFIG = MidnightBiomeConfig.builder(LIVABLE_CONFIG)
+    public static final MidnightBiomeConfig CRYSTAL_SPIRES_CONFIG = MidnightBiomeConfig.builder()
             .withFeature(SHADOWROOT_TREE_FEATURE, new SurfacePlacementConfig(-3, 1))
             .withFeature(BLOOMCRYSTAL_FEATURE, new SurfacePlacementConfig(3))
             .withFeature(BLOOMCRYSTAL_SPIRE_FEATURE, new SurfacePlacementConfig(2, 3))
             .withFeature(LUMEN_FEATURE, new ScatterPlacementConfig(1, 32))
             .withFeature(DOUBLE_LUMEN_FEATURE, new ScatterPlacementConfig(1, 16))
             .withFeature(CRYSTAL_FLOWER_FEATURE, new ScatterPlacementConfig(5, 12))
+            .withFeature(GHOST_PLANT_FEATURE, new ScatterPlacementConfig(3, 6))
             .withGrassColor(0xBAA3C6)
             .build();
 
@@ -205,7 +210,7 @@ public class MidnightBiomeConfigs {
             .wet()
             .build();
 
-    public static final MidnightBiomeConfig DECEITFUL_BOG_CONFIG = MidnightBiomeConfig.builder(LIVABLE_CONFIG)
+    public static final MidnightBiomeConfig DECEITFUL_BOG_CONFIG = MidnightBiomeConfig.builder()
             .withFeature(DEAD_TREE_FEATURE, new SurfacePlacementConfig(-1, 1))
             .withFeature(new IMidnightFeature[] {
                     SHADOWROOT_TREE_FEATURE,
@@ -218,13 +223,23 @@ public class MidnightBiomeConfigs {
             .withFeature(FUNGI_FEATURE, new ScatterPlacementConfig(2, 4))
             .withFeature(DEAD_LOG_FEATURE, new SurfacePlacementConfig(5))
             .withFeature(DECEITFUL_ALGAE_FEATURE, new ScatterPlacementConfig(10, 20))
+            .withFeature(GHOST_PLANT_FEATURE, new ScatterPlacementConfig(3, 6))
             .withGrassColor(0x8893AD)
             .withRidgeWeight(0.0F)
             .wet()
             .build();
 
-    public static final MidnightBiomeConfig NIGHT_PLAINS_CONFIG = MidnightBiomeConfig.builder(LIVABLE_CONFIG)
+    public static final MidnightBiomeConfig NIGHT_PLAINS_CONFIG = MidnightBiomeConfig.builder()
             .withFeature(TALL_GRASS_FEATURE, new ScatterPlacementConfig(2, 32))
+            .withFeature(GHOST_PLANT_FEATURE, new ScatterPlacementConfig(3, 6))
+            .withFeature(FINGERED_GRASS_FEATURE, new ScatterPlacementConfig(8, 16) {
+                @Override
+                public void apply(World world, Random random, BlockPos chunkOrigin, Consumer<BlockPos> generator) {
+                    if (world.rand.nextFloat() < 0.2f) {
+                        super.apply(world, random, chunkOrigin, generator);
+                    }
+                }
+            })
             .withFeature(new IMidnightFeature[] {
                     SHADOWROOT_TREE_FEATURE,
                     DEAD_TREE_FEATURE
@@ -242,7 +257,8 @@ public class MidnightBiomeConfigs {
             .withMonster(new Biome.SpawnListEntry(EntityHunter.class, 1, 0, 2))
             .build();
 
-    public static final MidnightBiomeConfig PHANTASMAL_VALLEY_CONFIG = MidnightBiomeConfig.builder(LIVABLE_CONFIG)
+    public static final MidnightBiomeConfig PHANTASMAL_VALLEY_CONFIG = MidnightBiomeConfig.builder()
+            .withFeature(GHOST_PLANT_FEATURE, new ScatterPlacementConfig(3, 6))
             .withMonster(new Biome.SpawnListEntry(EntityHunter.class, 1, 0, 2))
             .withRidgeWeight(0.0F)
             .wet()
