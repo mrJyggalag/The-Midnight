@@ -7,6 +7,7 @@ import com.mushroom.midnight.common.item.ItemBladeshroomCap;
 import com.mushroom.midnight.common.item.ItemCookSuavis;
 import com.mushroom.midnight.common.item.ItemMidnightDoor;
 import com.mushroom.midnight.common.item.ItemMidnightSeed;
+import com.mushroom.midnight.common.item.ItemRawDeceitfulSnapper;
 import com.mushroom.midnight.common.item.ItemRawSuavis;
 import com.mushroom.midnight.common.item.armors.ItemMidnightBoots;
 import com.mushroom.midnight.common.item.armors.ItemMidnightChestplate;
@@ -52,12 +53,14 @@ public class ModItems {
     public static final Item NAGRILITE_INGOT = Items.AIR;
     public static final Item NAGRILITE_NUGGET = Items.AIR;
     public static final Item EBONYS = Items.AIR;
+    public static final Item ARCHAIC_SHARD = Items.AIR;
 
     public static final Item BLADESHROOM_CAP = Items.AIR;
     public static final Item BLADESHROOM_SPORES = Items.AIR;
 
     public static final Item RAW_SUAVIS = Items.AIR;
     public static final Item COOK_SUAVIS = Items.AIR;
+    public static final Item RAW_DECEITFUL_SNAPPER = Items.AIR;
 
     public static final Item SHADOWROOT_PICKAXE = Items.AIR;
     public static final Item NIGHTSTONE_PICKAXE = Items.AIR;
@@ -118,10 +121,12 @@ public class ModItems {
                 RegUtil.withName(new ItemBasic(), "nagrilite_ingot"),
                 RegUtil.withName(new ItemBasic(), "nagrilite_nugget"),
                 RegUtil.withName(new ItemBasic(), "ebonys"),
+                RegUtil.withName(new ItemBasic(), "archaic_shard"),
                 RegUtil.withName(new ItemBladeshroomCap(), "bladeshroom_cap"),
                 RegUtil.withName(new ItemMidnightSeed(() -> ModBlocks.BLADESHROOM.getDefaultState()), "bladeshroom_spores"),
                 RegUtil.withName(new ItemRawSuavis(), "raw_suavis"),
                 RegUtil.withName(new ItemCookSuavis(), "cook_suavis"),
+                RegUtil.withName(new ItemRawDeceitfulSnapper(), "raw_deceitful_snapper"),
                 RegUtil.withName(new ItemMidnightPickaxe(ModToolMaterials.SHADOWROOT), "shadowroot_pickaxe"),
                 RegUtil.withName(new ItemMidnightPickaxe(ModToolMaterials.NIGHTSTONE), "nightstone_pickaxe"),
                 RegUtil.withName(new ItemMidnightPickaxe(ModToolMaterials.EBONYS), "ebonys_pickaxe"),

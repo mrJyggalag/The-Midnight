@@ -1,13 +1,14 @@
 package com.mushroom.midnight.common.block;
 
+import com.mushroom.midnight.common.config.MidnightConfig;
 import com.mushroom.midnight.common.registry.ModBlocks;
 import com.mushroom.midnight.common.registry.ModItems;
+import com.mushroom.midnight.common.util.MidnightDamageSource;
 import net.minecraft.block.IGrowable;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.pathfinding.PathNodeType;
@@ -33,6 +34,8 @@ public class BlockBladeshroom extends BlockMidnightPlant implements IGrowable {
     private static final AxisAlignedBB BOUNDS = new AxisAlignedBB(0.0625, 0.0, 0.0625, 0.9375, 0.5625, 0.9375);
     private static final AxisAlignedBB STEM_BOUNDS = new AxisAlignedBB(0.25, 0.0, 0.25, 0.75, 0.5, 0.75);
 
+    private static final DamageSource BLADESHROOM_DAMAGE = new MidnightDamageSource("bladeshroom").setDamageBypassesArmor().setDamageIsAbsolute();
+
     public BlockBladeshroom() {
         this.setDefaultState(this.blockState.getBaseState().withProperty(STAGE, Stage.SPORE));
         this.setTickRandomly(true);
@@ -55,8 +58,9 @@ public class BlockBladeshroom extends BlockMidnightPlant implements IGrowable {
         if (state.getValue(STAGE) == Stage.CAPPED) {
             player.addItemStackToInventory(new ItemStack(ModItems.BLADESHROOM_CAP));
             world.setBlockState(pos, state.withProperty(STAGE, Stage.STEM));
-            player.attackEntityFrom(DamageSource.CACTUS, 1.0F);
-
+            if (MidnightConfig.bladeshroomDamageChance != 0 && world.rand.nextInt(100) < MidnightConfig.bladeshroomDamageChance) {
+                player.attackEntityFrom(BLADESHROOM_DAMAGE, 1.0F);
+            }
             return true;
         }
 
@@ -98,7 +102,7 @@ public class BlockBladeshroom extends BlockMidnightPlant implements IGrowable {
     @Override
     public void onEntityCollision(World world, BlockPos pos, IBlockState state, Entity entity) {
         if (state.getValue(STAGE) == Stage.CAPPED) {
-            entity.attackEntityFrom(DamageSource.CACTUS, 1.0F);
+            entity.attackEntityFrom(BLADESHROOM_DAMAGE, 1.0F);
         }
     }
 

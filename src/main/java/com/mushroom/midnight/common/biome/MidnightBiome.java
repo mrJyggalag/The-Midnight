@@ -50,6 +50,10 @@ public class MidnightBiome extends Biome implements IMidnightBiome {
         return I18n.format("biome." + Midnight.MODID + "." + super.getBiomeName() + ".name");
     }
 
+    public String getUnlocalizedName() {
+        return "biome." + Midnight.MODID + "." + super.getBiomeName() + ".name";
+    }
+
     @Override
     public float getRidgeWeight() {
         return this.config.getRidgeWeight();

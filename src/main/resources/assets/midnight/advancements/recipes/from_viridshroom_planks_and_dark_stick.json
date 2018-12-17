@@ -3,7 +3,8 @@
 	"rewards": {
 		"recipes": [ 
 			"midnight:viridshroom_fence",
-			"midnight:viridshroom_fence_gate"
+			"midnight:viridshroom_fence_gate",
+			"midnight:viridshroom_ladder"
 		]
 	},
 	"criteria": {

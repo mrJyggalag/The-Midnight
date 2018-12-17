@@ -35,6 +35,8 @@ tile.midnight.dark_pearl_block.name=Dark Pearl Block
 tile.midnight.ebonys_ore.name=Ebonys Ore
 tile.midnight.ebonys_block.name=Ebonys Block
 
+tile.midnight.archaic_ore.name=Archaic Ore
+
 tile.midnight.nagrilite_ore.name=Nagrilite Ore
 tile.midnight.nagrilite_block.name=Nagrilite Block
 
@@ -113,7 +115,13 @@ tile.midnight.deceitful_moss.name=Deceitful Moss
 tile.midnight.shadowroot_slab.name=Shadowroot Slab
 tile.midnight.shadowroot_double_slab.name=Shadowroot Double Slab
 tile.midnight.shadowroot_ladder.name=Shadowroot Ladder
+tile.midnight.dead_wood_ladder.name=Dead Wood Ladder
 tile.midnight.dark_willow_ladder.name=Dark Willow Ladder
+
+tile.midnight.dewshroom_ladder.name=Dewshroom Ladder
+tile.midnight.viridshroom_ladder.name=Viridshroom Ladder
+tile.midnight.nightshroom_ladder.name=Nightshroom Ladder
+
 tile.midnight.dead_wood_slab.name=Dead Wood Slab
 tile.midnight.dead_wood_double_slab.name=Dead Wood Double Slab
 tile.midnight.dark_willow_slab.name=Dark Willow Slab
@@ -186,9 +194,11 @@ item.midnight.tenebrum_nugget.name=Tenebrum Nugget
 item.midnight.nagrilite_ingot.name=Nagrilite Ingot
 item.midnight.nagrilite_nugget.name=Nagrilite Nugget
 item.midnight.ebonys.name=Ebonys
+item.midnight.archaic_shard.name=Archaic Shard
 
 item.midnight.raw_suavis.name=Raw Suavis Slice
 item.midnight.cook_suavis.name=Cooked Suavis Slice
+item.midnight.raw_deceitful_snapper.name=Deceitful Snapper
 
 item.midnight.bladeshroom_cap.name=Bladeshroom Cap
 item.midnight.bladeshroom_spores.name=Bladeshroom Spores
@@ -256,7 +266,11 @@ config.midnight.midnight_dimension_id.tooltip=The ID to be used for the Midnight
 config.midnight.rift_shaders=Rift Shaders
 config.midnight.rift_shaders.tooltip=If true, rifts will be rendered with custom shaders for standard effects. If false, a simpler texture will be rendered.
 
+config.midnight.bladeshroom_damage_chance=Bladeshroom Damage Chance
+config.midnight.bladeshroom_damage_chance.tooltip=The chance to take damage when picking a bladeshroom cap
+
 status.midnight.rift_nearby=You may not rest now, there is an evil presence nearby
+status.midnight.snapped=The fish snapped at you
 
 # Biomes
 
@@ -275,6 +289,10 @@ biome.midnight.phantasmal_valley.name=Phantasmal Valley
 
 potion.midnight.stunned.name=Stunned
 
+# DamageSources
+death.midnight.bladeshroom=%s was pricked to death by a bladeshroom
+death.midnight.deceitful_snapper=%s was chomped up
+
 # Advancements
 
 advancement.midnight.title=The Midnight
@@ -291,3 +309,6 @@ advancement.shroomikens.desc=Throw a Bladeshroom Cap
 
 advancement.fungi_forest.title=Light Up
 advancement.fungi_forest.desc=Find the Fungi Forest biome
+
+advancement.snapped_by_snapper.title=TODO
+advancement.snapped_by_snapper.desc=TODO

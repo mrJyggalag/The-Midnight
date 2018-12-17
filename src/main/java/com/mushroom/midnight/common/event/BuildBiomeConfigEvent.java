@@ -1,14 +1,15 @@
 package com.mushroom.midnight.common.event;
 
+import com.mushroom.midnight.common.biome.MidnightBiome;
 import com.mushroom.midnight.common.biome.MidnightBiomeConfig;
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.fml.common.eventhandler.Event;
 
 public class BuildBiomeConfigEvent extends Event {
-    private final Biome biome;
+    private final MidnightBiome biome;
     private MidnightBiomeConfig.Builder builder;
 
-    public BuildBiomeConfigEvent(Biome biome, MidnightBiomeConfig.Builder builder) {
+    public BuildBiomeConfigEvent(MidnightBiome biome, MidnightBiomeConfig.Builder builder) {
         this.biome = biome;
         this.builder = builder;
     }
@@ -21,7 +22,7 @@ public class BuildBiomeConfigEvent extends Event {
         this.builder = builder;
     }
 
-    public Biome getBiome() {
+    public MidnightBiome getBiome() {
         return this.biome;
     }
 

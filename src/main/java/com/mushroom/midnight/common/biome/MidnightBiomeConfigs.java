@@ -22,7 +22,12 @@ import com.mushroom.midnight.common.world.feature.SpikeFeature;
 import com.mushroom.midnight.common.world.feature.config.ScatterPlacementConfig;
 import com.mushroom.midnight.common.world.feature.config.SurfacePlacementConfig;
 import net.minecraft.block.BlockBush;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
+
+import java.util.Random;
 
 public class MidnightBiomeConfigs {
     public static final IMidnightFeature SHADOWROOT_TREE_FEATURE = new ShadowrootTreeFeature();
@@ -111,10 +116,21 @@ public class MidnightBiomeConfigs {
             ModBlocks.BLOOMCRYSTAL.getDefaultState()
     );
 
-    public static final IMidnightFeature NIGHTSTONE_BOULDER_FEATURE = new BoulderFeature(ModBlocks.NIGHTSTONE.getDefaultState(), 2);
+    public static final IMidnightFeature NIGHTSTONE_BOULDER_FEATURE = new BoulderFeature(2) {
+        @Override
+        protected IBlockState getStateForPlacement(World world, BlockPos origin, BlockPos pos, double dist, float radiusSquare, Random random) {
+            return ModBlocks.NIGHTSTONE.getDefaultState();
+        }
+    };
     public static final IMidnightFeature NIGHTSTONE_SPIKE_FEATURE = new SpikeFeature(ModBlocks.NIGHTSTONE.getDefaultState());
 
-    public static final IMidnightFeature TRENCHSTONE_BOULDER_FEATURE = new BoulderFeature(ModBlocks.TRENCHSTONE.getDefaultState(), 2);
+    public static final IMidnightFeature TRENCHSTONE_BOULDER_FEATURE = new BoulderFeature(2) {
+        private final float radiusSquareIn = radius <= 1f ? 0f : (radius - 1f) * (radius - 1f);
+        @Override
+        protected IBlockState getStateForPlacement(World world, BlockPos origin, BlockPos pos, double dist, float radiusSquare, Random random) {
+            return dist <= radiusSquareIn && random.nextFloat() < 0.1f ? ModBlocks.ARCHAIC_ORE.getDefaultState() : ModBlocks.TRENCHSTONE.getDefaultState();
+        }
+    };
 
     public static final SurfaceConfig ROCKY_SURFACE_CONFIG = new SurfaceConfig()
             .withTopState(ModBlocks.NIGHTSTONE.getDefaultState())

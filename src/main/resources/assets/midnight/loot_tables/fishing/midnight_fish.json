@@ -7,29 +7,28 @@
         {
           "type": "item",
           "name": "midnight:deceitful_algae",
-          "functions": [
+          "conditions": [
             {
-              "function": "set_data",
-              "data": 0
+              "condition": "midnight:in_block",
+              "block": "midnight:dark_water"
             }
           ],
           "weight": 60
         },
         {
           "type": "item",
-          "name": "midnight:deceitful_moss",
+          "name": "midnight:raw_deceitful_snapper",
           "conditions": [
             {
               "condition": "midnight:in_biome",
               "biome": "midnight:deceitful_bog"
             }
           ],
-          "functions": [
-            {
-              "function": "set_data",
-              "data": 0
-            }
-          ],
+          "weight": 40
+        },
+        {
+          "type": "item",
+          "name": "midnight:deceitful_moss",
           "weight": 40
         }
       ]

@@ -1,19 +1,14 @@
 {
 	"parent": "midnight:recipes/root",
 	"rewards": {
-		"recipes": [ 
-			"midnight:trenchstone_slab",
-			"midnight:trenchstone_stairs",
-			"midnight:trenchstone_wall",
-			"midnight:trenchstone_bricks"
-		]
+		"recipes": ["midnight:crystal_glass"]
 	},
 	"criteria": {
 		"requirement_1": {
 			"trigger": "minecraft:inventory_changed",
 			"conditions": {
 				"items": [{
-					"item": "midnight:trenchstone"
+					"item": "midnight:archaic_shard"
 				}]
 			}
 		}

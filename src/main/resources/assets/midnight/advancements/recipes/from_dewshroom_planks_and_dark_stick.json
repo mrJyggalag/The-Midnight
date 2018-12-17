@@ -3,7 +3,8 @@
 	"rewards": {
 		"recipes": [ 
 			"midnight:dewshroom_fence",
-			"midnight:dewshroom_fence_gate"
+			"midnight:dewshroom_fence_gate",
+			"midnight:dewshroom_ladder"
 		]
 	},
 	"criteria": {
