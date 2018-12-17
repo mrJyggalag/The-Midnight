@@ -210,6 +210,7 @@ public class ModBlocks {
     public static final Block DEWSHROOM_SLAB = Blocks.AIR;
     public static final Block VIRIDSHROOM_SLAB = Blocks.AIR;
     public static final Block NIGHTSHROOM_SLAB = Blocks.AIR;
+    public static final Block ROCKSHROOM_BRICKS_SLAB = Blocks.AIR;
 
     public static final Block SHADOWROOT_DOUBLE_SLAB = Blocks.AIR;
     public static final Block DEAD_WOOD_DOUBLE_SLAB = Blocks.AIR;
@@ -221,6 +222,7 @@ public class ModBlocks {
     public static final Block DEWSHROOM_DOUBLE_SLAB = Blocks.AIR;
     public static final Block VIRIDSHROOM_DOUBLE_SLAB = Blocks.AIR;
     public static final Block NIGHTSHROOM_DOUBLE_SLAB = Blocks.AIR;
+    public static final Block ROCKSHROOM_BRICKS_DOUBLE_SLAB = Blocks.AIR;
 
     public static final Block SHADOWROOT_STAIRS = Blocks.AIR;
     public static final Block DEAD_WOOD_STAIRS = Blocks.AIR;
@@ -232,6 +234,7 @@ public class ModBlocks {
     public static final Block DEWSHROOM_STAIRS = Blocks.AIR;
     public static final Block VIRIDSHROOM_STAIRS = Blocks.AIR;
     public static final Block NIGHTSHROOM_STAIRS = Blocks.AIR;
+    public static final Block ROCKSHROOM_BRICKS_STAIRS = Blocks.AIR;
 
     public static final Block SHADOWROOT_FENCE = Blocks.AIR;
     public static final Block DEAD_WOOD_FENCE = Blocks.AIR;
@@ -240,6 +243,7 @@ public class ModBlocks {
     public static final Block NIGHTSTONE_BRICK_WALL = Blocks.AIR;
     public static final Block TRENCHSTONE_WALL = Blocks.AIR;
     public static final Block TRENCHSTONE_BRICK_WALL = Blocks.AIR;
+    public static final Block ROCKSHROOM_BRICKS_WALL = Blocks.AIR;
     public static final Block DEWSHROOM_FENCE = Blocks.AIR;
     public static final Block VIRIDSHROOM_FENCE = Blocks.AIR;
     public static final Block NIGHTSHROOM_FENCE = Blocks.AIR;
@@ -422,6 +426,7 @@ public class ModBlocks {
                 RegUtil.withName(new BlockMidnightSlab(() -> DEWSHROOM_PLANKS.getDefaultState()), "dewshroom_slab"),
                 RegUtil.withName(new BlockMidnightSlab(() -> VIRIDSHROOM_PLANKS.getDefaultState()), "viridshroom_slab"),
                 RegUtil.withName(new BlockMidnightSlab(() -> NIGHTSHROOM_PLANKS.getDefaultState()), "nightshroom_slab"),
+                RegUtil.withName(new BlockMidnightSlab(() -> ROCKSHROOM_BRICKS.getDefaultState()), "rockshroom_bricks_slab"),
                 RegUtil.withName(new BlockMidnightDoubleSlab(() -> SHADOWROOT_SLAB), "shadowroot_double_slab"),
                 RegUtil.withName(new BlockMidnightDoubleSlab(() -> DEAD_WOOD_SLAB), "dead_wood_double_slab"),
                 RegUtil.withName(new BlockMidnightDoubleSlab(() -> DARK_WILLOW_SLAB), "dark_willow_double_slab"),
@@ -432,6 +437,7 @@ public class ModBlocks {
                 RegUtil.withName(new BlockMidnightDoubleSlab(() -> DEWSHROOM_SLAB), "dewshroom_double_slab"),
                 RegUtil.withName(new BlockMidnightDoubleSlab(() -> VIRIDSHROOM_SLAB), "viridshroom_double_slab"),
                 RegUtil.withName(new BlockMidnightDoubleSlab(() -> NIGHTSHROOM_SLAB), "nightshroom_double_slab"),
+                RegUtil.withName(new BlockMidnightDoubleSlab(() -> ROCKSHROOM_BRICKS_SLAB), "rockshroom_bricks_double_slab"),
                 RegUtil.withName(new BlockMidnightStairs(() -> SHADOWROOT_PLANKS.getDefaultState()), "shadowroot_stairs"),
                 RegUtil.withName(new BlockMidnightStairs(() -> DEAD_WOOD_PLANKS.getDefaultState()), "dead_wood_stairs"),
                 RegUtil.withName(new BlockMidnightStairs(() -> DARK_WILLOW_PLANKS.getDefaultState()), "dark_willow_stairs"),
@@ -442,6 +448,7 @@ public class ModBlocks {
                 RegUtil.withName(new BlockMidnightStairs(() -> DEWSHROOM_PLANKS.getDefaultState()), "dewshroom_stairs"),
                 RegUtil.withName(new BlockMidnightStairs(() -> VIRIDSHROOM_PLANKS.getDefaultState()), "viridshroom_stairs"),
                 RegUtil.withName(new BlockMidnightStairs(() -> NIGHTSHROOM_PLANKS.getDefaultState()), "nightshroom_stairs"),
+                RegUtil.withName(new BlockMidnightStairs(() -> ROCKSHROOM_BRICKS.getDefaultState()), "rockshroom_bricks_stairs"),
                 RegUtil.withName(new BlockMidnightFence(() -> SHADOWROOT_PLANKS.getDefaultState()), "shadowroot_fence"),
                 RegUtil.withName(new BlockMidnightFence(() -> DEAD_WOOD_PLANKS.getDefaultState()), "dead_wood_fence"),
                 RegUtil.withName(new BlockMidnightFence(() -> DARK_WILLOW_PLANKS.getDefaultState()), "dark_willow_fence"),
@@ -449,6 +456,7 @@ public class ModBlocks {
                 RegUtil.withName(new BlockMidnightWall(() -> NIGHTSTONE_BRICKS.getDefaultState()), "nightstone_brick_wall"),
                 RegUtil.withName(new BlockMidnightWall(() -> TRENCHSTONE.getDefaultState()), "trenchstone_wall"),
                 RegUtil.withName(new BlockMidnightWall(() -> TRENCHSTONE_BRICKS.getDefaultState()), "trenchstone_brick_wall"),
+                RegUtil.withName(new BlockMidnightWall(() -> ROCKSHROOM_BRICKS.getDefaultState()), "rockshroom_bricks_wall"),
                 RegUtil.withName(new BlockMidnightFence(() -> DEWSHROOM_PLANKS.getDefaultState()), "dewshroom_fence"),
                 RegUtil.withName(new BlockMidnightFence(() -> VIRIDSHROOM_PLANKS.getDefaultState()), "viridshroom_fence"),
                 RegUtil.withName(new BlockMidnightFence(() -> NIGHTSHROOM_PLANKS.getDefaultState()), "nightshroom_fence"),
@@ -515,10 +523,10 @@ public class ModBlocks {
                 SHADOWROOT_STAIRS, DEAD_WOOD_STAIRS, DARK_WILLOW_STAIRS,
                 NIGHTSTONE_STAIRS, NIGHTSTONE_BRICK_STAIRS,
                 TRENCHSTONE_STAIRS, TRENCHSTONE_BRICK_STAIRS,
-                DEWSHROOM_STAIRS, VIRIDSHROOM_STAIRS, NIGHTSHROOM_STAIRS,
+                DEWSHROOM_STAIRS, VIRIDSHROOM_STAIRS, NIGHTSHROOM_STAIRS, ROCKSHROOM_BRICKS_STAIRS,
                 SHADOWROOT_FENCE, DEAD_WOOD_FENCE, DARK_WILLOW_FENCE,
                 NIGHTSTONE_WALL, NIGHTSTONE_BRICK_WALL,
-                TRENCHSTONE_WALL, TRENCHSTONE_BRICK_WALL,
+                TRENCHSTONE_WALL, TRENCHSTONE_BRICK_WALL, ROCKSHROOM_BRICKS_WALL,
                 DEWSHROOM_FENCE, VIRIDSHROOM_FENCE, NIGHTSHROOM_FENCE,
                 SHADOWROOT_FENCE_GATE, DEAD_WOOD_FENCE_GATE, DARK_WILLOW_FENCE_GATE,
                 DEWSHROOM_FENCE_GATE, VIRIDSHROOM_FENCE_GATE, NIGHTSHROOM_FENCE_GATE,
@@ -538,6 +546,7 @@ public class ModBlocks {
         registry.register(itemBlock(DEWSHROOM_SLAB, b -> new ItemMidnightSlab(b, DEWSHROOM_DOUBLE_SLAB)));
         registry.register(itemBlock(VIRIDSHROOM_SLAB, b -> new ItemMidnightSlab(b, VIRIDSHROOM_DOUBLE_SLAB)));
         registry.register(itemBlock(NIGHTSHROOM_SLAB, b -> new ItemMidnightSlab(b, NIGHTSHROOM_DOUBLE_SLAB)));
+        registry.register(itemBlock(ROCKSHROOM_BRICKS_SLAB, b -> new ItemMidnightSlab(b, ROCKSHROOM_BRICKS_DOUBLE_SLAB)));
     }
 
     public static void onInit() {

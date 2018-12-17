@@ -100,6 +100,7 @@ public class ModModelRegistry {
 
         ModelLoader.setCustomStateMapper(ModBlocks.TRENCHSTONE_WALL, new StateMap.Builder().ignore(BlockWall.VARIANT).build());
         ModelLoader.setCustomStateMapper(ModBlocks.TRENCHSTONE_BRICK_WALL, new StateMap.Builder().ignore(BlockWall.VARIANT).build());
+        ModelLoader.setCustomStateMapper(ModBlocks.ROCKSHROOM_BRICKS_WALL, new StateMap.Builder().ignore(BlockWall.VARIANT).build());
 
         ModelLoader.setCustomStateMapper(ModBlocks.SHADOWROOT_FENCE_GATE, new StateMap.Builder().ignore(BlockFenceGate.POWERED).build());
         ModelLoader.setCustomStateMapper(ModBlocks.DEAD_WOOD_FENCE_GATE, new StateMap.Builder().ignore(BlockFenceGate.POWERED).build());

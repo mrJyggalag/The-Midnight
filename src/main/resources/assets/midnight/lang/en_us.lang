@@ -142,6 +142,8 @@ tile.midnight.viridshroom_slab.name=Viridshroom Slab
 tile.midnight.viridshroom_double_slab.name=Viridshroom Double Slab
 tile.midnight.nightshroom_slab.name=Nightshroom Slab
 tile.midnight.nightshroom_double_slab.name=Nightshroom Double Slab
+tile.midnight.rockshroom_bricks_slab.name=Rockshroom Brick Slab
+tile.midnight.rockshroom_bricks_double_slab.name=Rockshroom Brick Double Slab
 
 tile.midnight.shadowroot_stairs.name=Shadowroot Stairs
 tile.midnight.dead_wood_stairs.name=Dead Wood Stairs
@@ -153,6 +155,7 @@ tile.midnight.trenchstone_brick_stairs.name=Trenchstone Brick Stairs
 tile.midnight.dewshroom_stairs.name=Dewshroom Stairs
 tile.midnight.viridshroom_stairs.name=Viridshroom Stairs
 tile.midnight.nightshroom_stairs.name=Nightshroom Stairs
+tile.midnight.rockshroom_bricks_stairs.name=Rockshroom Brick Stairs
 
 tile.midnight.shadowroot_fence.name=Shadowroot Fence
 tile.midnight.dead_wood_fence.name=Dead Wood Fence
@@ -161,6 +164,7 @@ tile.midnight.nightstone_wall.name=Nightstone Wall
 tile.midnight.nightstone_brick_wall.name=Nightstone Brick Wall
 tile.midnight.trenchstone_wall.name=Trenchstone Wall
 tile.midnight.trenchstone_brick_wall.name=Trenchstone Brick Wall
+tile.midnight.rockshroom_bricks_wall.name=Rockshroom Brick Wall
 tile.midnight.dewshroom_fence.name=Dewshroom Fence
 tile.midnight.viridshroom_fence.name=Viridshroom Fence
 tile.midnight.nightshroom_fence.name=Nightshroom Fence
