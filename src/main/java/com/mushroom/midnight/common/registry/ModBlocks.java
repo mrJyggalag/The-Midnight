@@ -12,6 +12,7 @@ import com.mushroom.midnight.common.block.BlockDeceitfulMoss;
 import com.mushroom.midnight.common.block.BlockDeceitfulMud;
 import com.mushroom.midnight.common.block.BlockDoubleMidnightPlant;
 import com.mushroom.midnight.common.block.BlockFingeredGrass;
+import com.mushroom.midnight.common.block.BlockGhostPlant;
 import com.mushroom.midnight.common.block.BlockGlowingDoublePlant;
 import com.mushroom.midnight.common.block.BlockGlowingPlant;
 import com.mushroom.midnight.common.block.BlockMiasmaFluid;
@@ -300,7 +301,7 @@ public class ModBlocks {
                 RegUtil.withName(new BlockGlowingDoublePlant(), "double_lumen_bud"),
                 RegUtil.withName(new BlockBladeshroom(), "bladeshroom"),
                 RegUtil.withName(new BlockBogweed(), "bogweed"),
-                RegUtil.withName(new BlockGlowingPlant(), "ghost_plant"),
+                RegUtil.withName(new BlockGhostPlant(), "ghost_plant"),
                 RegUtil.withName(new BlockFingeredGrass(), "fingered_grass"),
                 RegUtil.withName(new BlockGlowingPlant(), "crystal_flower"),
                 RegUtil.withName(new BlockMidnightSapling(ShadowrootTreeFeature::new), "shadowroot_sapling"),
