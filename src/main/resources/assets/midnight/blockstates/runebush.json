@@ -1,0 +1,13 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "tinted_cross",
+    "textures": {
+      "cross": "midnight:blocks/runebush"
+    }
+  },
+  "variants": {
+    "normal": [{}],
+	"inventory": [{"model":"builtin/generated","textures":{"layer0":"midnight:blocks/runebush"},"transform":"forge:default-item"}]
+  }
+}

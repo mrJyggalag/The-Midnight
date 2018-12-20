@@ -79,6 +79,8 @@ tile.midnight.ghost_plant.name=Plante Fantôme
 tile.midnight.fingered_grass.name=Herbe Fourchue
 tile.midnight.bogweed.name=Mauvaise Herbe de Tourbière
 tile.midnight.tendrilweed.name=Mauvaise Herbe Torsadée
+tile.midnight.runebush.name=RuneTaillis
+tile.midnight.dragon_nest.name=Nid de Dragon
 
 tile.midnight.dewshroom.name=ChampiRosée
 tile.midnight.double_dewshroom.name=Grand ChampiRosée

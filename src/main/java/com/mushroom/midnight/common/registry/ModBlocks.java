@@ -59,11 +59,18 @@ import com.mushroom.midnight.common.world.feature.ShadowrootTreeFeature;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.MobEffects;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -156,6 +163,8 @@ public class ModBlocks {
     public static final Block GHOST_PLANT = Blocks.AIR;
     public static final Block FINGERED_GRASS = Blocks.AIR;
     public static final Block TENDRILWEED = Blocks.AIR;
+    public static final Block RUNEBUSH = Blocks.AIR; // TODO generate in world in micro biome in vigilant forest
+    public static final Block DRAGON_NEST = Blocks.AIR; // TODO generate in world hanging on trees around crater
 
     public static final Block CRYSTAL_FLOWER = Blocks.AIR;
 
@@ -310,6 +319,16 @@ public class ModBlocks {
                 RegUtil.withName(new BlockGhostPlant(), "ghost_plant"),
                 RegUtil.withName(new BlockFingeredGrass(), "fingered_grass"),
                 RegUtil.withName(new BlockTendrilweed(), "tendrilweed"),
+                RegUtil.withName(new BlockMidnightPlant(), "runebush"),
+                RegUtil.withName(new BlockGlowingPlant() {
+                    @Override
+                    public void onEntityCollision(World world, BlockPos pos, IBlockState state, Entity entity) {
+                        if (entity instanceof EntityLivingBase && !entity.world.isRemote && entity.ticksExisted % 20 == 0) {
+                            // TODO replace with a custom effect providing 50% to avoid burn damages (name of the effect? icon?)
+                            ((EntityLivingBase) entity).addPotionEffect(new PotionEffect(MobEffects.FIRE_RESISTANCE, 100, 0, false, true));
+                        }
+                    }
+                }, "dragon_nest"),
                 RegUtil.withName(new BlockGlowingPlant(), "crystal_flower"),
                 RegUtil.withName(new BlockMidnightSapling(ShadowrootTreeFeature::new), "shadowroot_sapling"),
                 RegUtil.withName(new BlockMidnightSapling(DarkWillowTreeFeature::new), "dark_willow_sapling"),
@@ -513,7 +532,7 @@ public class ModBlocks {
                 NIGHTSHROOM_PLANKS, DEWSHROOM_PLANKS, VIRIDSHROOM_PLANKS,
                 ROCKSHROOM, ROCKSHROOM_BRICKS,
                 LUMEN_BUD, DOUBLE_LUMEN_BUD,
-                BOGWEED, GHOST_PLANT, FINGERED_GRASS, TENDRILWEED, CRYSTAL_FLOWER,
+                BOGWEED, GHOST_PLANT, FINGERED_GRASS, TENDRILWEED, RUNEBUSH, DRAGON_NEST, CRYSTAL_FLOWER,
                 SHADOWROOT_SAPLING, DARK_WILLOW_SAPLING,
                 SHADOWROOT_TRAPDOOR, DARK_WILLOW_TRAPDOOR, DEAD_WOOD_TRAPDOOR, TENEBRUM_TRAPDOOR,
                 NIGHTSHROOM_TRAPDOOR, DEWSHROOM_TRAPDOOR, VIRIDSHROOM_TRAPDOOR,
