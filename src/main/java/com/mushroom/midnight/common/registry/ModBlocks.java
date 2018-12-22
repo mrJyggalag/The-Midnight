@@ -10,6 +10,7 @@ import com.mushroom.midnight.common.block.BlockDarkWater;
 import com.mushroom.midnight.common.block.BlockDeceitfulAlgae;
 import com.mushroom.midnight.common.block.BlockDeceitfulMoss;
 import com.mushroom.midnight.common.block.BlockDeceitfulMud;
+import com.mushroom.midnight.common.block.BlockLumenBud;
 import com.mushroom.midnight.common.block.BlockMidnightDoublePlant;
 import com.mushroom.midnight.common.block.BlockDragonNest;
 import com.mushroom.midnight.common.block.BlockFingeredGrass;
@@ -38,6 +39,7 @@ import com.mushroom.midnight.common.block.BlockMidnightPlant;
 import com.mushroom.midnight.common.block.BlockMidnightSapling;
 import com.mushroom.midnight.common.block.BlockMidnightSlab;
 import com.mushroom.midnight.common.block.BlockMidnightStairs;
+import com.mushroom.midnight.common.block.BlockMidnightTallGrass;
 import com.mushroom.midnight.common.block.BlockMidnightTrapDoor;
 import com.mushroom.midnight.common.block.BlockMidnightWall;
 import com.mushroom.midnight.common.block.BlockMushroomInside;
@@ -285,7 +287,7 @@ public class ModBlocks {
                 RegUtil.withName(new BlockMidnightFungiStem(), "viridshroom_stem"),
                 RegUtil.withName(new BlockMidnightFungiHat(() -> VIRIDSHROOM), "viridshroom_hat"),
                 RegUtil.withName(new BlockRockshroom(), "rockshroom"),
-                RegUtil.withName(new BlockMidnightPlant(PlantBehaviorType.BUSH, false), "tall_midnight_grass"),
+                RegUtil.withName(new BlockMidnightTallGrass(), "tall_midnight_grass"),
                 RegUtil.withName(new BlockMidnightDoublePlant(PlantBehaviorType.BUSH, false), "double_midnight_grass"),
                 RegUtil.withName(new BlockMidnightFungi(() -> new LargeFungiFeature(
                         ModBlocks.NIGHTSHROOM_STEM.getDefaultState(),
@@ -305,7 +307,7 @@ public class ModBlocks {
                 RegUtil.withName(new BlockMidnightFungiShelf(), "nightshroom_shelf"),
                 RegUtil.withName(new BlockMidnightFungiShelf(), "dewshroom_shelf"),
                 RegUtil.withName(new BlockMidnightFungiShelf(), "viridshroom_shelf"),
-                RegUtil.withName(new BlockMidnightPlant(true), "lumen_bud"),
+                RegUtil.withName(new BlockLumenBud(), "lumen_bud"),
                 RegUtil.withName(new BlockMidnightDoublePlant(true), "double_lumen_bud"),
                 RegUtil.withName(new BlockBladeshroom(), "bladeshroom"),
                 RegUtil.withName(new BlockBogweed(), "bogweed"),

@@ -5,6 +5,8 @@ import com.mushroom.midnight.client.IModelProvider;
 import com.mushroom.midnight.common.helper.Helper;
 import com.mushroom.midnight.common.registry.ModBlocks;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockBush;
+import net.minecraft.block.IGrowable;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -20,7 +22,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.Random;
 
-public class BlockMidnightGrass extends Block implements IModelProvider {
+public class BlockMidnightGrass extends Block implements IGrowable, IModelProvider {
     public BlockMidnightGrass() {
         super(Material.GRASS);
         this.setHardness(0.6F);
@@ -76,5 +78,41 @@ public class BlockMidnightGrass extends Block implements IModelProvider {
     @Override
     public Item getItemDropped(IBlockState state, Random rand, int fortune) {
         return Item.getItemFromBlock(ModBlocks.MIDNIGHT_DIRT);
+    }
+
+    @Override
+    public boolean canGrow(World worldIn, BlockPos pos, IBlockState state, boolean isClient) {
+        return true;
+    }
+
+    @Override
+    public boolean canUseBonemeal(World worldIn, Random rand, BlockPos pos, IBlockState state) {
+        return true;
+    }
+
+    @Override
+    public void grow(World worldIn, Random rand, BlockPos pos, IBlockState state) {
+        BlockPos blockpos = pos.up();
+        label35:
+        for (int i = 0; i < 128; ++i) {
+            BlockPos blockpos1 = blockpos;
+            for (int j = 0; j < i / 16; ++j) {
+                blockpos1 = blockpos1.add(rand.nextInt(3) - 1, (rand.nextInt(3) - 1) * rand.nextInt(3) / 2, rand.nextInt(3) - 1);
+                if (worldIn.getBlockState(blockpos1.down()).getBlock() != ModBlocks.MIDNIGHT_GRASS || worldIn.getBlockState(blockpos1).isNormalCube()) {
+                    continue label35;
+                }
+            }
+            if (worldIn.isAirBlock(blockpos1)) {
+                // TODO flowers related to biome (and for now it uses vanilla default flowers, so it's disabled)
+                /*if (rand.nextInt(8) == 0) {
+                    worldIn.getBiome(blockpos1).plantFlower(worldIn, rand, blockpos1);
+                } else {*/
+                    IBlockState tallGrassState = ModBlocks.TALL_MIDNIGHT_GRASS.getDefaultState();
+                    if (((BlockBush)ModBlocks.TALL_MIDNIGHT_GRASS).canBlockStay(worldIn, blockpos1, tallGrassState)) {
+                        worldIn.setBlockState(blockpos1, tallGrassState, 3);
+                    }
+                //}
+            }
+        }
     }
 }
