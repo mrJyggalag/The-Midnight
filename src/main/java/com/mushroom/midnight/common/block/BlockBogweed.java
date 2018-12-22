@@ -5,7 +5,11 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class BlockBogweed extends BlockGlowingPlant {
+public class BlockBogweed extends BlockMidnightPlant {
+    public BlockBogweed() {
+        super(true);
+    }
+
     @Override
     public boolean canBlockStay(World world, BlockPos pos, IBlockState state) {
         return this.canSustainBush(world.getBlockState(pos.down()));

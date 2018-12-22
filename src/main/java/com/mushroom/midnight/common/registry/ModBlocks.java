@@ -10,12 +10,11 @@ import com.mushroom.midnight.common.block.BlockDarkWater;
 import com.mushroom.midnight.common.block.BlockDeceitfulAlgae;
 import com.mushroom.midnight.common.block.BlockDeceitfulMoss;
 import com.mushroom.midnight.common.block.BlockDeceitfulMud;
-import com.mushroom.midnight.common.block.BlockDoubleMidnightPlant;
+import com.mushroom.midnight.common.block.BlockLumenBud;
+import com.mushroom.midnight.common.block.BlockMidnightDoublePlant;
 import com.mushroom.midnight.common.block.BlockDragonNest;
 import com.mushroom.midnight.common.block.BlockFingeredGrass;
 import com.mushroom.midnight.common.block.BlockGhostPlant;
-import com.mushroom.midnight.common.block.BlockGlowingDoublePlant;
-import com.mushroom.midnight.common.block.BlockGlowingPlant;
 import com.mushroom.midnight.common.block.BlockMiasmaFluid;
 import com.mushroom.midnight.common.block.BlockMiasmaSurface;
 import com.mushroom.midnight.common.block.BlockMidnightDirt;
@@ -40,6 +39,7 @@ import com.mushroom.midnight.common.block.BlockMidnightPlant;
 import com.mushroom.midnight.common.block.BlockMidnightSapling;
 import com.mushroom.midnight.common.block.BlockMidnightSlab;
 import com.mushroom.midnight.common.block.BlockMidnightStairs;
+import com.mushroom.midnight.common.block.BlockMidnightTallGrass;
 import com.mushroom.midnight.common.block.BlockMidnightTrapDoor;
 import com.mushroom.midnight.common.block.BlockMidnightWall;
 import com.mushroom.midnight.common.block.BlockMushroomInside;
@@ -80,6 +80,7 @@ import java.util.function.Function;
 
 @GameRegistry.ObjectHolder(Midnight.MODID)
 @Mod.EventBusSubscriber(modid = Midnight.MODID)
+@SuppressWarnings("WeakerAccess")
 public class ModBlocks {
 
     static List<Block> blocks = new ArrayList<>();
@@ -286,36 +287,36 @@ public class ModBlocks {
                 RegUtil.withName(new BlockMidnightFungiStem(), "viridshroom_stem"),
                 RegUtil.withName(new BlockMidnightFungiHat(() -> VIRIDSHROOM), "viridshroom_hat"),
                 RegUtil.withName(new BlockRockshroom(), "rockshroom"),
-                RegUtil.withName(new BlockMidnightPlant(PlantBehaviorType.BUSH), "tall_midnight_grass"),
-                RegUtil.withName(new BlockDoubleMidnightPlant(PlantBehaviorType.BUSH), "double_midnight_grass"),
+                RegUtil.withName(new BlockMidnightTallGrass(), "tall_midnight_grass"),
+                RegUtil.withName(new BlockMidnightDoublePlant(PlantBehaviorType.BUSH, false), "double_midnight_grass"),
                 RegUtil.withName(new BlockMidnightFungi(() -> new LargeFungiFeature(
                         ModBlocks.NIGHTSHROOM_STEM.getDefaultState(),
                         ModBlocks.NIGHTSHROOM_HAT.getDefaultState()
                 )), "nightshroom"),
-                RegUtil.withName(new BlockGlowingDoublePlant(), "double_nightshroom"),
+                RegUtil.withName(new BlockMidnightDoublePlant(true), "double_nightshroom"),
                 RegUtil.withName(new BlockMidnightFungi(() -> new LargeFungiFeature(
                         ModBlocks.DEWSHROOM_STEM.getDefaultState(),
                         ModBlocks.DEWSHROOM_HAT.getDefaultState()
                 )), "dewshroom"),
-                RegUtil.withName(new BlockGlowingDoublePlant(), "double_dewshroom"),
+                RegUtil.withName(new BlockMidnightDoublePlant(true), "double_dewshroom"),
                 RegUtil.withName(new BlockMidnightFungi(() -> new LargeFungiFeature(
                         ModBlocks.VIRIDSHROOM_STEM.getDefaultState(),
                         ModBlocks.VIRIDSHROOM_HAT.getDefaultState()
                 )), "viridshroom"),
-                RegUtil.withName(new BlockGlowingDoublePlant(), "double_viridshroom"),
+                RegUtil.withName(new BlockMidnightDoublePlant(true), "double_viridshroom"),
                 RegUtil.withName(new BlockMidnightFungiShelf(), "nightshroom_shelf"),
                 RegUtil.withName(new BlockMidnightFungiShelf(), "dewshroom_shelf"),
                 RegUtil.withName(new BlockMidnightFungiShelf(), "viridshroom_shelf"),
-                RegUtil.withName(new BlockGlowingPlant(), "lumen_bud"),
-                RegUtil.withName(new BlockGlowingDoublePlant(), "double_lumen_bud"),
+                RegUtil.withName(new BlockLumenBud(), "lumen_bud"),
+                RegUtil.withName(new BlockMidnightDoublePlant(true), "double_lumen_bud"),
                 RegUtil.withName(new BlockBladeshroom(), "bladeshroom"),
                 RegUtil.withName(new BlockBogweed(), "bogweed"),
                 RegUtil.withName(new BlockGhostPlant(), "ghost_plant"),
                 RegUtil.withName(new BlockFingeredGrass(), "fingered_grass"),
                 RegUtil.withName(new BlockTendrilweed(), "tendrilweed"),
-                RegUtil.withName(new BlockMidnightPlant(), "runebush"),
+                RegUtil.withName(new BlockMidnightPlant(false), "runebush"),
                 RegUtil.withName(new BlockDragonNest(), "dragon_nest"),
-                RegUtil.withName(new BlockGlowingPlant(), "crystal_flower"),
+                RegUtil.withName(new BlockMidnightPlant(true), "crystal_flower"),
                 RegUtil.withName(new BlockMidnightSapling(ShadowrootTreeFeature::new), "shadowroot_sapling"),
                 RegUtil.withName(new BlockMidnightSapling(DarkWillowTreeFeature::new), "dark_willow_sapling"),
                 RegUtil.withName(new BlockDarkWater(), "dark_water"),

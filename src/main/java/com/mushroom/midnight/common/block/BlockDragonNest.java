@@ -15,10 +15,10 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.Random;
 
-public class BlockDragonNest extends BlockGlowingPlant {
+public class BlockDragonNest extends BlockMidnightPlant {
 
     public BlockDragonNest() {
-        super();
+        super(true);
     }
 
     @Override

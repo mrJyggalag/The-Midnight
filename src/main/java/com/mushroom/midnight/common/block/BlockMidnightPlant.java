@@ -9,11 +9,15 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
+import net.minecraftforge.client.MinecraftForgeClient;
 import net.minecraftforge.common.IShearable;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nonnull;
 import java.util.Collections;
@@ -22,19 +26,23 @@ import java.util.Random;
 
 public class BlockMidnightPlant extends BlockBush implements IModelProvider, IShearable {
     private static final AxisAlignedBB BOUNDS = new AxisAlignedBB(0.1, 0.0, 0.1, 0.9, 0.8, 0.9);
-
     private final PlantBehaviorType behaviorType;
+    private final boolean glowing;
 
-    public BlockMidnightPlant(PlantBehaviorType behaviorType) {
+    public BlockMidnightPlant(PlantBehaviorType behaviorType, boolean glowing) {
         super(behaviorType.getMaterial());
         this.behaviorType = behaviorType;
+        this.glowing = glowing;
+        if (this.glowing) {
+            setLightLevel(0.8F);
+        }
         this.setHardness(0.0F);
         this.setSoundType(SoundType.PLANT);
         this.setCreativeTab(Midnight.DECORATION_TAB);
     }
 
-    public BlockMidnightPlant() {
-        this(PlantBehaviorType.FLOWER);
+    public BlockMidnightPlant(boolean glowing) {
+        this(PlantBehaviorType.FLOWER, glowing);
     }
 
     @Override
@@ -74,5 +82,23 @@ public class BlockMidnightPlant extends BlockBush implements IModelProvider, ISh
     @Override
     public Item getItemDropped(IBlockState state, Random rand, int fortune) {
         return this.behaviorType.isShearable() ? Items.AIR : super.getItemDropped(state, rand, fortune);
+    }
+
+    @Override
+    public boolean canRenderInLayer(IBlockState state, BlockRenderLayer layer) {
+        return glowing ? layer == BlockRenderLayer.TRANSLUCENT || layer == BlockRenderLayer.CUTOUT : super.canRenderInLayer(state, layer);
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    @SuppressWarnings("deprecation")
+    public int getPackedLightmapCoords(IBlockState state, IBlockAccess source, BlockPos pos) {
+        if (!glowing) { return super.getPackedLightmapCoords(state, source, pos); }
+        if (MinecraftForgeClient.getRenderLayer() == BlockRenderLayer.CUTOUT) {
+            return source.getCombinedLight(pos, 0);
+        }
+        int skyLight = 14;
+        int blockLight = 14;
+        return skyLight << 20 | blockLight << 4;
     }
 }
