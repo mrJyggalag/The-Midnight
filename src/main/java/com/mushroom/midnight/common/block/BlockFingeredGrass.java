@@ -11,7 +11,7 @@ import java.util.Random;
 
 public class BlockFingeredGrass extends BlockMidnightPlant {
     public BlockFingeredGrass() {
-        super();
+        super(false);
         setTickRandomly(true);
     }
 

@@ -37,6 +37,7 @@ public class BlockBladeshroom extends BlockMidnightPlant implements IGrowable {
     private static final DamageSource BLADESHROOM_DAMAGE = new MidnightDamageSource("bladeshroom").setDamageBypassesArmor().setDamageIsAbsolute();
 
     public BlockBladeshroom() {
+        super(false);
         this.setDefaultState(this.blockState.getBaseState().withProperty(STAGE, Stage.SPORE));
         this.setTickRandomly(true);
         this.setCreativeTab(null);

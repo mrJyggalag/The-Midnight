@@ -17,34 +17,42 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.client.MinecraftForgeClient;
 import net.minecraftforge.common.IShearable;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nonnull;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-public class BlockDoubleMidnightPlant extends BlockBush implements IModelProvider, IShearable {
+public class BlockMidnightDoublePlant extends BlockBush implements IModelProvider, IShearable {
     private static final PropertyEnum<BlockDoublePlant.EnumBlockHalf> HALF = BlockDoublePlant.HALF;
-
     private final PlantBehaviorType behaviorType;
+    private final boolean glowing;
 
-    public BlockDoubleMidnightPlant(PlantBehaviorType behaviorType) {
+    public BlockMidnightDoublePlant(PlantBehaviorType behaviorType, boolean glowing) {
         super(Material.VINE);
         this.behaviorType = behaviorType;
+        this.glowing = glowing;
+        if (this.glowing) {
+            setLightLevel(0.8F);
+        }
         this.setHardness(0.0F);
         this.setSoundType(SoundType.PLANT);
         this.setCreativeTab(Midnight.DECORATION_TAB);
         this.setDefaultState(this.blockState.getBaseState().withProperty(HALF, BlockDoublePlant.EnumBlockHalf.LOWER));
     }
 
-    public BlockDoubleMidnightPlant() {
-        this(PlantBehaviorType.FLOWER);
+    public BlockMidnightDoublePlant(boolean glowing) {
+        this(PlantBehaviorType.FLOWER, glowing);
     }
 
     @Override
@@ -185,5 +193,23 @@ public class BlockDoubleMidnightPlant extends BlockBush implements IModelProvide
             return Items.AIR;
         }
         return super.getItemDropped(state, rand, fortune);
+    }
+
+    @Override
+    public boolean canRenderInLayer(IBlockState state, BlockRenderLayer layer) {
+        return glowing ? layer == BlockRenderLayer.TRANSLUCENT || layer == BlockRenderLayer.CUTOUT : super.canRenderInLayer(state, layer);
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    @SuppressWarnings("deprecation")
+    public int getPackedLightmapCoords(IBlockState state, IBlockAccess source, BlockPos pos) {
+        if (!glowing) { return super.getPackedLightmapCoords(state, source, pos); }
+        if (MinecraftForgeClient.getRenderLayer() == BlockRenderLayer.CUTOUT) {
+            return source.getCombinedLight(pos, 0);
+        }
+        int skyLight = 15;
+        int blockLight = 15;
+        return skyLight << 20 | blockLight << 4;
     }
 }

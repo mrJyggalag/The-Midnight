@@ -11,9 +11,10 @@ import net.minecraft.world.World;
 
 import java.util.Random;
 
-public class BlockTendrilweed extends BlockGlowingPlant {
+public class BlockTendrilweed extends BlockMidnightPlant {
     // TODO particle  tendril spore
     public BlockTendrilweed() {
+        super(true);
         setTickRandomly(true);
     }
 

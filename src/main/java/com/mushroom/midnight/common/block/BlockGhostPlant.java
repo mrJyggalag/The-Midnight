@@ -9,7 +9,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockGhostPlant extends BlockMidnightPlant {
     public BlockGhostPlant() {
-        super();
+        super(true);
         this.setLightLevel(0.8F);
     }
 

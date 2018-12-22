@@ -13,11 +13,11 @@ import net.minecraftforge.event.terraingen.TerrainGen;
 import java.util.Random;
 import java.util.function.Supplier;
 
-public class BlockMidnightFungi extends BlockGlowingPlant implements IGrowable {
+public class BlockMidnightFungi extends BlockMidnightPlant implements IGrowable {
     private final Supplier<WorldGenerator> generatorSupplier;
 
     public BlockMidnightFungi(Supplier<WorldGenerator> generatorSupplier) {
-        super();
+        super(true);
         this.setDefaultState(this.blockState.getBaseState().withProperty(BlockSapling.STAGE, 0));
         this.generatorSupplier = generatorSupplier;
     }
