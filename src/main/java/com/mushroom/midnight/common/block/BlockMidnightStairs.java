@@ -100,4 +100,14 @@ public class BlockMidnightStairs extends BlockStairs implements IModelProvider {
     public boolean canSustainPlant(IBlockState state, IBlockAccess world, BlockPos pos, EnumFacing direction, IPlantable plantable) {
         return parentSupplier.get().getBlock().canSustainPlant(state, world, pos, direction, plantable);
     }
+
+    @Override
+    public int getFireSpreadSpeed(IBlockAccess world, BlockPos pos, EnumFacing face) {
+        return parentSupplier.get().getBlock().getFireSpreadSpeed(world, pos, face);
+    }
+
+    @Override
+    public int getFlammability(IBlockAccess world, BlockPos pos, EnumFacing face) {
+        return parentSupplier.get().getBlock().getFlammability(world, pos, face);
+    }
 }

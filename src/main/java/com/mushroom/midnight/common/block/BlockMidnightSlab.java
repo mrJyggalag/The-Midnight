@@ -12,6 +12,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockRenderLayer;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.IBlockAccess;
@@ -131,5 +132,15 @@ public class BlockMidnightSlab extends BlockSlab implements IModelProvider {
 
     IBlockState getParentstate() {
         return parentSupplier.get();
+    }
+
+    @Override
+    public int getFireSpreadSpeed(IBlockAccess world, BlockPos pos, EnumFacing face) {
+        return parentSupplier.get().getBlock().getFireSpreadSpeed(world, pos, face);
+    }
+
+    @Override
+    public int getFlammability(IBlockAccess world, BlockPos pos, EnumFacing face) {
+        return parentSupplier.get().getBlock().getFlammability(world, pos, face);
     }
 }

@@ -43,6 +43,7 @@ import com.mushroom.midnight.common.block.BlockMidnightStairs;
 import com.mushroom.midnight.common.block.BlockMidnightTallGrass;
 import com.mushroom.midnight.common.block.BlockMidnightTrapDoor;
 import com.mushroom.midnight.common.block.BlockMidnightWall;
+import com.mushroom.midnight.common.block.BlockMidnightWoodPlank;
 import com.mushroom.midnight.common.block.BlockMushroomInside;
 import com.mushroom.midnight.common.block.BlockNightstone;
 import com.mushroom.midnight.common.block.BlockRockshroom;
@@ -384,30 +385,12 @@ public class ModBlocks {
                         .setHardness(3.0F),
                 RegUtil.withName(new BlockMidnightGlass(), "crystal_glass"),
                 RegUtil.withName(new BlockMidnightGlassPane(), "crystal_glass_pane"),
-                RegUtil.withName(new BlockBasic(Material.WOOD), "shadowroot_planks")
-                        .withSoundType(SoundType.WOOD)
-                        .setHardness(2.0F)
-                        .setResistance(5.0F),
-                RegUtil.withName(new BlockBasic(Material.WOOD), "dead_wood_planks")
-                        .withSoundType(SoundType.WOOD)
-                        .setHardness(2.0F)
-                        .setResistance(5.0F),
-                RegUtil.withName(new BlockBasic(Material.WOOD), "dark_willow_planks")
-                        .withSoundType(SoundType.WOOD)
-                        .setHardness(2.0F)
-                        .setResistance(5.0F),
-                RegUtil.withName(new BlockBasic(Material.WOOD), "nightshroom_planks")
-                        .withSoundType(SoundType.WOOD)
-                        .setHardness(2.0F)
-                        .setResistance(5.0F),
-                RegUtil.withName(new BlockBasic(Material.WOOD), "dewshroom_planks")
-                        .withSoundType(SoundType.WOOD)
-                        .setHardness(2.0F)
-                        .setResistance(5.0F),
-                RegUtil.withName(new BlockBasic(Material.WOOD), "viridshroom_planks")
-                        .withSoundType(SoundType.WOOD)
-                        .setHardness(2.0F)
-                        .setResistance(5.0F),
+                RegUtil.withName(new BlockMidnightWoodPlank(), "shadowroot_planks"),
+                RegUtil.withName(new BlockMidnightWoodPlank(), "dead_wood_planks"),
+                RegUtil.withName(new BlockMidnightWoodPlank(), "dark_willow_planks"),
+                RegUtil.withName(new BlockMidnightWoodPlank(), "nightshroom_planks"),
+                RegUtil.withName(new BlockMidnightWoodPlank(), "dewshroom_planks"),
+                RegUtil.withName(new BlockMidnightWoodPlank(), "viridshroom_planks"),
                 RegUtil.withName(new BlockMidnightDoor(() -> ModItems.SHADOWROOT_DOOR), "shadowroot_door"),
                 RegUtil.withName(new BlockMidnightDoor(() -> ModItems.DARK_WILLOW_DOOR), "dark_willow_door"),
                 RegUtil.withName(new BlockMidnightDoor(() -> ModItems.DEAD_WOOD_DOOR), "dead_wood_door"),

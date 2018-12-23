@@ -87,4 +87,14 @@ public class BlockMidnightLeaves extends BlockLeaves implements IModelProvider {
     public Item getItemDropped(IBlockState state, Random rand, int fortune) {
         return Item.getItemFromBlock(this.saplingSupplier.get());
     }
+
+    @Override
+    public int getFireSpreadSpeed(IBlockAccess world, BlockPos pos, EnumFacing face) {
+        return 30;
+    }
+
+    @Override
+    public int getFlammability(IBlockAccess world, BlockPos pos, EnumFacing face) {
+        return 60;
+    }
 }
