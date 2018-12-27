@@ -24,9 +24,14 @@ public class MidnightConfig {
 
     @Config.Name("bladeshroom_damage_chance")
     @Config.LangKey("config.midnight.bladeshroom_damage_chance")
-    @Config.Comment("The chance to take damage when picking a bladeshroom cap")
+    @Config.Comment("The chance to take damage when picking a bladeshroom cap.")
     @Config.RangeInt(min=0, max=100)
     public static int bladeshroomDamageChance = 5;
+
+    @Config.Name("can_sleep_in_midnight")
+    @Config.LangKey("config.midnight.can_sleep_in_midnight")
+    @Config.Comment("If true, players will be allowed to sleep in Midnight.")
+    public static boolean canSleepInMidnight = false;
 
     @SubscribeEvent
     public static void configChanged(ConfigChangedEvent.OnConfigChangedEvent event) {
