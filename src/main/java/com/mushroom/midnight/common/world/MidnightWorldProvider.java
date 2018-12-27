@@ -1,5 +1,6 @@
 package com.mushroom.midnight.common.world;
 
+import com.mushroom.midnight.common.config.MidnightConfig;
 import com.mushroom.midnight.common.registry.ModDimensions;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.effect.EntityLightningBolt;
@@ -26,8 +27,11 @@ public class MidnightWorldProvider extends WorldProvider {
     protected void init() {
         this.hasSkyLight = true;
         this.biomeProvider = new MidnightBiomeProvider(this.world.getWorldInfo());
-        this.nether = true;
+        this.nether = false;
     }
+
+    @Override
+    public int getActualHeight() { return 255; }
 
     @Override
     public IChunkGenerator createChunkGenerator() {
@@ -41,12 +45,12 @@ public class MidnightWorldProvider extends WorldProvider {
 
     @Override
     public WorldSleepResult canSleepAt(EntityPlayer player, BlockPos pos) {
-        return WorldSleepResult.BED_EXPLODES;
+        return MidnightConfig.canSleepInMidnight ? WorldSleepResult.ALLOW : WorldSleepResult.BED_EXPLODES;
     }
 
     @Override
     public boolean isSurfaceWorld() {
-        return false;
+        return true;
     }
 
     @Override
@@ -151,6 +155,6 @@ public class MidnightWorldProvider extends WorldProvider {
 
     @Override
     public boolean canRespawnHere() {
-        return false;
+        return MidnightConfig.canSleepInMidnight;
     }
 }
