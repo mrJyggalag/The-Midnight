@@ -50,7 +50,7 @@ public class MidnightWorldProvider extends WorldProvider {
 
     @Override
     public boolean isSurfaceWorld() {
-        return false;
+        return true;
     }
 
     @Override
