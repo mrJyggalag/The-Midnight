@@ -2,6 +2,8 @@ package com.mushroom.midnight.common.world;
 
 import com.mushroom.midnight.common.config.MidnightConfig;
 import com.mushroom.midnight.common.registry.ModDimensions;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.entity.player.EntityPlayer;
@@ -13,9 +15,11 @@ import net.minecraft.world.WorldProvider;
 import net.minecraft.world.WorldServer;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.gen.IChunkGenerator;
+import net.minecraftforge.client.IRenderHandler;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import javax.annotation.Nullable;
 import java.util.Iterator;
 import java.util.Random;
 
@@ -45,12 +49,12 @@ public class MidnightWorldProvider extends WorldProvider {
 
     @Override
     public WorldSleepResult canSleepAt(EntityPlayer player, BlockPos pos) {
-        return MidnightConfig.canSleepInMidnight ? WorldSleepResult.ALLOW : WorldSleepResult.BED_EXPLODES;
+        return WorldSleepResult.BED_EXPLODES;
     }
 
     @Override
     public boolean isSurfaceWorld() {
-        return true;
+        return false;
     }
 
     @Override
@@ -155,6 +159,22 @@ public class MidnightWorldProvider extends WorldProvider {
 
     @Override
     public boolean canRespawnHere() {
-        return MidnightConfig.canSleepInMidnight;
+        return MidnightConfig.canRespawnInMidnight;
+    }
+
+    @Override
+    public boolean shouldClientCheckLighting() {
+        return true;
+    }
+
+    @Override
+    @Nullable
+    @SideOnly(Side.CLIENT)
+    public IRenderHandler getCloudRenderer() {
+        return new IRenderHandler() {
+            @Override
+            public void render(float partialTicks, WorldClient world, Minecraft mc) {
+            }
+        };
     }
 }

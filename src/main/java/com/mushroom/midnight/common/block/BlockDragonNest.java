@@ -9,6 +9,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -45,7 +46,12 @@ public class BlockDragonNest extends BlockMidnightPlant {
     public void randomDisplayTick(IBlockState state, World world, BlockPos pos, Random rand) {
         super.randomDisplayTick(state, world, pos, rand);
         if (rand.nextInt(10) == 0) {
-            MidnightParticles.DRIP.spawn(world, (double) (pos.getX() + rand.nextFloat()), pos.getY() - 0.05D, (double) (pos.getZ() + rand.nextFloat()), 0d, 0d, 0d,191, 70, 82);
+            Vec3d offset = getOffset(state, world, pos);
+            double distX = rand.nextFloat() * 0.6 - 0.3d;
+            double posX = pos.getX() + 0.5d + offset.x + distX;
+            double posY = pos.getY() + offset.y + Math.abs(distX);
+            double posZ = pos.getZ() + 0.5d + offset.z + (rand.nextBoolean() ? distX : -distX);
+            MidnightParticles.DRIP.spawn(world, posX, posY, posZ, 0d, 0d, 0d,191, 70, 82);
         }
     }
 }
