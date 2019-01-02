@@ -33,6 +33,11 @@ public class MidnightConfig {
     @Config.Comment("If true, players will be allowed to respawn in Midnight.")
     public static boolean canRespawnInMidnight = false;
 
+    @Config.Name("hide_vignette_effect")
+    @Config.LangKey("config.midnight.hide_vignette_effect")
+    @Config.Comment("Hides the vignette effect in the dark areas of Midnight.")
+    public static boolean hideVignetteEffect = false;
+
     @SubscribeEvent
     public static void configChanged(ConfigChangedEvent.OnConfigChangedEvent event) {
         if (event.getModID().equals(Midnight.MODID)) {
