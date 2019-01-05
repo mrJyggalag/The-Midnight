@@ -268,6 +268,11 @@ entity.midnight.nova.name=Nova
 
 # Config
 
+config_cat.midnight.general=General
+config_cat.midnight.general.tooltip=All the options that can only be set on the server.
+config_cat.midnight.client=Client
+config_cat.midnight.client.tooltip=All the options that can be modified by players on server.
+
 config.midnight.midnight_dimension_id=Midnight Dimension ID
 config.midnight.midnight_dimension_id.tooltip=The ID to be used for the Midnight Dimension.
 
@@ -282,6 +287,9 @@ config.midnight.can_respawn_in_midnight.tooltip=If true, players will be allowed
 
 config.midnight.hide_vignette_effect=Hides the vignette effect
 config.midnight.hide_vignette_effect.tooltip=Hides the vignette effect in the dark areas of Midnight.
+
+config.midnight.allow_lightning_damage=Allow lightning damage
+config.midnight.allow_lightning_damage.tooltip=Allows the lightnings in Midnight to burn the lands and do damage to entities.
 
 status.midnight.rift_nearby=You may not rest now, there is an evil presence nearby
 status.midnight.snapped=The fish snapped at you

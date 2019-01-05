@@ -60,7 +60,7 @@ public class RenderRift extends Render<EntityRift> {
             float openAnimation = this.computeOpenAnimation(openProgress);
             float unstableAnimation = this.computeUnstableAnimation(unstableTime);
 
-            if (this.shader.isAvailable() && MidnightConfig.riftShaders) {
+            if (this.shader.isAvailable() && MidnightConfig.general.riftShaders) {
                 this.renderShader(entity, time, openAnimation, unstableAnimation);
             } else {
                 this.renderTexture(entity, time, openAnimation, unstableAnimation);
