@@ -25,7 +25,7 @@ public class MidnightWorldProvider extends WorldProvider {
 
     @Override
     protected void init() {
-        this.hasSkyLight = true;
+        this.hasSkyLight = false;
         this.biomeProvider = new MidnightBiomeProvider(this.world.getWorldInfo());
         this.nether = false;
     }
@@ -86,11 +86,6 @@ public class MidnightWorldProvider extends WorldProvider {
     }
 
     @Override
-    public boolean hasSkyLight() {
-        return false;
-    }
-
-    @Override
     public float getSunBrightnessFactor(float partialTicks) {
         return 0.0F;
     }
@@ -141,7 +136,7 @@ public class MidnightWorldProvider extends WorldProvider {
                     int lightningZ = globalZ + rand.nextInt(16);
                     BlockPos pos = this.world.getPrecipitationHeight(new BlockPos(lightningX, 0, lightningZ));
 
-                    Entity lightning = new EntityLightningBolt(this.world, pos.getX(), pos.getY(), pos.getZ(), true);
+                    Entity lightning = new EntityLightningBolt(this.world, pos.getX(), pos.getY(), pos.getZ(), !MidnightConfig.general.allowLightningDamage);
                     this.world.addWeatherEffect(lightning);
                 }
             });
@@ -155,7 +150,7 @@ public class MidnightWorldProvider extends WorldProvider {
 
     @Override
     public boolean canRespawnHere() {
-        return MidnightConfig.canRespawnInMidnight;
+        return MidnightConfig.general.canRespawnInMidnight;
     }
 
     @Override

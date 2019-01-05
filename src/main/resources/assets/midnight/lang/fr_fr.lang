@@ -268,6 +268,11 @@ entity.midnight.nova.name=Nova
 
 # Config
 
+config_cat.midnight.general=Général
+config_cat.midnight.general.tooltip=Toutes les options qui ne peuvent être configurée que sur le server.
+config_cat.midnight.client=Client
+config_cat.midnight.client.tooltip=Toutes les options qui peuvent être modifiées par les joueurs sur serveur.
+
 config.midnight.midnight_dimension_id=ID de la dimension de Minuit
 config.midnight.midnight_dimension_id.tooltip=L'ID qui va être utilisé pour la dimension de Minuit.
 
@@ -282,6 +287,9 @@ config.midnight.can_respawn_in_midnight.tooltip=Si vrai, les joueurs seront auto
 
 config.midnight.hide_vignette_effect=Cache l'effet de vignette
 config.midnight.hide_vignette_effect.tooltip=Cache l'effet de vignette dans les zones sombres de Minuit.
+
+config.midnight.allow_lightning_damage=Autoriser les dégâts des éclairs
+config.midnight.allow_lightning_damage.tooltip=Permet aux éclairs de Minuit de brûler les terres et d'endommager les entités.
 
 status.midnight.rift_nearby=Vous ne pouvez pas rester ici pour l'instant, il y a une présence démoniaque à proximitée
 status.midnight.snapped=Le poisson t'a baffé

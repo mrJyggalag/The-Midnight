@@ -11,32 +11,51 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 @Config.LangKey("midnight.config.title")
 @Mod.EventBusSubscriber(modid = Midnight.MODID)
 public class MidnightConfig {
-    @Config.Name("midnight_dimension_id")
-    @Config.LangKey("config.midnight.midnight_dimension_id")
-    @Config.Comment("The ID to be used for the Midnight Dimension")
-    @Config.RequiresMcRestart
-    public static int midnightDimensionId = -23;
+    public static class CatGeneral {
+        @Config.Name("midnight_dimension_id")
+        @Config.LangKey("config.midnight.midnight_dimension_id")
+        @Config.Comment("The ID to be used for the Midnight Dimension")
+        @Config.RequiresMcRestart
+        public int midnightDimensionId = -23;
 
-    @Config.Name("rift_shaders")
-    @Config.LangKey("config.midnight.rift_shaders")
-    @Config.Comment("If true, rifts will be rendered with custom shaders for standard effects. If false, a simpler texture will be rendered.")
-    public static boolean riftShaders = true;
+        @Config.Name("rift_shaders")
+        @Config.LangKey("config.midnight.rift_shaders")
+        @Config.Comment("If true, rifts will be rendered with custom shaders for standard effects. If false, a simpler texture will be rendered.")
+        public boolean riftShaders = true;
 
-    @Config.Name("bladeshroom_damage_chance")
-    @Config.LangKey("config.midnight.bladeshroom_damage_chance")
-    @Config.Comment("The chance to take damage when picking a bladeshroom cap.")
-    @Config.RangeInt(min=0, max=100)
-    public static int bladeshroomDamageChance = 5;
+        @Config.Name("bladeshroom_damage_chance")
+        @Config.LangKey("config.midnight.bladeshroom_damage_chance")
+        @Config.Comment("The chance to take damage when picking a bladeshroom cap.")
+        @Config.RangeInt(min=0, max=100)
+        public int bladeshroomDamageChance = 5;
 
-    @Config.Name("can_respawn_in_midnight")
-    @Config.LangKey("config.midnight.can_respawn_in_midnight")
-    @Config.Comment("If true, players will be allowed to respawn in Midnight.")
-    public static boolean canRespawnInMidnight = false;
+        @Config.Name("can_respawn_in_midnight")
+        @Config.LangKey("config.midnight.can_respawn_in_midnight")
+        @Config.Comment("If true, players will be allowed to respawn in Midnight.")
+        public boolean canRespawnInMidnight = false;
 
-    @Config.Name("hide_vignette_effect")
-    @Config.LangKey("config.midnight.hide_vignette_effect")
-    @Config.Comment("Hides the vignette effect in the dark areas of Midnight.")
-    public static boolean hideVignetteEffect = false;
+        @Config.Name("allow_lightning_damage")
+        @Config.LangKey("config.midnight.allow_lightning_damage")
+        @Config.Comment("Allows the lightnings in Midnight to burn the lands and do damage to entities.")
+        public boolean allowLightningDamage = false;
+    }
+
+    public static class CatClient {
+        @Config.Name("hide_vignette_effect")
+        @Config.LangKey("config.midnight.hide_vignette_effect")
+        @Config.Comment("Hides the vignette effect in the dark areas of Midnight.")
+        public boolean hideVignetteEffect = false;
+    }
+
+    @Config.Name("general")
+    @Config.LangKey("config_cat.midnight.general")
+    @Config.Comment("All the options that can only be set on the server.")
+    public static CatGeneral general = new CatGeneral();
+
+    @Config.Name("client")
+    @Config.LangKey("config_cat.midnight.client")
+    @Config.Comment("All the options that can be modified by players on server.")
+    public static CatClient client = new CatClient();
 
     @SubscribeEvent
     public static void configChanged(ConfigChangedEvent.OnConfigChangedEvent event) {
