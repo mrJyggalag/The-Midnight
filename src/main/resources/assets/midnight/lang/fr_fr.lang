@@ -291,6 +291,9 @@ config.midnight.hide_vignette_effect.tooltip=Cache l'effet de vignette dans les 
 config.midnight.allow_lightning_damage=Autoriser les dégâts des éclairs
 config.midnight.allow_lightning_damage.tooltip=Permet aux éclairs de Minuit de brûler les terres et d'endommager les entités.
 
+config.midnight.rift_spawn_rarity=Rareté qu'une faille apparaisse
+config.midnight.rift_spawn_rarity.tooltip=La rareté qu'une faille apparaisse. Les nombres plus grands augmentent la rareté. Si 0, les failles n'apparaissent pas.
+
 status.midnight.rift_nearby=Vous ne pouvez pas rester ici pour l'instant, il y a une présence démoniaque à proximitée
 status.midnight.snapped=Le poisson t'a baffé
 

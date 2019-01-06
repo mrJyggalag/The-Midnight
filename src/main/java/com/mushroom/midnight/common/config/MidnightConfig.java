@@ -38,6 +38,12 @@ public class MidnightConfig {
         @Config.LangKey("config.midnight.allow_lightning_damage")
         @Config.Comment("Allows the lightnings in Midnight to burn the lands and do damage to entities.")
         public boolean allowLightningDamage = false;
+
+        @Config.Name("rift_spawn_rarity")
+        @Config.LangKey("config.midnight.rift_spawn_rarity")
+        @Config.Comment("The rarity that a rift appears. Larger numbers increase rarity. If 0, rifts don't spawn.")
+        @Config.RangeInt(min=0, max=10000)
+        public int riftSpawnRarity = 960;
     }
 
     public static class CatClient {
