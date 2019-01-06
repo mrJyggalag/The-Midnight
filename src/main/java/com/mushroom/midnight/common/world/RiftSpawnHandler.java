@@ -1,6 +1,7 @@
 package com.mushroom.midnight.common.world;
 
 import com.mushroom.midnight.Midnight;
+import com.mushroom.midnight.common.config.MidnightConfig;
 import com.mushroom.midnight.common.entity.EntityRift;
 import com.mushroom.midnight.common.entity.RiftAttachment;
 import com.mushroom.midnight.common.entity.RiftBridge;
@@ -27,7 +28,6 @@ public class RiftSpawnHandler {
     private static final double RIFT_SEPARATION = 64.0;
     private static final double PLAYER_SEPARATION = 16.0;
 
-    private static final int REGION_SPAWN_CHANCE = 960;
     private static final int REGION_RANGE = 64 >> 5;
 
     private static boolean warnedOverworldUnloaded;
@@ -61,7 +61,7 @@ public class RiftSpawnHandler {
             }
 
             for (BlockPos spawnRegion : spawnRegions) {
-                if (random.nextInt(REGION_SPAWN_CHANCE) == 0) {
+                if (random.nextInt(MidnightConfig.general.riftSpawnRarity) == 0) {
                     BlockPos riftPosition = generateRiftPosition(random, spawnRegion);
                     if (endpointWorld != null && (world.getWorldBorder().contains(riftPosition) != endpointWorld.getWorldBorder().contains(riftPosition))) {
                         continue;

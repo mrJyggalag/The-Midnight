@@ -3,6 +3,7 @@ package com.mushroom.midnight.common;
 import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.common.capability.RiftCooldownCapability;
 import com.mushroom.midnight.common.capability.RifterCapturedCapability;
+import com.mushroom.midnight.common.config.MidnightConfig;
 import com.mushroom.midnight.common.entity.EntityRift;
 import com.mushroom.midnight.common.event.RifterCaptureEvent;
 import com.mushroom.midnight.common.event.RifterReleaseEvent;
@@ -77,7 +78,7 @@ public class CommonEventHandler {
 
     @SubscribeEvent
     public static void onServerTick(TickEvent.ServerTickEvent event) {
-        if (event.phase == TickEvent.Phase.END) {
+        if (MidnightConfig.general.riftSpawnRarity > 0 && event.phase == TickEvent.Phase.END) {
             RiftSpawnHandler.update();
         }
     }
