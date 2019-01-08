@@ -66,8 +66,8 @@ public class ModEntities {
                         .factory(EntityCrystalBug::new)
                         .id(new ResourceLocation(Midnight.MODID, "crystal_bug"), currentEntityId++)
                         .name(Midnight.MODID + ".crystal_bug")
-                        .tracker(80, 2, true)
-                        /*.egg(0x932C3B, 0x47415E)*/
+                        .tracker(80, 3, false)
+                        .egg(0x4B2277, 0xAF27E0)
                         .build()
         );
 
