@@ -29,6 +29,11 @@ public class RenderCrystalBug extends RenderLiving<EntityCrystalBug> {
 
     @Override
     protected void preRenderCallback(EntityCrystalBug entity, float partialTicks) {
+        if (entity.isStanding()) {
+            GlStateManager.translate(0f, 0.3f, 0f);
+        } else {
+            GlStateManager.translate(0f, 0.4f, 0f);
+        }
         GlStateManager.scale(0.3f, 0.3f, 0.3f);
     }
 

@@ -1,5 +1,6 @@
 package com.mushroom.midnight.common.entity.creature;
 
+import com.mushroom.midnight.common.registry.ModBlocks;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.SharedMonsterAttributes;
@@ -15,6 +16,8 @@ import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nullable;
 
@@ -58,7 +61,7 @@ public class EntityCrystalBug extends EntityAmbientCreature {
             motionY = 0d;
             motionZ = 0d;
         } else {
-            motionY *= 0.3d;
+            motionY *= 0.4d;
         }
     }
 
@@ -91,7 +94,7 @@ public class EntityCrystalBug extends EntityAmbientCreature {
         BlockPos blockpos = new BlockPos(this);
         BlockPos blockpos1 = blockpos.offset(getHorizontalFacing());
         if (isStanding()) {
-            if (world.getBlockState(blockpos1).isNormalCube()) {
+            if (canStayOnBlock(world.getBlockState(blockpos1))) {
                 if (world.getNearestPlayerNotCreative(this, 4d) != null) {
                     setStanding(false);
                     world.playEvent(null, 1025, blockpos, 0);
@@ -117,11 +120,15 @@ public class EntityCrystalBug extends EntityAmbientCreature {
             float f1 = MathHelper.wrapDegrees(f - rotationYaw);
             moveForward = 0.2f;
             rotationYaw += f1;
-            if (rand.nextInt(100) == 0 && world.getBlockState(blockpos1).isNormalCube()) {
+            if (rand.nextInt(100) == 0 && canStayOnBlock(world.getBlockState(blockpos1))) {
                 setStanding(true);
                 spawnPosition = blockpos1;
             }
         }
+    }
+
+    private boolean canStayOnBlock(IBlockState state) {
+        return state.getBlock() == ModBlocks.BLOOMCRYSTAL_ROCK;
     }
 
     @Override
@@ -144,8 +151,7 @@ public class EntityCrystalBug extends EntityAmbientCreature {
     }
 
     @Override
-    protected boolean canTriggerWalking()
-    {
+    protected boolean canTriggerWalking() {
         return false;
     }
 
@@ -171,5 +177,11 @@ public class EntityCrystalBug extends EntityAmbientCreature {
     @Nullable
     protected ResourceLocation getLootTable() {
         return LOOT_TABLE_CRYSTAL_BUG;
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public int getBrightnessForRender() {
+        return 14 << 20 | 14 << 4;
     }
 }

@@ -33,7 +33,6 @@ public class RiftAttachment {
     }
 
     public void apply(EntityRift rift) {
-        BlockPos pos = rift.world.getTopSolidOrLiquidBlock(this.pos);
         rift.setPositionAndRotation(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, this.yaw, 0.0F);
     }
 
