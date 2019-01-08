@@ -8,7 +8,6 @@ import com.mushroom.midnight.common.entity.RiftBridge;
 import com.mushroom.midnight.common.helper.Helper;
 import com.mushroom.midnight.common.registry.ModDimensions;
 import com.mushroom.midnight.common.util.WorldUtil;
-import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -18,7 +17,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 
-import javax.annotation.Nullable;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
@@ -95,7 +93,7 @@ public class RiftSpawnHandler {
 
     private static void trySpawnRift(World world, BlockPos riftPosition) {
         if (world.isAirBlock(riftPosition)) {
-            BlockPos correctedPosition = getCorrectedRiftPosition(world, riftPosition);
+            BlockPos correctedPosition = WorldUtil.findSurface(world, riftPosition, 6);
             if (correctedPosition == null || !canRiftSpawn(world, correctedPosition)) {
                 return;
             }
@@ -123,26 +121,15 @@ public class RiftSpawnHandler {
         if (world.isAnyPlayerWithinRangeAt(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, PLAYER_SEPARATION)) {
             return false;
         }
-
         AxisAlignedBB riftBounds = new AxisAlignedBB(pos).grow(RIFT_SEPARATION);
         if (!world.getEntitiesWithinAABB(EntityRift.class, riftBounds).isEmpty()) {
             return false;
         }
-
         AxisAlignedBB bounds = new AxisAlignedBB(pos).grow(1.0, 0.0, 1.0).expand(0.0, 1.0, 0.0);
         if (!world.getCollisionBoxes(null, bounds).isEmpty()) {
             return false;
         }
-
-        if (Helper.isMidnightDimension(world)) {
-            return true;
-        } else {
-            if (world.isMaterialInBB(bounds, Material.WATER) || world.isMaterialInBB(bounds, Material.LAVA)) {
-                return false;
-            }
-
-            return world.getLightFor(EnumSkyBlock.BLOCK, pos) < 4;
-        }
+        return Helper.isMidnightDimension(world) || (!world.containsAnyLiquid(bounds) && world.getLightFor(EnumSkyBlock.BLOCK, pos) < 4);
     }
 
     private static BlockPos generateRiftPosition(Random random, BlockPos region) {
@@ -150,14 +137,5 @@ public class RiftSpawnHandler {
         int y = (region.getY() << 5) + random.nextInt(32);
         int z = (region.getZ() << 5) + random.nextInt(32);
         return new BlockPos(x, y, z);
-    }
-
-    @Nullable
-    private static BlockPos getCorrectedRiftPosition(World world, BlockPos pos) {
-        BlockPos surface = WorldUtil.findSurface(world, pos, 6);
-        if (surface != null) {
-            return surface;
-        }
-        return null;
     }
 }
