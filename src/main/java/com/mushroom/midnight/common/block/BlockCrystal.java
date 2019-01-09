@@ -2,7 +2,6 @@ package com.mushroom.midnight.common.block;
 
 import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.client.IModelProvider;
-import com.mushroom.midnight.common.entity.creature.EntityCrystalBug;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -31,6 +30,7 @@ public class BlockCrystal extends Block implements IModelProvider {
         this.setHarvestLevel("pickaxe", 1);
         this.setTickRandomly(true);
         this.setCreativeTab(Midnight.DECORATION_TAB);
+        this.setLightLevel(0.2F);
     }
 
     @Override
@@ -76,17 +76,6 @@ public class BlockCrystal extends Block implements IModelProvider {
     @Override
     public void updateTick(World world, BlockPos pos, IBlockState state, Random rand) {
         this.tryBreakBlock(world, pos, state);
-        if (rand.nextFloat() < 0.005f && world.getEntitiesWithinAABB(EntityCrystalBug.class, new AxisAlignedBB(pos).grow(6d, 4d, 6d)).size() == 0) {
-            EntityCrystalBug crystal_bug;
-            try {
-                crystal_bug = new EntityCrystalBug(world);
-            } catch (Exception e) {
-                e.printStackTrace();
-                return;
-            }
-            crystal_bug.setLocationAndAngles(pos.getX(), pos.getY() + 1, pos.getZ(), world.rand.nextFloat() * 360f, 0f);
-            world.spawnEntity(crystal_bug);
-        }
     }
 
     private void tryBreakBlock(World world, BlockPos pos, IBlockState state) {

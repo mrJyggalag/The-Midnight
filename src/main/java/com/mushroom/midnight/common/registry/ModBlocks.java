@@ -4,6 +4,7 @@ import com.google.common.collect.Lists;
 import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.common.block.BlockBasic;
 import com.mushroom.midnight.common.block.BlockBladeshroom;
+import com.mushroom.midnight.common.block.BlockBloomCrystal;
 import com.mushroom.midnight.common.block.BlockBogweed;
 import com.mushroom.midnight.common.block.BlockCrystal;
 import com.mushroom.midnight.common.block.BlockDarkWater;
@@ -335,13 +336,13 @@ public class ModBlocks {
                         .withHarvestLevel("pickaxe", 2)
                         .setHardness(5.0F)
                         .setResistance(200.0F),
-                RegUtil.withName(new BlockCrystal().setLightLevel(1.0F), "bloomcrystal"),
+                RegUtil.withName(new BlockBloomCrystal(), "bloomcrystal"),
                 RegUtil.withName(new BlockBasic(Material.ROCK), "bloomcrystal_rock")
                         .withSoundType(SoundType.GLASS)
                         .withHarvestLevel("pickaxe", 1)
                         .setLightLevel(1.0F)
                         .setHardness(4.0F),
-                RegUtil.withName(new BlockCrystal().setLightLevel(0.2F), "rouxe"),
+                RegUtil.withName(new BlockCrystal(), "rouxe"),
                 RegUtil.withName(new BlockBasic(Material.ROCK), "rouxe_rock")
                         .withSoundType(SoundType.GLASS)
                         .withHarvestLevel("pickaxe", 1)
