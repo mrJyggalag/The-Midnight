@@ -3,6 +3,7 @@ package com.mushroom.midnight.common.entity.creature;
 import com.mushroom.midnight.common.registry.ModBlocks;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EnumCreatureAttribute;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.passive.EntityAmbientCreature;
 import net.minecraft.init.SoundEvents;
@@ -30,6 +31,7 @@ public class EntityCrystalBug extends EntityAmbientCreature {
     public EntityCrystalBug(World world) {
         super(world);
         setSize(0.2f, 0.2f);
+        experienceValue = 3;
     }
 
     @Override
@@ -183,5 +185,10 @@ public class EntityCrystalBug extends EntityAmbientCreature {
     @SideOnly(Side.CLIENT)
     public int getBrightnessForRender() {
         return 14 << 20 | 14 << 4;
+    }
+
+    @Override
+    public EnumCreatureAttribute getCreatureAttribute() {
+        return EnumCreatureAttribute.ARTHROPOD;
     }
 }
