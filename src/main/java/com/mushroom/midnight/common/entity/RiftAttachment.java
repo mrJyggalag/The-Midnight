@@ -34,7 +34,7 @@ public class RiftAttachment {
     }
 
     public RiftAttachment fixedToSurface(World world) {
-        BlockPos surfacePos = world.getHeight(this.pos);
+        BlockPos surfacePos = new BlockPos(pos.getX(), world.getChunk(pos).getHeight(pos), pos.getZ());
         return new RiftAttachment(surfacePos, this.yaw);
     }
 

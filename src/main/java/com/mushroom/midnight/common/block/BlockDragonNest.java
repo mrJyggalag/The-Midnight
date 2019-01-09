@@ -1,13 +1,12 @@
 package com.mushroom.midnight.common.block;
 
 import com.mushroom.midnight.client.particle.MidnightParticles;
-import com.mushroom.midnight.common.registry.ModBlocks;
 import com.mushroom.midnight.common.registry.ModEffects;
-import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.potion.PotionEffect;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
@@ -37,8 +36,7 @@ public class BlockDragonNest extends BlockMidnightPlant {
 
     @Override
     public boolean canBlockStay(World world, BlockPos pos, IBlockState state) {
-        Block blockUp = world.getBlockState(pos.up()).getBlock();
-        return blockUp == ModBlocks.SHADOWROOT_LEAVES || blockUp == ModBlocks.DARK_WILLOW_LEAVES;
+        return world.getBlockState(pos.up()).isSideSolid(world, pos.up(), EnumFacing.DOWN);
     }
 
     @Override
