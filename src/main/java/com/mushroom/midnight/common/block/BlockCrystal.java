@@ -76,7 +76,7 @@ public class BlockCrystal extends Block implements IModelProvider {
     @Override
     public void updateTick(World world, BlockPos pos, IBlockState state, Random rand) {
         this.tryBreakBlock(world, pos, state);
-        if (rand.nextFloat() < 0.005f && world.getEntitiesWithinAABB(EntityCrystalBug.class, getBoundingBox(state, world, pos).grow(10d)).size() == 0) {
+        if (rand.nextFloat() < 0.005f && world.getEntitiesWithinAABB(EntityCrystalBug.class, new AxisAlignedBB(pos).grow(6d, 4d, 6d)).size() == 0) {
             EntityCrystalBug crystal_bug;
             try {
                 crystal_bug = new EntityCrystalBug(world);
