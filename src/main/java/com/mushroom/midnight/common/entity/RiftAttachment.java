@@ -3,6 +3,7 @@ package com.mushroom.midnight.common.entity;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 
 public class RiftAttachment {
     private final BlockPos pos;
@@ -30,6 +31,11 @@ public class RiftAttachment {
     public void write(ByteBuf buf) {
         buf.writeLong(this.pos.toLong());
         buf.writeFloat(this.yaw);
+    }
+
+    public RiftAttachment fixedToSurface(World world) {
+        BlockPos surfacePos = world.getHeight(this.pos);
+        return new RiftAttachment(surfacePos, this.yaw);
     }
 
     public void apply(EntityRift rift) {

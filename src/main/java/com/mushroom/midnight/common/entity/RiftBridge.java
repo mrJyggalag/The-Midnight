@@ -102,7 +102,9 @@ public class RiftBridge {
     private void spawnRiftEntity(World world) {
         EntityRift rift = new EntityRift(world);
         rift.acceptBridge(this);
-        this.attachment.apply(rift);
+
+        RiftAttachment surfaceAttachment = this.attachment.fixedToSurface(world);
+        surfaceAttachment.apply(rift);
 
         world.spawnEntity(rift);
     }
