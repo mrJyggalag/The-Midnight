@@ -8,10 +8,12 @@ import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Enchantments;
 import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
@@ -25,6 +27,7 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.items.ItemHandlerHelper;
 
 import javax.annotation.Nullable;
 import java.util.Random;
@@ -65,11 +68,11 @@ public abstract class BlockPileOfEggs extends Block implements IModelProvider {
     protected void onTrample(World world, BlockPos pos, Entity entity, float chance) {
         IBlockState state = world.getBlockState(pos);
         if (!world.isRemote && canTrample(entity) && (chance >= 1f || world.rand.nextFloat() <= chance)) {
-            breakEggs(world, pos, state);
+            breakEggs(world, pos, state, true);
         }
     }
 
-    protected void breakEggs(World world, BlockPos pos, IBlockState state) {
+    protected void breakEggs(World world, BlockPos pos, IBlockState state, boolean summon) {
         world.playSound(null, pos, SoundEvents.BLOCK_SNOW_BREAK, SoundCategory.BLOCKS, 0.7F, 0.9F + world.rand.nextFloat() * 0.2F);
         int eggs = state.getValue(EGGS);
         if (eggs <= 1) {
@@ -78,15 +81,17 @@ public abstract class BlockPileOfEggs extends Block implements IModelProvider {
             world.setBlockState(pos, state.withProperty(EGGS, --eggs), 2);
             world.playEvent(2001, pos, Block.getStateId(state));
         }
-        EntityLiving creature;
-        try {
-            creature = createEntityForEgg(world, pos, state);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return;
+        if (summon) {
+            EntityLiving creature;
+            try {
+                creature = createEntityForEgg(world, pos, state);
+            } catch (Exception e) {
+                e.printStackTrace();
+                return;
+            }
+            creature.setPositionAndRotation(pos.getX() + world.rand.nextFloat(), pos.getY() + 0.45f, pos.getZ() + world.rand.nextFloat(), world.rand.nextFloat() * 360f, 0f);
+            world.spawnEntity(creature);
         }
-        creature.setLocationAndAngles(pos.getX(), pos.getY() + 1, pos.getZ(), world.rand.nextFloat() * 360f, 0f);
-        world.spawnEntity(creature);
     }
 
     @Override
@@ -97,7 +102,11 @@ public abstract class BlockPileOfEggs extends Block implements IModelProvider {
     @Override
     public void harvestBlock(World world, EntityPlayer player, BlockPos pos, IBlockState state, @Nullable TileEntity tile, ItemStack stack) {
         super.harvestBlock(world, player, pos, state, tile, stack);
-        breakEggs(world, pos, state);
+        boolean hasDrop = EnchantmentHelper.getEnchantmentLevel(Enchantments.SILK_TOUCH, stack) > 0 && world.rand.nextFloat() < 0.7f;
+        if (hasDrop) {
+            ItemHandlerHelper.giveItemToPlayer(player, new ItemStack(Item.getItemFromBlock(this), 1));
+        }
+        breakEggs(world, pos, state, !hasDrop);
     }
 
     @Override

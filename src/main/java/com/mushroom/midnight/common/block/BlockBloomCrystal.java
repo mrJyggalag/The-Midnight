@@ -25,7 +25,7 @@ public class BlockBloomCrystal extends BlockCrystal {
                 e.printStackTrace();
                 return;
             }
-            crystal_bug.setLocationAndAngles(pos.getX(), pos.getY() + 1, pos.getZ(), world.rand.nextFloat() * 360f, 0f);
+            crystal_bug.setPositionAndRotation(pos.getX() + 0.5f, pos.getY() + 1f, pos.getZ() + 0.5f, world.rand.nextFloat() * 360f, 0f);
             world.spawnEntity(crystal_bug);
         }
     }

@@ -27,7 +27,7 @@ public class CustomPathNavigateGround extends PathNavigateGround {
              * the check about y is because the tryToMoveXYZ is not able to jump in the case of 2 neighbours fullblock
              */
             private boolean isValidForDiagonal(PathPoint pointStart, @Nullable PathPoint pointEnd) {
-                return pointEnd != null && pointEnd.nodeType == PathNodeType.WALKABLE && pointEnd.costMalus == 0f && pointEnd.y <= pointStart.y;
+                return pointEnd != null && (pointEnd.nodeType == PathNodeType.WALKABLE || pointEnd.nodeType == PathNodeType.OPEN) && pointEnd.costMalus == 0f && pointEnd.y <= pointStart.y;
             }
 
             @Override

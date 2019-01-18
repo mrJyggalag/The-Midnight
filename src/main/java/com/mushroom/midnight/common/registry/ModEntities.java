@@ -8,6 +8,7 @@ import com.mushroom.midnight.common.entity.creature.EntityHunter;
 import com.mushroom.midnight.common.entity.creature.EntityNova;
 import com.mushroom.midnight.common.entity.creature.EntityPenumbrian;
 import com.mushroom.midnight.common.entity.creature.EntityRifter;
+import com.mushroom.midnight.common.entity.creature.EntityStinger;
 import com.mushroom.midnight.common.entity.creature.EntityTreeHopper;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntitySpawnPlacementRegistry;
@@ -84,6 +85,14 @@ public class ModEntities {
                         .factory(EntityTreeHopper::new)
                         .id(new ResourceLocation(Midnight.MODID, "tree_hopper"), currentEntityId++)
                         .name(Midnight.MODID + ".tree_hopper")
+                        .tracker(80, 3, true)
+                        //.egg(0x4B2277, 0xAF27E0)
+                        .build(),
+                EntityEntryBuilder.create()
+                        .entity(EntityStinger.class)
+                        .factory(EntityStinger::new)
+                        .id(new ResourceLocation(Midnight.MODID, "stinger"), currentEntityId++)
+                        .name(Midnight.MODID + ".stinger")
                         .tracker(80, 3, true)
                         //.egg(0x4B2277, 0xAF27E0)
                         .build()

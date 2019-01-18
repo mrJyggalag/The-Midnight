@@ -9,6 +9,7 @@ import com.mushroom.midnight.client.render.RenderNova;
 import com.mushroom.midnight.client.render.RenderPenumbrian;
 import com.mushroom.midnight.client.render.RenderRift;
 import com.mushroom.midnight.client.render.RenderRifter;
+import com.mushroom.midnight.client.render.RenderStinger;
 import com.mushroom.midnight.client.render.RenderTreeHopper;
 import com.mushroom.midnight.common.block.BlockShadowrootChest;
 import com.mushroom.midnight.common.entity.EntityBladeshroomCap;
@@ -18,6 +19,7 @@ import com.mushroom.midnight.common.entity.creature.EntityHunter;
 import com.mushroom.midnight.common.entity.creature.EntityNova;
 import com.mushroom.midnight.common.entity.creature.EntityPenumbrian;
 import com.mushroom.midnight.common.entity.creature.EntityRifter;
+import com.mushroom.midnight.common.entity.creature.EntityStinger;
 import com.mushroom.midnight.common.entity.creature.EntityTreeHopper;
 import com.mushroom.midnight.common.helper.Helper;
 import com.mushroom.midnight.common.registry.ModBlocks;
@@ -73,6 +75,7 @@ public class ModModelRegistry {
         RenderingRegistry.registerEntityRenderingHandler(EntityCrystalBug.class, RenderCrystalBug::new);
         RenderingRegistry.registerEntityRenderingHandler(EntityPenumbrian.class, RenderPenumbrian::new);
         RenderingRegistry.registerEntityRenderingHandler(EntityTreeHopper.class, RenderTreeHopper::new);
+        RenderingRegistry.registerEntityRenderingHandler(EntityStinger.class, RenderStinger::new);
 
         ModItems.getItems().stream().filter(i -> i instanceof IModelProvider).forEach(ModModelRegistry::registerItemModel);
         ModBlocks.getBlocks().stream().filter(b -> b instanceof IModelProvider).forEach(ModModelRegistry::registerBlockModel);

@@ -18,7 +18,7 @@ public class RenderCrystalBug extends RenderLiving<EntityCrystalBug> {
     private static final ResourceLocation TEXTURE = new ResourceLocation(Midnight.MODID, "textures/entities/crystal_bug.png");
 
     public RenderCrystalBug(RenderManager rendermanager) {
-        super(rendermanager, new ModelCrystalBug(), 0.5f);
+        super(rendermanager, new ModelCrystalBug(), 0.2f);
     }
 
     @Nullable

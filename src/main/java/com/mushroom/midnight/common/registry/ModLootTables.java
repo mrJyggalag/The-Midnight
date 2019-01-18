@@ -11,4 +11,5 @@ public class ModLootTables {
     public static final ResourceLocation LOOT_TABLE_CRYSTAL_BUG = new ResourceLocation(MODID, "crystal_bug");
     public static final ResourceLocation LOOT_TABLE_PENUMBRIAN = new ResourceLocation(MODID, "penumbrian");
     public static final ResourceLocation LOOT_TABLE_TREE_HOPPER = new ResourceLocation(MODID, "tree_hopper");
+    public static final ResourceLocation LOOT_TABLE_STINGER = new ResourceLocation(MODID, "stinger");
 }
