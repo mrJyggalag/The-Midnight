@@ -50,6 +50,7 @@ import com.mushroom.midnight.common.block.BlockNightstone;
 import com.mushroom.midnight.common.block.BlockRockshroom;
 import com.mushroom.midnight.common.block.BlockShadowrootChest;
 import com.mushroom.midnight.common.block.BlockShadowrootCraftingTable;
+import com.mushroom.midnight.common.block.BlockStingerEgg;
 import com.mushroom.midnight.common.block.BlockSuavis;
 import com.mushroom.midnight.common.block.BlockTendrilweed;
 import com.mushroom.midnight.common.block.PlantBehaviorType;
@@ -273,6 +274,8 @@ public class ModBlocks {
     public static final Block VIRIDSHROOM_LADDER = Blocks.AIR;
     public static final Block NIGHTSHROOM_LADDER = Blocks.AIR;
 
+    public static final Block STINGER_EGG = Blocks.AIR;
+
     @SubscribeEvent
     public static void registerBlocks(RegistryEvent.Register<Block> event) {
         blocks.addAll(Lists.newArrayList(
@@ -327,7 +330,8 @@ public class ModBlocks {
                 RegUtil.withName(new BlockDeceitfulMud(), "deceitful_mud"),
                 RegUtil.withName(new BlockMidnightDirt(), "deceitful_peat"),
                 RegUtil.withName(new BlockDeceitfulAlgae(), "deceitful_algae"),
-                RegUtil.withName(new BlockDeceitfulMoss(), "deceitful_moss")
+                RegUtil.withName(new BlockDeceitfulMoss(), "deceitful_moss"),
+                RegUtil.withName(new BlockStingerEgg(), "stinger_egg")
         ));
 
         blocks.addAll(Lists.newArrayList(
@@ -525,7 +529,7 @@ public class ModBlocks {
                 SHADOWROOT_FENCE_GATE, DEAD_WOOD_FENCE_GATE, DARK_WILLOW_FENCE_GATE,
                 DEWSHROOM_FENCE_GATE, VIRIDSHROOM_FENCE_GATE, NIGHTSHROOM_FENCE_GATE,
                 SUAVIS, SHADOWROOT_LADDER, DEAD_WOOD_LADDER, DARK_WILLOW_LADDER,
-                DEWSHROOM_LADDER, VIRIDSHROOM_LADDER, NIGHTSHROOM_LADDER
+                DEWSHROOM_LADDER, VIRIDSHROOM_LADDER, NIGHTSHROOM_LADDER, STINGER_EGG
         ));
 
         registry.register(itemBlock(DECEITFUL_ALGAE, ItemDeceitfulAlgae::new));

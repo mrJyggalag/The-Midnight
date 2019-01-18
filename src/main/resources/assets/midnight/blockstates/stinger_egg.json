@@ -1,0 +1,46 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "midnight:empty",
+    "textures": {
+      "all": "midnight:blocks/stinger_egg",
+      "particle": "midnight:blocks/stinger_egg"
+    }
+  },
+  "variants": {
+    "eggs=1": [
+      {"model": "midnight:one_egg"},
+      {"model": "midnight:one_egg", "y": 90},
+      {"model": "midnight:one_egg", "y": 180},
+      {"model": "midnight:one_egg", "y": 270}
+    ],
+    "eggs=2": [
+      {"model": "midnight:two_eggs"},
+      {"model": "midnight:two_eggs", "y": 90},
+      {"model": "midnight:two_eggs", "y": 180},
+      {"model": "midnight:two_eggs", "y": 270}
+    ],
+    "eggs=3": [
+      {"model": "midnight:three_eggs"},
+      {"model": "midnight:three_eggs", "y": 90},
+      {"model": "midnight:three_eggs", "y": 180},
+      {"model": "midnight:three_eggs", "y": 270}
+    ],
+    "eggs=4": [
+      {"model": "midnight:four_eggs"},
+      {"model": "midnight:four_eggs", "y": 90},
+      {"model": "midnight:four_eggs", "y": 180},
+      {"model": "midnight:four_eggs", "y": 270}
+    ],
+    "normal": [{}],
+    "inventory": [
+      {
+        "model": "builtin/generated",
+        "transform": "forge:default-item",
+        "textures": {
+          "layer0": "midnight:items/stinger_egg"
+        }
+      }
+    ]
+  }
+}
