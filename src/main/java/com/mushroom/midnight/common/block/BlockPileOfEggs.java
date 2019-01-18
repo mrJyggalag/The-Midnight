@@ -46,14 +46,14 @@ public abstract class BlockPileOfEggs extends Block implements IModelProvider {
     @Override
     public void onEntityWalk(World world, BlockPos pos, Entity entity) {
         if (canTrample(entity)) {
-            onTrample(world, pos, entity, 10);
+            onTrample(world, pos, entity, 0.1f);
         }
     }
 
     @Override
     public void onFallenUpon(World world, BlockPos pos, Entity entity, float fallDistance) {
         if (canTrample(entity)) {
-            onTrample(world, pos, entity, 100);
+            onTrample(world, pos, entity, 1f);
         }
         super.onFallenUpon(world, pos, entity, fallDistance);
     }
@@ -62,9 +62,9 @@ public abstract class BlockPileOfEggs extends Block implements IModelProvider {
         return true;
     }
 
-    protected void onTrample(World world, BlockPos pos, Entity entity, int chance) {
+    protected void onTrample(World world, BlockPos pos, Entity entity, float chance) {
         IBlockState state = world.getBlockState(pos);
-        if (!world.isRemote && canTrample(entity) && (chance == 100 || world.rand.nextInt(chance) == 0)) {
+        if (!world.isRemote && canTrample(entity) && (chance >= 1f || world.rand.nextFloat() <= chance)) {
             breakEggs(world, pos, state);
         }
     }
