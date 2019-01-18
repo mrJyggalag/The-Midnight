@@ -5,10 +5,13 @@ import com.mushroom.midnight.client.IModelProvider;
 import net.minecraft.block.BlockMagma;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.pathfinding.PathNodeType;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+
+import javax.annotation.Nullable;
 
 public class BlockMiasmaSurface extends BlockMagma implements IModelProvider {
     public BlockMiasmaSurface() {
@@ -25,5 +28,11 @@ public class BlockMiasmaSurface extends BlockMagma implements IModelProvider {
     @Override
     public boolean isFireSource(World world, BlockPos pos, EnumFacing side) {
         return side == EnumFacing.UP;
+    }
+
+    @Override
+    @Nullable
+    public PathNodeType getAiPathNodeType(IBlockState state, IBlockAccess world, BlockPos pos) {
+        return PathNodeType.DAMAGE_FIRE;
     }
 }
