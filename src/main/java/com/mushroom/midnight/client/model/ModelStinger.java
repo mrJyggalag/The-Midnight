@@ -3,36 +3,37 @@ package com.mushroom.midnight.client.model;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
+import net.minecraft.util.math.MathHelper;
 
 public class ModelStinger extends ModelBase {
-    public ModelRenderer stingerLeg5;
-    public ModelRenderer stingerLeg6;
-    public ModelRenderer stingerLeg7;
-    public ModelRenderer stingerLeg8;
-    public ModelRenderer stingerLeg1;
-    public ModelRenderer stingerLeg2;
-    public ModelRenderer stingerLeg3;
-    public ModelRenderer stingerLeg4;
-    public ModelRenderer stingerHead;
-    public ModelRenderer stingerBody;
-    public ModelRenderer bodyEnd;
-    public ModelRenderer stingerBody2;
-    public ModelRenderer bodyTail1;
-    public ModelRenderer bodyTail2;
-    public ModelRenderer bodyTail3;
-    public ModelRenderer bodyTail4;
-    public ModelRenderer armRight;
-    public ModelRenderer armLeft;
-    public ModelRenderer PincerRightBack;
-    public ModelRenderer PincerRightInt;
-    public ModelRenderer PincerRightExt;
-    public ModelRenderer PincerRightInt2;
-    public ModelRenderer PincerExt2;
-    public ModelRenderer PincerLeftBack;
-    public ModelRenderer PincerRightInt_1;
-    public ModelRenderer PincerRightExt_1;
-    public ModelRenderer PincerRightInt2_1;
-    public ModelRenderer PincerExt2_1;
+    private ModelRenderer stingerLeg5;
+    private ModelRenderer stingerLeg6;
+    private ModelRenderer stingerLeg7;
+    private ModelRenderer stingerLeg8;
+    private ModelRenderer stingerLeg1;
+    private ModelRenderer stingerLeg2;
+    private ModelRenderer stingerLeg3;
+    private ModelRenderer stingerLeg4;
+    private ModelRenderer stingerHead;
+    private ModelRenderer stingerBody;
+    private ModelRenderer bodyEnd;
+    private ModelRenderer stingerBody2;
+    private ModelRenderer bodyTail1;
+    private ModelRenderer bodyTail2;
+    private ModelRenderer bodyTail3;
+    private ModelRenderer bodyTail4;
+    private ModelRenderer armRight;
+    private ModelRenderer armLeft;
+    private ModelRenderer PincerRightBack;
+    private ModelRenderer PincerRightInt;
+    private ModelRenderer PincerRightExt;
+    private ModelRenderer PincerRightInt2;
+    private ModelRenderer PincerExt2;
+    private ModelRenderer PincerLeftBack;
+    private ModelRenderer PincerRightInt_1;
+    private ModelRenderer PincerRightExt_1;
+    private ModelRenderer PincerRightInt2_1;
+    private ModelRenderer PincerExt2_1;
 
     public ModelStinger() {
         this.textureWidth = 64;
@@ -172,7 +173,46 @@ public class ModelStinger extends ModelBase {
         this.stingerLeg2.render(f5);
     }
 
-    public void setRotateAngle(ModelRenderer modelRenderer, float x, float y, float z) {
+    @Override
+    public void setRotationAngles(float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scaleFactor, Entity entityIn) {
+        this.stingerHead.rotateAngleY = netHeadYaw * 0.017453292F;
+        this.stingerHead.rotateAngleX = headPitch * 0.017453292F;
+        float piOn4 = (float)(Math.PI / 4f);
+
+        this.stingerLeg1.rotateAngleZ = this.stingerLeg7.rotateAngleZ = this.stingerLeg2.rotateAngleY = this.stingerLeg7.rotateAngleY = -piOn4;
+        this.stingerLeg2.rotateAngleZ = this.stingerLeg8.rotateAngleZ = this.stingerLeg1.rotateAngleY = this.stingerLeg8.rotateAngleY = piOn4;
+        this.stingerLeg3.rotateAngleZ = this.stingerLeg5.rotateAngleZ = -0.58119464F;
+        this.stingerLeg4.rotateAngleZ = this.stingerLeg6.rotateAngleZ = 0.58119464F;
+        this.stingerLeg3.rotateAngleY = this.stingerLeg6.rotateAngleY = 0.3926991F;
+        this.stingerLeg4.rotateAngleY = this.stingerLeg5.rotateAngleY = -0.3926991F;
+
+        float f3 = -(MathHelper.cos(limbSwing * 0.6662F * 2.0F + 0.0F) * 0.4F) * limbSwingAmount;
+        float f4 = -(MathHelper.cos(limbSwing * 0.6662F * 2.0F + (float) Math.PI) * 0.4F) * limbSwingAmount;
+        float f5 = -(MathHelper.cos(limbSwing * 0.6662F * 2.0F + ((float) Math.PI / 2F)) * 0.4F) * limbSwingAmount;
+        float f6 = -(MathHelper.cos(limbSwing * 0.6662F * 2.0F + ((float) Math.PI * 3F / 2F)) * 0.4F) * limbSwingAmount;
+        float f7 = Math.abs(MathHelper.sin(limbSwing * 0.6662F + 0.0F) * 0.4F) * limbSwingAmount;
+        float f8 = Math.abs(MathHelper.sin(limbSwing * 0.6662F + (float) Math.PI) * 0.4F) * limbSwingAmount;
+        float f9 = Math.abs(MathHelper.sin(limbSwing * 0.6662F + ((float) Math.PI / 2F)) * 0.4F) * limbSwingAmount;
+        float f10 = Math.abs(MathHelper.sin(limbSwing * 0.6662F + ((float) Math.PI * 3F / 2F)) * 0.4F) * limbSwingAmount;
+        this.stingerLeg1.rotateAngleY += f3;
+        this.stingerLeg2.rotateAngleY += -f3;
+        this.stingerLeg3.rotateAngleY += f4;
+        this.stingerLeg4.rotateAngleY += -f4;
+        this.stingerLeg5.rotateAngleY += f5;
+        this.stingerLeg6.rotateAngleY += -f5;
+        this.stingerLeg7.rotateAngleY += f6;
+        this.stingerLeg8.rotateAngleY += -f6;
+        this.stingerLeg1.rotateAngleZ += f7;
+        this.stingerLeg2.rotateAngleZ += -f7;
+        this.stingerLeg3.rotateAngleZ += f8;
+        this.stingerLeg4.rotateAngleZ += -f8;
+        this.stingerLeg5.rotateAngleZ += f9;
+        this.stingerLeg6.rotateAngleZ += -f9;
+        this.stingerLeg7.rotateAngleZ += f10;
+        this.stingerLeg8.rotateAngleZ += -f10;
+    }
+
+    private void setRotateAngle(ModelRenderer modelRenderer, float x, float y, float z) {
         modelRenderer.rotateAngleX = x;
         modelRenderer.rotateAngleY = y;
         modelRenderer.rotateAngleZ = z;

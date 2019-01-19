@@ -38,6 +38,11 @@ public class RenderCrystalBug extends RenderLiving<EntityCrystalBug> {
     }
 
     @Override
+    protected float getDeathMaxRotation(EntityCrystalBug entity) {
+        return 180f;
+    }
+
+    @Override
     public void setLightmap(EntityCrystalBug entityLivingIn) {
         OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 240f, 240f);
     }

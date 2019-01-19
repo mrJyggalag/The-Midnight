@@ -27,4 +27,9 @@ public class RenderStinger extends RenderLiving<EntityStinger> {
     protected void preRenderCallback(EntityStinger entity, float partialTicks) {
         GlStateManager.scale(0.2f, 0.2f, 0.2f);
     }
+
+    @Override
+    protected float getDeathMaxRotation(EntityStinger entity) {
+        return 180f;
+    }
 }
