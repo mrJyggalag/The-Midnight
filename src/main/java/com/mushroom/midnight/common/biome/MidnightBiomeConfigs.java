@@ -13,6 +13,7 @@ import com.mushroom.midnight.common.world.feature.DoubleFungiFeature;
 import com.mushroom.midnight.common.world.feature.DoublePlantFeature;
 import com.mushroom.midnight.common.world.feature.FungiFeature;
 import com.mushroom.midnight.common.world.feature.GourdFeature;
+import com.mushroom.midnight.common.world.feature.HeapFeature;
 import com.mushroom.midnight.common.world.feature.IMidnightFeature;
 import com.mushroom.midnight.common.world.feature.LargeFungiFeature;
 import com.mushroom.midnight.common.world.feature.MossFeature;
@@ -145,6 +146,8 @@ public class MidnightBiomeConfigs {
         }
     };
 
+    public static final IMidnightFeature ROCKSHROOM_HEAP_FEATURE = new HeapFeature(ModBlocks.ROCKSHROOM.getDefaultState());
+
     public static final SurfaceConfig ROCKY_SURFACE_CONFIG = new SurfaceConfig()
             .withTopState(ModBlocks.NIGHTSTONE.getDefaultState())
             .withFillerState(ModBlocks.NIGHTSTONE.getDefaultState())
@@ -158,6 +161,7 @@ public class MidnightBiomeConfigs {
             .withFeature(FUNGI_FEATURE, new ScatterPlacementConfig(1, 16))
             .withFeature(GHOST_PLANT_FEATURE, new ParcelPlacementConfig(3, 6, 0.3f))
             .withFeature(TENDRILWEED_FEATURE, new UndergroundPlacementConfig(1, 10, 50))
+            .withFeature(ROCKSHROOM_HEAP_FEATURE, new SurfacePlacementConfig(-99, 1))
             .build();
 
     public static final MidnightBiomeConfig ROCKY_CONFIG = MidnightBiomeConfig.builder()
@@ -167,6 +171,7 @@ public class MidnightBiomeConfigs {
             .withFeature(TRENCHSTONE_BOULDER_FEATURE, new SurfacePlacementConfig(-3, 1))
             .withFeature(GHOST_PLANT_FEATURE, new ParcelPlacementConfig(3, 6, 0.3f))
             .withFeature(TENDRILWEED_FEATURE, new UndergroundPlacementConfig(1, 10, 50))
+            .withFeature(ROCKSHROOM_HEAP_FEATURE, new SurfacePlacementConfig(-99, 1))
             .withSurface(ROCKY_SURFACE_CONFIG)
             .withMonster(new Biome.SpawnListEntry(EntityHunter.class, 1, 0, 2))
             .build();
@@ -191,6 +196,7 @@ public class MidnightBiomeConfigs {
             .build();
 
     public static final MidnightBiomeConfig FUNGI_FOREST_CONFIG = MidnightBiomeConfig.builder(VEGETATED_CONFIG)
+            .withFeature(ROCKSHROOM_HEAP_FEATURE, new SurfacePlacementConfig(1, 3))
             .withFeature(LARGE_FUNGI_FEATURES, new SurfacePlacementConfig(6))
             .withFeature(FUNGI_FEATURE, new ScatterPlacementConfig(6, 16))
             .withFeature(DOUBLE_FUNGI_FEATURE, new ScatterPlacementConfig(4, 8))
@@ -208,6 +214,7 @@ public class MidnightBiomeConfigs {
             .withFeature(CRYSTAL_FLOWER_FEATURE, new ScatterPlacementConfig(5, 12))
             .withFeature(GHOST_PLANT_FEATURE, new ParcelPlacementConfig(3, 6, 0.3f))
             .withFeature(TENDRILWEED_FEATURE, new UndergroundPlacementConfig(1, 10, 50))
+            .withFeature(ROCKSHROOM_HEAP_FEATURE, new SurfacePlacementConfig(-99, 1))
             .withGrassColor(0xBAA3C6)
             .build();
 
@@ -234,6 +241,7 @@ public class MidnightBiomeConfigs {
             .withFeature(DECEITFUL_ALGAE_FEATURE, new ScatterPlacementConfig(10, 20))
             .withFeature(GHOST_PLANT_FEATURE, new ParcelPlacementConfig(3, 6, 0.3f))
             .withFeature(TENDRILWEED_FEATURE, new UndergroundPlacementConfig(1, 10, 50))
+            .withFeature(ROCKSHROOM_HEAP_FEATURE, new SurfacePlacementConfig(-99, 1))
             .withGrassColor(0x8893AD)
             .withRidgeWeight(0.0F)
             .wet()
@@ -259,6 +267,7 @@ public class MidnightBiomeConfigs {
                     NIGHTSTONE_BOULDER_FEATURE,
                     NIGHTSTONE_SPIKE_FEATURE
             }, new SurfacePlacementConfig(-3, 1))
+            .withFeature(ROCKSHROOM_HEAP_FEATURE, new SurfacePlacementConfig(-99, 1))
             .withMonster(new Biome.SpawnListEntry(EntityHunter.class, 1, 0, 2))
             .withRidgeWeight(0.0F)
             .withGrassColor(0xBAA3C6)
@@ -271,6 +280,7 @@ public class MidnightBiomeConfigs {
     public static final MidnightBiomeConfig PHANTASMAL_VALLEY_CONFIG = MidnightBiomeConfig.builder()
             .withFeature(GHOST_PLANT_FEATURE, new ParcelPlacementConfig(3, 6, 0.3f))
             .withFeature(TENDRILWEED_FEATURE, new UndergroundPlacementConfig(1, 10, 50))
+            .withFeature(ROCKSHROOM_HEAP_FEATURE, new SurfacePlacementConfig(-99, 1))
             .withMonster(new Biome.SpawnListEntry(EntityHunter.class, 1, 0, 2))
             .withRidgeWeight(0.0F)
             .wet()
