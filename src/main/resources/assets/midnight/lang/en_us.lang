@@ -332,11 +332,8 @@ death.midnight.deceitful_snapper=%s was chomped up
 
 # Advancements
 
-advancement.midnight.title=The Midnight
-advancement.midnight.desc=Advancements for the Midnight Dimension
-
-advancement.into_darkness.title=Into Darkness
-advancement.into_darkness.desc=Enter the Midnight dimension
+advancement.midnight.title=Into Darkness
+advancement.midnight.desc=Enter the Midnight dimension
 
 advancement.inebriated.title=Inebriated
 advancement.inebriated.desc=Break a Suavis plant

@@ -13,7 +13,7 @@
     "show_toast": true,
     "announce_to_chat": true
   },
-  "parent": "midnight:midnight/into_darkness",
+  "parent": "midnight:midnight/root",
   "criteria": {
     "entered_biome": {
       "trigger": "minecraft:location",

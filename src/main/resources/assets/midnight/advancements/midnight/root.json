@@ -10,13 +10,16 @@
       "translate": "advancement.midnight.desc"
     },
     "background": "midnight:textures/blocks/nightstone.png",
-    "show_toast": false,
-    "announce_to_chat": false,
+    "show_toast": true,
+    "announce_to_chat": true,
     "frame": "task"
   },
   "criteria": {
-    "auto": {
-      "trigger": "location"
+    "enter_midnight": {
+      "trigger": "minecraft:changed_dimension",
+      "conditions": {
+        "to": "midnight"
+      }
     }
   }
 }

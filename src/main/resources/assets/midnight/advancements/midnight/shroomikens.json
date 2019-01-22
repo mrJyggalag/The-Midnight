@@ -13,7 +13,7 @@
     "show_toast": true,
     "announce_to_chat": true
   },
-  "parent": "midnight:midnight/fungi_forest",
+  "parent": "midnight:midnight/root",
   "criteria": {
     "thrown_cap": {
       "trigger": "midnight:thrown_bladeshroom"

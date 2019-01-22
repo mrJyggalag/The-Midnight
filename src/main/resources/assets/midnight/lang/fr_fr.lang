@@ -332,11 +332,8 @@ death.midnight.deceitful_snapper=%s a été dévoré
 
 # Advancements
 
-advancement.midnight.title=Le Minuit
-advancement.midnight.desc=Progrès pour la dimension de Minuit
-
-advancement.into_darkness.title=Dans l'obscurité
-advancement.into_darkness.desc=Entre dans la dimension Minuit
+advancement.midnight.title=Dans l'obscurité
+advancement.midnight.desc=Entre dans la dimension Minuit
 
 advancement.inebriated.title=Imbriqué
 advancement.inebriated.desc=Casse une plante de Suavis
