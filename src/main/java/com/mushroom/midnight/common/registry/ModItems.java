@@ -97,7 +97,7 @@ public class ModItems {
     public static final Item TENEBRUM_CHESTPLATE = Items.AIR;
     public static final Item TENEBRUM_LEGGINGS = Items.AIR;
     public static final Item TENEBRUM_BOOTS = Items.AIR;
-    
+
     public static final Item ADVANCEMENT_SNAPPER = Items.AIR;
 
     static List<Item> items;
@@ -152,10 +152,10 @@ public class ModItems {
                 RegUtil.withName(new ItemMidnightSword(ModToolMaterials.EBONYS), "ebonys_sword"),
                 RegUtil.withName(new ItemMidnightSword(ModToolMaterials.NAGRILITE), "nagrilite_sword"),
                 RegUtil.withName(new ItemMidnightSword(ModToolMaterials.TENEBRUM), "tenebrum_sword"),
-                RegUtil.withName(new ItemMidnightHelmet(ModArmorMaterials.ROCKSHROOM).setCreativeTab(null), "rockshroom_helmet"),
-                RegUtil.withName(new ItemMidnightChestplate(ModArmorMaterials.ROCKSHROOM).setCreativeTab(null), "rockshroom_chestplate"),
-                RegUtil.withName(new ItemMidnightLeggings(ModArmorMaterials.ROCKSHROOM).setCreativeTab(null), "rockshroom_leggings"),
-                RegUtil.withName(new ItemMidnightBoots(ModArmorMaterials.ROCKSHROOM).setCreativeTab(null), "rockshroom_boots"),
+                RegUtil.withName(new ItemMidnightHelmet(ModArmorMaterials.ROCKSHROOM), "rockshroom_helmet"),
+                RegUtil.withName(new ItemMidnightChestplate(ModArmorMaterials.ROCKSHROOM), "rockshroom_chestplate"),
+                RegUtil.withName(new ItemMidnightLeggings(ModArmorMaterials.ROCKSHROOM), "rockshroom_leggings"),
+                RegUtil.withName(new ItemMidnightBoots(ModArmorMaterials.ROCKSHROOM), "rockshroom_boots"),
                 RegUtil.withName(new ItemMidnightHelmet(ModArmorMaterials.TENEBRUM), "tenebrum_helmet"),
                 RegUtil.withName(new ItemMidnightChestplate(ModArmorMaterials.TENEBRUM), "tenebrum_chestplate"),
                 RegUtil.withName(new ItemMidnightLeggings(ModArmorMaterials.TENEBRUM), "tenebrum_leggings"),
