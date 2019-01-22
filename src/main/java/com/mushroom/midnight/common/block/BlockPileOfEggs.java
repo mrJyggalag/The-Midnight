@@ -11,7 +11,6 @@ import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
@@ -35,7 +34,7 @@ import java.util.Random;
 public abstract class BlockPileOfEggs extends Block implements IModelProvider {
     protected static final AxisAlignedBB bound_one_egg = new AxisAlignedBB(0.1875d, 0d, 0.1875d, 0.75d, 0.4375d, 0.75d);
     protected static final AxisAlignedBB bound_several_eggs = new AxisAlignedBB(0.0625d, 0d, 0.0625d, 0.9375d, 0.4375d, 0.9375d);
-    protected static final PropertyInteger EGGS = PropertyInteger.create("eggs", 1, 4);
+    public static final PropertyInteger EGGS = PropertyInteger.create("eggs", 1, 4);
 
     protected BlockPileOfEggs() {
         super(Material.ROCK);
@@ -44,6 +43,22 @@ public abstract class BlockPileOfEggs extends Block implements IModelProvider {
     }
 
     protected abstract EntityLiving createEntityForEgg(World world, BlockPos pos, IBlockState state);
+
+    @Override
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+        if (player != null && !player.world.isRemote) {
+            ItemStack stack = player.getHeldItem(hand);
+            if (stack.getItem() == Item.getItemFromBlock(this) && state.getValue(EGGS) < 4 && !player.getCooldownTracker().hasCooldown(stack.getItem())) {
+                player.getCooldownTracker().setCooldown(stack.getItem(), 10);
+                if (!player.isCreative()) {
+                    stack.shrink(1);
+                }
+                world.setBlockState(pos, state.withProperty(EGGS, state.getValue(EGGS) + 1));
+                return true;
+            }
+        }
+        return false;
+    }
 
     @Override
     public void onEntityWalk(World world, BlockPos pos, Entity entity) {
@@ -111,11 +126,6 @@ public abstract class BlockPileOfEggs extends Block implements IModelProvider {
     @Override
     public boolean isReplaceable(IBlockAccess world, BlockPos pos) {
         return false;
-    }
-
-    @Override
-    public IBlockState getStateForPlacement(World world, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer, EnumHand hand) {
-        return getDefaultState().withProperty(EGGS, world.rand.nextInt(4) + 1);
     }
 
     @Override

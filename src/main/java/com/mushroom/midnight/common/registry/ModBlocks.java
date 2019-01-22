@@ -535,7 +535,7 @@ public class ModBlocks {
                 SHADOWROOT_FENCE_GATE, DEAD_WOOD_FENCE_GATE, DARK_WILLOW_FENCE_GATE,
                 DEWSHROOM_FENCE_GATE, VIRIDSHROOM_FENCE_GATE, NIGHTSHROOM_FENCE_GATE,
                 SUAVIS, SHADOWROOT_LADDER, DEAD_WOOD_LADDER, DARK_WILLOW_LADDER,
-                DEWSHROOM_LADDER, VIRIDSHROOM_LADDER, NIGHTSHROOM_LADDER
+                DEWSHROOM_LADDER, VIRIDSHROOM_LADDER, NIGHTSHROOM_LADDER, STINGER_EGG
         ));
 
         registry.register(itemBlock(DECEITFUL_ALGAE, ItemDeceitfulAlgae::new));
@@ -551,12 +551,6 @@ public class ModBlocks {
         registry.register(itemBlock(VIRIDSHROOM_SLAB, b -> new ItemMidnightSlab(b, VIRIDSHROOM_DOUBLE_SLAB)));
         registry.register(itemBlock(NIGHTSHROOM_SLAB, b -> new ItemMidnightSlab(b, NIGHTSHROOM_DOUBLE_SLAB)));
         registry.register(itemBlock(ROCKSHROOM_BRICKS_SLAB, b -> new ItemMidnightSlab(b, ROCKSHROOM_BRICKS_DOUBLE_SLAB)));
-        registry.register(new ItemBlock(STINGER_EGG) {
-            @Override
-            public EnumActionResult onItemUse(EntityPlayer player, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-                return player.isCreative() ? super.onItemUse(player, worldIn, pos, hand, facing, hitX, hitY, hitZ) : EnumActionResult.FAIL;
-            }
-        }.setRegistryName(STINGER_EGG.getRegistryName()));
     }
 
     public static void onInit() {
