@@ -3,6 +3,7 @@ package com.mushroom.midnight.client.render;
 import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.client.model.ModelNova;
 import com.mushroom.midnight.common.entity.creature.EntityNova;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.util.ResourceLocation;
@@ -23,5 +24,10 @@ public class RenderNova extends RenderLiving<EntityNova> {
     @Override
     protected ResourceLocation getEntityTexture(EntityNova entity) {
         return TEXTURE;
+    }
+
+    @Override
+    protected void preRenderCallback(EntityNova entity, float partialTicks) {
+        GlStateManager.translate(0f, -0.4f, 0f);
     }
 }
