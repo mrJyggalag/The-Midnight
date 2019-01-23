@@ -2,6 +2,7 @@ package com.mushroom.midnight.common.biome;
 
 import com.mushroom.midnight.common.block.BlockBladeshroom;
 import com.mushroom.midnight.common.block.BlockPileOfEggs;
+import com.mushroom.midnight.common.entity.creature.EntityCrystalBug;
 import com.mushroom.midnight.common.entity.creature.EntityHunter;
 import com.mushroom.midnight.common.entity.creature.EntityRifter;
 import com.mushroom.midnight.common.registry.ModBlocks;
@@ -226,7 +227,9 @@ public class MidnightBiomeConfigs {
             .withFeature(CRYSTAL_FLOWER_FEATURE, new ScatterPlacementConfig(5, 12))
             .withFeature(GHOST_PLANT_FEATURE, new ParcelPlacementConfig(3, 6, 0.3f))
             .withFeature(UNDERGROUND_FEATURES, new UndergroundPlacementConfig(1, 3, 10, 50))
-            .withGrassColor(0xBAA3C6)
+            // TODO add the ambient & aquatic creatures
+            .withCreature(new Biome.SpawnListEntry(EntityCrystalBug.class, 1, 5, 10))
+            .withGrassColor(0xD184BC)
             .build();
 
     public static final MidnightBiomeConfig WARPED_FIELDS_CONFIG = MidnightBiomeConfig.builder(VEGETATED_CONFIG)
