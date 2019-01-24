@@ -4,6 +4,7 @@ import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.client.IModelProvider;
 import com.mushroom.midnight.common.entity.creature.EntityStinger;
 import net.minecraft.block.Block;
+import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.BlockFaceShape;
@@ -46,16 +47,21 @@ public abstract class BlockPileOfEggs extends Block implements IModelProvider {
 
     @Override
     public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-        if (player != null && !player.world.isRemote) {
-            ItemStack stack = player.getHeldItem(hand);
-            if (stack.getItem() == Item.getItemFromBlock(this) && state.getValue(EGGS) < 4 && !player.getCooldownTracker().hasCooldown(stack.getItem())) {
+        if (player == null) { return false; }
+        ItemStack stack = player.getHeldItem(hand);
+        if (stack.getItem() == Item.getItemFromBlock(this)) {
+            if (state.getValue(EGGS) < 4 && !player.getCooldownTracker().hasCooldown(stack.getItem())) {
                 player.getCooldownTracker().setCooldown(stack.getItem(), 10);
-                if (!player.isCreative()) {
-                    stack.shrink(1);
+                if (!player.world.isRemote) {
+                    if (!player.isCreative()) {
+                        stack.shrink(1);
+                    }
+                    world.setBlockState(pos, state.withProperty(EGGS, state.getValue(EGGS) + 1));
+                    SoundType soundType = getSoundType(state, world, pos, player);
+                    world.playSound(player, pos, soundType.getPlaceSound(), SoundCategory.BLOCKS, (soundType.getVolume() + 1f) / 2f, soundType.getPitch() * 0.8f);
                 }
-                world.setBlockState(pos, state.withProperty(EGGS, state.getValue(EGGS) + 1));
-                return true;
             }
+            return true;
         }
         return false;
     }
@@ -92,7 +98,7 @@ public abstract class BlockPileOfEggs extends Block implements IModelProvider {
             world.destroyBlock(pos, false);
         } else {
             world.setBlockState(pos, state.withProperty(EGGS, --eggs), 2);
-            world.playEvent(2001, pos, Block.getStateId(state));
+            world.playEvent(2001, pos, getStateId(state));
         }
         if (world.getDifficulty() != EnumDifficulty.PEACEFUL) {
             EntityLiving creature;
@@ -160,7 +166,7 @@ public abstract class BlockPileOfEggs extends Block implements IModelProvider {
 
     @Override
     public IBlockState getStateFromMeta(int meta) {
-        return getDefaultState().withProperty(EGGS, meta + 1);
+        return getDefaultState().withProperty(EGGS, (meta & 3) + 1);
     }
 
     @Override
