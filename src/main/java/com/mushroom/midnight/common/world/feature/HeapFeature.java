@@ -10,7 +10,6 @@ import java.util.Random;
 
 public class HeapFeature extends MidnightAbstractFeature {
     private final IBlockState state;
-    private int rangeXZ = 1, rangeY = 1;
 
     public HeapFeature(IBlockState state) {
         this.state = state;
@@ -23,17 +22,12 @@ public class HeapFeature extends MidnightAbstractFeature {
         if (belowBlock.isLeaves(belowState, world, origin.down()) || belowBlock == ModBlocks.NIGHTSHROOM_HAT || belowBlock == ModBlocks.DEWSHROOM_HAT || belowBlock == ModBlocks.VIRIDSHROOM_HAT || belowBlock == ModBlocks.TRENCHSTONE) {
             return false;
         }
+        int rangeXZ = 1, rangeY = 1;
         for (BlockPos pos : BlockPos.getAllInBox(origin.add(-rangeXZ, -rangeY, -rangeXZ), origin.add(rangeXZ, rangeY, rangeXZ))) {
-            if (random.nextFloat() < 0.35f) {
+            if ((pos.getX() == origin.getX() && pos.getZ() == origin.getZ()) || random.nextFloat() < 0.5f) {
                 setBlockAndNotifyAdequately(world, pos, state);
             }
         }
         return true;
-    }
-
-    public HeapFeature withRange(int rangeXZ, int rangeY) {
-        this.rangeXZ = rangeXZ;
-        this.rangeY = rangeY;
-        return this;
     }
 }

@@ -41,6 +41,11 @@ public class EntityCrystalBug extends EntityAmbientCreature {
     }
 
     @Override
+    public int getMaxSpawnedInChunk() {
+        return 10;
+    }
+
+    @Override
     @Nullable
     public SoundEvent getAmbientSound() {
         // TODO ambient sound

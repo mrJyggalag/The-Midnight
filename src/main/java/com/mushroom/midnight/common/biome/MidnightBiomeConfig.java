@@ -103,7 +103,12 @@ public class MidnightBiomeConfig {
             this.surfaceConfig = config.surfaceConfig;
             this.ridgeWeight = config.ridgeWeight;
             this.densityScale = config.densityScale;
+            this.wet = config.wet;
+            this.grassColor = config.grassColor;
+            this.foliageColor = config.foliageColor;
             this.features.addAll(config.features);
+            this.monsterSpawns.addAll(config.monsterSpawns);
+            this.creatureSpawns.addAll(config.creatureSpawns);
         }
 
         public Builder withFeature(IMidnightFeature feature, IPlacementConfig config) {
