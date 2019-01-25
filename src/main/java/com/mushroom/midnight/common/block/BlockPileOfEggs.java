@@ -75,10 +75,10 @@ public abstract class BlockPileOfEggs extends Block implements IModelProvider {
 
     @Override
     public void onFallenUpon(World world, BlockPos pos, Entity entity, float fallDistance) {
+        super.onFallenUpon(world, pos, entity, fallDistance);
         if (canTrample(entity)) {
             onTrample(world, pos, entity, 1f);
         }
-        super.onFallenUpon(world, pos, entity, fallDistance);
     }
 
     protected boolean canTrample(Entity entity) {

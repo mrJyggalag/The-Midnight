@@ -67,6 +67,7 @@ public class BlockSuavis extends Block implements IModelProvider, IGrowable {
 
     @Override
     public void onFallenUpon(World world, BlockPos pos, Entity entity, float fallDistance) {
+        super.onFallenUpon(world, pos, entity, fallDistance);
         if (!world.isRemote) {
             IBlockState state = world.getBlockState(pos);
             world.playSound(null, pos, SoundEvents.BLOCK_SLIME_BREAK, SoundCategory.BLOCKS, 0.7F, 0.9F + world.rand.nextFloat() * 0.2F);
@@ -77,11 +78,10 @@ public class BlockSuavis extends Block implements IModelProvider, IGrowable {
                 world.setBlockState(pos, state.withProperty(STAGE, state.getValue(STAGE) - 1), 2);
                 world.playEvent(2001, pos, getStateId(state));
                 if (!(entity instanceof EntityPlayer) || !((EntityPlayer) entity).isCreative()) {
-                    createNauseaCloud(world, pos);
+                    createNauseaCloud(world, pos, 0);
                 }
             }
         }
-        super.onFallenUpon(world, pos, entity, fallDistance);
     }
 
     @Override
@@ -138,7 +138,7 @@ public class BlockSuavis extends Block implements IModelProvider, IGrowable {
         harvesters.set(null);
     }
 
-    public static void createNauseaCloud(World world, BlockPos pos) {
+    public static void createNauseaCloud(World world, BlockPos pos, int intensity) {
         EntityAreaEffectCloud entity = new EntityAreaEffectCloud(world, pos.getX(), pos.getY(), pos.getZ());
         entity.setRadius(3.0F);
         entity.setRadiusOnUse(-0.5F);
@@ -146,7 +146,7 @@ public class BlockSuavis extends Block implements IModelProvider, IGrowable {
         entity.setRadiusPerTick(-entity.getRadius() / (float) entity.getDuration());
         entity.setPotion(PotionTypes.EMPTY);
         entity.setColor(0x355796);
-        entity.addEffect(new PotionEffect(MobEffects.NAUSEA, 20 * 30, 0, false, true));
+        entity.addEffect(new PotionEffect(MobEffects.NAUSEA, 20 * (intensity + 1) * 6, 0, false, true));
         world.spawnEntity(entity);
     }
 
@@ -186,13 +186,10 @@ public class BlockSuavis extends Block implements IModelProvider, IGrowable {
     }
 
     @Override
-    public void getDrops(net.minecraft.util.NonNullList<ItemStack> drops, IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
-        super.getDrops(drops, world, pos, state, fortune);
-        int stage = state.getValue(STAGE);
-        int maxSlice = stage + 1;
-        int minSlice = Math.max(1 + fortune, maxSlice);
-        Random random = world instanceof World ? ((World) world).rand : RANDOM;
-        drops.add(new ItemStack(ModItems.RAW_SUAVIS, random.nextInt(maxSlice - minSlice + 1) + minSlice));
+    public int quantityDropped(IBlockState state, int fortune, Random random) {
+        int maxSlice = state.getValue(STAGE) + 1;
+        int minSlice = Math.min(1 + fortune, maxSlice);
+        return random.nextInt(maxSlice - minSlice + 1) + minSlice;
     }
 
     @Override

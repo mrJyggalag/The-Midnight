@@ -138,7 +138,7 @@ public class CommonEventHandler {
     @SubscribeEvent
     public static void onHarvestSuavis(BlockEvent.HarvestDropsEvent event) {
         if (event.getState().getBlock() == ModBlocks.SUAVIS && (event.getHarvester() == null || (!event.isSilkTouching() && !event.getHarvester().isCreative()))) {
-            BlockSuavis.createNauseaCloud(event.getWorld(), event.getPos());
+            BlockSuavis.createNauseaCloud(event.getWorld(), event.getPos(), event.getState().getValue(BlockSuavis.STAGE));
             if (event.getHarvester() != null) {
                 ModCriterion.HARVESTED_SUAVIS.trigger((EntityPlayerMP) event.getHarvester());
             }
