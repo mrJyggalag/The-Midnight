@@ -1,15 +1,12 @@
 package com.mushroom.midnight.common;
 
 import com.mushroom.midnight.Midnight;
-import com.mushroom.midnight.common.block.BlockSuavis;
 import com.mushroom.midnight.common.capability.RiftCooldownCapability;
 import com.mushroom.midnight.common.capability.RifterCapturedCapability;
 import com.mushroom.midnight.common.config.MidnightConfig;
 import com.mushroom.midnight.common.entity.EntityRift;
 import com.mushroom.midnight.common.event.RifterCaptureEvent;
 import com.mushroom.midnight.common.event.RifterReleaseEvent;
-import com.mushroom.midnight.common.registry.ModBlocks;
-import com.mushroom.midnight.common.registry.ModCriterion;
 import com.mushroom.midnight.common.registry.ModDimensions;
 import com.mushroom.midnight.common.registry.ModEffects;
 import com.mushroom.midnight.common.world.GlobalBridgeManager;
@@ -17,7 +14,6 @@ import com.mushroom.midnight.common.world.RiftSpawnHandler;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -30,7 +26,6 @@ import net.minecraftforge.event.entity.PlaySoundAtEntityEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.PlayerSleepInBedEvent;
-import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -132,16 +127,6 @@ public class CommonEventHandler {
     public static void onPlaySound(PlaySoundAtEntityEvent event) {
         if (TICKING_DIMENSION.get() == ModDimensions.MIDNIGHT) {
             event.setVolume(event.getVolume() * SOUND_TRAVEL_DISTANCE_MULTIPLIER);
-        }
-    }
-
-    @SubscribeEvent
-    public static void onHarvestSuavis(BlockEvent.HarvestDropsEvent event) {
-        if (event.getState().getBlock() == ModBlocks.SUAVIS && (event.getHarvester() == null || (!event.isSilkTouching() && !event.getHarvester().isCreative()))) {
-            BlockSuavis.createNauseaCloud(event.getWorld(), event.getPos(), event.getState().getValue(BlockSuavis.STAGE));
-            if (event.getHarvester() != null) {
-                ModCriterion.HARVESTED_SUAVIS.trigger((EntityPlayerMP) event.getHarvester());
-            }
         }
     }
 }

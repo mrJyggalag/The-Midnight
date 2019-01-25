@@ -2,6 +2,7 @@ package com.mushroom.midnight.common.block;
 
 import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.client.IModelProvider;
+import com.mushroom.midnight.common.registry.ModCriterion;
 import com.mushroom.midnight.common.registry.ModItems;
 import net.minecraft.block.Block;
 import net.minecraft.block.IGrowable;
@@ -17,6 +18,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityAreaEffectCloud;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Enchantments;
 import net.minecraft.init.MobEffects;
 import net.minecraft.init.PotionTypes;
@@ -136,9 +138,23 @@ public class BlockSuavis extends Block implements IModelProvider, IGrowable {
         harvesters.set(player);
         dropBlockAsItem(world, pos, state, EnchantmentHelper.getEnchantmentLevel(Enchantments.FORTUNE, stack));
         harvesters.set(null);
+        if (!world.isRemote && !player.isCreative() && player instanceof EntityPlayerMP) {
+            ModCriterion.HARVESTED_SUAVIS.trigger((EntityPlayerMP) player);
+        }
     }
 
-    public static void createNauseaCloud(World world, BlockPos pos, int intensity) {
+    @Override
+    public void dropBlockAsItemWithChance(World world, BlockPos pos, IBlockState state, float chance, int fortune) {
+        super.dropBlockAsItemWithChance(world, pos, state, chance, fortune);
+        if (!world.isRemote) {
+            EntityPlayer player = harvesters.get();
+            if (player == null || (!player.isCreative() && EnchantmentHelper.getEnchantmentLevel(Enchantments.SILK_TOUCH, player.getHeldItemMainhand()) == 0)) {
+                createNauseaCloud(world, pos, state.getValue(STAGE));
+            }
+        }
+    }
+
+    private static void createNauseaCloud(World world, BlockPos pos, int intensity) {
         EntityAreaEffectCloud entity = new EntityAreaEffectCloud(world, pos.getX(), pos.getY(), pos.getZ());
         entity.setRadius(3.0F);
         entity.setRadiusOnUse(-0.5F);
