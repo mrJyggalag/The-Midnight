@@ -2,7 +2,6 @@ package com.mushroom.midnight.common.block;
 
 import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.client.IModelProvider;
-import com.mushroom.midnight.common.registry.ModCriterion;
 import com.mushroom.midnight.common.registry.ModItems;
 import net.minecraft.block.Block;
 import net.minecraft.block.IGrowable;
@@ -18,7 +17,6 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityAreaEffectCloud;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Enchantments;
 import net.minecraft.init.MobEffects;
 import net.minecraft.init.PotionTypes;
@@ -46,10 +44,10 @@ import java.util.Random;
 public class BlockSuavis extends Block implements IModelProvider, IGrowable {
     public static final PropertyInteger STAGE = PropertyInteger.create("stage", 0, 3);
     protected static final AxisAlignedBB[] bounds = new AxisAlignedBB[] {
-            new AxisAlignedBB(1d, 0d, 1d, 1d, 0.125d, 1d),
-            new AxisAlignedBB(1d, 0d, 1d, 1d, 0.4375d, 1d),
-            new AxisAlignedBB(1d, 0d, 1d, 1d, 0.8125d, 1d),
-            new AxisAlignedBB(1d, 0d, 1d, 1d, 1d, 1d),
+            new AxisAlignedBB(0d, 0d, 0d, 1d, 0.125d, 1d),
+            new AxisAlignedBB(0d, 0d, 0d, 1d, 0.4375d, 1d),
+            new AxisAlignedBB(0d, 0d, 0d, 1d, 0.8125d, 1d),
+            new AxisAlignedBB(0d, 0d, 0d, 1d, 1d, 1d),
     };
 
     public BlockSuavis() {
@@ -138,19 +136,9 @@ public class BlockSuavis extends Block implements IModelProvider, IGrowable {
         harvesters.set(player);
         dropBlockAsItem(world, pos, state, EnchantmentHelper.getEnchantmentLevel(Enchantments.FORTUNE, stack));
         harvesters.set(null);
-        if (!world.isRemote && !player.isCreative()) {
-            ItemStack heldItem = player.getHeldItemMainhand();
-            int silkTouchLevel = EnchantmentHelper.getEnchantmentLevel(Enchantments.SILK_TOUCH, heldItem);
-            if (silkTouchLevel <= 0) {
-                createNauseaCloud(world, pos);
-            }
-            if (player instanceof EntityPlayerMP) {
-                ModCriterion.HARVESTED_SUAVIS.trigger((EntityPlayerMP) player);
-            }
-        }
     }
 
-    private static void createNauseaCloud(World world, BlockPos pos) {
+    public static void createNauseaCloud(World world, BlockPos pos) {
         EntityAreaEffectCloud entity = new EntityAreaEffectCloud(world, pos.getX(), pos.getY(), pos.getZ());
         entity.setRadius(3.0F);
         entity.setRadiusOnUse(-0.5F);
@@ -209,7 +197,12 @@ public class BlockSuavis extends Block implements IModelProvider, IGrowable {
 
     @Override
     public AxisAlignedBB getCollisionBoundingBox(IBlockState state, IBlockAccess world, BlockPos pos) {
-        return bounds[Math.max(state.getValue(STAGE), 1)];
+        return getBoundingBox(state, world, pos);
+    }
+
+    @Override
+    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess world, BlockPos pos) {
+        return bounds[state.getValue(STAGE)];
     }
 
     @Override

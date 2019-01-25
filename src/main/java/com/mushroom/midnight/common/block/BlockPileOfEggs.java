@@ -41,6 +41,7 @@ public abstract class BlockPileOfEggs extends Block implements IModelProvider {
         super(Material.ROCK);
         setDefaultState(blockState.getBaseState().withProperty(EGGS, 1));
         setCreativeTab(Midnight.DECORATION_TAB);
+        blockSoundType = SoundType.SNOW;
     }
 
     protected abstract EntityLiving createEntityForEgg(World world, BlockPos pos, IBlockState state);
@@ -57,8 +58,7 @@ public abstract class BlockPileOfEggs extends Block implements IModelProvider {
                         stack.shrink(1);
                     }
                     world.setBlockState(pos, state.withProperty(EGGS, state.getValue(EGGS) + 1));
-                    SoundType soundType = getSoundType(state, world, pos, player);
-                    world.playSound(player, pos, soundType.getPlaceSound(), SoundCategory.BLOCKS, (soundType.getVolume() + 1f) / 2f, soundType.getPitch() * 0.8f);
+                    world.playSound(null, pos, blockSoundType.getPlaceSound(), SoundCategory.BLOCKS, (blockSoundType.getVolume() + 1f) / 2f, blockSoundType.getPitch() * 0.8f);
                 }
             }
             return true;
