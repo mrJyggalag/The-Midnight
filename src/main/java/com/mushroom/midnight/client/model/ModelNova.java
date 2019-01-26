@@ -15,41 +15,41 @@ import net.minecraft.util.math.MathHelper;
  * Created using Tabula 7.0.0
  */
 public class ModelNova extends ModelBase {
-    public ModelRenderer Face;
-    public ModelRenderer Spike61;
-    public ModelRenderer Spike11_1;
-    public ModelRenderer Spike7;
-    public ModelRenderer Spike9;
-    public ModelRenderer Spike8;
-    public ModelRenderer Spike2;
-    public ModelRenderer Spike4;
-    public ModelRenderer Spike14;
-    public ModelRenderer Spike13;
-    public ModelRenderer Spike16;
-    public ModelRenderer Spike15;
-    public ModelRenderer Spike10;
-    public ModelRenderer Spike31;
-    public ModelRenderer Spike12;
-    public ModelRenderer Spike11;
-    public ModelRenderer Spike51;
-    public ModelRenderer ChunkTop1;
-    public ModelRenderer ChunkTop2;
-    public ModelRenderer ChunkTop3;
-    public ModelRenderer ChunkTop4;
-    public ModelRenderer ChunkDown1;
-    public ModelRenderer ChunkDown2;
-    public ModelRenderer ChunkDown3;
-    public ModelRenderer ChunkDown4;
-    public ModelRenderer rotChunks;
-    public ModelRenderer Spike61Child;
-    public ModelRenderer Spike31Child;
-    public ModelRenderer Spike11Child;
-    public ModelRenderer Spike51Child;
+	 public ModelRenderer Face;
+	    public ModelRenderer Spike61;
+	    public ModelRenderer Spike11_1;
+	    public ModelRenderer Spike7;
+	    public ModelRenderer Spike9;
+	    public ModelRenderer Spike8;
+	    public ModelRenderer Spike2;
+	    public ModelRenderer Spike4;
+	    public ModelRenderer Spike14;
+	    public ModelRenderer Spike13;
+	    public ModelRenderer Spike16;
+	    public ModelRenderer Spike15;
+	    public ModelRenderer Spike10;
+	    public ModelRenderer Spike31;
+	    public ModelRenderer Spike12;
+	    public ModelRenderer Spike11;
+	    public ModelRenderer Spike51;
+	    public ModelRenderer ChunkTop1;
+	    public ModelRenderer ChunkTop2;
+	    public ModelRenderer ChunkTop3;
+	    public ModelRenderer ChunkTop4;
+	    public ModelRenderer ChunkDown1;
+	    public ModelRenderer ChunkDown2;
+	    public ModelRenderer ChunkDown3;
+	    public ModelRenderer ChunkDown4;
+	    public ModelRenderer rotChunks;
+	    public ModelRenderer Spike61Child;
+	    public ModelRenderer Spike31Child;
+	    public ModelRenderer Spike11Child;
+	    public ModelRenderer Spike51Child;
 
-    public ModelNova() {
-        this.textureWidth = 128;
-        this.textureHeight = 64;
-        this.Spike16 = new ModelRenderer(this, 89, 38);
+	public ModelNova() {
+	    this.textureWidth = 128;
+	    this.textureHeight = 64;
+	    this.Spike16 = new ModelRenderer(this, 89, 38);
         this.Spike16.setRotationPoint(-1.2999999523162842F, 17.5F, 1.5F);
         this.Spike16.addBox(0.0F, 0.0F, 0.0F, 5, 4, 4, 0.0F);
         this.setRotateAngle(Spike16, 0.0F, -1.001644492149353F, 2.1855013370513916F);
@@ -142,7 +142,6 @@ public class ModelNova extends ModelBase {
         this.Spike4 = new ModelRenderer(this, 41, 6);
         this.Spike4.setRotationPoint(1.600000023841858F, 7.400000095367432F, -1.600000023841858F);
         this.Spike4.addBox(0.0F, 0.0F, 0.0F, 5, 4, 4, 0.0F);
-        this.setRotateAngle(Spike4, 0.0F, 0.0F, -0.5462880730628967F);
         this.Spike61 = new ModelRenderer(this, 13, 33);
         this.Spike61.setRotationPoint(3.5999999046325684F, 10.199999809265137F, -1.2999999523162842F);
         this.Spike61.addBox(0.0F, 0.0F, 0.0F, 2, 4, 4, 0.0F);
@@ -160,37 +159,6 @@ public class ModelNova extends ModelBase {
         this.setRotateAngle(Spike12, 0.0F, -1.0471975803375244F, -2.367539167404175F);
         this.ChunkTop1.addChild(this.ChunkTop4);
         this.ChunkTop1.addChild(this.ChunkTop3);
-        this.Spike11_1 = new ModelRenderer(this, 38, 50);
-        this.Spike11_1.setRotationPoint(-4.300000190734863F, 12.5F, -5.900000095367432F);
-        this.Spike11_1.addBox(0.0F, 0.0F, 0.0F, 5, 4, 4, 0.0F);
-        this.setRotateAngle(Spike11_1, 0.0F, -1.0471975803375244F, -0.8651596903800965F);
-        this.ChunkTop1 = new ModelRenderer(this, 106, 22);
-        this.ChunkTop1.setRotationPoint(0F, 0F, 0F);
-        this.ChunkTop1.addBox(-2.5F, -18.0F, -2.5F, 5, 5, 5, 0.0F);
-        this.ChunkTop2 = new ModelRenderer(this, 106, 22);
-        this.ChunkTop2.setRotationPoint(0F, 0F, 0F);
-        this.ChunkTop2.addBox(-2.5F, -18.0F, -2.5F, 5, 5, 5, 0.0F);
-        this.ChunkTop3 = new ModelRenderer(this, 106, 22);
-        this.ChunkTop3.setRotationPoint(0F, 0F, 0F);
-        this.ChunkTop3.addBox(-2.5F, -18.0F, -2.5F, 5, 5, 5, 0.0F);
-        this.ChunkTop4 = new ModelRenderer(this, 106, 22);
-        this.ChunkTop4.setRotationPoint(0F, 0F, 0F);
-        this.ChunkTop4.addBox(-2.5F, -18.0F, -2.5F, 5, 5, 5, 0.0F);
-        this.ChunkDown1 = new ModelRenderer(this, 106, 22);
-        this.ChunkDown1.setRotationPoint(0F, 0F, 0F);
-        this.ChunkDown1.addBox(-2.5F, -18.0F, -2.5F, 5, 5, 5, 0.0F);
-        this.ChunkDown2 = new ModelRenderer(this, 106, 22);
-        this.ChunkDown2.setRotationPoint(0F, 0F, 0F);
-        this.ChunkDown2.addBox(-2.5F, -18.0F, -2.5F, 5, 5, 5, 0.0F);
-        this.ChunkDown3 = new ModelRenderer(this, 107, 5);
-        this.ChunkDown3.setRotationPoint(0F, 0F, 0F);
-        this.ChunkDown3.addBox(-2.5F, -18.0F, -2.5F, 5, 5, 5, 0.0F);
-        this.ChunkDown4 = new ModelRenderer(this, 107, 5);
-        this.ChunkDown4.setRotationPoint(0F, 0F, 0F);
-        this.ChunkDown4.addBox(-2.5F, -18.0F, -2.5F, 5, 5, 5, 0.0F);
-
-        this.Spike51.addChild(this.Spike51Child);
-        this.Spike61.addChild(this.Spike61Child);
         this.Spike11.addChild(this.Spike11Child);
         this.ChunkTop1.addChild(this.ChunkDown2);
         this.ChunkTop1.addChild(this.rotChunks);
@@ -230,9 +198,8 @@ public class ModelNova extends ModelBase {
     
     @Override
     public void setRotationAngles(float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scaleFactor, Entity entity) {
-        float angle = ((EntityNova)entity).isAttacking() ? (ageInTicks * 0.7f) / (2f * (float) Math.PI) : (ageInTicks * 0.4f) / (2f * (float) Math.PI);
+    	float angle = ((EntityNova)entity).isAttacking() ? (ageInTicks * 0.7f) / (2f * (float) Math.PI) : (ageInTicks * 0.4f) / (2f * (float) Math.PI);
         rotChunks.rotateAngleX = rotChunks.rotateAngleZ = ChunkDown2.rotateAngleZ = angle;
-        ChunkTop1.rotateAngleX = ChunkTop1.rotateAngleZ = ChunkDown1.rotateAngleZ = angle;
         ChunkTop2.rotateAngleX = ChunkTop2.rotateAngleZ = ChunkDown2.rotateAngleZ = angle + (float) Math.PI * 0.25f;
         ChunkTop3.rotateAngleX = ChunkTop3.rotateAngleZ = ChunkDown3.rotateAngleZ = angle + (float) Math.PI * 0.5f;
         ChunkTop4.rotateAngleX = ChunkTop4.rotateAngleZ = ChunkDown4.rotateAngleZ = angle + (float) Math.PI * 0.75f;
@@ -243,9 +210,7 @@ public class ModelNova extends ModelBase {
         ChunkDown3.rotateAngleX = ChunkTop3.rotateAngleX + (float) Math.PI;
         ChunkDown4.rotateAngleX = ChunkTop4.rotateAngleX + (float) Math.PI;
         rotChunks.rotateAngleY = ChunkDown2.rotateAngleY = ChunkDown3.rotateAngleY = ChunkDown4.rotateAngleY = 0f;
-
         rotChunks.rotateAngleX = ChunkDown1.rotateAngleY;
-        //rotChunks.rotateAngleX = rotChunks.rotateAngleY = entity instanceof EntityNova && ((EntityNova)entity).isAttacking() ? -2f * angle : 0f;
     }
 
     /**

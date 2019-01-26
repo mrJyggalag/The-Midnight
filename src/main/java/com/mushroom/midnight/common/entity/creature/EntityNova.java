@@ -33,10 +33,21 @@ public class EntityNova extends EntityMob implements EntityFlying {
 	
     private static final DataParameter<Boolean> IS_ATTACKING = EntityDataManager.createKey(EntityNova.class, DataSerializers.BOOLEAN);
 
+    private float heightOffset = 0.5F;
+    
+    private int heightOffsetUpdateTime;
+    
     public EntityNova(World world) {
         super(world);
         setSize(1.4f, 1.8f);
         experienceValue = 10;
+    }
+    
+    @Override
+    protected PathNavigate createNavigator(World world) {
+        NavigatorFlying nav = new NavigatorFlying(this, world);
+        nav.setCanFloat(true);
+        return nav;
     }
 
     @Override
@@ -45,7 +56,7 @@ public class EntityNova extends EntityMob implements EntityFlying {
     }
     
     protected boolean canFlyUp() {
-    	return this.getPosition().up() == Blocks.AIR.getDefaultState() && this.getPosition().getY() < world.getSeaLevel();
+    	return this.getPosition().up() == Blocks.AIR.getDefaultState() && getPosition().getY() < world.getSeaLevel();
     }
 
     @Override
@@ -68,6 +79,11 @@ public class EntityNova extends EntityMob implements EntityFlying {
                 super.startExecuting();
                 setAttacking(true);
             }
+            
+            @Override
+            protected double getAttackReachSqr(EntityLivingBase attackTarget) {
+            	return (double)(this.attacker.width * 2.0F * this.attacker.width * 2.0F + attackTarget.width) * 0.65F;
+            }
         });
         this.tasks.addTask(5, new EntityAIMoveTowardsRestriction(this, 1.0D));
         this.tasks.addTask(8, new EntityAIWatchClosest(this, EntityPlayer.class, 8f, 0.02f));
@@ -83,18 +99,9 @@ public class EntityNova extends EntityMob implements EntityFlying {
         getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.21d);
         getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(14d);
         getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(2d);
+        this.getEntityAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(40.0D);
     }
     
-    @Override
-    public void onLivingUpdate()
-    {
-    	if (!this.onGround && this.motionY < 0.0D && this.canFlyUp())
-    	{
-    		this.motionY *= 0.45D;
-    	}
-    	super.onLivingUpdate();
-    }
-
     @Override
     public void travel(float strafe, float vertical, float forward) {
         if (isServerWorld()) {
@@ -104,6 +111,44 @@ public class EntityNova extends EntityMob implements EntityFlying {
             this.motionY *= 0.8999999761581421d;
             this.motionZ *= 0.8999999761581421d;
         }
+    }
+    
+    @Override
+    public void onLivingUpdate()
+    {
+    	if (!this.onGround && this.motionY < 0.0D && this.canFlyUp())
+    	{
+    		this.motionY *= 0.45D;
+    	}
+    	
+    	EntityLivingBase entitylivingbase = this.getAttackTarget();
+    	
+    	super.onLivingUpdate();
+    }
+    
+    @Override
+    protected void updateAITasks()
+    {
+    	--this.heightOffsetUpdateTime;
+
+        if (this.heightOffsetUpdateTime <= 0)
+        {
+            this.heightOffsetUpdateTime = 100;
+            this.heightOffset = 0.5F + (float)this.rand.nextGaussian() * 3.0F;
+        }
+        
+    	EntityLivingBase entitylivingbase = this.getAttackTarget();
+
+        if (entitylivingbase != null && entitylivingbase.posY + (double)entitylivingbase.getEyeHeight() > this.posY + (double)this.getEyeHeight() && this.canFlyUp())
+        {
+            this.motionY += (0.30000001192092896D - this.motionY) * 0.30000001192092896D;
+            this.isAirBorne = true;
+        } else {
+        	if(this.isAirBorne) {
+        		this.motionY -= (0.30000001192092896D - this.motionY) * 0.30000001192092896D;
+        	}
+        }
+        super.updateAITasks();
     }
 
     @Override
