@@ -28,6 +28,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import javax.annotation.Nullable;
 
 public class EntityNova extends EntityMob implements EntityFlying {
+	
     private static final DataParameter<Boolean> IS_ATTACKING = EntityDataManager.createKey(EntityNova.class, DataSerializers.BOOLEAN);
 
     public EntityNova(World world) {
