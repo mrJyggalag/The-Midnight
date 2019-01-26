@@ -6,6 +6,7 @@ import com.mushroom.midnight.common.entity.creature.EntityNova;
 
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.math.MathHelper;
 
@@ -174,8 +175,8 @@ public class ModelNova extends ModelBase {
 
     @Override
     public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) { 
-    	GL11.glPushMatrix();
-        GL11.glTranslatef(0, MathHelper.sin(f2 * 0.14f - 0.5f) / 8, 0);
+    	GlStateManager.pushMatrix();
+    	GlStateManager.translate(0, MathHelper.sin(f2 * 0.14f - 0.5f) / 8, 0);
         this.Face.render(f5);
         this.Spike16.render(f5);
         this.Spike11_1.render(f5);
@@ -193,7 +194,7 @@ public class ModelNova extends ModelBase {
         this.Spike9.render(f5);
         this.Spike2.render(f5);
         this.Spike12.render(f5);
-        GL11.glPopMatrix();
+        GlStateManager.popMatrix();
     }
     
     @Override

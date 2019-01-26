@@ -9,12 +9,14 @@ import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAIAttackMelee;
 import net.minecraft.entity.ai.EntityAIHurtByTarget;
 import net.minecraft.entity.ai.EntityAILookIdle;
+import net.minecraft.entity.ai.EntityAIMoveTowardsRestriction;
 import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
 import net.minecraft.entity.ai.EntityAIWanderAvoidWaterFlying;
 import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.passive.EntityFlying;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
@@ -38,15 +40,12 @@ public class EntityNova extends EntityMob implements EntityFlying {
     }
 
     @Override
-    protected PathNavigate createNavigator(World world) {
-        NavigatorFlying nav = new NavigatorFlying(this, world);
-        nav.setCanFloat(true);
-        return nav;
-    }
-
-    @Override
     public boolean getCanSpawnHere() {
         return getPosition().getY() < world.getSeaLevel() && super.getCanSpawnHere();
+    }
+    
+    protected boolean canFlyUp() {
+    	return this.getPosition().up() == Blocks.AIR.getDefaultState() && this.getPosition().getY() < world.getSeaLevel();
     }
 
     @Override
@@ -70,21 +69,30 @@ public class EntityNova extends EntityMob implements EntityFlying {
                 setAttacking(true);
             }
         });
-        this.tasks.addTask(7, new EntityAIWanderAvoidWaterFlying(this, 0.6d));
+        this.tasks.addTask(5, new EntityAIMoveTowardsRestriction(this, 1.0D));
         this.tasks.addTask(8, new EntityAIWatchClosest(this, EntityPlayer.class, 8f, 0.02f));
         this.tasks.addTask(8, new EntityAILookIdle(this));
         this.targetTasks.addTask(1, new EntityAIHurtByTarget(this, true));
         this.targetTasks.addTask(2, new EntityAINearestAttackableTarget<>(this, EntityPlayer.class, true));
-        // only for test purpose
-        this.targetTasks.addTask(3, new EntityAINearestAttackableTarget<>(this, EntityLivingBase.class, 10, true, false, p -> true));
+        this.targetTasks.addTask(1, new EntityAIHurtByTarget(this, true, new Class[0]));
     }
 
     @Override
     protected void applyEntityAttributes() {
         super.applyEntityAttributes();
-        getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.2d);
-        getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(12d);
+        getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.21d);
+        getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(14d);
         getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(2d);
+    }
+    
+    @Override
+    public void onLivingUpdate()
+    {
+    	if (!this.onGround && this.motionY < 0.0D && this.canFlyUp())
+    	{
+    		this.motionY *= 0.45D;
+    	}
+    	super.onLivingUpdate();
     }
 
     @Override
