@@ -119,28 +119,28 @@ public class ModelNova extends ModelBase {
         this.Spike11_1.addBox(0.0F, 0.0F, 0.0F, 5, 4, 4, 0.0F);
         this.setRotateAngle(Spike11_1, 0.0F, -1.0471975803375244F, -0.8651596903800965F);
         this.ChunkTop1 = new ModelRenderer(this, 106, 22);
-        this.ChunkTop1.setRotationPoint(4.0F, 4.0F, 4.0F);
+        this.ChunkTop1.setRotationPoint(0F, 0F, 0F);
         this.ChunkTop1.addBox(-2.5F, -18.0F, -2.5F, 5, 5, 5, 0.0F);
         this.ChunkTop2 = new ModelRenderer(this, 106, 22);
-        this.ChunkTop2.setRotationPoint(4.0F, 4.0F, 4.0F);
+        this.ChunkTop2.setRotationPoint(0F, 0F, 0F);
         this.ChunkTop2.addBox(-2.5F, -18.0F, -2.5F, 5, 5, 5, 0.0F);
         this.ChunkTop3 = new ModelRenderer(this, 106, 22);
-        this.ChunkTop3.setRotationPoint(4.0F, 4.0F, 4.0F);
+        this.ChunkTop3.setRotationPoint(0F, 0F, 0F);
         this.ChunkTop3.addBox(-2.5F, -18.0F, -2.5F, 5, 5, 5, 0.0F);
         this.ChunkTop4 = new ModelRenderer(this, 106, 22);
-        this.ChunkTop4.setRotationPoint(4.0F, 4.0F, 4.0F);
+        this.ChunkTop4.setRotationPoint(0F, 0F, 0F);
         this.ChunkTop4.addBox(-2.5F, -18.0F, -2.5F, 5, 5, 5, 0.0F);
         this.ChunkDown1 = new ModelRenderer(this, 106, 22);
-        this.ChunkDown1.setRotationPoint(4.0F, 4.0F, 4.0F);
+        this.ChunkDown1.setRotationPoint(0F, 0F, 0F);
         this.ChunkDown1.addBox(-2.5F, -18.0F, -2.5F, 5, 5, 5, 0.0F);
         this.ChunkDown2 = new ModelRenderer(this, 106, 22);
-        this.ChunkDown2.setRotationPoint(4.0F, 4.0F, 4.0F);
+        this.ChunkDown2.setRotationPoint(0F, 0F, 0F);
         this.ChunkDown2.addBox(-2.5F, -18.0F, -2.5F, 5, 5, 5, 0.0F);
         this.ChunkDown3 = new ModelRenderer(this, 107, 5);
-        this.ChunkDown3.setRotationPoint(4.0F, 4.0F, 4.0F);
+        this.ChunkDown3.setRotationPoint(0F, 0F, 0F);
         this.ChunkDown3.addBox(-2.5F, -18.0F, -2.5F, 5, 5, 5, 0.0F);
         this.ChunkDown4 = new ModelRenderer(this, 107, 5);
-        this.ChunkDown4.setRotationPoint(4.0F, 4.0F, 4.0F);
+        this.ChunkDown4.setRotationPoint(0F, 0F, 0F);
         this.ChunkDown4.addBox(-2.5F, -18.0F, -2.5F, 5, 5, 5, 0.0F);
 
         this.Spike51.addChild(this.Spike51Child);
@@ -181,7 +181,7 @@ public class ModelNova extends ModelBase {
 
     @Override
     public void setRotationAngles(float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scaleFactor, Entity entity) {
-        float angle = (ageInTicks * 0.4f) / (2f * (float) Math.PI);
+        float angle = ((EntityNova)entity).isAttacking() ? (ageInTicks * 0.7f) / (2f * (float) Math.PI) : (ageInTicks * 0.4f) / (2f * (float) Math.PI);
         ChunkTop1.rotateAngleX = ChunkTop1.rotateAngleZ = ChunkDown1.rotateAngleZ = angle;
         ChunkTop2.rotateAngleX = ChunkTop2.rotateAngleZ = ChunkDown2.rotateAngleZ = angle + (float) Math.PI * 0.25f;
         ChunkTop3.rotateAngleX = ChunkTop3.rotateAngleZ = ChunkDown3.rotateAngleZ = angle + (float) Math.PI * 0.5f;
@@ -194,7 +194,7 @@ public class ModelNova extends ModelBase {
         ChunkDown4.rotateAngleX = ChunkTop4.rotateAngleX + (float) Math.PI;
         ChunkDown1.rotateAngleY = ChunkDown2.rotateAngleY = ChunkDown3.rotateAngleY = ChunkDown4.rotateAngleY = 0f;
 
-        rotChunks.rotateAngleX = rotChunks.rotateAngleY = entity instanceof EntityNova && ((EntityNova)entity).isAttacking() ? -2f * angle : 0f;
+        //rotChunks.rotateAngleX = rotChunks.rotateAngleY = entity instanceof EntityNova && ((EntityNova)entity).isAttacking() ? -2f * angle : 0f;
     }
 
     private void setRotateAngle(ModelRenderer modelRenderer, float x, float y, float z) {
