@@ -7,6 +7,7 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -17,7 +18,7 @@ public class RenderNova extends RenderLiving<EntityNova> {
     private static final ResourceLocation TEXTURE = new ResourceLocation(Midnight.MODID, "textures/entities/nova.png");
 
     public RenderNova(RenderManager rendermanager) {
-        super(rendermanager, new ModelNova(), 0.5f);
+        super(rendermanager, new ModelNova(), 0.6f);
     }
 
     @Nullable
@@ -28,6 +29,7 @@ public class RenderNova extends RenderLiving<EntityNova> {
 
     @Override
     protected void preRenderCallback(EntityNova entity, float partialTicks) {
-        GlStateManager.translate(0f, -0.4f, 0f);
+        GlStateManager.translate(0f, -0.25f + (MathHelper.sin((entity.ticksExisted + partialTicks) * 0.14f - 0.5f) / 8), 0f);
+        GlStateManager.scale(0.8f, 0.8f, 0.8f);
     }
 }
