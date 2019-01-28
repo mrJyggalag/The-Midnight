@@ -44,7 +44,6 @@ public class EntityNova extends EntityMob implements EntityFlying {
         setPathPriority(PathNodeType.LAVA, 8f);
         setPathPriority(PathNodeType.DANGER_FIRE, 0f);
         setPathPriority(PathNodeType.DAMAGE_FIRE, 0f);
-        setPathPriority(PathNodeType.WATER, 0f);
         this.moveHelper = new EntityFlyHelper(this);
     }
 
