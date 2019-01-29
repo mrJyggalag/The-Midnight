@@ -4,6 +4,7 @@ import com.mushroom.midnight.common.block.BlockBladeshroom;
 import com.mushroom.midnight.common.block.BlockPileOfEggs;
 import com.mushroom.midnight.common.entity.creature.EntityCrystalBug;
 import com.mushroom.midnight.common.entity.creature.EntityHunter;
+import com.mushroom.midnight.common.entity.creature.EntityNightStag;
 import com.mushroom.midnight.common.entity.creature.EntityRifter;
 import com.mushroom.midnight.common.registry.ModBlocks;
 import com.mushroom.midnight.common.world.feature.BoulderFeature;
@@ -179,6 +180,7 @@ public class MidnightBiomeConfigs {
             .withFeature(FUNGI_FEATURE, new ScatterPlacementConfig(1, 16))
             .withFeature(GHOST_PLANT_FEATURE, new ParcelPlacementConfig(3, 6, 0.3f))
             .withFeature(UNDERGROUND_FEATURES, new UndergroundPlacementConfig(1, 3, 10, 50))
+            .withCreature(new Biome.SpawnListEntry(EntityNightStag.class, 100, 1, 3))
             .build();
 
     public static final MidnightBiomeConfig ROCKY_CONFIG = MidnightBiomeConfig.builder()
@@ -211,6 +213,7 @@ public class MidnightBiomeConfigs {
             .withFeature(DEAD_TREE_FEATURE, new SurfacePlacementConfig(-5, 1))
             .withFeature(VIOLEAF_FEATURE, new ParcelPlacementConfig(2, 5, 0.3f))
             .withMonster(new Biome.SpawnListEntry(EntityRifter.class, 1, 0, 1))
+            .withCreature(new Biome.SpawnListEntry(EntityNightStag.class, 100, 1, 3))
             .build();
 
     public static final MidnightBiomeConfig FUNGI_FOREST_CONFIG = MidnightBiomeConfig.builder(VEGETATED_CONFIG)
@@ -234,7 +237,7 @@ public class MidnightBiomeConfigs {
             .withFeature(GHOST_PLANT_FEATURE, new ParcelPlacementConfig(3, 6, 0.3f))
             .withFeature(UNDERGROUND_FEATURES, new UndergroundPlacementConfig(1, 3, 10, 50))
             // TODO add the ambient & aquatic creatures
-            .withCreature(new Biome.SpawnListEntry(EntityCrystalBug.class, 1, 5, 10))
+            .withCreature(new Biome.SpawnListEntry(EntityCrystalBug.class, 100, 3, 7))
             .withGrassColor(0xD184BC)
             .build();
 
@@ -262,6 +265,7 @@ public class MidnightBiomeConfigs {
             .withFeature(DECEITFUL_ALGAE_FEATURE, new ScatterPlacementConfig(10, 20))
             .withFeature(GHOST_PLANT_FEATURE, new ParcelPlacementConfig(3, 6, 0.3f))
             .withFeature(UNDERGROUND_FEATURES, new UndergroundPlacementConfig(1, 3, 10, 50))
+            .withCreature(new Biome.SpawnListEntry(EntityNightStag.class, 100, 1, 3))
             .withGrassColor(0x8893AD)
             .withRidgeWeight(0.0F)
             .wet()
@@ -289,6 +293,7 @@ public class MidnightBiomeConfigs {
                     NIGHTSTONE_SPIKE_FEATURE
             }, new SurfacePlacementConfig(-3, 1))
             .withMonster(new Biome.SpawnListEntry(EntityHunter.class, 1, 0, 2))
+            .withCreature(new Biome.SpawnListEntry(EntityNightStag.class, 100, 1, 3))
             .withRidgeWeight(0.0F)
             .withGrassColor(0xBAA3C6)
             .build();
@@ -302,6 +307,7 @@ public class MidnightBiomeConfigs {
             .withFeature(GHOST_PLANT_FEATURE, new ParcelPlacementConfig(3, 6, 0.3f))
             .withFeature(UNDERGROUND_FEATURES, new UndergroundPlacementConfig(1, 3, 10, 50))
             .withMonster(new Biome.SpawnListEntry(EntityHunter.class, 1, 0, 2))
+            .withCreature(new Biome.SpawnListEntry(EntityNightStag.class, 100, 1, 3))
             .withRidgeWeight(0.0F)
             .wet()
             .build();

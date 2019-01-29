@@ -24,6 +24,7 @@ import com.mushroom.midnight.common.network.MessageCaptureEntity;
 import com.mushroom.midnight.common.registry.ModEffects;
 import com.mushroom.midnight.common.registry.ModLootTables;
 import com.mushroom.midnight.common.registry.ModSounds;
+
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -32,6 +33,7 @@ import net.minecraft.entity.ai.EntityAILookIdle;
 import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
 import net.minecraft.entity.ai.EntityAIOpenDoor;
 import net.minecraft.entity.ai.EntityAISwimming;
+import net.minecraft.entity.ai.EntityAIWanderAvoidWater;
 import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.IAttribute;
@@ -119,6 +121,8 @@ public class EntityRifter extends EntityMob implements IRiftTraveler, IEntityAdd
 
         this.tasks.addTask(4, new EntityAIWatchClosest(this, EntityLivingBase.class, 8.0F));
         this.tasks.addTask(4, new EntityAILookIdle(this));
+
+        this.tasks.addTask(5, new EntityAIWanderAvoidWater(this, 0.7d, 0.005f));
 
         this.targetTasks.addTask(2, new EntityAINearestAttackableTarget<>(this, EntityPlayer.class, 2, true, false, this::shouldAttack));
         this.targetTasks.addTask(3, new EntityAINearestAttackableTarget<>(this, EntityAnimal.class, 4, true, false, this::shouldAttack));
@@ -229,6 +233,9 @@ public class EntityRifter extends EntityMob implements IRiftTraveler, IEntityAdd
     private boolean shouldAttack(Entity entity) {
         if (entity == null || RifterCapturedCapability.isCaptured(entity)) {
             return false;
+        }
+        if (entity instanceof EntityAnimal) {
+            return !Helper.isMidnightDimension(entity.world);
         }
         if (entity instanceof EntityPlayer && ((EntityPlayer) entity).isPlayerSleeping()) {
             return false;
