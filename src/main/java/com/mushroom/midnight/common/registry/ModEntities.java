@@ -62,7 +62,7 @@ public class ModEntities {
                         .id(new ResourceLocation(Midnight.MODID, "nova"), currentEntityId++)
                         .name(Midnight.MODID + ".nova")
                         .tracker(80, 2, true)
-                        /*.egg(0x932C3B, 0x47415E)*/
+                        .egg(0x932C3B, 0x47415E)
                         .build(),
                 EntityEntryBuilder.create()
                         .entity(EntityCrystalBug.class)
@@ -78,7 +78,7 @@ public class ModEntities {
                         .id(new ResourceLocation(Midnight.MODID, "penumbrian"), currentEntityId++)
                         .name(Midnight.MODID + ".penumbrian")
                         .tracker(80, 3, true)
-                        //.egg(0x4B2277, 0xAF27E0)
+                        //.egg(0x8CDCC9, 0x456B6F)
                         .build(),
                 EntityEntryBuilder.create()
                         .entity(EntityTreeHopper.class)
@@ -86,7 +86,7 @@ public class ModEntities {
                         .id(new ResourceLocation(Midnight.MODID, "tree_hopper"), currentEntityId++)
                         .name(Midnight.MODID + ".tree_hopper")
                         .tracker(80, 3, true)
-                        //.egg(0x4B2277, 0xAF27E0)
+                        //.egg(0x6E5A84, 0x303847)
                         .build(),
                 EntityEntryBuilder.create()
                         .entity(EntityStinger.class)
@@ -94,10 +94,12 @@ public class ModEntities {
                         .id(new ResourceLocation(Midnight.MODID, "stinger"), currentEntityId++)
                         .name(Midnight.MODID + ".stinger")
                         .tracker(80, 3, true)
-                        //.egg(0x4B2277, 0xAF27E0)
+                        .egg(0x291E23, 0x4D6A43)
                         .build()
         );
 
         EntitySpawnPlacementRegistry.setPlacementType(EntityHunter.class, EntityLiving.SpawnPlacementType.IN_AIR);
+        EntitySpawnPlacementRegistry.setPlacementType(EntityCrystalBug.class, EntityLiving.SpawnPlacementType.IN_AIR);
+        EntitySpawnPlacementRegistry.setPlacementType(EntityNova.class, EntityLiving.SpawnPlacementType.IN_AIR);
     }
 }

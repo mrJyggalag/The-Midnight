@@ -90,6 +90,11 @@ public class MidnightBiomeConfigs {
             ((BlockBush) ModBlocks.FINGERED_GRASS)::canBlockStay
     );
 
+    public static final IMidnightFeature VIOLEAF_FEATURE = new PlantFeature(
+            ModBlocks.VIOLEAF.getDefaultState(),
+            ((BlockBush) ModBlocks.VIOLEAF)::canBlockStay
+    );
+
     public static final IMidnightFeature[] UNDERGROUND_FEATURES = new IMidnightFeature[] {
             new PlantFeature(ModBlocks.TENDRILWEED.getDefaultState(), ((BlockBush) ModBlocks.TENDRILWEED)::canBlockStay),
             new MidnightAbstractFeature() {
@@ -204,6 +209,7 @@ public class MidnightBiomeConfigs {
             .withFeature(SUAVIS_FEATURE, new ScatterPlacementConfig(1, 8))
             .withFeature(DEAD_LOG_FEATURE, new SurfacePlacementConfig(6))
             .withFeature(DEAD_TREE_FEATURE, new SurfacePlacementConfig(-5, 1))
+            .withFeature(VIOLEAF_FEATURE, new ParcelPlacementConfig(2, 5, 0.3f))
             .withMonster(new Biome.SpawnListEntry(EntityRifter.class, 1, 0, 1))
             .build();
 

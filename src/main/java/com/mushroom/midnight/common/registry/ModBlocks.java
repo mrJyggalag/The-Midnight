@@ -53,6 +53,7 @@ import com.mushroom.midnight.common.block.BlockShadowrootCraftingTable;
 import com.mushroom.midnight.common.block.BlockStingerEgg;
 import com.mushroom.midnight.common.block.BlockSuavis;
 import com.mushroom.midnight.common.block.BlockTendrilweed;
+import com.mushroom.midnight.common.block.BlockVioleaf;
 import com.mushroom.midnight.common.block.PlantBehaviorType;
 import com.mushroom.midnight.common.item.ItemDeceitfulAlgae;
 import com.mushroom.midnight.common.item.ItemMidnightSlab;
@@ -170,6 +171,7 @@ public class ModBlocks {
     public static final Block TENDRILWEED = Blocks.AIR;
     public static final Block RUNEBUSH = Blocks.AIR; // TODO generate in world in micro biome in vigilant forest
     public static final Block DRAGON_NEST = Blocks.AIR; // TODO generate in world hanging on trees around crater
+    public static final Block VIOLEAF = Blocks.AIR;
 
     public static final Block CRYSTAL_FLOWER = Blocks.AIR;
 
@@ -328,6 +330,7 @@ public class ModBlocks {
                 RegUtil.withName(new BlockTendrilweed(), "tendrilweed"),
                 RegUtil.withName(new BlockMidnightPlant(false), "runebush"),
                 RegUtil.withName(new BlockDragonNest(), "dragon_nest"),
+                RegUtil.withName(new BlockVioleaf(), "violeaf"),
                 RegUtil.withName(new BlockMidnightPlant(true), "crystal_flower"),
                 RegUtil.withName(new BlockMidnightSapling(ShadowrootTreeFeature::new), "shadowroot_sapling"),
                 RegUtil.withName(new BlockMidnightSapling(DarkWillowTreeFeature::new), "dark_willow_sapling"),
@@ -514,7 +517,8 @@ public class ModBlocks {
                 NIGHTSHROOM_PLANKS, DEWSHROOM_PLANKS, VIRIDSHROOM_PLANKS,
                 ROCKSHROOM, ROCKSHROOM_BRICKS,
                 LUMEN_BUD, DOUBLE_LUMEN_BUD,
-                BOGWEED, GHOST_PLANT, FINGERED_GRASS, TENDRILWEED, RUNEBUSH, DRAGON_NEST, CRYSTAL_FLOWER,
+                BOGWEED, GHOST_PLANT, FINGERED_GRASS, TENDRILWEED, RUNEBUSH, DRAGON_NEST,
+                VIOLEAF, CRYSTAL_FLOWER,
                 SHADOWROOT_SAPLING, DARK_WILLOW_SAPLING,
                 SHADOWROOT_TRAPDOOR, DARK_WILLOW_TRAPDOOR, DEAD_WOOD_TRAPDOOR, TENEBRUM_TRAPDOOR,
                 NIGHTSHROOM_TRAPDOOR, DEWSHROOM_TRAPDOOR, VIRIDSHROOM_TRAPDOOR,
