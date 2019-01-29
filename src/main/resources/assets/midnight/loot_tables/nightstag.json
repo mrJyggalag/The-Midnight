@@ -1,6 +1,7 @@
 {
   "pools": [
     {
+      "name": "midnight:nightstag",
       "rolls": 1,
       "entries": [
         {
