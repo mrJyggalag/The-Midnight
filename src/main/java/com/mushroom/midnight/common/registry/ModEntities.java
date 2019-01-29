@@ -5,6 +5,7 @@ import com.mushroom.midnight.common.entity.EntityBladeshroomCap;
 import com.mushroom.midnight.common.entity.EntityRift;
 import com.mushroom.midnight.common.entity.creature.EntityCrystalBug;
 import com.mushroom.midnight.common.entity.creature.EntityHunter;
+import com.mushroom.midnight.common.entity.creature.EntityNightStag;
 import com.mushroom.midnight.common.entity.creature.EntityNova;
 import com.mushroom.midnight.common.entity.creature.EntityPenumbrian;
 import com.mushroom.midnight.common.entity.creature.EntityRifter;
@@ -95,6 +96,14 @@ public class ModEntities {
                         .name(Midnight.MODID + ".stinger")
                         .tracker(80, 3, true)
                         .egg(0x291E23, 0x4D6A43)
+                        .build(),
+                EntityEntryBuilder.create()
+                        .entity(EntityNightStag.class)
+                        .factory(EntityNightStag::new)
+                        .id(new ResourceLocation(Midnight.MODID, "nightstag"), currentEntityId++)
+                        .name(Midnight.MODID + ".nightstag")
+                        .tracker(80, 3, true)
+                        //.egg(0x946CC2, 0x221F1D)
                         .build()
         );
 

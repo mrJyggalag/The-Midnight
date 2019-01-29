@@ -270,6 +270,9 @@ entity.midnight.bladeshroom_cap.name=Chapeau de ChampiLame
 entity.midnight.nova.name=Nova
 entity.midnight.crystal_bug.name=Insecte de Cristal
 entity.midnight.stinger.name=Piqueur
+entity.midnight.penumbrian=Pénombrien
+entity.midnight.tree_hopper=Cigale Épineuse
+entity.midnight.nightstag=Cerf Obscure
 
 # Config
 
