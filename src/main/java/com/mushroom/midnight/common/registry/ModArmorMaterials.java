@@ -11,9 +11,9 @@ public class ModArmorMaterials {
              reduceamount{boots, leggings, chest, helmet}, enchantability, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC, toughness);*/
     public static final ArmorMaterial ROCKSHROOM = EnumHelper.addArmorMaterial(
             "armor_material_rockshroom", Midnight.MODID + ":rockshroom",
-            15, new int[] { 2, 5, 6, 2 }, 5,
+            15, new int[] { 2, 4, 3, 1 }, 5,
             SoundEvents.ITEM_ARMOR_EQUIP_GENERIC,
-            2.0F
+            1.0F
     );
     public static final ArmorMaterial TENEBRUM = EnumHelper.addArmorMaterial(
             "armor_material_tenebrum", Midnight.MODID + ":tenebrum",
