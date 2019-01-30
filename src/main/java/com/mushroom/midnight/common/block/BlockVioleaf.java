@@ -5,11 +5,15 @@ import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityAreaEffectCloud;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;
+import net.minecraft.init.PotionTypes;
 import net.minecraft.init.SoundEvents;
+import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
 import java.util.Random;
@@ -19,7 +23,7 @@ public class BlockVioleaf extends BlockMidnightPlant implements IGrowable {
 
     public BlockVioleaf() {
         super(false);
-        setDefaultState(blockState.getBaseState().withProperty(IS_GROWN, false));
+        setDefaultState(blockState.getBaseState().withProperty(IS_GROWN, true));
     }
 
     @Override
@@ -29,9 +33,25 @@ public class BlockVioleaf extends BlockMidnightPlant implements IGrowable {
             if (player.isPotionActive(MobEffects.NAUSEA)) {
                 player.removePotionEffect(MobEffects.NAUSEA);
                 world.setBlockState(pos, state.withProperty(IS_GROWN, false), 2);
-                world.playSound(null, pos, SoundEvents.BLOCK_NOTE_HARP, SoundCategory.BLOCKS, 0.5f, 0.5f);
+                world.playSound(null, pos, SoundEvents.BLOCK_CHORUS_FLOWER_DEATH, SoundCategory.BLOCKS, 1f, world.rand.nextFloat() * 0.4f + 0.8f);
+                Vec3d offset = getOffset(state, world, pos);
+                double posX = (double) pos.getX() + 0.5d + offset.x;
+                double posY = (double)pos.getY() + 0.3d;
+                double posZ = (double) pos.getZ() + 0.5d + offset.z;
+                createCloud(world, posX, posY, posZ);
             }
         }
+    }
+
+    private static void createCloud(World world, double posX, double posY, double posZ) {
+        EntityAreaEffectCloud entity = new EntityAreaEffectCloud(world, posX, posY, posZ);
+        entity.setRadius(1.5f);
+        entity.setDuration(5);
+        entity.setRadiusPerTick(-entity.getRadius() / (float) entity.getDuration());
+        entity.setColor(0xA041C3);
+        entity.setPotion(PotionTypes.EMPTY);
+        entity.setParticle(EnumParticleTypes.DRAGON_BREATH);
+        world.spawnEntity(entity);
     }
 
     @Override

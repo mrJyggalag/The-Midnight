@@ -52,13 +52,7 @@ public class ModelNightStag extends ModelQuadruped {
 
     @Override
     public void render(Entity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scale) {
-        setRotationAngles(limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale, entity);
-        this.body.render(scale);
-        this.leg1.render(scale);
-        this.leg2.render(scale);
-        this.leg3.render(scale);
-        this.leg4.render(scale);
-        this.head.render(scale);
+        super.render(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale);
     }
 
     public void setRotateAngle(ModelRenderer modelRenderer, float x, float y, float z) {
@@ -70,6 +64,5 @@ public class ModelNightStag extends ModelQuadruped {
     public void setRotationAngles(float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scaleFactor, Entity entity) {
         super.setRotationAngles(limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scaleFactor, entity);
         this.body.rotateAngleX = 0f;
-
     }
 }
