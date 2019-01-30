@@ -210,6 +210,8 @@ item.midnight.archaic_shard.name=Tesson Archaïque
 item.midnight.raw_suavis.name=Tranche de Suavis Cru
 item.midnight.cook_suavis.name=Tranche de Suavis Cuit
 item.midnight.raw_deceitful_snapper.name=Baffeur Fourbe
+item.midnight.raw_stag_flank.name=Flanc de Cerf Cru
+item.midnight.cook_stag_flank.name=Flanc de Cerf Cuit
 
 item.midnight.bladeshroom_cap.name=Chapeau de ChampiLame
 item.midnight.bladeshroom_spores.name=Spores de ChampiLame
@@ -333,6 +335,7 @@ potion.midnight.dragon_guard.name=Garde du Dragon
 # DamageSources
 death.midnight.bladeshroom=%s a été piqué mortellement par un ChampiLame
 death.midnight.deceitful_snapper=%s a été dévoré
+death.midnight.rockshroom_spore=%s a été touché par un spore de ChampiRoche
 
 # Advancements
 

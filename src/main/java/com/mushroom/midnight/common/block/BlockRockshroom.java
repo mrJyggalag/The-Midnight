@@ -6,6 +6,7 @@ import com.mushroom.midnight.client.particle.MidnightParticles;
 import com.mushroom.midnight.common.network.MessageRockshroomBroken;
 import com.mushroom.midnight.common.registry.ModBlocks;
 import com.mushroom.midnight.common.registry.ModItems;
+import com.mushroom.midnight.common.util.MidnightDamageSource;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -29,6 +30,8 @@ public class BlockRockshroom extends Block implements IModelProvider {
     private static final double SPORE_SPEED = 0.3;
 
     private static final double DAMAGE_RANGE = 4.0;
+
+    private static final DamageSource ROCKSHROOM_SPORE = new MidnightDamageSource("rockshroom_spore");
 
     public BlockRockshroom() {
         super(Material.ROCK);
@@ -68,7 +71,7 @@ public class BlockRockshroom extends Block implements IModelProvider {
 
         RayTraceResult rayTrace = world.rayTraceBlocks(origin, target);
         if (rayTrace == null || rayTrace.typeOfHit == RayTraceResult.Type.MISS) {
-            player.attackEntityFrom(DamageSource.IN_WALL, world.rand.nextFloat() * 3.5F + 0.5F);
+            player.attackEntityFrom(ROCKSHROOM_SPORE, world.rand.nextFloat() * 3.5F + 0.5F);
         }
     }
 
