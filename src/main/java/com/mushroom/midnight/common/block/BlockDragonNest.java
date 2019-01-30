@@ -6,7 +6,6 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.potion.PotionEffect;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
@@ -36,7 +35,7 @@ public class BlockDragonNest extends BlockMidnightPlant {
 
     @Override
     public boolean canBlockStay(World world, BlockPos pos, IBlockState state) {
-        return world.getBlockState(pos.up()).isSideSolid(world, pos.up(), EnumFacing.DOWN);
+        return world.getBlockState(pos.up()).isBlockNormalCube();
     }
 
     @Override

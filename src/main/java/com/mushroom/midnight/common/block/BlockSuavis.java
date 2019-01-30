@@ -19,6 +19,7 @@ import net.minecraft.entity.EntityAreaEffectCloud;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.init.Blocks;
 import net.minecraft.init.Enchantments;
 import net.minecraft.init.MobEffects;
 import net.minecraft.init.PotionTypes;
@@ -46,7 +47,7 @@ import java.util.Random;
 public class BlockSuavis extends Block implements IModelProvider, IGrowable {
     public static final PropertyInteger STAGE = PropertyInteger.create("stage", 0, 3);
     protected static final AxisAlignedBB[] bounds = new AxisAlignedBB[] {
-            new AxisAlignedBB(0d, 0d, 0d, 1d, 0.125d, 1d),
+            new AxisAlignedBB(0d, 0d, 0d, 1d, 0.2125d, 1d),
             new AxisAlignedBB(0d, 0d, 0d, 1d, 0.4375d, 1d),
             new AxisAlignedBB(0d, 0d, 0d, 1d, 0.8125d, 1d),
             new AxisAlignedBB(0d, 0d, 0d, 1d, 1d, 1d),
@@ -70,14 +71,15 @@ public class BlockSuavis extends Block implements IModelProvider, IGrowable {
     @Override
     public void onFallenUpon(World world, BlockPos pos, Entity entity, float fallDistance) {
         super.onFallenUpon(world, pos, entity, fallDistance);
-        if (!world.isRemote) {
+        if (!world.isRemote && fallDistance > 0.8f && entity instanceof EntityLivingBase) {
             IBlockState state = world.getBlockState(pos);
             world.playSound(null, pos, SoundEvents.BLOCK_SLIME_BREAK, SoundCategory.BLOCKS, 0.7F, 0.9F + world.rand.nextFloat() * 0.2F);
-            if (state.getValue(STAGE) == 0 || world.rand.nextInt(100) == 0) {
+            boolean isFirstStage = state.getValue(STAGE) == 0;
+            if (!isFirstStage && world.rand.nextInt(100) == 0) {
                 world.destroyBlock(pos, true);
             } else {
                 spawnAsEntity(world, pos, new ItemStack(ModItems.RAW_SUAVIS));
-                world.setBlockState(pos, state.withProperty(STAGE, state.getValue(STAGE) - 1), 2);
+                world.setBlockState(pos, isFirstStage ? Blocks.AIR.getDefaultState() : state.withProperty(STAGE, state.getValue(STAGE) - 1), 2);
                 world.playEvent(2001, pos, getStateId(state));
                 if (!(entity instanceof EntityPlayer) || !((EntityPlayer) entity).isCreative()) {
                     createNauseaCloud(world, pos, 0);
@@ -156,8 +158,8 @@ public class BlockSuavis extends Block implements IModelProvider, IGrowable {
 
     private static void createNauseaCloud(World world, BlockPos pos, int intensity) {
         EntityAreaEffectCloud entity = new EntityAreaEffectCloud(world, pos.getX(), pos.getY(), pos.getZ());
-        entity.setRadius(3.0F);
-        entity.setRadiusOnUse(-0.5F);
+        entity.setRadius(1.5f + 0.5f * intensity);
+        entity.setRadiusOnUse(-0.3f);
         entity.setWaitTime(10);
         entity.setRadiusPerTick(-entity.getRadius() / (float) entity.getDuration());
         entity.setPotion(PotionTypes.EMPTY);
