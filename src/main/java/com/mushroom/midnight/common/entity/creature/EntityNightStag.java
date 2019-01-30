@@ -1,7 +1,11 @@
 package com.mushroom.midnight.common.entity.creature;
 
 import com.mushroom.midnight.common.entity.navigation.CustomPathNavigateGround;
+import com.mushroom.midnight.common.registry.ModBlocks;
+import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityAgeable;
+import net.minecraft.entity.IEntityLivingData;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAIAvoidEntity;
 import net.minecraft.entity.ai.EntityAIFollowParent;
@@ -12,8 +16,13 @@ import net.minecraft.entity.ai.EntityAIWanderAvoidWater;
 import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.pathfinding.PathNavigate;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.SoundEvent;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
@@ -21,6 +30,7 @@ import javax.annotation.Nullable;
 import static com.mushroom.midnight.common.registry.ModLootTables.LOOT_TABLE_NIGHTSTAG;
 
 public class EntityNightStag extends EntityAnimal {
+
     public EntityNightStag(World world) {
         super(world);
         setSize(0.9f, 1.87f);
@@ -29,8 +39,56 @@ public class EntityNightStag extends EntityAnimal {
 
     @Override
     @Nullable
-    public EntityAgeable createChild(EntityAgeable ageable) {
+    public EntityAgeable createChild(EntityAgeable entity) {
         return null;
+    }
+
+    @Override
+    @Nullable
+    public IEntityLivingData onInitialSpawn(DifficultyInstance difficulty, @Nullable IEntityLivingData livingdata) {
+        livingdata = super.onInitialSpawn(difficulty, livingdata);
+        if (this.rand.nextInt(5) == 0) {
+            setGrowingAge(-24000);
+        }
+        return livingdata;
+    }
+
+    @Override
+    public boolean isOnLadder() {
+        return false;
+    }
+
+    protected SoundEvent getAmbientSound() {
+        return SoundEvents.ENTITY_LLAMA_AMBIENT;
+    }
+
+    protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
+        return SoundEvents.ENTITY_LLAMA_HURT;
+    }
+
+    protected SoundEvent getDeathSound() {
+        return SoundEvents.ENTITY_LLAMA_DEATH;
+    }
+
+    public int getTalkInterval()
+    {
+        return 200;
+    }
+
+    protected void playStepSound(BlockPos pos, Block blockIn) {
+        playSound(SoundEvents.ENTITY_LLAMA_STEP, 0.15f, 1f);
+    }
+
+    @Override
+    public float getBlockPathWeight(BlockPos pos) {
+        Block belowBlock = world.getBlockState(pos.down()).getBlock();
+        return belowBlock == ModBlocks.MIDNIGHT_GRASS || belowBlock == ModBlocks.NIGHTSTONE ? 10f : 9f - (world.getLightBrightness(pos) * 10f);
+    }
+
+    @Override
+    public boolean getCanSpawnHere() {
+        IBlockState belowState = world.getBlockState(new BlockPos(this).down());
+        return belowState.isFullCube() && belowState.canEntitySpawn(this);
     }
 
     @Override

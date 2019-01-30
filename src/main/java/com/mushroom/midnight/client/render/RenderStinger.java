@@ -25,7 +25,8 @@ public class RenderStinger extends RenderLiving<EntityStinger> {
 
     @Override
     protected void preRenderCallback(EntityStinger entity, float partialTicks) {
-        GlStateManager.scale(0.2f, 0.2f, 0.2f);
+        float scale = entity.isChild() ? 0.2f : 0.3f;
+        GlStateManager.scale(scale, scale, scale);
     }
 
     @Override
