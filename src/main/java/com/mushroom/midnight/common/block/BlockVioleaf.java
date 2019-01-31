@@ -15,6 +15,7 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import net.minecraftforge.common.ForgeHooks;
 
 import java.util.Random;
 
@@ -67,6 +68,14 @@ public class BlockVioleaf extends BlockMidnightPlant implements IGrowable {
     @Override
     public void grow(World world, Random rand, BlockPos pos, IBlockState state) {
         world.setBlockState(pos, state.withProperty(IS_GROWN, true), 2);
+    }
+
+    @Override
+    public void updateTick(World world, BlockPos pos, IBlockState state, Random rand) {
+        if (canGrow(world, pos, state, world.isRemote) && ForgeHooks.onCropsGrowPre(world, pos, state, rand.nextInt(5) == 0)) {
+            grow(world, rand, pos, state);
+            ForgeHooks.onCropsGrowPost(world, pos, state, world.getBlockState(pos));
+        }
     }
 
     @Override
