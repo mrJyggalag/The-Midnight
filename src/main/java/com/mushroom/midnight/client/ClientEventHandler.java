@@ -24,6 +24,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.MobEffects;
 import net.minecraft.network.play.client.CPacketEntityAction;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
@@ -135,28 +136,45 @@ public class ClientEventHandler {
 
     @SubscribeEvent
     public static void onSetupFogDensity(EntityViewRenderEvent.RenderFogEvent.FogDensity event) {
-        Entity entity = event.getEntity();
         if (FluidImmersionRenderer.immersedState.getBlock() != Blocks.AIR) {
             return;
         }
-        if (Helper.isMidnightDimension(entity.world)) {
+        EntityLivingBase entity = event.getEntity() instanceof EntityLivingBase ? (EntityLivingBase) event.getEntity() : null;
+        if (entity != null) {
+            if (entity.isPotionActive(MobEffects.BLINDNESS)) {
+                return;
+            }
+            if (entity.isPotionActive(ModEffects.DARKNESS)) {
+                GlStateManager.setFog(GlStateManager.FogMode.EXP);
+                event.setCanceled(true);
+                event.setDensity(0.15f);
+                return;
+            }
+        }
+        if (Helper.isMidnightDimension(event.getEntity().world)) {
             GlStateManager.setFog(GlStateManager.FogMode.EXP);
             event.setCanceled(true);
-            event.setDensity(0.015F);
-        } else if (entity instanceof EntityLivingBase && ((EntityLivingBase) entity).isPotionActive(ModEffects.STUNNED)) {
+            event.setDensity(0.015f);
+        } else if (entity != null && entity.isPotionActive(ModEffects.STUNNED)) {
             GlStateManager.setFog(GlStateManager.FogMode.EXP);
             event.setCanceled(true);
-            event.setDensity(0.15F);
+            event.setDensity(0.15f);
         }
     }
 
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public static void onSetupFogColor(EntityViewRenderEvent.FogColors event) {
-        Entity entity = event.getEntity();
-        if (entity instanceof EntityLivingBase && ((EntityLivingBase) entity).isPotionActive(ModEffects.STUNNED)) {
-            event.setRed(0.1F);
-            event.setGreen(0.1F);
-            event.setBlue(0.1F);
+        if (event.getEntity() instanceof EntityLivingBase) {
+            EntityLivingBase entity = (EntityLivingBase) event.getEntity();
+            if (entity.isPotionActive(ModEffects.STUNNED)) {
+                event.setRed(0.1F);
+                event.setGreen(0.1F);
+                event.setBlue(0.1F);
+            } else if (entity.isPotionActive(ModEffects.DARKNESS)) {
+                event.setRed(0f);
+                event.setGreen(0f);
+                event.setBlue(0f);
+            }
         }
     }
 

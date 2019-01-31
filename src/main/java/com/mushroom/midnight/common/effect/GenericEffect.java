@@ -10,10 +10,10 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import static com.mushroom.midnight.Midnight.MODID;
 
-public abstract class GenericEffect extends Potion {
+public class GenericEffect extends Potion {
     private ResourceLocation icon = null;
 
-    protected GenericEffect(boolean isBadEffect, int color) {
+    public GenericEffect(boolean isBadEffect, int color) {
         super(isBadEffect, color);
     }
 
