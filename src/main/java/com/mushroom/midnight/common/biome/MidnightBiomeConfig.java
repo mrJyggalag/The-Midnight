@@ -19,6 +19,8 @@ public class MidnightBiomeConfig {
     private final ImmutableList<FeatureEntry> features;
     private final ImmutableList<Biome.SpawnListEntry> monsterSpawns;
     private final ImmutableList<Biome.SpawnListEntry> creatureSpawns;
+    private final ImmutableList<Biome.SpawnListEntry> ambientCreatureSpawns;
+    private final ImmutableList<Biome.SpawnListEntry> waterCreatureSpawns;
 
     private MidnightBiomeConfig(
             SurfaceConfig surfaceConfig,
@@ -26,7 +28,9 @@ public class MidnightBiomeConfig {
             int grassColor, int foliageColor,
             ImmutableList<FeatureEntry> features,
             ImmutableList<Biome.SpawnListEntry> monsterSpawns,
-            ImmutableList<Biome.SpawnListEntry> creatureSpawns
+            ImmutableList<Biome.SpawnListEntry> creatureSpawns,
+            ImmutableList<Biome.SpawnListEntry> ambientCreatureSpawns,
+            ImmutableList<Biome.SpawnListEntry> waterCreatureSpawns
     ) {
         this.surfaceConfig = surfaceConfig;
         this.ridgeWeight = ridgeWeight;
@@ -37,6 +41,8 @@ public class MidnightBiomeConfig {
         this.features = features;
         this.monsterSpawns = monsterSpawns;
         this.creatureSpawns = creatureSpawns;
+        this.ambientCreatureSpawns = ambientCreatureSpawns;
+        this.waterCreatureSpawns = waterCreatureSpawns;
     }
 
     public static Builder builder() {
@@ -57,6 +63,14 @@ public class MidnightBiomeConfig {
 
     public Collection<Biome.SpawnListEntry> getCreatureSpawns() {
         return this.creatureSpawns;
+    }
+
+    public Collection<Biome.SpawnListEntry> getAmbientCreatureSpawns() {
+        return this.ambientCreatureSpawns;
+    }
+
+    public Collection<Biome.SpawnListEntry> getWaterCreatureSpawns() {
+        return this.waterCreatureSpawns;
     }
 
     public float getRidgeWeight() {
@@ -95,6 +109,8 @@ public class MidnightBiomeConfig {
         private final ImmutableList.Builder<FeatureEntry> features = new ImmutableList.Builder<>();
         private final ImmutableList.Builder<Biome.SpawnListEntry> monsterSpawns = new ImmutableList.Builder<>();
         private final ImmutableList.Builder<Biome.SpawnListEntry> creatureSpawns = new ImmutableList.Builder<>();
+        private final ImmutableList.Builder<Biome.SpawnListEntry> ambientCreatureSpawns = new ImmutableList.Builder<>();
+        private final ImmutableList.Builder<Biome.SpawnListEntry> waterCreatureSpawns = new ImmutableList.Builder<>();
 
         Builder() {
         }
@@ -109,6 +125,8 @@ public class MidnightBiomeConfig {
             this.features.addAll(config.features);
             this.monsterSpawns.addAll(config.monsterSpawns);
             this.creatureSpawns.addAll(config.creatureSpawns);
+            this.ambientCreatureSpawns.addAll(config.ambientCreatureSpawns);
+            this.waterCreatureSpawns.addAll(config.waterCreatureSpawns);
         }
 
         public Builder withFeature(IMidnightFeature feature, IPlacementConfig config) {
@@ -156,6 +174,16 @@ public class MidnightBiomeConfig {
             return this;
         }
 
+        public Builder withAmbientCreature(Biome.SpawnListEntry entry) {
+            this.ambientCreatureSpawns.add(entry);
+            return this;
+        }
+
+        public Builder withWaterCreature(Biome.SpawnListEntry entry) {
+            this.waterCreatureSpawns.add(entry);
+            return this;
+        }
+
         public Builder wet() {
             this.wet = true;
             return this;
@@ -168,7 +196,9 @@ public class MidnightBiomeConfig {
                     this.grassColor, this.foliageColor,
                     this.features.build(),
                     this.monsterSpawns.build(),
-                    this.creatureSpawns.build()
+                    this.creatureSpawns.build(),
+                    this.ambientCreatureSpawns.build(),
+                    this.waterCreatureSpawns.build()
             );
         }
     }
