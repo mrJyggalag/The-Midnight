@@ -25,7 +25,7 @@ public class MidnightBiome extends Biome implements IMidnightBiome {
     private final SurfaceConfig localSurfaceConfig;
 
     private static final EnumCreatureType MIDNIGHT_MOB = EnumHelper.addCreatureType("midnight_mob", IMob.class, 20, Material.AIR, false, false);
-    private static final EnumCreatureType MIDNIGHT_AMBIENT = EnumHelper.addCreatureType("midnight_mob", EntityAmbientCreature.class, 30, Material.AIR, true, false);
+    private static final EnumCreatureType MIDNIGHT_AMBIENT = EnumHelper.addCreatureType("midnight_ambient", EntityAmbientCreature.class, 30, Material.AIR, true, false);
 
     public MidnightBiome(BiomeProperties properties, MidnightBiomeConfig sourceConfig) {
         super(properties);
