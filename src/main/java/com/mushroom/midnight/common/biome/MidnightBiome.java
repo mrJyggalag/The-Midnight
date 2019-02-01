@@ -6,18 +6,26 @@ import com.mushroom.midnight.common.registry.ModBlocks;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
+import net.minecraft.entity.EnumCreatureType;
+import net.minecraft.entity.monster.IMob;
+import net.minecraft.entity.passive.EntityAmbientCreature;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.chunk.ChunkPrimer;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.util.EnumHelper;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 public class MidnightBiome extends Biome implements IMidnightBiome {
     protected final MidnightBiomeConfig config;
     private final SurfaceConfig surfaceConfig;
     private final SurfaceConfig localSurfaceConfig;
+
+    private static final EnumCreatureType MIDNIGHT_MOB = EnumHelper.addCreatureType("midnight_mob", IMob.class, 20, Material.AIR, false, false);
+    private static final EnumCreatureType MIDNIGHT_AMBIENT = EnumHelper.addCreatureType("midnight_ambient", EntityAmbientCreature.class, 30, Material.AIR, true, false);
 
     public MidnightBiome(BiomeProperties properties, MidnightBiomeConfig sourceConfig) {
         super(properties);
@@ -32,8 +40,10 @@ public class MidnightBiome extends Biome implements IMidnightBiome {
         this.spawnableWaterCreatureList.clear();
         this.spawnableCaveCreatureList.clear();
 
-        this.spawnableMonsterList.addAll(config.getMonsterSpawns());
+        this.modSpawnableLists.put(MIDNIGHT_MOB, new ArrayList<>(config.getMonsterSpawns()));
+        this.modSpawnableLists.put(MIDNIGHT_AMBIENT, new ArrayList<>(config.getAmbientCreatureSpawns()));
         this.spawnableCreatureList.addAll(config.getCreatureSpawns());
+        this.spawnableWaterCreatureList.addAll(config.getWaterCreatureSpawns());
 
         this.config = config;
         this.decorator = new MidnightBiomeDecorator(config);
