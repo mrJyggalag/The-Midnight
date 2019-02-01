@@ -314,19 +314,6 @@ public class EntityRifter extends EntityMob implements IRiftTraveler, IEntityAdd
     }
 
     @Override
-    public boolean getCanSpawnHere() {
-        if (this.rand.nextInt(10) != 0) {
-            return false;
-        }
-        AxisAlignedBB bounds = this.getEntityBoundingBox().grow(64.0);
-        List<EntityRifter> nearbyRifters = this.world.getEntitiesWithinAABB(EntityRifter.class, bounds);
-        if (!nearbyRifters.isEmpty()) {
-            return false;
-        }
-        return super.getCanSpawnHere();
-    }
-
-    @Override
     public int getMaxSpawnedInChunk() {
         return 1;
     }

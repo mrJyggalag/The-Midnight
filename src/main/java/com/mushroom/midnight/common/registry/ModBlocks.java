@@ -65,17 +65,12 @@ import com.mushroom.midnight.common.world.feature.ShadowrootTreeFeature;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.monster.EntityEnderman;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -555,6 +550,17 @@ public class ModBlocks {
         registry.register(itemBlock(VIRIDSHROOM_SLAB, b -> new ItemMidnightSlab(b, VIRIDSHROOM_DOUBLE_SLAB)));
         registry.register(itemBlock(NIGHTSHROOM_SLAB, b -> new ItemMidnightSlab(b, NIGHTSHROOM_DOUBLE_SLAB)));
         registry.register(itemBlock(ROCKSHROOM_BRICKS_SLAB, b -> new ItemMidnightSlab(b, ROCKSHROOM_BRICKS_DOUBLE_SLAB)));
+
+        EntityEnderman.setCarriable(MIDNIGHT_GRASS, true);
+        EntityEnderman.setCarriable(MIDNIGHT_DIRT, true);
+        EntityEnderman.setCarriable(NIGHTSTONE, true);
+        EntityEnderman.setCarriable(SUAVIS, true);
+        EntityEnderman.setCarriable(TRENCHSTONE, true);
+        EntityEnderman.setCarriable(ROCKSHROOM, true);
+        EntityEnderman.setCarriable(DEWSHROOM, true);
+        EntityEnderman.setCarriable(VIRIDSHROOM, true);
+        EntityEnderman.setCarriable(NIGHTSHROOM, true);
+        EntityEnderman.setCarriable(GHOST_PLANT, true);
     }
 
     public static void onInit() {

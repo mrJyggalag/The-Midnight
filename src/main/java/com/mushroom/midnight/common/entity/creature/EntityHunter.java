@@ -205,12 +205,6 @@ public class EntityHunter extends EntityMob implements EntityFlying {
     }
 
     @Override
-    public boolean getCanSpawnHere() {
-        // TODO
-        return false;
-    }
-
-    @Override
     public int getMaxSpawnedInChunk() {
         return 1;
     }

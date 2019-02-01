@@ -30,6 +30,7 @@ import com.mushroom.midnight.common.world.feature.config.SurfacePlacementConfig;
 import com.mushroom.midnight.common.world.feature.config.UndergroundPlacementConfig;
 import net.minecraft.block.BlockBush;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.monster.EntityEnderman;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
@@ -181,6 +182,8 @@ public class MidnightBiomeConfigs {
             .withFeature(GHOST_PLANT_FEATURE, new ParcelPlacementConfig(3, 6, 0.3f))
             .withFeature(UNDERGROUND_FEATURES, new UndergroundPlacementConfig(1, 3, 10, 50))
             .withCreature(new Biome.SpawnListEntry(EntityNightStag.class, 100, 1, 3))
+            .withMonster(new Biome.SpawnListEntry(EntityRifter.class, 100, 1, 2))
+            .withMonster(new Biome.SpawnListEntry(EntityEnderman.class, 1, 4, 4))
             .build();
 
     public static final MidnightBiomeConfig ROCKY_CONFIG = MidnightBiomeConfig.builder()
@@ -192,7 +195,9 @@ public class MidnightBiomeConfigs {
             .withFeature(GHOST_PLANT_FEATURE, new ParcelPlacementConfig(3, 6, 0.3f))
             .withFeature(UNDERGROUND_FEATURES, new UndergroundPlacementConfig(1, 3, 10, 50))
             .withSurface(ROCKY_SURFACE_CONFIG)
-            .withMonster(new Biome.SpawnListEntry(EntityHunter.class, 1, 0, 2))
+            .withMonster(new Biome.SpawnListEntry(EntityRifter.class, 100, 1, 2))
+            .withMonster(new Biome.SpawnListEntry(EntityEnderman.class, 1, 4, 4))
+            .withMonster(new Biome.SpawnListEntry(EntityHunter.class, 5, 1, 2))
             .build();
 
     public static final MidnightBiomeConfig BLACK_RIDGE_CONFIG = MidnightBiomeConfig.builder(ROCKY_CONFIG)
@@ -212,7 +217,6 @@ public class MidnightBiomeConfigs {
             .withFeature(DEAD_LOG_FEATURE, new SurfacePlacementConfig(6))
             .withFeature(DEAD_TREE_FEATURE, new SurfacePlacementConfig(-5, 1))
             .withFeature(VIOLEAF_FEATURE, new ParcelPlacementConfig(2, 5, 0.3f))
-            .withMonster(new Biome.SpawnListEntry(EntityRifter.class, 1, 0, 1))
             .withCreature(new Biome.SpawnListEntry(EntityNightStag.class, 100, 1, 3))
             .build();
 
@@ -222,7 +226,6 @@ public class MidnightBiomeConfigs {
             .withFeature(FUNGI_FEATURE, new ScatterPlacementConfig(6, 16))
             .withFeature(DOUBLE_FUNGI_FEATURE, new ScatterPlacementConfig(4, 8))
             .withFeature(BLADESHROOM_FEATURE, new ScatterPlacementConfig(1, 32))
-            .withMonster(new Biome.SpawnListEntry(EntityRifter.class, 1, 0, 1))
             .withGrassColor(0x8489B5)
             .build();
 
@@ -236,14 +239,13 @@ public class MidnightBiomeConfigs {
             .withFeature(CRYSTAL_FLOWER_FEATURE, new ScatterPlacementConfig(5, 12))
             .withFeature(GHOST_PLANT_FEATURE, new ParcelPlacementConfig(3, 6, 0.3f))
             .withFeature(UNDERGROUND_FEATURES, new UndergroundPlacementConfig(1, 3, 10, 50))
-            // TODO add the ambient & aquatic creatures
-            .withCreature(new Biome.SpawnListEntry(EntityCrystalBug.class, 100, 3, 7))
+            .withAmbientCreature(new Biome.SpawnListEntry(EntityCrystalBug.class, 100, 7, 10))
             .withGrassColor(0xD184BC)
             .build();
 
     public static final MidnightBiomeConfig WARPED_FIELDS_CONFIG = MidnightBiomeConfig.builder(VEGETATED_CONFIG)
             .withFeature(SHADOWROOT_TREE_FEATURE, new SurfacePlacementConfig(-3, 1))
-            .withMonster(new Biome.SpawnListEntry(EntityHunter.class, 1, 0, 2))
+            .withMonster(new Biome.SpawnListEntry(EntityHunter.class, 5, 0, 2))
             .withDensityScale(0.5F)
             .withRidgeWeight(0.0F)
             .wet()
@@ -266,6 +268,8 @@ public class MidnightBiomeConfigs {
             .withFeature(GHOST_PLANT_FEATURE, new ParcelPlacementConfig(3, 6, 0.3f))
             .withFeature(UNDERGROUND_FEATURES, new UndergroundPlacementConfig(1, 3, 10, 50))
             .withCreature(new Biome.SpawnListEntry(EntityNightStag.class, 100, 1, 3))
+            .withMonster(new Biome.SpawnListEntry(EntityRifter.class, 100, 1, 2))
+            .withMonster(new Biome.SpawnListEntry(EntityEnderman.class, 1, 4, 4))
             .withGrassColor(0x8893AD)
             .withRidgeWeight(0.0F)
             .wet()
@@ -292,22 +296,26 @@ public class MidnightBiomeConfigs {
                     NIGHTSTONE_BOULDER_FEATURE,
                     NIGHTSTONE_SPIKE_FEATURE
             }, new SurfacePlacementConfig(-3, 1))
-            .withMonster(new Biome.SpawnListEntry(EntityHunter.class, 1, 0, 2))
             .withCreature(new Biome.SpawnListEntry(EntityNightStag.class, 100, 1, 3))
+            .withMonster(new Biome.SpawnListEntry(EntityRifter.class, 100, 1, 2))
+            .withMonster(new Biome.SpawnListEntry(EntityEnderman.class, 1, 4, 4))
+            .withMonster(new Biome.SpawnListEntry(EntityHunter.class, 5, 1, 2))
             .withRidgeWeight(0.0F)
             .withGrassColor(0xBAA3C6)
             .build();
 
     public static final MidnightBiomeConfig BLACK_PLATEAU_CONFIG = MidnightBiomeConfig.builder(ROCKY_CONFIG)
-            .withMonster(new Biome.SpawnListEntry(EntityHunter.class, 1, 0, 2))
+            .withMonster(new Biome.SpawnListEntry(EntityHunter.class, 5, 0, 2))
             .build();
 
     public static final MidnightBiomeConfig PHANTASMAL_VALLEY_CONFIG = MidnightBiomeConfig.builder()
             .withFeature(ROCKSHROOM_HEAP_FEATURE, new SurfacePlacementConfig(-99, 1))
             .withFeature(GHOST_PLANT_FEATURE, new ParcelPlacementConfig(3, 6, 0.3f))
             .withFeature(UNDERGROUND_FEATURES, new UndergroundPlacementConfig(1, 3, 10, 50))
-            .withMonster(new Biome.SpawnListEntry(EntityHunter.class, 1, 0, 2))
             .withCreature(new Biome.SpawnListEntry(EntityNightStag.class, 100, 1, 3))
+            .withMonster(new Biome.SpawnListEntry(EntityRifter.class, 100, 1, 2))
+            .withMonster(new Biome.SpawnListEntry(EntityEnderman.class, 1, 4, 4))
+            .withMonster(new Biome.SpawnListEntry(EntityHunter.class, 5, 1, 2))
             .withRidgeWeight(0.0F)
             .wet()
             .build();
