@@ -103,7 +103,7 @@ public class ModEntities {
                         .id(new ResourceLocation(Midnight.MODID, "nightstag"), currentEntityId++)
                         .name(Midnight.MODID + ".nightstag")
                         .tracker(80, 3, true)
-                        //.egg(0x946CC2, 0x221F1D)
+                        .egg(0x946CC2, 0x221F1D)
                         .build()
         );
 
