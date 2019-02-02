@@ -1,7 +1,9 @@
 package com.mushroom.midnight.common.entity.creature;
 
+import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.common.entity.navigation.CustomPathNavigateGround;
 import com.mushroom.midnight.common.entity.task.EntityTaskNeutral;
+import com.mushroom.midnight.common.network.MessageNightstagAttack;
 import com.mushroom.midnight.common.registry.ModBlocks;
 import com.mushroom.midnight.common.registry.ModEffects;
 import net.minecraft.block.Block;
@@ -25,7 +27,6 @@ import net.minecraft.init.SoundEvents;
 import net.minecraft.pathfinding.PathNavigate;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
@@ -37,10 +38,11 @@ import javax.annotation.Nullable;
 import static com.mushroom.midnight.common.registry.ModLootTables.LOOT_TABLE_NIGHTSTAG;
 
 public class EntityNightStag extends EntityAnimal {
-    private static final int ATTACK_ANIMATION_TICKS = 20;
-    private boolean attacking = false;
+
+    private static final int ATTACK_ANIMATION_TICKS = 10;
     private int attackAnimation = 0;
     private float attackProgress = 0f;
+    private boolean attacking = false;
 
     public EntityNightStag(World world) {
         super(world);
@@ -115,7 +117,6 @@ public class EntityNightStag extends EntityAnimal {
             protected void checkAndPerformAttack(EntityLivingBase enemy, double distToEnemySqr) {
                 if (distToEnemySqr <= getAttackReachSqr(enemy) && this.attackTick <= 0) {
                     this.attackTick = 20;
-                    this.attacker.swingArm(EnumHand.MAIN_HAND);
                     this.attacker.attackEntityAsMob(enemy);
                     setAttacking(true);
                 }
@@ -145,6 +146,7 @@ public class EntityNightStag extends EntityAnimal {
                 ((EntityPlayer) entity).addPotionEffect(new PotionEffect(ModEffects.DARKNESS, 200, 0, false, true));
             }
             applyEnchantments(this, entity);
+            Midnight.NETWORK.sendToAllTracking(new MessageNightstagAttack(this), this);
         }
         return flag;
     }
@@ -156,12 +158,13 @@ public class EntityNightStag extends EntityAnimal {
     }
 
     private void updateAttackAnimation() {
-        if (this.attacking) {
-            this.attackAnimation++;
+        if (isAttacking()) {
             if (this.attackAnimation >= ATTACK_ANIMATION_TICKS) {
                 this.attackAnimation = 0;
                 this.attackProgress = 0f;
+                setAttacking(false);
             } else {
+                this.attackAnimation++;
                 this.attackProgress = this.attackAnimation / (float) ATTACK_ANIMATION_TICKS;
             }
         }

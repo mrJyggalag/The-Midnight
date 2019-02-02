@@ -74,10 +74,8 @@ public class ModelNightStag extends ModelQuadruped {
         EntityNightStag nightstag = (EntityNightStag) entity;
         if (nightstag.isAttacking()) {
             float attackProgress = nightstag.getAttackProgress();
-            if (attackProgress > 0f) {
-                this.body.rotateAngleX = (attackProgress < 0.5f ? attackProgress : 0f) * 0.2f;
-                this.head.rotateAngleX = (attackProgress < 0.9f ? attackProgress : (1f - attackProgress)) * 3f;
-            }
+            this.body.rotateAngleX = (attackProgress < 0.5f ? attackProgress : 0f) * 0.2f;
+            this.head.rotateAngleX = (attackProgress < 0.9f ? attackProgress : (1f - attackProgress)) * 3f;
         } else {
             this.body.rotateAngleX = 0f;
         }
