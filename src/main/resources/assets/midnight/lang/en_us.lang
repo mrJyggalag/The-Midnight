@@ -68,8 +68,8 @@ tile.midnight.bloomcrystal_rock.name=Bloomcrystal Rock
 tile.midnight.rouxe.name=Rouxe Crystal
 tile.midnight.rouxe_rock.name=Rouxe Rock
 
-tile.midnight.crystal_glass.name=Crystal Glass
-tile.midnight.crystal_glass_pane.name=Crystal Glass Pane
+tile.midnight.archaic_glass.name=Crystal Glass
+tile.midnight.archaic_glass_pane.name=Crystal Glass Pane
 
 tile.midnight.miasma_surface.name=Miasma Surface
 tile.midnight.miasma.name=Miasma
@@ -209,7 +209,7 @@ item.midnight.archaic_shard.name=Archaic Shard
 
 item.midnight.raw_suavis.name=Raw Suavis Slice
 item.midnight.cook_suavis.name=Cooked Suavis Slice
-item.midnight.raw_deceitful_snapper.name=Deceitful Snapper
+item.midnight.deceitful_snapper.name=Deceitful Snapper
 item.midnight.raw_stag_flank.name=Raw Stag Flank
 item.midnight.cook_stag_flank.name=Cooked Stag Flank
 item.midnight.cook_stinger_egg.name=Cooked Stinger Egg

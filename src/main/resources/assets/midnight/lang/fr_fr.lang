@@ -68,8 +68,8 @@ tile.midnight.bloomcrystal_rock.name=Roche de Cristal de Floraison
 tile.midnight.rouxe.name=Cristal de Rouxe
 tile.midnight.rouxe_rock.name=Roche de Rouxe
 
-tile.midnight.crystal_glass.name=Verre de Cristal
-tile.midnight.crystal_glass_pane.name=Vitre de Cristal
+tile.midnight.archaic_glass.name=Verre de Cristal
+tile.midnight.archaic_glass_pane.name=Vitre de Cristal
 
 tile.midnight.miasma_surface.name=Surface de Miasme
 tile.midnight.miasma.name=Miasme
@@ -209,7 +209,7 @@ item.midnight.archaic_shard.name=Tesson Archaïque
 
 item.midnight.raw_suavis.name=Tranche de Suavis Cru
 item.midnight.cook_suavis.name=Tranche de Suavis Cuit
-item.midnight.raw_deceitful_snapper.name=Baffeur Fourbe
+item.midnight.deceitful_snapper.name=Baffeur Fourbe
 item.midnight.raw_stag_flank.name=Flanc de Cerf Cru
 item.midnight.cook_stag_flank.name=Flanc de Cerf Cuit
 item.midnight.cook_stinger_egg.name=Oeuf de Stinger Cuit

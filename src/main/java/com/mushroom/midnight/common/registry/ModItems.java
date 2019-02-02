@@ -7,7 +7,7 @@ import com.mushroom.midnight.common.item.ItemBladeshroomCap;
 import com.mushroom.midnight.common.item.ItemFoodBasic;
 import com.mushroom.midnight.common.item.ItemMidnightDoor;
 import com.mushroom.midnight.common.item.ItemMidnightSeed;
-import com.mushroom.midnight.common.item.ItemRawDeceitfulSnapper;
+import com.mushroom.midnight.common.item.ItemDeceitfulSnapper;
 import com.mushroom.midnight.common.item.ItemRawSuavis;
 import com.mushroom.midnight.common.item.armors.ItemMidnightBoots;
 import com.mushroom.midnight.common.item.armors.ItemMidnightChestplate;
@@ -60,7 +60,7 @@ public class ModItems {
 
     public static final Item RAW_SUAVIS = Items.AIR;
     public static final Item COOK_SUAVIS = Items.AIR;
-    public static final Item RAW_DECEITFUL_SNAPPER = Items.AIR;
+    public static final Item DECEITFUL_SNAPPER = Items.AIR;
     public static final Item RAW_STAG_FLANK = Items.AIR;
     public static final Item COOK_STAG_FLANK = Items.AIR;
     public static final Item COOK_STINGER_EGG = Items.AIR;
@@ -129,7 +129,7 @@ public class ModItems {
                 RegUtil.withName(new ItemMidnightSeed(() -> ModBlocks.BLADESHROOM.getDefaultState()), "bladeshroom_spores"),
                 RegUtil.withName(new ItemRawSuavis(), "raw_suavis"),
                 RegUtil.withName(new ItemFoodBasic(5, 0.6f, false), "cook_suavis"),
-                RegUtil.withName(new ItemRawDeceitfulSnapper(), "raw_deceitful_snapper"),
+                RegUtil.withName(new ItemDeceitfulSnapper(), "deceitful_snapper"),
                 RegUtil.withName(new ItemFoodBasic(3, 0.3f, false), "raw_stag_flank"),
                 RegUtil.withName(new ItemFoodBasic(8, 0.8f, false), "cook_stag_flank"),
                 RegUtil.withName(new ItemFoodBasic(6, 0.6f, false), "cook_stinger_egg"),

@@ -17,7 +17,7 @@
         },
         {
           "type": "item",
-          "name": "midnight:raw_deceitful_snapper",
+          "name": "midnight:deceitful_snapper",
           "conditions": [
             {
               "condition": "midnight:in_biome",

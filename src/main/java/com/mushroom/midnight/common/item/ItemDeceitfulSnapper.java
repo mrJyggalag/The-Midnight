@@ -20,10 +20,10 @@ import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
 
-public class ItemRawDeceitfulSnapper extends ItemFoodBasic {
+public class ItemDeceitfulSnapper extends ItemFoodBasic {
     private static final DamageSource DECEITFUL_SNAPPER_DAMAGE = new MidnightDamageSource("deceitful_snapper");
 
-    public ItemRawDeceitfulSnapper() {
+    public ItemDeceitfulSnapper() {
         super(6, 0.6f, false);
     }
 

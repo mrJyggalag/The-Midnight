@@ -6,11 +6,11 @@
   ],
   "key": {
     "#": {
-      "item": "midnight:crystal_glass"
+      "item": "midnight:archaic_glass"
     }
   },
   "result": {
-    "item": "midnight:crystal_glass_pane",
+    "item": "midnight:archaic_glass_pane",
     "count": 16
   }
 }

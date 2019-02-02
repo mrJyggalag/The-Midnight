@@ -3,7 +3,7 @@
   "defaults": {
     "model": "cube_all",
     "textures": {
-      "all": "midnight:blocks/crystal_glass"
+      "all": "midnight:blocks/archaic_glass"
     }
   },
   "variants": {

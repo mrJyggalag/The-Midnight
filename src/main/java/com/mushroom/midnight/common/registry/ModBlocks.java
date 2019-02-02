@@ -199,8 +199,8 @@ public class ModBlocks {
     public static final Block ROUXE = Blocks.AIR;
     public static final Block ROUXE_ROCK = Blocks.AIR;
 
-    public static final Block CRYSTAL_GLASS = Blocks.AIR;
-    public static final Block CRYSTAL_GLASS_PANE = Blocks.AIR;
+    public static final Block ARCHAIC_GLASS = Blocks.AIR;
+    public static final Block ARCHAIC_GLASS_PANE = Blocks.AIR;
 
     public static final Block MIASMA_SURFACE = Blocks.AIR;
     public static final Block MIASMA = Blocks.AIR;
@@ -392,8 +392,8 @@ public class ModBlocks {
                 RegUtil.withName(new BlockBasic(Material.IRON), "ebonys_block")
                         .withSoundType(SoundType.METAL)
                         .setHardness(3.0F),
-                RegUtil.withName(new BlockMidnightGlass(), "crystal_glass"),
-                RegUtil.withName(new BlockMidnightGlassPane(), "crystal_glass_pane"),
+                RegUtil.withName(new BlockMidnightGlass(), "archaic_glass"),
+                RegUtil.withName(new BlockMidnightGlassPane(), "archaic_glass_pane"),
                 RegUtil.withName(new BlockMidnightWoodPlank(), "shadowroot_planks"),
                 RegUtil.withName(new BlockMidnightWoodPlank(), "dead_wood_planks"),
                 RegUtil.withName(new BlockMidnightWoodPlank(), "dark_willow_planks"),
@@ -519,7 +519,7 @@ public class ModBlocks {
                 NIGHTSHROOM_TRAPDOOR, DEWSHROOM_TRAPDOOR, VIRIDSHROOM_TRAPDOOR,
                 BLOOMCRYSTAL, BLOOMCRYSTAL_ROCK,
                 ROUXE, ROUXE_ROCK,
-                CRYSTAL_GLASS, CRYSTAL_GLASS_PANE,
+                ARCHAIC_GLASS, ARCHAIC_GLASS_PANE,
                 MIASMA_SURFACE, MIASMA,
                 DARK_WATER,
                 DECEITFUL_PEAT, DECEITFUL_MUD, DECEITFUL_MOSS,

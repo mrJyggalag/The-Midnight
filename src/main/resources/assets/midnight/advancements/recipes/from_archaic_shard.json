@@ -1,7 +1,7 @@
 {
 	"parent": "midnight:recipes/root",
 	"rewards": {
-		"recipes": ["midnight:crystal_glass"]
+		"recipes": ["midnight:archaic_glass"]
 	},
 	"criteria": {
 		"requirement_1": {
