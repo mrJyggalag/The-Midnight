@@ -273,9 +273,9 @@ entity.midnight.bladeshroom_cap.name=Bladeshroom Cap
 entity.midnight.nova.name=Nova
 entity.midnight.crystal_bug.name=Crystal Bug
 entity.midnight.stinger.name=Stinger
-entity.midnight.penumbrian=Penumbrian
-entity.midnight.tree_hopper=Treehopper
-entity.midnight.nightstag=Nightstag
+entity.midnight.penumbrian.name=Penumbrian
+entity.midnight.tree_hopper.name=Treehopper
+entity.midnight.nightstag.name=Nightstag
 
 # Config
 
