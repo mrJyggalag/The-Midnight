@@ -1,6 +1,7 @@
 package com.mushroom.midnight.common.entity.creature;
 
 import com.mushroom.midnight.common.entity.navigation.CustomPathNavigateGround;
+import com.mushroom.midnight.common.entity.task.EntityTaskNeutral;
 import com.mushroom.midnight.common.registry.ModLootTables;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityAgeable;
@@ -11,6 +12,7 @@ import net.minecraft.entity.ai.EntityAIHurtByTarget;
 import net.minecraft.entity.ai.EntityAILookIdle;
 import net.minecraft.entity.ai.EntityAIMoveTowardsRestriction;
 import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
+import net.minecraft.entity.ai.EntityAIPanic;
 import net.minecraft.entity.ai.EntityAISwimming;
 import net.minecraft.entity.ai.EntityAIWander;
 import net.minecraft.entity.ai.EntityAIWatchClosest;
@@ -19,7 +21,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.pathfinding.PathNavigate;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
@@ -50,13 +51,14 @@ public class EntityStinger extends EntityAgeable implements IAnimals {
     @Override
     protected void initEntityAI() {
         this.tasks.addTask(0, new EntityAISwimming(this));
-        this.tasks.addTask(2, new EntityAIAttackMelee(this, 1d, false));
+        this.tasks.addTask(1, new EntityTaskNeutral(this, new EntityAIPanic(this, 1.2d), true));
+        this.tasks.addTask(2, new EntityTaskNeutral(this, new EntityAIAttackMelee(this, 1d, false), false));
         this.tasks.addTask(5, new EntityAIMoveTowardsRestriction(this, 0.6d));
         this.tasks.addTask(7, new EntityAIWander(this, 0.6d, 60));
         this.tasks.addTask(8, new EntityAIWatchClosest(this, EntityPlayer.class, 8f, 0.02f));
         this.tasks.addTask(8, new EntityAILookIdle(this));
-        this.targetTasks.addTask(1, new EntityAIHurtByTarget(this, true));
-        this.targetTasks.addTask(2, new EntityAINearestAttackableTarget<>(this, EntityPlayer.class, 10, true, true, p -> p.world.getDifficulty() != EnumDifficulty.PEACEFUL && !p.isCreative() && !p.isSpectator()));
+        this.targetTasks.addTask(1, new EntityTaskNeutral(this, new EntityAIHurtByTarget(this, true), false));
+        this.targetTasks.addTask(2, new EntityTaskNeutral(this, new EntityAINearestAttackableTarget<>(this, EntityPlayer.class, true, true), false));
     }
 
     @Override

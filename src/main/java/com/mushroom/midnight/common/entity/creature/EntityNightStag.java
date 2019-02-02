@@ -1,14 +1,19 @@
 package com.mushroom.midnight.common.entity.creature;
 
 import com.mushroom.midnight.common.entity.navigation.CustomPathNavigateGround;
+import com.mushroom.midnight.common.entity.task.EntityTaskNeutral;
 import com.mushroom.midnight.common.registry.ModBlocks;
+import com.mushroom.midnight.common.registry.ModEffects;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityAgeable;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.IEntityLivingData;
 import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.EntityAIAvoidEntity;
+import net.minecraft.entity.ai.EntityAIAttackMelee;
 import net.minecraft.entity.ai.EntityAIFollowParent;
+import net.minecraft.entity.ai.EntityAIHurtByTarget;
 import net.minecraft.entity.ai.EntityAILookIdle;
 import net.minecraft.entity.ai.EntityAIPanic;
 import net.minecraft.entity.ai.EntityAISwimming;
@@ -18,7 +23,9 @@ import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.pathfinding.PathNavigate;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
@@ -30,6 +37,10 @@ import javax.annotation.Nullable;
 import static com.mushroom.midnight.common.registry.ModLootTables.LOOT_TABLE_NIGHTSTAG;
 
 public class EntityNightStag extends EntityAnimal {
+    private static final int ATTACK_ANIMATION_TICKS = 20;
+    private boolean attacking = false;
+    private int attackAnimation = 0;
+    private float attackProgress = 0f;
 
     public EntityNightStag(World world) {
         super(world);
@@ -70,8 +81,7 @@ public class EntityNightStag extends EntityAnimal {
         return SoundEvents.ENTITY_LLAMA_DEATH;
     }
 
-    public int getTalkInterval()
-    {
+    public int getTalkInterval() {
         return 200;
     }
 
@@ -99,12 +109,23 @@ public class EntityNightStag extends EntityAnimal {
     @Override
     protected void initEntityAI() {
         this.tasks.addTask(0, new EntityAISwimming(this));
-        this.tasks.addTask(1, new EntityAIPanic(this, 1.2d));
-        this.tasks.addTask(3, new EntityAIAvoidEntity<>(this, EntityPlayer.class, 24f, 0.8d, 1d));
+        this.tasks.addTask(1, new EntityTaskNeutral(this, new EntityAIPanic(this, 1.2d), true));
+        this.tasks.addTask(2, new EntityTaskNeutral(this, new EntityAIAttackMelee(this, 1d, false) {
+            @Override
+            protected void checkAndPerformAttack(EntityLivingBase enemy, double distToEnemySqr) {
+                if (distToEnemySqr <= getAttackReachSqr(enemy) && this.attackTick <= 0) {
+                    this.attackTick = 20;
+                    this.attacker.swingArm(EnumHand.MAIN_HAND);
+                    this.attacker.attackEntityAsMob(enemy);
+                    setAttacking(true);
+                }
+            }
+        }, false));
         this.tasks.addTask(4, new EntityAIFollowParent(this, 1d));
         this.tasks.addTask(6, new EntityAIWanderAvoidWater(this, 0.7d, 0.005f));
         this.tasks.addTask(7, new EntityAIWatchClosest(this, EntityPlayer.class, 12f));
         this.tasks.addTask(8, new EntityAILookIdle(this));
+        this.targetTasks.addTask(1, new EntityTaskNeutral(this, new EntityAIHurtByTarget(this, true), false));
     }
 
     @Override
@@ -112,11 +133,55 @@ public class EntityNightStag extends EntityAnimal {
         super.applyEntityAttributes();
         getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.25d);
         getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(15d);
+        getAttributeMap().registerAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(2d);
+    }
+
+    @Override
+    public boolean attackEntityAsMob(Entity entity) {
+        super.attackEntityAsMob(entity);
+        boolean flag = entity.attackEntityFrom(DamageSource.causeMobDamage(this), (float) getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).getAttributeValue());
+        if (flag) {
+            if (entity instanceof EntityPlayer) {
+                ((EntityPlayer) entity).addPotionEffect(new PotionEffect(ModEffects.DARKNESS, 200, 0, false, true));
+            }
+            applyEnchantments(this, entity);
+        }
+        return flag;
+    }
+
+    @Override
+    public void onUpdate() {
+        super.onUpdate();
+        updateAttackAnimation();
+    }
+
+    private void updateAttackAnimation() {
+        if (this.attacking) {
+            this.attackAnimation++;
+            if (this.attackAnimation >= ATTACK_ANIMATION_TICKS) {
+                this.attackAnimation = 0;
+                this.attackProgress = 0f;
+            } else {
+                this.attackProgress = this.attackAnimation / (float) ATTACK_ANIMATION_TICKS;
+            }
+        }
+    }
+
+    public float getAttackProgress() {
+        return this.attackProgress;
+    }
+
+    public void setAttacking(boolean attacking) {
+        this.attacking = attacking;
+    }
+
+    public boolean isAttacking() {
+        return this.attacking;
     }
 
     @Override
     @Nullable
     protected ResourceLocation getLootTable() {
-        return LOOT_TABLE_NIGHTSTAG;
+        return isChild() ? null : LOOT_TABLE_NIGHTSTAG;
     }
 }

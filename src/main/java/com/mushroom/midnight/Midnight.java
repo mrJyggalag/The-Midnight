@@ -24,12 +24,17 @@ import com.mushroom.midnight.common.registry.ModItems;
 import com.mushroom.midnight.common.registry.ModRecipes;
 import com.mushroom.midnight.common.util.EntityUtil;
 import com.mushroom.midnight.common.world.generator.MidnightOreGenerator;
+import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.EnumCreatureType;
+import net.minecraft.entity.monster.IMob;
+import net.minecraft.entity.passive.EntityAmbientCreature;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.storage.loot.conditions.LootConditionManager;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.common.capabilities.CapabilityManager;
+import net.minecraftforge.common.util.EnumHelper;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
@@ -83,6 +88,8 @@ public class Midnight {
             return new ItemStack(ModItems.SHADOWROOT_SWORD);
         }
     };
+    public static final EnumCreatureType MIDNIGHT_MOB = EnumHelper.addCreatureType("midnight_mob", IMob.class, 20, Material.AIR, false, false);
+    public static final EnumCreatureType MIDNIGHT_AMBIENT = EnumHelper.addCreatureType("midnight_ambient", EntityAmbientCreature.class, 30, Material.AIR, true, false);
 
     @SidedProxy(serverSide = "com.mushroom.midnight.common.CommonProxy", clientSide = "com.mushroom.midnight.client.ClientProxy")
     public static CommonProxy proxy;
