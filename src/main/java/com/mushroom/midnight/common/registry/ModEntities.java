@@ -4,6 +4,7 @@ import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.common.entity.EntityBladeshroomCap;
 import com.mushroom.midnight.common.entity.EntityRift;
 import com.mushroom.midnight.common.entity.creature.EntityCrystalBug;
+import com.mushroom.midnight.common.entity.creature.EntityDeceitfulSnapper;
 import com.mushroom.midnight.common.entity.creature.EntityHunter;
 import com.mushroom.midnight.common.entity.creature.EntityNightStag;
 import com.mushroom.midnight.common.entity.creature.EntityNova;
@@ -104,11 +105,20 @@ public class ModEntities {
                         .name(Midnight.MODID + ".nightstag")
                         .tracker(80, 3, true)
                         .egg(0x946CC2, 0x221F1D)
+                        .build(),
+                EntityEntryBuilder.create()
+                        .entity(EntityDeceitfulSnapper.class)
+                        .factory(EntityDeceitfulSnapper::new)
+                        .id(new ResourceLocation(Midnight.MODID, "deceitful_snapper"), currentEntityId++)
+                        .name(Midnight.MODID + ".deceitful_snapper")
+                        .tracker(80, 3, true)
+                        .egg(0x45404E, 0x906F99)
                         .build()
         );
 
         EntitySpawnPlacementRegistry.setPlacementType(EntityHunter.class, EntityLiving.SpawnPlacementType.IN_AIR);
         EntitySpawnPlacementRegistry.setPlacementType(EntityCrystalBug.class, EntityLiving.SpawnPlacementType.IN_AIR);
         EntitySpawnPlacementRegistry.setPlacementType(EntityNova.class, EntityLiving.SpawnPlacementType.IN_AIR);
+        EntitySpawnPlacementRegistry.setPlacementType(EntityDeceitfulSnapper.class, EntityLiving.SpawnPlacementType.IN_WATER);
     }
 }

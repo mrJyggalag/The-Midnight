@@ -114,7 +114,7 @@ tile.midnight.viridshroom_trapdoor.name=Trappe en ChampiViride
 tile.midnight.deceitful_mud.name=Boue Trompeuse
 tile.midnight.deceitful_peat.name=Tourbe Trompeuse
 tile.midnight.deceitful_algae.name=Algues Trompeuse
-tile.midnight.deceitful_moss.name=Mouse Trompeuse
+tile.midnight.deceitful_moss.name=Mousse Trompeuse
 
 tile.midnight.shadowroot_ladder.name=Échelle en Ombreracine
 tile.midnight.dead_wood_ladder.name=Échelle en Bois Mort
@@ -276,6 +276,7 @@ entity.midnight.stinger.name=Piqueur
 entity.midnight.penumbrian.name=Pénombrien
 entity.midnight.tree_hopper.name=Cigale Épineuse
 entity.midnight.nightstag.name=Cerf Obscure
+entity.midnight.deceitful_snapper.name=Baffeur Fourbe
 
 # Config
 

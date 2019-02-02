@@ -4,6 +4,7 @@ import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.client.IModelProvider;
 import com.mushroom.midnight.client.render.RenderBladeshroomCap;
 import com.mushroom.midnight.client.render.RenderCrystalBug;
+import com.mushroom.midnight.client.render.RenderDeceitfulSnapper;
 import com.mushroom.midnight.client.render.RenderHunter;
 import com.mushroom.midnight.client.render.RenderNightStag;
 import com.mushroom.midnight.client.render.RenderNova;
@@ -16,6 +17,7 @@ import com.mushroom.midnight.common.block.BlockShadowrootChest;
 import com.mushroom.midnight.common.entity.EntityBladeshroomCap;
 import com.mushroom.midnight.common.entity.EntityRift;
 import com.mushroom.midnight.common.entity.creature.EntityCrystalBug;
+import com.mushroom.midnight.common.entity.creature.EntityDeceitfulSnapper;
 import com.mushroom.midnight.common.entity.creature.EntityHunter;
 import com.mushroom.midnight.common.entity.creature.EntityNightStag;
 import com.mushroom.midnight.common.entity.creature.EntityNova;
@@ -79,6 +81,7 @@ public class ModModelRegistry {
         RenderingRegistry.registerEntityRenderingHandler(EntityTreeHopper.class, RenderTreeHopper::new);
         RenderingRegistry.registerEntityRenderingHandler(EntityStinger.class, RenderStinger::new);
         RenderingRegistry.registerEntityRenderingHandler(EntityNightStag.class, RenderNightStag::new);
+        RenderingRegistry.registerEntityRenderingHandler(EntityDeceitfulSnapper.class, RenderDeceitfulSnapper::new);
 
         ModItems.getItems().stream().filter(i -> i instanceof IModelProvider).forEach(ModModelRegistry::registerItemModel);
         ModBlocks.getBlocks().stream().filter(b -> b instanceof IModelProvider).forEach(ModModelRegistry::registerBlockModel);
