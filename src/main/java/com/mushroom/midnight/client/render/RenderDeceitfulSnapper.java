@@ -3,6 +3,7 @@ package com.mushroom.midnight.client.render;
 import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.client.model.ModelDeceitfulSnapper;
 import com.mushroom.midnight.common.entity.creature.EntityDeceitfulSnapper;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.util.ResourceLocation;
@@ -20,6 +21,12 @@ public class RenderDeceitfulSnapper extends RenderLiving<EntityDeceitfulSnapper>
     @Override
     protected ResourceLocation getEntityTexture(EntityDeceitfulSnapper entity) {
         return TEXTURE;
+    }
+
+    @Override
+    protected void preRenderCallback(EntityDeceitfulSnapper entity, float partialTicks) {
+        GlStateManager.translate(0f, 1.4f, -0.05f);
+        GlStateManager.scale(1.1f, 1.1f, 1.1f);
     }
 
     @Override
