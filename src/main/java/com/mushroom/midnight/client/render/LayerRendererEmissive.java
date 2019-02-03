@@ -13,10 +13,16 @@ public class LayerRendererEmissive<T extends EntityLivingBase> implements LayerR
 
     private final ModelBase model;
     private final ResourceLocation texture;
+    private final BrightnessFunction<T> brightnessFunction;
 
-    public LayerRendererEmissive(ModelBase model, ResourceLocation texture) {
+    public LayerRendererEmissive(ModelBase model, ResourceLocation texture, BrightnessFunction<T> brightnessFunction) {
         this.model = model;
         this.texture = texture;
+        this.brightnessFunction = brightnessFunction;
+    }
+
+    public LayerRendererEmissive(ModelBase model, ResourceLocation texture) {
+        this(model, texture, (entity, partialTicks) -> 240);
     }
 
     @Override
@@ -29,7 +35,9 @@ public class LayerRendererEmissive<T extends EntityLivingBase> implements LayerR
         GlStateManager.depthMask(true);
         GlStateManager.enableBlend();
 
-        OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 240, 240);
+        int brightness = this.brightnessFunction.apply(entity, partialTicks);
+        OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, brightness, brightness);
+
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
         GlStateManager.disableLighting();
 
@@ -42,5 +50,9 @@ public class LayerRendererEmissive<T extends EntityLivingBase> implements LayerR
     @Override
     public boolean shouldCombineTextures() {
         return false;
+    }
+
+    public interface BrightnessFunction<T extends EntityLivingBase> {
+        int apply(T entity, float partialTicks);
     }
 }
