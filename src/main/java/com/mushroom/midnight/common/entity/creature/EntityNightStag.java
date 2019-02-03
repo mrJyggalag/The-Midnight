@@ -41,7 +41,8 @@ public class EntityNightStag extends EntityAnimal {
 
     private static final int ATTACK_ANIMATION_TICKS = 10;
     private int attackAnimation = 0;
-    private float attackProgress = 0f;
+    private int prevAttackAnimation;
+
     private boolean attacking = false;
 
     public EntityNightStag(World world) {
@@ -158,20 +159,20 @@ public class EntityNightStag extends EntityAnimal {
     }
 
     private void updateAttackAnimation() {
+        this.prevAttackAnimation = this.attackAnimation;
         if (isAttacking()) {
             if (this.attackAnimation >= ATTACK_ANIMATION_TICKS) {
                 this.attackAnimation = 0;
-                this.attackProgress = 0f;
                 setAttacking(false);
             } else {
                 this.attackAnimation++;
-                this.attackProgress = this.attackAnimation / (float) ATTACK_ANIMATION_TICKS;
             }
         }
     }
 
-    public float getAttackProgress() {
-        return this.attackProgress;
+    public float getAttackAnimation(float partialTicks) {
+        float animationTick = this.prevAttackAnimation + (this.attackAnimation - this.prevAttackAnimation) * partialTicks;
+        return animationTick / ATTACK_ANIMATION_TICKS;
     }
 
     public void setAttacking(boolean attacking) {

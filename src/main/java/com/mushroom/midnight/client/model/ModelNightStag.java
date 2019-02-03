@@ -1,10 +1,12 @@
 package com.mushroom.midnight.client.model;
 
 import com.mushroom.midnight.common.entity.creature.EntityNightStag;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelQuadruped;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.Entity;
+import net.minecraft.util.math.MathHelper;
 
 public class ModelNightStag extends ModelQuadruped {
     public ModelRenderer snout;
@@ -81,9 +83,12 @@ public class ModelNightStag extends ModelQuadruped {
 
         EntityNightStag nightstag = (EntityNightStag) entity;
         if (nightstag.isAttacking()) {
-            float attackProgress = nightstag.getAttackProgress();
-            this.body.rotateAngleX = (attackProgress < 0.5f ? attackProgress : 0f) * 0.2f;
-            this.head.rotateAngleX = (attackProgress < 0.9f ? attackProgress : (1f - attackProgress)) * 3f;
+            float partialTicks = Minecraft.getMinecraft().getRenderPartialTicks();
+            float attackProgress = nightstag.getAttackAnimation(partialTicks);
+            float attackAnimation = MathHelper.sin((float) (attackProgress * Math.PI));
+
+            this.body.rotateAngleX = attackAnimation * 0.2f;
+            this.head.rotateAngleX = attackAnimation * 1.5f;
         } else {
             this.body.rotateAngleX = 0f;
         }

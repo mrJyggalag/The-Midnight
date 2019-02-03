@@ -23,6 +23,9 @@ public class RenderNightStag extends RenderLiving<EntityNightStag> {
     private static final int FLICK_BRIGHT_LOW = 50;
     private static final int FLICK_BRIGHT_UP = 200;
 
+    private static final int PULSE_BRIGHT_LOW = 200;
+    private static final int PULSE_BRIGHT_UP = 240;
+
     private static float flicker;
     private static float prevFlicker;
 
@@ -44,19 +47,22 @@ public class RenderNightStag extends RenderLiving<EntityNightStag> {
     }
 
     private static int computeBrightness(EntityNightStag entity, float partialTicks) {
-        float flicker = computeFlicker(entity, partialTicks);
+        double totalTicks = entity.ticksExisted + partialTicks;
+
+        float flicker = computeFlicker(totalTicks, partialTicks);
+        float pulse = (float) ((Math.sin(totalTicks * 0.125) + 1.0) * 0.5F);
+
         float health = entity.getHealth() / entity.getMaxHealth();
 
         float flickerBrightness = FLICK_BRIGHT_LOW + (FLICK_BRIGHT_UP - FLICK_BRIGHT_LOW) * flicker;
-        float healthyBrightness = 240.0F;
+        float healthyBrightness = PULSE_BRIGHT_LOW + (PULSE_BRIGHT_UP - PULSE_BRIGHT_LOW) * pulse;
 
         return MathHelper.floor(flickerBrightness * (1.0F - health) + healthyBrightness * health);
     }
 
-    private static float computeFlicker(EntityNightStag entity, float partialTicks) {
-        double totalTime = entity.ticksExisted + partialTicks;
+    private static float computeFlicker(double totalTicks, float partialTicks) {
         float lerpedFlicker = prevFlicker + (flicker - prevFlicker) * partialTicks;
-        float pulse = (float) (Math.sin(totalTime * 0.2) + 1.0) * 0.4F;
+        float pulse = (float) (Math.sin(totalTicks * 0.2) + 1.0) * 0.4F;
         return MathHelper.clamp(lerpedFlicker + pulse, 0.0F, 1.0F);
     }
 
