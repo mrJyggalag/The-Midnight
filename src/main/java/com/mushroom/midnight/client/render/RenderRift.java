@@ -7,6 +7,7 @@ import com.mushroom.midnight.common.config.MidnightConfig;
 import com.mushroom.midnight.common.entity.EntityRift;
 import com.mushroom.midnight.common.entity.RiftBridge;
 import com.mushroom.midnight.common.entity.RiftGeometry;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.OpenGlHelper;
@@ -26,6 +27,7 @@ public class RenderRift extends Render<EntityRift> {
     private static final double QUAD_HEIGHT = 2.6;
 
     private static final ResourceLocation RIFT_NOISE = new ResourceLocation(Midnight.MODID, "textures/effects/rift_noise.png");
+    private static final ResourceLocation RIFT_TEXTURE = new ResourceLocation(Midnight.MODID, "textures/entities/rift.png");
 
     private final WorldShader shader = new WorldShader(new ResourceLocation(Midnight.MODID, "rift"))
             .withTextureSampler("NoiseSampler", RIFT_NOISE);
@@ -49,6 +51,7 @@ public class RenderRift extends Render<EntityRift> {
 
             GlStateManager.pushMatrix();
             GlStateManager.disableCull();
+            GlStateManager.disableLighting();
 
             GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
 
@@ -60,12 +63,13 @@ public class RenderRift extends Render<EntityRift> {
             float openAnimation = this.computeOpenAnimation(openProgress);
             float unstableAnimation = this.computeUnstableAnimation(unstableTime);
 
-            if (this.shader.isAvailable() && MidnightConfig.general.riftShaders) {
+            if (this.shader.isAvailable() && MidnightConfig.client.riftShaders) {
                 this.renderShader(entity, time, openAnimation, unstableAnimation);
             } else {
                 this.renderTexture(entity, time, openAnimation, unstableAnimation);
             }
 
+            GlStateManager.enableLighting();
             GlStateManager.enableCull();
             GlStateManager.popMatrix();
 
@@ -107,7 +111,36 @@ public class RenderRift extends Render<EntityRift> {
     }
 
     private void renderTexture(EntityRift entity, float time, float openAnimation, float unstableAnimation) {
-        // TODO
+        Minecraft client = Minecraft.getMinecraft();
+
+        client.getTextureManager().bindTexture(RIFT_TEXTURE);
+
+        GlStateManager.enableAlpha();
+        GlStateManager.enableBlend();
+
+        GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
+
+        Tessellator tessellator = Tessellator.getInstance();
+        BufferBuilder builder = tessellator.getBuffer();
+
+        double width = (64.0 * 0.0625) / 2.0;
+        double height = (128.0 * 0.0625) / 2.0;
+
+        float idleSpeed = 0.08F;
+        float idleIntensity = 0.1F * openAnimation * (unstableAnimation * 5.0F + 1.0F);
+        float idleAnimation = (MathHelper.sin(time * idleSpeed) + 1.0F) * 0.4F * idleIntensity;
+
+        GlStateManager.scale(openAnimation, openAnimation, 1.0F);
+        GlStateManager.scale(1.0F + idleAnimation, 1.0F + (idleAnimation * 0.5F), 1.0F);
+
+        builder.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX);
+        builder.pos(-width, height, 0.0).tex(0.0, 1.0).endVertex();
+        builder.pos(width, height, 0.0).tex(1.0, 1.0).endVertex();
+        builder.pos(width, -height, 0.0).tex(1.0, 0.0).endVertex();
+        builder.pos(-width, -height, 0.0).tex(0.0, 0.0).endVertex();
+        tessellator.draw();
+
+        GlStateManager.disableBlend();
     }
 
     private float computeOpenAnimation(float openProgress) {

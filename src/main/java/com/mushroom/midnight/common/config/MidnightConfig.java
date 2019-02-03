@@ -28,11 +28,6 @@ public class MidnightConfig {
         @Config.RequiresMcRestart
         public int midnightDimensionId = -23;
 
-        @Config.Name("rift_shaders")
-        @Config.LangKey("config.midnight.rift_shaders")
-        @Config.Comment("If true, rifts will be rendered with custom shaders for standard effects. If false, a simpler texture will be rendered.")
-        public boolean riftShaders = true;
-
         @Config.Name("bladeshroom_damage_chance")
         @Config.LangKey("config.midnight.bladeshroom_damage_chance")
         @Config.Comment("The chance to take damage when picking a bladeshroom cap.")
@@ -73,6 +68,11 @@ public class MidnightConfig {
         @Config.LangKey("config.midnight.hide_vignette_effect")
         @Config.Comment("Hides the vignette effect in the dark areas of Midnight.")
         public boolean hideVignetteEffect = false;
+
+        @Config.Name("rift_shaders")
+        @Config.LangKey("config.midnight.rift_shaders")
+        @Config.Comment("If true, rifts will be rendered with custom shaders for standard effects. If false, a simpler texture will be rendered.")
+        public boolean riftShaders = true;
     }
 
     @SubscribeEvent
