@@ -1,7 +1,7 @@
 package com.mushroom.midnight.common.block;
 
-import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.client.IModelProvider;
+import com.mushroom.midnight.common.registry.ModTabs;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -16,7 +16,7 @@ public class BlockMidnightDirt extends Block implements IModelProvider {
         super(Material.GROUND);
         this.setHardness(0.5F);
         this.setSoundType(SoundType.GROUND);
-        this.setCreativeTab(Midnight.BUILDING_TAB);
+        this.setCreativeTab(ModTabs.BUILDING_TAB);
     }
 
     @Override

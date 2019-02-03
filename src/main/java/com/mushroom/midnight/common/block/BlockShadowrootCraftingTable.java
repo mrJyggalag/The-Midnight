@@ -1,9 +1,9 @@
 package com.mushroom.midnight.common.block;
 
-import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.client.IModelProvider;
 import com.mushroom.midnight.common.container.ContainerShadowrootCT;
 import com.mushroom.midnight.common.registry.ModBlocks;
+import com.mushroom.midnight.common.registry.ModTabs;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -25,15 +25,15 @@ public class BlockShadowrootCraftingTable extends Block implements IModelProvide
         super(Material.WOOD);
         this.setHardness(2.5F);
         this.setSoundType(SoundType.WOOD);
-        this.setCreativeTab(Midnight.DECORATION_TAB);
+        this.setCreativeTab(ModTabs.DECORATION_TAB);
     }
 
     @Override
-    public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-        if (worldIn.isRemote) {
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+        if (world.isRemote) {
             return true;
         } else {
-            playerIn.displayGui(new BlockShadowrootCraftingTable.InterfaceCraftingTable(worldIn, pos));
+            player.displayGui(new BlockShadowrootCraftingTable.InterfaceCraftingTable(world, pos));
             // playerIn.addStat(StatList.CRAFTING_TABLE_INTERACTION);
             return true;
         }

@@ -1,7 +1,7 @@
 package com.mushroom.midnight.common.block;
 
-import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.client.IModelProvider;
+import com.mushroom.midnight.common.registry.ModTabs;
 import net.minecraft.block.BlockWall;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.MapColor;
@@ -30,7 +30,7 @@ public class BlockMidnightWall extends BlockWall implements IModelProvider {
     public BlockMidnightWall(Supplier<IBlockState> parentSupplier) {
         super(Blocks.AIR);
         this.parentSupplier = parentSupplier;
-        this.setCreativeTab(Midnight.DECORATION_TAB);
+        this.setCreativeTab(ModTabs.DECORATION_TAB);
 
         this.setDefaultState(this.blockState.getBaseState()
                 .withProperty(UP, false)

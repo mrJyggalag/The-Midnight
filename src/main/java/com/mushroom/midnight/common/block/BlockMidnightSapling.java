@@ -1,7 +1,7 @@
 package com.mushroom.midnight.common.block;
 
-import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.client.IModelProvider;
+import com.mushroom.midnight.common.registry.ModTabs;
 import net.minecraft.block.BlockBush;
 import net.minecraft.block.BlockSapling;
 import net.minecraft.block.IGrowable;
@@ -31,7 +31,7 @@ public class BlockMidnightSapling extends BlockBush implements IModelProvider, I
         this.setSoundType(SoundType.PLANT);
 
         this.setDefaultState(this.blockState.getBaseState().withProperty(BlockSapling.STAGE, 0));
-        this.setCreativeTab(Midnight.DECORATION_TAB);
+        this.setCreativeTab(ModTabs.DECORATION_TAB);
 
         this.generatorSupplier = generatorSupplier;
     }

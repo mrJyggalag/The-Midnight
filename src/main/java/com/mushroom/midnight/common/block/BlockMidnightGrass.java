@@ -1,9 +1,9 @@
 package com.mushroom.midnight.common.block;
 
-import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.client.IModelProvider;
 import com.mushroom.midnight.common.helper.Helper;
 import com.mushroom.midnight.common.registry.ModBlocks;
+import com.mushroom.midnight.common.registry.ModTabs;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockBush;
 import net.minecraft.block.IGrowable;
@@ -28,7 +28,7 @@ public class BlockMidnightGrass extends Block implements IGrowable, IModelProvid
         this.setHardness(0.6F);
         this.setSoundType(SoundType.PLANT);
         this.setTickRandomly(true);
-        this.setCreativeTab(Midnight.BUILDING_TAB);
+        this.setCreativeTab(ModTabs.BUILDING_TAB);
     }
 
     @Override

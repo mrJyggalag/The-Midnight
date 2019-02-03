@@ -1,7 +1,7 @@
 package com.mushroom.midnight.common.block;
 
-import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.client.IModelProvider;
+import com.mushroom.midnight.common.registry.ModTabs;
 import net.minecraft.block.BlockMagma;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.state.IBlockState;
@@ -17,7 +17,7 @@ public class BlockMiasmaSurface extends BlockMagma implements IModelProvider {
     public BlockMiasmaSurface() {
         super();
         this.setHardness(0.5F);
-        this.setCreativeTab(Midnight.BUILDING_TAB);
+        this.setCreativeTab(ModTabs.BUILDING_TAB);
     }
 
     @Override

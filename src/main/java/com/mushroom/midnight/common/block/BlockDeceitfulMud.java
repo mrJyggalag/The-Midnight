@@ -1,8 +1,8 @@
 package com.mushroom.midnight.common.block;
 
-import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.client.IModelProvider;
 import com.mushroom.midnight.common.registry.ModSounds;
+import com.mushroom.midnight.common.registry.ModTabs;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -23,7 +23,7 @@ public class BlockDeceitfulMud extends Block implements IModelProvider {
         super(Material.GROUND);
         this.setHardness(0.5F);
         this.setSoundType(ModSounds.MUD);
-        this.setCreativeTab(Midnight.BUILDING_TAB);
+        this.setCreativeTab(ModTabs.BUILDING_TAB);
     }
 
     @Override

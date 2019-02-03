@@ -1,7 +1,7 @@
 package com.mushroom.midnight.common.block;
 
-import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.client.IModelProvider;
+import com.mushroom.midnight.common.registry.ModTabs;
 import net.minecraft.block.BlockGlass;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -14,7 +14,7 @@ public class BlockMidnightGlass extends BlockGlass implements IModelProvider {
         super(Material.GLASS, false);
         this.setHardness(0.3F);
         this.setSoundType(SoundType.GLASS);
-        this.setCreativeTab(Midnight.BUILDING_TAB);
+        this.setCreativeTab(ModTabs.BUILDING_TAB);
     }
 
     @Override

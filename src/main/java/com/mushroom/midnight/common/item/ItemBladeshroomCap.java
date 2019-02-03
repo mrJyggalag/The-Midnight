@@ -1,10 +1,10 @@
 package com.mushroom.midnight.common.item;
 
-import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.client.IModelProvider;
 import com.mushroom.midnight.common.entity.EntityBladeshroomCap;
 import com.mushroom.midnight.common.registry.ModCriterion;
 import com.mushroom.midnight.common.registry.ModSounds;
+import com.mushroom.midnight.common.registry.ModTabs;
 import net.minecraft.block.BlockDispenser;
 import net.minecraft.dispenser.BehaviorProjectileDispense;
 import net.minecraft.dispenser.IPosition;
@@ -25,7 +25,7 @@ import net.minecraft.world.World;
 public class ItemBladeshroomCap extends Item implements IModelProvider {
     public ItemBladeshroomCap() {
         this.maxStackSize = 64;
-        this.setCreativeTab(Midnight.MIDNIGHT_ITEMS);
+        this.setCreativeTab(ModTabs.MIDNIGHT_ITEMS);
 
         BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(this, new DispenserBehavior());
     }

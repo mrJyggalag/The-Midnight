@@ -1,7 +1,7 @@
 package com.mushroom.midnight.common.block;
 
-import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.client.IModelProvider;
+import com.mushroom.midnight.common.registry.ModTabs;
 import com.mushroom.midnight.common.util.DirectionalBounds;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDirectional;
@@ -34,7 +34,7 @@ public class BlockDeceitfulMoss extends Block implements IModelProvider {
         super(Material.PLANTS);
         this.setHardness(0.2F);
         this.setSoundType(SoundType.PLANT);
-        this.setCreativeTab(Midnight.DECORATION_TAB);
+        this.setCreativeTab(ModTabs.DECORATION_TAB);
         this.setDefaultState(this.blockState.getBaseState().withProperty(FACING, EnumFacing.DOWN));
     }
 

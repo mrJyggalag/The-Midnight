@@ -1,7 +1,7 @@
 package com.mushroom.midnight.common.item;
 
-import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.client.IModelProvider;
+import com.mushroom.midnight.common.registry.ModTabs;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDoor;
 import net.minecraft.block.SoundType;
@@ -19,7 +19,7 @@ import net.minecraft.world.World;
 public class ItemMidnightDoor extends ItemBlock implements IModelProvider {
     public ItemMidnightDoor(Block block) {
         super(block);
-        this.setCreativeTab(Midnight.DECORATION_TAB);
+        this.setCreativeTab(ModTabs.DECORATION_TAB);
     }
 
     @Override

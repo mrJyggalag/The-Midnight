@@ -1,7 +1,7 @@
 package com.mushroom.midnight.common.block;
 
-import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.client.IModelProvider;
+import com.mushroom.midnight.common.registry.ModTabs;
 import net.minecraft.block.BlockBush;
 import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.SoundType;
@@ -21,7 +21,7 @@ public class BlockDeceitfulAlgae extends BlockBush implements IModelProvider {
     public BlockDeceitfulAlgae() {
         this.setHardness(0.0F);
         this.setSoundType(SoundType.PLANT);
-        this.setCreativeTab(Midnight.DECORATION_TAB);
+        this.setCreativeTab(ModTabs.DECORATION_TAB);
     }
 
     @Override

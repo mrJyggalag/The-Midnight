@@ -1,8 +1,8 @@
 package com.mushroom.midnight.common.block;
 
-import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.client.IModelProvider;
 import com.mushroom.midnight.common.registry.ModBlocks;
+import com.mushroom.midnight.common.registry.ModTabs;
 import net.minecraft.block.BlockBush;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.state.IBlockState;
@@ -39,7 +39,7 @@ public class BlockMidnightPlant extends BlockBush implements IModelProvider, ISh
         }
         this.setHardness(0.0F);
         this.setSoundType(SoundType.PLANT);
-        this.setCreativeTab(Midnight.DECORATION_TAB);
+        this.setCreativeTab(ModTabs.DECORATION_TAB);
     }
 
     public BlockMidnightPlant(boolean glowing) {

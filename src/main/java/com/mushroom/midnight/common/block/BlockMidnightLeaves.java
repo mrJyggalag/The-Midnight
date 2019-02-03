@@ -1,8 +1,8 @@
 package com.mushroom.midnight.common.block;
 
 import com.google.common.collect.Lists;
-import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.client.IModelProvider;
+import com.mushroom.midnight.common.registry.ModTabs;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLeaves;
 import net.minecraft.block.BlockPlanks;
@@ -26,7 +26,7 @@ public class BlockMidnightLeaves extends BlockLeaves implements IModelProvider {
 
     public BlockMidnightLeaves(Supplier<Block> saplingSupplier) {
         super();
-        this.setCreativeTab(Midnight.DECORATION_TAB);
+        this.setCreativeTab(ModTabs.DECORATION_TAB);
         this.setDefaultState(this.blockState.getBaseState().withProperty(DECAYABLE, true).withProperty(CHECK_DECAY, true));
         this.saplingSupplier = saplingSupplier;
     }

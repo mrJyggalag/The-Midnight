@@ -1,9 +1,9 @@
 package com.mushroom.midnight.common.block;
 
-import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.client.IModelProvider;
 import com.mushroom.midnight.common.registry.ModCriterion;
 import com.mushroom.midnight.common.registry.ModItems;
+import com.mushroom.midnight.common.registry.ModTabs;
 import net.minecraft.block.Block;
 import net.minecraft.block.IGrowable;
 import net.minecraft.block.SoundType;
@@ -56,7 +56,7 @@ public class BlockSuavis extends Block implements IModelProvider, IGrowable {
     public BlockSuavis() {
         super(Material.GOURD, MapColor.LIGHT_BLUE);
         setLightLevel(0.8F);
-        setCreativeTab(Midnight.DECORATION_TAB);
+        setCreativeTab(ModTabs.DECORATION_TAB);
         setHardness(1f);
         setSoundType(SoundType.SLIME);
         setDefaultState(blockState.getBaseState().withProperty(STAGE, 3));

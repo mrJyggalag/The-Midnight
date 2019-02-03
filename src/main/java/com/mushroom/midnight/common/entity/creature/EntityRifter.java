@@ -122,7 +122,7 @@ public class EntityRifter extends EntityMob implements IRiftTraveler, IEntityAdd
         this.tasks.addTask(4, new EntityAIWatchClosest(this, EntityLivingBase.class, 8.0F));
         this.tasks.addTask(4, new EntityAILookIdle(this));
 
-        this.tasks.addTask(5, new EntityAIWanderAvoidWater(this, 0.7d, 0.005f));
+        this.tasks.addTask(5, new EntityAIWanderAvoidWater(this, 0.4, 0.005F));
 
         this.targetTasks.addTask(2, new EntityAINearestAttackableTarget<>(this, EntityPlayer.class, 2, true, false, this::shouldAttack));
         this.targetTasks.addTask(3, new EntityAINearestAttackableTarget<>(this, EntityAnimal.class, 4, true, false, this::shouldAttack));

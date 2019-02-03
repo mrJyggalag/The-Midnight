@@ -1,7 +1,7 @@
 package com.mushroom.midnight.common.block;
 
-import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.client.IModelProvider;
+import com.mushroom.midnight.common.registry.ModTabs;
 import com.mushroom.midnight.common.tile.base.TileEntityShadowrootChest;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockChest;
@@ -27,7 +27,7 @@ public class BlockShadowrootChest extends BlockChest implements IModelProvider {
         super(Type.BASIC);
         this.setHardness(2.5F);
         this.setSoundType(SoundType.WOOD);
-        this.setCreativeTab(Midnight.DECORATION_TAB);
+        this.setCreativeTab(ModTabs.DECORATION_TAB);
     }
 
     @Nullable

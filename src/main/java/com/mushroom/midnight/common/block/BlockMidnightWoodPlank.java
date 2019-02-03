@@ -1,7 +1,7 @@
 package com.mushroom.midnight.common.block;
 
-import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.client.IModelProvider;
+import com.mushroom.midnight.common.registry.ModTabs;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -12,7 +12,7 @@ import net.minecraft.world.IBlockAccess;
 public class BlockMidnightWoodPlank extends Block implements IModelProvider {
     public BlockMidnightWoodPlank() {
         super(Material.WOOD);
-        setCreativeTab(Midnight.BUILDING_TAB);
+        setCreativeTab(ModTabs.BUILDING_TAB);
         setSoundType(SoundType.WOOD);
         setHardness(2.0F);
         setResistance(5.0F);

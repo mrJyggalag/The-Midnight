@@ -3,6 +3,7 @@ package com.mushroom.midnight.client.model;
 import com.mushroom.midnight.common.entity.creature.EntityNightStag;
 import net.minecraft.client.model.ModelQuadruped;
 import net.minecraft.client.model.ModelRenderer;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.Entity;
 
 public class ModelNightStag extends ModelQuadruped {
@@ -27,7 +28,7 @@ public class ModelNightStag extends ModelQuadruped {
         this.leftAntler.mirror = true;
         this.leftAntler.setRotationPoint(1.5F, -15.0F, -1.0F);
         this.leftAntler.addBox(-1.0F, -17.0F, -6.0F, 1, 18, 12, 0.0F);
-        this.setRotateAngle(leftAntler, 0.0F, 0.7853981633974483F, 0.7853981633974483F);
+        this.setRotateAngle(this.leftAntler, 0.0F, 0.7853981633974483F, 0.7853981633974483F);
         this.leg3 = new ModelRenderer(this, 0, 36);
         this.leg3.setRotationPoint(3.75F, 12.0F, 0.0F);
         this.leg3.addBox(-2.0F, -2.0F, -2.0F, 4, 14, 4, 0.0F);
@@ -37,15 +38,15 @@ public class ModelNightStag extends ModelQuadruped {
         this.head = new ModelRenderer(this, 32, 5);
         this.head.setRotationPoint(0.0F, 6.0F, -5.0F);
         this.head.addBox(-4.0F, -15.0F, -4.0F, 8, 18, 8, 0.0F);
-        this.setRotateAngle(head, 0.17453292519943295F, 0.0F, 0.0F);
+        this.setRotateAngle(this.head, 0.17453292519943295F, 0.0F, 0.0F);
         this.rightAntler = new ModelRenderer(this, 0, 0);
         this.rightAntler.setRotationPoint(-1.5F, -15.0F, -1.0F);
         this.rightAntler.addBox(0.0F, -17.0F, -6.0F, 1, 18, 12, 0.0F);
-        this.setRotateAngle(rightAntler, 0.0F, -0.7853981633974483F, -0.7853981633974483F);
+        this.setRotateAngle(this.rightAntler, 0.0F, -0.7853981633974483F, -0.7853981633974483F);
         this.snout = new ModelRenderer(this, 16, 0);
         this.snout.setRotationPoint(0.0F, -5.0F, -4.0F);
         this.snout.addBox(-3.0F, -5.0F, -6.0F, 6, 5, 6, 0.0F);
-        this.setRotateAngle(snout, -0.17453292519943295F, 0.0F, 0.0F);
+        this.setRotateAngle(this.snout, -0.17453292519943295F, 0.0F, 0.0F);
         this.head.addChild(this.leftAntler);
         this.head.addChild(this.rightAntler);
         this.head.addChild(this.snout);
@@ -53,21 +54,28 @@ public class ModelNightStag extends ModelQuadruped {
 
     @Override
     public void render(Entity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scale) {
-        setRotationAngles(limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale, entity);
+        this.setRotationAngles(limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale, entity);
+
+        GlStateManager.pushMatrix();
+        GlStateManager.translate(0.0F, 0.0F, -0.4F);
+
         this.head.render(scale);
         this.body.render(scale);
         this.leg1.render(scale);
         this.leg2.render(scale);
         this.leg3.render(scale);
         this.leg4.render(scale);
+
+        GlStateManager.popMatrix();
     }
 
-    public void setRotateAngle(ModelRenderer modelRenderer, float x, float y, float z) {
+    private void setRotateAngle(ModelRenderer modelRenderer, float x, float y, float z) {
         modelRenderer.rotateAngleX = x;
         modelRenderer.rotateAngleY = y;
         modelRenderer.rotateAngleZ = z;
     }
 
+    @Override
     public void setRotationAngles(float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scaleFactor, Entity entity) {
         super.setRotationAngles(limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scaleFactor, entity);
 

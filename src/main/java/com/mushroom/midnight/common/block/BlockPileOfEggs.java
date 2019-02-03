@@ -1,8 +1,8 @@
 package com.mushroom.midnight.common.block;
 
-import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.client.IModelProvider;
 import com.mushroom.midnight.common.entity.creature.EntityStinger;
+import com.mushroom.midnight.common.registry.ModTabs;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -40,7 +40,7 @@ public abstract class BlockPileOfEggs extends Block implements IModelProvider {
     protected BlockPileOfEggs() {
         super(Material.ROCK);
         setDefaultState(blockState.getBaseState().withProperty(EGGS, 1));
-        setCreativeTab(Midnight.DECORATION_TAB);
+        setCreativeTab(ModTabs.DECORATION_TAB);
         blockSoundType = SoundType.SNOW;
     }
 

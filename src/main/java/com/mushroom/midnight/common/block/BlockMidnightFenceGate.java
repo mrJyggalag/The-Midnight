@@ -1,7 +1,7 @@
 package com.mushroom.midnight.common.block;
 
-import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.client.IModelProvider;
+import com.mushroom.midnight.common.registry.ModTabs;
 import net.minecraft.block.BlockFenceGate;
 import net.minecraft.block.BlockPlanks;
 import net.minecraft.block.SoundType;
@@ -28,7 +28,7 @@ public class BlockMidnightFenceGate extends BlockFenceGate implements IModelProv
     public BlockMidnightFenceGate(Supplier<IBlockState> parentSupplier) {
         super(BlockPlanks.EnumType.OAK);
         this.parentSupplier = parentSupplier;
-        this.setCreativeTab(Midnight.DECORATION_TAB);
+        this.setCreativeTab(ModTabs.DECORATION_TAB);
     }
 
     @Override

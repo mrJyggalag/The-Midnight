@@ -6,6 +6,7 @@ import com.mushroom.midnight.client.particle.MidnightParticles;
 import com.mushroom.midnight.common.network.MessageRockshroomBroken;
 import com.mushroom.midnight.common.registry.ModBlocks;
 import com.mushroom.midnight.common.registry.ModItems;
+import com.mushroom.midnight.common.registry.ModTabs;
 import com.mushroom.midnight.common.util.MidnightDamageSource;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
@@ -38,7 +39,7 @@ public class BlockRockshroom extends Block implements IModelProvider {
         this.setHardness(1.5F);
         this.setResistance(10.0F);
         this.setSoundType(SoundType.STONE);
-        this.setCreativeTab(Midnight.BUILDING_TAB);
+        this.setCreativeTab(ModTabs.BUILDING_TAB);
     }
 
     @Override

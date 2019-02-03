@@ -4,6 +4,7 @@ import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.client.IModelProvider;
 import com.mushroom.midnight.common.network.GuiHandler;
 import com.mushroom.midnight.common.registry.ModBlocks;
+import com.mushroom.midnight.common.registry.ModTabs;
 import com.mushroom.midnight.common.tile.base.TileEntityMidnightFurnace;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.BlockHorizontal;
@@ -44,20 +45,14 @@ public class BlockMidnightFurnace extends BlockContainer implements IModelProvid
         this.setHardness(3.5F);
         this.setDefaultState(this.blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH));
         this.isBurning = isBurning;
-        setCreativeTab(Midnight.DECORATION_TAB);
+        setCreativeTab(ModTabs.DECORATION_TAB);
     }
 
-    /**
-     * Get the Item that this Block should drop when harvested.
-     */
     @Override
     public Item getItemDropped(IBlockState state, Random rand, int fortune) {
         return Item.getItemFromBlock(ModBlocks.MIDNIGHT_FURNACE);
     }
 
-    /**
-     * Called after the block is set in the Chunk data, but before the Tile Entity is set
-     */
     @Override
     public void onBlockAdded(World worldIn, BlockPos pos, IBlockState state) {
         this.setDefaultFacing(worldIn, pos, state);
@@ -121,9 +116,6 @@ public class BlockMidnightFurnace extends BlockContainer implements IModelProvid
         }
     }
 
-    /**
-     * Called when the block is right clicked by a player.
-     */
     @Override
     public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
         TileEntity tileentity = world.getTileEntity(pos);
@@ -155,26 +147,16 @@ public class BlockMidnightFurnace extends BlockContainer implements IModelProvid
         }
     }
 
-    /**
-     * Returns a new instance of a block's tile entity class. Called on placing the block.
-     */
     @Override
     public TileEntity createNewTileEntity(World worldIn, int meta) {
         return new TileEntityMidnightFurnace();
     }
 
-    /**
-     * Called by ItemBlocks just before a block is actually set in the world, to allow for adjustments to the
-     * IBlockstate
-     */
     @Override
     public IBlockState getStateForPlacement(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer) {
         return this.getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite());
     }
 
-    /**
-     * Called by ItemBlocks after a block is set in the world, to allow post-place logic
-     */
     @Override
     public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
         worldIn.setBlockState(pos, state.withProperty(FACING, placer.getHorizontalFacing().getOpposite()), 2);
@@ -188,9 +170,6 @@ public class BlockMidnightFurnace extends BlockContainer implements IModelProvid
         }
     }
 
-    /**
-     * Called serverside after this block is replaced with another in Chunk, but before the Tile Entity is updated
-     */
     @Override
     public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
         if (!keepInventory) {
@@ -205,19 +184,11 @@ public class BlockMidnightFurnace extends BlockContainer implements IModelProvid
         super.breakBlock(worldIn, pos, state);
     }
 
-    /**
-     * @deprecated call via {@link IBlockState#hasComparatorInputOverride()} whenever possible. Implementing/overriding
-     * is fine.
-     */
     @Override
     public boolean hasComparatorInputOverride(IBlockState state) {
         return true;
     }
 
-    /**
-     * @deprecated call via {@link IBlockState#getComparatorInputOverride(World, BlockPos)} whenever possible.
-     * Implementing/overriding is fine.
-     */
     @Override
     public int getComparatorInputOverride(IBlockState blockState, World worldIn, BlockPos pos) {
         return Container.calcRedstone(worldIn.getTileEntity(pos));
@@ -228,57 +199,31 @@ public class BlockMidnightFurnace extends BlockContainer implements IModelProvid
         return new ItemStack(ModBlocks.MIDNIGHT_FURNACE);
     }
 
-    /**
-     * The type of render function called. MODEL for mixed tesr and static model, MODELBLOCK_ANIMATED for TESR-only,
-     * LIQUID for vanilla liquids, INVISIBLE to skip all rendering
-     *
-     * @deprecated call via {@link IBlockState#getRenderType()} whenever possible. Implementing/overriding is fine.
-     */
     @Override
     public EnumBlockRenderType getRenderType(IBlockState state) {
         return EnumBlockRenderType.MODEL;
     }
 
-    /**
-     * Convert the given metadata into a BlockState for this Block
-     */
     @Override
     public IBlockState getStateFromMeta(int meta) {
-        EnumFacing enumfacing = EnumFacing.byIndex(meta);
-
-        if (enumfacing.getAxis() == EnumFacing.Axis.Y) {
-            enumfacing = EnumFacing.NORTH;
+        EnumFacing facing = EnumFacing.byIndex(meta);
+        if (facing.getAxis() == EnumFacing.Axis.Y) {
+            facing = EnumFacing.NORTH;
         }
 
-        return this.getDefaultState().withProperty(FACING, enumfacing);
+        return this.getDefaultState().withProperty(FACING, facing);
     }
 
-    /**
-     * Convert the BlockState into the correct metadata value
-     */
     @Override
     public int getMetaFromState(IBlockState state) {
         return (state.getValue(FACING)).getIndex();
     }
 
-    /**
-     * Returns the blockstate with the given rotation from the passed blockstate. If inapplicable, returns the passed
-     * blockstate.
-     *
-     * @deprecated call via {@link IBlockState#withRotation(Rotation)} whenever possible. Implementing/overriding is
-     * fine.
-     */
     @Override
     public IBlockState withRotation(IBlockState state, Rotation rot) {
         return state.withProperty(FACING, rot.rotate(state.getValue(FACING)));
     }
 
-    /**
-     * Returns the blockstate with the given mirror of the passed blockstate. If inapplicable, returns the passed
-     * blockstate.
-     *
-     * @deprecated call via {@link IBlockState#withMirror(Mirror)} whenever possible. Implementing/overriding is fine.
-     */
     @Override
     public IBlockState withMirror(IBlockState state, Mirror mirrorIn) {
         return state.withRotation(mirrorIn.toRotation(state.getValue(FACING)));

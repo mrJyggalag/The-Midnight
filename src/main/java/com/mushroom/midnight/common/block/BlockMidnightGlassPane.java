@@ -1,7 +1,7 @@
 package com.mushroom.midnight.common.block;
 
-import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.client.IModelProvider;
+import com.mushroom.midnight.common.registry.ModTabs;
 import net.minecraft.block.BlockPane;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -13,7 +13,7 @@ public class BlockMidnightGlassPane extends BlockPane implements IModelProvider 
     public BlockMidnightGlassPane() {
         super(Material.GLASS, false);
         setSoundType(SoundType.GLASS);
-        setCreativeTab(Midnight.DECORATION_TAB);
+        setCreativeTab(ModTabs.DECORATION_TAB);
     }
 
     @Override

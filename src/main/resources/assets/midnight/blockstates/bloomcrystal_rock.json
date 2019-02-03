@@ -1,7 +1,7 @@
 {
   "forge_marker": 1,
   "defaults": {
-    "model": "cube_all",
+    "model": "midnight:crystal_rock",
     "textures": {
       "all": "midnight:blocks/bloomcrystal_rock"
     }

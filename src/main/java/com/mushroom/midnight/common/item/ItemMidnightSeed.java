@@ -1,7 +1,7 @@
 package com.mushroom.midnight.common.item;
 
-import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.client.IModelProvider;
+import com.mushroom.midnight.common.registry.ModTabs;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
@@ -24,7 +24,7 @@ public class ItemMidnightSeed extends Item implements IPlantable, IModelProvider
 
     public ItemMidnightSeed(Supplier<IBlockState> plantSupplier) {
         this.plantSupplier = plantSupplier;
-        this.setCreativeTab(Midnight.MIDNIGHT_ITEMS);
+        this.setCreativeTab(ModTabs.MIDNIGHT_ITEMS);
     }
 
     @Override

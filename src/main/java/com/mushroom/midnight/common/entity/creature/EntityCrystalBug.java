@@ -52,6 +52,11 @@ public class EntityCrystalBug extends EntityAmbientCreature {
         return isStanding() && rand.nextInt(4) != 0 ? null : SoundEvents.ENTITY_BAT_AMBIENT;
     }
 
+    @Override
+    protected float getSoundVolume() {
+        return 0.2F;
+    }
+
     public boolean isStanding() {
         return dataManager.get(IS_STANDING);
     }

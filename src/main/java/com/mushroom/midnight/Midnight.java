@@ -5,9 +5,9 @@ import com.mushroom.midnight.common.CommonProxy;
 import com.mushroom.midnight.common.capability.RiftCooldownCapability;
 import com.mushroom.midnight.common.capability.RifterCapturedCapability;
 import com.mushroom.midnight.common.capability.VoidStorage;
-import com.mushroom.midnight.common.network.GuiHandler;
 import com.mushroom.midnight.common.loot.InBiomeLootCondition;
 import com.mushroom.midnight.common.loot.InBlockLootCondition;
+import com.mushroom.midnight.common.network.GuiHandler;
 import com.mushroom.midnight.common.network.MessageBridgeCreate;
 import com.mushroom.midnight.common.network.MessageBridgeRemoval;
 import com.mushroom.midnight.common.network.MessageBridgeState;
@@ -23,14 +23,13 @@ import com.mushroom.midnight.common.registry.ModDimensions;
 import com.mushroom.midnight.common.registry.ModFluids;
 import com.mushroom.midnight.common.registry.ModItems;
 import com.mushroom.midnight.common.registry.ModRecipes;
+import com.mushroom.midnight.common.registry.ModTabs;
 import com.mushroom.midnight.common.util.EntityUtil;
 import com.mushroom.midnight.common.world.generator.MidnightOreGenerator;
 import net.minecraft.block.material.Material;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.passive.EntityAmbientCreature;
-import net.minecraft.item.ItemStack;
 import net.minecraft.world.storage.loot.conditions.LootConditionManager;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
@@ -59,36 +58,6 @@ public class Midnight {
     public static final Logger LOGGER = LogManager.getLogger(NAME);
     public static final SimpleNetworkWrapper NETWORK = new SimpleNetworkWrapper(MODID);
 
-    public static final CreativeTabs BUILDING_TAB = new CreativeTabs("midnight_building") {
-        @Override
-        public ItemStack createIcon() {
-            return new ItemStack(ModBlocks.MIDNIGHT_GRASS);
-        }
-    };
-    public static final CreativeTabs DECORATION_TAB = new CreativeTabs("midnight_decoration") {
-        @Override
-        public ItemStack createIcon() {
-            return new ItemStack(ModBlocks.ROUXE);
-        }
-    };
-    public static final CreativeTabs MIDNIGHT_ITEMS = new CreativeTabs("midnight_items") {
-        @Override
-        public ItemStack createIcon() {
-            return new ItemStack(ModItems.DARK_STICK);
-        }
-    };
-    public static final CreativeTabs MIDNIGHT_TOOLS = new CreativeTabs("midnight_tools") {
-        @Override
-        public ItemStack createIcon() {
-            return new ItemStack(ModItems.SHADOWROOT_PICKAXE);
-        }
-    };
-    public static final CreativeTabs MIDNIGHT_COMBAT = new CreativeTabs("midnight_combat") {
-        @Override
-        public ItemStack createIcon() {
-            return new ItemStack(ModItems.SHADOWROOT_SWORD);
-        }
-    };
     public static final EnumCreatureType MIDNIGHT_MOB = EnumHelper.addCreatureType("midnight_mob", IMob.class, 20, Material.AIR, false, false);
     public static final EnumCreatureType MIDNIGHT_AMBIENT = EnumHelper.addCreatureType("midnight_ambient", EntityAmbientCreature.class, 30, Material.AIR, true, false);
 
@@ -122,7 +91,7 @@ public class Midnight {
         NETWORK.registerMessage(MessageRockshroomBroken.Handler.class, MessageRockshroomBroken.class, 6, Side.CLIENT);
         NETWORK.registerMessage(MessageItemActivation.Handler.class, MessageItemActivation.class, 7, Side.CLIENT);
 
-        Reflection.initialize(ModCriterion.class);
+        Reflection.initialize(ModCriterion.class, ModTabs.class);
 
         EntityUtil.onPreInit();
         ModFluids.register();
