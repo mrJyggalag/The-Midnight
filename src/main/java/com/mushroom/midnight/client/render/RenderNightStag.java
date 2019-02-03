@@ -12,9 +12,11 @@ import javax.annotation.Nullable;
 
 public class RenderNightStag extends RenderLiving<EntityNightStag> {
     private static final ResourceLocation TEXTURE = new ResourceLocation(Midnight.MODID, "textures/entities/nightstag.png");
+    private static final ResourceLocation EMISSIVE_TEXTURE = new ResourceLocation(Midnight.MODID, "textures/entities/nightstag_emissive.png");
 
-    public RenderNightStag(RenderManager rendermanager) {
-        super(rendermanager, new ModelNightStag(), 0f);
+    public RenderNightStag(RenderManager renderManager) {
+        super(renderManager, new ModelNightStag(), 0.0F);
+        this.addLayer(new LayerRendererEmissive<>(new ModelNightStag(), EMISSIVE_TEXTURE));
     }
 
     @Nullable
