@@ -173,12 +173,11 @@ public class EntityNightStag extends EntityAnimal {
         animCap.updateAnimation();
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     @Nullable
     public <T> T getCapability(Capability<T> capability, @Nullable EnumFacing facing) {
         if (capability == Midnight.animationCap) {
-            return (T) animCap;
+            return Midnight.animationCap.cast(animCap);
         }
         return super.getCapability(capability, facing);
     }
