@@ -119,4 +119,8 @@
       "midnight:entity/nightstag_hurt_1"
     ]
   }
+  "midnight.egg_cracked": {
+    "category": "block",
+    "sounds": ["midnight:blocks/egg_cracked"]
+  }
 }

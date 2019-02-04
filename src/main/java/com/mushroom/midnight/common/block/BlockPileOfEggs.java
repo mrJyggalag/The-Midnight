@@ -2,9 +2,9 @@ package com.mushroom.midnight.common.block;
 
 import com.mushroom.midnight.client.IModelProvider;
 import com.mushroom.midnight.common.entity.creature.EntityStinger;
+import com.mushroom.midnight.common.registry.ModSounds;
 import com.mushroom.midnight.common.registry.ModTabs;
 import net.minecraft.block.Block;
-import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.BlockFaceShape;
@@ -14,7 +14,6 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
-import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -24,7 +23,6 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
@@ -41,7 +39,7 @@ public abstract class BlockPileOfEggs extends Block implements IModelProvider {
         super(Material.ROCK);
         setDefaultState(blockState.getBaseState().withProperty(EGGS, 1));
         setCreativeTab(ModTabs.DECORATION_TAB);
-        blockSoundType = SoundType.SNOW;
+        blockSoundType = ModSounds.PILE_OF_EGGS;
     }
 
     protected abstract EntityLiving createEntityForEgg(World world, BlockPos pos, IBlockState state);
@@ -92,7 +90,7 @@ public abstract class BlockPileOfEggs extends Block implements IModelProvider {
     }
 
     protected void breakEggs(World world, BlockPos pos, IBlockState state) {
-        world.playSound(null, pos, SoundEvents.BLOCK_SNOW_BREAK, SoundCategory.BLOCKS, 0.7F, 0.9F + world.rand.nextFloat() * 0.2F);
+        world.playSound(null, pos, ModSounds.PILE_OF_EGGS.getBreakSound(), SoundCategory.BLOCKS, 0.7F, 0.9F + world.rand.nextFloat() * 0.2F);
         int eggs = state.getValue(EGGS);
         if (eggs <= 1) {
             world.destroyBlock(pos, false);
@@ -100,17 +98,15 @@ public abstract class BlockPileOfEggs extends Block implements IModelProvider {
             world.setBlockState(pos, state.withProperty(EGGS, --eggs), 2);
             world.playEvent(2001, pos, getStateId(state));
         }
-        if (world.getDifficulty() != EnumDifficulty.PEACEFUL) {
-            EntityLiving creature;
-            try {
-                creature = createEntityForEgg(world, pos, state);
-            } catch (Exception e) {
-                e.printStackTrace();
-                return;
-            }
-            creature.setPositionAndRotation(pos.getX() + world.rand.nextFloat(), pos.getY() + 0.45f, pos.getZ() + world.rand.nextFloat(), world.rand.nextFloat() * 360f, 0f);
-            world.spawnEntity(creature);
+        EntityLiving creature;
+        try {
+            creature = createEntityForEgg(world, pos, state);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return;
         }
+        creature.setPositionAndRotation(pos.getX() + world.rand.nextFloat(), pos.getY() + 0.45f, pos.getZ() + world.rand.nextFloat(), world.rand.nextFloat() * 360f, 0f);
+        world.spawnEntity(creature);
     }
 
     @Override
