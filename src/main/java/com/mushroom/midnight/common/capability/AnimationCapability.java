@@ -28,6 +28,10 @@ public class AnimationCapability implements ICapabilityProvider {
         return this.animationType;
     }
 
+    public int getDuration() {
+        return maxTicks;
+    }
+
     public float getProgress(float partialTicks) {
         return (this.prevTick + (this.currentTick - this.prevTick) * partialTicks) / this.maxTicks;
     }

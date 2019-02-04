@@ -2,7 +2,6 @@ package com.mushroom.midnight.client.model;
 
 import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.common.capability.AnimationCapability;
-import com.mushroom.midnight.common.entity.creature.EntityHunter;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
@@ -121,7 +120,7 @@ public class ModelHunter extends ModelBase {
         if (animationCap != null && animationCap.getAnimationType() == AnimationCapability.AnimationType.ATTACK) {
             float partialTicks = Minecraft.getMinecraft().getRenderPartialTicks();
             float attackProgress = animationCap.getProgress(partialTicks);
-            float attackAnimation = (float) (Math.sin((2.0F * (attackProgress / EntityHunter.ATTACK_ANIMATION_TICKS) - 0.5F) * Math.PI) + 1.0F) / 2.0F;
+            float attackAnimation = (float) (Math.sin((2.0F * attackProgress - 0.5F) * Math.PI) + 1.0F) / 2.0F;
 
             float partAttackAngle = -180.0F / this.tail.length;
 
