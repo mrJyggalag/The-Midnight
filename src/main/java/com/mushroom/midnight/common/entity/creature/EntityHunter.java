@@ -25,17 +25,19 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;
 import net.minecraft.pathfinding.PathNavigate;
 import net.minecraft.potion.PotionEffect;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import net.minecraftforge.common.capabilities.Capability;
 
 import javax.annotation.Nullable;
 import javax.vecmath.Point3f;
 
-public class EntityHunter extends EntityMob implements EntityFlying, IAnimable {
-    public static final int ATTACK_ANIMATION_TICKS = 10;
+public class EntityHunter extends EntityMob implements EntityFlying {
+    private final AnimationCapability animCap = new AnimationCapability();
 
     public static final int FLIGHT_HEIGHT = 40;
 
@@ -172,10 +174,7 @@ public class EntityHunter extends EntityMob implements EntityFlying, IAnimable {
                 living.addPotionEffect(new PotionEffect(MobEffects.SLOWNESS, 10 * 20));
                 living.addPotionEffect(new PotionEffect(MobEffects.WITHER, 6 * 20));
 
-                AnimationCapability animationCap = getCapability(Midnight.animationCap, null);
-                if (animationCap != null) {
-                    animationCap.setAnimation(this, AnimationCapability.AnimationType.ATTACK, ATTACK_ANIMATION_TICKS);
-                }
+                animCap.setAnimation(this, AnimationCapability.AnimationType.ATTACK, 10);
             }
 
             return true;
@@ -271,4 +270,25 @@ public class EntityHunter extends EntityMob implements EntityFlying, IAnimable {
     @Override
     @Nullable
     protected ResourceLocation getLootTable() { return ModLootTables.LOOT_TABLE_HUNTER; }
+
+    @Override
+    public void onLivingUpdate() {
+        super.onLivingUpdate();
+        animCap.updateAnimation();
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    @Nullable
+    public <T> T getCapability(Capability<T> capability, @Nullable EnumFacing facing) {
+        if (capability == Midnight.animationCap) {
+            return (T) animCap;
+        }
+        return super.getCapability(capability, facing);
+    }
+
+    @Override
+    public boolean hasCapability(Capability<?> capability, @Nullable EnumFacing facing) {
+        return capability == Midnight.animationCap || super.hasCapability(capability, facing);
+    }
 }

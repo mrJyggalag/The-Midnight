@@ -28,19 +28,21 @@ import net.minecraft.init.SoundEvents;
 import net.minecraft.pathfinding.PathNavigate;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.World;
+import net.minecraftforge.common.capabilities.Capability;
 
 import javax.annotation.Nullable;
 
 import static com.mushroom.midnight.common.registry.ModLootTables.LOOT_TABLE_NIGHTSTAG;
 
-public class EntityNightStag extends EntityAnimal implements IAnimable {
-    private static final int ATTACK_ANIMATION_TICKS = 10;
+public class EntityNightStag extends EntityAnimal {
+    private final AnimationCapability animCap = new AnimationCapability();
 
     public EntityNightStag(World world) {
         super(world);
@@ -145,10 +147,7 @@ public class EntityNightStag extends EntityAnimal implements IAnimable {
                 ((EntityPlayer) entity).addPotionEffect(new PotionEffect(ModEffects.DARKNESS, 200, 0, false, true));
             }
             applyEnchantments(this, entity);
-            AnimationCapability animationCap = getCapability(Midnight.animationCap, null);
-            if (animationCap != null) {
-                animationCap.setAnimation(this, AnimationType.ATTACK, ATTACK_ANIMATION_TICKS);
-            }
+            animCap.setAnimation(this, AnimationType.ATTACK, 10);
         }
         return flag;
     }
@@ -166,5 +165,26 @@ public class EntityNightStag extends EntityAnimal implements IAnimable {
     @Nullable
     protected ResourceLocation getLootTable() {
         return LOOT_TABLE_NIGHTSTAG;
+    }
+
+    @Override
+    public void onLivingUpdate() {
+        super.onLivingUpdate();
+        animCap.updateAnimation();
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    @Nullable
+    public <T> T getCapability(Capability<T> capability, @Nullable EnumFacing facing) {
+        if (capability == Midnight.animationCap) {
+            return (T) animCap;
+        }
+        return super.getCapability(capability, facing);
+    }
+
+    @Override
+    public boolean hasCapability(Capability<?> capability, @Nullable EnumFacing facing) {
+        return capability == Midnight.animationCap || super.hasCapability(capability, facing);
     }
 }

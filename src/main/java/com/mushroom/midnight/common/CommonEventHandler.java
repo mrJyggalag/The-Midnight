@@ -1,12 +1,10 @@
 package com.mushroom.midnight.common;
 
 import com.mushroom.midnight.Midnight;
-import com.mushroom.midnight.common.capability.AnimationCapability;
 import com.mushroom.midnight.common.capability.RiftCooldownCapability;
 import com.mushroom.midnight.common.capability.RifterCapturedCapability;
 import com.mushroom.midnight.common.config.MidnightConfig;
 import com.mushroom.midnight.common.entity.EntityRift;
-import com.mushroom.midnight.common.entity.creature.IAnimable;
 import com.mushroom.midnight.common.event.RifterCaptureEvent;
 import com.mushroom.midnight.common.event.RifterReleaseEvent;
 import com.mushroom.midnight.common.registry.ModDimensions;
@@ -46,9 +44,6 @@ public class CommonEventHandler {
         if (event.getObject() instanceof EntityLivingBase) {
             event.addCapability(new ResourceLocation(Midnight.MODID, "rifter_captured"), new RifterCapturedCapability());
         }
-        if (event.getObject() instanceof IAnimable) {
-            event.addCapability(new ResourceLocation(Midnight.MODID, "animable"), new AnimationCapability());
-        }
     }
 
     @SubscribeEvent
@@ -66,11 +61,6 @@ public class CommonEventHandler {
         RiftCooldownCapability cooldownCap = entity.getCapability(Midnight.riftCooldownCap, null);
         if (cooldownCap != null) {
             cooldownCap.update(entity);
-        }
-
-        AnimationCapability animationCap = entity.getCapability(Midnight.animationCap, null);
-        if (animationCap != null) {
-            animationCap.updateAnimation();
         }
     }
 
