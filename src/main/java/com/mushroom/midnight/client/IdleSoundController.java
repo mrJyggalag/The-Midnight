@@ -44,9 +44,9 @@ public class IdleSoundController {
     private static void retainIdleSound(ISound sound) {
         SoundHandler soundHandler = MC.getSoundHandler();
         if (!soundHandler.isSoundPlaying(sound)) {
-            // Fix very odd bug where playSound would complain that the sound is already playing
-            soundHandler.stopSound(sound);
             try {
+                // Fix very odd bug where playSound would complain that the sound is already playing
+                soundHandler.stopSound(sound);
                 soundHandler.playSound(sound);
             } catch (IllegalArgumentException e) {
                 // Ignore SoundHandler complaints

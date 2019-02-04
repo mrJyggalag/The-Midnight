@@ -59,7 +59,7 @@ public class EntityNightStag extends EntityAnimal {
     @Nullable
     public IEntityLivingData onInitialSpawn(DifficultyInstance difficulty, @Nullable IEntityLivingData livingdata) {
         livingdata = super.onInitialSpawn(difficulty, livingdata);
-        setGrowingAge(this.rand.nextInt(5) == 0 ? -1 : -24000);
+        setGrowingAge(this.rand.nextInt(5) == 0 ? -24000 : -1);
         return livingdata;
     }
 
@@ -126,8 +126,16 @@ public class EntityNightStag extends EntityAnimal {
     protected void applyEntityAttributes() {
         super.applyEntityAttributes();
         getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.25d);
-        getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(15d);
+        getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(10d);
         getAttributeMap().registerAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(2d);
+    }
+
+    @Override
+    protected void onGrowingAdult() {
+        getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(4d);
+        getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(20d);
+        getEntityAttribute(SharedMonsterAttributes.ARMOR).setBaseValue(1d);
+        setHealth(20f);
     }
 
     @Override
@@ -135,7 +143,7 @@ public class EntityNightStag extends EntityAnimal {
         super.attackEntityAsMob(entity);
         boolean flag = entity.attackEntityFrom(DamageSource.causeMobDamage(this), (float) getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).getAttributeValue());
         if (flag) {
-            if (entity instanceof EntityPlayer) {
+            if (!isChild() && entity instanceof EntityPlayer) {
                 ((EntityPlayer) entity).addPotionEffect(new PotionEffect(ModEffects.DARKNESS, 200, 0, false, true));
             }
             applyEnchantments(this, entity);
@@ -182,12 +190,12 @@ public class EntityNightStag extends EntityAnimal {
 
     @Override
     protected int getExperiencePoints(EntityPlayer player) {
-        return 5;
+        return isChild() ? 4 : 7;
     }
 
     @Override
     @Nullable
     protected ResourceLocation getLootTable() {
-        return isChild() ? null : LOOT_TABLE_NIGHTSTAG;
+        return LOOT_TABLE_NIGHTSTAG;
     }
 }

@@ -9,8 +9,8 @@ import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityAgeable;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.EnumCreatureAttribute;
+import net.minecraft.entity.IEntityLivingData;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAIAttackMelee;
 import net.minecraft.entity.ai.EntityAIHurtByTarget;
@@ -32,6 +32,7 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
@@ -139,13 +140,21 @@ public class EntityStinger extends EntityAgeable implements IAnimals {
     @Override
     @Nullable
     protected ResourceLocation getLootTable() {
-        return isChild() ? null : ModLootTables.LOOT_TABLE_STINGER;
+        return ModLootTables.LOOT_TABLE_STINGER;
     }
 
     @Nullable
     @Override
     public EntityAgeable createChild(EntityAgeable ageable) {
         return null;
+    }
+
+    @Override
+    @Nullable
+    public IEntityLivingData onInitialSpawn(DifficultyInstance difficulty, @Nullable IEntityLivingData livingdata) {
+        livingdata = super.onInitialSpawn(difficulty, livingdata);
+        setGrowingAge(this.rand.nextInt(5) == 0 ? -24000 : -1);
+        return livingdata;
     }
 
     @Override
