@@ -1,6 +1,7 @@
 package com.mushroom.midnight.client.model;
 
-import com.mushroom.midnight.common.entity.creature.EntityStinger;
+import com.mushroom.midnight.Midnight;
+import com.mushroom.midnight.common.capability.AnimationCapability;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
@@ -223,10 +224,10 @@ public class ModelStinger extends ModelBase {
         this.PincerLeftExt.rotateAngleY = this.PincerRightInt.rotateAngleY = MathHelper.sin((float) (limbSwing * Math.PI)) * limbSwingAmount * 0.5f;
         this.PincerRightExt.rotateAngleY = this.PincerLeftInt.rotateAngleY = -this.PincerLeftExt.rotateAngleY;;
 
-        EntityStinger stinger = (EntityStinger) entity;
-        if (stinger.isAttacking()) {
+        AnimationCapability animationCap = entity.getCapability(Midnight.animationCap, null);
+        if (animationCap != null && animationCap.getAnimationType() == AnimationCapability.AnimationType.ATTACK) {
             float partialTicks = Minecraft.getMinecraft().getRenderPartialTicks();
-            float attackProgress = stinger.getAttackAnimation(partialTicks);
+            float attackProgress = animationCap.getProgress(partialTicks);
             float attackAnimation = MathHelper.sin((float) (attackProgress * Math.PI));
             // TODO
         }

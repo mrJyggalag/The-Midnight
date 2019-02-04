@@ -1,9 +1,9 @@
 package com.mushroom.midnight.common.entity.creature;
 
 import com.mushroom.midnight.Midnight;
+import com.mushroom.midnight.common.capability.AnimationCapability;
 import com.mushroom.midnight.common.entity.navigation.CustomPathNavigateGround;
 import com.mushroom.midnight.common.entity.task.EntityTaskNeutral;
-import com.mushroom.midnight.common.network.MessageStingerAttack;
 import com.mushroom.midnight.common.registry.ModLootTables;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -28,20 +28,19 @@ import net.minecraft.init.SoundEvents;
 import net.minecraft.pathfinding.PathNavigate;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.World;
+import net.minecraftforge.common.capabilities.Capability;
 
 import javax.annotation.Nullable;
 
 public class EntityStinger extends EntityAgeable implements IAnimals {
-    private static final int ATTACK_ANIMATION_TICKS = 10;
-    private int attackAnimation = 0;
-    private int prevAttackAnimation;
-    private boolean attacking = false;
+    private final AnimationCapability animCap = new AnimationCapability();
 
     public EntityStinger(World worldIn) {
         super(worldIn);
@@ -127,8 +126,7 @@ public class EntityStinger extends EntityAgeable implements IAnimals {
                 ((EntityPlayer) entity).addPotionEffect(new PotionEffect(MobEffects.WEAKNESS, 100, 0, false, true));
             }
             applyEnchantments(this, entity);
-            setAttacking(true);
-            Midnight.NETWORK.sendToAllTracking(new MessageStingerAttack(this), this);
+            animCap.setAnimation(this, AnimationCapability.AnimationType.ATTACK, 10);
         }
         return flag;
     }
@@ -165,37 +163,6 @@ public class EntityStinger extends EntityAgeable implements IAnimals {
     }
 
     @Override
-    public void onUpdate() {
-        super.onUpdate();
-        updateAttackAnimation();
-    }
-
-    private void updateAttackAnimation() {
-        this.prevAttackAnimation = this.attackAnimation;
-        if (isAttacking()) {
-            if (this.attackAnimation >= ATTACK_ANIMATION_TICKS) {
-                this.attackAnimation = 0;
-                setAttacking(false);
-            } else {
-                this.attackAnimation++;
-            }
-        }
-    }
-
-    public float getAttackAnimation(float partialTicks) {
-        float animationTick = this.prevAttackAnimation + (this.attackAnimation - this.prevAttackAnimation) * partialTicks;
-        return animationTick / ATTACK_ANIMATION_TICKS;
-    }
-
-    public void setAttacking(boolean attacking) {
-        this.attacking = attacking;
-    }
-
-    public boolean isAttacking() {
-        return this.attacking;
-    }
-
-    @Override
     protected int getExperiencePoints(EntityPlayer player) {
         return isChild() ? 3 : 5;
     }
@@ -208,5 +175,25 @@ public class EntityStinger extends EntityAgeable implements IAnimals {
     @Override
     public void setScaleForAge(boolean child) {
         setScale(child ? 1f : 1.5f);
+    }
+
+    @Override
+    public void onLivingUpdate() {
+        super.onLivingUpdate();
+        animCap.updateAnimation();
+    }
+
+    @Override
+    @Nullable
+    public <T> T getCapability(Capability<T> capability, @Nullable EnumFacing facing) {
+        if (capability == Midnight.animationCap) {
+            return Midnight.animationCap.cast(animCap);
+        }
+        return super.getCapability(capability, facing);
+    }
+
+    @Override
+    public boolean hasCapability(Capability<?> capability, @Nullable EnumFacing facing) {
+        return capability == Midnight.animationCap || super.hasCapability(capability, facing);
     }
 }

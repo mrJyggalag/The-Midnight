@@ -1,6 +1,8 @@
 package com.mushroom.midnight.client.model;
 
-import com.mushroom.midnight.common.entity.creature.EntityNightStag;
+import com.mushroom.midnight.Midnight;
+import com.mushroom.midnight.common.capability.AnimationCapability;
+import com.mushroom.midnight.common.capability.AnimationCapability.AnimationType;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelQuadruped;
 import net.minecraft.client.model.ModelRenderer;
@@ -81,10 +83,10 @@ public class ModelNightStag extends ModelQuadruped {
     public void setRotationAngles(float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scaleFactor, Entity entity) {
         super.setRotationAngles(limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scaleFactor, entity);
 
-        EntityNightStag nightstag = (EntityNightStag) entity;
-        if (nightstag.isAttacking()) {
+        AnimationCapability animationCap = entity.getCapability(Midnight.animationCap, null);
+        if (animationCap != null && animationCap.getAnimationType() == AnimationType.ATTACK) {
             float partialTicks = Minecraft.getMinecraft().getRenderPartialTicks();
-            float attackProgress = nightstag.getAttackAnimation(partialTicks);
+            float attackProgress = animationCap.getProgress(partialTicks);
             float attackAnimation = MathHelper.sin((float) (attackProgress * Math.PI));
 
             this.body.rotateAngleX = attackAnimation * 0.2f;
