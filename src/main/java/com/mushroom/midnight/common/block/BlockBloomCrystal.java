@@ -1,6 +1,7 @@
 package com.mushroom.midnight.common.block;
 
 import com.mushroom.midnight.common.entity.creature.EntityCrystalBug;
+import net.minecraft.block.material.MapColor;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
@@ -10,7 +11,7 @@ import java.util.Random;
 
 public class BlockBloomCrystal extends BlockCrystal {
     public BlockBloomCrystal() {
-        super();
+        super(MapColor.PINK);
         setLightLevel(1f);
     }
 

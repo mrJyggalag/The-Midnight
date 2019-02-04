@@ -4,6 +4,7 @@ import com.mushroom.midnight.client.IModelProvider;
 import com.mushroom.midnight.common.registry.ModTabs;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
+import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.block.state.IBlockState;
@@ -23,8 +24,8 @@ import java.util.Random;
 public class BlockCrystal extends Block implements IModelProvider {
     private static final AxisAlignedBB BOUNDS = new AxisAlignedBB(0.1, 0.0, 0.1, 0.9, 0.8, 0.9);
 
-    public BlockCrystal() {
-        super(Material.ROCK);
+    public BlockCrystal(MapColor mapColor) {
+        super(Material.ROCK, mapColor);
         this.setHardness(2.0F);
         this.setSoundType(SoundType.GLASS);
         this.setHarvestLevel("pickaxe", 1);

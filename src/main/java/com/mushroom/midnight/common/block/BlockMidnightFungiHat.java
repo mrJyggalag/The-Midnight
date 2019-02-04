@@ -5,6 +5,7 @@ import com.mushroom.midnight.common.registry.ModBlocks;
 import com.mushroom.midnight.common.registry.ModTabs;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
+import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.state.BlockStateContainer;
@@ -30,8 +31,8 @@ public class BlockMidnightFungiHat extends Block implements IModelProvider {
 
     private final Supplier<Block> saplingSupplier;
 
-    public BlockMidnightFungiHat(Supplier<Block> saplingSupplier) {
-        super(Material.WOOD);
+    public BlockMidnightFungiHat(Supplier<Block> saplingSupplier, MapColor mapColor) {
+        super(Material.WOOD, mapColor);
         this.saplingSupplier = saplingSupplier;
         this.setHardness(0.5F);
         this.setSoundType(SoundType.WOOD);
@@ -57,6 +58,7 @@ public class BlockMidnightFungiHat extends Block implements IModelProvider {
     }
 
     @Override
+    @SuppressWarnings("deprecation")
     public IBlockState getActualState(IBlockState state, IBlockAccess world, BlockPos pos) {
         return state.withProperty(UP, this.isInside(world, pos.up()))
                 .withProperty(DOWN, this.isInside(world, pos.down()))
@@ -71,6 +73,7 @@ public class BlockMidnightFungiHat extends Block implements IModelProvider {
     }
 
     @Override
+    @SuppressWarnings("deprecation")
     public IBlockState getStateFromMeta(int meta) {
         return this.getDefaultState();
     }
@@ -109,6 +112,7 @@ public class BlockMidnightFungiHat extends Block implements IModelProvider {
     }
 
     @Override
+    @SuppressWarnings("deprecation")
     public float getAmbientOcclusionLightValue(IBlockState state) {
         return 0.8F;
     }
