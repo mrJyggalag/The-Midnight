@@ -39,7 +39,7 @@ public class ModSounds {
     public static final SoundEvent EGG_CRACKED = RegUtil.applyName(new SoundEvent(new ResourceLocation(MODID, "egg_cracked")));
 
     public static final SoundType MUD = new SoundType(1.0F, 1.0F, ModSounds.MUD_DIG, ModSounds.MUD_STEP, ModSounds.MUD_DIG, ModSounds.MUD_DIG, ModSounds.MUD_STEP);
-    public static final SoundType PILE_OF_EGGS = new SoundType(1.0F, 1.0F, ModSounds.EGG_CRACKED, SoundEvents.BLOCK_SNOW_STEP, SoundEvents.BLOCK_SNOW_PLACE, SoundEvents.BLOCK_SNOW_HIT, SoundEvents.BLOCK_SNOW_FALL);
+    public static final SoundType PILE_OF_EGGS = new SoundType(1.0F, 1.0F, ModSounds.EGG_CRACKED, SoundEvents.BLOCK_STONE_STEP, SoundEvents.BLOCK_STONE_PLACE, SoundEvents.BLOCK_STONE_HIT, SoundEvents.BLOCK_STONE_FALL);
 
     @SubscribeEvent
     public static void onRegisterSounds(RegistryEvent.Register<SoundEvent> event) {
