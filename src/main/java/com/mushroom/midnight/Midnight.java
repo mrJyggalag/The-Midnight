@@ -2,6 +2,7 @@ package com.mushroom.midnight;
 
 import com.google.common.reflect.Reflection;
 import com.mushroom.midnight.common.CommonProxy;
+import com.mushroom.midnight.common.capability.AnimationCapability;
 import com.mushroom.midnight.common.capability.RiftCooldownCapability;
 import com.mushroom.midnight.common.capability.RifterCapturedCapability;
 import com.mushroom.midnight.common.capability.VoidStorage;
@@ -12,11 +13,9 @@ import com.mushroom.midnight.common.network.MessageBridgeCreate;
 import com.mushroom.midnight.common.network.MessageBridgeRemoval;
 import com.mushroom.midnight.common.network.MessageBridgeState;
 import com.mushroom.midnight.common.network.MessageCaptureEntity;
-import com.mushroom.midnight.common.network.MessageHunterAttack;
 import com.mushroom.midnight.common.network.MessageItemActivation;
-import com.mushroom.midnight.common.network.MessageNightstagAttack;
+import com.mushroom.midnight.common.network.MessageAnimation;
 import com.mushroom.midnight.common.network.MessageRockshroomBroken;
-import com.mushroom.midnight.common.network.MessageStingerAttack;
 import com.mushroom.midnight.common.registry.ModBiomes;
 import com.mushroom.midnight.common.registry.ModBlocks;
 import com.mushroom.midnight.common.registry.ModCriterion;
@@ -74,6 +73,9 @@ public class Midnight {
     @CapabilityInject(RifterCapturedCapability.class)
     public static Capability<RifterCapturedCapability> rifterCapturedCap;
 
+    @CapabilityInject(AnimationCapability.class)
+    public static Capability<AnimationCapability> animationCap;
+
     static {
         FluidRegistry.enableUniversalBucket();
     }
@@ -82,17 +84,15 @@ public class Midnight {
     public void preInit(FMLPreInitializationEvent event) {
         CapabilityManager.INSTANCE.register(RiftCooldownCapability.class, new VoidStorage<>(), RiftCooldownCapability::new);
         CapabilityManager.INSTANCE.register(RifterCapturedCapability.class, new VoidStorage<>(), RifterCapturedCapability::new);
+        CapabilityManager.INSTANCE.register(AnimationCapability.class, new VoidStorage<>(), AnimationCapability::new);
 
         NETWORK.registerMessage(MessageCaptureEntity.Handler.class, MessageCaptureEntity.class, 0, Side.CLIENT);
         NETWORK.registerMessage(MessageBridgeCreate.Handler.class, MessageBridgeCreate.class, 1, Side.CLIENT);
         NETWORK.registerMessage(MessageBridgeState.Handler.class, MessageBridgeState.class, 2, Side.CLIENT);
         NETWORK.registerMessage(MessageBridgeRemoval.Handler.class, MessageBridgeRemoval.class, 3, Side.CLIENT);
-        // TODO merge the packets for animation in one capability
-        NETWORK.registerMessage(MessageHunterAttack.Handler.class, MessageHunterAttack.class, 4, Side.CLIENT);
-        NETWORK.registerMessage(MessageNightstagAttack.Handler.class, MessageNightstagAttack.class, 5, Side.CLIENT);
-        NETWORK.registerMessage(MessageStingerAttack.Handler.class, MessageStingerAttack.class, 6, Side.CLIENT);
-        NETWORK.registerMessage(MessageRockshroomBroken.Handler.class, MessageRockshroomBroken.class, 7, Side.CLIENT);
-        NETWORK.registerMessage(MessageItemActivation.Handler.class, MessageItemActivation.class, 8, Side.CLIENT);
+        NETWORK.registerMessage(MessageAnimation.Handler.class, MessageAnimation.class, 4, Side.CLIENT);
+        NETWORK.registerMessage(MessageRockshroomBroken.Handler.class, MessageRockshroomBroken.class, 5, Side.CLIENT);
+        NETWORK.registerMessage(MessageItemActivation.Handler.class, MessageItemActivation.class, 6, Side.CLIENT);
 
         Reflection.initialize(ModCriterion.class, ModTabs.class);
 

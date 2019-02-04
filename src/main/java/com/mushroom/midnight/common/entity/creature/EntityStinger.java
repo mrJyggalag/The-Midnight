@@ -1,9 +1,9 @@
 package com.mushroom.midnight.common.entity.creature;
 
 import com.mushroom.midnight.Midnight;
+import com.mushroom.midnight.common.capability.AnimationCapability;
 import com.mushroom.midnight.common.entity.navigation.CustomPathNavigateGround;
 import com.mushroom.midnight.common.entity.task.EntityTaskNeutral;
-import com.mushroom.midnight.common.network.MessageStingerAttack;
 import com.mushroom.midnight.common.registry.ModLootTables;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -37,11 +37,8 @@ import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
 
-public class EntityStinger extends EntityAgeable implements IAnimals {
+public class EntityStinger extends EntityAgeable implements IAnimals, IAnimable {
     private static final int ATTACK_ANIMATION_TICKS = 10;
-    private int attackAnimation = 0;
-    private int prevAttackAnimation;
-    private boolean attacking = false;
 
     public EntityStinger(World worldIn) {
         super(worldIn);
@@ -127,8 +124,10 @@ public class EntityStinger extends EntityAgeable implements IAnimals {
                 ((EntityPlayer) entity).addPotionEffect(new PotionEffect(MobEffects.WEAKNESS, 100, 0, false, true));
             }
             applyEnchantments(this, entity);
-            setAttacking(true);
-            Midnight.NETWORK.sendToAllTracking(new MessageStingerAttack(this), this);
+            AnimationCapability animationCap = getCapability(Midnight.animationCap, null);
+            if (animationCap != null) {
+                animationCap.setAnimation(this, AnimationCapability.AnimationType.ATTACK, ATTACK_ANIMATION_TICKS);
+            }
         }
         return flag;
     }
@@ -162,37 +161,6 @@ public class EntityStinger extends EntityAgeable implements IAnimals {
         getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(2d);
         getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(12d);
         setHealth(12f);
-    }
-
-    @Override
-    public void onUpdate() {
-        super.onUpdate();
-        updateAttackAnimation();
-    }
-
-    private void updateAttackAnimation() {
-        this.prevAttackAnimation = this.attackAnimation;
-        if (isAttacking()) {
-            if (this.attackAnimation >= ATTACK_ANIMATION_TICKS) {
-                this.attackAnimation = 0;
-                setAttacking(false);
-            } else {
-                this.attackAnimation++;
-            }
-        }
-    }
-
-    public float getAttackAnimation(float partialTicks) {
-        float animationTick = this.prevAttackAnimation + (this.attackAnimation - this.prevAttackAnimation) * partialTicks;
-        return animationTick / ATTACK_ANIMATION_TICKS;
-    }
-
-    public void setAttacking(boolean attacking) {
-        this.attacking = attacking;
-    }
-
-    public boolean isAttacking() {
-        return this.attacking;
     }
 
     @Override

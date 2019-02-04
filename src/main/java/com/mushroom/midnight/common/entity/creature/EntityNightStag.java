@@ -1,9 +1,10 @@
 package com.mushroom.midnight.common.entity.creature;
 
 import com.mushroom.midnight.Midnight;
+import com.mushroom.midnight.common.capability.AnimationCapability;
+import com.mushroom.midnight.common.capability.AnimationCapability.AnimationType;
 import com.mushroom.midnight.common.entity.navigation.CustomPathNavigateGround;
 import com.mushroom.midnight.common.entity.task.EntityTaskNeutral;
-import com.mushroom.midnight.common.network.MessageNightstagAttack;
 import com.mushroom.midnight.common.registry.ModBlocks;
 import com.mushroom.midnight.common.registry.ModEffects;
 import com.mushroom.midnight.common.registry.ModSounds;
@@ -38,11 +39,8 @@ import javax.annotation.Nullable;
 
 import static com.mushroom.midnight.common.registry.ModLootTables.LOOT_TABLE_NIGHTSTAG;
 
-public class EntityNightStag extends EntityAnimal {
+public class EntityNightStag extends EntityAnimal implements IAnimable {
     private static final int ATTACK_ANIMATION_TICKS = 10;
-    private int attackAnimation = 0;
-    private int prevAttackAnimation;
-    private boolean attacking = false;
 
     public EntityNightStag(World world) {
         super(world);
@@ -147,45 +145,16 @@ public class EntityNightStag extends EntityAnimal {
                 ((EntityPlayer) entity).addPotionEffect(new PotionEffect(ModEffects.DARKNESS, 200, 0, false, true));
             }
             applyEnchantments(this, entity);
-            setAttacking(true);
-            Midnight.NETWORK.sendToAllTracking(new MessageNightstagAttack(this), this);
+            AnimationCapability animationCap = getCapability(Midnight.animationCap, null);
+            if (animationCap != null) {
+                animationCap.setAnimation(this, AnimationType.ATTACK, ATTACK_ANIMATION_TICKS);
+            }
         }
         return flag;
     }
 
     @Override
     public void swingArm(EnumHand hand) {
-    }
-
-    @Override
-    public void onUpdate() {
-        super.onUpdate();
-        updateAttackAnimation();
-    }
-
-    private void updateAttackAnimation() {
-        this.prevAttackAnimation = this.attackAnimation;
-        if (isAttacking()) {
-            if (this.attackAnimation >= ATTACK_ANIMATION_TICKS) {
-                this.attackAnimation = 0;
-                setAttacking(false);
-            } else {
-                this.attackAnimation++;
-            }
-        }
-    }
-
-    public float getAttackAnimation(float partialTicks) {
-        float animationTick = this.prevAttackAnimation + (this.attackAnimation - this.prevAttackAnimation) * partialTicks;
-        return animationTick / ATTACK_ANIMATION_TICKS;
-    }
-
-    public void setAttacking(boolean attacking) {
-        this.attacking = attacking;
-    }
-
-    public boolean isAttacking() {
-        return this.attacking;
     }
 
     @Override

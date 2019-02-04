@@ -1,13 +1,13 @@
 package com.mushroom.midnight.common.entity.creature;
 
 import com.mushroom.midnight.Midnight;
+import com.mushroom.midnight.common.capability.AnimationCapability;
 import com.mushroom.midnight.common.entity.NavigatorFlying;
 import com.mushroom.midnight.common.entity.task.EntityTaskHunterIdle;
 import com.mushroom.midnight.common.entity.task.EntityTaskHunterSwoop;
 import com.mushroom.midnight.common.entity.task.EntityTaskHunterTarget;
 import com.mushroom.midnight.common.entity.task.EntityTaskHunterTrack;
 import com.mushroom.midnight.common.entity.util.ChainSolver;
-import com.mushroom.midnight.common.network.MessageHunterAttack;
 import com.mushroom.midnight.common.registry.ModLootTables;
 import com.mushroom.midnight.common.util.MeanValueRecorder;
 import net.minecraft.block.state.IBlockState;
@@ -34,7 +34,7 @@ import net.minecraft.world.World;
 import javax.annotation.Nullable;
 import javax.vecmath.Point3f;
 
-public class EntityHunter extends EntityMob implements EntityFlying {
+public class EntityHunter extends EntityMob implements EntityFlying, IAnimable {
     public static final int ATTACK_ANIMATION_TICKS = 10;
 
     public static final int FLIGHT_HEIGHT = 40;
@@ -43,11 +43,6 @@ public class EntityHunter extends EntityMob implements EntityFlying {
     public float prevRoll;
 
     public int swoopCooldown;
-
-    public boolean attacking;
-
-    public int attackAnimation;
-    public int prevAttackAnimation;
 
     private final MeanValueRecorder deltaYaw = new MeanValueRecorder(20);
     private final ChainSolver<EntityHunter> chainSolver = new ChainSolver<>(
@@ -110,7 +105,6 @@ public class EntityHunter extends EntityMob implements EntityFlying {
                 this.swoopCooldown--;
             }
         } else {
-            this.updateAttackAnimation();
 
             this.deltaYaw.record(this.rotationYaw - this.prevRotationYaw);
             float deltaYaw = this.deltaYaw.computeMean();
@@ -119,19 +113,6 @@ public class EntityHunter extends EntityMob implements EntityFlying {
             this.roll = MathHelper.clamp(-deltaYaw * 8.0F, -45.0F, 45.0F);
 
 //            this.chainSolver.update(this);
-        }
-    }
-
-    private void updateAttackAnimation() {
-        this.prevAttackAnimation = this.attackAnimation;
-
-        if (this.attacking) {
-            if (this.attackAnimation < ATTACK_ANIMATION_TICKS) {
-                this.attackAnimation += 1;
-            } else {
-                this.attackAnimation = 0;
-                this.attacking = false;
-            }
         }
     }
 
@@ -191,7 +172,10 @@ public class EntityHunter extends EntityMob implements EntityFlying {
                 living.addPotionEffect(new PotionEffect(MobEffects.SLOWNESS, 10 * 20));
                 living.addPotionEffect(new PotionEffect(MobEffects.WITHER, 6 * 20));
 
-                Midnight.NETWORK.sendToAllTracking(new MessageHunterAttack(this), this);
+                AnimationCapability animationCap = getCapability(Midnight.animationCap, null);
+                if (animationCap != null) {
+                    animationCap.setAnimation(this, AnimationCapability.AnimationType.ATTACK, ATTACK_ANIMATION_TICKS);
+                }
             }
 
             return true;
