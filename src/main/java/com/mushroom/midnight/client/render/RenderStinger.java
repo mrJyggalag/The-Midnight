@@ -18,6 +18,15 @@ public class RenderStinger extends RenderLiving<EntityStinger> {
     }
 
     @Override
+    public void doRender(EntityStinger entity, double x, double y, double z, float entityYaw, float partialTicks) {
+        GlStateManager.pushMatrix();
+        GlStateManager.enableCull();
+        super.doRender(entity, x, y, z, entityYaw, partialTicks);
+        GlStateManager.disableCull();
+        GlStateManager.popMatrix();
+    }
+
+    @Override
     @Nullable
     protected ResourceLocation getEntityTexture(EntityStinger entity) {
         return TEXTURE;

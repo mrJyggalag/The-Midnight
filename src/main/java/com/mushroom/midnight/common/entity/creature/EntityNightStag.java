@@ -27,6 +27,7 @@ import net.minecraft.init.SoundEvents;
 import net.minecraft.pathfinding.PathNavigate;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
@@ -38,17 +39,14 @@ import javax.annotation.Nullable;
 import static com.mushroom.midnight.common.registry.ModLootTables.LOOT_TABLE_NIGHTSTAG;
 
 public class EntityNightStag extends EntityAnimal {
-
     private static final int ATTACK_ANIMATION_TICKS = 10;
     private int attackAnimation = 0;
     private int prevAttackAnimation;
-
     private boolean attacking = false;
 
     public EntityNightStag(World world) {
         super(world);
         setSize(0.9f, 1.87f);
-        experienceValue = 4;
     }
 
     @Override
@@ -61,9 +59,7 @@ public class EntityNightStag extends EntityAnimal {
     @Nullable
     public IEntityLivingData onInitialSpawn(DifficultyInstance difficulty, @Nullable IEntityLivingData livingdata) {
         livingdata = super.onInitialSpawn(difficulty, livingdata);
-        if (this.rand.nextInt(5) == 0) {
-            setGrowingAge(-24000);
-        }
+        setGrowingAge(this.rand.nextInt(5) == 0 ? -1 : -24000);
         return livingdata;
     }
 
@@ -72,22 +68,27 @@ public class EntityNightStag extends EntityAnimal {
         return false;
     }
 
+    @Override
     protected SoundEvent getAmbientSound() {
         return SoundEvents.ENTITY_LLAMA_AMBIENT;
     }
 
+    @Override
     protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
         return SoundEvents.ENTITY_LLAMA_HURT;
     }
 
+    @Override
     protected SoundEvent getDeathSound() {
         return SoundEvents.ENTITY_LLAMA_DEATH;
     }
 
+    @Override
     public int getTalkInterval() {
         return 200;
     }
 
+    @Override
     protected void playStepSound(BlockPos pos, Block blockIn) {
         playSound(SoundEvents.ENTITY_LLAMA_STEP, 0.15f, 1f);
     }
@@ -113,16 +114,7 @@ public class EntityNightStag extends EntityAnimal {
     protected void initEntityAI() {
         this.tasks.addTask(0, new EntityAISwimming(this));
         this.tasks.addTask(1, new EntityTaskNeutral(this, new EntityAIPanic(this, 1.2d), true));
-        this.tasks.addTask(2, new EntityTaskNeutral(this, new EntityAIAttackMelee(this, 1d, false) {
-            @Override
-            protected void checkAndPerformAttack(EntityLivingBase enemy, double distToEnemySqr) {
-                if (distToEnemySqr <= getAttackReachSqr(enemy) && this.attackTick <= 0) {
-                    this.attackTick = 20;
-                    this.attacker.attackEntityAsMob(enemy);
-                    setAttacking(true);
-                }
-            }
-        }, false));
+        this.tasks.addTask(2, new EntityTaskNeutral(this, new EntityAIAttackMelee(this, 1d, false), false));
         this.tasks.addTask(4, new EntityAIFollowParent(this, 1d));
         this.tasks.addTask(6, new EntityAIWanderAvoidWater(this, 0.7d, 0.005f));
         this.tasks.addTask(7, new EntityAIWatchClosest(this, EntityPlayer.class, 12f));
@@ -147,9 +139,14 @@ public class EntityNightStag extends EntityAnimal {
                 ((EntityPlayer) entity).addPotionEffect(new PotionEffect(ModEffects.DARKNESS, 200, 0, false, true));
             }
             applyEnchantments(this, entity);
+            setAttacking(true);
             Midnight.NETWORK.sendToAllTracking(new MessageNightstagAttack(this), this);
         }
         return flag;
+    }
+
+    @Override
+    public void swingArm(EnumHand hand) {
     }
 
     @Override
@@ -181,6 +178,11 @@ public class EntityNightStag extends EntityAnimal {
 
     public boolean isAttacking() {
         return this.attacking;
+    }
+
+    @Override
+    protected int getExperiencePoints(EntityPlayer player) {
+        return 5;
     }
 
     @Override
