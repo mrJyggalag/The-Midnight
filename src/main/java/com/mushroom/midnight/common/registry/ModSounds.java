@@ -31,6 +31,10 @@ public class ModSounds {
     public static final SoundEvent MUD_DIG = RegUtil.applyName(new SoundEvent(new ResourceLocation(MODID, "mud_dig")));
     public static final SoundEvent MUD_STEP = RegUtil.applyName(new SoundEvent(new ResourceLocation(MODID, "mud_step")));
 
+    public static final SoundEvent NIGHTSTAG_AMBIENT = RegUtil.applyName(new SoundEvent(new ResourceLocation(MODID, "nightstag_ambient")));
+    public static final SoundEvent NIGHTSTAG_HURT = RegUtil.applyName(new SoundEvent(new ResourceLocation(MODID, "nightstag_hurt")));
+    public static final SoundEvent NIGHTSTAG_DEATH = RegUtil.applyName(new SoundEvent(new ResourceLocation(MODID, "nightstag_death")));
+
     public static final SoundType MUD = new SoundType(1.0F, 1.0F, ModSounds.MUD_DIG, ModSounds.MUD_STEP, ModSounds.MUD_DIG, ModSounds.MUD_DIG, ModSounds.MUD_STEP);
 
     @SubscribeEvent
@@ -49,7 +53,10 @@ public class ModSounds {
                 BLADESHROOM_CAP_SHOOT,
                 BLADESHROOM_CAP_HIT,
                 MUD_DIG,
-                MUD_STEP
+                MUD_STEP,
+                NIGHTSTAG_AMBIENT,
+                NIGHTSTAG_HURT,
+                NIGHTSTAG_DEATH
         );
     }
 }
