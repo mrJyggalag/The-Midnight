@@ -1,6 +1,7 @@
 package com.mushroom.midnight.common.world;
 
-import com.mushroom.midnight.common.biome.IMidnightBiome;
+import com.mushroom.midnight.common.biome.surface.SurfaceBiome;
+import com.mushroom.midnight.common.biome.surface.SurfaceTerrainConfig;
 import com.mushroom.midnight.common.registry.ModBlocks;
 import com.mushroom.midnight.common.world.generator.WorldGenMidnightCaves;
 import com.mushroom.midnight.common.world.generator.WorldGenMoltenCrater;
@@ -173,10 +174,13 @@ public class MidnightChunkGenerator implements IChunkGenerator, PartialChunkGene
                 for (int neighborZ = -BIOME_WEIGHT_RADIUS; neighborZ <= BIOME_WEIGHT_RADIUS; neighborZ++) {
                     for (int neighborX = -BIOME_WEIGHT_RADIUS; neighborX <= BIOME_WEIGHT_RADIUS; neighborX++) {
                         Biome neighborBiome = this.sampleNoiseBiome(localX + neighborX, localZ + neighborZ);
-                        float neighborBaseHeight = neighborBiome.getBaseHeight();
-                        float neighborHeightVariation = neighborBiome.getHeightVariation();
-                        float neighborRidgeWeight = IMidnightBiome.getRidgeWeight(neighborBiome);
-                        float neighborDensityScale = IMidnightBiome.getDensityScale(neighborBiome);
+
+                        SurfaceTerrainConfig terrainConfig = SurfaceBiome.getTerrainConfig(neighborBiome);
+                        float neighborBaseHeight = terrainConfig.getBaseHeight();
+                        float neighborHeightVariation = terrainConfig.getHeightVariation();
+
+                        float neighborRidgeWeight = terrainConfig.getRidgeWeight();
+                        float neighborDensityScale = terrainConfig.getDensityScale();
 
                         float biomeWeight = this.weightTable.get(neighborX, neighborZ) / (neighborBaseHeight + 2.0F);
                         if (neighborBiome.getBaseHeight() > originBiome.getBaseHeight()) {

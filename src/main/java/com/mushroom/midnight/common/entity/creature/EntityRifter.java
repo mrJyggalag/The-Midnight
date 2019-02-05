@@ -2,7 +2,7 @@ package com.mushroom.midnight.common.entity.creature;
 
 import com.google.common.collect.ImmutableList;
 import com.mushroom.midnight.Midnight;
-import com.mushroom.midnight.common.capability.RifterCapturedCapability;
+import com.mushroom.midnight.common.capability.RifterCapturable;
 import com.mushroom.midnight.common.entity.EntityRift;
 import com.mushroom.midnight.common.entity.IRiftTraveler;
 import com.mushroom.midnight.common.entity.RiftTravelEntry;
@@ -231,7 +231,7 @@ public class EntityRifter extends EntityMob implements IRiftTraveler, IEntityAdd
     }
 
     private boolean shouldAttack(Entity entity) {
-        if (entity == null || RifterCapturedCapability.isCaptured(entity)) {
+        if (entity == null || RifterCapturable.isCaptured(entity)) {
             return false;
         }
         if (entity instanceof EntityAnimal) {
@@ -282,7 +282,7 @@ public class EntityRifter extends EntityMob implements IRiftTraveler, IEntityAdd
     }
 
     private void initCapturedEntity(EntityLivingBase capturedEntity) {
-        RifterCapturedCapability capability = capturedEntity.getCapability(Midnight.rifterCapturedCap, null);
+        RifterCapturable capability = capturedEntity.getCapability(Midnight.RIFTER_CAPTURABLE_CAP, null);
         if (capability != null) {
             capability.setCaptured(true);
         }
@@ -291,7 +291,7 @@ public class EntityRifter extends EntityMob implements IRiftTraveler, IEntityAdd
     }
 
     private void resetCapturedEntity(EntityLivingBase capturedEntity) {
-        RifterCapturedCapability capability = capturedEntity.getCapability(Midnight.rifterCapturedCap, null);
+        RifterCapturable capability = capturedEntity.getCapability(Midnight.RIFTER_CAPTURABLE_CAP, null);
         if (capability != null) {
             capability.setCaptured(false);
         }

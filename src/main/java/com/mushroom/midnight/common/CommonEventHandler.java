@@ -1,8 +1,8 @@
 package com.mushroom.midnight.common;
 
 import com.mushroom.midnight.Midnight;
-import com.mushroom.midnight.common.capability.RiftCooldownCapability;
-import com.mushroom.midnight.common.capability.RifterCapturedCapability;
+import com.mushroom.midnight.common.capability.RiftTravelCooldown;
+import com.mushroom.midnight.common.capability.RifterCapturable;
 import com.mushroom.midnight.common.config.MidnightConfig;
 import com.mushroom.midnight.common.entity.EntityRift;
 import com.mushroom.midnight.common.event.RifterCaptureEvent;
@@ -40,9 +40,9 @@ public class CommonEventHandler {
 
     @SubscribeEvent
     public static void onAttachEntityCapabilities(AttachCapabilitiesEvent<Entity> event) {
-        event.addCapability(new ResourceLocation(Midnight.MODID, "rift_cooldown"), new RiftCooldownCapability());
+        event.addCapability(new ResourceLocation(Midnight.MODID, "rift_cooldown"), new RiftTravelCooldown());
         if (event.getObject() instanceof EntityLivingBase) {
-            event.addCapability(new ResourceLocation(Midnight.MODID, "rifter_captured"), new RifterCapturedCapability());
+            event.addCapability(new ResourceLocation(Midnight.MODID, "rifter_captured"), new RifterCapturable());
         }
     }
 
@@ -58,7 +58,7 @@ public class CommonEventHandler {
     public static void onEntityTick(LivingEvent.LivingUpdateEvent event) {
         EntityLivingBase entity = event.getEntityLiving();
 
-        RiftCooldownCapability cooldownCap = entity.getCapability(Midnight.riftCooldownCap, null);
+        RiftTravelCooldown cooldownCap = entity.getCapability(Midnight.RIFT_TRAVEL_COOLDOWN_CAP, null);
         if (cooldownCap != null) {
             cooldownCap.update(entity);
         }

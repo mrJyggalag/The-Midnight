@@ -3,13 +3,13 @@ package com.mushroom.midnight.client;
 import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.client.particle.MidnightParticles;
 import com.mushroom.midnight.client.sound.IdleRiftSound;
-import com.mushroom.midnight.common.capability.RifterCapturedCapability;
+import com.mushroom.midnight.common.capability.RifterCapturable;
 import com.mushroom.midnight.common.config.MidnightConfig;
 import com.mushroom.midnight.common.entity.EntityRift;
 import com.mushroom.midnight.common.helper.Helper;
-import com.mushroom.midnight.common.registry.ModBiomes;
 import com.mushroom.midnight.common.registry.ModEffects;
 import com.mushroom.midnight.common.registry.ModSounds;
+import com.mushroom.midnight.common.registry.ModSurfaceBiomes;
 import com.mushroom.midnight.common.util.EntityUtil;
 import com.mushroom.midnight.common.util.ResetHookHandler;
 import com.mushroom.midnight.common.world.GlobalBridgeManager;
@@ -23,7 +23,6 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
 import net.minecraft.init.MobEffects;
 import net.minecraft.network.play.client.CPacketEntityAction;
 import net.minecraft.util.ResourceLocation;
@@ -136,7 +135,7 @@ public class ClientEventHandler {
 
     @SubscribeEvent
     public static void onSetupFogDensity(EntityViewRenderEvent.RenderFogEvent.FogDensity event) {
-        if (FluidImmersionRenderer.immersedState.getBlock() != Blocks.AIR) {
+        if (FluidImmersionRenderer.immersedState.isOpaqueCube()) {
             return;
         }
         EntityLivingBase entity = event.getEntity() instanceof EntityLivingBase ? (EntityLivingBase) event.getEntity() : null;
@@ -195,7 +194,7 @@ public class ClientEventHandler {
     }
 
     public static void onApplyRotations(EntityLivingBase entity) {
-        boolean captured = RifterCapturedCapability.isCaptured(entity);
+        boolean captured = RifterCapturable.isCaptured(entity);
         if (captured) {
             entity.limbSwing = 0.0F;
             entity.limbSwingAmount = entity.prevLimbSwingAmount = 0.0F;
@@ -243,7 +242,7 @@ public class ClientEventHandler {
     @Nullable
     private static SoundEvent getMusicSound(EntityPlayer player) {
         Biome biome = player.world.getBiome(player.getPosition());
-        if (biome == ModBiomes.CRYSTAL_SPIRES) {
+        if (biome == ModSurfaceBiomes.CRYSTAL_SPIRES) {
             return ModSounds.MUSIC_CRYSTAL;
         }
         return ModSounds.MUSIC_GENERIC;

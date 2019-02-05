@@ -10,7 +10,15 @@ import net.minecraft.world.biome.Biome;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
 import net.minecraftforge.registries.GameData;
 
+import javax.annotation.Nonnull;
+
 public class RegUtil {
+    @Nonnull
+    @SuppressWarnings("ConstantConditions")
+    public static <T> T injected() {
+        return null;
+    }
+
     public static <T extends Block> T withName(T block, String name) {
         ResourceLocation registryName = GameData.checkPrefix(name);
         block.setRegistryName(registryName);

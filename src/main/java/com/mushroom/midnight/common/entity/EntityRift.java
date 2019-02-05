@@ -2,7 +2,7 @@ package com.mushroom.midnight.common.entity;
 
 import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.client.particle.RiftParticleSystem;
-import com.mushroom.midnight.common.capability.RiftCooldownCapability;
+import com.mushroom.midnight.common.capability.RiftTravelCooldown;
 import com.mushroom.midnight.common.config.MidnightConfig;
 import com.mushroom.midnight.common.entity.creature.EntityHunter;
 import com.mushroom.midnight.common.entity.creature.EntityRifter;
@@ -223,7 +223,7 @@ public class EntityRift extends Entity implements IEntityAdditionalSpawnData {
             if (entity.isRiding() || (entity instanceof EntityPlayer && ((EntityPlayer)entity).isSpectator())) {
                 return false;
             }
-            RiftCooldownCapability cooldown = entity.getCapability(Midnight.riftCooldownCap, null);
+            RiftTravelCooldown cooldown = entity.getCapability(Midnight.RIFT_TRAVEL_COOLDOWN_CAP, null);
             if (cooldown != null && !cooldown.isReady()) {
                 return false;
             }

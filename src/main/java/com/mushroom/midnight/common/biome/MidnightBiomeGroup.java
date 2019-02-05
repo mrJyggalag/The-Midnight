@@ -1,31 +1,33 @@
 package com.mushroom.midnight.common.biome;
 
+import com.mushroom.midnight.common.biome.config.BiomeSpawnEntry;
 import com.mushroom.midnight.common.util.INumberGenerator;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public enum MidnightBiomeGroup {
-    BASE,
-    SMALL(new VoidBiomeSpawnEntry(100));
+    SURFACE,
+    UNDERGROUND,
+    SMALL_SURFACE(new BiomeSpawnEntry.Void(100));
 
-    private final List<IMidnightBiomeSpawnEntry> spawnEntries = new ArrayList<>();
+    private final List<BiomeSpawnEntry> spawnEntries = new ArrayList<>();
     private int totalWeight;
 
-    MidnightBiomeGroup(IMidnightBiomeSpawnEntry... entries) {
+    MidnightBiomeGroup(BiomeSpawnEntry... entries) {
         this.add(entries);
     }
 
-    public void add(IMidnightBiomeSpawnEntry... entries) {
-        for (IMidnightBiomeSpawnEntry entry : entries) {
+    public void add(BiomeSpawnEntry... entries) {
+        for (BiomeSpawnEntry entry : entries) {
             this.spawnEntries.add(entry);
             this.totalWeight += entry.getWeight();
         }
     }
 
-    public IMidnightBiomeSpawnEntry selectEntry(INumberGenerator numberGenerator) {
+    public BiomeSpawnEntry selectEntry(INumberGenerator numberGenerator) {
         int weight = numberGenerator.nextInt(this.totalWeight);
-        for (IMidnightBiomeSpawnEntry entry : this.spawnEntries) {
+        for (BiomeSpawnEntry entry : this.spawnEntries) {
             weight -= entry.getWeight();
             if (weight < 0) {
                 return entry;

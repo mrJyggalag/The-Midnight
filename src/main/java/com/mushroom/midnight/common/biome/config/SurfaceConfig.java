@@ -1,7 +1,8 @@
-package com.mushroom.midnight.common.biome;
+package com.mushroom.midnight.common.biome.config;
 
 import com.mushroom.midnight.common.registry.ModBlocks;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.world.biome.Biome;
 
 public class SurfaceConfig {
     private IBlockState topState = ModBlocks.MIDNIGHT_GRASS.getDefaultState();
@@ -42,5 +43,10 @@ public class SurfaceConfig {
 
     public IBlockState getWetState() {
         return this.wetState;
+    }
+
+    public void apply(Biome biome) {
+        biome.topBlock = this.topState;
+        biome.fillerBlock = this.fillerState;
     }
 }

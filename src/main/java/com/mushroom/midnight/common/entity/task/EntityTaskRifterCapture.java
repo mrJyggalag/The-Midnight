@@ -1,6 +1,6 @@
 package com.mushroom.midnight.common.entity.task;
 
-import com.mushroom.midnight.common.capability.RifterCapturedCapability;
+import com.mushroom.midnight.common.capability.RifterCapturable;
 import com.mushroom.midnight.common.entity.creature.EntityRifter;
 import net.minecraft.entity.EntityLivingBase;
 
@@ -19,7 +19,7 @@ public class EntityTaskRifterCapture extends EntityTaskRifterFollow {
 
     @Override
     protected boolean shouldFollow(EntityLivingBase target) {
-        return super.shouldFollow(target) && !this.owner.hasCaptured() && !RifterCapturedCapability.isCaptured(target);
+        return super.shouldFollow(target) && !this.owner.hasCaptured() && !RifterCapturable.isCaptured(target);
     }
 
     @Override

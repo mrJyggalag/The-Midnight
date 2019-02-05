@@ -1,6 +1,6 @@
 package com.mushroom.midnight.common.world.layer;
 
-import com.mushroom.midnight.common.biome.IMidnightBiomeSpawnEntry;
+import com.mushroom.midnight.common.biome.config.BiomeSpawnEntry;
 import com.mushroom.midnight.common.biome.MidnightBiomeGroup;
 import net.minecraft.init.Biomes;
 import net.minecraft.world.biome.Biome;
@@ -21,7 +21,7 @@ public class MidnightSeedLayer extends GenLayer {
                 this.initChunkSeed(originX + localX, originY + localY);
 
                 Biome biome = Biomes.DEFAULT;
-                IMidnightBiomeSpawnEntry entry = MidnightBiomeGroup.BASE.selectEntry(this::nextInt);
+                BiomeSpawnEntry entry = MidnightBiomeGroup.SURFACE.selectEntry(this::nextInt);
                 if (entry != null) {
                     Biome selectedBiome = entry.selectBiome(this::nextInt);
                     if (selectedBiome != null) {

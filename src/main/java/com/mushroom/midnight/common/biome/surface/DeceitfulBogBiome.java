@@ -1,13 +1,14 @@
-package com.mushroom.midnight.common.biome;
+package com.mushroom.midnight.common.biome.surface;
 
+import com.mushroom.midnight.common.biome.config.SurfaceConfig;
 import com.mushroom.midnight.common.registry.ModBlocks;
 import net.minecraft.block.state.IBlockState;
 
 import java.util.Random;
 
-public class DeceitfulBogBiome extends MidnightBiome {
-    public DeceitfulBogBiome(BiomeProperties properties, MidnightBiomeConfig config) {
-        super(properties, config);
+public class DeceitfulBogBiome extends SurfaceBiome {
+    public DeceitfulBogBiome(String name, SurfaceBiomeConfig config) {
+        super(name, config);
     }
 
     @Override

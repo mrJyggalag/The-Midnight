@@ -1,7 +1,7 @@
 package com.mushroom.midnight.common.world;
 
 import com.mushroom.midnight.Midnight;
-import com.mushroom.midnight.common.capability.RiftCooldownCapability;
+import com.mushroom.midnight.common.capability.RiftTravelCooldown;
 import com.mushroom.midnight.common.entity.EntityRift;
 import com.mushroom.midnight.common.entity.RiftBridge;
 import com.mushroom.midnight.common.registry.ModArmorMaterials;
@@ -50,7 +50,7 @@ public class MidnightTeleporter implements ITeleporter {
         entity.posZ = placementPos.z + 0.5;
         entity.fallDistance = 0.0F;
 
-        RiftCooldownCapability capability = entity.getCapability(Midnight.riftCooldownCap, null);
+        RiftTravelCooldown capability = entity.getCapability(Midnight.RIFT_TRAVEL_COOLDOWN_CAP, null);
         if (capability != null) {
             capability.setCooldown(COOLDOWN);
         }

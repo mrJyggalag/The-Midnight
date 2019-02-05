@@ -11,7 +11,7 @@ import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public class RiftCooldownCapability implements ICapabilityProvider {
+public class RiftTravelCooldown implements ICapabilityProvider {
     private int cooldown;
 
     public void update(Entity entity) {
@@ -33,14 +33,14 @@ public class RiftCooldownCapability implements ICapabilityProvider {
 
     @Override
     public boolean hasCapability(@Nonnull Capability<?> capability, @Nullable EnumFacing facing) {
-        return capability == Midnight.riftCooldownCap;
+        return capability == Midnight.RIFT_TRAVEL_COOLDOWN_CAP;
     }
 
     @Nullable
     @Override
     public <T> T getCapability(@Nonnull Capability<T> capability, @Nullable EnumFacing facing) {
-        if (capability == Midnight.riftCooldownCap) {
-            return Midnight.riftCooldownCap.cast(this);
+        if (capability == Midnight.RIFT_TRAVEL_COOLDOWN_CAP) {
+            return Midnight.RIFT_TRAVEL_COOLDOWN_CAP.cast(this);
         }
         return null;
     }

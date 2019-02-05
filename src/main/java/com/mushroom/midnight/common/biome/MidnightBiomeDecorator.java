@@ -1,5 +1,7 @@
 package com.mushroom.midnight.common.biome;
 
+import com.mushroom.midnight.common.biome.config.BiomeFeatureEntry;
+import com.mushroom.midnight.common.biome.config.FeatureConfig;
 import com.mushroom.midnight.common.world.feature.IMidnightFeature;
 import com.mushroom.midnight.common.world.feature.config.IPlacementConfig;
 import net.minecraft.util.math.BlockPos;
@@ -15,9 +17,9 @@ import java.util.Collection;
 import java.util.Random;
 
 public class MidnightBiomeDecorator extends BiomeDecorator {
-    private final MidnightBiomeConfig config;
+    private final FeatureConfig config;
 
-    public MidnightBiomeDecorator(MidnightBiomeConfig config) {
+    public MidnightBiomeDecorator(FeatureConfig config) {
         this.config = config;
     }
 
@@ -42,15 +44,15 @@ public class MidnightBiomeDecorator extends BiomeDecorator {
 
         MinecraftForge.EVENT_BUS.post(new DecorateBiomeEvent.Pre(world, random, chunkPos));
 
-        Collection<MidnightBiomeConfig.FeatureEntry> features = this.config.getFeatures();
-        for (MidnightBiomeConfig.FeatureEntry entry : features) {
+        Collection<BiomeFeatureEntry> features = this.config.getFeatures();
+        for (BiomeFeatureEntry entry : features) {
             this.generateFeatureEntry(world, random, chunkPos, entry);
         }
 
         MinecraftForge.EVENT_BUS.post(new DecorateBiomeEvent.Post(world, random, chunkPos));
     }
 
-    private void generateFeatureEntry(World world, Random random, ChunkPos chunkPos, MidnightBiomeConfig.FeatureEntry entry) {
+    private void generateFeatureEntry(World world, Random random, ChunkPos chunkPos, BiomeFeatureEntry entry) {
         IMidnightFeature[] features = entry.getFeatures();
         IMidnightFeature feature = features[random.nextInt(features.length)];
 

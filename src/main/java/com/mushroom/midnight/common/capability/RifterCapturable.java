@@ -9,11 +9,11 @@ import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public class RifterCapturedCapability implements ICapabilityProvider {
+public class RifterCapturable implements ICapabilityProvider {
     private boolean captured;
 
     public static boolean isCaptured(Entity entity) {
-        RifterCapturedCapability capability = entity.getCapability(Midnight.rifterCapturedCap, null);
+        RifterCapturable capability = entity.getCapability(Midnight.RIFTER_CAPTURABLE_CAP, null);
         return capability != null && capability.isCaptured();
     }
 
@@ -27,14 +27,14 @@ public class RifterCapturedCapability implements ICapabilityProvider {
 
     @Override
     public boolean hasCapability(@Nonnull Capability<?> capability, @Nullable EnumFacing facing) {
-        return capability == Midnight.rifterCapturedCap;
+        return capability == Midnight.RIFTER_CAPTURABLE_CAP;
     }
 
     @Nullable
     @Override
     public <T> T getCapability(@Nonnull Capability<T> capability, @Nullable EnumFacing facing) {
-        if (capability == Midnight.rifterCapturedCap) {
-            return Midnight.rifterCapturedCap.cast(this);
+        if (capability == Midnight.RIFTER_CAPTURABLE_CAP) {
+            return Midnight.RIFTER_CAPTURABLE_CAP.cast(this);
         }
         return null;
     }

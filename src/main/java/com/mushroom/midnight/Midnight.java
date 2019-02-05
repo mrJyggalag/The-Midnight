@@ -2,9 +2,11 @@ package com.mushroom.midnight;
 
 import com.google.common.reflect.Reflection;
 import com.mushroom.midnight.common.CommonProxy;
-import com.mushroom.midnight.common.capability.RiftCooldownCapability;
-import com.mushroom.midnight.common.capability.RifterCapturedCapability;
-import com.mushroom.midnight.common.capability.VoidStorage;
+import com.mushroom.midnight.common.capability.DelegatedStorage;
+import com.mushroom.midnight.common.capability.RiftTravelCooldown;
+import com.mushroom.midnight.common.capability.RifterCapturable;
+import com.mushroom.midnight.common.capability.NullStorage;
+import com.mushroom.midnight.common.capability.UndergroundBiomeStore;
 import com.mushroom.midnight.common.loot.InBiomeLootCondition;
 import com.mushroom.midnight.common.loot.InBlockLootCondition;
 import com.mushroom.midnight.common.network.GuiHandler;
@@ -16,7 +18,7 @@ import com.mushroom.midnight.common.network.MessageHunterAttack;
 import com.mushroom.midnight.common.network.MessageItemActivation;
 import com.mushroom.midnight.common.network.MessageNightstagAttack;
 import com.mushroom.midnight.common.network.MessageRockshroomBroken;
-import com.mushroom.midnight.common.registry.ModBiomes;
+import com.mushroom.midnight.common.registry.ModSurfaceBiomes;
 import com.mushroom.midnight.common.registry.ModBlocks;
 import com.mushroom.midnight.common.registry.ModCriterion;
 import com.mushroom.midnight.common.registry.ModDimensions;
@@ -24,6 +26,7 @@ import com.mushroom.midnight.common.registry.ModFluids;
 import com.mushroom.midnight.common.registry.ModItems;
 import com.mushroom.midnight.common.registry.ModRecipes;
 import com.mushroom.midnight.common.registry.ModTabs;
+import com.mushroom.midnight.common.registry.RegUtil;
 import com.mushroom.midnight.common.util.EntityUtil;
 import com.mushroom.midnight.common.world.generator.MidnightOreGenerator;
 import net.minecraft.block.material.Material;
@@ -67,11 +70,14 @@ public class Midnight {
     @Mod.Instance(MODID)
     public static Midnight instance;
 
-    @CapabilityInject(RiftCooldownCapability.class)
-    public static Capability<RiftCooldownCapability> riftCooldownCap;
+    @CapabilityInject(RiftTravelCooldown.class)
+    public static final Capability<RiftTravelCooldown> RIFT_TRAVEL_COOLDOWN_CAP = RegUtil.injected();
 
-    @CapabilityInject(RifterCapturedCapability.class)
-    public static Capability<RifterCapturedCapability> rifterCapturedCap;
+    @CapabilityInject(RifterCapturable.class)
+    public static final Capability<RifterCapturable> RIFTER_CAPTURABLE_CAP = RegUtil.injected();
+
+    @CapabilityInject(UndergroundBiomeStore.class)
+    public static final Capability<UndergroundBiomeStore> UNDERGROUND_BIOME_CAP = RegUtil.injected();
 
     static {
         FluidRegistry.enableUniversalBucket();
@@ -79,8 +85,9 @@ public class Midnight {
 
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event) {
-        CapabilityManager.INSTANCE.register(RiftCooldownCapability.class, new VoidStorage<>(), RiftCooldownCapability::new);
-        CapabilityManager.INSTANCE.register(RifterCapturedCapability.class, new VoidStorage<>(), RifterCapturedCapability::new);
+        CapabilityManager.INSTANCE.register(RiftTravelCooldown.class, new NullStorage<>(), RiftTravelCooldown::new);
+        CapabilityManager.INSTANCE.register(RifterCapturable.class, new NullStorage<>(), RifterCapturable::new);
+        CapabilityManager.INSTANCE.register(UndergroundBiomeStore.class, new DelegatedStorage<>(), UndergroundBiomeStore::new);
 
         NETWORK.registerMessage(MessageCaptureEntity.Handler.class, MessageCaptureEntity.class, 0, Side.CLIENT);
         NETWORK.registerMessage(MessageBridgeCreate.Handler.class, MessageBridgeCreate.class, 1, Side.CLIENT);
@@ -105,7 +112,7 @@ public class Midnight {
     public void init(FMLInitializationEvent event) {
         GameRegistry.registerWorldGenerator(new MidnightOreGenerator(), Integer.MAX_VALUE);
 
-        ModBiomes.onInit();
+        ModSurfaceBiomes.onInit();
         ModItems.onInit();
         ModBlocks.onInit();
         ModRecipes.onInit();

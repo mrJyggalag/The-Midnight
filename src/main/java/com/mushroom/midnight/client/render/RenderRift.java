@@ -66,7 +66,7 @@ public class RenderRift extends Render<EntityRift> {
             if (this.shader.isAvailable() && MidnightConfig.client.riftShaders) {
                 this.renderShader(entity, time, openAnimation, unstableAnimation);
             } else {
-                this.renderTexture(entity, time, openAnimation, unstableAnimation);
+                this.renderTexture(time, openAnimation, unstableAnimation);
             }
 
             GlStateManager.enableLighting();
@@ -110,7 +110,7 @@ public class RenderRift extends Render<EntityRift> {
         GlStateManager.disableBlend();
     }
 
-    private void renderTexture(EntityRift entity, float time, float openAnimation, float unstableAnimation) {
+    private void renderTexture(float time, float openAnimation, float unstableAnimation) {
         Minecraft client = Minecraft.getMinecraft();
 
         client.getTextureManager().bindTexture(RIFT_TEXTURE);

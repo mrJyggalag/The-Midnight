@@ -1,6 +1,6 @@
 package com.mushroom.midnight.common.world.generator;
 
-import com.mushroom.midnight.common.biome.IMidnightBiome;
+import com.mushroom.midnight.common.biome.surface.SurfaceBiome;
 import com.mushroom.midnight.common.registry.ModBlocks;
 import com.mushroom.midnight.common.world.PartialChunkGenerator;
 import com.mushroom.midnight.common.world.noise.INoiseSampler;
@@ -74,7 +74,7 @@ public class WorldGenMoltenCrater extends MapGenBase {
     }
 
     private boolean isBiomeInvalid(Biome biome) {
-        return IMidnightBiome.isWet(biome);
+        return SurfaceBiome.getTerrainConfig(biome).isWet();
     }
 
     private void generateCrater(int centerX, int centerY, int centerZ, int radius, int genChunkX, int genChunkZ, ChunkPrimer primer) {

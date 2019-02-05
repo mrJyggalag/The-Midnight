@@ -45,7 +45,7 @@ public class MidnightBiomeProvider extends BiomeProvider {
         GenLayer layer = new MidnightSeedLayer(0);
         layer = new GenLayerVoronoiZoom(1000, layer);
 
-        layer = new ApplyBiomeGroupLayer(2000, layer, MidnightBiomeGroup.SMALL);
+        layer = new ApplyBiomeGroupLayer(2000, layer, MidnightBiomeGroup.SMALL_SURFACE);
         layer = new GenLayerFuzzyZoom(3000, layer);
         layer = new RidgeMergeLayer(4000, layer, ridgeLayer);
 

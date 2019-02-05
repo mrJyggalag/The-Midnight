@@ -1,13 +1,13 @@
 package com.mushroom.midnight.common.world.layer;
 
-import com.mushroom.midnight.common.registry.ModBiomes;
+import com.mushroom.midnight.common.registry.ModSurfaceBiomes;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.layer.GenLayer;
 import net.minecraft.world.gen.layer.IntCache;
 
 public class ValleyMergeLayer extends GenLayer {
-    private static final int VALLEY_ID = Biome.getIdForBiome(ModBiomes.PHANTASMAL_VALLEY);
-    private static final int PLATEUA_ID = Biome.getIdForBiome(ModBiomes.OBSCURED_PLATEAU);
+    private static final int VALLEY_ID = Biome.getIdForBiome(ModSurfaceBiomes.PHANTASMAL_VALLEY);
+    private static final int PLATEUA_ID = Biome.getIdForBiome(ModSurfaceBiomes.OBSCURED_PLATEAU);
 
     private final GenLayer ridgeParent;
 

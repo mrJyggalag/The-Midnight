@@ -1,6 +1,6 @@
 package com.mushroom.midnight.common.world.layer;
 
-import com.mushroom.midnight.common.biome.IMidnightBiomeSpawnEntry;
+import com.mushroom.midnight.common.biome.config.BiomeSpawnEntry;
 import com.mushroom.midnight.common.biome.MidnightBiomeGroup;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.layer.GenLayer;
@@ -32,7 +32,7 @@ public class ApplyBiomeGroupLayer extends GenLayer {
     }
 
     private int apply(int parentValue) {
-        IMidnightBiomeSpawnEntry entry = this.layer.selectEntry(this::nextInt);
+        BiomeSpawnEntry entry = this.layer.selectEntry(this::nextInt);
         if (entry.canReplace(Biome.getBiome(parentValue))) {
             Biome biome = entry.selectBiome(this::nextInt);
             if (biome != null) {
