@@ -7,6 +7,7 @@ import com.mushroom.midnight.common.entity.creature.EntityDeceitfulSnapper;
 import com.mushroom.midnight.common.entity.creature.EntityHunter;
 import com.mushroom.midnight.common.entity.creature.EntityNightStag;
 import com.mushroom.midnight.common.entity.creature.EntityRifter;
+import com.mushroom.midnight.common.entity.creature.EntityStinger;
 import com.mushroom.midnight.common.registry.ModBlocks;
 import com.mushroom.midnight.common.world.feature.BoulderFeature;
 import com.mushroom.midnight.common.world.feature.CrystalClusterFeature;
@@ -185,6 +186,7 @@ public class MidnightBiomeConfigs {
             .withCreature(new Biome.SpawnListEntry(EntityNightStag.class, 100, 1, 3))
             .withMonster(new Biome.SpawnListEntry(EntityRifter.class, 100, 1, 2))
             .withMonster(new Biome.SpawnListEntry(EntityEnderman.class, 1, 4, 4))
+            .withMonster(new Biome.SpawnListEntry(EntityStinger.class, 100, 1, 2))
             .build();
 
     public static final MidnightBiomeConfig ROCKY_CONFIG = MidnightBiomeConfig.builder()
@@ -199,6 +201,7 @@ public class MidnightBiomeConfigs {
             .withMonster(new Biome.SpawnListEntry(EntityRifter.class, 100, 1, 2))
             .withMonster(new Biome.SpawnListEntry(EntityEnderman.class, 1, 4, 4))
             .withMonster(new Biome.SpawnListEntry(EntityHunter.class, 5, 1, 2))
+            .withMonster(new Biome.SpawnListEntry(EntityStinger.class, 100, 1, 2))
             .build();
 
     public static final MidnightBiomeConfig BLACK_RIDGE_CONFIG = MidnightBiomeConfig.builder(ROCKY_CONFIG)
@@ -241,6 +244,7 @@ public class MidnightBiomeConfigs {
             .withFeature(GHOST_PLANT_FEATURE, new ParcelPlacementConfig(3, 6, 0.3f))
             .withFeature(UNDERGROUND_FEATURES, new UndergroundPlacementConfig(1, 3, 10, 50))
             .withAmbientCreature(new Biome.SpawnListEntry(EntityCrystalBug.class, 100, 7, 10))
+            .withMonster(new Biome.SpawnListEntry(EntityStinger.class, 100, 1, 2))
             .withGrassColor(0xD184BC)
             .build();
 
@@ -272,6 +276,7 @@ public class MidnightBiomeConfigs {
             .withCreature(new Biome.SpawnListEntry(EntityNightStag.class, 100, 1, 3))
             .withMonster(new Biome.SpawnListEntry(EntityRifter.class, 100, 1, 2))
             .withMonster(new Biome.SpawnListEntry(EntityEnderman.class, 1, 4, 4))
+            .withMonster(new Biome.SpawnListEntry(EntityStinger.class, 100, 1, 2))
             .withGrassColor(0x8893AD)
             .withRidgeWeight(0.0F)
             .wet()
@@ -302,6 +307,7 @@ public class MidnightBiomeConfigs {
             .withMonster(new Biome.SpawnListEntry(EntityRifter.class, 100, 1, 2))
             .withMonster(new Biome.SpawnListEntry(EntityEnderman.class, 1, 4, 4))
             .withMonster(new Biome.SpawnListEntry(EntityHunter.class, 5, 1, 2))
+            .withMonster(new Biome.SpawnListEntry(EntityStinger.class, 100, 1, 2))
             .withRidgeWeight(0.0F)
             .withGrassColor(0xBAA3C6)
             .build();
@@ -318,6 +324,7 @@ public class MidnightBiomeConfigs {
             .withMonster(new Biome.SpawnListEntry(EntityRifter.class, 100, 1, 2))
             .withMonster(new Biome.SpawnListEntry(EntityEnderman.class, 1, 4, 4))
             .withMonster(new Biome.SpawnListEntry(EntityHunter.class, 5, 1, 2))
+            .withMonster(new Biome.SpawnListEntry(EntityStinger.class, 100, 1, 2))
             .withRidgeWeight(0.0F)
             .wet()
             .build();

@@ -7,6 +7,7 @@ import com.mushroom.midnight.common.entity.navigation.CustomPathNavigateGround;
 import com.mushroom.midnight.common.entity.task.EntityTaskNeutral;
 import com.mushroom.midnight.common.registry.ModBlocks;
 import com.mushroom.midnight.common.registry.ModEffects;
+import com.mushroom.midnight.common.registry.ModItems;
 import com.mushroom.midnight.common.registry.ModSounds;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -22,9 +23,12 @@ import net.minecraft.entity.ai.EntityAIPanic;
 import net.minecraft.entity.ai.EntityAISwimming;
 import net.minecraft.entity.ai.EntityAIWanderAvoidWater;
 import net.minecraft.entity.ai.EntityAIWatchClosest;
+import net.minecraft.entity.ai.attributes.AttributeModifier;
+import net.minecraft.entity.ai.attributes.IAttributeInstance;
 import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
+import net.minecraft.item.ItemStack;
 import net.minecraft.pathfinding.PathNavigate;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
@@ -39,9 +43,13 @@ import net.minecraftforge.common.capabilities.Capability;
 
 import javax.annotation.Nullable;
 
+import java.util.UUID;
+
 import static com.mushroom.midnight.common.registry.ModLootTables.LOOT_TABLE_NIGHTSTAG;
 
 public class EntityNightStag extends EntityAnimal {
+    private static final AttributeModifier CHILD_ATTACK_MALUS = new AttributeModifier(UUID.fromString("c0f32cda-a4fd-4fe4-8b3f-15612ef9a52f"), "nightstag_child_attack_malus", -2d, 0);
+    private static final int GROWING_TIME = -24000;
     private final AnimationCapability animCap = new AnimationCapability();
 
     public EntityNightStag(World world) {
@@ -52,14 +60,17 @@ public class EntityNightStag extends EntityAnimal {
     @Override
     @Nullable
     public EntityAgeable createChild(EntityAgeable entity) {
-        return null;
+        EntityNightStag child = new EntityNightStag(world);
+        child.setGrowingAge(GROWING_TIME);
+        return child;
     }
 
     @Override
     @Nullable
     public IEntityLivingData onInitialSpawn(DifficultyInstance difficulty, @Nullable IEntityLivingData livingdata) {
-        livingdata = super.onInitialSpawn(difficulty, livingdata);
-        setGrowingAge(this.rand.nextInt(5) == 0 ? -24000 : -1);
+        if (this.rand.nextInt(5) == 0) {
+            setGrowingAge(GROWING_TIME);
+        }
         return livingdata;
     }
 
@@ -125,14 +136,18 @@ public class EntityNightStag extends EntityAnimal {
     @Override
     protected void applyEntityAttributes() {
         super.applyEntityAttributes();
+        getAttributeMap().registerAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(4d);
         getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.25d);
-        getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(10d);
-        getAttributeMap().registerAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(2d);
+        getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(20d);
+        getEntityAttribute(SharedMonsterAttributes.ARMOR).setBaseValue(1d);
     }
 
     @Override
     protected void onGrowingAdult() {
-        getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(4d);
+        IAttributeInstance attackAttrib = getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE);
+        if (attackAttrib.hasModifier(CHILD_ATTACK_MALUS)) {
+            attackAttrib.removeModifier(CHILD_ATTACK_MALUS);
+        }
         getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(20d);
         getEntityAttribute(SharedMonsterAttributes.ARMOR).setBaseValue(1d);
         setHealth(20f);
@@ -157,6 +172,16 @@ public class EntityNightStag extends EntityAnimal {
     }
 
     @Override
+    public double getMountedYOffset() {
+        return (double) this.height * 0.67d;
+    }
+
+    @Override
+    public boolean isBreedingItem(ItemStack stack) {
+        return stack.getItem() == ModItems.RAW_SUAVIS;
+    }
+
+    @Override
     protected int getExperiencePoints(EntityPlayer player) {
         return isChild() ? 4 : 7;
     }
@@ -171,6 +196,15 @@ public class EntityNightStag extends EntityAnimal {
     public void onLivingUpdate() {
         super.onLivingUpdate();
         animCap.updateAnimation();
+        if (!world.isRemote && isChild()) {
+            IAttributeInstance attackAttrib = getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE);
+            if (!attackAttrib.hasModifier(CHILD_ATTACK_MALUS)) {
+                attackAttrib.applyModifier(CHILD_ATTACK_MALUS);
+                getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(10d);
+                getEntityAttribute(SharedMonsterAttributes.ARMOR).setBaseValue(0d);
+                setHealth(10f);
+            }
+        }
     }
 
     @Override

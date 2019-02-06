@@ -21,7 +21,9 @@ import net.minecraft.entity.ai.EntityAIPanic;
 import net.minecraft.entity.ai.EntityAISwimming;
 import net.minecraft.entity.ai.EntityAIWanderAvoidWater;
 import net.minecraft.entity.ai.EntityAIWatchClosest;
-import net.minecraft.entity.passive.IAnimals;
+import net.minecraft.entity.ai.attributes.AttributeModifier;
+import net.minecraft.entity.ai.attributes.IAttributeInstance;
+import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;
 import net.minecraft.init.SoundEvents;
@@ -31,6 +33,7 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.DifficultyInstance;
@@ -38,8 +41,11 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 
 import javax.annotation.Nullable;
+import java.util.UUID;
 
-public class EntityStinger extends EntityAgeable implements IAnimals {
+public class EntityStinger extends EntityAgeable implements IMob {
+    private static final AttributeModifier CHILD_ATTACK_MALUS = new AttributeModifier(UUID.fromString("c02aca06-ecb7-447f-bcc7-1fef82fecdbd"), "stinger_child_attack_malus", -1d, 0);
+    private static final int GROWING_TIME = -1200;
     private final AnimationCapability animCap = new AnimationCapability();
 
     public EntityStinger(World worldIn) {
@@ -54,7 +60,7 @@ public class EntityStinger extends EntityAgeable implements IAnimals {
 
     @Override
     public boolean getCanSpawnHere() {
-        if (getPosition().getY() > world.getSeaLevel()) {
+        if (getPosition().getY() > 50) {
             return false;
         }
         IBlockState belowState = world.getBlockState(new BlockPos(this).down());
@@ -69,6 +75,11 @@ public class EntityStinger extends EntityAgeable implements IAnimals {
     @Override
     public boolean isOnLadder() {
         return false;
+    }
+
+    @Override
+    public SoundCategory getSoundCategory() {
+        return SoundCategory.HOSTILE;
     }
 
     @Override
@@ -113,8 +124,8 @@ public class EntityStinger extends EntityAgeable implements IAnimals {
     protected void applyEntityAttributes() {
         super.applyEntityAttributes();
         getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.2d);
-        getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(6d);
-        getAttributeMap().registerAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(1d);
+        getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(12d);
+        getAttributeMap().registerAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(2d);
     }
 
     @Override
@@ -122,7 +133,7 @@ public class EntityStinger extends EntityAgeable implements IAnimals {
         super.attackEntityAsMob(entity);
         boolean flag = entity.attackEntityFrom(DamageSource.causeMobDamage(this), (float) getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).getAttributeValue());
         if (flag) {
-            if (entity instanceof EntityPlayer) {
+            if (!isChild() && entity instanceof EntityPlayer) {
                 ((EntityPlayer) entity).addPotionEffect(new PotionEffect(MobEffects.WEAKNESS, 100, 0, false, true));
             }
             applyEnchantments(this, entity);
@@ -150,14 +161,18 @@ public class EntityStinger extends EntityAgeable implements IAnimals {
     @Override
     @Nullable
     public IEntityLivingData onInitialSpawn(DifficultyInstance difficulty, @Nullable IEntityLivingData livingdata) {
-        livingdata = super.onInitialSpawn(difficulty, livingdata);
-        setGrowingAge(this.rand.nextInt(5) == 0 ? -24000 : -1);
+        if (this.rand.nextInt(5) == 0) {
+            setGrowingAge(GROWING_TIME);
+        }
         return livingdata;
     }
 
     @Override
     protected void onGrowingAdult() {
-        getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(2d);
+        IAttributeInstance attackAttrib = getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE);
+        if (attackAttrib.hasModifier(CHILD_ATTACK_MALUS)) {
+            attackAttrib.removeModifier(CHILD_ATTACK_MALUS);
+        }
         getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(12d);
         setHealth(12f);
     }
@@ -181,6 +196,14 @@ public class EntityStinger extends EntityAgeable implements IAnimals {
     public void onLivingUpdate() {
         super.onLivingUpdate();
         animCap.updateAnimation();
+        if (!world.isRemote && isChild()) {
+            IAttributeInstance attackAttrib = getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE);
+            if (!attackAttrib.hasModifier(CHILD_ATTACK_MALUS)) {
+                attackAttrib.applyModifier(CHILD_ATTACK_MALUS);
+                getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(6d);
+                setHealth(6f);
+            }
+        }
     }
 
     @Override
