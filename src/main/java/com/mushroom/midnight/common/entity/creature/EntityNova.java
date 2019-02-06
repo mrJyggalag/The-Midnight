@@ -63,7 +63,11 @@ public class EntityNova extends EntityMob implements EntityFlying {
 
     @Override
     public boolean getCanSpawnHere() {
-        return getPosition().getY() < world.getSeaLevel() && super.getCanSpawnHere();
+        if (getPosition().getY() > 50) {
+            return false;
+        }
+        IBlockState belowState = world.getBlockState(new BlockPos(this).down());
+        return belowState.isFullCube() && belowState.canEntitySpawn(this);
     }
 
     @Override
