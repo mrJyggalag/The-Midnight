@@ -64,6 +64,8 @@ public class ModItems {
     public static final Item RAW_STAG_FLANK = Items.AIR;
     public static final Item COOK_STAG_FLANK = Items.AIR;
     public static final Item COOK_STINGER_EGG = Items.AIR;
+    public static final Item HUNTER_WING = Items.AIR;
+    public static final Item COOK_HUNTER_WING = Items.AIR;
 
     public static final Item SHADOWROOT_PICKAXE = Items.AIR;
     public static final Item NIGHTSTONE_PICKAXE = Items.AIR;
@@ -133,6 +135,8 @@ public class ModItems {
                 RegUtil.withName(new ItemFoodBasic(3, 0.3f, false), "raw_stag_flank"),
                 RegUtil.withName(new ItemFoodBasic(8, 0.8f, false), "cook_stag_flank"),
                 RegUtil.withName(new ItemFoodBasic(6, 0.6f, false), "cook_stinger_egg"),
+                RegUtil.withName(new ItemFoodBasic(3, 0.6f, false), "hunter_wing"),
+                RegUtil.withName(new ItemFoodBasic(8, 1.4f, false), "cook_hunter_wing"),
 
                 RegUtil.withName(new ItemMidnightPickaxe(ModToolMaterials.SHADOWROOT), "shadowroot_pickaxe"),
                 RegUtil.withName(new ItemMidnightAxe(ModToolMaterials.SHADOWROOT, 6.0F, -3.2F), "shadowroot_axe"),
