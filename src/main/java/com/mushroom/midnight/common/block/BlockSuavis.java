@@ -21,6 +21,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Enchantments;
+import net.minecraft.init.Items;
 import net.minecraft.init.MobEffects;
 import net.minecraft.init.PotionTypes;
 import net.minecraft.init.SoundEvents;
@@ -31,6 +32,7 @@ import net.minecraft.stats.StatList;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
@@ -166,6 +168,24 @@ public class BlockSuavis extends Block implements IModelProvider, IGrowable {
         entity.setColor(0x355796);
         entity.addEffect(new PotionEffect(MobEffects.NAUSEA, 20 * (intensity + 1) * 6, 0, false, true));
         world.spawnEntity(entity);
+    }
+
+    @Override
+    public void getDrops(NonNullList<ItemStack> drops, IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
+        boolean isSilkTouch = harvesters.get() != null && EnchantmentHelper.getEnchantmentLevel(Enchantments.SILK_TOUCH, harvesters.get().getHeldItemMainhand()) > 0;
+        int stage = state.getValue(STAGE);
+        if (isSilkTouch && stage == 3) {
+            drops.add(new ItemStack(this));
+            return;
+        }
+        Random rand = world instanceof World ? ((World) world).rand : RANDOM;
+        int count = isSilkTouch ? stage + 1 : quantityDropped(state, fortune, rand);
+        for (int i = 0; i < count; i++) {
+            Item item = getItemDropped(state, rand, fortune);
+            if (item != Items.AIR) {
+                drops.add(new ItemStack(item, 1, damageDropped(state)));
+            }
+        }
     }
 
     @Override
