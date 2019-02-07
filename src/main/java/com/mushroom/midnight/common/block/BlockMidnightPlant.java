@@ -112,4 +112,8 @@ public class BlockMidnightPlant extends BlockBush implements IModelProvider, ISh
     public int getFlammability(IBlockAccess world, BlockPos pos, EnumFacing face) {
         return 100;
     }
+
+    public PlantBehaviorType getBehaviorType() {
+        return behaviorType;
+    }
 }
