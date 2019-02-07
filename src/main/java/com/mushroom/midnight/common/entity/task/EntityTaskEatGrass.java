@@ -69,7 +69,7 @@ public class EntityTaskEatGrass extends EntityAIBase {
                 if (belowBlock == Blocks.GRASS || belowBlock == ModBlocks.MIDNIGHT_GRASS) {
                     if (ForgeEventFactory.getMobGriefingEvent(this.owner.world, this.owner)) {
                         this.owner.world.playEvent(2001, belowPos, Block.getIdFromBlock(belowBlock));
-                        this.owner.world.setBlockState(belowPos, Blocks.DIRT.getDefaultState(), 2);
+                        this.owner.world.setBlockState(belowPos, (belowBlock == Blocks.GRASS ? Blocks.DIRT : ModBlocks.MIDNIGHT_DIRT).getDefaultState(), 2);
                     }
                     this.owner.eatGrassBonus();
                 }
