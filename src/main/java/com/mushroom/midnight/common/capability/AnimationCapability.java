@@ -11,15 +11,15 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 public class AnimationCapability implements ICapabilityProvider {
-    private AnimationType animationType = null;
+    private AnimationType animationType = AnimationType.NONE;
     private int maxTicks, prevTick, currentTick;
-    public enum AnimationType { ATTACK }
+    public enum AnimationType { NONE, ATTACK, EAT, CURTSEY }
 
     public void setAnimation(Entity animable, AnimationType animationType, int duration) {
         this.animationType = animationType;
         this.maxTicks = duration;
         this.currentTick = 0;
-        if (!animable.world.isRemote && this.animationType != null & this.maxTicks > 0) {
+        if (!animable.world.isRemote) {
             Midnight.NETWORK.sendToAllTracking(new MessageAnimation(animable, animationType, duration), animable);
         }
     }
@@ -32,20 +32,32 @@ public class AnimationCapability implements ICapabilityProvider {
         return maxTicks;
     }
 
+    public int getCurrentTick() {
+        return this.currentTick;
+    }
+
     public float getProgress(float partialTicks) {
         return (this.prevTick + (this.currentTick - this.prevTick) * partialTicks) / this.maxTicks;
     }
 
     public void updateAnimation() {
-        if (this.animationType != null) {
+        if (this.animationType != AnimationType.NONE) {
             this.prevTick = this.currentTick;
             if (this.currentTick >= this.maxTicks) {
                 this.currentTick = this.maxTicks = 0;
-                this.animationType = null;
+                this.animationType = AnimationType.NONE;
             } else {
                 this.currentTick++;
             }
         }
+    }
+
+    public void resetAnimation(Entity animable) {
+        setAnimation(animable, AnimationType.NONE, 0);
+    }
+
+    public boolean isAnimate() {
+        return this.animationType != AnimationType.NONE;
     }
 
     @Override

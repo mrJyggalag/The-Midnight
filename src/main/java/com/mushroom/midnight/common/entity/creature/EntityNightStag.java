@@ -1,9 +1,12 @@
 package com.mushroom.midnight.common.entity.creature;
 
 import com.mushroom.midnight.Midnight;
+import com.mushroom.midnight.common.block.BlockMidnightPlant;
+import com.mushroom.midnight.common.block.PlantBehaviorType;
 import com.mushroom.midnight.common.capability.AnimationCapability;
 import com.mushroom.midnight.common.capability.AnimationCapability.AnimationType;
 import com.mushroom.midnight.common.entity.navigation.CustomPathNavigateGround;
+import com.mushroom.midnight.common.entity.task.EntityTaskEatGrass;
 import com.mushroom.midnight.common.entity.task.EntityTaskNeutral;
 import com.mushroom.midnight.common.registry.ModBlocks;
 import com.mushroom.midnight.common.registry.ModEffects;
@@ -13,6 +16,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityAgeable;
+import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.IEntityLivingData;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAIAttackMelee;
@@ -131,8 +135,9 @@ public class EntityNightStag extends EntityAnimal {
         this.tasks.addTask(2, new EntityAIMate(this, 1d));
         this.tasks.addTask(3, new EntityAITempt(this, 1d, ModItems.RAW_SUAVIS, false));
         this.tasks.addTask(4, new EntityAIFollowParent(this, 1d));
+        this.tasks.addTask(5, new EntityTaskEatGrass(this, 40, true, p -> p.getBlock() instanceof BlockMidnightPlant && ((BlockMidnightPlant) p).getBehaviorType() == PlantBehaviorType.FLOWER));
         this.tasks.addTask(6, new EntityAIWanderAvoidWater(this, 0.7d, 0.005f));
-        this.tasks.addTask(7, new EntityAIWatchClosest(this, EntityPlayer.class, 12f));
+        this.tasks.addTask(7, new EntityTaskCurtsey(this, EntityPlayer.class, 12f, 0.02f));
         this.tasks.addTask(8, new EntityAILookIdle(this));
         this.targetTasks.addTask(1, new EntityTaskNeutral(this, new EntityAIHurtByTarget(this, true), false));
     }
@@ -186,6 +191,11 @@ public class EntityNightStag extends EntityAnimal {
     }
 
     @Override
+    public void eatGrassBonus() {
+        heal(1f);
+    }
+
+    @Override
     protected int getExperiencePoints(EntityPlayer player) {
         return isChild() ? 4 : 7;
     }
@@ -223,5 +233,29 @@ public class EntityNightStag extends EntityAnimal {
     @Override
     public boolean hasCapability(Capability<?> capability, @Nullable EnumFacing facing) {
         return capability == Midnight.animationCap || super.hasCapability(capability, facing);
+    }
+
+    public class EntityTaskCurtsey extends EntityAIWatchClosest {
+
+        EntityTaskCurtsey(EntityLiving entity, Class<? extends Entity> watchTargetClass, float maxDistance, float chance) {
+            super(entity, watchTargetClass, maxDistance, chance);
+            setMutexBits(3);
+        }
+
+        @Override
+        public void startExecuting() {
+            super.startExecuting();
+            if (this.entity.getRNG().nextFloat() < 0.1f) {
+                animCap.setAnimation(this.entity, AnimationType.CURTSEY, 40);
+            }
+        }
+
+        @Override
+        public void resetTask() {
+            super.resetTask();
+            if (animCap.isAnimate()) {
+                animCap.resetAnimation(entity);
+            }
+        }
     }
 }

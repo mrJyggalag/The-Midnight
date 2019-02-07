@@ -2,7 +2,6 @@ package com.mushroom.midnight.client.model;
 
 import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.common.capability.AnimationCapability;
-import com.mushroom.midnight.common.capability.AnimationCapability.AnimationType;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelQuadruped;
 import net.minecraft.client.model.ModelRenderer;
@@ -81,18 +80,40 @@ public class ModelNightStag extends ModelQuadruped {
 
     @Override
     public void setRotationAngles(float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scaleFactor, Entity entity) {
-        super.setRotationAngles(limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scaleFactor, entity);
+        this.head.rotateAngleX = headPitch * 0.017453292f;
+        this.head.rotateAngleY = netHeadYaw * 0.017453292f;
+        this.body.rotateAngleX = 0f;
+        this.leg1.rotateAngleX = this.leg4.rotateAngleX = MathHelper.cos(limbSwing * 0.6662f) * 1.4f * limbSwingAmount;
+        this.leg2.rotateAngleX = this.leg3.rotateAngleX = MathHelper.cos(limbSwing * 0.6662f + (float)Math.PI) * 1.4f * limbSwingAmount;
 
         AnimationCapability animationCap = entity.getCapability(Midnight.animationCap, null);
-        if (animationCap != null && animationCap.getAnimationType() == AnimationType.ATTACK) {
+        if (animationCap != null && animationCap.isAnimate()) {
             float partialTicks = Minecraft.getMinecraft().getRenderPartialTicks();
-            float attackProgress = animationCap.getProgress(partialTicks);
-            float attackAnimation = MathHelper.sin((float) (attackProgress * Math.PI));
-
-            this.body.rotateAngleX = attackAnimation * 0.2f;
-            this.head.rotateAngleX = attackAnimation * 1.5f;
+            float progress = animationCap.getProgress(partialTicks);
+            float ftcAnimation;
+            switch (animationCap.getAnimationType()) {
+                case ATTACK:
+                    ftcAnimation = MathHelper.sin((float) (progress * Math.PI));
+                    this.body.rotateAngleX = ftcAnimation * 0.2f;
+                    this.head.rotateAngleX = ftcAnimation * 1.5f;
+                    break;
+                case CURTSEY:
+                    ftcAnimation = MathHelper.sin((float) (progress * Math.PI));
+                    this.head.rotateAngleX = ftcAnimation * 1f;
+                    this.body.rotateAngleX = this.leg1.rotateAngleX = this.leg3.rotateAngleZ = ftcAnimation * 0.2f;
+                    this.leg3.rotateAngleX = -this.leg3.rotateAngleZ;
+                    break;
+                case EAT:
+                    this.body.rotateAngleX = MathHelper.sin((float) (progress * Math.PI)) * 0.2f;
+                    this.head.rotateAngleX = progress <= 0.1f ? progress * 15f : progress >= 0.9f ? (1f - progress) * 15f : 1.5f;
+                    if (progress > 0.1f && progress <0.9f) {
+                        this.head.rotationPointX = -partialTicks;
+                    }
+                    break;
+            }
         } else {
-            this.body.rotateAngleX = 0f;
+            this.head.rotationPointX = 0f;
+            this.leg3.rotateAngleZ = 0f;
         }
     }
 }
