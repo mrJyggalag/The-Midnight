@@ -6,14 +6,12 @@ import com.mushroom.midnight.common.registry.ModBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockTallGrass;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.block.state.pattern.BlockStateMatcher;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.event.ForgeEventFactory;
 
-import java.util.Objects;
 import java.util.function.Predicate;
 
 public class EntityTaskEatGrass extends EntityAIBase {
@@ -24,7 +22,7 @@ public class EntityTaskEatGrass extends EntityAIBase {
 
     public EntityTaskEatGrass(EntityLiving owner, int duration, boolean vanillaBehavior, Predicate<IBlockState> eatPredicate) {
         this.owner = owner;
-        this.eatPredicate = vanillaBehavior ? eatPredicate.or(BlockStateMatcher.forBlock(Blocks.TALLGRASS).where(BlockTallGrass.TYPE, enumType -> Objects.equals(enumType, BlockTallGrass.EnumType.GRASS))) : eatPredicate;
+        this.eatPredicate = vanillaBehavior ? eatPredicate.or(p -> p.getBlock() == Blocks.TALLGRASS && p.getValue(BlockTallGrass.TYPE) == BlockTallGrass.EnumType.GRASS) : eatPredicate;
         this.duration = duration;
         setMutexBits(7);
     }

@@ -135,7 +135,7 @@ public class EntityNightStag extends EntityAnimal {
         this.tasks.addTask(2, new EntityAIMate(this, 1d));
         this.tasks.addTask(3, new EntityAITempt(this, 1d, ModItems.RAW_SUAVIS, false));
         this.tasks.addTask(4, new EntityAIFollowParent(this, 1d));
-        this.tasks.addTask(5, new EntityTaskEatGrass(this, 40, true, p -> p.getBlock() instanceof BlockMidnightPlant && ((BlockMidnightPlant) p).getBehaviorType() == PlantBehaviorType.FLOWER));
+        this.tasks.addTask(5, new EntityTaskEatGrass(this, 40, false, p -> p.getBlock() instanceof BlockMidnightPlant && ((BlockMidnightPlant) p.getBlock()).getBehaviorType() == PlantBehaviorType.FLOWER));
         this.tasks.addTask(6, new EntityAIWanderAvoidWater(this, 0.7d, 0.005f));
         this.tasks.addTask(7, new EntityTaskCurtsey(this, EntityPlayer.class, 12f, 0.02f));
         this.tasks.addTask(8, new EntityAILookIdle(this));
