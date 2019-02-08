@@ -16,9 +16,11 @@ import net.minecraftforge.registries.RegistryBuilder;
 public class ModCavernousBiomes {
     public static final CavernousBiome NONE = RegUtil.withName(new CavernousBiome(CavernousBiomeConfig.builder().build()), "none");
 
+    private static ForgeRegistry<CavernousBiome> registry;
+
     @SubscribeEvent
     public static void onNewRegistry(RegistryEvent.NewRegistry event) {
-        new RegistryBuilder<CavernousBiome>()
+        registry = (ForgeRegistry<CavernousBiome>) new RegistryBuilder<CavernousBiome>()
                 .setType(CavernousBiome.class)
                 .setName(new ResourceLocation(Midnight.MODID, "cavernous_biomes"))
                 .setDefaultKey(new ResourceLocation(Midnight.MODID, "none"))
@@ -34,6 +36,14 @@ public class ModCavernousBiomes {
     }
 
     public static ForgeRegistry<CavernousBiome> getRegistry() {
-        return (ForgeRegistry<CavernousBiome>) GameRegistry.findRegistry(CavernousBiome.class);
+        if (registry == null) {
+            throw new IllegalStateException("Registry not yet initialized");
+        }
+
+        return registry;
+    }
+
+    public static CavernousBiome fromId(int id) {
+        return registry.getValue(id);
     }
 }

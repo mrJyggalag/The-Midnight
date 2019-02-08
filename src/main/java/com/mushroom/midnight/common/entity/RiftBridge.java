@@ -53,9 +53,9 @@ public class RiftBridge {
         this.ticks++;
 
         if (this.open.get()) {
-            this.open.setSpeed(1);
+            this.open.setRate(1);
         } else {
-            this.open.setSpeed(EntityRift.CLOSE_SPEED);
+            this.open.setRate(EntityRift.CLOSE_SPEED);
         }
 
         this.open.update();

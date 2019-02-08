@@ -5,7 +5,7 @@ import net.minecraft.nbt.NBTTagCompound;
 public class ToggleAnimation {
     private final int length;
 
-    private int speed = 1;
+    private int rate = 1;
 
     private boolean state;
     private int timer;
@@ -16,9 +16,9 @@ public class ToggleAnimation {
 
     public void update() {
         if (this.state) {
-            this.timer = Math.min(this.timer + this.speed, this.length);
+            this.timer = Math.min(this.timer + this.rate, this.length);
         } else {
-            this.timer = Math.max(this.timer - this.speed, 0);
+            this.timer = Math.max(this.timer - this.rate, 0);
         }
     }
 
@@ -30,8 +30,8 @@ public class ToggleAnimation {
         return this.state;
     }
 
-    public void setSpeed(int speed) {
-        this.speed = speed;
+    public void setRate(int rate) {
+        this.rate = rate;
     }
 
     public void setTimer(int timer) {
@@ -49,14 +49,14 @@ public class ToggleAnimation {
     public NBTTagCompound serialize(NBTTagCompound compound) {
         compound.setBoolean("state", this.state);
         compound.setShort("timer", (short) this.timer);
-        compound.setByte("speed", (byte) this.speed);
+        compound.setByte("rate", (byte) this.rate);
         return compound;
     }
 
     public void deserialize(NBTTagCompound compound) {
         this.state = compound.getBoolean("state");
         this.timer = compound.getShort("timer");
-        this.speed = compound.getByte("speed");
+        this.rate = compound.getByte("rate");
     }
 
     @Override

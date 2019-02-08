@@ -1,5 +1,6 @@
 package com.mushroom.midnight.common.world;
 
+import com.mushroom.midnight.common.biome.MidnightBiomeLayer;
 import com.mushroom.midnight.common.config.MidnightConfig;
 import com.mushroom.midnight.common.registry.ModDimensions;
 import net.minecraft.entity.Entity;
@@ -26,7 +27,7 @@ public class MidnightWorldProvider extends WorldProvider {
     @Override
     protected void init() {
         this.hasSkyLight = false;
-        this.biomeProvider = new MidnightBiomeProvider(this.world.getWorldInfo());
+        this.biomeProvider = new MidnightBiomeProvider(this.world, MidnightBiomeLayer.SURFACE);
         this.nether = false;
     }
 

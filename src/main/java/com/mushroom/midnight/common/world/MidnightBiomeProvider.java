@@ -1,77 +1,105 @@
 package com.mushroom.midnight.common.world;
 
-import com.mushroom.midnight.common.biome.MidnightBiomeGroup;
-import com.mushroom.midnight.common.world.layer.CellSeedLayer;
-import com.mushroom.midnight.common.world.layer.CreateGroupPocketsLayer;
-import com.mushroom.midnight.common.world.layer.OutlineProducerLayer;
-import com.mushroom.midnight.common.world.layer.RidgeMergeLayer;
-import com.mushroom.midnight.common.world.layer.SeedGroupLayer;
-import com.mushroom.midnight.common.world.layer.ValleyMergeLayer;
-import net.minecraft.world.WorldType;
+import com.mushroom.midnight.Midnight;
+import com.mushroom.midnight.common.biome.BiomeLayerSampler;
+import com.mushroom.midnight.common.biome.BiomeLayerType;
+import com.mushroom.midnight.common.capability.MultiLayerBiomeSampler;
+import net.minecraft.init.Biomes;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
+import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.BiomeProvider;
-import net.minecraft.world.gen.layer.GenLayer;
-import net.minecraft.world.gen.layer.GenLayerFuzzyZoom;
-import net.minecraft.world.gen.layer.GenLayerSmooth;
-import net.minecraft.world.gen.layer.GenLayerVoronoiZoom;
-import net.minecraft.world.gen.layer.GenLayerZoom;
-import net.minecraft.world.storage.WorldInfo;
+
+import javax.annotation.Nullable;
+import java.util.List;
+import java.util.Random;
 
 public class MidnightBiomeProvider extends BiomeProvider {
-    public MidnightBiomeProvider(WorldInfo info) {
-        super(info);
-    }
+    private static final BiomeLayerSampler<Biome> DEFAULT_SAMPLER = new BiomeLayerSampler.Constant<>(Biomes.DEFAULT);
 
-    // TODO: All biome sampling on world cap
+    private final World world;
+    private final BiomeLayerType<Biome> sampleLayer;
+
+    public MidnightBiomeProvider(World world, BiomeLayerType<Biome> sampleLayer) {
+        super(world.getWorldInfo());
+        this.world = world;
+        this.sampleLayer = sampleLayer;
+    }
 
     @Override
-    public GenLayer[] getModdedBiomeGenerators(WorldType worldType, long seed, GenLayer[] original) {
-        return this.buildProcedureArray(worldType, seed, buildBiomeProcedure());
+    public Biome[] getBiomesForGeneration(Biome[] biomes, int x, int z, int width, int height) {
+        if (biomes == null || biomes.length < width * height) {
+            biomes = new Biome[width * height];
+        }
+        return this.getSampler().sampleNoise(biomes, x, z, width, height);
     }
 
-    private GenLayer[] buildProcedureArray(WorldType worldType, long seed, GenLayer noiseLayer) {
-        GenLayerVoronoiZoom layer = new GenLayerVoronoiZoom(10, noiseLayer);
-        layer.initWorldGenSeed(seed);
-
-        GenLayer[] layers = new GenLayer[] { noiseLayer, layer, noiseLayer };
-        return super.getModdedBiomeGenerators(worldType, seed, layers);
+    @Override
+    public Biome[] getBiomes(@Nullable Biome[] biomes, int x, int z, int width, int height, boolean cacheFlag) {
+        if (biomes == null || biomes.length < width * height) {
+            biomes = new Biome[width * height];
+        }
+        return this.getSampler().sample(biomes, x, z, width, height);
     }
 
-    private static GenLayer buildBiomeProcedure() {
-        GenLayer ridgeLayer = buildRidgeLayer();
-        GenLayer valleyLayer = buildValleyLayer();
+    @Override
+    public boolean areBiomesViable(int x, int z, int radius, List<Biome> allowed) {
+        int minX = x - radius >> 2;
+        int minZ = z - radius >> 2;
+        int maxX = x + radius >> 2;
+        int maxZ = z + radius >> 2;
+        int width = maxX - minX + 1;
+        int height = maxZ - minZ + 1;
 
-        GenLayer layer = new SeedGroupLayer(0, MidnightBiomeGroup.SURFACE);
-        layer = new GenLayerVoronoiZoom(1000, layer);
+        Biome[] biomes = this.getSampler().sampleNoise(new Biome[width * height], minX, minZ, width, height);
+        for (Biome biome : biomes) {
+            if (!allowed.contains(biome)) {
+                return false;
+            }
+        }
 
-        layer = new CreateGroupPocketsLayer(2000, layer, MidnightBiomeGroup.SURFACE_POCKET, 100);
-        layer = new GenLayerFuzzyZoom(3000, layer);
-        layer = new RidgeMergeLayer(4000, layer, ridgeLayer);
-
-        layer = GenLayerZoom.magnify(5000, layer, 2);
-
-        layer = new ValleyMergeLayer(6000, layer, valleyLayer);
-
-        layer = GenLayerZoom.magnify(7000, layer, 1);
-        layer = new GenLayerSmooth(8000, layer);
-
-        return layer;
+        return true;
     }
 
-    private static GenLayer buildRidgeLayer() {
-        GenLayer ridgeLayer = new CellSeedLayer(10);
-        ridgeLayer = new GenLayerVoronoiZoom(20, ridgeLayer);
-        ridgeLayer = GenLayerZoom.magnify(30, ridgeLayer, 2);
-        ridgeLayer = new OutlineProducerLayer(40, ridgeLayer);
+    @Override
+    @Nullable
+    public BlockPos findBiomePosition(int x, int z, int range, List<Biome> biomes, Random random) {
+        int minX = x - range >> 2;
+        int minZ = z - range >> 2;
+        int maxX = x + range >> 2;
+        int maxZ = z + range >> 2;
+        int width = maxX - minX + 1;
+        int height = maxZ - minZ + 1;
 
-        return ridgeLayer;
+        Biome[] sampledBiomes = this.getSampler().sampleNoise(new Biome[width * height], minX, minZ, width, height);
+
+        BlockPos pos = null;
+
+        int count = 0;
+        for (int index = 0; index < sampledBiomes.length; ++index) {
+            int biomeX = minX + index % width << 2;
+            int biomeZ = minZ + index / width << 2;
+
+            Biome biome = sampledBiomes[index];
+
+            if (biomes.contains(biome) && (pos == null || random.nextInt(count + 1) == 0)) {
+                pos = new BlockPos(biomeX, 0, biomeZ);
+                count++;
+            }
+        }
+
+        return pos;
     }
 
-    private static GenLayer buildValleyLayer() {
-        GenLayer valleyLayer = new CellSeedLayer(50);
-        valleyLayer = new GenLayerVoronoiZoom(60, valleyLayer);
-        valleyLayer = GenLayerZoom.magnify(70, valleyLayer, 2);
-        valleyLayer = new OutlineProducerLayer(80, valleyLayer);
+    private BiomeLayerSampler<Biome> getSampler() {
+        MultiLayerBiomeSampler multiLayerSampler = this.world.getCapability(Midnight.MULTI_LAYER_BIOME_SAMPLER_CAP, null);
+        if (multiLayerSampler != null) {
+            BiomeLayerSampler<Biome> layer = multiLayerSampler.getLayer(this.sampleLayer);
+            if (layer != null) {
+                return layer;
+            }
+        }
 
-        return valleyLayer;
+        return DEFAULT_SAMPLER;
     }
 }

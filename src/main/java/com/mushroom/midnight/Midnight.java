@@ -3,6 +3,7 @@ package com.mushroom.midnight;
 import com.google.common.reflect.Reflection;
 import com.mushroom.midnight.common.CommonProxy;
 import com.mushroom.midnight.common.capability.DelegatedStorage;
+import com.mushroom.midnight.common.capability.MultiLayerBiomeSampler;
 import com.mushroom.midnight.common.capability.RiftTravelCooldown;
 import com.mushroom.midnight.common.capability.RifterCapturable;
 import com.mushroom.midnight.common.capability.NullStorage;
@@ -79,6 +80,9 @@ public class Midnight {
     @CapabilityInject(CavernousBiomeStore.class)
     public static final Capability<CavernousBiomeStore> CAVERNOUS_BIOME_CAP = RegUtil.injected();
 
+    @CapabilityInject(MultiLayerBiomeSampler.class)
+    public static final Capability<MultiLayerBiomeSampler> MULTI_LAYER_BIOME_SAMPLER_CAP = RegUtil.injected();
+
     static {
         FluidRegistry.enableUniversalBucket();
     }
@@ -88,6 +92,7 @@ public class Midnight {
         CapabilityManager.INSTANCE.register(RiftTravelCooldown.class, new NullStorage<>(), RiftTravelCooldown::new);
         CapabilityManager.INSTANCE.register(RifterCapturable.class, new NullStorage<>(), RifterCapturable::new);
         CapabilityManager.INSTANCE.register(CavernousBiomeStore.class, new DelegatedStorage<>(), CavernousBiomeStore::new);
+        CapabilityManager.INSTANCE.register(MultiLayerBiomeSampler.class, new NullStorage<>(), MultiLayerBiomeSampler::new);
 
         NETWORK.registerMessage(MessageCaptureEntity.Handler.class, MessageCaptureEntity.class, 0, Side.CLIENT);
         NETWORK.registerMessage(MessageBridgeCreate.Handler.class, MessageBridgeCreate.class, 1, Side.CLIENT);
