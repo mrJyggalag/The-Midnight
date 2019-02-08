@@ -28,7 +28,7 @@ public class EntityTaskEatGrass extends EntityAIBase {
     }
 
     public boolean shouldExecute() {
-        capAnim = owner.getCapability(Midnight.animationCap, null);
+        capAnim = owner.getCapability(Midnight.ANIMATION_CAP, null);
         if (this.capAnim == null || this.owner.getRNG().nextInt(this.owner.isChild() ? 50 : 1000) != 0) {
             return false;
         } else {

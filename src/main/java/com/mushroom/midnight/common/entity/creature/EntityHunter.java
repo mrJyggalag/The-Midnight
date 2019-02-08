@@ -280,14 +280,14 @@ public class EntityHunter extends EntityMob implements EntityFlying {
     @Override
     @Nullable
     public <T> T getCapability(Capability<T> capability, @Nullable EnumFacing facing) {
-        if (capability == Midnight.animationCap) {
-            return Midnight.animationCap.cast(animCap);
+        if (capability == Midnight.ANIMATION_CAP) {
+            return Midnight.ANIMATION_CAP.cast(animCap);
         }
         return super.getCapability(capability, facing);
     }
 
     @Override
     public boolean hasCapability(Capability<?> capability, @Nullable EnumFacing facing) {
-        return capability == Midnight.animationCap || super.hasCapability(capability, facing);
+        return capability == Midnight.ANIMATION_CAP || super.hasCapability(capability, facing);
     }
 }

@@ -222,9 +222,9 @@ public class ModelStinger extends ModelBase {
 
         // Pincers clapping
         this.PincerLeftExt.rotateAngleY = this.PincerRightInt.rotateAngleY = MathHelper.sin((float) (limbSwing * Math.PI)) * limbSwingAmount * 0.5f;
-        this.PincerRightExt.rotateAngleY = this.PincerLeftInt.rotateAngleY = -this.PincerLeftExt.rotateAngleY;;
+        this.PincerRightExt.rotateAngleY = this.PincerLeftInt.rotateAngleY = -this.PincerLeftExt.rotateAngleY;
 
-        AnimationCapability animationCap = entity.getCapability(Midnight.animationCap, null);
+        AnimationCapability animationCap = entity.getCapability(Midnight.ANIMATION_CAP, null);
         if (animationCap != null && animationCap.getAnimationType() == AnimationCapability.AnimationType.ATTACK) {
             float partialTicks = Minecraft.getMinecraft().getRenderPartialTicks();
             float attackProgress = animationCap.getProgress(partialTicks);

@@ -45,7 +45,7 @@ public class MessageAnimation implements IMessage {
                     World world = player.world;
                     Entity entity = world.getEntityByID(message.entityId);
                     if (entity != null) {
-                        AnimationCapability animationCap = entity.getCapability(Midnight.animationCap, null);
+                        AnimationCapability animationCap = entity.getCapability(Midnight.ANIMATION_CAP, null);
                         if (animationCap != null) {
                             animationCap.setAnimation(entity, message.animationType, message.duration);
                         }

@@ -116,7 +116,7 @@ public class ModelHunter extends ModelBase {
         this.animator.walk(this.Wing11, globalSpeed * 0.5F, globalDegree * 0.25F, true, 0.0F, -0.25F, limbSwing, limbSwingAmount);
         this.animator.walk(this.Wing21, globalSpeed * 0.5F, globalDegree * 0.25F, true, 0.0F, -0.25F, limbSwing, limbSwingAmount);
 
-        AnimationCapability animationCap = entity.getCapability(Midnight.animationCap, null);
+        AnimationCapability animationCap = entity.getCapability(Midnight.ANIMATION_CAP, null);
         if (animationCap != null && animationCap.getAnimationType() == AnimationCapability.AnimationType.ATTACK) {
             float partialTicks = Minecraft.getMinecraft().getRenderPartialTicks();
             float attackProgress = animationCap.getProgress(partialTicks);

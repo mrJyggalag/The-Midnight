@@ -88,7 +88,7 @@ public class ModelNightStag extends ModelQuadruped {
         this.head.rotationPointX = 0f;
         this.leg3.rotateAngleZ = 0f;
 
-        AnimationCapability animationCap = entity.getCapability(Midnight.animationCap, null);
+        AnimationCapability animationCap = entity.getCapability(Midnight.ANIMATION_CAP, null);
         if (animationCap != null && animationCap.isAnimate()) {
             float partialTicks = Minecraft.getMinecraft().getRenderPartialTicks();
             float progress = animationCap.getProgress(partialTicks);

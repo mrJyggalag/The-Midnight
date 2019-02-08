@@ -62,14 +62,14 @@ public class AnimationCapability implements ICapabilityProvider {
 
     @Override
     public boolean hasCapability(@Nonnull Capability<?> capability, @Nullable EnumFacing facing) {
-        return capability == Midnight.animationCap;
+        return capability == Midnight.ANIMATION_CAP;
     }
 
     @Nullable
     @Override
     public <T> T getCapability(@Nonnull Capability<T> capability, @Nullable EnumFacing facing) {
-        if (capability == Midnight.animationCap) {
-            return Midnight.animationCap.cast(this);
+        if (capability == Midnight.ANIMATION_CAP) {
+            return Midnight.ANIMATION_CAP.cast(this);
         }
         return null;
     }
