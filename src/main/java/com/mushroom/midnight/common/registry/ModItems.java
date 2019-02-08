@@ -64,6 +64,8 @@ public class ModItems {
     public static final Item RAW_STAG_FLANK = Items.AIR;
     public static final Item COOK_STAG_FLANK = Items.AIR;
     public static final Item COOK_STINGER_EGG = Items.AIR;
+    public static final Item HUNTER_WING = Items.AIR;
+    public static final Item COOK_HUNTER_WING = Items.AIR;
 
     public static final Item SHADOWROOT_PICKAXE = Items.AIR;
     public static final Item NIGHTSTONE_PICKAXE = Items.AIR;
@@ -133,26 +135,34 @@ public class ModItems {
                 RegUtil.withName(new ItemFoodBasic(3, 0.3f, false), "raw_stag_flank"),
                 RegUtil.withName(new ItemFoodBasic(8, 0.8f, false), "cook_stag_flank"),
                 RegUtil.withName(new ItemFoodBasic(6, 0.6f, false), "cook_stinger_egg"),
+                RegUtil.withName(new ItemFoodBasic(3, 0.6f, false), "hunter_wing"),
+                RegUtil.withName(new ItemFoodBasic(8, 1.4f, false), "cook_hunter_wing"),
+
                 RegUtil.withName(new ItemMidnightPickaxe(ModToolMaterials.SHADOWROOT), "shadowroot_pickaxe"),
-                RegUtil.withName(new ItemMidnightPickaxe(ModToolMaterials.NIGHTSTONE), "nightstone_pickaxe"),
-                RegUtil.withName(new ItemMidnightPickaxe(ModToolMaterials.EBONYS), "ebonys_pickaxe"),
-                RegUtil.withName(new ItemMidnightPickaxe(ModToolMaterials.NAGRILITE), "nagrilite_pickaxe"),
-                RegUtil.withName(new ItemMidnightPickaxe(ModToolMaterials.TENEBRUM), "tenebrum_pickaxe"),
-                RegUtil.withName(new ItemMidnightShovel(ModToolMaterials.SHADOWROOT), "shadowroot_shovel"),
-                RegUtil.withName(new ItemMidnightShovel(ModToolMaterials.NIGHTSTONE), "nightstone_shovel"),
-                RegUtil.withName(new ItemMidnightShovel(ModToolMaterials.EBONYS), "ebonys_shovel"),
-                RegUtil.withName(new ItemMidnightShovel(ModToolMaterials.NAGRILITE), "nagrilite_shovel"),
-                RegUtil.withName(new ItemMidnightShovel(ModToolMaterials.TENEBRUM), "tenebrum_shovel"),
                 RegUtil.withName(new ItemMidnightAxe(ModToolMaterials.SHADOWROOT, 6.0F, -3.2F), "shadowroot_axe"),
-                RegUtil.withName(new ItemMidnightAxe(ModToolMaterials.NIGHTSTONE, 7.0F, -3.1F), "nightstone_axe"),
-                RegUtil.withName(new ItemMidnightAxe(ModToolMaterials.EBONYS, 8.0F, -3.0F), "ebonys_axe"),
-                RegUtil.withName(new ItemMidnightAxe(ModToolMaterials.NAGRILITE, 9.0F, -2.9F), "nagrilite_axe"),
-                RegUtil.withName(new ItemMidnightAxe(ModToolMaterials.TENEBRUM, 10.0F, -2.8F), "tenebrum_axe"),
+                RegUtil.withName(new ItemMidnightShovel(ModToolMaterials.SHADOWROOT), "shadowroot_shovel"),
                 RegUtil.withName(new ItemMidnightHoe(ModToolMaterials.SHADOWROOT), "shadowroot_hoe"),
+
+                RegUtil.withName(new ItemMidnightPickaxe(ModToolMaterials.NIGHTSTONE), "nightstone_pickaxe"),
+                RegUtil.withName(new ItemMidnightAxe(ModToolMaterials.NIGHTSTONE, 7.0F, -3.1F), "nightstone_axe"),
+                RegUtil.withName(new ItemMidnightShovel(ModToolMaterials.NIGHTSTONE), "nightstone_shovel"),
                 RegUtil.withName(new ItemMidnightHoe(ModToolMaterials.NIGHTSTONE), "nightstone_hoe"),
+
+                RegUtil.withName(new ItemMidnightPickaxe(ModToolMaterials.EBONYS), "ebonys_pickaxe"),
+                RegUtil.withName(new ItemMidnightAxe(ModToolMaterials.EBONYS, 8.0F, -3.0F), "ebonys_axe"),
+                RegUtil.withName(new ItemMidnightShovel(ModToolMaterials.EBONYS), "ebonys_shovel"),
                 RegUtil.withName(new ItemMidnightHoe(ModToolMaterials.EBONYS), "ebonys_hoe"),
+
+                RegUtil.withName(new ItemMidnightPickaxe(ModToolMaterials.NAGRILITE), "nagrilite_pickaxe"),
+                RegUtil.withName(new ItemMidnightAxe(ModToolMaterials.NAGRILITE, 9.0F, -2.9F), "nagrilite_axe"),
+                RegUtil.withName(new ItemMidnightShovel(ModToolMaterials.NAGRILITE), "nagrilite_shovel"),
                 RegUtil.withName(new ItemMidnightHoe(ModToolMaterials.NAGRILITE), "nagrilite_hoe"),
+
+                RegUtil.withName(new ItemMidnightPickaxe(ModToolMaterials.TENEBRUM), "tenebrum_pickaxe"),
+                RegUtil.withName(new ItemMidnightAxe(ModToolMaterials.TENEBRUM, 10.0F, -2.8F), "tenebrum_axe"),
+                RegUtil.withName(new ItemMidnightShovel(ModToolMaterials.TENEBRUM), "tenebrum_shovel"),
                 RegUtil.withName(new ItemMidnightHoe(ModToolMaterials.TENEBRUM), "tenebrum_hoe"),
+
                 RegUtil.withName(new ItemMidnightSword(ModToolMaterials.SHADOWROOT), "shadowroot_sword"),
                 RegUtil.withName(new ItemMidnightSword(ModToolMaterials.NIGHTSTONE), "nightstone_sword"),
                 RegUtil.withName(new ItemMidnightSword(ModToolMaterials.EBONYS), "ebonys_sword"),

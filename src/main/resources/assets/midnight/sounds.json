@@ -100,5 +100,27 @@
     "sounds": [
       "midnight:entity/bladeshroom_cap_hit"
     ]
+  },
+  "midnight.nightstag_ambient": {
+    "category": "hostile",
+    "sounds": [
+      "midnight:entity/nightstag_ambient_1"
+    ]
+  },
+  "midnight.nightstag_death": {
+    "category": "hostile",
+    "sounds": [
+      "midnight:entity/nightstag_death_1"
+    ]
+  },
+  "midnight.nightstag_hurt": {
+    "category": "hostile",
+    "sounds": [
+      "midnight:entity/nightstag_hurt_1"
+    ]
+  },
+  "midnight.egg_cracked": {
+    "category": "block",
+    "sounds": ["midnight:blocks/egg_cracked"]
   }
 }

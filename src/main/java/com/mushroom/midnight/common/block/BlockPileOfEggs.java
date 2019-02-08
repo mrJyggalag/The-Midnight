@@ -1,22 +1,25 @@
 package com.mushroom.midnight.common.block;
 
+import com.google.common.collect.Lists;
 import com.mushroom.midnight.client.IModelProvider;
 import com.mushroom.midnight.common.entity.creature.EntityStinger;
+import com.mushroom.midnight.common.registry.ModSounds;
 import com.mushroom.midnight.common.registry.ModTabs;
 import net.minecraft.block.Block;
-import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Enchantments;
 import net.minecraft.init.Items;
-import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.stats.StatList;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
@@ -24,11 +27,12 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.event.ForgeEventFactory;
 
 import javax.annotation.Nullable;
+import java.util.ArrayList;
 import java.util.Random;
 
 @SuppressWarnings({ "WeakerAccess", "deprecation" })
@@ -41,14 +45,17 @@ public abstract class BlockPileOfEggs extends Block implements IModelProvider {
         super(Material.ROCK);
         setDefaultState(blockState.getBaseState().withProperty(EGGS, 1));
         setCreativeTab(ModTabs.DECORATION_TAB);
-        blockSoundType = SoundType.SNOW;
+        blockSoundType = ModSounds.PILE_OF_EGGS;
+        blockHardness = 1f;
     }
 
     protected abstract EntityLiving createEntityForEgg(World world, BlockPos pos, IBlockState state);
 
     @Override
     public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-        if (player == null) { return false; }
+        if (player == null) {
+            return false;
+        }
         ItemStack stack = player.getHeldItem(hand);
         if (stack.getItem() == Item.getItemFromBlock(this)) {
             if (state.getValue(EGGS) < 4 && !player.getCooldownTracker().hasCooldown(stack.getItem())) {
@@ -92,7 +99,8 @@ public abstract class BlockPileOfEggs extends Block implements IModelProvider {
     }
 
     protected void breakEggs(World world, BlockPos pos, IBlockState state) {
-        world.playSound(null, pos, SoundEvents.BLOCK_SNOW_BREAK, SoundCategory.BLOCKS, 0.7F, 0.9F + world.rand.nextFloat() * 0.2F);
+        if (world.isRemote) { return; }
+        world.playSound(null, pos, ModSounds.PILE_OF_EGGS.getBreakSound(), SoundCategory.BLOCKS, 0.7F, 0.9F + world.rand.nextFloat() * 0.2F);
         int eggs = state.getValue(EGGS);
         if (eggs <= 1) {
             world.destroyBlock(pos, false);
@@ -100,17 +108,26 @@ public abstract class BlockPileOfEggs extends Block implements IModelProvider {
             world.setBlockState(pos, state.withProperty(EGGS, --eggs), 2);
             world.playEvent(2001, pos, getStateId(state));
         }
-        if (world.getDifficulty() != EnumDifficulty.PEACEFUL) {
-            EntityLiving creature;
-            try {
-                creature = createEntityForEgg(world, pos, state);
-            } catch (Exception e) {
-                e.printStackTrace();
+        if (harvesters.get() != null) {
+            ItemStack stack = harvesters.get().getHeldItemMainhand();
+            int fortune = EnchantmentHelper.getEnchantmentLevel(Enchantments.FORTUNE, stack);
+            ArrayList<ItemStack> drops = Lists.newArrayList(new ItemStack(this));
+            float chance = ForgeEventFactory.fireBlockHarvesting(drops, world, pos, state, fortune, (EnchantmentHelper.getEnchantmentLevel(Enchantments.SILK_TOUCH, stack) > 0 ? 0.6f : 0.2f + (0.1f * fortune)), false, harvesters.get());
+            if (world.rand.nextFloat() <= chance) {
+                drops.forEach(c -> spawnAsEntity(world, pos, c));
                 return;
             }
-            creature.setPositionAndRotation(pos.getX() + world.rand.nextFloat(), pos.getY() + 0.45f, pos.getZ() + world.rand.nextFloat(), world.rand.nextFloat() * 360f, 0f);
-            world.spawnEntity(creature);
         }
+
+        EntityLiving creature;
+        try {
+            creature = createEntityForEgg(world, pos, state);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return;
+        }
+        creature.setPositionAndRotation(pos.getX() + world.rand.nextFloat(), pos.getY() + 0.45f, pos.getZ() + world.rand.nextFloat(), world.rand.nextFloat() * 360f, 0f);
+        world.spawnEntity(creature);
     }
 
     @Override
@@ -120,8 +137,11 @@ public abstract class BlockPileOfEggs extends Block implements IModelProvider {
 
     @Override
     public void harvestBlock(World world, EntityPlayer player, BlockPos pos, IBlockState state, @Nullable TileEntity tile, ItemStack stack) {
-        super.harvestBlock(world, player, pos, state, tile, stack);
+        player.addStat(StatList.getBlockStats(this));
+        player.addExhaustion(0.005F);
+        harvesters.set(player);
         breakEggs(world, pos, state);
+        harvesters.set(null);
     }
 
     @Override

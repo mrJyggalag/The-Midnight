@@ -14,7 +14,7 @@ public class BlockMidnightFungi extends BlockMidnightPlant implements IGrowable 
     private final Supplier<Block> parentSupplier;
 
     public BlockMidnightFungi(Supplier<Block> parentSupplier) {
-        super(PlantBehaviorType.BUSH, true);
+        super(true);
         this.parentSupplier = parentSupplier;
     }
 

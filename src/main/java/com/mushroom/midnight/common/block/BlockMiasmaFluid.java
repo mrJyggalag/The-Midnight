@@ -3,6 +3,7 @@ package com.mushroom.midnight.common.block;
 import com.mushroom.midnight.client.IModelProvider;
 import com.mushroom.midnight.common.registry.ModBlocks;
 import com.mushroom.midnight.common.registry.ModFluids;
+import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
@@ -48,5 +49,11 @@ public class BlockMiasmaFluid extends BlockMixableFluid implements IModelProvide
     @Nullable
     public PathNodeType getAiPathNodeType(IBlockState state, IBlockAccess world, BlockPos pos) {
         return PathNodeType.LAVA;
+    }
+
+    @Override
+    @SuppressWarnings("deprecation")
+    public MapColor getMapColor(IBlockState state, IBlockAccess world, BlockPos pos) {
+        return MapColor.ICE;
     }
 }

@@ -11,7 +11,7 @@ import java.util.Random;
 
 public class BlockLumenBud extends BlockMidnightPlant implements IGrowable {
     public BlockLumenBud() {
-        super(PlantBehaviorType.BUSH,true);
+        super(true);
     }
 
     @Override

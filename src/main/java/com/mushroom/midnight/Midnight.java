@@ -83,6 +83,9 @@ public class Midnight {
     @CapabilityInject(MultiLayerBiomeSampler.class)
     public static final Capability<MultiLayerBiomeSampler> MULTI_LAYER_BIOME_SAMPLER_CAP = RegUtil.injected();
 
+    @CapabilityInject(AnimationCapability.class)
+    public static final Capability<AnimationCapability> ANIMATION_CAP = RegUtil.injected();
+
     static {
         FluidRegistry.enableUniversalBucket();
     }
@@ -93,15 +96,15 @@ public class Midnight {
         CapabilityManager.INSTANCE.register(RifterCapturable.class, new NullStorage<>(), RifterCapturable::new);
         CapabilityManager.INSTANCE.register(CavernousBiomeStore.class, new DelegatedStorage<>(), CavernousBiomeStore::new);
         CapabilityManager.INSTANCE.register(MultiLayerBiomeSampler.class, new NullStorage<>(), MultiLayerBiomeSampler::new);
+        CapabilityManager.INSTANCE.register(AnimationCapability.class, new NullStorage<>(), AnimationCapability::new);
 
         NETWORK.registerMessage(MessageCaptureEntity.Handler.class, MessageCaptureEntity.class, 0, Side.CLIENT);
         NETWORK.registerMessage(MessageBridgeCreate.Handler.class, MessageBridgeCreate.class, 1, Side.CLIENT);
         NETWORK.registerMessage(MessageBridgeState.Handler.class, MessageBridgeState.class, 2, Side.CLIENT);
         NETWORK.registerMessage(MessageBridgeRemoval.Handler.class, MessageBridgeRemoval.class, 3, Side.CLIENT);
-        NETWORK.registerMessage(MessageHunterAttack.Handler.class, MessageHunterAttack.class, 4, Side.CLIENT);
-        NETWORK.registerMessage(MessageNightstagAttack.Handler.class, MessageNightstagAttack.class, 5, Side.CLIENT);
-        NETWORK.registerMessage(MessageRockshroomBroken.Handler.class, MessageRockshroomBroken.class, 6, Side.CLIENT);
-        NETWORK.registerMessage(MessageItemActivation.Handler.class, MessageItemActivation.class, 7, Side.CLIENT);
+        NETWORK.registerMessage(MessageAnimation.Handler.class, MessageAnimation.class, 4, Side.CLIENT);
+        NETWORK.registerMessage(MessageRockshroomBroken.Handler.class, MessageRockshroomBroken.class, 5, Side.CLIENT);
+        NETWORK.registerMessage(MessageItemActivation.Handler.class, MessageItemActivation.class, 6, Side.CLIENT);
 
         Reflection.initialize(ModCriterion.class, ModTabs.class);
 

@@ -64,6 +64,7 @@ import com.mushroom.midnight.common.world.feature.LargeFungiFeature;
 import com.mushroom.midnight.common.world.feature.ShadowrootTreeFeature;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
+import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.monster.EntityEnderman;
 import net.minecraft.init.Blocks;
@@ -290,11 +291,11 @@ public class ModBlocks {
                 RegUtil.withName(new BlockMidnightLog(), "dark_willow_log"),
                 RegUtil.withName(new BlockMidnightLeaves(() -> DARK_WILLOW_SAPLING), "dark_willow_leaves"),
                 RegUtil.withName(new BlockMidnightFungiStem(), "nightshroom_stem"),
-                RegUtil.withName(new BlockMidnightFungiHat(() -> NIGHTSHROOM), "nightshroom_hat"),
+                RegUtil.withName(new BlockMidnightFungiHat(() -> NIGHTSHROOM, MapColor.CYAN), "nightshroom_hat"),
                 RegUtil.withName(new BlockMidnightFungiStem(), "dewshroom_stem"),
-                RegUtil.withName(new BlockMidnightFungiHat(() -> DEWSHROOM), "dewshroom_hat"),
+                RegUtil.withName(new BlockMidnightFungiHat(() -> DEWSHROOM, MapColor.PURPLE), "dewshroom_hat"),
                 RegUtil.withName(new BlockMidnightFungiStem(), "viridshroom_stem"),
-                RegUtil.withName(new BlockMidnightFungiHat(() -> VIRIDSHROOM), "viridshroom_hat"),
+                RegUtil.withName(new BlockMidnightFungiHat(() -> VIRIDSHROOM, MapColor.EMERALD), "viridshroom_hat"),
                 RegUtil.withName(new BlockRockshroom(), "rockshroom"),
                 RegUtil.withName(new BlockMidnightTallGrass(), "tall_midnight_grass"),
                 RegUtil.withName(new BlockMidnightDoublePlant(PlantBehaviorType.BUSH, false), "double_midnight_grass"),
@@ -345,13 +346,13 @@ public class ModBlocks {
                         .setHardness(5.0F)
                         .setResistance(200.0F),
                 RegUtil.withName(new BlockBloomCrystal(), "bloomcrystal"),
-                RegUtil.withName(new BlockBasic(Material.ROCK), "bloomcrystal_rock")
+                RegUtil.withName(new BlockBasic(Material.ROCK, MapColor.PINK), "bloomcrystal_rock")
                         .withSoundType(SoundType.GLASS)
                         .withHarvestLevel("pickaxe", 1)
                         .setLightLevel(1.0F)
                         .setHardness(4.0F),
-                RegUtil.withName(new BlockCrystal(), "rouxe"),
-                RegUtil.withName(new BlockBasic(Material.ROCK), "rouxe_rock")
+                RegUtil.withName(new BlockCrystal(MapColor.RED), "rouxe"),
+                RegUtil.withName(new BlockBasic(Material.ROCK, MapColor.RED), "rouxe_rock")
                         .withSoundType(SoundType.GLASS)
                         .withHarvestLevel("pickaxe", 1)
                         .withGlow()
@@ -527,9 +528,9 @@ public class ModBlocks {
                 NIGHTSTONE_STAIRS, NIGHTSTONE_BRICK_STAIRS,
                 TRENCHSTONE_STAIRS, TRENCHSTONE_BRICK_STAIRS,
                 DEWSHROOM_STAIRS, VIRIDSHROOM_STAIRS, NIGHTSHROOM_STAIRS, ROCKSHROOM_BRICKS_STAIRS,
-                SHADOWROOT_FENCE, DEAD_WOOD_FENCE, DARK_WILLOW_FENCE,
                 NIGHTSTONE_WALL, NIGHTSTONE_BRICK_WALL,
                 TRENCHSTONE_WALL, TRENCHSTONE_BRICK_WALL, ROCKSHROOM_BRICKS_WALL,
+                SHADOWROOT_FENCE, DEAD_WOOD_FENCE, DARK_WILLOW_FENCE,
                 DEWSHROOM_FENCE, VIRIDSHROOM_FENCE, NIGHTSHROOM_FENCE,
                 SHADOWROOT_FENCE_GATE, DEAD_WOOD_FENCE_GATE, DARK_WILLOW_FENCE_GATE,
                 DEWSHROOM_FENCE_GATE, VIRIDSHROOM_FENCE_GATE, NIGHTSHROOM_FENCE_GATE,

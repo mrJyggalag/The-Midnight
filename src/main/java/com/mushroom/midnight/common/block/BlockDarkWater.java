@@ -3,11 +3,13 @@ package com.mushroom.midnight.common.block;
 import com.mushroom.midnight.client.IModelProvider;
 import com.mushroom.midnight.common.registry.ModBlocks;
 import com.mushroom.midnight.common.registry.ModFluids;
+import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
@@ -30,5 +32,11 @@ public class BlockDarkWater extends BlockMixableFluid implements IModelProvider 
             return ModBlocks.TRENCHSTONE.getDefaultState();
         }
         return null;
+    }
+
+    @Override
+    @SuppressWarnings("deprecation")
+    public MapColor getMapColor(IBlockState state, IBlockAccess world, BlockPos pos) {
+        return MapColor.LIGHT_BLUE_STAINED_HARDENED_CLAY;
     }
 }

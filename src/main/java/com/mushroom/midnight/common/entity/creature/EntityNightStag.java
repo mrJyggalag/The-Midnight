@@ -1,68 +1,81 @@
 package com.mushroom.midnight.common.entity.creature;
 
 import com.mushroom.midnight.Midnight;
+import com.mushroom.midnight.common.block.BlockMidnightPlant;
+import com.mushroom.midnight.common.block.PlantBehaviorType;
+import com.mushroom.midnight.common.capability.AnimationCapability;
+import com.mushroom.midnight.common.capability.AnimationCapability.AnimationType;
 import com.mushroom.midnight.common.entity.navigation.CustomPathNavigateGround;
+import com.mushroom.midnight.common.entity.task.EntityTaskEatGrass;
 import com.mushroom.midnight.common.entity.task.EntityTaskNeutral;
-import com.mushroom.midnight.common.network.MessageNightstagAttack;
 import com.mushroom.midnight.common.registry.ModBlocks;
 import com.mushroom.midnight.common.registry.ModEffects;
+import com.mushroom.midnight.common.registry.ModItems;
+import com.mushroom.midnight.common.registry.ModSounds;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityAgeable;
-import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.IEntityLivingData;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAIAttackMelee;
 import net.minecraft.entity.ai.EntityAIFollowParent;
 import net.minecraft.entity.ai.EntityAIHurtByTarget;
 import net.minecraft.entity.ai.EntityAILookIdle;
+import net.minecraft.entity.ai.EntityAIMate;
 import net.minecraft.entity.ai.EntityAIPanic;
 import net.minecraft.entity.ai.EntityAISwimming;
+import net.minecraft.entity.ai.EntityAITempt;
 import net.minecraft.entity.ai.EntityAIWanderAvoidWater;
 import net.minecraft.entity.ai.EntityAIWatchClosest;
+import net.minecraft.entity.ai.attributes.AttributeModifier;
+import net.minecraft.entity.ai.attributes.IAttributeInstance;
 import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
+import net.minecraft.item.ItemStack;
 import net.minecraft.pathfinding.PathNavigate;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.World;
+import net.minecraftforge.common.capabilities.Capability;
 
 import javax.annotation.Nullable;
+
+import java.util.UUID;
 
 import static com.mushroom.midnight.common.registry.ModLootTables.LOOT_TABLE_NIGHTSTAG;
 
 public class EntityNightStag extends EntityAnimal {
-
-    private static final int ATTACK_ANIMATION_TICKS = 10;
-    private int attackAnimation = 0;
-    private int prevAttackAnimation;
-
-    private boolean attacking = false;
+    private static final AttributeModifier CHILD_ATTACK_MALUS = new AttributeModifier(UUID.fromString("c0f32cda-a4fd-4fe4-8b3f-15612ef9a52f"), "nightstag_child_attack_malus", -2d, 0);
+    private static final int GROWING_TIME = -24000;
+    private final AnimationCapability animCap = new AnimationCapability();
 
     public EntityNightStag(World world) {
         super(world);
         setSize(0.9f, 1.87f);
-        experienceValue = 4;
     }
 
     @Override
     @Nullable
     public EntityAgeable createChild(EntityAgeable entity) {
-        return null;
+        EntityNightStag child = new EntityNightStag(world);
+        child.setGrowingAge(GROWING_TIME);
+        return child;
     }
 
     @Override
     @Nullable
     public IEntityLivingData onInitialSpawn(DifficultyInstance difficulty, @Nullable IEntityLivingData livingdata) {
-        livingdata = super.onInitialSpawn(difficulty, livingdata);
         if (this.rand.nextInt(5) == 0) {
-            setGrowingAge(-24000);
+            setGrowingAge(GROWING_TIME);
         }
         return livingdata;
     }
@@ -72,22 +85,27 @@ public class EntityNightStag extends EntityAnimal {
         return false;
     }
 
+    @Override
     protected SoundEvent getAmbientSound() {
-        return SoundEvents.ENTITY_LLAMA_AMBIENT;
+        return ModSounds.NIGHTSTAG_AMBIENT;
     }
 
+    @Override
     protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
-        return SoundEvents.ENTITY_LLAMA_HURT;
+        return ModSounds.NIGHTSTAG_HURT;
     }
 
+    @Override
     protected SoundEvent getDeathSound() {
-        return SoundEvents.ENTITY_LLAMA_DEATH;
+        return ModSounds.NIGHTSTAG_DEATH;
     }
 
+    @Override
     public int getTalkInterval() {
         return 200;
     }
 
+    @Override
     protected void playStepSound(BlockPos pos, Block blockIn) {
         playSound(SoundEvents.ENTITY_LLAMA_STEP, 0.15f, 1f);
     }
@@ -113,19 +131,13 @@ public class EntityNightStag extends EntityAnimal {
     protected void initEntityAI() {
         this.tasks.addTask(0, new EntityAISwimming(this));
         this.tasks.addTask(1, new EntityTaskNeutral(this, new EntityAIPanic(this, 1.2d), true));
-        this.tasks.addTask(2, new EntityTaskNeutral(this, new EntityAIAttackMelee(this, 1d, false) {
-            @Override
-            protected void checkAndPerformAttack(EntityLivingBase enemy, double distToEnemySqr) {
-                if (distToEnemySqr <= getAttackReachSqr(enemy) && this.attackTick <= 0) {
-                    this.attackTick = 20;
-                    this.attacker.attackEntityAsMob(enemy);
-                    setAttacking(true);
-                }
-            }
-        }, false));
+        this.tasks.addTask(2, new EntityTaskNeutral(this, new EntityAIAttackMelee(this, 1d, false), false));
+        this.tasks.addTask(2, new EntityAIMate(this, 1d));
+        this.tasks.addTask(3, new EntityAITempt(this, 1d, ModItems.RAW_SUAVIS, false));
         this.tasks.addTask(4, new EntityAIFollowParent(this, 1d));
+        this.tasks.addTask(5, new EntityTaskEatGrass(this, 40, false, p -> p.getBlock() instanceof BlockMidnightPlant && ((BlockMidnightPlant) p.getBlock()).getBehaviorType() == PlantBehaviorType.FLOWER));
         this.tasks.addTask(6, new EntityAIWanderAvoidWater(this, 0.7d, 0.005f));
-        this.tasks.addTask(7, new EntityAIWatchClosest(this, EntityPlayer.class, 12f));
+        this.tasks.addTask(7, new EntityTaskCurtsey(this, EntityPlayer.class, 12f, 0.02f));
         this.tasks.addTask(8, new EntityAILookIdle(this));
         this.targetTasks.addTask(1, new EntityTaskNeutral(this, new EntityAIHurtByTarget(this, true), false));
     }
@@ -133,9 +145,21 @@ public class EntityNightStag extends EntityAnimal {
     @Override
     protected void applyEntityAttributes() {
         super.applyEntityAttributes();
+        getAttributeMap().registerAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(4d);
         getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.25d);
-        getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(15d);
-        getAttributeMap().registerAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(2d);
+        getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(20d);
+        getEntityAttribute(SharedMonsterAttributes.ARMOR).setBaseValue(1d);
+    }
+
+    @Override
+    protected void onGrowingAdult() {
+        IAttributeInstance attackAttrib = getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE);
+        if (attackAttrib.hasModifier(CHILD_ATTACK_MALUS)) {
+            attackAttrib.removeModifier(CHILD_ATTACK_MALUS);
+        }
+        getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(20d);
+        getEntityAttribute(SharedMonsterAttributes.ARMOR).setBaseValue(1d);
+        setHealth(20f);
     }
 
     @Override
@@ -143,49 +167,95 @@ public class EntityNightStag extends EntityAnimal {
         super.attackEntityAsMob(entity);
         boolean flag = entity.attackEntityFrom(DamageSource.causeMobDamage(this), (float) getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).getAttributeValue());
         if (flag) {
-            if (entity instanceof EntityPlayer) {
+            if (!isChild() && entity instanceof EntityPlayer) {
                 ((EntityPlayer) entity).addPotionEffect(new PotionEffect(ModEffects.DARKNESS, 200, 0, false, true));
             }
             applyEnchantments(this, entity);
-            Midnight.NETWORK.sendToAllTracking(new MessageNightstagAttack(this), this);
+            animCap.setAnimation(this, AnimationType.ATTACK, 10);
         }
         return flag;
     }
 
     @Override
-    public void onUpdate() {
-        super.onUpdate();
-        updateAttackAnimation();
+    public void swingArm(EnumHand hand) {
     }
 
-    private void updateAttackAnimation() {
-        this.prevAttackAnimation = this.attackAnimation;
-        if (isAttacking()) {
-            if (this.attackAnimation >= ATTACK_ANIMATION_TICKS) {
-                this.attackAnimation = 0;
-                setAttacking(false);
-            } else {
-                this.attackAnimation++;
-            }
-        }
+    @Override
+    public double getMountedYOffset() {
+        return (double) this.height * 0.67d;
     }
 
-    public float getAttackAnimation(float partialTicks) {
-        float animationTick = this.prevAttackAnimation + (this.attackAnimation - this.prevAttackAnimation) * partialTicks;
-        return animationTick / ATTACK_ANIMATION_TICKS;
+    @Override
+    public boolean isBreedingItem(ItemStack stack) {
+        return stack.getItem() == ModItems.RAW_SUAVIS;
     }
 
-    public void setAttacking(boolean attacking) {
-        this.attacking = attacking;
+    @Override
+    public void eatGrassBonus() {
+        heal(1f);
     }
 
-    public boolean isAttacking() {
-        return this.attacking;
+    @Override
+    protected int getExperiencePoints(EntityPlayer player) {
+        return isChild() ? 4 : 7;
     }
 
     @Override
     @Nullable
     protected ResourceLocation getLootTable() {
-        return isChild() ? null : LOOT_TABLE_NIGHTSTAG;
+        return LOOT_TABLE_NIGHTSTAG;
+    }
+
+    @Override
+    public void onLivingUpdate() {
+        super.onLivingUpdate();
+        animCap.updateAnimation();
+        if (!world.isRemote && isChild()) {
+            IAttributeInstance attackAttrib = getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE);
+            if (!attackAttrib.hasModifier(CHILD_ATTACK_MALUS)) {
+                attackAttrib.applyModifier(CHILD_ATTACK_MALUS);
+                getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(10d);
+                getEntityAttribute(SharedMonsterAttributes.ARMOR).setBaseValue(0d);
+                setHealth(10f);
+            }
+        }
+    }
+
+    @Override
+    @Nullable
+    public <T> T getCapability(Capability<T> capability, @Nullable EnumFacing facing) {
+        if (capability == Midnight.animationCap) {
+            return Midnight.animationCap.cast(animCap);
+        }
+        return super.getCapability(capability, facing);
+    }
+
+    @Override
+    public boolean hasCapability(Capability<?> capability, @Nullable EnumFacing facing) {
+        return capability == Midnight.animationCap || super.hasCapability(capability, facing);
+    }
+
+    public class EntityTaskCurtsey extends EntityAIWatchClosest {
+
+        EntityTaskCurtsey(EntityLiving entity, Class<? extends Entity> watchTargetClass, float maxDistance, float chance) {
+            super(entity, watchTargetClass, maxDistance, chance);
+            setMutexBits(3);
+        }
+
+        @Override
+        public void startExecuting() {
+            super.startExecuting();
+            if (this.entity.getRNG().nextFloat() < 0.1f) {
+                animCap.setAnimation(this.entity, AnimationType.CURTSEY, 40);
+            }
+        }
+
+        @Override
+        public void resetTask() {
+            super.resetTask();
+            if (animCap.isAnimate()) {
+                animCap.resetAnimation(entity);
+            }
+        }
     }
 }

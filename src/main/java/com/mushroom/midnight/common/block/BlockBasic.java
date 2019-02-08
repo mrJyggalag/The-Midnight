@@ -4,6 +4,7 @@ import com.mushroom.midnight.client.IModelProvider;
 import com.mushroom.midnight.common.registry.ModTabs;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
+import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.math.BlockPos;
@@ -16,6 +17,11 @@ public final class BlockBasic extends Block implements IModelProvider {
 
     public BlockBasic(Material material) {
         super(material);
+        this.setCreativeTab(ModTabs.BUILDING_TAB);
+    }
+
+    public BlockBasic(Material material, MapColor mapColor) {
+        super(material, mapColor);
         this.setCreativeTab(ModTabs.BUILDING_TAB);
     }
 

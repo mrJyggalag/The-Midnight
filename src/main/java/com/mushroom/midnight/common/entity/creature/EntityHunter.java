@@ -1,13 +1,13 @@
 package com.mushroom.midnight.common.entity.creature;
 
 import com.mushroom.midnight.Midnight;
+import com.mushroom.midnight.common.capability.AnimationCapability;
 import com.mushroom.midnight.common.entity.NavigatorFlying;
 import com.mushroom.midnight.common.entity.task.EntityTaskHunterIdle;
 import com.mushroom.midnight.common.entity.task.EntityTaskHunterSwoop;
 import com.mushroom.midnight.common.entity.task.EntityTaskHunterTarget;
 import com.mushroom.midnight.common.entity.task.EntityTaskHunterTrack;
 import com.mushroom.midnight.common.entity.util.ChainSolver;
-import com.mushroom.midnight.common.network.MessageHunterAttack;
 import com.mushroom.midnight.common.registry.ModLootTables;
 import com.mushroom.midnight.common.util.MeanValueRecorder;
 import net.minecraft.block.state.IBlockState;
@@ -25,17 +25,19 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;
 import net.minecraft.pathfinding.PathNavigate;
 import net.minecraft.potion.PotionEffect;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import net.minecraftforge.common.capabilities.Capability;
 
 import javax.annotation.Nullable;
 import javax.vecmath.Point3f;
 
 public class EntityHunter extends EntityMob implements EntityFlying {
-    public static final int ATTACK_ANIMATION_TICKS = 10;
+    private final AnimationCapability animCap = new AnimationCapability();
 
     public static final int FLIGHT_HEIGHT = 40;
 
@@ -43,11 +45,6 @@ public class EntityHunter extends EntityMob implements EntityFlying {
     public float prevRoll;
 
     public int swoopCooldown;
-
-    public boolean attacking;
-
-    public int attackAnimation;
-    public int prevAttackAnimation;
 
     private final MeanValueRecorder deltaYaw = new MeanValueRecorder(20);
     private final ChainSolver<EntityHunter> chainSolver = new ChainSolver<>(
@@ -110,7 +107,6 @@ public class EntityHunter extends EntityMob implements EntityFlying {
                 this.swoopCooldown--;
             }
         } else {
-            this.updateAttackAnimation();
 
             this.deltaYaw.record(this.rotationYaw - this.prevRotationYaw);
             float deltaYaw = this.deltaYaw.computeMean();
@@ -119,19 +115,6 @@ public class EntityHunter extends EntityMob implements EntityFlying {
             this.roll = MathHelper.clamp(-deltaYaw * 8.0F, -45.0F, 45.0F);
 
 //            this.chainSolver.update(this);
-        }
-    }
-
-    private void updateAttackAnimation() {
-        this.prevAttackAnimation = this.attackAnimation;
-
-        if (this.attacking) {
-            if (this.attackAnimation < ATTACK_ANIMATION_TICKS) {
-                this.attackAnimation += 1;
-            } else {
-                this.attackAnimation = 0;
-                this.attacking = false;
-            }
         }
     }
 
@@ -191,7 +174,7 @@ public class EntityHunter extends EntityMob implements EntityFlying {
                 living.addPotionEffect(new PotionEffect(MobEffects.SLOWNESS, 10 * 20));
                 living.addPotionEffect(new PotionEffect(MobEffects.WITHER, 6 * 20));
 
-                Midnight.NETWORK.sendToAllTracking(new MessageHunterAttack(this), this);
+                animCap.setAnimation(this, AnimationCapability.AnimationType.ATTACK, 10);
             }
 
             return true;
@@ -287,4 +270,24 @@ public class EntityHunter extends EntityMob implements EntityFlying {
     @Override
     @Nullable
     protected ResourceLocation getLootTable() { return ModLootTables.LOOT_TABLE_HUNTER; }
+
+    @Override
+    public void onLivingUpdate() {
+        super.onLivingUpdate();
+        animCap.updateAnimation();
+    }
+    
+    @Override
+    @Nullable
+    public <T> T getCapability(Capability<T> capability, @Nullable EnumFacing facing) {
+        if (capability == Midnight.animationCap) {
+            return Midnight.animationCap.cast(animCap);
+        }
+        return super.getCapability(capability, facing);
+    }
+
+    @Override
+    public boolean hasCapability(Capability<?> capability, @Nullable EnumFacing facing) {
+        return capability == Midnight.animationCap || super.hasCapability(capability, facing);
+    }
 }

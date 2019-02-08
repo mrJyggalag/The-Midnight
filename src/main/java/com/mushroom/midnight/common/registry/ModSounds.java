@@ -1,6 +1,7 @@
 package com.mushroom.midnight.common.registry;
 
 import net.minecraft.block.SoundType;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraftforge.event.RegistryEvent;
@@ -31,7 +32,14 @@ public class ModSounds {
     public static final SoundEvent MUD_DIG = RegUtil.applyName(new SoundEvent(new ResourceLocation(MODID, "mud_dig")));
     public static final SoundEvent MUD_STEP = RegUtil.applyName(new SoundEvent(new ResourceLocation(MODID, "mud_step")));
 
+    public static final SoundEvent NIGHTSTAG_AMBIENT = RegUtil.applyName(new SoundEvent(new ResourceLocation(MODID, "nightstag_ambient")));
+    public static final SoundEvent NIGHTSTAG_HURT = RegUtil.applyName(new SoundEvent(new ResourceLocation(MODID, "nightstag_hurt")));
+    public static final SoundEvent NIGHTSTAG_DEATH = RegUtil.applyName(new SoundEvent(new ResourceLocation(MODID, "nightstag_death")));
+
+    public static final SoundEvent EGG_CRACKED = RegUtil.applyName(new SoundEvent(new ResourceLocation(MODID, "egg_cracked")));
+
     public static final SoundType MUD = new SoundType(1.0F, 1.0F, ModSounds.MUD_DIG, ModSounds.MUD_STEP, ModSounds.MUD_DIG, ModSounds.MUD_DIG, ModSounds.MUD_STEP);
+    public static final SoundType PILE_OF_EGGS = new SoundType(1.0F, 1.0F, ModSounds.EGG_CRACKED, SoundEvents.BLOCK_STONE_STEP, SoundEvents.BLOCK_STONE_PLACE, SoundEvents.BLOCK_STONE_HIT, SoundEvents.BLOCK_STONE_FALL);
 
     @SubscribeEvent
     public static void onRegisterSounds(RegistryEvent.Register<SoundEvent> event) {
@@ -49,7 +57,11 @@ public class ModSounds {
                 BLADESHROOM_CAP_SHOOT,
                 BLADESHROOM_CAP_HIT,
                 MUD_DIG,
-                MUD_STEP
+                MUD_STEP,
+                NIGHTSTAG_AMBIENT,
+                NIGHTSTAG_HURT,
+                NIGHTSTAG_DEATH,
+                EGG_CRACKED
         );
     }
 }
