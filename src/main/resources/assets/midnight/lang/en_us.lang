@@ -297,13 +297,13 @@ config.midnight.bladeshroom_damage_chance=Bladeshroom Damage Chance
 config.midnight.bladeshroom_damage_chance.tooltip=The chance to take damage when picking a bladeshroom cap.
 
 config.midnight.can_respawn_in_midnight=Allow to respawn in Midnight
-config.midnight.can_respawn_in_midnight.tooltip=If true, players will be allowed to respawn in Midnight.
+config.midnight.can_respawn_in_midnight.tooltip=If true, players will respawn in Midnight after dying in the dimension.
 
 config.midnight.hide_vignette_effect=Hides the vignette effect
 config.midnight.hide_vignette_effect.tooltip=Hides the vignette effect in the dark areas of Midnight.
 
 config.midnight.allow_lightning_damage=Allow lightning damage
-config.midnight.allow_lightning_damage.tooltip=Allows the lightnings in Midnight to burn the lands and do damage to entities.
+config.midnight.allow_lightning_damage.tooltip=Allows the lightning in Midnight to burn blocks and do damage to entities.
 
 config.midnight.rift_spawn_rarity=Rarity of rifts
 config.midnight.rift_spawn_rarity.tooltip=The rarity that a rift appears. Larger numbers increase rarity. If 0, rifts don't spawn.
