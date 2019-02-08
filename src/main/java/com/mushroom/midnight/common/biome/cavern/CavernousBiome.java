@@ -1,9 +1,15 @@
 package com.mushroom.midnight.common.biome.cavern;
 
-import com.mushroom.midnight.common.biome.MidnightBiome;
+import net.minecraftforge.registries.IForgeRegistryEntry;
 
-public class CavernousBiome extends MidnightBiome<CavernousBiomeConfig> {
-    public CavernousBiome(String name, CavernousBiomeConfig config) {
-        super(name, config);
+public class CavernousBiome extends IForgeRegistryEntry.Impl<CavernousBiome> {
+    private final CavernousBiomeConfig config;
+
+    public CavernousBiome(CavernousBiomeConfig config) {
+        this.config = config;
+    }
+
+    public CavernousBiomeConfig getConfig() {
+        return this.config;
     }
 }

@@ -1,11 +1,11 @@
 package com.mushroom.midnight.common.world;
 
 import com.mushroom.midnight.common.biome.MidnightBiomeGroup;
-import com.mushroom.midnight.common.world.layer.ApplyBiomeGroupLayer;
 import com.mushroom.midnight.common.world.layer.CellSeedLayer;
-import com.mushroom.midnight.common.world.layer.MidnightSeedLayer;
+import com.mushroom.midnight.common.world.layer.CreateGroupPocketsLayer;
 import com.mushroom.midnight.common.world.layer.OutlineProducerLayer;
 import com.mushroom.midnight.common.world.layer.RidgeMergeLayer;
+import com.mushroom.midnight.common.world.layer.SeedGroupLayer;
 import com.mushroom.midnight.common.world.layer.ValleyMergeLayer;
 import net.minecraft.world.WorldType;
 import net.minecraft.world.biome.BiomeProvider;
@@ -21,31 +21,29 @@ public class MidnightBiomeProvider extends BiomeProvider {
         super(info);
     }
 
+    // TODO: All biome sampling on world cap
+
     @Override
     public GenLayer[] getModdedBiomeGenerators(WorldType worldType, long seed, GenLayer[] original) {
-        GenLayer generationLayer = buildBiomeProcedure();
-        GenLayerVoronoiZoom layer = new GenLayerVoronoiZoom(10, generationLayer);
+        return this.buildProcedureArray(worldType, seed, buildBiomeProcedure());
+    }
+
+    private GenLayer[] buildProcedureArray(WorldType worldType, long seed, GenLayer noiseLayer) {
+        GenLayerVoronoiZoom layer = new GenLayerVoronoiZoom(10, noiseLayer);
         layer.initWorldGenSeed(seed);
 
-        GenLayer[] layers = new GenLayer[] { generationLayer, layer, generationLayer };
+        GenLayer[] layers = new GenLayer[] { noiseLayer, layer, noiseLayer };
         return super.getModdedBiomeGenerators(worldType, seed, layers);
     }
 
     private static GenLayer buildBiomeProcedure() {
-        GenLayer ridgeLayer = new CellSeedLayer(10);
-        ridgeLayer = new GenLayerVoronoiZoom(20, ridgeLayer);
-        ridgeLayer = GenLayerZoom.magnify(30, ridgeLayer, 2);
-        ridgeLayer = new OutlineProducerLayer(40, ridgeLayer);
+        GenLayer ridgeLayer = buildRidgeLayer();
+        GenLayer valleyLayer = buildValleyLayer();
 
-        GenLayer valleyLayer = new CellSeedLayer(50);
-        valleyLayer = new GenLayerVoronoiZoom(60, valleyLayer);
-        valleyLayer = GenLayerZoom.magnify(70, valleyLayer, 2);
-        valleyLayer = new OutlineProducerLayer(80, valleyLayer);
-
-        GenLayer layer = new MidnightSeedLayer(0);
+        GenLayer layer = new SeedGroupLayer(0, MidnightBiomeGroup.SURFACE);
         layer = new GenLayerVoronoiZoom(1000, layer);
 
-        layer = new ApplyBiomeGroupLayer(2000, layer, MidnightBiomeGroup.SMALL_SURFACE);
+        layer = new CreateGroupPocketsLayer(2000, layer, MidnightBiomeGroup.SURFACE_POCKET, 100);
         layer = new GenLayerFuzzyZoom(3000, layer);
         layer = new RidgeMergeLayer(4000, layer, ridgeLayer);
 
@@ -57,5 +55,23 @@ public class MidnightBiomeProvider extends BiomeProvider {
         layer = new GenLayerSmooth(8000, layer);
 
         return layer;
+    }
+
+    private static GenLayer buildRidgeLayer() {
+        GenLayer ridgeLayer = new CellSeedLayer(10);
+        ridgeLayer = new GenLayerVoronoiZoom(20, ridgeLayer);
+        ridgeLayer = GenLayerZoom.magnify(30, ridgeLayer, 2);
+        ridgeLayer = new OutlineProducerLayer(40, ridgeLayer);
+
+        return ridgeLayer;
+    }
+
+    private static GenLayer buildValleyLayer() {
+        GenLayer valleyLayer = new CellSeedLayer(50);
+        valleyLayer = new GenLayerVoronoiZoom(60, valleyLayer);
+        valleyLayer = GenLayerZoom.magnify(70, valleyLayer, 2);
+        valleyLayer = new OutlineProducerLayer(80, valleyLayer);
+
+        return valleyLayer;
     }
 }

@@ -63,9 +63,9 @@ public class ModSurfaceBiomes {
                 new BiomeSpawnEntry.Basic(NIGHT_PLAINS, 100)
         );
 
-        MidnightBiomeGroup.SMALL_SURFACE.add(
+        MidnightBiomeGroup.SURFACE_POCKET.add(
                 new BiomeSpawnEntry.Basic(OBSCURED_PEAKS, 10)
-                        .canReplace(biome -> biome == OBSCURED_PLATEAU || biome == BLACK_RIDGE),
+                        .canReplace(OBSCURED_PLATEAU, BLACK_RIDGE),
                 new BiomeSpawnEntry.Basic(WARPED_FIELDS, 5),
                 new BiomeSpawnEntry.Basic(CRYSTAL_SPIRES, 3)
         );

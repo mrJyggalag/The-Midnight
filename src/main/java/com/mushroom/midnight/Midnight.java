@@ -6,7 +6,7 @@ import com.mushroom.midnight.common.capability.DelegatedStorage;
 import com.mushroom.midnight.common.capability.RiftTravelCooldown;
 import com.mushroom.midnight.common.capability.RifterCapturable;
 import com.mushroom.midnight.common.capability.NullStorage;
-import com.mushroom.midnight.common.capability.UndergroundBiomeStore;
+import com.mushroom.midnight.common.capability.CavernousBiomeStore;
 import com.mushroom.midnight.common.loot.InBiomeLootCondition;
 import com.mushroom.midnight.common.loot.InBlockLootCondition;
 import com.mushroom.midnight.common.network.GuiHandler;
@@ -76,8 +76,8 @@ public class Midnight {
     @CapabilityInject(RifterCapturable.class)
     public static final Capability<RifterCapturable> RIFTER_CAPTURABLE_CAP = RegUtil.injected();
 
-    @CapabilityInject(UndergroundBiomeStore.class)
-    public static final Capability<UndergroundBiomeStore> UNDERGROUND_BIOME_CAP = RegUtil.injected();
+    @CapabilityInject(CavernousBiomeStore.class)
+    public static final Capability<CavernousBiomeStore> CAVERNOUS_BIOME_CAP = RegUtil.injected();
 
     static {
         FluidRegistry.enableUniversalBucket();
@@ -87,7 +87,7 @@ public class Midnight {
     public void preInit(FMLPreInitializationEvent event) {
         CapabilityManager.INSTANCE.register(RiftTravelCooldown.class, new NullStorage<>(), RiftTravelCooldown::new);
         CapabilityManager.INSTANCE.register(RifterCapturable.class, new NullStorage<>(), RifterCapturable::new);
-        CapabilityManager.INSTANCE.register(UndergroundBiomeStore.class, new DelegatedStorage<>(), UndergroundBiomeStore::new);
+        CapabilityManager.INSTANCE.register(CavernousBiomeStore.class, new DelegatedStorage<>(), CavernousBiomeStore::new);
 
         NETWORK.registerMessage(MessageCaptureEntity.Handler.class, MessageCaptureEntity.class, 0, Side.CLIENT);
         NETWORK.registerMessage(MessageBridgeCreate.Handler.class, MessageBridgeCreate.class, 1, Side.CLIENT);

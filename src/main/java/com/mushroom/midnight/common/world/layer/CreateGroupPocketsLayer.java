@@ -1,18 +1,19 @@
 package com.mushroom.midnight.common.world.layer;
 
-import com.mushroom.midnight.common.biome.config.BiomeSpawnEntry;
 import com.mushroom.midnight.common.biome.MidnightBiomeGroup;
-import net.minecraft.world.biome.Biome;
+import com.mushroom.midnight.common.biome.config.BiomeSpawnEntry;
 import net.minecraft.world.gen.layer.GenLayer;
 import net.minecraft.world.gen.layer.IntCache;
 
-public class ApplyBiomeGroupLayer extends GenLayer {
-    private final MidnightBiomeGroup layer;
+public class CreateGroupPocketsLayer extends GenLayer {
+    private final MidnightBiomeGroup group;
+    private final int chance;
 
-    public ApplyBiomeGroupLayer(long seed, GenLayer parent, MidnightBiomeGroup layer) {
+    public CreateGroupPocketsLayer(long seed, GenLayer parent, MidnightBiomeGroup group, int chance) {
         super(seed);
         this.parent = parent;
-        this.layer = layer;
+        this.group = group;
+        this.chance = chance;
     }
 
     @Override
@@ -24,7 +25,11 @@ public class ApplyBiomeGroupLayer extends GenLayer {
             for (int localX = 0; localX < width; localX++) {
                 this.initChunkSeed(localX + originX, localY + originY);
                 int index = localX + localY * width;
-                result[index] = this.apply(parent[index]);
+                if (this.nextInt(this.chance) == 0) {
+                    result[index] = this.apply(parent[index]);
+                } else {
+                    result[index] = parent[index];
+                }
             }
         }
 
@@ -32,12 +37,9 @@ public class ApplyBiomeGroupLayer extends GenLayer {
     }
 
     private int apply(int parentValue) {
-        BiomeSpawnEntry entry = this.layer.selectEntry(this::nextInt);
-        if (entry.canReplace(Biome.getBiome(parentValue))) {
-            Biome biome = entry.selectBiome(this::nextInt);
-            if (biome != null) {
-                return Biome.getIdForBiome(biome);
-            }
+        BiomeSpawnEntry entry = this.group.selectEntry(this::nextInt);
+        if (entry.canReplace(parentValue)) {
+            return entry.getBiomeId();
         }
         return parentValue;
     }

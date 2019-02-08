@@ -1,10 +1,10 @@
 package com.mushroom.midnight.common.biome.cavern;
 
 public class CavernStructureConfig {
-    private float densityScale;
-    private float floorHeight;
-    private float ceilingHeight;
-    private float heightVariation;
+    private float densityScale = 1.0F;
+    private float floorHeight = 0.0F;
+    private float ceilingHeight = 1.0F;
+    private float heightVariation = 0.1F;
 
     public CavernStructureConfig withFloorHeight(float floorHeight) {
         this.floorHeight = floorHeight;

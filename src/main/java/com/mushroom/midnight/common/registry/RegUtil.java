@@ -9,6 +9,7 @@ import net.minecraft.util.SoundEvent;
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
 import net.minecraftforge.registries.GameData;
+import net.minecraftforge.registries.IForgeRegistryEntry;
 
 import javax.annotation.Nonnull;
 
@@ -38,6 +39,12 @@ public class RegUtil {
         potion.setRegistryName(registryName);
         potion.setPotionName(registryName.getNamespace() + "." + registryName.getPath());
         return potion;
+    }
+
+    public static <T extends IForgeRegistryEntry<T>> T withName(T entry, String name) {
+        ResourceLocation registryName = GameData.checkPrefix(name);
+        entry.setRegistryName(registryName);
+        return entry;
     }
 
     public static <T extends Biome> T applyName(T biome) {

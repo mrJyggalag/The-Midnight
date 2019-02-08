@@ -1,10 +1,11 @@
 package com.mushroom.midnight.common.biome.surface;
 
-import com.mushroom.midnight.common.biome.MidnightBiome;
+import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.common.biome.config.SurfaceConfig;
 import com.mushroom.midnight.common.registry.ModBlocks;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
@@ -12,12 +13,29 @@ import net.minecraft.world.chunk.ChunkPrimer;
 
 import java.util.Random;
 
-public class SurfaceBiome extends MidnightBiome<SurfaceBiomeConfig> {
+public class SurfaceBiome extends Biome {
+    protected final SurfaceBiomeConfig config;
     private final SurfaceConfig localSurfaceConfig;
 
     public SurfaceBiome(String name, SurfaceBiomeConfig config) {
-        super(name, config);
+        super(config.buildProperties(name));
+
+        this.config = config;
         this.localSurfaceConfig = new SurfaceConfig(this.config.getSurfaceConfig());
+
+        this.decorator = config.getFeatureConfig().createDecorator();
+
+        config.getSpawnerConfig().apply(this);
+        config.getSurfaceConfig().apply(this);
+    }
+
+    public SurfaceBiomeConfig getConfig() {
+        return this.config;
+    }
+
+    @Override
+    public String getBiomeName() {
+        return I18n.format("biome." + Midnight.MODID + "." + super.getBiomeName() + ".name");
     }
 
     @Override

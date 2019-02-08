@@ -1,75 +1,56 @@
 package com.mushroom.midnight.common.biome.config;
 
-import com.mushroom.midnight.common.util.INumberGenerator;
+import it.unimi.dsi.fastutil.ints.IntOpenHashSet;
+import it.unimi.dsi.fastutil.ints.IntSet;
 import net.minecraft.world.biome.Biome;
 
-import javax.annotation.Nullable;
-import java.util.function.Function;
-import java.util.function.Predicate;
+import java.util.function.IntPredicate;
 
 public interface BiomeSpawnEntry {
-    @Nullable
-    Biome selectBiome(INumberGenerator numberGenerator);
+    int getBiomeId();
 
-    boolean canReplace(Biome biome);
+    boolean canReplace(int biome);
 
     int getWeight();
 
     class Basic implements BiomeSpawnEntry {
-        private final Function<INumberGenerator, Biome> supplier;
-        private Predicate<Biome> canReplace;
+        private final int biomeId;
+        private IntPredicate canReplace;
 
         private final int weight;
 
-        public Basic(Function<INumberGenerator, Biome> supplier, int weight) {
-            this.supplier = supplier;
+        public Basic(Biome biome, int weight) {
+            this.biomeId = Biome.getIdForBiome(biome);
             this.weight = weight;
         }
 
-        public Basic(Biome biome, int weight) {
-            this(rng -> biome, weight);
-        }
-
-        public Basic canReplace(Predicate<Biome> predicate) {
+        public Basic canReplace(IntPredicate predicate) {
             this.canReplace = predicate;
             return this;
         }
 
-        @Override
-        public Biome selectBiome(INumberGenerator numberGenerator) {
-            return this.supplier.apply(numberGenerator);
+        public Basic canReplace(Biome... biomes) {
+            IntSet biomeIds = new IntOpenHashSet();
+            for (Biome biome : biomes) {
+                biomeIds.add(Biome.getIdForBiome(biome));
+            }
+
+            this.canReplace = biomeIds::contains;
+
+            return this;
         }
 
         @Override
-        public boolean canReplace(Biome biome) {
+        public int getBiomeId() {
+            return this.biomeId;
+        }
+
+        @Override
+        public boolean canReplace(int biome) {
             if (this.canReplace == null) {
                 return true;
             }
             return this.canReplace.test(biome);
-        }
-
-        @Override
-        public int getWeight() {
-            return this.weight;
-        }
-    }
-
-    class Void implements BiomeSpawnEntry {
-        private final int weight;
-
-        public Void(int weight) {
-            this.weight = weight;
-        }
-
-        @Nullable
-        @Override
-        public Biome selectBiome(INumberGenerator numberGenerator) {
-            return null;
-        }
-
-        @Override
-        public boolean canReplace(Biome biome) {
-            return false;
         }
 
         @Override
