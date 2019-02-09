@@ -6,6 +6,7 @@ import com.mushroom.midnight.common.block.PlantBehaviorType;
 import com.mushroom.midnight.common.capability.AnimationCapability;
 import com.mushroom.midnight.common.capability.AnimationCapability.AnimationType;
 import com.mushroom.midnight.common.entity.navigation.CustomPathNavigateGround;
+import com.mushroom.midnight.common.entity.task.EntityTaskCharge;
 import com.mushroom.midnight.common.entity.task.EntityTaskEatGrass;
 import com.mushroom.midnight.common.entity.task.EntityTaskNeutral;
 import com.mushroom.midnight.common.registry.ModBlocks;
@@ -86,6 +87,11 @@ public class EntityNightStag extends EntityAnimal {
     }
 
     @Override
+    protected float getSoundVolume() {
+        return 0.5f;
+    }
+
+    @Override
     protected SoundEvent getAmbientSound() {
         return ModSounds.NIGHTSTAG_AMBIENT;
     }
@@ -131,6 +137,7 @@ public class EntityNightStag extends EntityAnimal {
     protected void initEntityAI() {
         this.tasks.addTask(0, new EntityAISwimming(this));
         this.tasks.addTask(1, new EntityTaskNeutral(this, new EntityAIPanic(this, 1.2d), true));
+        this.tasks.addTask(1, new EntityTaskNeutral(this, new EntityTaskCharge(this, 1.2d, 200, 0.25f), false));
         this.tasks.addTask(2, new EntityTaskNeutral(this, new EntityAIAttackMelee(this, 1d, false), false));
         this.tasks.addTask(2, new EntityAIMate(this, 1d));
         this.tasks.addTask(3, new EntityAITempt(this, 1d, ModItems.RAW_SUAVIS, false));
