@@ -1,8 +1,10 @@
 package com.mushroom.midnight.common.registry;
 
 import com.mushroom.midnight.Midnight;
+import com.mushroom.midnight.common.biome.MidnightBiomeGroup;
 import com.mushroom.midnight.common.biome.cavern.CavernousBiome;
 import com.mushroom.midnight.common.biome.cavern.CavernousBiomeConfig;
+import com.mushroom.midnight.common.biome.config.BiomeSpawnEntry;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -33,6 +35,10 @@ public class ModCavernousBiomes {
 
         event.getRegistry().registerAll(
         );
+    }
+
+    public static void onInit() {
+        MidnightBiomeGroup.UNDERGROUND.add(new BiomeSpawnEntry.Basic(NONE, 100));
     }
 
     public static ForgeRegistry<CavernousBiome> getRegistry() {

@@ -1,5 +1,7 @@
 package com.mushroom.midnight.common.biome.config;
 
+import com.mushroom.midnight.common.biome.cavern.CavernousBiome;
+import com.mushroom.midnight.common.registry.ModCavernousBiomes;
 import it.unimi.dsi.fastutil.ints.IntOpenHashSet;
 import it.unimi.dsi.fastutil.ints.IntSet;
 import net.minecraft.world.biome.Biome;
@@ -21,6 +23,11 @@ public interface BiomeSpawnEntry {
 
         public Basic(Biome biome, int weight) {
             this.biomeId = Biome.getIdForBiome(biome);
+            this.weight = weight;
+        }
+
+        public Basic(CavernousBiome biome, int weight) {
+            this.biomeId = ModCavernousBiomes.getRegistry().getID(biome);
             this.weight = weight;
         }
 

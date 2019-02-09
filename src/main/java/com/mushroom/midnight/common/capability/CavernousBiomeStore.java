@@ -1,6 +1,7 @@
 package com.mushroom.midnight.common.capability;
 
 import com.mushroom.midnight.Midnight;
+import com.mushroom.midnight.common.biome.BiomeLayerSampler;
 import com.mushroom.midnight.common.biome.cavern.CavernousBiome;
 import com.mushroom.midnight.common.registry.ModCavernousBiomes;
 import net.minecraft.nbt.NBTTagCompound;
@@ -14,6 +15,10 @@ import javax.annotation.Nullable;
 
 public class CavernousBiomeStore implements ICapabilitySerializable<NBTTagCompound> {
     private final CavernousBiome[] biomes = new CavernousBiome[256];
+
+    public void populate(BiomeLayerSampler<CavernousBiome> sampler, int x, int z) {
+        sampler.sample(this.biomes, x, z, 16, 16);
+    }
 
     @Nonnull
     public CavernousBiome getBiome(int x, int z) {

@@ -20,6 +20,7 @@ import com.mushroom.midnight.common.network.MessageCaptureEntity;
 import com.mushroom.midnight.common.network.MessageItemActivation;
 import com.mushroom.midnight.common.network.MessageRockshroomBroken;
 import com.mushroom.midnight.common.registry.ModBlocks;
+import com.mushroom.midnight.common.registry.ModCavernousBiomes;
 import com.mushroom.midnight.common.registry.ModCriterion;
 import com.mushroom.midnight.common.registry.ModDimensions;
 import com.mushroom.midnight.common.registry.ModFluids;
@@ -121,6 +122,7 @@ public class Midnight {
         GameRegistry.registerWorldGenerator(new MidnightOreGenerator(), Integer.MAX_VALUE);
 
         ModSurfaceBiomes.onInit();
+        ModCavernousBiomes.onInit();
         ModItems.onInit();
         ModBlocks.onInit();
         ModRecipes.onInit();

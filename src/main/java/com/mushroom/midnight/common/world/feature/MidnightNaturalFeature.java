@@ -13,6 +13,10 @@ public abstract class MidnightNaturalFeature extends MidnightAbstractFeature {
     }
 
     protected boolean canReplace(World world, BlockPos pos) {
+        if (world.isOutsideBuildHeight(pos)) {
+            return false;
+        }
+
         IBlockState state = world.getBlockState(pos);
         return state.getBlock().isAir(state, world, pos) || state.getBlock().isLeaves(state, world, pos) || state.getMaterial() == Material.VINE;
     }
