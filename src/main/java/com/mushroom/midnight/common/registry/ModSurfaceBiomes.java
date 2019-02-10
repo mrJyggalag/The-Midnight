@@ -4,6 +4,7 @@ import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.common.biome.MidnightBiomeConfigs;
 import com.mushroom.midnight.common.biome.MidnightBiomeGroup;
 import com.mushroom.midnight.common.biome.config.BiomeSpawnEntry;
+import com.mushroom.midnight.common.biome.surface.DeceitfulBogBiome;
 import com.mushroom.midnight.common.biome.surface.SurfaceBiome;
 import net.minecraft.init.Biomes;
 import net.minecraft.world.biome.Biome;
@@ -33,7 +34,7 @@ public class ModSurfaceBiomes {
         event.getRegistry().registerAll(
                 RegUtil.applyName(new SurfaceBiome("vigilant_forest", MidnightBiomeConfigs.VIGILANT_FOREST_CONFIG)),
                 RegUtil.applyName(new SurfaceBiome("black_ridge", MidnightBiomeConfigs.BLACK_RIDGE_CONFIG)),
-                RegUtil.applyName(new SurfaceBiome("deceitful_bog", MidnightBiomeConfigs.DECEITFUL_BOG_CONFIG)),
+                RegUtil.applyName(new DeceitfulBogBiome("deceitful_bog", MidnightBiomeConfigs.DECEITFUL_BOG_CONFIG)),
                 RegUtil.applyName(new SurfaceBiome("fungi_forest", MidnightBiomeConfigs.FUNGI_FOREST_CONFIG)),
                 RegUtil.applyName(new SurfaceBiome("obscured_peaks", MidnightBiomeConfigs.OBSCURED_PEAK_CONFIG)),
                 RegUtil.applyName(new SurfaceBiome("warped_fields", MidnightBiomeConfigs.WARPED_FIELDS_CONFIG)),
