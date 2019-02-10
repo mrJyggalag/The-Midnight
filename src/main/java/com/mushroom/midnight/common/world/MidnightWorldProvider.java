@@ -3,6 +3,7 @@ package com.mushroom.midnight.common.world;
 import com.mushroom.midnight.common.biome.MidnightBiomeLayer;
 import com.mushroom.midnight.common.config.MidnightConfig;
 import com.mushroom.midnight.common.registry.ModDimensions;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.entity.player.EntityPlayer;
@@ -106,7 +107,7 @@ public class MidnightWorldProvider extends WorldProvider {
     @Override
     @SideOnly(Side.CLIENT)
     public Vec3d getFogColor(float celestialAngle, float partialTicks) {
-        if (this.world.getLastLightningBolt() > 0) {
+        if (this.world.getLastLightningBolt() > 0 && Minecraft.getMinecraft().player.posY > 50) {
             return LIGHTING_FOG_COLOR;
         }
         return FOG_COLOR;
@@ -123,6 +124,7 @@ public class MidnightWorldProvider extends WorldProvider {
 
     @Override
     public void updateWeather() {
+        setAllowedSpawnTypes(false, false);
         if (this.world instanceof WorldServer) {
             WorldServer worldServer = (WorldServer) this.world;
             PlayerChunkMap chunkMap = worldServer.getPlayerChunkMap();

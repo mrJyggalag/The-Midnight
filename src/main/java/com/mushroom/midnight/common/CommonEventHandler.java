@@ -16,6 +16,7 @@ import com.mushroom.midnight.common.registry.ModCavernousBiomes;
 import com.mushroom.midnight.common.registry.ModDimensions;
 import com.mushroom.midnight.common.registry.ModEffects;
 import com.mushroom.midnight.common.world.GlobalBridgeManager;
+import com.mushroom.midnight.common.world.MidnightWorldEntitySpawner;
 import com.mushroom.midnight.common.world.RiftSpawnHandler;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -28,6 +29,8 @@ import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.DimensionType;
 import net.minecraft.world.GameRules;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldServer;
+import net.minecraft.world.WorldType;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.gen.layer.GenLayer;
@@ -103,6 +106,9 @@ public class CommonEventHandler {
         if (event.phase == TickEvent.Phase.START) {
             if (!event.world.isRemote) {
                 GlobalBridgeManager.getServer().update();
+                if (Helper.isMidnightDimension(event.world) && event.world.getGameRules().getBoolean("doMobSpawning") && event.world.getWorldInfo().getTerrainType() != WorldType.DEBUG_ALL_BLOCK_STATES) {
+                    MidnightWorldEntitySpawner.findChunksForSpawning((WorldServer) event.world);
+                }
             }
             TICKING_DIMENSION.set(event.world.provider.getDimensionType());
         } else {

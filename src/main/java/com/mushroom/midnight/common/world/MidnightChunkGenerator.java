@@ -18,7 +18,6 @@ import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraft.world.WorldEntitySpawner;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.BiomeProvider;
 import net.minecraft.world.chunk.Chunk;
@@ -202,7 +201,7 @@ public class MidnightChunkGenerator implements IChunkGenerator, PartialChunkGene
             if (TerrainGen.populate(this, this.world, this.random, chunkX, chunkZ, false, PopulateChunkEvent.Populate.EventType.ANIMALS)) {
                 int originX = globalX + 8;
                 int originZ = globalZ + 8;
-                WorldEntitySpawner.performWorldGenSpawning(this.world, biome, originX, originZ, 16, 16, this.random);
+                MidnightWorldEntitySpawner.performWorldGenSpawning(this.world, biome, originX, originZ, 16, 16, this.random);
             }
 
             ForgeEventFactory.onChunkPopulate(false, this, this.world, this.random, chunkX, chunkZ, false);
