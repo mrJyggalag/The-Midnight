@@ -1,0 +1,38 @@
+package com.mushroom.midnight.common.world.layer;
+
+import com.mushroom.midnight.common.biome.MidnightBiomeGroup;
+import com.mushroom.midnight.common.biome.config.BiomeSpawnEntry;
+import com.mushroom.midnight.common.registry.ModCavernousBiomes;
+import net.minecraft.world.gen.layer.GenLayer;
+import net.minecraft.world.gen.layer.IntCache;
+
+public class CavernSeedLayer extends GenLayer {
+    private final MidnightBiomeGroup group;
+    private final int closedCavernId;
+
+    public CavernSeedLayer(long seed, MidnightBiomeGroup group) {
+        super(seed);
+        this.group = group;
+        this.closedCavernId = ModCavernousBiomes.getId(ModCavernousBiomes.CLOSED_CAVERN);
+    }
+
+    @Override
+    public int[] getInts(int originX, int originY, int width, int height) {
+        int[] result = IntCache.getIntCache(width * height);
+
+        for (int localY = 0; localY < height; localY++) {
+            for (int localX = 0; localX < width; localX++) {
+                this.initChunkSeed(localX + originX, localY + originY);
+
+                if (this.nextInt(2) == 0) {
+                    BiomeSpawnEntry entry = this.group.selectEntry(this::nextInt);
+                    result[localX + localY * width] = entry.getBiomeId();
+                } else {
+                    result[localX + localY * width] = this.closedCavernId;
+                }
+            }
+        }
+
+        return result;
+    }
+}

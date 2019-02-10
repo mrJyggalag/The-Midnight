@@ -36,7 +36,7 @@ import java.util.Random;
 import static com.mushroom.midnight.common.world.MidnightNoiseGenerator.*;
 
 public class MidnightChunkGenerator implements IChunkGenerator, PartialChunkGenerator {
-    private static final BiomeLayerSampler<CavernousBiome> DEFAULT_CAVERN_SAMPLER = new BiomeLayerSampler.Constant<>(ModCavernousBiomes.CLOSED);
+    private static final BiomeLayerSampler<CavernousBiome> DEFAULT_CAVERN_SAMPLER = new BiomeLayerSampler.Constant<>(ModCavernousBiomes.CLOSED_CAVERN);
 
     public static final int SURFACE_LEVEL = 78;
 

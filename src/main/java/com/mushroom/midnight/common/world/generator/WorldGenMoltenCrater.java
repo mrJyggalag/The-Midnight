@@ -29,7 +29,7 @@ public class WorldGenMoltenCrater extends MapGenBase {
     private static final int SCALE_Y = 2;
 
     private static final int EDGE_DEPTH = 12;
-    private static final int POOL_DEPTH = 2;
+    private static final int POOL_DEPTH = 3;
 
     private static final IBlockState AIR_STATE = Blocks.AIR.getDefaultState();
     private static final IBlockState MIASMA_STATE = ModBlocks.MIASMA.getDefaultState();

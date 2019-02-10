@@ -24,7 +24,7 @@ public class CavernousBiomeStore implements ICapabilitySerializable<NBTTagCompou
     public CavernousBiome getBiome(int x, int z) {
         CavernousBiome biome = this.biomes[(x & 15) + (z & 15) << 4];
         if (biome == null) {
-            return ModCavernousBiomes.CLOSED;
+            return ModCavernousBiomes.CLOSED_CAVERN;
         }
         return biome;
     }
@@ -33,13 +33,11 @@ public class CavernousBiomeStore implements ICapabilitySerializable<NBTTagCompou
     public NBTTagCompound serializeNBT() {
         NBTTagCompound compound = new NBTTagCompound();
 
-        ForgeRegistry<CavernousBiome> registry = ModCavernousBiomes.getRegistry();
-
         byte[] bytes = new byte[this.biomes.length];
         for (int i = 0; i < this.biomes.length; i++) {
             CavernousBiome biome = this.biomes[i];
             if (biome != null) {
-                bytes[i] = (byte) (registry.getID(biome) & 0xFF);
+                bytes[i] = (byte) (ModCavernousBiomes.getId(biome) & 0xFF);
             }
         }
 

@@ -309,9 +309,20 @@ public class MidnightBiomeConfigs {
             .build();
 
     public static final CavernStructureConfig OPEN_STRUCTURE_CONFIG = new CavernStructureConfig()
-            .withCaveRadiusScale(0.0F);
+            .withCaveRadiusScale(0.0F)
+            .withHeightVariation(0.4F);
+
+    public static final CavernStructureConfig CRAMPED_STRUCTURE_CONFIG = new CavernStructureConfig()
+            .withCaveRadiusScale(0.0F)
+            .withCavernDensity(-1.0F)
+            .withFloorHeight(0.2F)
+            .withCeilingHeight(0.8F);
 
     public static final CavernousBiomeConfig OPEN_CAVERN_CONFIG = CavernousBiomeConfig.builder()
             .withStructure(OPEN_STRUCTURE_CONFIG)
+            .build();
+
+    public static final CavernousBiomeConfig CRAMPED_CAVERN_CONFIG = CavernousBiomeConfig.builder()
+            .withStructure(CRAMPED_STRUCTURE_CONFIG)
             .build();
 }

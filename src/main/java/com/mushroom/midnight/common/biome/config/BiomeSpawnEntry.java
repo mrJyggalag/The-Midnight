@@ -16,6 +16,7 @@ public interface BiomeSpawnEntry {
 
     int getWeight();
 
+    // TODO: Initialize along with GenLayers to avoid need for SessionLocal?
     class Basic implements BiomeSpawnEntry {
         private final SessionLocal<Integer> biomeId;
         private IntPredicate canReplace;
@@ -28,7 +29,7 @@ public interface BiomeSpawnEntry {
         }
 
         public Basic(CavernousBiome biome, int weight) {
-            this.biomeId = SessionLocal.register(() -> ModCavernousBiomes.getRegistry().getID(biome));
+            this.biomeId = SessionLocal.register(() -> ModCavernousBiomes.getId(biome));
             this.weight = weight;
         }
 

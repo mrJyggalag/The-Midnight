@@ -63,6 +63,6 @@ public class WorldGenMidnightCaves extends MapGenCaves {
             }
         }
 
-        return ModCavernousBiomes.CLOSED;
+        return ModCavernousBiomes.CLOSED_CAVERN;
     }
 }

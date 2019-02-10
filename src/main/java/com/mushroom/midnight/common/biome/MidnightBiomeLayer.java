@@ -1,6 +1,9 @@
 package com.mushroom.midnight.common.biome;
 
 import com.mushroom.midnight.common.biome.cavern.CavernousBiome;
+import com.mushroom.midnight.common.registry.ModCavernousBiomes;
+import com.mushroom.midnight.common.world.layer.AddOutlineLayer;
+import com.mushroom.midnight.common.world.layer.CavernSeedLayer;
 import com.mushroom.midnight.common.world.layer.CellSeedLayer;
 import com.mushroom.midnight.common.world.layer.CreateGroupPocketsLayer;
 import com.mushroom.midnight.common.world.layer.OutlineProducerLayer;
@@ -70,10 +73,10 @@ public final class MidnightBiomeLayer<T> implements BiomeLayerType<T> {
     }
 
     private static GenLayer buildUndergroundProcedure() {
-        GenLayer layer = new SeedGroupLayer(0, MidnightBiomeGroup.UNDERGROUND);
+        GenLayer layer = new CavernSeedLayer(0, MidnightBiomeGroup.UNDERGROUND);
         layer = new GenLayerVoronoiZoom(1000, layer);
 
-//        layer = new CreateGroupPocketsLayer(2000, layer, MidnightBiomeGroup.UNDERGROUND_POCKET, 6);
+        layer = new AddOutlineLayer(2000, layer, ModCavernousBiomes.getId(ModCavernousBiomes.CLOSED_CAVERN));
         layer = new GenLayerFuzzyZoom(3000, layer);
 
         layer = GenLayerZoom.magnify(4000, layer, 3);

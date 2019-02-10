@@ -115,19 +115,20 @@ public class MidnightNoiseGenerator {
         float heightVariation = properties.heightVariation * 0.9F + 0.1F;
         float cavernHeightVariation = properties.cavernHeightVariation * 0.9F + 0.1F;
 
-        double perlinSurfaceNoise = this.surfaceBuffer[surfaceIndex];
-        double perlinCeilingNoise = this.ceilingBuffer[surfaceIndex];
+        double perlinSurfaceNoise = (this.surfaceBuffer[surfaceIndex] + 1.5) / 3.0;
+        double perlinCeilingNoise = (this.ceilingBuffer[surfaceIndex] + 1.5) / 3.0;
+        double ridgedSurfaceNoise = (this.ridgedSurfaceBuffer[surfaceIndex] + 1.5) / 3.0;
 
         double pillarDensity = Math.pow((this.pillarBuffer[surfaceIndex] + 1.0) * 0.5, 4.0);
 
-        double ridgedSurfaceNoise = this.ridgedSurfaceBuffer[surfaceIndex];
+        double surfaceHeightVariationScale = Math.pow(heightVariation * 2.0, 3.0);
+        double cavernHeightVariationScale = Math.pow(cavernHeightVariation * 2.0, 3.0);
 
         double surfaceHeight = perlinSurfaceNoise + (ridgedSurfaceNoise - perlinSurfaceNoise) * properties.ridgeWeight;
-        surfaceHeight = (surfaceHeight + 1.5) / 3.0;
         surfaceHeight = (surfaceHeight * heightVariation * 2.0) + baseHeight;
 
-        double cavernRegionStart = cavernFloorHeight + perlinSurfaceNoise;
-        double cavernRegionEnd = cavernCeilingHeight + perlinCeilingNoise;
+        double cavernRegionStart = cavernFloorHeight + (perlinSurfaceNoise * cavernHeightVariation * 2.0);
+        double cavernRegionEnd = cavernCeilingHeight + (perlinCeilingNoise * 0.15);
 
         double curveRange = 8.0 / VERTICAL_GRANULARITY;
         RegionInterpolator.Region[] regions = new RegionInterpolator.Region[] {
@@ -151,8 +152,9 @@ public class MidnightNoiseGenerator {
             densityBias += Math.max(pillarDensity * 3.5 - pillarFalloff, 0.0) * cavernWeight * 5.0;
 
             double sampledNoise = this.worldNoiseBuffer[index];
-            double surfaceNoiseDensity = sampledNoise * Math.pow(heightVariation * 2.0, 3.0);
-            double cavernNoiseDensity = sampledNoise * Math.pow(cavernHeightVariation * 2.0, 3.0);
+
+            double surfaceNoiseDensity = sampledNoise * surfaceHeightVariationScale;
+            double cavernNoiseDensity = sampledNoise * cavernHeightVariationScale;
             double noiseDensity = (surfaceNoiseDensity * surfaceWeight) + (cavernNoiseDensity * cavernWeight);
 
             this.terrainBuffer[index] = noiseDensity + densityBias;

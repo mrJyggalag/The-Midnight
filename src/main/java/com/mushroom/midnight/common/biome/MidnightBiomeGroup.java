@@ -9,8 +9,7 @@ import java.util.List;
 public enum MidnightBiomeGroup {
     SURFACE,
     SURFACE_POCKET,
-    UNDERGROUND,
-    UNDERGROUND_POCKET;
+    UNDERGROUND;
 
     private final List<BiomeSpawnEntry> spawnEntries = new ArrayList<>();
     private int totalWeight;
