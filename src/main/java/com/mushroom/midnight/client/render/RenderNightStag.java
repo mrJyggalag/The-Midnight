@@ -31,7 +31,7 @@ public class RenderNightStag extends RenderLiving<EntityNightStag> {
 
     public RenderNightStag(RenderManager renderManager) {
         super(renderManager, new ModelNightStag(), 0.0F);
-        this.addLayer(new LayerRendererEmissive<>(new ModelNightStag(), EMISSIVE_TEXTURE, RenderNightStag::computeBrightness));
+        this.addLayer(new LayerRendererEmissive<>(new ModelNightStag(), EMISSIVE_TEXTURE, RenderNightStag::computeBrightness, RenderNightStag::computeColor));
     }
 
     @SubscribeEvent
@@ -43,6 +43,19 @@ public class RenderNightStag extends RenderLiving<EntityNightStag> {
             targetFlicker *= targetFlicker;
 
             flicker += (targetFlicker - flicker) * 0.5;
+        }
+    }
+
+    private static int computeColor(EntityNightStag entity, float partialTicks) {
+        switch (entity.getAntlerType()) {
+            case 1:
+                return 0xA63E3E;
+            case 2:
+                return 0x596E5B;
+            case 3:
+                return 0x616D90;
+            case 0: default:
+                return 0x8051B6;
         }
     }
 

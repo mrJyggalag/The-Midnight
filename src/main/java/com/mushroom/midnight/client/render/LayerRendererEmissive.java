@@ -8,17 +8,25 @@ import net.minecraft.client.renderer.entity.layers.LayerRenderer;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.ResourceLocation;
 
+import java.awt.Color;
+
 public class LayerRendererEmissive<T extends EntityLivingBase> implements LayerRenderer<T> {
     private static final Minecraft CLIENT = Minecraft.getMinecraft();
 
     private final ModelBase model;
     private final ResourceLocation texture;
     private final BrightnessFunction<T> brightnessFunction;
+    private final ColorFunction<T> colorFunction;
 
-    public LayerRendererEmissive(ModelBase model, ResourceLocation texture, BrightnessFunction<T> brightnessFunction) {
+    public LayerRendererEmissive(ModelBase model, ResourceLocation texture, BrightnessFunction<T> brightnessFunction, ColorFunction<T> colorFunction) {
         this.model = model;
         this.texture = texture;
         this.brightnessFunction = brightnessFunction;
+        this.colorFunction = colorFunction;
+    }
+
+    public LayerRendererEmissive(ModelBase model, ResourceLocation texture, BrightnessFunction<T> brightnessFunction) {
+        this(model, texture, brightnessFunction, (entity, partialTicks) -> 0xffffff);
     }
 
     public LayerRendererEmissive(ModelBase model, ResourceLocation texture) {
@@ -37,8 +45,8 @@ public class LayerRendererEmissive<T extends EntityLivingBase> implements LayerR
 
         int brightness = this.brightnessFunction.apply(entity, partialTicks);
         OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, brightness, brightness);
-
-        GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+        Color color = new Color(colorFunction.getColor(entity, partialTicks));
+        GlStateManager.color(color.getRed() / 255f, color.getGreen() / 255f, color.getBlue() / 255f, 1f);
         GlStateManager.disableLighting();
 
         this.model.render(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale);
@@ -54,5 +62,9 @@ public class LayerRendererEmissive<T extends EntityLivingBase> implements LayerR
 
     public interface BrightnessFunction<T extends EntityLivingBase> {
         int apply(T entity, float partialTicks);
+    }
+
+    public interface ColorFunction<T extends EntityLivingBase> {
+        int getColor(T entity, float partialTicks);
     }
 }

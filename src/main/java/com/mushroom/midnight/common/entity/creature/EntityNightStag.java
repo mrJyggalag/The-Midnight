@@ -6,6 +6,7 @@ import com.mushroom.midnight.common.block.PlantBehaviorType;
 import com.mushroom.midnight.common.capability.AnimationCapability;
 import com.mushroom.midnight.common.capability.AnimationCapability.AnimationType;
 import com.mushroom.midnight.common.entity.navigation.CustomPathNavigateGround;
+import com.mushroom.midnight.common.entity.task.EntityTaskCharge;
 import com.mushroom.midnight.common.entity.task.EntityTaskEatGrass;
 import com.mushroom.midnight.common.entity.task.EntityTaskNeutral;
 import com.mushroom.midnight.common.registry.ModBlocks;
@@ -35,6 +36,10 @@ import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.datasync.DataParameter;
+import net.minecraft.network.datasync.DataSerializers;
+import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.pathfinding.PathNavigate;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
@@ -46,6 +51,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.util.Constants;
 
 import javax.annotation.Nullable;
 
@@ -54,6 +60,7 @@ import java.util.UUID;
 import static com.mushroom.midnight.common.registry.ModLootTables.LOOT_TABLE_NIGHTSTAG;
 
 public class EntityNightStag extends EntityAnimal {
+    private static final DataParameter<Integer> ANTLER_TYPE = EntityDataManager.createKey(EntityNightStag.class, DataSerializers.VARINT);
     private static final AttributeModifier CHILD_ATTACK_MALUS = new AttributeModifier(UUID.fromString("c0f32cda-a4fd-4fe4-8b3f-15612ef9a52f"), "nightstag_child_attack_malus", -2d, 0);
     private static final int GROWING_TIME = -24000;
     private final AnimationCapability animCap = new AnimationCapability();
@@ -68,6 +75,7 @@ public class EntityNightStag extends EntityAnimal {
     public EntityAgeable createChild(EntityAgeable entity) {
         EntityNightStag child = new EntityNightStag(world);
         child.setGrowingAge(GROWING_TIME);
+        child.setAntlerType(((EntityNightStag)entity).getAntlerType());
         return child;
     }
 
@@ -77,12 +85,46 @@ public class EntityNightStag extends EntityAnimal {
         if (this.rand.nextInt(5) == 0) {
             setGrowingAge(GROWING_TIME);
         }
+        setAntlerType(this.rand.nextInt(4));
         return livingdata;
+    }
+
+    @Override
+    protected void entityInit() {
+        super.entityInit();
+        this.dataManager.register(ANTLER_TYPE, 0);
+    }
+
+    @Override
+    public void writeEntityToNBT(NBTTagCompound compound) {
+        super.writeEntityToNBT(compound);
+        compound.setInteger("antler_type", getAntlerType());
+    }
+
+    @Override
+    public void readEntityFromNBT(NBTTagCompound compound) {
+        super.readEntityFromNBT(compound);
+        if (compound.hasKey("antler_type", Constants.NBT.TAG_INT)) {
+            setAntlerType(Math.min(Math.max(0, compound.getInteger("antler_type")),3));
+        }
+    }
+
+    public void setAntlerType(int index) {
+        dataManager.set(ANTLER_TYPE, Math.min(Math.max(0, index), 3));
+    }
+
+    public int getAntlerType() {
+        return dataManager.get(ANTLER_TYPE);
     }
 
     @Override
     public boolean isOnLadder() {
         return false;
+    }
+
+    @Override
+    protected float getSoundVolume() {
+        return 0.5f;
     }
 
     @Override
@@ -131,6 +173,7 @@ public class EntityNightStag extends EntityAnimal {
     protected void initEntityAI() {
         this.tasks.addTask(0, new EntityAISwimming(this));
         this.tasks.addTask(1, new EntityTaskNeutral(this, new EntityAIPanic(this, 1.2d), true));
+        this.tasks.addTask(1, new EntityTaskNeutral(this, new EntityTaskCharge(this, 1.2d, 200, 0.25f), false));
         this.tasks.addTask(2, new EntityTaskNeutral(this, new EntityAIAttackMelee(this, 1d, false), false));
         this.tasks.addTask(2, new EntityAIMate(this, 1d));
         this.tasks.addTask(3, new EntityAITempt(this, 1d, ModItems.RAW_SUAVIS, false));

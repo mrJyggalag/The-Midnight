@@ -13,7 +13,7 @@ import javax.annotation.Nullable;
 public class AnimationCapability implements ICapabilityProvider {
     private AnimationType animationType = AnimationType.NONE;
     private int maxTicks, prevTick, currentTick;
-    public enum AnimationType { NONE, ATTACK, EAT, CURTSEY }
+    public enum AnimationType { NONE, ATTACK, EAT, CURTSEY, CHARGE }
 
     public void setAnimation(Entity animable, AnimationType animationType, int duration) {
         this.animationType = animationType;
