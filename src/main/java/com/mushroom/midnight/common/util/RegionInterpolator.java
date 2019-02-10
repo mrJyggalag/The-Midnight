@@ -1,11 +1,5 @@
 package com.mushroom.midnight.common.util;
 
-import net.minecraft.util.math.MathHelper;
-
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.util.Arrays;
 
 /**
@@ -18,49 +12,6 @@ public class RegionInterpolator {
     public RegionInterpolator(Region[] regions, Curve curve) {
         this.regions = regions;
         this.curve = curve;
-    }
-
-    // TODO: Remove: test code
-    public static void main(String[] args) throws IOException {
-        RegionInterpolator.Region[] regions = new RegionInterpolator.Region[] {
-                RegionInterpolator.region(0.0, 20.0, 1.0, 8.0),
-                RegionInterpolator.region(20.0, 46.0, -1.5, 8.0),
-                RegionInterpolator.region(46.0, 62.0, 1.0, 8.0),
-                RegionInterpolator.region(62.0, 256.0, -194.0, 194)
-        };
-
-        RegionInterpolator interpolator = new RegionInterpolator(regions, Curve.sine());
-
-        int width = 256;
-        int height = 4096;
-        BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
-        for (int y = 0; y < height; y++) {
-            for (int x = 0; x < width; x++) {
-                int background = 0xFFFFFF;
-                for (Region region : regions) {
-                    if (MathHelper.floor(region.center()) == x) {
-                        background = 0xFF0000;
-                        break;
-                    }
-                    if (x >= region.start && x <= region.end) {
-                        if (region.density > 0.0) {
-                            background = 0xA0A0A0;
-                        } else {
-                            background = 0xFFFFFF;
-                        }
-                    }
-                }
-                image.setRGB(x, y, background);
-            }
-        }
-
-        for (double x = 0; x < width; x += 0.0125) {
-            double density = interpolator.get(x);
-            double targetY = (density * 6.0) + (height / 2.0);
-            image.setRGB(MathHelper.floor(x), MathHelper.clamp(MathHelper.floor(targetY), 0, height), 0x000000);
-        }
-
-        ImageIO.write(image, "png", new File("test.png"));
     }
 
     public static Region region(double start, double end, double density, double curveRange) {
@@ -94,10 +45,6 @@ public class RegionInterpolator {
             this.end = end;
             this.density = density;
             this.curveRange = curveRange;
-        }
-
-        double center() {
-            return (this.start + this.end) / 2.0;
         }
 
         @Override
