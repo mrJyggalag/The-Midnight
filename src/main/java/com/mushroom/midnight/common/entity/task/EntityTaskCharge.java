@@ -50,7 +50,7 @@ public class EntityTaskCharge extends EntityAIBase {
     public void startExecuting() {
         this.tickCounter = 0;
         this.owner.getMoveHelper().setMoveTo(this.target.posX, this.target.posY, this.target.posZ, this.speed);
-        capAnim = owner.getCapability(Midnight.animationCap, null);
+        capAnim = owner.getCapability(Midnight.ANIMATION_CAP, null);
         if (this.capAnim != null) {
             capAnim.setAnimation(this.owner, AnimationCapability.AnimationType.CHARGE, 200);
         }
