@@ -15,6 +15,7 @@ import com.mushroom.midnight.common.world.util.NoiseChunkPrimer;
 import net.minecraft.block.BlockFalling;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EnumCreatureType;
+import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldEntitySpawner;
@@ -47,11 +48,13 @@ public class MidnightChunkGenerator implements IChunkGenerator, PartialChunkGene
 
     private static final IBlockState STONE = ModBlocks.NIGHTSTONE.getDefaultState();
     private static final IBlockState WATER = ModBlocks.DARK_WATER.getDefaultState();
+    private static final IBlockState BEDROCK = Blocks.BEDROCK.getDefaultState();
 
     private final World world;
     private final Random random;
 
     private Biome[] biomeBuffer;
+    private final CavernousBiome[] cavernBiomeBuffer = new CavernousBiome[256];
 
     private Biome[] biomeNoiseBuffer;
     private final CavernousBiome[] cavernNoiseBuffer = new CavernousBiome[BIOME_NOISE_SIZE * BIOME_NOISE_SIZE];
@@ -98,7 +101,7 @@ public class MidnightChunkGenerator implements IChunkGenerator, PartialChunkGene
 
         CavernousBiomeStore cavernousBiomeStore = chunk.getCapability(Midnight.CAVERNOUS_BIOME_CAP, null);
         if (cavernousBiomeStore != null) {
-            cavernousBiomeStore.populate(this.getCavernousBiomeSampler(), chunkX << 4, chunkZ << 4);
+            cavernousBiomeStore.populate(this.cavernBiomeBuffer);
         }
 
         chunk.generateSkylightMap();
@@ -115,6 +118,7 @@ public class MidnightChunkGenerator implements IChunkGenerator, PartialChunkGene
 
         BiomeProvider biomeProvider = this.world.getBiomeProvider();
         this.biomeBuffer = biomeProvider.getBiomes(this.biomeBuffer, globalX, globalZ, 16, 16);
+        this.getCavernousBiomeSampler().sample(this.cavernBiomeBuffer, globalX, globalZ, 16, 16);
 
         this.coverSurface(primer, chunkX, chunkZ);
 
@@ -150,17 +154,25 @@ public class MidnightChunkGenerator implements IChunkGenerator, PartialChunkGene
 
         int globalX = chunkX << 4;
         int globalZ = chunkZ << 4;
-        this.biomeBuffer = this.world.getBiomeProvider().getBiomes(this.biomeBuffer, globalX, globalZ, 16, 16);
 
         this.depthNoise.sample2D(this.depthBuffer, globalX, globalZ, 16, 16);
 
         for (int localZ = 0; localZ < 16; localZ++) {
             for (int localX = 0; localX < 16; localX++) {
                 int index = localX + localZ * 16;
+
                 Biome biome = this.biomeBuffer[index];
+                CavernousBiome cavernousBiome = this.cavernBiomeBuffer[index];
                 double depth = this.depthBuffer[index];
 
+                for (int localY = 0; localY < 5; localY++) {
+                    if (localY <= this.random.nextInt(5)) {
+                        primer.setBlockState(localX, localY, localZ, BEDROCK);
+                    }
+                }
+
                 biome.genTerrainBlocks(this.world, this.random, primer, globalZ + localZ, globalX + localX, depth);
+                cavernousBiome.coverSurface(this.world, this.random, primer, globalX + localX, globalZ + localZ, depth);
             }
         }
     }

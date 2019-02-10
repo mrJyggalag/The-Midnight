@@ -6,11 +6,13 @@ import com.mushroom.midnight.common.biome.config.SpawnerConfig;
 import com.mushroom.midnight.common.biome.config.SurfaceConfig;
 import net.minecraft.world.biome.Biome;
 
+import javax.annotation.Nullable;
+
 public class CavernousBiomeConfig implements MidnightBiomeConfig {
     private final SurfaceConfig surfaceConfig;
     private final CavernStructureConfig structureConfig;
 
-    private CavernousBiomeConfig(SurfaceConfig surfaceConfig, CavernStructureConfig structureConfig) {
+    private CavernousBiomeConfig(@Nullable SurfaceConfig surfaceConfig, CavernStructureConfig structureConfig) {
         this.surfaceConfig = surfaceConfig;
         this.structureConfig = structureConfig;
     }
@@ -20,6 +22,7 @@ public class CavernousBiomeConfig implements MidnightBiomeConfig {
     }
 
     @Override
+    @Nullable
     public SurfaceConfig getSurfaceConfig() {
         return this.surfaceConfig;
     }
@@ -47,7 +50,7 @@ public class CavernousBiomeConfig implements MidnightBiomeConfig {
     }
 
     public static class Builder {
-        private SurfaceConfig surfaceConfig = new SurfaceConfig();
+        private SurfaceConfig surfaceConfig;
         private CavernStructureConfig structureConfig = new CavernStructureConfig();
 
         Builder() {
