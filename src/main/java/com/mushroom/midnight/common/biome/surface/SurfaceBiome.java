@@ -43,7 +43,7 @@ public class SurfaceBiome extends Biome {
         this.configureSurface(this.localSurfaceConfig, this.config.getSurfaceConfig(), x, z, rand);
         int fillerDepth = (int) (noiseVal / 3.0 + 3.0 + rand.nextDouble() * 0.25);
 
-        this.coverGenerator.coverSurface(world, this.localSurfaceConfig, primer, x, z, fillerDepth);
+        this.coverGenerator.coverSurface(this.localSurfaceConfig, primer, x, z, fillerDepth);
     }
 
     protected SurfaceConfig configureSurface(SurfaceConfig config, SurfaceConfig parent, int x, int z, Random random) {

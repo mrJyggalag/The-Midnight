@@ -172,7 +172,7 @@ public class MidnightChunkGenerator implements IChunkGenerator, PartialChunkGene
                 }
 
                 biome.genTerrainBlocks(this.world, this.random, primer, globalZ + localZ, globalX + localX, depth);
-                cavernousBiome.coverSurface(this.world, this.random, primer, globalX + localX, globalZ + localZ, depth);
+                cavernousBiome.coverSurface(this.random, primer, globalX + localX, globalZ + localZ, depth);
             }
         }
     }

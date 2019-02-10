@@ -69,6 +69,20 @@ public class MidnightBiomeConfigs {
             .withFeature(VIOLEAF_FEATURE, new ParcelPlacementConfig(2, 5, 0.3f))
             .build();
 
+    public static final FeatureConfig RUNEBUSH_GROVE_FEATURE_CONFIG = FeatureConfig.builder()
+            .withFeature(LUMEN_FEATURE, new ScatterPlacementConfig(1, 32))
+            .withFeature(DOUBLE_LUMEN_FEATURE, new ScatterPlacementConfig(1, 16))
+            .withFeature(UNDERGROUND_FEATURES, new UndergroundPlacementConfig(1, 3, 10, 50))
+            .withFeature(new IMidnightFeature[] {
+                    SHADOWROOT_TREE_FEATURE,
+                    DARK_WILLOW_TREE_FEATURE
+            }, new SurfacePlacementConfig(8))
+            .withFeature(DEAD_LOG_FEATURE, new SurfacePlacementConfig(6))
+            .withFeature(COMMON_SUAVIS_FEATURE, new ScatterPlacementConfig(8, 8))
+            .withFeature(RUNEBUSH_FEATURE, new ScatterPlacementConfig(16, 128))
+            .withFeature(TALL_GRASS_FEATURE, new ScatterPlacementConfig(4, 16))
+            .build();
+
     public static final FeatureConfig FUNGI_FOREST_FEATURE_CONFIG = FeatureConfig.builder()
             .extendsFrom(VEGETATED_FEATURE_CONFIG)
             .withFeature(ROCKSHROOM_HEAP_FEATURE, new SurfacePlacementConfig(-8, 2))
@@ -272,6 +286,13 @@ public class MidnightBiomeConfigs {
             .withTerrain(FOREST_TERRAIN_CONFIG)
             .withFeatures(VIGILANT_FOREST_FEATURE_CONFIG)
             .withSpawner(VEGETATED_SPAWN_CONFIG)
+            .build();
+
+    public static final SurfaceBiomeConfig RUNEBUSH_GROVE_CONFIG = SurfaceBiomeConfig.builder()
+            .withTerrain(FOREST_TERRAIN_CONFIG)
+            .withFeatures(RUNEBUSH_GROVE_FEATURE_CONFIG)
+            .withSpawner(VEGETATED_SPAWN_CONFIG)
+            .withGrassColor(0x8C84BC)
             .build();
 
     public static final SurfaceBiomeConfig FUNGI_FOREST_CONFIG = SurfaceBiomeConfig.builder()

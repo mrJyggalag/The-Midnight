@@ -60,6 +60,12 @@ public class MidnightBiomeFeatures {
             2
     );
 
+    public static final IMidnightFeature COMMON_SUAVIS_FEATURE = new GourdFeature(
+            ModBlocks.SUAVIS.getDefaultState(),
+            ModBlocks.MIDNIGHT_GRASS,
+            1
+    );
+
     public static final IMidnightFeature DECEITFUL_ALGAE_FEATURE = new PlantFeature(
             ModBlocks.DECEITFUL_ALGAE.getDefaultState(),
             (world, pos, state) -> ModBlocks.DECEITFUL_ALGAE.canPlaceBlockAt(world, pos)
@@ -85,6 +91,11 @@ public class MidnightBiomeFeatures {
     public static final IMidnightFeature VIOLEAF_FEATURE = new PlantFeature(
             ModBlocks.VIOLEAF.getDefaultState(),
             ((BlockBush) ModBlocks.VIOLEAF)::canBlockStay
+    );
+
+    public static final IMidnightFeature RUNEBUSH_FEATURE = new PlantFeature(
+            ModBlocks.RUNEBUSH.getDefaultState(),
+            ((BlockBush) ModBlocks.RUNEBUSH)::canBlockStay
     );
 
     public static final IMidnightFeature[] UNDERGROUND_FEATURES = new IMidnightFeature[] {

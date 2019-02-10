@@ -26,6 +26,7 @@ public class ModSurfaceBiomes {
     public static final Biome NIGHT_PLAINS = Biomes.DEFAULT;
     public static final Biome OBSCURED_PLATEAU = Biomes.DEFAULT;
     public static final Biome PHANTASMAL_VALLEY = Biomes.DEFAULT;
+    public static final Biome RUNEBUSH_GROVE = Biomes.DEFAULT;
 
     @SubscribeEvent
     public static void onRegisterBiomes(RegistryEvent.Register<Biome> event) {
@@ -39,12 +40,14 @@ public class ModSurfaceBiomes {
                 RegUtil.applyName(new SurfaceBiome("crystal_spires", MidnightBiomeConfigs.CRYSTAL_SPIRES_CONFIG)),
                 RegUtil.applyName(new SurfaceBiome("night_plains", MidnightBiomeConfigs.NIGHT_PLAINS_CONFIG)),
                 RegUtil.applyName(new SurfaceBiome("obscured_plateau", MidnightBiomeConfigs.OBSCURED_PLATEAU_CONFIG)),
-                RegUtil.applyName(new SurfaceBiome("phantasmal_valley", MidnightBiomeConfigs.PHANTASMAL_VALLEY_CONFIG))
+                RegUtil.applyName(new SurfaceBiome("phantasmal_valley", MidnightBiomeConfigs.PHANTASMAL_VALLEY_CONFIG)),
+                RegUtil.applyName(new SurfaceBiome("runebush_grove", MidnightBiomeConfigs.RUNEBUSH_GROVE_CONFIG))
         );
     }
 
     public static void onInit() {
         BiomeDictionary.addTypes(VIGILANT_FOREST, BiomeDictionary.Type.FOREST, BiomeDictionary.Type.SPOOKY);
+        BiomeDictionary.addTypes(RUNEBUSH_GROVE, BiomeDictionary.Type.FOREST, BiomeDictionary.Type.DENSE, BiomeDictionary.Type.SPOOKY);
         BiomeDictionary.addTypes(BLACK_RIDGE, BiomeDictionary.Type.MOUNTAIN, BiomeDictionary.Type.HILLS, BiomeDictionary.Type.SPARSE, BiomeDictionary.Type.SPOOKY);
         BiomeDictionary.addTypes(FUNGI_FOREST, BiomeDictionary.Type.FOREST, BiomeDictionary.Type.SPOOKY);
         BiomeDictionary.addTypes(OBSCURED_PEAKS, BiomeDictionary.Type.MOUNTAIN, BiomeDictionary.Type.HILLS, BiomeDictionary.Type.SPARSE, BiomeDictionary.Type.SPOOKY);
@@ -67,7 +70,9 @@ public class ModSurfaceBiomes {
                 new BiomeSpawnEntry.Basic(OBSCURED_PEAKS, 10)
                         .canReplace(OBSCURED_PLATEAU, BLACK_RIDGE),
                 new BiomeSpawnEntry.Basic(WARPED_FIELDS, 5),
-                new BiomeSpawnEntry.Basic(CRYSTAL_SPIRES, 3)
+                new BiomeSpawnEntry.Basic(CRYSTAL_SPIRES, 3),
+                new BiomeSpawnEntry.Basic(RUNEBUSH_GROVE, 3)
+                        .canReplace(VIGILANT_FOREST)
         );
     }
 }
