@@ -44,7 +44,7 @@ public class MidnightChunkGenerator implements IChunkGenerator, PartialChunkGene
     public static final int MIN_CAVE_HEIGHT = 20;
     public static final int MAX_CAVE_HEIGHT = 46;
 
-    private static final int MIN_WATER_LEVEL = MAX_CAVE_HEIGHT + 12;
+    public static final int MIN_SURFACE_LEVEL = MAX_CAVE_HEIGHT + 12;
 
     private static final IBlockState STONE = ModBlocks.NIGHTSTONE.getDefaultState();
     private static final IBlockState WATER = ModBlocks.DARK_WATER.getDefaultState();
@@ -140,7 +140,7 @@ public class MidnightChunkGenerator implements IChunkGenerator, PartialChunkGene
         this.noisePrimer.primeChunk(primer, terrainBuffer, (density, x, y, z) -> {
             if (density > 0.0F) {
                 return STONE;
-            } else if (y < seaLevel && y > MIN_WATER_LEVEL) {
+            } else if (y < seaLevel && y > MIN_SURFACE_LEVEL) {
                 return WATER;
             }
             return null;
@@ -187,6 +187,7 @@ public class MidnightChunkGenerator implements IChunkGenerator, PartialChunkGene
 
             BlockPos origin = new BlockPos(globalX, 0, globalZ);
             Biome biome = this.world.getBiome(origin.add(16, 0, 16));
+            CavernousBiome cavernousBiome = CavernousBiomeStore.getBiome(this.world, globalX + 16, globalZ + 16);
 
             this.random.setSeed(this.world.getSeed());
             long chunkSeedX = this.random.nextLong() / 2L * 2L + 1L;
@@ -195,7 +196,9 @@ public class MidnightChunkGenerator implements IChunkGenerator, PartialChunkGene
 
             ForgeEventFactory.onChunkPopulate(true, this, this.world, this.random, chunkX, chunkZ, false);
 
-            biome.decorate(this.world, this.random, new BlockPos(globalX, 0, globalZ));
+            biome.decorate(this.world, this.random, origin);
+            cavernousBiome.decorate(this.world, this.random, origin);
+
             if (TerrainGen.populate(this, this.world, this.random, chunkX, chunkZ, false, PopulateChunkEvent.Populate.EventType.ANIMALS)) {
                 int originX = globalX + 8;
                 int originZ = globalZ + 8;

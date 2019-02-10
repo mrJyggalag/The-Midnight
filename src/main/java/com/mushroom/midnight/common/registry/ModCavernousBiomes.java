@@ -14,8 +14,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.registries.ForgeRegistry;
 import net.minecraftforge.registries.RegistryBuilder;
 
-import static com.mushroom.midnight.common.biome.MidnightBiomeConfigs.CRAMPED_CAVERN_CONFIG;
-import static com.mushroom.midnight.common.biome.MidnightBiomeConfigs.OPEN_CAVERN_CONFIG;
+import static com.mushroom.midnight.common.biome.MidnightBiomeConfigs.*;
 
 @Mod.EventBusSubscriber(modid = Midnight.MODID)
 @GameRegistry.ObjectHolder(Midnight.MODID)
@@ -27,7 +26,8 @@ public class ModCavernousBiomes {
             .withStructure(CLOSED_STRUCTURE_CONFIG)
             .build()), "closed_cavern");
 
-    public static final CavernousBiome OPEN_CAVERN = CLOSED_CAVERN;
+    public static final CavernousBiome GREAT_CAVERN = CLOSED_CAVERN;
+    public static final CavernousBiome CRYSTAL_CAVERN = CLOSED_CAVERN;
     public static final CavernousBiome CRAMPED_CAVERN = CLOSED_CAVERN;
 
     private static ForgeRegistry<CavernousBiome> registry;
@@ -45,15 +45,21 @@ public class ModCavernousBiomes {
     public static void onRegisterBiomes(RegistryEvent.Register<CavernousBiome> event) {
         event.getRegistry().registerAll(
                 CLOSED_CAVERN,
-                RegUtil.withName(new CavernousBiome(OPEN_CAVERN_CONFIG), "open_cavern"),
+                RegUtil.withName(new CavernousBiome(GREAT_CAVERN_CONFIG), "great_cavern"),
+                RegUtil.withName(new CavernousBiome(CRYSTAL_CAVERN_CONFIG), "crystal_cavern"),
                 RegUtil.withName(new CavernousBiome(CRAMPED_CAVERN_CONFIG), "cramped_cavern")
         );
     }
 
     public static void onInit() {
         MidnightBiomeGroup.UNDERGROUND.add(
-                new BiomeSpawnEntry.Basic(OPEN_CAVERN, 100),
+                new BiomeSpawnEntry.Basic(GREAT_CAVERN, 100),
                 new BiomeSpawnEntry.Basic(CRAMPED_CAVERN, 50)
+        );
+
+        MidnightBiomeGroup.UNDERGROUND_POCKET.add(
+                new BiomeSpawnEntry.Basic(CRYSTAL_CAVERN, 10)
+                        .canReplace(GREAT_CAVERN)
         );
     }
 
@@ -61,7 +67,6 @@ public class ModCavernousBiomes {
         if (registry == null) {
             throw new IllegalStateException("Registry not yet initialized");
         }
-
         return registry;
     }
 

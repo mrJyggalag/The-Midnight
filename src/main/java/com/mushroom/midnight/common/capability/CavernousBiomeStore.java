@@ -5,6 +5,8 @@ import com.mushroom.midnight.common.biome.cavern.CavernousBiome;
 import com.mushroom.midnight.common.registry.ModCavernousBiomes;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.world.World;
+import net.minecraft.world.chunk.Chunk;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 import net.minecraftforge.registries.ForgeRegistry;
@@ -14,6 +16,15 @@ import javax.annotation.Nullable;
 
 public class CavernousBiomeStore implements ICapabilitySerializable<NBTTagCompound> {
     private final CavernousBiome[] biomes = new CavernousBiome[256];
+
+    public static CavernousBiome getBiome(World world, int x, int z) {
+        Chunk chunk = world.getChunk(x >> 4, z >> 4);
+        CavernousBiomeStore biomeStore = chunk.getCapability(Midnight.CAVERNOUS_BIOME_CAP, null);
+        if (biomeStore != null) {
+            return biomeStore.getBiome(x & 15, z & 15);
+        }
+        return ModCavernousBiomes.CLOSED_CAVERN;
+    }
 
     public void populate(CavernousBiome[] biomes) {
         System.arraycopy(biomes, 0, this.biomes, 0, biomes.length);

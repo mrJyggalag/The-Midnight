@@ -1,5 +1,6 @@
 package com.mushroom.midnight.common.world.feature.config;
 
+import com.mushroom.midnight.common.world.SurfacePlacementLevel;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -32,7 +33,7 @@ public class UndergroundPlacementConfig implements IPlacementConfig {
     }
 
     @Override
-    public void apply(World world, Random random, BlockPos chunkOrigin, Consumer<BlockPos> generator) {
+    public void apply(World world, SurfacePlacementLevel placementLevel, Random random, BlockPos chunkOrigin, Consumer<BlockPos> generator) {
         int count = minCount;
         if (minCount != maxCount) {
             count = random.nextInt(maxCount - minCount + 1) + minCount;

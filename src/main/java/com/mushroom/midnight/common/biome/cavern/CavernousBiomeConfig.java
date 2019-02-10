@@ -11,10 +11,12 @@ import javax.annotation.Nullable;
 public class CavernousBiomeConfig implements MidnightBiomeConfig {
     private final SurfaceConfig surfaceConfig;
     private final CavernStructureConfig structureConfig;
+    private final FeatureConfig featureConfig;
 
-    private CavernousBiomeConfig(@Nullable SurfaceConfig surfaceConfig, CavernStructureConfig structureConfig) {
+    private CavernousBiomeConfig(@Nullable SurfaceConfig surfaceConfig, CavernStructureConfig structureConfig, FeatureConfig featureConfig) {
         this.surfaceConfig = surfaceConfig;
         this.structureConfig = structureConfig;
+        this.featureConfig = featureConfig;
     }
 
     public static Builder builder() {
@@ -31,10 +33,10 @@ public class CavernousBiomeConfig implements MidnightBiomeConfig {
         return this.structureConfig;
     }
 
-    // TODO: Feature & spawner handling
+    // TODO: Spawner handling
     @Override
     public FeatureConfig getFeatureConfig() {
-        return FeatureConfig.EMPTY;
+        return this.featureConfig;
     }
 
     @Override
@@ -51,6 +53,7 @@ public class CavernousBiomeConfig implements MidnightBiomeConfig {
 
     public static class Builder {
         private SurfaceConfig surfaceConfig;
+        private FeatureConfig featureConfig = FeatureConfig.EMPTY;
         private CavernStructureConfig structureConfig = new CavernStructureConfig();
 
         Builder() {
@@ -61,13 +64,18 @@ public class CavernousBiomeConfig implements MidnightBiomeConfig {
             return this;
         }
 
+        public Builder withFeatures(FeatureConfig featureConfig) {
+            this.featureConfig = featureConfig;
+            return this;
+        }
+
         public Builder withStructure(CavernStructureConfig structureConfig) {
             this.structureConfig = structureConfig;
             return this;
         }
 
         public CavernousBiomeConfig build() {
-            return new CavernousBiomeConfig(this.surfaceConfig, this.structureConfig);
+            return new CavernousBiomeConfig(this.surfaceConfig, this.structureConfig, this.featureConfig);
         }
     }
 }

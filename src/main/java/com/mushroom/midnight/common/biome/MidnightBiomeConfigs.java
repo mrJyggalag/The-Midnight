@@ -15,6 +15,7 @@ import com.mushroom.midnight.common.entity.creature.EntityNova;
 import com.mushroom.midnight.common.entity.creature.EntityRifter;
 import com.mushroom.midnight.common.entity.creature.EntityStinger;
 import com.mushroom.midnight.common.registry.ModBlocks;
+import com.mushroom.midnight.common.world.SurfacePlacementLevel;
 import com.mushroom.midnight.common.world.feature.IMidnightFeature;
 import com.mushroom.midnight.common.world.feature.config.ParcelPlacementConfig;
 import com.mushroom.midnight.common.world.feature.config.ScatterPlacementConfig;
@@ -133,9 +134,9 @@ public class MidnightBiomeConfigs {
             .withFeature(GHOST_PLANT_FEATURE, new ParcelPlacementConfig(3, 6, 0.3f))
             .withFeature(FINGERED_GRASS_FEATURE, new ScatterPlacementConfig(8, 16) {
                 @Override
-                public void apply(World world, Random random, BlockPos chunkOrigin, Consumer<BlockPos> generator) {
+                public void apply(World world, SurfacePlacementLevel placementLevel, Random random, BlockPos chunkOrigin, Consumer<BlockPos> generator) {
                     if (world.rand.nextFloat() < 0.2f) {
-                        super.apply(world, random, chunkOrigin, generator);
+                        super.apply(world, placementLevel, random, chunkOrigin, generator);
                     }
                 }
             })
@@ -154,6 +155,10 @@ public class MidnightBiomeConfigs {
             .withFeature(ROCKSHROOM_HEAP_FEATURE, new SurfacePlacementConfig(-99, 1))
             .withFeature(GHOST_PLANT_FEATURE, new ParcelPlacementConfig(3, 6, 0.3f))
             .withFeature(UNDERGROUND_FEATURES, new UndergroundPlacementConfig(1, 3, 10, 50))
+            .build();
+
+    public static final FeatureConfig CRYSTAL_CAVERN_FEATURE_CONFIG = FeatureConfig.builder()
+            .withFeature(ROUXE_FEATURE, new SurfacePlacementConfig(5))
             .build();
 
     public static final SpawnerConfig VEGETATED_SPAWN_CONFIG = SpawnerConfig.builder()
@@ -329,7 +334,7 @@ public class MidnightBiomeConfigs {
             .withGrassColor(0xBAA3C6)
             .build();
 
-    public static final CavernStructureConfig OPEN_STRUCTURE_CONFIG = new CavernStructureConfig()
+    public static final CavernStructureConfig GREAT_CAVERN_STRUCTURE_CONFIG = new CavernStructureConfig()
             .withCaveRadiusScale(0.0F)
             .withHeightVariation(0.4F);
 
@@ -339,8 +344,13 @@ public class MidnightBiomeConfigs {
             .withFloorHeight(0.2F)
             .withCeilingHeight(0.8F);
 
-    public static final CavernousBiomeConfig OPEN_CAVERN_CONFIG = CavernousBiomeConfig.builder()
-            .withStructure(OPEN_STRUCTURE_CONFIG)
+    public static final CavernousBiomeConfig GREAT_CAVERN_CONFIG = CavernousBiomeConfig.builder()
+            .withStructure(GREAT_CAVERN_STRUCTURE_CONFIG)
+            .build();
+
+    public static final CavernousBiomeConfig CRYSTAL_CAVERN_CONFIG = CavernousBiomeConfig.builder()
+            .withFeatures(CRYSTAL_CAVERN_FEATURE_CONFIG)
+            .withStructure(GREAT_CAVERN_STRUCTURE_CONFIG)
             .build();
 
     public static final CavernousBiomeConfig CRAMPED_CAVERN_CONFIG = CavernousBiomeConfig.builder()

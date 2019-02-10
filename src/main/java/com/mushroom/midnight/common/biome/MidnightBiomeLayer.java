@@ -77,10 +77,11 @@ public final class MidnightBiomeLayer<T> implements BiomeLayerType<T> {
         layer = new GenLayerVoronoiZoom(1000, layer);
 
         layer = new AddOutlineLayer(2000, layer, ModCavernousBiomes.getId(ModCavernousBiomes.CLOSED_CAVERN));
-        layer = new GenLayerFuzzyZoom(3000, layer);
+        layer = new CreateGroupPocketsLayer(3000, layer, MidnightBiomeGroup.UNDERGROUND_POCKET, 6);
+        layer = new GenLayerFuzzyZoom(4000, layer);
 
-        layer = GenLayerZoom.magnify(4000, layer, 3);
-        layer = new GenLayerSmooth(5000, layer);
+        layer = GenLayerZoom.magnify(5000, layer, 3);
+        layer = new GenLayerSmooth(6000, layer);
 
         return layer;
     }

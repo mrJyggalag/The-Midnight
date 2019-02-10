@@ -2,10 +2,13 @@ package com.mushroom.midnight.common.biome.config;
 
 import com.google.common.collect.ImmutableList;
 import com.mushroom.midnight.common.biome.MidnightBiomeDecorator;
+import com.mushroom.midnight.common.world.SurfacePlacementLevel;
 import com.mushroom.midnight.common.world.feature.IMidnightFeature;
 import com.mushroom.midnight.common.world.feature.config.IPlacementConfig;
+import net.minecraft.world.World;
 
 import java.util.Collection;
+import java.util.function.Function;
 
 public class FeatureConfig {
     public static final FeatureConfig EMPTY = new FeatureConfig(ImmutableList.of());
@@ -24,8 +27,8 @@ public class FeatureConfig {
         return this.features;
     }
 
-    public MidnightBiomeDecorator createDecorator() {
-        return new MidnightBiomeDecorator(this);
+    public MidnightBiomeDecorator createDecorator(Function<World, SurfacePlacementLevel> placementLevel) {
+        return new MidnightBiomeDecorator(this, placementLevel);
     }
 
     public static class Builder {

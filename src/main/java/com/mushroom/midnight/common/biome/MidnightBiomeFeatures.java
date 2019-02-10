@@ -150,6 +150,11 @@ public class MidnightBiomeFeatures {
             ModBlocks.BLOOMCRYSTAL.getDefaultState()
     );
 
+    public static final IMidnightFeature ROUXE_FEATURE = new CrystalClusterFeature(3, 4,
+            ModBlocks.ROUXE_ROCK.getDefaultState(),
+            ModBlocks.ROUXE.getDefaultState()
+    );
+
     public static final IMidnightFeature NIGHTSTONE_BOULDER_FEATURE = new BoulderFeature(2) {
         @Override
         protected IBlockState getStateForPlacement(World world, BlockPos origin, BlockPos pos, double dist, float radiusSquare, Random random) {

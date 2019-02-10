@@ -1,5 +1,6 @@
 package com.mushroom.midnight.common.world.feature.config;
 
+import com.mushroom.midnight.common.world.SurfacePlacementLevel;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
@@ -18,14 +19,14 @@ public class ScatterPlacementConfig implements IPlacementConfig {
     }
 
     @Override
-    public void apply(World world, Random random, BlockPos chunkOrigin, Consumer<BlockPos> generator) {
+    public void apply(World world, SurfacePlacementLevel placementLevel, Random random, BlockPos chunkOrigin, Consumer<BlockPos> generator) {
         for (int i = 0; i < this.count; i++) {
             int offsetX = random.nextInt(16) + 8;
             int offsetZ = random.nextInt(16) + 8;
             BlockPos pos = chunkOrigin.add(offsetX, 0, offsetZ);
-            int maxY = world.getHeight(pos).getY() + 32;
+            int maxY = placementLevel.getSurfacePos(pos).getY() + 32;
             if (maxY > 0) {
-                this.applyScatter(world, random, pos.up(random.nextInt(maxY)), generator);
+                this.applyScatter(world, random, pos.up(placementLevel.generateUpTo(random, maxY)), generator);
             }
         }
     }

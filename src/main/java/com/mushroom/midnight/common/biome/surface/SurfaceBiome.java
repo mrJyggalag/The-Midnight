@@ -2,7 +2,9 @@ package com.mushroom.midnight.common.biome.surface;
 
 import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.common.biome.config.SurfaceConfig;
+import com.mushroom.midnight.common.world.MidnightChunkGenerator;
 import com.mushroom.midnight.common.world.SurfaceCoverGenerator;
+import com.mushroom.midnight.common.world.SurfacePlacementLevel;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -23,7 +25,7 @@ public class SurfaceBiome extends Biome {
         this.config = config;
         this.localSurfaceConfig = new SurfaceConfig(this.config.getSurfaceConfig());
 
-        this.decorator = config.getFeatureConfig().createDecorator();
+        this.decorator = config.getFeatureConfig().createDecorator(PlacementLevel::new);
 
         config.getSpawnerConfig().apply(this);
         config.getSurfaceConfig().apply(this);
@@ -65,5 +67,24 @@ public class SurfaceBiome extends Biome {
             return ((SurfaceBiome) biome).getConfig().getTerrainConfig();
         }
         return SurfaceTerrainConfig.DEFAULT;
+    }
+
+    static class PlacementLevel implements SurfacePlacementLevel {
+        private final World world;
+
+        PlacementLevel(World world) {
+            this.world = world;
+        }
+
+        @Override
+        public BlockPos getSurfacePos(BlockPos pos) {
+            return this.world.getHeight(pos);
+        }
+
+        @Override
+        public int generateUpTo(Random random, int y) {
+            int bound = Math.max(y - MidnightChunkGenerator.MIN_SURFACE_LEVEL, 1);
+            return random.nextInt(bound) + MidnightChunkGenerator.MIN_SURFACE_LEVEL;
+        }
     }
 }

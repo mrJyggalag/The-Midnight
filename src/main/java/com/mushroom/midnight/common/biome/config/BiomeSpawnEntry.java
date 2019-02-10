@@ -52,6 +52,20 @@ public interface BiomeSpawnEntry {
             return this;
         }
 
+        public Basic canReplace(CavernousBiome... biomes) {
+            SessionLocal<IntSet> biomeIds = SessionLocal.register(() -> {
+                IntSet ids = new IntOpenHashSet();
+                for (CavernousBiome biome : biomes) {
+                    ids.add(ModCavernousBiomes.getId(biome));
+                }
+                return ids;
+            });
+
+            this.canReplace = id -> biomeIds.get().contains(id);
+
+            return this;
+        }
+
         @Override
         public int getBiomeId() {
             return this.biomeId.get();
