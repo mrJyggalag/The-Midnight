@@ -79,7 +79,7 @@ tile.midnight.ghost_plant.name=Plante Fantôme
 tile.midnight.fingered_grass.name=Herbe Fourchue
 tile.midnight.bogweed.name=Mauvaise Herbe de Tourbière
 tile.midnight.tendrilweed.name=Mauvaise Herbe Torsadée
-tile.midnight.runebush.name=RuneTaillis
+tile.midnight.runebush.name=RunePousse
 tile.midnight.dragon_nest.name=Nid de Dragon
 
 tile.midnight.dewshroom.name=ChampiRosée
@@ -209,7 +209,7 @@ item.midnight.archaic_shard.name=Tesson Archaïque
 
 item.midnight.raw_suavis.name=Tranche de Suavis Cru
 item.midnight.cook_suavis.name=Tranche de Suavis Cuit
-item.midnight.deceitful_snapper.name=Baffeur Fourbe
+item.midnight.deceitful_snapper.name=Vivaneau Fourbe
 item.midnight.raw_stag_flank.name=Flanc de Cerf Cru
 item.midnight.cook_stag_flank.name=Flanc de Cerf Cuit
 item.midnight.cook_stinger_egg.name=Oeuf de Stinger Cuit
@@ -278,7 +278,7 @@ entity.midnight.stinger.name=Piqueur
 entity.midnight.penumbrian.name=Pénombrien
 entity.midnight.tree_hopper.name=Cigale Épineuse
 entity.midnight.nightstag.name=Cerf Obscure
-entity.midnight.deceitful_snapper.name=Baffeur Fourbe
+entity.midnight.deceitful_snapper.name=Vivaneau Fourbe
 
 # Config
 
@@ -315,7 +315,7 @@ config.midnight.max_rifter_by_rift=Passeurs de faille max par rift
 config.midnight.max_rifter_by_rift.tooltip=Maximum de passeurs de faille apparaissant d'un rift.
 
 status.midnight.rift_nearby=Vous ne pouvez pas rester ici pour l'instant, il y a une présence démoniaque à proximitée
-status.midnight.snapped=Le poisson t'a baffé
+status.midnight.snapped=Le poisson t'a mordu
 
 # Biomes
 
@@ -329,6 +329,7 @@ biome.midnight.crystal_spires.name=Cimes de Cristal
 biome.midnight.night_plains.name=Plaines de Nuit
 biome.midnight.obscured_plateau.name=Plateau Obscure
 biome.midnight.phantasmal_valley.name=Vallée Fantasmatique
+biome.midnight.runebush_grove.name=Bosquet de RunePousse
 
 # Potions
 
@@ -356,5 +357,5 @@ advancement.shroomikens.desc=Lance un chapeau de ChampiLame
 advancement.fungi_forest.title=Éclairage
 advancement.fungi_forest.desc=Trouver le biome de Forêt Fongique
 
-advancement.snapped_by_snapper.title=TODO
-advancement.snapped_by_snapper.desc=TODO
+advancement.snapped_by_snapper.title=Revanche
+advancement.snapped_by_snapper.desc=Se faire mordre par un Vivaneau Fourbe en essayant de le manger
