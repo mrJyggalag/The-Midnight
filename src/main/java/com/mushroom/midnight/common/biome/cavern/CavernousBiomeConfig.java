@@ -58,7 +58,7 @@ public class CavernousBiomeConfig implements MidnightBiomeConfig {
             return this;
         }
 
-        public Builder withTerrain(CavernStructureConfig structureConfig) {
+        public Builder withStructure(CavernStructureConfig structureConfig) {
             this.structureConfig = structureConfig;
             return this;
         }

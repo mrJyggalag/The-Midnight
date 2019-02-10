@@ -31,6 +31,8 @@ public interface BiomeLayerSampler<T> {
 
     T[] sampleNoise(T[] array, int x, int y, int width, int height);
 
+    T sample(int x, int y);
+
     class Constant<T> implements BiomeLayerSampler<T> {
         private final T value;
 
@@ -48,6 +50,11 @@ public interface BiomeLayerSampler<T> {
         public T[] sampleNoise(T[] array, int x, int y, int width, int height) {
             Arrays.fill(array, this.value);
             return array;
+        }
+
+        @Override
+        public T sample(int x, int y) {
+            return this.value;
         }
     }
 
@@ -71,6 +78,14 @@ public interface BiomeLayerSampler<T> {
         @Override
         public T[] sampleNoise(T[] array, int x, int y, int width, int height) {
             return this.sampleLayer(array, x, y, width, height, this.noiseLayer);
+        }
+
+        @Override
+        public T sample(int x, int y) {
+            IntCache.resetIntCache();
+
+            int[] ints = this.layer.getInts(x, y, 1, 1);
+            return this.function.apply(ints[0]);
         }
 
         private T[] sampleLayer(T[] array, int x, int y, int width, int height, GenLayer layer) {

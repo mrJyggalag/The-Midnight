@@ -1,10 +1,16 @@
 package com.mushroom.midnight.common.biome.cavern;
 
 public class CavernStructureConfig {
-    private float densityScale = 1.0F;
+    private float cavernDensity = -5.0F;
     private float floorHeight = 0.0F;
     private float ceilingHeight = 1.0F;
     private float heightVariation = 0.1F;
+    private float caveRadiusScale = 2.2F;
+
+    public CavernStructureConfig withCavernDensity(float density) {
+        this.cavernDensity = density;
+        return this;
+    }
 
     public CavernStructureConfig withFloorHeight(float floorHeight) {
         this.floorHeight = floorHeight;
@@ -21,13 +27,13 @@ public class CavernStructureConfig {
         return this;
     }
 
-    public CavernStructureConfig withDensityScale(float densityScale) {
-        this.densityScale = densityScale;
+    public CavernStructureConfig withCaveRadiusScale(float caveRadiusScale) {
+        this.caveRadiusScale = caveRadiusScale;
         return this;
     }
 
-    public float getDensityScale() {
-        return this.densityScale;
+    public float getCavernDensity() {
+        return this.cavernDensity;
     }
 
     public float getFloorHeight() {
@@ -40,5 +46,9 @@ public class CavernStructureConfig {
 
     public float getHeightVariation() {
         return this.heightVariation;
+    }
+
+    public float getCaveRadiusScale() {
+        return this.caveRadiusScale;
     }
 }

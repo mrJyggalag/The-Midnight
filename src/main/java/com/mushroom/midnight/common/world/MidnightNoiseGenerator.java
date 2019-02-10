@@ -15,8 +15,7 @@ import net.minecraft.world.biome.Biome;
 import java.util.Arrays;
 import java.util.Random;
 
-import static com.mushroom.midnight.common.world.MidnightChunkGenerator.MAX_CAVE_HEIGHT;
-import static com.mushroom.midnight.common.world.MidnightChunkGenerator.MIN_CAVE_HEIGHT;
+import static com.mushroom.midnight.common.world.MidnightChunkGenerator.*;
 
 public class MidnightNoiseGenerator {
     private static final BiomeProperties BIOME_PROPERTIES = new BiomeProperties();
@@ -99,7 +98,7 @@ public class MidnightNoiseGenerator {
     private int populateColumnNoise(GenerationContext context,  int index, int surfaceIndex, int localX, int localZ) {
         BiomeProperties properties = this.computeBiomeProperties(context, localX, localZ);
 
-        float heightOrigin = 62.0F / VERTICAL_GRANULARITY;
+        float heightOrigin = (float) SURFACE_LEVEL / VERTICAL_GRANULARITY;
         float maxHeight = 256.0F / VERTICAL_GRANULARITY;
 
         float minCaveHeight = (float) MIN_CAVE_HEIGHT / VERTICAL_GRANULARITY;
@@ -133,7 +132,7 @@ public class MidnightNoiseGenerator {
         double curveRange = 8.0 / VERTICAL_GRANULARITY;
         RegionInterpolator.Region[] regions = new RegionInterpolator.Region[] {
                 RegionInterpolator.region(0.0, cavernRegionStart, 2.5, curveRange),
-                RegionInterpolator.region(cavernRegionStart, cavernRegionEnd, -5.0, curveRange),
+                RegionInterpolator.region(cavernRegionStart, cavernRegionEnd, properties.cavernDensity, curveRange),
                 RegionInterpolator.region(cavernRegionEnd, surfaceHeight, 2.5, curveRange),
                 RegionInterpolator.region(surfaceHeight, maxHeight, surfaceHeight - maxHeight, maxHeight - surfaceHeight)
         };
@@ -186,7 +185,7 @@ public class MidnightNoiseGenerator {
                 CavernStructureConfig cavernStructureConfig = neighborCavernBiome.getConfig().getStructureConfig();
                 float nCavernFloorHeight = cavernStructureConfig.getFloorHeight();
                 float nCavernCeilingHeight = cavernStructureConfig.getCeilingHeight();
-                float nCavernDensityScale = cavernStructureConfig.getDensityScale();
+                float nCavernDensity = cavernStructureConfig.getCavernDensity();
                 float nCavernHeightVariation = cavernStructureConfig.getHeightVariation();
 
                 float biomeWeight = this.weightTable.get(neighborX, neighborZ) / (nBaseHeight + 2.0F);
@@ -200,7 +199,7 @@ public class MidnightNoiseGenerator {
                 properties.densityScale += nDensityScale * biomeWeight;
                 properties.cavernFloorHeight += nCavernFloorHeight * biomeWeight;
                 properties.cavernCeilingHeight += nCavernCeilingHeight * biomeWeight;
-                properties.cavernDensityScale += nCavernDensityScale * biomeWeight;
+                properties.cavernDensity += nCavernDensity * biomeWeight;
                 properties.cavernHeightVariation += nCavernHeightVariation * biomeWeight;
 
                 totalWeight += biomeWeight;
@@ -237,7 +236,7 @@ public class MidnightNoiseGenerator {
         float ridgeWeight;
         float cavernFloorHeight;
         float cavernCeilingHeight;
-        float cavernDensityScale;
+        float cavernDensity;
         float cavernHeightVariation;
 
         void zero() {
@@ -247,7 +246,7 @@ public class MidnightNoiseGenerator {
             this.densityScale = 0.0F;
             this.cavernFloorHeight = 0.0F;
             this.cavernCeilingHeight = 0.0F;
-            this.cavernDensityScale = 0.0F;
+            this.cavernDensity = 0.0F;
             this.cavernHeightVariation = 0.0F;
         }
 
@@ -258,7 +257,7 @@ public class MidnightNoiseGenerator {
             this.densityScale /= weight;
             this.cavernFloorHeight /= weight;
             this.cavernCeilingHeight /= weight;
-            this.cavernDensityScale /= weight;
+            this.cavernDensity /= weight;
             this.cavernHeightVariation /= weight;
         }
     }

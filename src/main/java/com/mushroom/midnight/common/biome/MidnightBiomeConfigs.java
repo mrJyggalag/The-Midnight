@@ -1,10 +1,12 @@
 package com.mushroom.midnight.common.biome;
 
+import com.mushroom.midnight.common.biome.cavern.CavernStructureConfig;
+import com.mushroom.midnight.common.biome.cavern.CavernousBiomeConfig;
 import com.mushroom.midnight.common.biome.config.FeatureConfig;
 import com.mushroom.midnight.common.biome.config.SpawnerConfig;
 import com.mushroom.midnight.common.biome.config.SurfaceConfig;
-import com.mushroom.midnight.common.biome.surface.SurfaceTerrainConfig;
 import com.mushroom.midnight.common.biome.surface.SurfaceBiomeConfig;
+import com.mushroom.midnight.common.biome.surface.SurfaceTerrainConfig;
 import com.mushroom.midnight.common.entity.creature.EntityCrystalBug;
 import com.mushroom.midnight.common.entity.creature.EntityDeceitfulSnapper;
 import com.mushroom.midnight.common.entity.creature.EntityHunter;
@@ -290,5 +292,12 @@ public class MidnightBiomeConfigs {
             .withFeatures(NIGHT_PLAINS_FEATURE_CONFIG)
             .withSpawner(NIGHT_PLAINS_SPAWN_CONFIG)
             .withGrassColor(0xBAA3C6)
+            .build();
+
+    public static final CavernStructureConfig OPEN_STRUCTURE_CONFIG = new CavernStructureConfig()
+            .withCaveRadiusScale(0.0F);
+
+    public static final CavernousBiomeConfig OPEN_CAVERN_CONFIG = CavernousBiomeConfig.builder()
+            .withStructure(OPEN_STRUCTURE_CONFIG)
             .build();
 }

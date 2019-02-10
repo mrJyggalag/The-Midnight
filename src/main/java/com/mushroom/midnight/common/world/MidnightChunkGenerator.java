@@ -36,12 +36,14 @@ import java.util.Random;
 import static com.mushroom.midnight.common.world.MidnightNoiseGenerator.*;
 
 public class MidnightChunkGenerator implements IChunkGenerator, PartialChunkGenerator {
-    private static final BiomeLayerSampler<CavernousBiome> DEFAULT_CAVERN_SAMPLER = new BiomeLayerSampler.Constant<>(ModCavernousBiomes.NONE);
+    private static final BiomeLayerSampler<CavernousBiome> DEFAULT_CAVERN_SAMPLER = new BiomeLayerSampler.Constant<>(ModCavernousBiomes.CLOSED);
+
+    public static final int SURFACE_LEVEL = 78;
 
     public static final int MIN_CAVE_HEIGHT = 20;
     public static final int MAX_CAVE_HEIGHT = 46;
 
-    private static final int MIN_WATER_LEVEL = MAX_CAVE_HEIGHT + 6;
+    private static final int MIN_WATER_LEVEL = MAX_CAVE_HEIGHT + 12;
 
     private static final IBlockState STONE = ModBlocks.NIGHTSTONE.getDefaultState();
     private static final IBlockState WATER = ModBlocks.DARK_WATER.getDefaultState();
@@ -76,6 +78,8 @@ public class MidnightChunkGenerator implements IChunkGenerator, PartialChunkGene
 
         this.caveGenerator = TerrainGen.getModdedMapGen(new WorldGenMidnightCaves(), InitMapGenEvent.EventType.CAVE);
         this.craterGenerator = TerrainGen.getModdedMapGen(new WorldGenMoltenCrater(this.random, this), InitMapGenEvent.EventType.CUSTOM);
+
+        this.world.setSeaLevel(SURFACE_LEVEL + 1);
     }
 
     @Override
@@ -114,9 +118,8 @@ public class MidnightChunkGenerator implements IChunkGenerator, PartialChunkGene
 
         this.coverSurface(primer, chunkX, chunkZ);
 
-        // TODO
-//        this.caveGenerator.generate(this.world, chunkX, chunkZ, primer);
-//        this.craterGenerator.generate(this.world, chunkX, chunkZ, primer);
+        this.caveGenerator.generate(this.world, chunkX, chunkZ, primer);
+        this.craterGenerator.generate(this.world, chunkX, chunkZ, primer);
     }
 
     @Override

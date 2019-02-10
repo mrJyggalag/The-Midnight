@@ -2,6 +2,7 @@ package com.mushroom.midnight.common.world.generator;
 
 import com.mushroom.midnight.common.biome.surface.SurfaceBiome;
 import com.mushroom.midnight.common.registry.ModBlocks;
+import com.mushroom.midnight.common.world.MidnightChunkGenerator;
 import com.mushroom.midnight.common.world.PartialChunkGenerator;
 import com.mushroom.midnight.common.world.noise.INoiseSampler;
 import com.mushroom.midnight.common.world.noise.PerlinNoiseSampler;
@@ -24,7 +25,7 @@ public class WorldGenMoltenCrater extends MapGenBase {
     private static final int MIN_RADIUS = 16;
     private static final int MAX_RADIUS = 42;
 
-    private static final int MAX_GENERATION_Y = 70;
+    private static final int MAX_GENERATION_Y = MidnightChunkGenerator.SURFACE_LEVEL + 8;
     private static final int SCALE_Y = 2;
 
     private static final int EDGE_DEPTH = 12;

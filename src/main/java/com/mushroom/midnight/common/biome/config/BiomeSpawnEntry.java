@@ -2,6 +2,7 @@ package com.mushroom.midnight.common.biome.config;
 
 import com.mushroom.midnight.common.biome.cavern.CavernousBiome;
 import com.mushroom.midnight.common.registry.ModCavernousBiomes;
+import com.mushroom.midnight.common.util.SessionLocal;
 import it.unimi.dsi.fastutil.ints.IntOpenHashSet;
 import it.unimi.dsi.fastutil.ints.IntSet;
 import net.minecraft.world.biome.Biome;
@@ -16,18 +17,18 @@ public interface BiomeSpawnEntry {
     int getWeight();
 
     class Basic implements BiomeSpawnEntry {
-        private final int biomeId;
+        private final SessionLocal<Integer> biomeId;
         private IntPredicate canReplace;
 
         private final int weight;
 
         public Basic(Biome biome, int weight) {
-            this.biomeId = Biome.getIdForBiome(biome);
+            this.biomeId = SessionLocal.register(() -> Biome.getIdForBiome(biome));
             this.weight = weight;
         }
 
         public Basic(CavernousBiome biome, int weight) {
-            this.biomeId = ModCavernousBiomes.getRegistry().getID(biome);
+            this.biomeId = SessionLocal.register(() -> ModCavernousBiomes.getRegistry().getID(biome));
             this.weight = weight;
         }
 
@@ -37,19 +38,22 @@ public interface BiomeSpawnEntry {
         }
 
         public Basic canReplace(Biome... biomes) {
-            IntSet biomeIds = new IntOpenHashSet();
-            for (Biome biome : biomes) {
-                biomeIds.add(Biome.getIdForBiome(biome));
-            }
+            SessionLocal<IntSet> biomeIds = SessionLocal.register(() -> {
+                IntSet ids = new IntOpenHashSet();
+                for (Biome biome : biomes) {
+                    ids.add(Biome.getIdForBiome(biome));
+                }
+                return ids;
+            });
 
-            this.canReplace = biomeIds::contains;
+            this.canReplace = id -> biomeIds.get().contains(id);
 
             return this;
         }
 
         @Override
         public int getBiomeId() {
-            return this.biomeId;
+            return this.biomeId.get();
         }
 
         @Override

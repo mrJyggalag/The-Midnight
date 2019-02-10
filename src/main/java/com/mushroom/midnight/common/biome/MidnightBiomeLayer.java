@@ -37,7 +37,7 @@ public final class MidnightBiomeLayer<T> implements BiomeLayerType<T> {
         GenLayer layer = new SeedGroupLayer(0, MidnightBiomeGroup.SURFACE);
         layer = new GenLayerVoronoiZoom(1000, layer);
 
-        layer = new CreateGroupPocketsLayer(2000, layer, MidnightBiomeGroup.SURFACE_POCKET, 100);
+        layer = new CreateGroupPocketsLayer(2000, layer, MidnightBiomeGroup.SURFACE_POCKET, 6);
         layer = new GenLayerFuzzyZoom(3000, layer);
         layer = new RidgeMergeLayer(4000, layer, ridgeLayer);
 
@@ -70,6 +70,15 @@ public final class MidnightBiomeLayer<T> implements BiomeLayerType<T> {
     }
 
     private static GenLayer buildUndergroundProcedure() {
-        return new SeedGroupLayer(0, MidnightBiomeGroup.UNDERGROUND);
+        GenLayer layer = new SeedGroupLayer(0, MidnightBiomeGroup.UNDERGROUND);
+        layer = new GenLayerVoronoiZoom(1000, layer);
+
+//        layer = new CreateGroupPocketsLayer(2000, layer, MidnightBiomeGroup.UNDERGROUND_POCKET, 6);
+        layer = new GenLayerFuzzyZoom(3000, layer);
+
+        layer = GenLayerZoom.magnify(4000, layer, 3);
+        layer = new GenLayerSmooth(5000, layer);
+
+        return layer;
     }
 }
