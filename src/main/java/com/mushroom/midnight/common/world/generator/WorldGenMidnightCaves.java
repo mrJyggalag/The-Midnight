@@ -6,7 +6,6 @@ import com.mushroom.midnight.common.biome.MidnightBiomeLayer;
 import com.mushroom.midnight.common.biome.cavern.CavernousBiome;
 import com.mushroom.midnight.common.capability.MultiLayerBiomeSampler;
 import com.mushroom.midnight.common.registry.ModBlocks;
-import com.mushroom.midnight.common.registry.ModCavernousBiomes;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.math.BlockPos;
@@ -15,6 +14,8 @@ import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.chunk.ChunkPrimer;
 import net.minecraft.world.gen.MapGenCaves;
+
+import java.util.Arrays;
 
 public class WorldGenMidnightCaves extends MapGenCaves {
     @Override
@@ -78,8 +79,7 @@ public class WorldGenMidnightCaves extends MapGenCaves {
 
     @Override
     protected void addTunnel(long seed, int originChunkX, int originChunkZ, ChunkPrimer primer, double x, double y, double z, float radius, float yaw, float pitch, int p_180702_15_, int p_180702_16_, double length) {
-        CavernousBiome cavernousBiome = this.getCavernousBiome(MathHelper.floor(x), MathHelper.floor(z));
-        float caveRadiusScale = cavernousBiome.getConfig().getStructureConfig().getCaveRadiusScale();
+        float caveRadiusScale = this.getRadiusScale(MathHelper.floor(x), MathHelper.floor(z));
         if (caveRadiusScale <= 0.01F) {
             return;
         }
@@ -87,15 +87,30 @@ public class WorldGenMidnightCaves extends MapGenCaves {
         super.addTunnel(seed, originChunkX, originChunkZ, primer, x, y, z, radius * caveRadiusScale, yaw, pitch, p_180702_15_, p_180702_16_, length);
     }
 
-    private CavernousBiome getCavernousBiome(int x, int z) {
+    private float getRadiusScale(int x, int z) {
         MultiLayerBiomeSampler multiLayerSampler = this.world.getCapability(Midnight.MULTI_LAYER_BIOME_SAMPLER_CAP, null);
         if (multiLayerSampler != null) {
             BiomeLayerSampler<CavernousBiome> undergroundLayer = multiLayerSampler.getLayer(MidnightBiomeLayer.UNDERGROUND);
+
             if (undergroundLayer != null) {
-                return undergroundLayer.sample(x, z);
+                float current = getRadiusScale(undergroundLayer.sample(x, z));
+                float west = getRadiusScale(undergroundLayer.sample(x - 16, z));
+                float east = getRadiusScale(undergroundLayer.sample(x + 16, z));
+                float north = getRadiusScale(undergroundLayer.sample(x, z - 16));
+                float south = getRadiusScale(undergroundLayer.sample(x, z + 16));
+
+                return (float) max(current, west, east, north, south);
             }
         }
 
-        return ModCavernousBiomes.CLOSED_CAVERN;
+        return 1.0F;
+    }
+
+    private static double max(double... values) {
+        return Arrays.stream(values).max().orElse(0.0);
+    }
+
+    private static float getRadiusScale(CavernousBiome biome) {
+        return biome.getConfig().getStructureConfig().getCaveRadiusScale();
     }
 }

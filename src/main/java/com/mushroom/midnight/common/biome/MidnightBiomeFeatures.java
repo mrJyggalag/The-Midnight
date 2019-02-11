@@ -98,20 +98,6 @@ public class MidnightBiomeFeatures {
             ((BlockBush) ModBlocks.RUNEBUSH)::canBlockStay
     );
 
-    public static final IMidnightFeature[] UNDERGROUND_FEATURES = new IMidnightFeature[] {
-            new PlantFeature(ModBlocks.TENDRILWEED.getDefaultState(), ((BlockBush) ModBlocks.TENDRILWEED)::canBlockStay),
-            new MidnightAbstractFeature() {
-                @Override
-                public boolean placeFeature(World world, Random random, BlockPos origin) {
-                    if (world.getBlockState(origin.down()).isFullBlock()) {
-                        world.setBlockState(origin, ModBlocks.STINGER_EGG.getDefaultState().withProperty(BlockPileOfEggs.EGGS, random.nextInt(4) + 1), 2 | 16);
-                        return true;
-                    }
-                    return false;
-                }
-            }
-    };
-
     public static final IMidnightFeature DOUBLE_LUMEN_FEATURE = new DoublePlantFeature(
             ModBlocks.DOUBLE_LUMEN_BUD.getDefaultState(),
             (world, pos, state) -> ModBlocks.DOUBLE_LUMEN_BUD.canPlaceBlockAt(world, pos)
@@ -173,4 +159,19 @@ public class MidnightBiomeFeatures {
     };
 
     public static final IMidnightFeature ROCKSHROOM_HEAP_FEATURE = new HeapFeature(ModBlocks.ROCKSHROOM.getDefaultState());
+
+    public static final IMidnightFeature[] UNDERGROUND_FEATURES = new IMidnightFeature[] {
+            new PlantFeature(ModBlocks.TENDRILWEED.getDefaultState(), ((BlockBush) ModBlocks.TENDRILWEED)::canBlockStay),
+            FUNGI_FEATURE,
+            new MidnightAbstractFeature() {
+                @Override
+                public boolean placeFeature(World world, Random random, BlockPos origin) {
+                    if (world.getBlockState(origin.down()).isFullBlock()) {
+                        world.setBlockState(origin, ModBlocks.STINGER_EGG.getDefaultState().withProperty(BlockPileOfEggs.EGGS, random.nextInt(4) + 1), 2 | 16);
+                        return true;
+                    }
+                    return false;
+                }
+            }
+    };
 }
