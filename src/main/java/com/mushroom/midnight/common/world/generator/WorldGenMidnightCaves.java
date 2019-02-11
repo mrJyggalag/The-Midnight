@@ -11,11 +11,44 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.chunk.ChunkPrimer;
 import net.minecraft.world.gen.MapGenCaves;
 
 public class WorldGenMidnightCaves extends MapGenCaves {
+    @Override
+    protected void recursiveGenerate(World world, int chunkX, int chunkZ, int originalX, int originalZ, ChunkPrimer primer) {
+        int nodeCount = this.rand.nextInt(this.rand.nextInt(this.rand.nextInt(15) + 1) + 1);
+        if (this.rand.nextInt(7) != 0) {
+            nodeCount = 0;
+        }
+
+        for (int i = 0; i < nodeCount; ++i) {
+            double startX = (chunkX << 4) + this.rand.nextInt(16);
+            double startY = this.rand.nextInt(this.rand.nextInt(world.getSeaLevel() * 2) + 8);
+            double startZ = (chunkZ << 4) + this.rand.nextInt(16);
+
+            int branchCount = 1;
+            if (this.rand.nextInt(4) == 0) {
+                this.addRoom(this.rand.nextLong(), originalX, originalZ, primer, startX, startY, startZ);
+                branchCount += this.rand.nextInt(4);
+            }
+
+            for (int branch = 0; branch < branchCount; branch++) {
+                float horizAngle = this.rand.nextFloat() * (float) (Math.PI * 2.0F);
+                float vertAngle = (this.rand.nextFloat() - 0.5F) * 2.0F / 8.0F;
+
+                float radius = this.rand.nextFloat() * 2.0F + this.rand.nextFloat();
+                if (this.rand.nextInt(10) == 0) {
+                    radius *= this.rand.nextFloat() * this.rand.nextFloat() * 3.0F + 1.0F;
+                }
+
+                this.addTunnel(this.rand.nextLong(), originalX, originalZ, primer, startX, startY, startZ, radius, horizAngle, vertAngle, 0, 0, 1.0D);
+            }
+        }
+    }
+
     @Override
     protected void digBlock(ChunkPrimer data, int x, int y, int z, int chunkX, int chunkZ, boolean foundTop, IBlockState state, IBlockState up) {
         Biome biome = this.world.getBiome(new BlockPos(x + chunkX * 16, 0, z + chunkZ * 16));
