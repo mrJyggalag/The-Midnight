@@ -170,6 +170,7 @@ public class MidnightBiomeConfigs {
             .build();
 
     public static final SpawnerConfig ROCKY_SPAWN_CONFIG = SpawnerConfig.builder()
+            .withCreature(new Biome.SpawnListEntry(EntityNightStag.class, 100, 1, 3))
             .withMonster(new Biome.SpawnListEntry(EntityRifter.class, 100, 1, 2))
             .withMonster(new Biome.SpawnListEntry(EntityEnderman.class, 10, 4, 4))
             .withMonster(new Biome.SpawnListEntry(EntityHunter.class, 5, 1, 2))
@@ -178,6 +179,7 @@ public class MidnightBiomeConfigs {
             .build();
 
     public static final SpawnerConfig CRYSTAL_SPIRES_SPAWN_CONFIG = SpawnerConfig.builder()
+            .withCreature(new Biome.SpawnListEntry(EntityNightStag.class, 100, 1, 3))
             .withAmbientCreature(new Biome.SpawnListEntry(EntityCrystalBug.class, 100, 7, 10))
             .withMonster(new Biome.SpawnListEntry(EntityStinger.class, 100, 1, 2))
             .withMonster(new Biome.SpawnListEntry(EntityNova.class, 20, 1, 1))
