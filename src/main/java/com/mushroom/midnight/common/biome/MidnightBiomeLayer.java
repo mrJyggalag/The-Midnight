@@ -71,8 +71,8 @@ public final class MidnightBiomeLayer<T> implements BiomeLayerType<T> {
 
         layer = GenLayerZoom.magnify(5000, layer, 2);
 
-        int passageId = ModCavernousBiomes.getId(ModCavernousBiomes.CRAMPED_PASSAGE);
-        layer = new EdgeMergeLayer(6000, layer, passageLayer, closedCavernId, passageId);
+        int fungalCavernId = ModCavernousBiomes.getId(ModCavernousBiomes.FUNGAL_CAVERN);
+        layer = new EdgeMergeLayer(6000, layer, passageLayer, closedCavernId, fungalCavernId);
 
         layer = GenLayerZoom.magnify(7000, layer, 1);
 

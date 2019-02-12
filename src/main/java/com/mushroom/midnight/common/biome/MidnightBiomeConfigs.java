@@ -161,9 +161,10 @@ public class MidnightBiomeConfigs {
             .withFeature(ROUXE_FEATURE, new SurfacePlacementConfig(5))
             .build();
 
-    // TODO: Fungal Cavern
-    public static final FeatureConfig GREAT_CAVERN_FEATURE_CONFIG = FeatureConfig.builder()
-            .withFeature(LARGE_BULB_FUNGUS_FEATURE, new SurfacePlacementConfig(1))
+    public static final FeatureConfig FUNGAL_CAVERN_FEATURE_CONFIG = FeatureConfig.builder()
+            .withFeature(FUNGI_FEATURE, new ScatterPlacementConfig(6, 16))
+            .withFeature(DOUBLE_FUNGI_FEATURE, new ScatterPlacementConfig(4, 8))
+            .withFeature(LARGE_BULB_FUNGUS_FEATURE, new SurfacePlacementConfig(3))
             .build();
 
     public static final SpawnerConfig VEGETATED_SPAWN_CONFIG = SpawnerConfig.builder()
@@ -350,7 +351,7 @@ public class MidnightBiomeConfigs {
             .withCaveRadiusScale(0.0F)
             .withHeightVariation(0.4F);
 
-    public static final CavernStructureConfig CRAMPED_PASSAGE_STRUCTURE_CONFIG = new CavernStructureConfig()
+    public static final CavernStructureConfig FUNGAL_CAVERN_STRUCTURE_CONFIG = new CavernStructureConfig()
             .withCavernDensity(-15.0F)
             .withPillarWeight(0.0F)
             .withFloorHeight(0.1F)
@@ -358,7 +359,6 @@ public class MidnightBiomeConfigs {
             .withHeightVariation(0.6F);
 
     public static final CavernousBiomeConfig GREAT_CAVERN_CONFIG = CavernousBiomeConfig.builder()
-            .withFeatures(GREAT_CAVERN_FEATURE_CONFIG)
             .withStructure(GREAT_CAVERN_STRUCTURE_CONFIG)
             .build();
 
@@ -367,7 +367,9 @@ public class MidnightBiomeConfigs {
             .withStructure(GREAT_CAVERN_STRUCTURE_CONFIG)
             .build();
 
-    public static final CavernousBiomeConfig CRAMPED_PASSAGE_CONFIG = CavernousBiomeConfig.builder()
-            .withStructure(CRAMPED_PASSAGE_STRUCTURE_CONFIG)
+    public static final CavernousBiomeConfig FUNGAL_CAVERN_CONFIG = CavernousBiomeConfig.builder()
+            .withSurface(new SurfaceConfig())
+            .withFeatures(FUNGAL_CAVERN_FEATURE_CONFIG)
+            .withStructure(FUNGAL_CAVERN_STRUCTURE_CONFIG)
             .build();
 }

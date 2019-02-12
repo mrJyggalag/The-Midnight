@@ -28,7 +28,7 @@ public class ModCavernousBiomes {
 
     public static final CavernousBiome GREAT_CAVERN = CLOSED_CAVERN;
     public static final CavernousBiome CRYSTAL_CAVERN = CLOSED_CAVERN;
-    public static final CavernousBiome CRAMPED_PASSAGE = CLOSED_CAVERN;
+    public static final CavernousBiome FUNGAL_CAVERN = CLOSED_CAVERN;
 
     private static ForgeRegistry<CavernousBiome> registry;
 
@@ -47,7 +47,7 @@ public class ModCavernousBiomes {
                 CLOSED_CAVERN,
                 RegUtil.withName(new CavernousBiome(GREAT_CAVERN_CONFIG), "great_cavern"),
                 RegUtil.withName(new CavernousBiome(CRYSTAL_CAVERN_CONFIG), "crystal_cavern"),
-                RegUtil.withName(new CavernousBiome(CRAMPED_PASSAGE_CONFIG), "cramped_passage")
+                RegUtil.withName(new CavernousBiome(FUNGAL_CAVERN_CONFIG), "fungal_cavern")
         );
     }
 
