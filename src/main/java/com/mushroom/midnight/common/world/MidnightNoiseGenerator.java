@@ -149,7 +149,7 @@ public class MidnightNoiseGenerator {
             double cavernCenterDistance = Math.min(Math.abs(localY - cavernCenter) / cavernHeight, 1.0);
             double pillarFalloff = Math.max(1.0 - Math.pow(cavernCenterDistance, 2.0), 0.0) * 0.125;
 
-            densityBias += Math.max(pillarDensity * 3.5 - pillarFalloff, 0.0) * cavernWeight * 5.0;
+            densityBias += (Math.max(pillarDensity * 3.5 - pillarFalloff, 0.0) * cavernWeight * 5.0) * properties.pillarWeight;
 
             double sampledNoise = this.worldNoiseBuffer[index];
 
@@ -189,6 +189,7 @@ public class MidnightNoiseGenerator {
                 float nCavernCeilingHeight = cavernStructureConfig.getCeilingHeight();
                 float nCavernDensity = cavernStructureConfig.getCavernDensity();
                 float nCavernHeightVariation = cavernStructureConfig.getHeightVariation();
+                float nCavernPillarWeight = cavernStructureConfig.getPillarWeight();
 
                 float biomeWeight = this.weightTable.get(neighborX, neighborZ) / (nBaseHeight + 2.0F);
                 if (neighborBiome.getBaseHeight() > originBiome.getBaseHeight()) {
@@ -203,6 +204,7 @@ public class MidnightNoiseGenerator {
                 properties.cavernCeilingHeight += nCavernCeilingHeight * biomeWeight;
                 properties.cavernDensity += nCavernDensity * biomeWeight;
                 properties.cavernHeightVariation += nCavernHeightVariation * biomeWeight;
+                properties.pillarWeight += nCavernPillarWeight * biomeWeight;
 
                 totalWeight += biomeWeight;
             }
@@ -240,6 +242,7 @@ public class MidnightNoiseGenerator {
         float cavernCeilingHeight;
         float cavernDensity;
         float cavernHeightVariation;
+        float pillarWeight;
 
         void zero() {
             this.heightVariation = 0.0F;
@@ -250,6 +253,7 @@ public class MidnightNoiseGenerator {
             this.cavernCeilingHeight = 0.0F;
             this.cavernDensity = 0.0F;
             this.cavernHeightVariation = 0.0F;
+            this.pillarWeight = 0.0F;
         }
 
         void normalize(float weight) {
@@ -261,6 +265,7 @@ public class MidnightNoiseGenerator {
             this.cavernCeilingHeight /= weight;
             this.cavernDensity /= weight;
             this.cavernHeightVariation /= weight;
+            this.pillarWeight /= weight;
         }
     }
 }

@@ -2,14 +2,15 @@ package com.mushroom.midnight.common.biome;
 
 import com.mushroom.midnight.common.biome.cavern.CavernousBiome;
 import com.mushroom.midnight.common.registry.ModCavernousBiomes;
+import com.mushroom.midnight.common.registry.ModSurfaceBiomes;
 import com.mushroom.midnight.common.world.layer.AddOutlineLayer;
 import com.mushroom.midnight.common.world.layer.CavernSeedLayer;
 import com.mushroom.midnight.common.world.layer.CellSeedLayer;
 import com.mushroom.midnight.common.world.layer.CreateGroupPocketsLayer;
+import com.mushroom.midnight.common.world.layer.EdgeMergeLayer;
 import com.mushroom.midnight.common.world.layer.OutlineProducerLayer;
 import com.mushroom.midnight.common.world.layer.RidgeMergeLayer;
 import com.mushroom.midnight.common.world.layer.SeedGroupLayer;
-import com.mushroom.midnight.common.world.layer.ValleyMergeLayer;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.layer.GenLayer;
 import net.minecraft.world.gen.layer.GenLayerFuzzyZoom;
@@ -34,8 +35,8 @@ public final class MidnightBiomeLayer<T> implements BiomeLayerType<T> {
     }
 
     private static GenLayer buildSurfaceProcedure() {
-        GenLayer ridgeLayer = buildRidgeLayer();
-        GenLayer valleyLayer = buildValleyLayer();
+        GenLayer ridgeLayer = buildEdgeHighlightLayer(100);
+        GenLayer valleyLayer = buildEdgeHighlightLayer(200);
 
         GenLayer layer = new SeedGroupLayer(0, MidnightBiomeGroup.SURFACE);
         layer = new GenLayerVoronoiZoom(1000, layer);
@@ -46,7 +47,9 @@ public final class MidnightBiomeLayer<T> implements BiomeLayerType<T> {
 
         layer = GenLayerZoom.magnify(5000, layer, 2);
 
-        layer = new ValleyMergeLayer(6000, layer, valleyLayer);
+        int plateauId = Biome.getIdForBiome(ModSurfaceBiomes.OBSCURED_PLATEAU);
+        int valleyId = Biome.getIdForBiome(ModSurfaceBiomes.PHANTASMAL_VALLEY);
+        layer = new EdgeMergeLayer(6000, layer, valleyLayer, plateauId, valleyId);
 
         layer = GenLayerZoom.magnify(7000, layer, 1);
         layer = new GenLayerSmooth(8000, layer);
@@ -54,35 +57,36 @@ public final class MidnightBiomeLayer<T> implements BiomeLayerType<T> {
         return layer;
     }
 
-    private static GenLayer buildRidgeLayer() {
-        GenLayer ridgeLayer = new CellSeedLayer(10);
-        ridgeLayer = new GenLayerVoronoiZoom(20, ridgeLayer);
-        ridgeLayer = GenLayerZoom.magnify(30, ridgeLayer, 2);
-        ridgeLayer = new OutlineProducerLayer(40, ridgeLayer);
-
-        return ridgeLayer;
-    }
-
-    private static GenLayer buildValleyLayer() {
-        GenLayer valleyLayer = new CellSeedLayer(50);
-        valleyLayer = new GenLayerVoronoiZoom(60, valleyLayer);
-        valleyLayer = GenLayerZoom.magnify(70, valleyLayer, 2);
-        valleyLayer = new OutlineProducerLayer(80, valleyLayer);
-
-        return valleyLayer;
-    }
-
     private static GenLayer buildUndergroundProcedure() {
+        int closedCavernId = ModCavernousBiomes.getId(ModCavernousBiomes.CLOSED_CAVERN);
+
+        GenLayer passageLayer = buildEdgeHighlightLayer(300);
+
         GenLayer layer = new CavernSeedLayer(0, MidnightBiomeGroup.UNDERGROUND);
         layer = new GenLayerVoronoiZoom(1000, layer);
 
-        layer = new AddOutlineLayer(2000, layer, ModCavernousBiomes.getId(ModCavernousBiomes.CLOSED_CAVERN));
+        layer = new AddOutlineLayer(2000, layer, closedCavernId);
         layer = new CreateGroupPocketsLayer(3000, layer, MidnightBiomeGroup.UNDERGROUND_POCKET, 6);
         layer = new GenLayerFuzzyZoom(4000, layer);
 
-        layer = GenLayerZoom.magnify(5000, layer, 3);
-        layer = new GenLayerSmooth(6000, layer);
+        layer = GenLayerZoom.magnify(5000, layer, 2);
+
+        int passageId = ModCavernousBiomes.getId(ModCavernousBiomes.CRAMPED_PASSAGE);
+        layer = new EdgeMergeLayer(6000, layer, passageLayer, closedCavernId, passageId);
+
+        layer = GenLayerZoom.magnify(7000, layer, 1);
+
+        layer = new GenLayerSmooth(8000, layer);
 
         return layer;
+    }
+
+    private static GenLayer buildEdgeHighlightLayer(long seed) {
+        GenLayer valleyLayer = new CellSeedLayer(10 + seed);
+        valleyLayer = new GenLayerVoronoiZoom(20 + seed, valleyLayer);
+        valleyLayer = GenLayerZoom.magnify(30 + seed, valleyLayer, 2);
+        valleyLayer = new OutlineProducerLayer(40 + seed, valleyLayer);
+
+        return valleyLayer;
     }
 }

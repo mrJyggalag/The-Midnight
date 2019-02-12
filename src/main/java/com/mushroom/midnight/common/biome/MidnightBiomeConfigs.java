@@ -338,11 +338,12 @@ public class MidnightBiomeConfigs {
             .withCaveRadiusScale(0.0F)
             .withHeightVariation(0.4F);
 
-    public static final CavernStructureConfig CRAMPED_STRUCTURE_CONFIG = new CavernStructureConfig()
-            .withCaveRadiusScale(0.0F)
-            .withCavernDensity(-1.0F)
-            .withFloorHeight(0.2F)
-            .withCeilingHeight(0.8F);
+    public static final CavernStructureConfig CRAMPED_PASSAGE_STRUCTURE_CONFIG = new CavernStructureConfig()
+            .withCavernDensity(-15.0F)
+            .withPillarWeight(0.0F)
+            .withFloorHeight(0.1F)
+            .withCeilingHeight(0.8F)
+            .withHeightVariation(0.6F);
 
     public static final CavernousBiomeConfig GREAT_CAVERN_CONFIG = CavernousBiomeConfig.builder()
             .withStructure(GREAT_CAVERN_STRUCTURE_CONFIG)
@@ -353,7 +354,7 @@ public class MidnightBiomeConfigs {
             .withStructure(GREAT_CAVERN_STRUCTURE_CONFIG)
             .build();
 
-    public static final CavernousBiomeConfig CRAMPED_CAVERN_CONFIG = CavernousBiomeConfig.builder()
-            .withStructure(CRAMPED_STRUCTURE_CONFIG)
+    public static final CavernousBiomeConfig CRAMPED_PASSAGE_CONFIG = CavernousBiomeConfig.builder()
+            .withStructure(CRAMPED_PASSAGE_STRUCTURE_CONFIG)
             .build();
 }

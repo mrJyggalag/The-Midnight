@@ -28,7 +28,7 @@ public class ModCavernousBiomes {
 
     public static final CavernousBiome GREAT_CAVERN = CLOSED_CAVERN;
     public static final CavernousBiome CRYSTAL_CAVERN = CLOSED_CAVERN;
-    public static final CavernousBiome CRAMPED_CAVERN = CLOSED_CAVERN;
+    public static final CavernousBiome CRAMPED_PASSAGE = CLOSED_CAVERN;
 
     private static ForgeRegistry<CavernousBiome> registry;
 
@@ -47,14 +47,13 @@ public class ModCavernousBiomes {
                 CLOSED_CAVERN,
                 RegUtil.withName(new CavernousBiome(GREAT_CAVERN_CONFIG), "great_cavern"),
                 RegUtil.withName(new CavernousBiome(CRYSTAL_CAVERN_CONFIG), "crystal_cavern"),
-                RegUtil.withName(new CavernousBiome(CRAMPED_CAVERN_CONFIG), "cramped_cavern")
+                RegUtil.withName(new CavernousBiome(CRAMPED_PASSAGE_CONFIG), "cramped_passage")
         );
     }
 
     public static void onInit() {
         MidnightBiomeGroup.UNDERGROUND.add(
-                new BiomeSpawnEntry.Basic(GREAT_CAVERN, 100),
-                new BiomeSpawnEntry.Basic(CRAMPED_CAVERN, 50)
+                new BiomeSpawnEntry.Basic(GREAT_CAVERN, 100)
         );
 
         MidnightBiomeGroup.UNDERGROUND_POCKET.add(

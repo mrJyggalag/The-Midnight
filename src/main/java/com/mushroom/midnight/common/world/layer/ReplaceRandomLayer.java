@@ -7,7 +7,7 @@ public class ReplaceRandomLayer extends GenLayer {
     private final int chance;
     private final int replacement;
 
-    public ReplaceRandomLayer(long seed, int chance, int replacement, GenLayer parent) {
+    public ReplaceRandomLayer(long seed, GenLayer parent, int replacement, int chance) {
         super(seed);
         this.chance = chance;
         this.replacement = replacement;

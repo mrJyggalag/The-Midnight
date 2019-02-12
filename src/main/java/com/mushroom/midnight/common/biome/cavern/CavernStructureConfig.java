@@ -6,6 +6,7 @@ public class CavernStructureConfig {
     private float ceilingHeight = 1.0F;
     private float heightVariation = 0.1F;
     private float caveRadiusScale = 2.2F;
+    private float pillarWeight = 1.0F;
 
     public CavernStructureConfig withCavernDensity(float density) {
         this.cavernDensity = density;
@@ -32,6 +33,11 @@ public class CavernStructureConfig {
         return this;
     }
 
+    public CavernStructureConfig withPillarWeight(float pillarWeight) {
+        this.pillarWeight = pillarWeight;
+        return this;
+    }
+
     public float getCavernDensity() {
         return this.cavernDensity;
     }
@@ -50,5 +56,9 @@ public class CavernStructureConfig {
 
     public float getCaveRadiusScale() {
         return this.caveRadiusScale;
+    }
+
+    public float getPillarWeight() {
+        return this.pillarWeight;
     }
 }
