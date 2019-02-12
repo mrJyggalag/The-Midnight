@@ -121,7 +121,7 @@ public class MidnightChunkGenerator implements IChunkGenerator, PartialChunkGene
 
         this.coverSurface(primer, chunkX, chunkZ);
 
-//        this.caveGenerator.generate(this.world, chunkX, chunkZ, primer);
+        this.caveGenerator.generate(this.world, chunkX, chunkZ, primer);
         this.craterGenerator.generate(this.world, chunkX, chunkZ, primer);
     }
 
