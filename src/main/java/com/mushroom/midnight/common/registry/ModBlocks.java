@@ -301,7 +301,7 @@ public class ModBlocks {
                 RegUtil.withName(new BlockMidnightFungiHat(() -> DEWSHROOM, MapColor.PURPLE), "dewshroom_hat"),
                 RegUtil.withName(new BlockMidnightFungiStem(), "viridshroom_stem"),
                 RegUtil.withName(new BlockMidnightFungiHat(() -> VIRIDSHROOM, MapColor.EMERALD), "viridshroom_hat"),
-                RegUtil.withName(new BlockMidnightFungiStem(), "bulb_fungus_stem"),
+                RegUtil.withName(new BlockMidnightLog(), "bulb_fungus_stem"),
                 RegUtil.withName(new BlockMidnightFungiHat(() -> BULB_FUNGUS, MapColor.MAGENTA), "bulb_fungus_hat"),
                 RegUtil.withName(new BlockRockshroom(), "rockshroom"),
                 RegUtil.withName(new BlockMidnightTallGrass(), "tall_midnight_grass"),

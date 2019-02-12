@@ -99,7 +99,7 @@ public class EntityNightStag extends EntityAnimal {
             } else if (biome == ModSurfaceBiomes.RUNEBUSH_GROVE) {
                 setAntlerType(random == 0 ? 3 : 8);
             } else if (biome == ModSurfaceBiomes.DECEITFUL_BOG) {
-                setAntlerType(random == 0 ? 0 : 2);
+                setAntlerType(random == 0 ? 0 : random == 1 ? 2 : 4);
             } else if (biome == ModSurfaceBiomes.FUNGI_FOREST) {
                 setAntlerType(random == 0 ? 0 : random == 1 ? 2 : 3);
             } else if (biome == ModSurfaceBiomes.CRYSTAL_SPIRES) {

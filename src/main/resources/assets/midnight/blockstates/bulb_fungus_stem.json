@@ -3,11 +3,17 @@
   "defaults": {
     "model": "cube_column",
     "textures": {
-        "end": "midnight:blocks/bulb_fungus_stem_top",
-        "side": "midnight:blocks/bulb_fungus_stem_side"
+      "end": "midnight:blocks/bulb_fungus_stem_top",
+      "side": "midnight:blocks/bulb_fungus_stem_side"
     }
   },
   "variants": {
+    "axis": {
+      "x": {"x": 90, "y": 90},
+      "y": {},
+      "z": {"x": 90},
+      "none": {}
+    },
     "normal": [{}],
     "inventory": [{}]
   }
