@@ -51,19 +51,19 @@ public class RenderNightStag extends RenderLiving<EntityNightStag> {
             case 1:
                 return 0xA63E3E; // red
             case 2:
-                return 0x596E5B; // green
+                return 0xbbff99; // green
             case 3:
                 return 0x616D90; // blue
             case 4:
-                return 0x90A1D1; // light blue
+                return 0xb3ffff; // light blue
             case 5:
-                return 0xD13DC5; // pink
+                return 0xe39cdc; // pink
             case 6:
                 return 0xD77CD0; // light pink
             case 7:
-                return 0xE1CEE1; // white
+                return 0xf2f2f2; // white
             case 8:
-                return 0x1A256C; // dark blue
+                return 0x6699ff; // dark blue
             case 0: default:
                 return 0x8051B6; // purple
         }
