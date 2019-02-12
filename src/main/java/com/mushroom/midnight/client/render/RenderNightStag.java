@@ -49,13 +49,13 @@ public class RenderNightStag extends RenderLiving<EntityNightStag> {
     private static int computeColor(EntityNightStag entity, float partialTicks) {
         switch (entity.getAntlerType()) {
             case 1:
-                return 0xA63E3E; // red
+                return 0xff6666; // red
             case 2:
                 return 0xbbff99; // green
             case 3:
-                return 0x616D90; // blue
+                return 0x99ffff; // blue
             case 4:
-                return 0xb3ffff; // light blue
+                return 0xb3ffff; // light blue- unused?
             case 5:
                 return 0xe39cdc; // pink
             case 6:
