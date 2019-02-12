@@ -19,7 +19,7 @@ public class FungiFeature extends MidnightAbstractFeature {
     @Override
     public boolean placeFeature(World world, Random rand, BlockPos origin) {
         IBlockState state = FUNGI_STATES[rand.nextInt(FUNGI_STATES.length)];
-        if (((BlockBush) ModBlocks.NIGHTSHROOM).canBlockStay(world, origin, state)) {
+        if (((BlockBush) state.getBlock()).canBlockStay(world, origin, state)) {
             this.setBlockAndNotifyAdequately(world, origin, state);
             return true;
         }
