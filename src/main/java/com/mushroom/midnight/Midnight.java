@@ -53,13 +53,20 @@ import net.minecraftforge.fml.relauncher.Side;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-@Mod(modid = Midnight.MODID, name = Midnight.NAME, version = Midnight.VERSION, dependencies = "required:forge@[14.23.5.2768,)")
+@Mod(
+        modid = Midnight.MODID,
+        name = Midnight.NAME,
+        version = Midnight.VERSION,
+        dependencies = "required:forge@[14.23.5.2768,)",
+        updateJSON = "https://gist.githubusercontent.com/gegy1000/a3f1f593c43f88d7f01a3560ac32e216/raw/midnight_updates.json"
+)
 @Mod.EventBusSubscriber(modid = Midnight.MODID)
 public class Midnight {
 
     public static final String MODID = "midnight";
     public static final String NAME = "Midnight";
     public static final String VERSION = "@VERSION@";
+
     public static final Logger LOGGER = LogManager.getLogger(NAME);
     public static final SimpleNetworkWrapper NETWORK = new SimpleNetworkWrapper(MODID);
 

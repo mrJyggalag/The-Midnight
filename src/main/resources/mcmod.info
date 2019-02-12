@@ -1,12 +1,11 @@
 [{
   "modid": "midnight",
   "name": "Midnight",
-  "description": "A spooky biome",
+  "description": "The Midnight adds a new, dark, mysterious and spooky dimension to explore.",
   "version": "${version}",
   "mcversion": "${mcversion}",
   "logoFile": "assets/midnight/logo.png",
-  "url": "",
-  "updateJSON": "",
+  "url": "https://minecraft.curseforge.com/projects/the-midnight",
   "authorList": ["Martacus", "Gegy", "cipherzerox", "Endergized", "Lachney"],
-  "credits": ""
+  "credits": "Corail31"
 }]
