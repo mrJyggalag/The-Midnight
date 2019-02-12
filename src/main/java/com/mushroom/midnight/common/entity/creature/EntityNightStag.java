@@ -238,7 +238,11 @@ public class EntityNightStag extends EntityAnimal {
     @Override
     public boolean attackEntityAsMob(Entity entity) {
         super.attackEntityAsMob(entity);
-        boolean flag = entity.attackEntityFrom(DamageSource.causeMobDamage(this), (float) getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).getAttributeValue());
+        float damage = (float) getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).getAttributeValue();
+        if (animCap.getAnimationType() == AnimationType.CHARGE) {
+            damage *= 2f;
+        }
+        boolean flag = entity.attackEntityFrom(DamageSource.causeMobDamage(this), damage);
         if (flag) {
             if (!isChild() && entity instanceof EntityPlayer) {
                 ((EntityPlayer) entity).addPotionEffect(new PotionEffect(ModEffects.DARKNESS, 200, 0, false, true));

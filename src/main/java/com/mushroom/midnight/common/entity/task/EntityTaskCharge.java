@@ -82,15 +82,15 @@ public class EntityTaskCharge extends EntityAIBase {
             List<EntityLivingBase> hitEntities = this.owner.world.getEntitiesWithinAABB(EntityLivingBase.class, this.owner.getEntityBoundingBox().grow(0.2d, 0.2d, 0.2d), p -> !(p instanceof EntityNightStag));
             if (!hitEntities.isEmpty()) {
                 for (EntityLivingBase hitEntity : hitEntities) {
-                    // TODO damage increased while charging
-                    this.owner.attackEntityAsMob(this.target);
-                    hitEntity.knockBack(this.owner, 1f, (double) MathHelper.sin(this.owner.rotationYaw * 0.017453292f), (double) (-MathHelper.cos(this.owner.rotationYaw * 0.017453292f)));
-                    if (hitEntity instanceof EntityPlayerMP) {
-                        ((EntityPlayerMP) hitEntity).connection.sendPacket(new SPacketEntityVelocity(hitEntity));
-                        hitEntity.velocityChanged = false;
-                        hitEntity.motionX = this.owner.motionX * 2d;
-                        hitEntity.motionY = 2d;
-                        hitEntity.motionZ = this.owner.motionZ * 2d;
+                    if (this.owner.attackEntityAsMob(this.target)) {
+                        hitEntity.knockBack(this.owner, 1f, (double) MathHelper.sin(this.owner.rotationYaw * 0.017453292f), (double) (-MathHelper.cos(this.owner.rotationYaw * 0.017453292f)));
+                        if (hitEntity instanceof EntityPlayerMP) {
+                            ((EntityPlayerMP) hitEntity).connection.sendPacket(new SPacketEntityVelocity(hitEntity));
+                            hitEntity.velocityChanged = false;
+                            hitEntity.motionX = this.owner.motionX * 2d;
+                            hitEntity.motionY = 2d;
+                            hitEntity.motionZ = this.owner.motionZ * 2d;
+                        }
                     }
                 }
                 this.tickCounter = this.duration;
