@@ -62,6 +62,7 @@ import com.mushroom.midnight.common.item.ItemMidnightSlab;
 import com.mushroom.midnight.common.tile.base.TileEntityMidnightFurnace;
 import com.mushroom.midnight.common.tile.base.TileEntityShadowrootChest;
 import com.mushroom.midnight.common.world.feature.DarkWillowTreeFeature;
+import com.mushroom.midnight.common.world.feature.LargeBulbFungusFeature;
 import com.mushroom.midnight.common.world.feature.LargeFungiFeature;
 import com.mushroom.midnight.common.world.feature.ShadowrootTreeFeature;
 import net.minecraft.block.Block;
@@ -322,11 +323,7 @@ public class ModBlocks {
                         ModBlocks.VIRIDSHROOM_STEM.getDefaultState(),
                         ModBlocks.VIRIDSHROOM_HAT.getDefaultState()
                 )), "double_viridshroom"),
-                // TODO five wants to create custom structure for them
-                RegUtil.withName(new BlockBulbFungus(/*() -> new LargeFungiFeature(
-                        ModBlocks.BULB_FUNGUS_STEM.getDefaultState(),
-                        ModBlocks.BULB_FUNGUS_HAT.getDefaultState()
-                )*/null), "bulb_fungus"),
+                RegUtil.withName(new BlockBulbFungus(LargeBulbFungusFeature::new), "bulb_fungus"),
                 RegUtil.withName(new BlockMidnightFungiShelf(), "nightshroom_shelf"),
                 RegUtil.withName(new BlockMidnightFungiShelf(), "dewshroom_shelf"),
                 RegUtil.withName(new BlockMidnightFungiShelf(), "viridshroom_shelf"),

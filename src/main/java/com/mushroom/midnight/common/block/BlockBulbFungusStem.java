@@ -5,12 +5,11 @@ import com.mushroom.midnight.common.registry.ModItems;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
-import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.IShearable;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -18,7 +17,12 @@ public class BlockBulbFungusStem extends BlockMidnightLog implements IModelProvi
 
     public BlockBulbFungusStem() {
         super();
-        setHardness(1f);
+        setHardness(0.5f);
+    }
+
+    @Override
+    public int quantityDropped(Random random) {
+        return 4;
     }
 
     @Override
@@ -28,7 +32,7 @@ public class BlockBulbFungusStem extends BlockMidnightLog implements IModelProvi
 
     @Override
     protected ItemStack getSilkTouchDrop(IBlockState state) {
-        return new ItemStack(Item.getItemFromBlock(this));
+        return new ItemStack(this);
     }
 
     @Override
@@ -38,11 +42,8 @@ public class BlockBulbFungusStem extends BlockMidnightLog implements IModelProvi
 
     @Override
     public List<ItemStack> onSheared(ItemStack item, IBlockAccess world, BlockPos pos, int fortune) {
-        ArrayList<ItemStack> list = new ArrayList<>();
-        if (world instanceof WorldServer) {
-            list.add(new ItemStack(this));
-            ((WorldServer)world).destroyBlock(pos, false);
-        }
+        NonNullList<ItemStack> list = NonNullList.create();
+        list.add(new ItemStack(this));
         return list;
     }
 }
