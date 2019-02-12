@@ -91,7 +91,7 @@ public class EntityNightStag extends EntityAnimal {
         }
         if (Helper.isMidnightDimension(world)) {
             Biome biome = world.getBiome(getPosition());
-            int random = this.rand.nextInt(2);
+            int random = this.rand.nextInt(3);
             if (biome == ModSurfaceBiomes.VIGILANT_FOREST) {
                 setAntlerType(random == 0 ? 0 : random == 1 ? 3 : 7);
             } else if (biome == ModSurfaceBiomes.NIGHT_PLAINS || biome == ModSurfaceBiomes.WARPED_FIELDS) {
