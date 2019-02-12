@@ -126,6 +126,11 @@ public class MidnightBiomeFeatures {
             )
     };
 
+    public static final IMidnightFeature BULB_FUNGUS_FEATURE = new PlantFeature(
+            ModBlocks.BULB_FUNGUS.getDefaultState(),
+            ((BlockBush) ModBlocks.BULB_FUNGUS)::canBlockStay
+    );
+
     public static final IMidnightFeature BLOOMCRYSTAL_FEATURE = new CrystalClusterFeature(3, 4,
             ModBlocks.BLOOMCRYSTAL_ROCK.getDefaultState(),
             ModBlocks.BLOOMCRYSTAL.getDefaultState()
@@ -162,7 +167,7 @@ public class MidnightBiomeFeatures {
 
     public static final IMidnightFeature[] UNDERGROUND_FEATURES = new IMidnightFeature[] {
             new PlantFeature(ModBlocks.TENDRILWEED.getDefaultState(), ((BlockBush) ModBlocks.TENDRILWEED)::canBlockStay),
-            FUNGI_FEATURE,
+            FUNGI_FEATURE, BULB_FUNGUS_FEATURE,
             new MidnightAbstractFeature() {
                 @Override
                 public boolean placeFeature(World world, Random random, BlockPos origin) {

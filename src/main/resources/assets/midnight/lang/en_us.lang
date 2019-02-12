@@ -91,6 +91,10 @@ tile.midnight.double_nightshroom.name=Tall Nightshroom
 tile.midnight.viridshroom.name=Viridshroom
 tile.midnight.double_viridshroom.name=Tall Viridshroom
 
+tile.midnight.bulb_fungus.name=Bulb Fungus
+tile.midnight.bulb_fungus_stem.name=Bulb Fungus Stem
+tile.midnight.bulb_fungus_cap.name=Bulb Fungus Cap
+
 tile.midnight.bladeshroom.name=Bladeshroom
 
 tile.midnight.nightshroom_stem.name=Nightshroom Stem

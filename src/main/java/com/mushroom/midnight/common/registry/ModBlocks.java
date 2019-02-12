@@ -6,6 +6,7 @@ import com.mushroom.midnight.common.block.BlockBasic;
 import com.mushroom.midnight.common.block.BlockBladeshroom;
 import com.mushroom.midnight.common.block.BlockBloomCrystal;
 import com.mushroom.midnight.common.block.BlockBogweed;
+import com.mushroom.midnight.common.block.BlockBulbFungus;
 import com.mushroom.midnight.common.block.BlockCrystal;
 import com.mushroom.midnight.common.block.BlockDarkWater;
 import com.mushroom.midnight.common.block.BlockDeceitfulAlgae;
@@ -154,6 +155,10 @@ public class ModBlocks {
     public static final Block DEWSHROOM_STEM = Blocks.AIR;
     public static final Block DEWSHROOM_HAT = Blocks.AIR;
 
+    public static final Block BULB_FUNGUS = Blocks.AIR;
+    public static final Block BULB_FUNGUS_STEM = Blocks.AIR;
+    public static final Block BULB_FUNGUS_HAT = Blocks.AIR;
+
     public static final Block ROCKSHROOM = Blocks.AIR;
     public static final Block ROCKSHROOM_BRICKS = Blocks.AIR;
 
@@ -296,6 +301,8 @@ public class ModBlocks {
                 RegUtil.withName(new BlockMidnightFungiHat(() -> DEWSHROOM, MapColor.PURPLE), "dewshroom_hat"),
                 RegUtil.withName(new BlockMidnightFungiStem(), "viridshroom_stem"),
                 RegUtil.withName(new BlockMidnightFungiHat(() -> VIRIDSHROOM, MapColor.EMERALD), "viridshroom_hat"),
+                RegUtil.withName(new BlockMidnightFungiStem(), "bulb_fungus_stem"),
+                RegUtil.withName(new BlockMidnightFungiHat(() -> BULB_FUNGUS, MapColor.MAGENTA), "bulb_fungus_hat"),
                 RegUtil.withName(new BlockRockshroom(), "rockshroom"),
                 RegUtil.withName(new BlockMidnightTallGrass(), "tall_midnight_grass"),
                 RegUtil.withName(new BlockMidnightDoublePlant(PlantBehaviorType.BUSH, false), "double_midnight_grass"),
@@ -314,6 +321,11 @@ public class ModBlocks {
                         ModBlocks.VIRIDSHROOM_STEM.getDefaultState(),
                         ModBlocks.VIRIDSHROOM_HAT.getDefaultState()
                 )), "double_viridshroom"),
+                // TODO five wants to create custom structure for them
+                RegUtil.withName(new BlockBulbFungus(/*() -> new LargeFungiFeature(
+                        ModBlocks.BULB_FUNGUS_STEM.getDefaultState(),
+                        ModBlocks.BULB_FUNGUS_HAT.getDefaultState()
+                )*/null), "bulb_fungus"),
                 RegUtil.withName(new BlockMidnightFungiShelf(), "nightshroom_shelf"),
                 RegUtil.withName(new BlockMidnightFungiShelf(), "dewshroom_shelf"),
                 RegUtil.withName(new BlockMidnightFungiShelf(), "viridshroom_shelf"),
@@ -507,9 +519,11 @@ public class ModBlocks {
                 NIGHTSHROOM, DOUBLE_NIGHTSHROOM, NIGHTSHROOM_SHELF,
                 DEWSHROOM, DOUBLE_DEWSHROOM, DEWSHROOM_SHELF,
                 VIRIDSHROOM, DOUBLE_VIRIDSHROOM, VIRIDSHROOM_SHELF,
+                BULB_FUNGUS,
                 NIGHTSHROOM_STEM, NIGHTSHROOM_HAT,
                 DEWSHROOM_STEM, DEWSHROOM_HAT,
                 VIRIDSHROOM_STEM, VIRIDSHROOM_HAT,
+                BULB_FUNGUS_STEM, BULB_FUNGUS_HAT,
                 NIGHTSHROOM_PLANKS, DEWSHROOM_PLANKS, VIRIDSHROOM_PLANKS,
                 ROCKSHROOM, ROCKSHROOM_BRICKS,
                 LUMEN_BUD, DOUBLE_LUMEN_BUD,

@@ -91,6 +91,10 @@ tile.midnight.double_nightshroom.name=Grand ChampiNuit
 tile.midnight.viridshroom.name=ChampiViride
 tile.midnight.double_viridshroom.name=Grand ChampiViride
 
+tile.midnight.bulb_fungus.name=Bulbe Fongus
+tile.midnight.bulb_fungus_stem.name=Tronc de Bulbe Fongus
+tile.midnight.bulb_fungus_cap.name=Chapeau en Bulbe Fongus
+
 tile.midnight.bladeshroom.name=ChampiLame
 
 tile.midnight.nightshroom_stem.name=Tronc de ChampiNuit
