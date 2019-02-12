@@ -36,6 +36,12 @@ public class BlockBulbFungus extends BlockMidnightPlant implements IGrowable {
     }
 
     @Override
+    @SuppressWarnings("deprecation")
+    protected boolean canSilkHarvest() {
+        return true;
+    }
+
+    @Override
     public Item getItemDropped(IBlockState state, Random rand, int fortune) {
         return ModItems.BULB_FUNGUS_HAND;
     }

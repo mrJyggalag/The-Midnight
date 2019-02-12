@@ -7,6 +7,7 @@ import com.mushroom.midnight.common.block.BlockBladeshroom;
 import com.mushroom.midnight.common.block.BlockBloomCrystal;
 import com.mushroom.midnight.common.block.BlockBogweed;
 import com.mushroom.midnight.common.block.BlockBulbFungus;
+import com.mushroom.midnight.common.block.BlockBulbFungusHat;
 import com.mushroom.midnight.common.block.BlockCrystal;
 import com.mushroom.midnight.common.block.BlockDarkWater;
 import com.mushroom.midnight.common.block.BlockDeceitfulAlgae;
@@ -304,7 +305,7 @@ public class ModBlocks {
                 RegUtil.withName(new BlockMidnightFungiStem(), "viridshroom_stem"),
                 RegUtil.withName(new BlockMidnightFungiHat(() -> VIRIDSHROOM, MapColor.EMERALD), "viridshroom_hat"),
                 RegUtil.withName(new BlockBulbFungusStem(), "bulb_fungus_stem"),
-                RegUtil.withName(new BlockMidnightFungiHat(() -> BULB_FUNGUS, MapColor.MAGENTA), "bulb_fungus_hat"),
+                RegUtil.withName(new BlockBulbFungusHat(MapColor.MAGENTA), "bulb_fungus_hat"),
                 RegUtil.withName(new BlockRockshroom(), "rockshroom"),
                 RegUtil.withName(new BlockMidnightTallGrass(), "tall_midnight_grass"),
                 RegUtil.withName(new BlockMidnightDoublePlant(PlantBehaviorType.BUSH, false), "double_midnight_grass"),

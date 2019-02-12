@@ -36,6 +36,12 @@ public class BlockBulbFungusStem extends BlockMidnightLog implements IModelProvi
     }
 
     @Override
+    @SuppressWarnings("deprecation")
+    protected boolean canSilkHarvest() {
+        return true;
+    }
+
+    @Override
     public boolean isShearable(ItemStack item, IBlockAccess world, BlockPos pos) {
         return true;
     }
