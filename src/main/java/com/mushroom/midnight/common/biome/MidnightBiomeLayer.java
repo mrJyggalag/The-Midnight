@@ -41,7 +41,7 @@ public final class MidnightBiomeLayer<T> implements BiomeLayerType<T> {
         GenLayer layer = new SeedGroupLayer(0, MidnightBiomeGroup.SURFACE);
         layer = new GenLayerVoronoiZoom(1000, layer);
 
-        layer = new CreateGroupPocketsLayer(2000, layer, MidnightBiomeGroup.SURFACE_POCKET, 6);
+        layer = new CreateGroupPocketsLayer(2000, layer, MidnightBiomeGroup.SURFACE_POCKET, 10);
         layer = new GenLayerFuzzyZoom(3000, layer);
         layer = new RidgeMergeLayer(4000, layer, ridgeLayer);
 
@@ -66,7 +66,7 @@ public final class MidnightBiomeLayer<T> implements BiomeLayerType<T> {
         layer = new GenLayerVoronoiZoom(1000, layer);
 
         layer = new AddOutlineLayer(2000, layer, closedCavernId);
-        layer = new CreateGroupPocketsLayer(3000, layer, MidnightBiomeGroup.UNDERGROUND_POCKET, 6);
+        layer = new CreateGroupPocketsLayer(3000, layer, MidnightBiomeGroup.UNDERGROUND_POCKET, 8);
         layer = new GenLayerFuzzyZoom(4000, layer);
 
         layer = GenLayerZoom.magnify(5000, layer, 2);

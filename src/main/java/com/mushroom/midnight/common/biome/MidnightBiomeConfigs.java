@@ -240,6 +240,11 @@ public class MidnightBiomeConfigs {
             .withHeightVariation(0.26F)
             .withRidgeWeight(0.0F);
 
+    public static final SurfaceTerrainConfig CRSYTAL_SPIRES_TERRAIN_CONFIG = new SurfaceTerrainConfig()
+            .withBaseHeight(0.6F)
+            .withHeightVariation(0.26F)
+            .withRidgeWeight(0.0F);
+
     public static final SurfaceTerrainConfig FOREST_TERRAIN_CONFIG = new SurfaceTerrainConfig()
             .withBaseHeight(0.155F)
             .withHeightVariation(0.07F);
@@ -310,7 +315,7 @@ public class MidnightBiomeConfigs {
             .build();
 
     public static final SurfaceBiomeConfig CRYSTAL_SPIRES_CONFIG = SurfaceBiomeConfig.builder()
-            .withTerrain(PLAINS_TERRAIN_CONFIG)
+            .withTerrain(CRSYTAL_SPIRES_TERRAIN_CONFIG)
             .withFeatures(CRYSTAL_SPIRES_FEATURE_CONFIG)
             .withSpawner(CRYSTAL_SPIRES_SPAWN_CONFIG)
             .withGrassColor(0xD184BC)
