@@ -9,10 +9,12 @@ import com.mushroom.midnight.common.entity.navigation.CustomPathNavigateGround;
 import com.mushroom.midnight.common.entity.task.EntityTaskCharge;
 import com.mushroom.midnight.common.entity.task.EntityTaskEatGrass;
 import com.mushroom.midnight.common.entity.task.EntityTaskNeutral;
+import com.mushroom.midnight.common.helper.Helper;
 import com.mushroom.midnight.common.registry.ModBlocks;
 import com.mushroom.midnight.common.registry.ModEffects;
 import com.mushroom.midnight.common.registry.ModItems;
 import com.mushroom.midnight.common.registry.ModSounds;
+import com.mushroom.midnight.common.registry.ModSurfaceBiomes;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
@@ -50,6 +52,7 @@ import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.World;
+import net.minecraft.world.biome.Biome;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.Constants;
 
@@ -61,6 +64,7 @@ import static com.mushroom.midnight.common.registry.ModLootTables.LOOT_TABLE_NIG
 
 public class EntityNightStag extends EntityAnimal {
     private static final DataParameter<Integer> ANTLER_TYPE = EntityDataManager.createKey(EntityNightStag.class, DataSerializers.VARINT);
+    private static final int MAX_ANTLER_TYPE = 9;
     private static final AttributeModifier CHILD_ATTACK_MALUS = new AttributeModifier(UUID.fromString("c0f32cda-a4fd-4fe4-8b3f-15612ef9a52f"), "nightstag_child_attack_malus", -2d, 0);
     private static final int GROWING_TIME = -24000;
     private final AnimationCapability animCap = new AnimationCapability();
@@ -85,7 +89,29 @@ public class EntityNightStag extends EntityAnimal {
         if (this.rand.nextInt(5) == 0) {
             setGrowingAge(GROWING_TIME);
         }
-        setAntlerType(this.rand.nextInt(4));
+        if (Helper.isMidnightDimension(world)) {
+            Biome biome = world.getBiome(getPosition());
+            int random = this.rand.nextInt(2);
+            if (biome == ModSurfaceBiomes.VIGILANT_FOREST) {
+                setAntlerType(random == 0 ? 0 : random == 1 ? 3 : 7);
+            } else if (biome == ModSurfaceBiomes.NIGHT_PLAINS || biome == ModSurfaceBiomes.WARPED_FIELDS) {
+                setAntlerType(random == 0 ? 0 : 1);
+            } else if (biome == ModSurfaceBiomes.RUNEBUSH_GROVE) {
+                setAntlerType(random == 0 ? 3 : 8);
+            } else if (biome == ModSurfaceBiomes.DECEITFUL_BOG) {
+                setAntlerType(random == 0 ? 0 : 2);
+            } else if (biome == ModSurfaceBiomes.FUNGI_FOREST) {
+                setAntlerType(random == 0 ? 0 : random == 1 ? 2 : 3);
+            } else if (biome == ModSurfaceBiomes.CRYSTAL_SPIRES) {
+                setAntlerType(random == 0 ? 5 : 6);
+            } else if (biome == ModSurfaceBiomes.PHANTASMAL_VALLEY || biome == ModSurfaceBiomes.OBSCURED_PEAKS || biome == ModSurfaceBiomes.OBSCURED_PLATEAU || biome == ModSurfaceBiomes.BLACK_RIDGE) {
+                setAntlerType(random == 0 ? 0 : random == 1 ? 5 : 7);
+            } else {
+                setAntlerType(this.rand.nextInt(MAX_ANTLER_TYPE));
+            }
+        } else {
+            setAntlerType(this.rand.nextInt(MAX_ANTLER_TYPE));
+        }
         return livingdata;
     }
 
@@ -105,12 +131,13 @@ public class EntityNightStag extends EntityAnimal {
     public void readEntityFromNBT(NBTTagCompound compound) {
         super.readEntityFromNBT(compound);
         if (compound.hasKey("antler_type", Constants.NBT.TAG_INT)) {
-            setAntlerType(Math.min(Math.max(0, compound.getInteger("antler_type")),3));
+            int antlerType = compound.getInteger("antler_type");
+            setAntlerType(antlerType >= 0 && antlerType < MAX_ANTLER_TYPE ? antlerType : 0);
         }
     }
 
-    public void setAntlerType(int index) {
-        dataManager.set(ANTLER_TYPE, Math.min(Math.max(0, index), 3));
+    public void setAntlerType(int antlerType) {
+        dataManager.set(ANTLER_TYPE, antlerType >= 0 && antlerType < MAX_ANTLER_TYPE ? antlerType : 0);
     }
 
     public int getAntlerType() {
@@ -160,6 +187,9 @@ public class EntityNightStag extends EntityAnimal {
 
     @Override
     public boolean getCanSpawnHere() {
+        if (getPosition().getY() <= world.getSeaLevel()) {
+            return false;
+        }
         IBlockState belowState = world.getBlockState(new BlockPos(this).down());
         return belowState.isFullCube() && belowState.canEntitySpawn(this);
     }

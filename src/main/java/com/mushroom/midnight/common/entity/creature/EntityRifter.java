@@ -104,6 +104,11 @@ public class EntityRifter extends EntityMob implements IRiftTraveler, IEntityAdd
     }
 
     @Override
+    public boolean getCanSpawnHere() {
+        return getPosition().getY() > world.getSeaLevel() && super.getCanSpawnHere();
+    }
+
+    @Override
     protected void initEntityAI() {
         super.initEntityAI();
 

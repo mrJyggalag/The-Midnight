@@ -80,6 +80,11 @@ public class EntityHunter extends EntityMob implements EntityFlying {
     }
 
     @Override
+    public boolean getCanSpawnHere() {
+        return getPosition().getY() > world.getSeaLevel() && super.getCanSpawnHere();
+    }
+
+    @Override
     protected void applyEntityAttributes() {
         super.applyEntityAttributes();
         this.getAttributeMap().registerAttribute(SharedMonsterAttributes.FLYING_SPEED);

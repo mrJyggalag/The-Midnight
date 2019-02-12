@@ -164,23 +164,23 @@ public class MidnightBiomeConfigs {
     public static final SpawnerConfig VEGETATED_SPAWN_CONFIG = SpawnerConfig.builder()
             .withCreature(new Biome.SpawnListEntry(EntityNightStag.class, 100, 1, 3))
             .withMonster(new Biome.SpawnListEntry(EntityRifter.class, 100, 1, 2))
-            .withMonster(new Biome.SpawnListEntry(EntityEnderman.class, 1, 4, 4))
+            .withMonster(new Biome.SpawnListEntry(EntityEnderman.class, 10, 4, 4))
             .withMonster(new Biome.SpawnListEntry(EntityStinger.class, 100, 1, 2))
-            .withMonster(new Biome.SpawnListEntry(EntityNova.class, 5, 1, 1))
+            .withMonster(new Biome.SpawnListEntry(EntityNova.class, 20, 1, 1))
             .build();
 
     public static final SpawnerConfig ROCKY_SPAWN_CONFIG = SpawnerConfig.builder()
             .withMonster(new Biome.SpawnListEntry(EntityRifter.class, 100, 1, 2))
-            .withMonster(new Biome.SpawnListEntry(EntityEnderman.class, 1, 4, 4))
+            .withMonster(new Biome.SpawnListEntry(EntityEnderman.class, 10, 4, 4))
             .withMonster(new Biome.SpawnListEntry(EntityHunter.class, 5, 1, 2))
             .withMonster(new Biome.SpawnListEntry(EntityStinger.class, 100, 1, 2))
-            .withMonster(new Biome.SpawnListEntry(EntityNova.class, 5, 1, 1))
+            .withMonster(new Biome.SpawnListEntry(EntityNova.class, 20, 1, 1))
             .build();
 
     public static final SpawnerConfig CRYSTAL_SPIRES_SPAWN_CONFIG = SpawnerConfig.builder()
             .withAmbientCreature(new Biome.SpawnListEntry(EntityCrystalBug.class, 100, 7, 10))
             .withMonster(new Biome.SpawnListEntry(EntityStinger.class, 100, 1, 2))
-            .withMonster(new Biome.SpawnListEntry(EntityNova.class, 5, 1, 1))
+            .withMonster(new Biome.SpawnListEntry(EntityNova.class, 20, 1, 1))
             .build();
 
     public static final SpawnerConfig WARPED_FIELDS_SPAWN_CONFIG = SpawnerConfig.builder()
@@ -192,18 +192,18 @@ public class MidnightBiomeConfigs {
             .withWaterCreature(new Biome.SpawnListEntry(EntityDeceitfulSnapper.class, 100, 5, 10))
             .withCreature(new Biome.SpawnListEntry(EntityNightStag.class, 100, 1, 3))
             .withMonster(new Biome.SpawnListEntry(EntityRifter.class, 100, 1, 2))
-            .withMonster(new Biome.SpawnListEntry(EntityEnderman.class, 1, 4, 4))
+            .withMonster(new Biome.SpawnListEntry(EntityEnderman.class, 10, 4, 4))
             .withMonster(new Biome.SpawnListEntry(EntityStinger.class, 100, 1, 2))
-            .withMonster(new Biome.SpawnListEntry(EntityNova.class, 5, 1, 1))
+            .withMonster(new Biome.SpawnListEntry(EntityNova.class, 20, 1, 1))
             .build();
 
     public static final SpawnerConfig NIGHT_PLAINS_SPAWN_CONFIG = SpawnerConfig.builder()
             .withCreature(new Biome.SpawnListEntry(EntityNightStag.class, 100, 1, 3))
             .withMonster(new Biome.SpawnListEntry(EntityRifter.class, 100, 1, 2))
-            .withMonster(new Biome.SpawnListEntry(EntityEnderman.class, 1, 4, 4))
+            .withMonster(new Biome.SpawnListEntry(EntityEnderman.class, 10, 4, 4))
             .withMonster(new Biome.SpawnListEntry(EntityHunter.class, 5, 1, 2))
             .withMonster(new Biome.SpawnListEntry(EntityStinger.class, 100, 1, 2))
-            .withMonster(new Biome.SpawnListEntry(EntityNova.class, 5, 1, 1))
+            .withMonster(new Biome.SpawnListEntry(EntityNova.class, 20, 1, 1))
             .build();
 
     public static final SpawnerConfig PLATEAU_SPAWN_CONFIG = SpawnerConfig.builder()
@@ -214,10 +214,10 @@ public class MidnightBiomeConfigs {
     public static final SpawnerConfig VALLEY_SPAWN_CONFIG = SpawnerConfig.builder()
             .withCreature(new Biome.SpawnListEntry(EntityNightStag.class, 100, 1, 3))
             .withMonster(new Biome.SpawnListEntry(EntityRifter.class, 100, 1, 2))
-            .withMonster(new Biome.SpawnListEntry(EntityEnderman.class, 1, 4, 4))
+            .withMonster(new Biome.SpawnListEntry(EntityEnderman.class, 10, 4, 4))
             .withMonster(new Biome.SpawnListEntry(EntityHunter.class, 5, 1, 2))
             .withMonster(new Biome.SpawnListEntry(EntityStinger.class, 100, 1, 2))
-            .withMonster(new Biome.SpawnListEntry(EntityNova.class, 5, 1, 1))
+            .withMonster(new Biome.SpawnListEntry(EntityNova.class, 20, 1, 1))
             .build();
 
     public static final SurfaceTerrainConfig WARPED_TERRAIN_CONFIG = new SurfaceTerrainConfig()

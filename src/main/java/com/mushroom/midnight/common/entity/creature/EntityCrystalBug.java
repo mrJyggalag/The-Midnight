@@ -38,6 +38,12 @@ public class EntityCrystalBug extends EntityAmbientCreature {
         dataManager.register(IS_STANDING, false);
     }
 
+
+    @Override
+    public boolean getCanSpawnHere() {
+        return getPosition().getY() > world.getSeaLevel() && super.getCanSpawnHere();
+    }
+
     @Override
     public int getMaxSpawnedInChunk() {
         return 10;
