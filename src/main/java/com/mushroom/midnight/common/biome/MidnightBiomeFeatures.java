@@ -4,6 +4,7 @@ import com.mushroom.midnight.common.block.BlockBladeshroom;
 import com.mushroom.midnight.common.block.BlockPileOfEggs;
 import com.mushroom.midnight.common.registry.ModBlocks;
 import com.mushroom.midnight.common.world.feature.BoulderFeature;
+import com.mushroom.midnight.common.world.feature.LargeBulbFungusFeature;
 import com.mushroom.midnight.common.world.feature.CrystalClusterFeature;
 import com.mushroom.midnight.common.world.feature.DarkWillowTreeFeature;
 import com.mushroom.midnight.common.world.feature.DeadLogFeature;
@@ -125,6 +126,8 @@ public class MidnightBiomeFeatures {
                     ModBlocks.VIRIDSHROOM_HAT.getDefaultState()
             )
     };
+
+    public static final IMidnightFeature LARGE_BULB_FUNGUS_FEATURE = new LargeBulbFungusFeature();
 
     public static final IMidnightFeature BULB_FUNGUS_FEATURE = new PlantFeature(
             ModBlocks.BULB_FUNGUS.getDefaultState(),

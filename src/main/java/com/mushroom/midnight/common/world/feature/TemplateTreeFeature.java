@@ -1,10 +1,13 @@
 package com.mushroom.midnight.common.world.feature;
 
 import com.mushroom.midnight.Midnight;
+import com.mushroom.midnight.common.block.BlockMidnightFungiHat;
+import com.mushroom.midnight.common.block.BlockMidnightFungiStem;
 import com.mushroom.midnight.common.util.WorldUtil;
 import com.mushroom.midnight.common.world.template.CompiledTemplate;
 import com.mushroom.midnight.common.world.template.RotatedSettingConfigurator;
 import com.mushroom.midnight.common.world.template.TemplateCompiler;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockAir;
 import net.minecraft.block.BlockLeaves;
 import net.minecraft.block.BlockLog;
@@ -90,11 +93,12 @@ public class TemplateTreeFeature extends MidnightTreeFeature {
 
     protected Template.BlockInfo processState(World world, BlockPos pos, Template.BlockInfo info) {
         IBlockState state = info.blockState;
-        if (state.getBlock() instanceof BlockLog) {
+        Block block = state.getBlock();
+        if (block instanceof BlockLog || block instanceof BlockMidnightFungiStem) {
             return new Template.BlockInfo(pos, this.log, null);
-        } else if (state.getBlock() instanceof BlockLeaves) {
+        } else if (block instanceof BlockLeaves || block instanceof BlockMidnightFungiHat) {
             return new Template.BlockInfo(pos, this.leaves, null);
-        } else if (state.getBlock() == Blocks.STRUCTURE_BLOCK || state.getBlock() instanceof BlockAir) {
+        } else if (block == Blocks.STRUCTURE_BLOCK || block instanceof BlockAir) {
             return null;
         }
         return info;

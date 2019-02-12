@@ -161,6 +161,11 @@ public class MidnightBiomeConfigs {
             .withFeature(ROUXE_FEATURE, new SurfacePlacementConfig(5))
             .build();
 
+    // TODO: Fungal Cavern
+    public static final FeatureConfig GREAT_CAVERN_FEATURE_CONFIG = FeatureConfig.builder()
+            .withFeature(LARGE_BULB_FUNGUS_FEATURE, new SurfacePlacementConfig(1))
+            .build();
+
     public static final SpawnerConfig VEGETATED_SPAWN_CONFIG = SpawnerConfig.builder()
             .withCreature(new Biome.SpawnListEntry(EntityNightStag.class, 100, 1, 3))
             .withMonster(new Biome.SpawnListEntry(EntityRifter.class, 100, 1, 2))
@@ -240,7 +245,7 @@ public class MidnightBiomeConfigs {
             .withHeightVariation(0.26F)
             .withRidgeWeight(0.0F);
 
-    public static final SurfaceTerrainConfig CRSYTAL_SPIRES_TERRAIN_CONFIG = new SurfaceTerrainConfig()
+    public static final SurfaceTerrainConfig CRYSTAL_SPIRES_TERRAIN_CONFIG = new SurfaceTerrainConfig()
             .withBaseHeight(0.6F)
             .withHeightVariation(0.26F)
             .withRidgeWeight(0.0F);
@@ -315,7 +320,7 @@ public class MidnightBiomeConfigs {
             .build();
 
     public static final SurfaceBiomeConfig CRYSTAL_SPIRES_CONFIG = SurfaceBiomeConfig.builder()
-            .withTerrain(CRSYTAL_SPIRES_TERRAIN_CONFIG)
+            .withTerrain(CRYSTAL_SPIRES_TERRAIN_CONFIG)
             .withFeatures(CRYSTAL_SPIRES_FEATURE_CONFIG)
             .withSpawner(CRYSTAL_SPIRES_SPAWN_CONFIG)
             .withGrassColor(0xD184BC)
@@ -353,6 +358,7 @@ public class MidnightBiomeConfigs {
             .withHeightVariation(0.6F);
 
     public static final CavernousBiomeConfig GREAT_CAVERN_CONFIG = CavernousBiomeConfig.builder()
+            .withFeatures(GREAT_CAVERN_FEATURE_CONFIG)
             .withStructure(GREAT_CAVERN_STRUCTURE_CONFIG)
             .build();
 
