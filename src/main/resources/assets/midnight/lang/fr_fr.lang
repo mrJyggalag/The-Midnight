@@ -91,26 +91,31 @@ tile.midnight.double_nightshroom.name=Grand ChampiNuit
 tile.midnight.viridshroom.name=ChampiViride
 tile.midnight.double_viridshroom.name=Grand ChampiViride
 
+tile.midnight.bogshroom.name=ChampiTourbe
+tile.midnight.double_bogshroom.name=Grand ChampiTourbe
+tile.midnight.bogshroom_stem.name=Tronc de ChampiTourbe
+tile.midnight.bogshroom_cap.name=Chapeau de ChampiTourbe
+
 tile.midnight.bulb_fungus.name=Bulbe Fongus
 tile.midnight.bulb_fungus_stem.name=Tronc de Bulbe Fongus
-tile.midnight.bulb_fungus_cap.name=Chapeau en Bulbe Fongus
+tile.midnight.bulb_fungus_cap.name=Chapeau de Bulbe Fongus
 
 tile.midnight.bladeshroom.name=ChampiLame
 
 tile.midnight.nightshroom_stem.name=Tronc de ChampiNuit
-tile.midnight.nightshroom_hat.name=Chapeau en ChampiNuit
+tile.midnight.nightshroom_hat.name=Chapeau de ChampiNuit
 tile.midnight.nightshroom_planks.name=Planches de ChampiNuit
 tile.midnight.nightshroom_shelf.name=Étagères en ChampiNuit
 tile.midnight.nightshroom_trapdoor.name=Trappe en ChampiNuit
 
 tile.midnight.dewshroom_stem.name=Tronc de ChampiRosée
-tile.midnight.dewshroom_hat.name=Chapeau en ChampiRosée
+tile.midnight.dewshroom_hat.name=Chapeau de ChampiRosée
 tile.midnight.dewshroom_planks.name=Planches de ChampiRosée
 tile.midnight.dewshroom_shelf.name=Étagères en ChampiRosée
 tile.midnight.dewshroom_trapdoor.name=Trappe en ChampiRosée
 
 tile.midnight.viridshroom_stem.name=Tronc de ChampiViride
-tile.midnight.viridshroom_hat.name=Chapeau en ChampiViride
+tile.midnight.viridshroom_hat.name=Chapeau de ChampiViride
 tile.midnight.viridshroom_planks.name=Planches de ChampiViride
 tile.midnight.viridshroom_shelf.name=Étagères en ChampiViride
 tile.midnight.viridshroom_trapdoor.name=Trappe en ChampiViride

@@ -158,6 +158,11 @@ public class ModBlocks {
     public static final Block DEWSHROOM_STEM = Blocks.AIR;
     public static final Block DEWSHROOM_HAT = Blocks.AIR;
 
+    public static final Block BOGSHROOM = Blocks.AIR;
+    public static final Block DOUBLE_BOGSHROOM = Blocks.AIR;
+    public static final Block BOGSHROOM_STEM = Blocks.AIR;
+    public static final Block BOGSHROOM_HAT = Blocks.AIR;
+
     public static final Block BULB_FUNGUS = Blocks.AIR;
     public static final Block BULB_FUNGUS_STEM = Blocks.AIR;
     public static final Block BULB_FUNGUS_HAT = Blocks.AIR;
@@ -324,6 +329,13 @@ public class ModBlocks {
                         ModBlocks.VIRIDSHROOM_STEM.getDefaultState(),
                         ModBlocks.VIRIDSHROOM_HAT.getDefaultState()
                 )), "double_viridshroom"),
+                RegUtil.withName(new BlockMidnightFungi(() -> DOUBLE_BOGSHROOM), "bogshroom"),
+                RegUtil.withName(new BlockMidnightDoubleFungi(() -> new LargeFungiFeature(
+                        ModBlocks.BOGSHROOM_STEM.getDefaultState(),
+                        ModBlocks.BOGSHROOM_HAT.getDefaultState()
+                )), "double_bogshroom"),
+                RegUtil.withName(new BlockMidnightFungiStem(), "bogshroom_stem"),
+                RegUtil.withName(new BlockMidnightFungiHat(() -> BOGSHROOM, MapColor.ADOBE), "bogshroom_hat"),
                 RegUtil.withName(new BlockBulbFungus(LargeBulbFungusFeature::new), "bulb_fungus"),
                 RegUtil.withName(new BlockMidnightFungiShelf(), "nightshroom_shelf"),
                 RegUtil.withName(new BlockMidnightFungiShelf(), "dewshroom_shelf"),
@@ -518,11 +530,11 @@ public class ModBlocks {
                 NIGHTSHROOM, DOUBLE_NIGHTSHROOM, NIGHTSHROOM_SHELF,
                 DEWSHROOM, DOUBLE_DEWSHROOM, DEWSHROOM_SHELF,
                 VIRIDSHROOM, DOUBLE_VIRIDSHROOM, VIRIDSHROOM_SHELF,
-                BULB_FUNGUS,
+                BOGSHROOM, DOUBLE_BOGSHROOM, BOGSHROOM_HAT, BOGSHROOM_STEM,
                 NIGHTSHROOM_STEM, NIGHTSHROOM_HAT,
                 DEWSHROOM_STEM, DEWSHROOM_HAT,
                 VIRIDSHROOM_STEM, VIRIDSHROOM_HAT,
-                BULB_FUNGUS_STEM, BULB_FUNGUS_HAT,
+                BULB_FUNGUS, BULB_FUNGUS_STEM, BULB_FUNGUS_HAT,
                 NIGHTSHROOM_PLANKS, DEWSHROOM_PLANKS, VIRIDSHROOM_PLANKS,
                 ROCKSHROOM, ROCKSHROOM_BRICKS,
                 LUMEN_BUD, DOUBLE_LUMEN_BUD,

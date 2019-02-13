@@ -127,6 +127,11 @@ public class MidnightBiomeFeatures {
             )
     };
 
+    public static final IMidnightFeature LARGE_BOG_SHROOM_FEATURE = new LargeFungiFeature(
+            ModBlocks.BOGSHROOM_STEM.getDefaultState(),
+            ModBlocks.BOGSHROOM_HAT.getDefaultState()
+    );
+
     public static final IMidnightFeature LARGE_BULB_FUNGUS_FEATURE = new LargeBulbFungusFeature();
 
     public static final IMidnightFeature BULB_FUNGUS_FEATURE = new PlantFeature(

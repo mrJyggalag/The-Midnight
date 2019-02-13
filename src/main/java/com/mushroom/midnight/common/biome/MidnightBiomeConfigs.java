@@ -117,6 +117,7 @@ public class MidnightBiomeConfigs {
                     SHADOWROOT_TREE_FEATURE,
                     DARK_WILLOW_TREE_FEATURE
             }, new SurfacePlacementConfig(4))
+            .withFeature(LARGE_BOG_SHROOM_FEATURE, new SurfacePlacementConfig(6))
             .withFeature(BOGWEED_FEATURE, new ScatterPlacementConfig(2, 32))
             .withFeature(TALL_GRASS_FEATURE, new ScatterPlacementConfig(5, 32))
             .withFeature(DOUBLE_GRASS_FEATURE, new ScatterPlacementConfig(3, 32))
