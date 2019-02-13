@@ -11,6 +11,7 @@ import com.mushroom.midnight.common.capability.RiftTravelCooldown;
 import com.mushroom.midnight.common.capability.RifterCapturable;
 import com.mushroom.midnight.common.loot.InBiomeLootCondition;
 import com.mushroom.midnight.common.loot.InBlockLootCondition;
+import com.mushroom.midnight.common.loot.IsChildLootCondition;
 import com.mushroom.midnight.common.network.GuiHandler;
 import com.mushroom.midnight.common.network.MessageAnimation;
 import com.mushroom.midnight.common.network.MessageBridgeCreate;
@@ -122,6 +123,7 @@ public class Midnight {
 
         LootConditionManager.registerCondition(new InBiomeLootCondition.Serialiser());
         LootConditionManager.registerCondition(new InBlockLootCondition.Serialiser());
+        LootConditionManager.registerCondition(new IsChildLootCondition.Serialiser());
     }
 
     @Mod.EventHandler

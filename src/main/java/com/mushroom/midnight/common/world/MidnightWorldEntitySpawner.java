@@ -88,6 +88,7 @@ public final class MidnightWorldEntitySpawner {
                                     int posZ = pos.getZ();
                                     int range = 6;
                                     Biome.SpawnListEntry spawnEntry = null;
+                                    IEntityLivingData livingdata = null;
                                     int maxSpawnEntry = MathHelper.ceil(Math.random() * 4d);
                                     for (int j = 0; j < maxSpawnEntry; ++j) {
                                         posX += world.rand.nextInt(range) - world.rand.nextInt(range);
@@ -117,7 +118,7 @@ public final class MidnightWorldEntitySpawner {
                                                 Event.Result canSpawn = ForgeEventFactory.canEntitySpawn(creature, world, posX + 0.5f, posY, posZ + 0.5f, false);
                                                 if (canSpawn == Event.Result.ALLOW || (canSpawn == Event.Result.DEFAULT && (creature.getCanSpawnHere() && creature.isNotColliding()))) {
                                                     if (!ForgeEventFactory.doSpecialSpawn(creature, world, posX + 0.5f, posY, posZ + 0.5f)) {
-                                                        creature.onInitialSpawn(world.getDifficultyForLocation(new BlockPos(creature)), null);
+                                                        livingdata = creature.onInitialSpawn(world.getDifficultyForLocation(new BlockPos(creature)), livingdata);
                                                     }
                                                     if (creature.isNotColliding()) {
                                                         ++entitySpawnInChunk;
@@ -162,7 +163,7 @@ public final class MidnightWorldEntitySpawner {
             while (random.nextFloat() < biome.getSpawningChance()) {
                 Biome.SpawnListEntry spawnEntry = WeightedRandom.getRandomItem(world.rand, list);
                 int i = spawnEntry.minGroupCount + random.nextInt(1 + spawnEntry.maxGroupCount - spawnEntry.minGroupCount);
-                IEntityLivingData ientitylivingdata = null;
+                IEntityLivingData livingdata = null;
                 int j = centerX + random.nextInt(diameterX);
                 int k = centerZ + random.nextInt(diameterZ);
                 int l = j;
@@ -184,7 +185,7 @@ public final class MidnightWorldEntitySpawner {
                             }
                             creature.setLocationAndAngles((double) ((float) j + 0.5f), (double) blockpos.getY(), (double) ((float) k + 0.5f), random.nextFloat() * 360f, 0f);
                             world.spawnEntity(creature);
-                            creature.onInitialSpawn(world.getDifficultyForLocation(new BlockPos(creature)), ientitylivingdata);
+                            livingdata = creature.onInitialSpawn(world.getDifficultyForLocation(new BlockPos(creature)), livingdata);
                             flag = true;
                         }
                         j += random.nextInt(5) - random.nextInt(5);
