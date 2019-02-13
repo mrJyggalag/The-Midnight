@@ -1,8 +1,8 @@
 package com.mushroom.midnight.common.network;
 
-import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.common.entity.creature.EntityRifter;
 import io.netty.buffer.ByteBuf;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.world.World;
@@ -38,8 +38,8 @@ public class MessageCaptureEntity implements IMessage {
         @Override
         public IMessage onMessage(MessageCaptureEntity message, MessageContext ctx) {
             if (ctx.side.isClient()) {
-                Midnight.proxy.handleMessage(ctx, player -> {
-                    World world = player.world;
+                Minecraft.getMinecraft().addScheduledTask(() -> {
+                    World world = Minecraft.getMinecraft().world;
                     EntityRifter rifterEntity = getEntity(world, message.rifterId, EntityRifter.class);
                     EntityLivingBase capturedEntity = getEntity(world, message.capturedId, EntityLivingBase.class);
                     if (rifterEntity != null) {
