@@ -26,8 +26,8 @@ public class BlockBulbFungusHat extends Block implements IModelProvider {
 
     public BlockBulbFungusHat(MapColor mapColor) {
         super(Material.WOOD, mapColor);
-        setHardness(0.5f);
-        setSoundType(SoundType.WOOD);
+        setHardness(0.2f);
+        setSoundType(SoundType.SLIME);
         setCreativeTab(ModTabs.BUILDING_TAB);
         setLightLevel(0.1f);
     }
