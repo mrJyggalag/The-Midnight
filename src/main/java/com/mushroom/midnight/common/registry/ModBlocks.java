@@ -39,6 +39,7 @@ import com.mushroom.midnight.common.block.BlockMidnightGrass;
 import com.mushroom.midnight.common.block.BlockMidnightLadder;
 import com.mushroom.midnight.common.block.BlockMidnightLeaves;
 import com.mushroom.midnight.common.block.BlockMidnightLog;
+import com.mushroom.midnight.common.block.BlockMidnightMycelium;
 import com.mushroom.midnight.common.block.BlockMidnightOre;
 import com.mushroom.midnight.common.block.BlockMidnightPlant;
 import com.mushroom.midnight.common.block.BlockMidnightSapling;
@@ -127,6 +128,7 @@ public class ModBlocks {
 
     public static final Block MIDNIGHT_DIRT = Blocks.AIR;
     public static final Block MIDNIGHT_GRASS = Blocks.AIR;
+    public static final Block MIDNIGHT_MYCELIUM = Blocks.AIR;
 
     public static final Block TALL_MIDNIGHT_GRASS = Blocks.AIR;
     public static final Block DOUBLE_MIDNIGHT_GRASS = Blocks.AIR;
@@ -298,6 +300,7 @@ public class ModBlocks {
         blocks.addAll(Lists.newArrayList(
                 RegUtil.withName(new BlockMidnightGrass(), "midnight_grass"),
                 RegUtil.withName(new BlockMidnightDirt(), "midnight_dirt"),
+                RegUtil.withName(new BlockMidnightMycelium(), "midnight_mycelium"),
                 RegUtil.withName(new BlockMidnightLog(), "shadowroot_log"),
                 RegUtil.withName(new BlockMidnightLeaves(() -> SHADOWROOT_SAPLING), "shadowroot_leaves"),
                 RegUtil.withName(new BlockMidnightLog(), "dead_wood_log"),
@@ -525,7 +528,7 @@ public class ModBlocks {
                 SHADOWROOT_CRAFTING_TABLE,
                 SHADOWROOT_CHEST,
                 MIDNIGHT_FURNACE,
-                MIDNIGHT_DIRT, MIDNIGHT_GRASS,
+                MIDNIGHT_DIRT, MIDNIGHT_GRASS, MIDNIGHT_MYCELIUM,
                 TALL_MIDNIGHT_GRASS, DOUBLE_MIDNIGHT_GRASS,
                 NIGHTSHROOM, DOUBLE_NIGHTSHROOM, NIGHTSHROOM_SHELF,
                 DEWSHROOM, DOUBLE_DEWSHROOM, DEWSHROOM_SHELF,

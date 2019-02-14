@@ -1,0 +1,36 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "forge:multi-layer",
+    "transform": "forge:default-block",
+    "custom": {
+      "base": "midnight:midnight_mycelium#base",
+      "Cutout": "midnight:midnight_mycelium#base",
+      "Translucent": "midnight:midnight_mycelium#glow"
+    }
+  },
+  "variants": {
+    "normal": [{}],
+    "inventory": [{}],
+    "base": [
+      {
+        "model": "cube_bottom_top",
+        "textures": {
+          "bottom": "blocks/dirt",
+          "top": "midnight:blocks/mycelium_top",
+          "side": "midnight:blocks/mycelium_side"
+        }
+      }
+    ],
+    "glow": [
+      {
+        "model": "cube_bottom_top",
+        "textures": {
+          "bottom": "blocks/dirt",
+          "top": "midnight:blocks/mycelium_top_glow",
+          "side": "midnight:blocks/mycelium_side_glow"
+        }
+      }
+    ]
+  }
+}

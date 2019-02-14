@@ -11,6 +11,7 @@ itemGroup.midnight_combat=Midnight Combat
 tile.midnight.nightstone.name=Pierre de Nuit
 tile.midnight.midnight_grass.name=Herbe de Minuit
 tile.midnight.midnight_dirt.name=Terre de Minuit
+tile.midnight.midnight_mycelium.name=Mycélium de Minuit
 
 tile.midnight.trenchstone.name=Pierre de Tranchée
 tile.midnight.trenchstone_bricks.name=Briques de Tranchée

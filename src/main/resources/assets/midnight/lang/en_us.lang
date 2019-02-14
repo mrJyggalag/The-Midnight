@@ -11,6 +11,7 @@ itemGroup.midnight_combat=Midnight Combat
 tile.midnight.nightstone.name=Nightstone
 tile.midnight.midnight_grass.name=Midnight Grass
 tile.midnight.midnight_dirt.name=Midnight Dirt
+tile.midnight.midnight_mycelium.name=Midnight Mycelium
 
 tile.midnight.trenchstone.name=Trenchstone
 tile.midnight.trenchstone_bricks.name=Trenchstone Bricks
