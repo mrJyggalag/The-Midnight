@@ -1,6 +1,5 @@
 package com.mushroom.midnight.common.network;
 
-import com.mushroom.midnight.Midnight;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
@@ -33,9 +32,7 @@ public class MessageItemActivation implements IMessage {
         @Override
         public IMessage onMessage(MessageItemActivation message, MessageContext ctx) {
             if (ctx.side.isClient()) {
-                Midnight.proxy.handleMessage(ctx, player -> {
-                    Minecraft.getMinecraft().entityRenderer.displayItemActivation(message.stack);
-                });
+                Minecraft.getMinecraft().addScheduledTask(() -> Minecraft.getMinecraft().entityRenderer.displayItemActivation(message.stack));
             }
             return null;
         }
