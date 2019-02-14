@@ -16,7 +16,7 @@
       {
         "model": "cube_bottom_top",
         "textures": {
-          "bottom": "blocks/dirt",
+          "bottom": "midnight:blocks/nightstone",
           "top": "midnight:blocks/mycelium_top",
           "side": "midnight:blocks/mycelium_side"
         }
@@ -26,7 +26,7 @@
       {
         "model": "cube_bottom_top",
         "textures": {
-          "bottom": "blocks/dirt",
+          "bottom": "midnight:blocks/nightstone",
           "top": "midnight:blocks/mycelium_top_glow",
           "side": "midnight:blocks/mycelium_side_glow"
         }
