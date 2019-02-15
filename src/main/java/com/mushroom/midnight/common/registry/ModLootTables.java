@@ -14,4 +14,5 @@ public class ModLootTables {
     public static final ResourceLocation LOOT_TABLE_STINGER = new ResourceLocation(MODID, "stinger");
     public static final ResourceLocation LOOT_TABLE_NIGHTSTAG = new ResourceLocation(MODID, "nightstag");
     public static final ResourceLocation LOOT_TABLE_DECEITFUL_SNAPPER = new ResourceLocation(MODID, "deceitful_snapper");
+    public static final ResourceLocation LOOT_TABLE_RACOON = new ResourceLocation(MODID, "racoon");
 }

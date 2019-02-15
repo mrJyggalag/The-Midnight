@@ -9,6 +9,7 @@ import com.mushroom.midnight.common.entity.creature.EntityHunter;
 import com.mushroom.midnight.common.entity.creature.EntityNightStag;
 import com.mushroom.midnight.common.entity.creature.EntityNova;
 import com.mushroom.midnight.common.entity.creature.EntityPenumbrian;
+import com.mushroom.midnight.common.entity.creature.EntityRacoon;
 import com.mushroom.midnight.common.entity.creature.EntityRifter;
 import com.mushroom.midnight.common.entity.creature.EntityStinger;
 import com.mushroom.midnight.common.entity.creature.EntityTreeHopper;
@@ -113,6 +114,14 @@ public class ModEntities {
                         .name(Midnight.MODID + ".deceitful_snapper")
                         .tracker(80, 3, true)
                         .egg(0x45404E, 0x906F99)
+                        .build(),
+                EntityEntryBuilder.create()
+                        .entity(EntityRacoon.class)
+                        .factory(EntityRacoon::new)
+                        .id(new ResourceLocation(Midnight.MODID, "racoon"), currentEntityId++)
+                        .name(Midnight.MODID + ".racoon")
+                        .tracker(80, 3, true)
+                        .egg(0x4B5065, 0x4E268A)
                         .build()
         );
 
