@@ -369,7 +369,7 @@ public class MidnightBiomeConfigs {
             .build();
 
     public static final CavernousBiomeConfig FUNGAL_CAVERN_CONFIG = CavernousBiomeConfig.builder()
-            .withSurface(new SurfaceConfig())
+            .withSurface(new SurfaceConfig().withTopState(ModBlocks.MIDNIGHT_MYCELIUM.getDefaultState()))
             .withFeatures(FUNGAL_CAVERN_FEATURE_CONFIG)
             .withStructure(FUNGAL_CAVERN_STRUCTURE_CONFIG)
             .build();

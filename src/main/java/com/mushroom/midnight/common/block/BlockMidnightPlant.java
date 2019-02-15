@@ -53,7 +53,7 @@ public class BlockMidnightPlant extends BlockBush implements IModelProvider, ISh
 
     @Override
     protected boolean canSustainBush(IBlockState state) {
-        return state.getBlock() == ModBlocks.MIDNIGHT_DIRT || state.getBlock() == ModBlocks.MIDNIGHT_GRASS;
+        return state.getBlock() == ModBlocks.MIDNIGHT_DIRT || state.getBlock() == ModBlocks.MIDNIGHT_GRASS || state.getBlock() == ModBlocks.MIDNIGHT_MYCELIUM;
     }
 
     @Override
@@ -94,7 +94,9 @@ public class BlockMidnightPlant extends BlockBush implements IModelProvider, ISh
     @SideOnly(Side.CLIENT)
     @SuppressWarnings("deprecation")
     public int getPackedLightmapCoords(IBlockState state, IBlockAccess source, BlockPos pos) {
-        if (!glowing) { return super.getPackedLightmapCoords(state, source, pos); }
+        if (!glowing) {
+            return super.getPackedLightmapCoords(state, source, pos);
+        }
         if (MinecraftForgeClient.getRenderLayer() == BlockRenderLayer.CUTOUT) {
             return source.getCombinedLight(pos, 0);
         }

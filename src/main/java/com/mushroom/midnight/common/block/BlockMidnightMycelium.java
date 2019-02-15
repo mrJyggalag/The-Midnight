@@ -11,11 +11,13 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.Item;
 import net.minecraft.util.BlockRenderLayer;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.client.MinecraftForgeClient;
+import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -28,7 +30,6 @@ public class BlockMidnightMycelium extends Block implements IModelProvider {
         setCreativeTab(ModTabs.BUILDING_TAB);
         setHardness(0.6f);
         setSoundType(SoundType.PLANT);
-        setLightLevel(0.1f);
         setTickRandomly(true);
     }
 
@@ -68,18 +69,21 @@ public class BlockMidnightMycelium extends Block implements IModelProvider {
 
     @Override
     public boolean canRenderInLayer(IBlockState state, BlockRenderLayer layer) {
-        return layer == BlockRenderLayer.TRANSLUCENT || layer == BlockRenderLayer.CUTOUT;
+        return layer == BlockRenderLayer.SOLID || layer == BlockRenderLayer.CUTOUT;
     }
 
     @Override
     @SideOnly(Side.CLIENT)
     @SuppressWarnings("deprecation")
     public int getPackedLightmapCoords(IBlockState state, IBlockAccess source, BlockPos pos) {
-        if (MinecraftForgeClient.getRenderLayer() == BlockRenderLayer.CUTOUT) {
+        if (MinecraftForgeClient.getRenderLayer() == BlockRenderLayer.SOLID) {
             return source.getCombinedLight(pos, 0);
         }
-        int skyLight = 10;
-        int blockLight = 10;
-        return skyLight << 20 | blockLight << 4;
+        return source.getCombinedLight(pos, 10);
+    }
+
+    @Override
+    public boolean canSustainPlant(IBlockState state, IBlockAccess world, BlockPos pos, EnumFacing direction, IPlantable plantable) {
+        return true;
     }
 }
