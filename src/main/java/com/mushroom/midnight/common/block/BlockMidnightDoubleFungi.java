@@ -28,11 +28,6 @@ public class BlockMidnightDoubleFungi extends BlockMidnightDoublePlant implement
     }
 
     @Override
-    public boolean canPlaceBlockAt(World world, BlockPos pos) {
-        return world.getBlockState(pos).getBlock().isReplaceable(world, pos) && world.getBlockState(pos.up()).getBlock().isReplaceable(world, pos.up());
-    }
-
-    @Override
     public boolean canGrow(World world, BlockPos pos, IBlockState state, boolean isClient) {
         return true;
     }

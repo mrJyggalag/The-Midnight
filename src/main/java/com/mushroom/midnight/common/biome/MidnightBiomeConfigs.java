@@ -12,6 +12,7 @@ import com.mushroom.midnight.common.entity.creature.EntityDeceitfulSnapper;
 import com.mushroom.midnight.common.entity.creature.EntityHunter;
 import com.mushroom.midnight.common.entity.creature.EntityNightStag;
 import com.mushroom.midnight.common.entity.creature.EntityNova;
+import com.mushroom.midnight.common.entity.creature.EntityRacoon;
 import com.mushroom.midnight.common.entity.creature.EntityRifter;
 import com.mushroom.midnight.common.entity.creature.EntityStinger;
 import com.mushroom.midnight.common.registry.ModBlocks;
@@ -197,22 +198,19 @@ public class MidnightBiomeConfigs {
             .withMonster(new Biome.SpawnListEntry(EntityHunter.class, 5, 0, 2))
             .build();
 
+    public static final SpawnerConfig VIGILANT_FOREST_SPAWN_CONFIG = SpawnerConfig.builder()
+            .extendsFrom(VEGETATED_SPAWN_CONFIG)
+            .withCreature(new Biome.SpawnListEntry(EntityRacoon.class, 100, 1, 2))
+            .build();
+
     public static final SpawnerConfig DECEITFUL_BOG_SPAWN_CONFIG = SpawnerConfig.builder()
+            .extendsFrom(VEGETATED_SPAWN_CONFIG)
             .withWaterCreature(new Biome.SpawnListEntry(EntityDeceitfulSnapper.class, 100, 5, 10))
-            .withCreature(new Biome.SpawnListEntry(EntityNightStag.class, 100, 1, 3))
-            .withMonster(new Biome.SpawnListEntry(EntityRifter.class, 100, 1, 2))
-            .withMonster(new Biome.SpawnListEntry(EntityEnderman.class, 10, 4, 4))
-            .withMonster(new Biome.SpawnListEntry(EntityStinger.class, 100, 1, 2))
-            .withMonster(new Biome.SpawnListEntry(EntityNova.class, 20, 1, 1))
             .build();
 
     public static final SpawnerConfig NIGHT_PLAINS_SPAWN_CONFIG = SpawnerConfig.builder()
-            .withCreature(new Biome.SpawnListEntry(EntityNightStag.class, 100, 1, 3))
-            .withMonster(new Biome.SpawnListEntry(EntityRifter.class, 100, 1, 2))
-            .withMonster(new Biome.SpawnListEntry(EntityEnderman.class, 10, 4, 4))
+            .extendsFrom(VEGETATED_SPAWN_CONFIG)
             .withMonster(new Biome.SpawnListEntry(EntityHunter.class, 5, 1, 2))
-            .withMonster(new Biome.SpawnListEntry(EntityStinger.class, 100, 1, 2))
-            .withMonster(new Biome.SpawnListEntry(EntityNova.class, 20, 1, 1))
             .build();
 
     public static final SpawnerConfig PLATEAU_SPAWN_CONFIG = SpawnerConfig.builder()
@@ -221,12 +219,8 @@ public class MidnightBiomeConfigs {
             .build();
 
     public static final SpawnerConfig VALLEY_SPAWN_CONFIG = SpawnerConfig.builder()
-            .withCreature(new Biome.SpawnListEntry(EntityNightStag.class, 100, 1, 3))
-            .withMonster(new Biome.SpawnListEntry(EntityRifter.class, 100, 1, 2))
-            .withMonster(new Biome.SpawnListEntry(EntityEnderman.class, 10, 4, 4))
+            .extendsFrom(VEGETATED_SPAWN_CONFIG)
             .withMonster(new Biome.SpawnListEntry(EntityHunter.class, 5, 1, 2))
-            .withMonster(new Biome.SpawnListEntry(EntityStinger.class, 100, 1, 2))
-            .withMonster(new Biome.SpawnListEntry(EntityNova.class, 20, 1, 1))
             .build();
 
     public static final SurfaceTerrainConfig WARPED_TERRAIN_CONFIG = new SurfaceTerrainConfig()
@@ -304,7 +298,7 @@ public class MidnightBiomeConfigs {
     public static final SurfaceBiomeConfig VIGILANT_FOREST_CONFIG = SurfaceBiomeConfig.builder()
             .withTerrain(FOREST_TERRAIN_CONFIG)
             .withFeatures(VIGILANT_FOREST_FEATURE_CONFIG)
-            .withSpawner(VEGETATED_SPAWN_CONFIG)
+            .withSpawner(VIGILANT_FOREST_SPAWN_CONFIG)
             .build();
 
     public static final SurfaceBiomeConfig RUNEBUSH_GROVE_CONFIG = SurfaceBiomeConfig.builder()

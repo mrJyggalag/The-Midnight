@@ -9,6 +9,7 @@ import net.minecraft.entity.ai.EntityAILookIdle;
 import net.minecraft.entity.ai.EntityAIPanic;
 import net.minecraft.entity.ai.EntityAISwimming;
 import net.minecraft.entity.ai.EntityAIWanderAvoidWater;
+import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.pathfinding.PathNavigate;
@@ -38,7 +39,7 @@ public class EntityRacoon extends EntityAnimal {
 
     @Override
     public boolean getCanSpawnHere() {
-        if (getPosition().getY() > 50) {
+        if (getPosition().getY() <= world.getSeaLevel()) {
             return false;
         }
         IBlockState belowState = world.getBlockState(new BlockPos(this).down());
@@ -50,6 +51,7 @@ public class EntityRacoon extends EntityAnimal {
         this.tasks.addTask(0, new EntityAISwimming(this));
         this.tasks.addTask(1, new EntityAIPanic(this, 1d));
         this.tasks.addTask(6, new EntityAIWanderAvoidWater(this, 0.7d, 0.005f));
+        this.tasks.addTask(7, new EntityAIWatchClosest(this, EntityPlayer.class, 8f, 0.02f));
         this.tasks.addTask(8, new EntityAILookIdle(this));
     }
 

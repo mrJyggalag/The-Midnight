@@ -1,35 +1,24 @@
 package com.mushroom.midnight.common.block;
 
-import com.mushroom.midnight.client.IModelProvider;
 import com.mushroom.midnight.common.helper.Helper;
 import com.mushroom.midnight.common.registry.ModBlocks;
-import com.mushroom.midnight.common.registry.ModTabs;
-import net.minecraft.block.Block;
-import net.minecraft.block.SoundType;
-import net.minecraft.block.material.MapColor;
-import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.Item;
 import net.minecraft.util.BlockRenderLayer;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.client.MinecraftForgeClient;
-import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.Random;
 
-public class BlockMidnightMycelium extends Block implements IModelProvider {
+public class BlockMidnightMycelium extends BlockNightstone {
 
     public BlockMidnightMycelium() {
-        super(Material.GRASS, MapColor.MAGENTA_STAINED_HARDENED_CLAY);
-        setCreativeTab(ModTabs.BUILDING_TAB);
-        setHardness(0.6f);
-        setSoundType(SoundType.PLANT);
+        super();
         setTickRandomly(true);
     }
 
@@ -80,10 +69,5 @@ public class BlockMidnightMycelium extends Block implements IModelProvider {
             return source.getCombinedLight(pos, 0);
         }
         return source.getCombinedLight(pos, 10);
-    }
-
-    @Override
-    public boolean canSustainPlant(IBlockState state, IBlockAccess world, BlockPos pos, EnumFacing direction, IPlantable plantable) {
-        return true;
     }
 }
