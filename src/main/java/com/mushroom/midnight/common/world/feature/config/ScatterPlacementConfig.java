@@ -1,5 +1,6 @@
 package com.mushroom.midnight.common.world.feature.config;
 
+import com.mushroom.midnight.common.registry.ModBlocks;
 import com.mushroom.midnight.common.world.SurfacePlacementLevel;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.EnumFacing;
@@ -52,7 +53,8 @@ public class ScatterPlacementConfig implements IPlacementConfig {
 
             mutablePos.setPos(pos.getX() + offsetX, pos.getY() + offsetY, pos.getZ() + offsetZ);
 
-            if (world.isAirBlock(mutablePos)) {
+            IBlockState existingState = world.getBlockState(mutablePos);
+            if (existingState.getBlock().isAir(existingState, world, mutablePos) && existingState.getBlock() != ModBlocks.MUSHROOM_INSIDE) {
                 generator.accept(mutablePos.toImmutable());
             }
         }

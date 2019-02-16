@@ -7,7 +7,8 @@ import net.minecraft.util.ResourceLocation;
 
 public class LargeBulbFungusFeature extends TemplateTreeFeature {
     private static final ResourceLocation[] TEMPLATES = new ResourceLocation[] {
-            new ResourceLocation(Midnight.MODID, "mushroom/bulbfungus")
+            new ResourceLocation(Midnight.MODID, "mushroom/bulbfungus_1"),
+            new ResourceLocation(Midnight.MODID, "mushroom/bulbfungus_2")
     };
 
     public LargeBulbFungusFeature(IBlockState log, IBlockState leaves) {

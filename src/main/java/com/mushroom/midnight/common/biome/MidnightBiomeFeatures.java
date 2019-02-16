@@ -4,6 +4,7 @@ import com.mushroom.midnight.common.block.BlockBladeshroom;
 import com.mushroom.midnight.common.block.BlockPileOfEggs;
 import com.mushroom.midnight.common.registry.ModBlocks;
 import com.mushroom.midnight.common.world.feature.BoulderFeature;
+import com.mushroom.midnight.common.world.feature.LargeBogshroomFeature;
 import com.mushroom.midnight.common.world.feature.LargeBulbFungusFeature;
 import com.mushroom.midnight.common.world.feature.CrystalClusterFeature;
 import com.mushroom.midnight.common.world.feature.DarkWillowTreeFeature;
@@ -127,10 +128,7 @@ public class MidnightBiomeFeatures {
             )
     };
 
-    public static final IMidnightFeature LARGE_BOG_SHROOM_FEATURE = new LargeFungiFeature(
-            ModBlocks.BOGSHROOM_STEM.getDefaultState(),
-            ModBlocks.BOGSHROOM_HAT.getDefaultState()
-    );
+    public static final IMidnightFeature LARGE_BOGSHROOM_FEATURE = new LargeBogshroomFeature();
 
     public static final IMidnightFeature LARGE_BULB_FUNGUS_FEATURE = new LargeBulbFungusFeature();
 

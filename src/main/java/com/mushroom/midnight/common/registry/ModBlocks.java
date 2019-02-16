@@ -63,6 +63,7 @@ import com.mushroom.midnight.common.item.ItemDeceitfulAlgae;
 import com.mushroom.midnight.common.item.ItemMidnightSlab;
 import com.mushroom.midnight.common.tile.base.TileEntityMidnightFurnace;
 import com.mushroom.midnight.common.tile.base.TileEntityShadowrootChest;
+import com.mushroom.midnight.common.world.feature.LargeBogshroomFeature;
 import com.mushroom.midnight.common.world.feature.DarkWillowTreeFeature;
 import com.mushroom.midnight.common.world.feature.LargeBulbFungusFeature;
 import com.mushroom.midnight.common.world.feature.LargeFungiFeature;
@@ -333,10 +334,7 @@ public class ModBlocks {
                         ModBlocks.VIRIDSHROOM_HAT.getDefaultState()
                 )), "double_viridshroom"),
                 RegUtil.withName(new BlockMidnightFungi(() -> DOUBLE_BOGSHROOM), "bogshroom"),
-                RegUtil.withName(new BlockMidnightDoubleFungi(() -> new LargeFungiFeature(
-                        ModBlocks.BOGSHROOM_STEM.getDefaultState(),
-                        ModBlocks.BOGSHROOM_HAT.getDefaultState()
-                )), "double_bogshroom"),
+                RegUtil.withName(new BlockMidnightDoubleFungi(LargeBogshroomFeature::new), "double_bogshroom"),
                 RegUtil.withName(new BlockMidnightFungiStem(), "bogshroom_stem"),
                 RegUtil.withName(new BlockMidnightFungiHat(() -> BOGSHROOM, MapColor.ADOBE), "bogshroom_hat"),
                 RegUtil.withName(new BlockBulbFungus(LargeBulbFungusFeature::new), "bulb_fungus"),

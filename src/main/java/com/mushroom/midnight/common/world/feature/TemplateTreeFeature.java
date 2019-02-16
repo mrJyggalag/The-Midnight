@@ -2,6 +2,7 @@ package com.mushroom.midnight.common.world.feature;
 
 import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.common.block.BlockMidnightFungiHat;
+import com.mushroom.midnight.common.block.BlockMidnightFungiStem;
 import com.mushroom.midnight.common.util.WorldUtil;
 import com.mushroom.midnight.common.world.template.CompiledTemplate;
 import com.mushroom.midnight.common.world.template.RotatedSettingConfigurator;
@@ -96,6 +97,8 @@ public class TemplateTreeFeature extends MidnightTreeFeature {
         if (block instanceof BlockLog) {
             BlockLog.EnumAxis axis = state.getValue(BlockLog.LOG_AXIS);
             return new Template.BlockInfo(pos, this.log.withProperty(BlockLog.LOG_AXIS, axis), null);
+        } else if (block instanceof BlockMidnightFungiStem) {
+            return new Template.BlockInfo(pos, this.log, null);
         } else if (block instanceof BlockLeaves || block instanceof BlockMidnightFungiHat) {
             return new Template.BlockInfo(pos, this.leaves, null);
         } else if (block == Blocks.STRUCTURE_BLOCK || block instanceof BlockAir) {
