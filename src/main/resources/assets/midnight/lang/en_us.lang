@@ -95,7 +95,8 @@ tile.midnight.double_viridshroom.name=Tall Viridshroom
 tile.midnight.bogshroom.name=Bogshroom
 tile.midnight.double_bogshroom.name=Tall Bogshroom
 tile.midnight.bogshroom_stem.name=Bogshroom Stem
-tile.midnight.bogshroom_cap.name=Bogshroom Cap
+tile.midnight.bogshroom_hat.name=Bogshroom Cap
+tile.midnight.bogshroom_shelf.name=Bogshroom Shelf
 
 tile.midnight.bulb_fungus.name=Bulb Fungus
 tile.midnight.bulb_fungus_stem.name=Bulb Fungus Stem

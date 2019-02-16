@@ -163,6 +163,7 @@ public class ModBlocks {
 
     public static final Block BOGSHROOM = Blocks.AIR;
     public static final Block DOUBLE_BOGSHROOM = Blocks.AIR;
+    public static final Block BOGSHROOM_SHELF = Blocks.AIR;
     public static final Block BOGSHROOM_STEM = Blocks.AIR;
     public static final Block BOGSHROOM_HAT = Blocks.AIR;
 
@@ -335,6 +336,7 @@ public class ModBlocks {
                 )), "double_viridshroom"),
                 RegUtil.withName(new BlockMidnightFungi(() -> DOUBLE_BOGSHROOM), "bogshroom"),
                 RegUtil.withName(new BlockMidnightDoubleFungi(LargeBogshroomFeature::new), "double_bogshroom"),
+                RegUtil.withName(new BlockMidnightFungiShelf(), "bogshroom_shelf"),
                 RegUtil.withName(new BlockMidnightFungiStem(), "bogshroom_stem"),
                 RegUtil.withName(new BlockMidnightFungiHat(() -> BOGSHROOM, MapColor.ADOBE), "bogshroom_hat"),
                 RegUtil.withName(new BlockBulbFungus(LargeBulbFungusFeature::new), "bulb_fungus"),
@@ -531,7 +533,7 @@ public class ModBlocks {
                 NIGHTSHROOM, DOUBLE_NIGHTSHROOM, NIGHTSHROOM_SHELF,
                 DEWSHROOM, DOUBLE_DEWSHROOM, DEWSHROOM_SHELF,
                 VIRIDSHROOM, DOUBLE_VIRIDSHROOM, VIRIDSHROOM_SHELF,
-                BOGSHROOM, DOUBLE_BOGSHROOM, BOGSHROOM_HAT, BOGSHROOM_STEM,
+                BOGSHROOM, DOUBLE_BOGSHROOM, BOGSHROOM_SHELF, BOGSHROOM_HAT, BOGSHROOM_STEM,
                 NIGHTSHROOM_STEM, NIGHTSHROOM_HAT,
                 DEWSHROOM_STEM, DEWSHROOM_HAT,
                 VIRIDSHROOM_STEM, VIRIDSHROOM_HAT,
