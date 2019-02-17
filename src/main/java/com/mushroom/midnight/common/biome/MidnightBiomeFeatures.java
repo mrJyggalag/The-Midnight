@@ -2,10 +2,9 @@ package com.mushroom.midnight.common.biome;
 
 import com.mushroom.midnight.common.block.BlockBladeshroom;
 import com.mushroom.midnight.common.block.BlockPileOfEggs;
+import com.mushroom.midnight.common.block.GeneratablePlant;
 import com.mushroom.midnight.common.registry.ModBlocks;
 import com.mushroom.midnight.common.world.feature.BoulderFeature;
-import com.mushroom.midnight.common.world.feature.LargeBogshroomFeature;
-import com.mushroom.midnight.common.world.feature.LargeBulbFungusFeature;
 import com.mushroom.midnight.common.world.feature.CrystalClusterFeature;
 import com.mushroom.midnight.common.world.feature.DarkWillowTreeFeature;
 import com.mushroom.midnight.common.world.feature.DeadLogFeature;
@@ -16,6 +15,8 @@ import com.mushroom.midnight.common.world.feature.FungiFeature;
 import com.mushroom.midnight.common.world.feature.GourdFeature;
 import com.mushroom.midnight.common.world.feature.HeapFeature;
 import com.mushroom.midnight.common.world.feature.IMidnightFeature;
+import com.mushroom.midnight.common.world.feature.LargeBogshroomFeature;
+import com.mushroom.midnight.common.world.feature.LargeBulbFungusFeature;
 import com.mushroom.midnight.common.world.feature.LargeFungiFeature;
 import com.mushroom.midnight.common.world.feature.MidnightAbstractFeature;
 import com.mushroom.midnight.common.world.feature.MossFeature;
@@ -23,7 +24,6 @@ import com.mushroom.midnight.common.world.feature.PlantFeature;
 import com.mushroom.midnight.common.world.feature.ShadowrootTreeFeature;
 import com.mushroom.midnight.common.world.feature.SpikeFeature;
 import com.mushroom.midnight.common.world.template.ShelfAttachProcessor;
-import net.minecraft.block.BlockBush;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -41,22 +41,22 @@ public class MidnightBiomeFeatures {
 
     public static final IMidnightFeature TALL_GRASS_FEATURE = new PlantFeature(
             ModBlocks.TALL_MIDNIGHT_GRASS.getDefaultState(),
-            ((BlockBush) ModBlocks.TALL_MIDNIGHT_GRASS)::canBlockStay
+            GeneratablePlant::canGenerate
     );
 
     public static final IMidnightFeature DOUBLE_GRASS_FEATURE = new DoublePlantFeature(
             ModBlocks.DOUBLE_MIDNIGHT_GRASS.getDefaultState(),
-            (world, pos, state) -> ModBlocks.DOUBLE_MIDNIGHT_GRASS.canPlaceBlockAt(world, pos)
+            GeneratablePlant::canGenerate
     );
 
     public static final IMidnightFeature LUMEN_FEATURE = new PlantFeature(
             ModBlocks.LUMEN_BUD.getDefaultState(),
-            ((BlockBush) ModBlocks.LUMEN_BUD)::canBlockStay
+            GeneratablePlant::canGenerate
     );
 
     public static final IMidnightFeature BLADESHROOM_FEATURE = new PlantFeature(
             ModBlocks.BLADESHROOM.getDefaultState().withProperty(BlockBladeshroom.STAGE, BlockBladeshroom.Stage.CAPPED),
-            ((BlockBush) ModBlocks.BLADESHROOM)::canBlockStay
+            GeneratablePlant::canGenerate
     );
 
     public static final IMidnightFeature SUAVIS_FEATURE = new GourdFeature(
@@ -80,32 +80,32 @@ public class MidnightBiomeFeatures {
 
     public static final IMidnightFeature BOGWEED_FEATURE = new PlantFeature(
             ModBlocks.BOGWEED.getDefaultState(),
-            ((BlockBush) ModBlocks.BOGWEED)::canBlockStay
+            GeneratablePlant::canGenerate
     );
 
     public static final IMidnightFeature GHOST_PLANT_FEATURE = new PlantFeature(
             ModBlocks.GHOST_PLANT.getDefaultState(),
-            ((BlockBush) ModBlocks.GHOST_PLANT)::canBlockStay
+            GeneratablePlant::canGenerate
     );
 
     public static final IMidnightFeature FINGERED_GRASS_FEATURE = new PlantFeature(
             ModBlocks.FINGERED_GRASS.getDefaultState(),
-            ((BlockBush) ModBlocks.FINGERED_GRASS)::canBlockStay
+            GeneratablePlant::canGenerate
     );
 
     public static final IMidnightFeature VIOLEAF_FEATURE = new PlantFeature(
             ModBlocks.VIOLEAF.getDefaultState(),
-            ((BlockBush) ModBlocks.VIOLEAF)::canBlockStay
+            GeneratablePlant::canGenerate
     );
 
     public static final IMidnightFeature RUNEBUSH_FEATURE = new PlantFeature(
             ModBlocks.RUNEBUSH.getDefaultState(),
-            ((BlockBush) ModBlocks.RUNEBUSH)::canBlockStay
+            GeneratablePlant::canGenerate
     );
 
     public static final IMidnightFeature DOUBLE_LUMEN_FEATURE = new DoublePlantFeature(
             ModBlocks.DOUBLE_LUMEN_BUD.getDefaultState(),
-            (world, pos, state) -> ModBlocks.DOUBLE_LUMEN_BUD.canPlaceBlockAt(world, pos)
+            GeneratablePlant::canGenerate
     );
 
     public static final IMidnightFeature FUNGI_FEATURE = new FungiFeature(FungiFeature.FUNGI_STATES);
@@ -116,7 +116,7 @@ public class MidnightBiomeFeatures {
 
     public static final IMidnightFeature CRYSTAL_FLOWER_FEATURE = new PlantFeature(
             ModBlocks.CRYSTAL_FLOWER.getDefaultState(),
-            ((BlockBush) ModBlocks.CRYSTAL_FLOWER)::canBlockStay
+            GeneratablePlant::canGenerate
     );
 
     public static final IMidnightFeature[] LARGE_FUNGI_FEATURES = new LargeFungiFeature[] {
@@ -140,7 +140,7 @@ public class MidnightBiomeFeatures {
 
     public static final IMidnightFeature BULB_FUNGUS_FEATURE = new PlantFeature(
             ModBlocks.BULB_FUNGUS.getDefaultState(),
-            ((BlockBush) ModBlocks.BULB_FUNGUS)::canBlockStay
+            GeneratablePlant::canGenerate
     );
 
     public static final IMidnightFeature BLOOMCRYSTAL_FEATURE = new CrystalClusterFeature(3, 4,
@@ -178,7 +178,7 @@ public class MidnightBiomeFeatures {
     public static final IMidnightFeature ROCKSHROOM_HEAP_FEATURE = new HeapFeature(ModBlocks.ROCKSHROOM.getDefaultState());
 
     public static final IMidnightFeature[] UNDERGROUND_FEATURES = new IMidnightFeature[] {
-            new PlantFeature(ModBlocks.TENDRILWEED.getDefaultState(), ((BlockBush) ModBlocks.TENDRILWEED)::canBlockStay),
+            new PlantFeature(ModBlocks.TENDRILWEED.getDefaultState(), GeneratablePlant::canGenerate),
             FUNGI_FEATURE, BULB_FUNGUS_FEATURE,
             new MidnightAbstractFeature() {
                 @Override

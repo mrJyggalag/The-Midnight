@@ -25,7 +25,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-public class BlockMidnightPlant extends BlockBush implements IModelProvider, IShearable {
+public class BlockMidnightPlant extends BlockBush implements IModelProvider, IShearable, GeneratablePlant {
     private static final AxisAlignedBB BOUNDS = new AxisAlignedBB(0.1, 0.0, 0.1, 0.9, 0.8, 0.9);
     private final PlantBehaviorType behaviorType;
     private final boolean glowing;

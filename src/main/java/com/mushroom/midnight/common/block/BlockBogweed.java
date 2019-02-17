@@ -11,11 +11,6 @@ public class BlockBogweed extends BlockMidnightPlant {
     }
 
     @Override
-    public boolean canBlockStay(World world, BlockPos pos, IBlockState state) {
-        return this.canSustainBush(world.getBlockState(pos.down()));
-    }
-
-    @Override
     protected boolean canSustainBush(IBlockState state) {
         return state.getBlock() == ModBlocks.DECEITFUL_PEAT;
     }

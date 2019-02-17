@@ -5,7 +5,6 @@ import com.mushroom.midnight.common.helper.Helper;
 import com.mushroom.midnight.common.registry.ModBlocks;
 import com.mushroom.midnight.common.registry.ModTabs;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockBush;
 import net.minecraft.block.IGrowable;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -108,7 +107,7 @@ public class BlockMidnightGrass extends Block implements IGrowable, IModelProvid
                     worldIn.getBiome(blockpos1).plantFlower(worldIn, rand, blockpos1);
                 } else {*/
                     IBlockState tallGrassState = ModBlocks.TALL_MIDNIGHT_GRASS.getDefaultState();
-                    if (((BlockBush)ModBlocks.TALL_MIDNIGHT_GRASS).canBlockStay(worldIn, blockpos1, tallGrassState)) {
+                    if (GeneratablePlant.canGenerate(worldIn, blockpos1, tallGrassState)) {
                         worldIn.setBlockState(blockpos1, tallGrassState, 3);
                     }
                 //}

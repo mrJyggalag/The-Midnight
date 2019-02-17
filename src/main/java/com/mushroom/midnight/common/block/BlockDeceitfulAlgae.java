@@ -10,7 +10,6 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
-import net.minecraft.world.World;
 import net.minecraftforge.common.EnumPlantType;
 
 import javax.annotation.Nullable;
@@ -39,16 +38,6 @@ public class BlockDeceitfulAlgae extends BlockBush implements IModelProvider {
     protected boolean canSustainBush(IBlockState state) {
         Material material = state.getMaterial();
         return material == Material.WATER && state.getValue(BlockLiquid.LEVEL) == 0 || material == Material.ICE;
-    }
-
-    @Override
-    public boolean canPlaceBlockAt(World world, BlockPos pos) {
-        return this.canSustainBush(world.getBlockState(pos.down()));
-    }
-
-    @Override
-    public boolean canBlockStay(World world, BlockPos pos, IBlockState state) {
-        return this.canSustainBush(world.getBlockState(pos.down()));
     }
 
     @Override

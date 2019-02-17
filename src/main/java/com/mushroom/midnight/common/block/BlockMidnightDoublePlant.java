@@ -34,7 +34,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-public class BlockMidnightDoublePlant extends BlockBush implements IModelProvider, IShearable {
+public class BlockMidnightDoublePlant extends BlockBush implements IModelProvider, IShearable, GeneratablePlant {
     protected static final PropertyEnum<BlockDoublePlant.EnumBlockHalf> HALF = BlockDoublePlant.HALF;
     private final PlantBehaviorType behaviorType;
     private final boolean glowing;
@@ -84,6 +84,19 @@ public class BlockMidnightDoublePlant extends BlockBush implements IModelProvide
             this.breakHalf(world, upperPos, 2);
             this.breakHalf(world, lowerPos, 3);
         }
+    }
+
+    @Override
+    public boolean canBlockStay(World world, BlockPos pos, IBlockState state) {
+        if (state.getBlock() != this) {
+            return super.canBlockStay(world, pos, state);
+        }
+        BlockPos otherPos = this.getOtherPos(state, pos);
+        IBlockState otherState = world.getBlockState(otherPos);
+        if (otherState.getBlock() != this) {
+            return false;
+        }
+        return this.isUpper(state) || super.canBlockStay(world, pos, otherState);
     }
 
     private BlockPos getUpperPos(IBlockState state, BlockPos pos) {

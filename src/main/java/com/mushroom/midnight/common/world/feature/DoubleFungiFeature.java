@@ -1,7 +1,7 @@
 package com.mushroom.midnight.common.world.feature;
 
+import com.mushroom.midnight.common.block.GeneratablePlant;
 import com.mushroom.midnight.common.registry.ModBlocks;
-import net.minecraft.block.BlockBush;
 import net.minecraft.block.BlockDoublePlant;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.math.BlockPos;
@@ -33,7 +33,7 @@ public class DoubleFungiFeature extends MidnightAbstractFeature {
     @Override
     public boolean placeFeature(World world, Random rand, BlockPos origin) {
         IBlockState state = this.fungiStates[rand.nextInt(this.fungiStates.length)];
-        if (((BlockBush) state.getBlock()).canBlockStay(world, origin, state)) {
+        if (GeneratablePlant.canGenerate(world, origin, state)) {
             world.setBlockState(origin, state.withProperty(BlockDoublePlant.HALF, BlockDoublePlant.EnumBlockHalf.LOWER), 2 | 16);
             world.setBlockState(origin.up(), state.withProperty(BlockDoublePlant.HALF, BlockDoublePlant.EnumBlockHalf.UPPER), 2 | 16);
             return true;
