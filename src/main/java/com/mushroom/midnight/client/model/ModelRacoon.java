@@ -63,7 +63,8 @@ public class ModelRacoon extends ModelQuadruped {
     public void setRotationAngles(float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scaleFactor, Entity entity) {
         super.setRotationAngles(limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scaleFactor, entity);
         this.body.rotateAngleX = 0f;
-        this.Tail.rotateAngleY = this.LeftEar.rotateAngleX = this.RightEar.rotateAngleX = MathHelper.sin((float) (ageInTicks * Math.PI * 0.2f)) * 0.1f;
+        this.Tail.rotateAngleY = MathHelper.sin((float) (ageInTicks * Math.PI * 0.25f)) * 0.1f;
+        this.LeftEar.rotateAngleX = this.RightEar.rotateAngleX = MathHelper.sin((float) (ageInTicks * Math.PI * 0.2f)) * 0.1f;
     }
 
     private void setRotateAngle(ModelRenderer modelRenderer, float x, float y, float z) {
