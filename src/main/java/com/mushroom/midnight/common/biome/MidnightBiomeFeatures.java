@@ -22,6 +22,7 @@ import com.mushroom.midnight.common.world.feature.MossFeature;
 import com.mushroom.midnight.common.world.feature.PlantFeature;
 import com.mushroom.midnight.common.world.feature.ShadowrootTreeFeature;
 import com.mushroom.midnight.common.world.feature.SpikeFeature;
+import com.mushroom.midnight.common.world.template.ShelfAttachProcessor;
 import net.minecraft.block.BlockBush;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.math.BlockPos;
@@ -33,7 +34,9 @@ public class MidnightBiomeFeatures {
     public static final IMidnightFeature SHADOWROOT_TREE_FEATURE = new ShadowrootTreeFeature();
     public static final IMidnightFeature DARK_WILLOW_TREE_FEATURE = new DarkWillowTreeFeature();
 
-    public static final IMidnightFeature DEAD_TREE_FEATURE = new DeadTreeFeature();
+    public static final IMidnightFeature DEAD_TREE_FEATURE = new DeadTreeFeature(ShelfAttachProcessor.FOREST_SHELF_BLOCKS);
+    public static final IMidnightFeature BOG_DEAD_TREE_FEATURE = new DeadTreeFeature(ShelfAttachProcessor.SHELF_BLOCKS);
+
     public static final IMidnightFeature DEAD_LOG_FEATURE = new DeadLogFeature();
 
     public static final IMidnightFeature TALL_GRASS_FEATURE = new PlantFeature(
@@ -105,8 +108,11 @@ public class MidnightBiomeFeatures {
             (world, pos, state) -> ModBlocks.DOUBLE_LUMEN_BUD.canPlaceBlockAt(world, pos)
     );
 
-    public static final IMidnightFeature FUNGI_FEATURE = new FungiFeature();
-    public static final IMidnightFeature DOUBLE_FUNGI_FEATURE = new DoubleFungiFeature();
+    public static final IMidnightFeature FUNGI_FEATURE = new FungiFeature(FungiFeature.FUNGI_STATES);
+    public static final IMidnightFeature BOG_FUNGI_FEATURE = new FungiFeature(FungiFeature.BOG_FUNGI_STATES);
+
+    public static final IMidnightFeature DOUBLE_FUNGI_FEATURE = new DoubleFungiFeature(DoubleFungiFeature.FUNGI_STATES);
+    public static final IMidnightFeature DOUBLE_BOG_FUNGI_FEATURE = new DoubleFungiFeature(DoubleFungiFeature.BOG_FUNGI_STATES);
 
     public static final IMidnightFeature CRYSTAL_FLOWER_FEATURE = new PlantFeature(
             ModBlocks.CRYSTAL_FLOWER.getDefaultState(),

@@ -113,7 +113,7 @@ public class MidnightBiomeConfigs {
 
     public static final FeatureConfig DECEITFUL_BOG_FEATURE_CONFIG = FeatureConfig.builder()
             .withFeature(ROCKSHROOM_HEAP_FEATURE, new SurfacePlacementConfig(-99, 1))
-            .withFeature(DEAD_TREE_FEATURE, new SurfacePlacementConfig(-1, 1))
+            .withFeature(BOG_DEAD_TREE_FEATURE, new SurfacePlacementConfig(-1, 1))
             .withFeature(new IMidnightFeature[] {
                     SHADOWROOT_TREE_FEATURE,
                     DARK_WILLOW_TREE_FEATURE
@@ -125,7 +125,7 @@ public class MidnightBiomeConfigs {
             .withFeature(TALL_GRASS_FEATURE, new ScatterPlacementConfig(5, 32))
             .withFeature(DOUBLE_GRASS_FEATURE, new ScatterPlacementConfig(3, 32))
             .withFeature(DECEITFUL_MOSS_FEATURE, new ScatterPlacementConfig(16, 32))
-            .withFeature(FUNGI_FEATURE, new ScatterPlacementConfig(2, 4))
+            .withFeature(BOG_FUNGI_FEATURE, new ScatterPlacementConfig(2, 4))
             .withFeature(DEAD_LOG_FEATURE, new SurfacePlacementConfig(5))
             .withFeature(DECEITFUL_ALGAE_FEATURE, new ScatterPlacementConfig(10, 20))
             .withFeature(GHOST_PLANT_FEATURE, new ParcelPlacementConfig(3, 6, 0.3f))

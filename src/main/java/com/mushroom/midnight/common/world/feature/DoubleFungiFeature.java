@@ -11,15 +11,28 @@ import net.minecraftforge.event.terraingen.DecorateBiomeEvent;
 import java.util.Random;
 
 public class DoubleFungiFeature extends MidnightAbstractFeature {
-    private static final IBlockState[] FUNGI_STATES = new IBlockState[] {
+    public static final IBlockState[] FUNGI_STATES = new IBlockState[] {
             ModBlocks.DOUBLE_NIGHTSHROOM.getDefaultState(),
             ModBlocks.DOUBLE_DEWSHROOM.getDefaultState(),
             ModBlocks.DOUBLE_VIRIDSHROOM.getDefaultState()
     };
 
+    public static final IBlockState[] BOG_FUNGI_STATES = new IBlockState[] {
+            ModBlocks.DOUBLE_NIGHTSHROOM.getDefaultState(),
+            ModBlocks.DOUBLE_DEWSHROOM.getDefaultState(),
+            ModBlocks.DOUBLE_VIRIDSHROOM.getDefaultState(),
+            ModBlocks.DOUBLE_BOGSHROOM.getDefaultState()
+    };
+
+    private final IBlockState[] fungiStates;
+
+    public DoubleFungiFeature(IBlockState[] fungiStates) {
+        this.fungiStates = fungiStates;
+    }
+
     @Override
     public boolean placeFeature(World world, Random rand, BlockPos origin) {
-        IBlockState state = FUNGI_STATES[rand.nextInt(FUNGI_STATES.length)];
+        IBlockState state = this.fungiStates[rand.nextInt(this.fungiStates.length)];
         if (((BlockBush) ModBlocks.NIGHTSHROOM).canBlockStay(world, origin, state)) {
             world.setBlockState(origin, state.withProperty(BlockDoublePlant.HALF, BlockDoublePlant.EnumBlockHalf.LOWER), 2 | 16);
             world.setBlockState(origin.up(), state.withProperty(BlockDoublePlant.HALF, BlockDoublePlant.EnumBlockHalf.UPPER), 2 | 16);

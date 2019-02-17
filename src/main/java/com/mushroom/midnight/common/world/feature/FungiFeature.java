@@ -10,15 +10,28 @@ import net.minecraftforge.event.terraingen.DecorateBiomeEvent;
 import java.util.Random;
 
 public class FungiFeature extends MidnightAbstractFeature {
-    private static final IBlockState[] FUNGI_STATES = new IBlockState[] {
+    public static final IBlockState[] FUNGI_STATES = new IBlockState[] {
             ModBlocks.NIGHTSHROOM.getDefaultState(),
             ModBlocks.DEWSHROOM.getDefaultState(),
             ModBlocks.VIRIDSHROOM.getDefaultState()
     };
 
+    public static final IBlockState[] BOG_FUNGI_STATES = new IBlockState[] {
+            ModBlocks.NIGHTSHROOM.getDefaultState(),
+            ModBlocks.DEWSHROOM.getDefaultState(),
+            ModBlocks.VIRIDSHROOM.getDefaultState(),
+            ModBlocks.BOGSHROOM.getDefaultState()
+    };
+
+    private final IBlockState[] fungiStates;
+
+    public FungiFeature(IBlockState[] fungiStates) {
+        this.fungiStates = fungiStates;
+    }
+
     @Override
     public boolean placeFeature(World world, Random rand, BlockPos origin) {
-        IBlockState state = FUNGI_STATES[rand.nextInt(FUNGI_STATES.length)];
+        IBlockState state = this.fungiStates[rand.nextInt(this.fungiStates.length)];
         if (((BlockBush) state.getBlock()).canBlockStay(world, origin, state)) {
             this.setBlockAndNotifyAdequately(world, origin, state);
             return true;

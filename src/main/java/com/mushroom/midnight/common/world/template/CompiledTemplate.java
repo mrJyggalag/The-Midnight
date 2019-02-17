@@ -9,10 +9,11 @@ import net.minecraft.world.gen.structure.template.PlacementSettings;
 import net.minecraft.world.gen.structure.template.Template;
 
 import javax.annotation.Nullable;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
 import java.util.Random;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class CompiledTemplate {
     private final ResourceLocation templateId;
@@ -67,22 +68,17 @@ public class CompiledTemplate {
 
     @Nullable
     public BlockPos lookupAny(String key) {
-        for (Map.Entry<BlockPos, String> entry : this.dataBlocks.entrySet()) {
-            if (entry.getValue().equals(key)) {
-                return entry.getKey();
-            }
-        }
-        return null;
+        return this.lookupStream(key).findFirst().orElse(null);
     }
 
     public Collection<BlockPos> lookup(String key) {
-        Collection<BlockPos> result = new ArrayList<>();
-        for (Map.Entry<BlockPos, String> entry : this.dataBlocks.entrySet()) {
-            if (entry.getValue().equals(key)) {
-                result.add(entry.getKey());
-            }
-        }
-        return result;
+        return this.lookupStream(key).collect(Collectors.toList());
+    }
+
+    public Stream<BlockPos> lookupStream(String key) {
+        return this.dataBlocks.entrySet().stream()
+                .filter(e -> e.getValue().equals(key))
+                .map(Map.Entry::getKey);
     }
 
     @Override

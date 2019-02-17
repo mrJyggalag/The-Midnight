@@ -26,11 +26,12 @@ public class TemplateTreeFeature extends MidnightTreeFeature {
     private static final String TRUNK_TOP_KEY = "trunk_top";
     private static final String TRUNK_CORNER_KEY = "trunk_corner";
 
-    private final TemplateCompiler templateCompiler;
+    private final ResourceLocation[] templates;
+    private TemplateCompiler templateCompiler;
 
     public TemplateTreeFeature(ResourceLocation[] templates, IBlockState log, IBlockState leaves) {
         super(log, leaves);
-        this.templateCompiler = this.buildCompiler(templates);
+        this.templates = templates;
     }
 
     protected TemplateCompiler buildCompiler(ResourceLocation[] templates) {
@@ -45,6 +46,10 @@ public class TemplateTreeFeature extends MidnightTreeFeature {
     public boolean placeFeature(World world, Random rand, BlockPos origin) {
         if (!this.canGrow(world, origin)) {
             return false;
+        }
+
+        if (this.templateCompiler == null) {
+            this.templateCompiler = this.buildCompiler(this.templates);
         }
 
         CompiledTemplate template = this.templateCompiler.compile(world, rand, origin);

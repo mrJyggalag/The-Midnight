@@ -4,6 +4,7 @@ import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.common.registry.ModBlocks;
 import com.mushroom.midnight.common.world.template.ShelfAttachProcessor;
 import com.mushroom.midnight.common.world.template.TemplateCompiler;
+import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.ResourceLocation;
@@ -18,17 +19,20 @@ public class DeadTreeFeature extends TemplateTreeFeature {
             new ResourceLocation(Midnight.MODID, "trees/dead_tree_6")
     };
 
-    public DeadTreeFeature(IBlockState log) {
+    private final Block[] shelfBlocks;
+
+    public DeadTreeFeature(IBlockState log, Block[] shelfBlocks) {
         super(TEMPLATES, log, Blocks.AIR.getDefaultState());
+        this.shelfBlocks = shelfBlocks;
     }
 
-    public DeadTreeFeature() {
-        this(ModBlocks.DEAD_WOOD_LOG.getDefaultState());
+    public DeadTreeFeature(Block[] shelfBlocks) {
+        this(ModBlocks.DEAD_WOOD_LOG.getDefaultState(), shelfBlocks);
     }
 
     @Override
     protected TemplateCompiler buildCompiler(ResourceLocation[] templates) {
         return super.buildCompiler(templates)
-                .withPostProcessor(new ShelfAttachProcessor(this::canReplace, ShelfAttachProcessor.SHELF_BLOCKS));
+                .withPostProcessor(new ShelfAttachProcessor(this::canReplace, this.shelfBlocks));
     }
 }
