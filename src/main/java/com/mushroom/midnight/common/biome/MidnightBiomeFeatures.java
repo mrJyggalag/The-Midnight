@@ -114,6 +114,11 @@ public class MidnightBiomeFeatures {
     public static final IMidnightFeature DOUBLE_FUNGI_FEATURE = new DoubleFungiFeature(DoubleFungiFeature.FUNGI_STATES);
     public static final IMidnightFeature DOUBLE_BOG_FUNGI_FEATURE = new DoubleFungiFeature(DoubleFungiFeature.BOG_FUNGI_STATES);
 
+    public static final IMidnightFeature DRAGON_NEST_FEATURE = new PlantFeature(
+            ModBlocks.DRAGON_NEST.getDefaultState(),
+            (world, pos, state) -> ModBlocks.DRAGON_NEST.canPlaceBlockAt(world, pos)
+    );
+
     public static final IMidnightFeature CRYSTAL_FLOWER_FEATURE = new PlantFeature(
             ModBlocks.CRYSTAL_FLOWER.getDefaultState(),
             GeneratablePlant::canGenerate

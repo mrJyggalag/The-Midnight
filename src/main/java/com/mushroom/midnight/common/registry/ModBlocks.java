@@ -183,7 +183,7 @@ public class ModBlocks {
     public static final Block FINGERED_GRASS = Blocks.AIR;
     public static final Block TENDRILWEED = Blocks.AIR;
     public static final Block RUNEBUSH = Blocks.AIR;
-    public static final Block DRAGON_NEST = Blocks.AIR; // TODO generate in world hanging on trees around crater
+    public static final Block DRAGON_NEST = Blocks.AIR;
     public static final Block VIOLEAF = Blocks.AIR;
 
     public static final Block CRYSTAL_FLOWER = Blocks.AIR;

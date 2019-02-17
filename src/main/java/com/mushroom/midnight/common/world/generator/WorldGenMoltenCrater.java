@@ -20,6 +20,8 @@ import java.util.Arrays;
 import java.util.Random;
 
 public class WorldGenMoltenCrater extends MapGenBase {
+    private static final Random RNG = new Random(0);
+
     private static final int SPAWN_CHANCE = 350;
 
     private static final int MIN_RADIUS = 16;
@@ -203,5 +205,15 @@ public class WorldGenMoltenCrater extends MapGenBase {
         }
 
         return 0;
+    }
+
+    public static boolean isCraterSource(World world, int chunkX, int chunkZ) {
+        RNG.setSeed(world.getSeed());
+
+        long seedX = chunkX * RNG.nextLong();
+        long seedZ = chunkZ * RNG.nextLong();
+        RNG.setSeed(seedX ^ seedZ ^ world.getSeed());
+
+        return RNG.nextInt(SPAWN_CHANCE) == 0;
     }
 }

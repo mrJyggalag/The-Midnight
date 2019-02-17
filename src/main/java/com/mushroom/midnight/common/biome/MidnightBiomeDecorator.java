@@ -3,6 +3,7 @@ package com.mushroom.midnight.common.biome;
 import com.mushroom.midnight.common.biome.config.BiomeFeatureEntry;
 import com.mushroom.midnight.common.biome.config.FeatureConfig;
 import com.mushroom.midnight.common.world.SurfacePlacementLevel;
+import com.mushroom.midnight.common.world.feature.FeatureSorting;
 import com.mushroom.midnight.common.world.feature.IMidnightFeature;
 import com.mushroom.midnight.common.world.feature.config.IPlacementConfig;
 import net.minecraft.util.math.BlockPos;
@@ -47,9 +48,11 @@ public class MidnightBiomeDecorator extends BiomeDecorator {
 
         MinecraftForge.EVENT_BUS.post(new DecorateBiomeEvent.Pre(world, random, chunkPos));
 
-        Collection<BiomeFeatureEntry> features = this.config.getFeatures();
-        for (BiomeFeatureEntry entry : features) {
-            this.generateFeatureEntry(world, random, chunkPos, entry);
+        for (FeatureSorting pass : FeatureSorting.VALUES) {
+            Collection<BiomeFeatureEntry> features = this.config.getFeatures(pass);
+            for (BiomeFeatureEntry entry : features) {
+                this.generateFeatureEntry(world, random, chunkPos, entry);
+            }
         }
 
         MinecraftForge.EVENT_BUS.post(new DecorateBiomeEvent.Post(world, random, chunkPos));
