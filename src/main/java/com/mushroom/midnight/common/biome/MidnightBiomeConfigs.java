@@ -175,7 +175,6 @@ public class MidnightBiomeConfigs {
             .withCreature(new Biome.SpawnListEntry(EntityNightStag.class, 100, 1, 3))
             .withMonster(new Biome.SpawnListEntry(EntityRifter.class, 100, 1, 2))
             .withMonster(new Biome.SpawnListEntry(EntityEnderman.class, 10, 4, 4))
-            .withMonster(new Biome.SpawnListEntry(EntityStinger.class, 100, 1, 2))
             .build();
 
     public static final SpawnerConfig ROCKY_SPAWN_CONFIG = SpawnerConfig.builder()
@@ -183,7 +182,11 @@ public class MidnightBiomeConfigs {
             .withMonster(new Biome.SpawnListEntry(EntityRifter.class, 100, 1, 2))
             .withMonster(new Biome.SpawnListEntry(EntityEnderman.class, 10, 4, 4))
             .withMonster(new Biome.SpawnListEntry(EntityHunter.class, 5, 1, 2))
-            .withMonster(new Biome.SpawnListEntry(EntityStinger.class, 100, 1, 2))
+            .build();
+
+    public static final SpawnerConfig UNDERGROUND_SPAWN_CONFIG = SpawnerConfig.builder()
+            .withMonster(new Biome.SpawnListEntry(EntityStinger.class, 100, 2, 4))
+            .withMonster(new Biome.SpawnListEntry(EntityEnderman.class, 10, 4, 4))
             .build();
 
     public static final SpawnerConfig CRYSTAL_SPIRES_SPAWN_CONFIG = SpawnerConfig.builder()
@@ -222,8 +225,17 @@ public class MidnightBiomeConfigs {
             .withMonster(new Biome.SpawnListEntry(EntityHunter.class, 5, 1, 2))
             .build();
 
+    public static final SpawnerConfig GREAT_CAVERN_SPAWN_CONFIG = SpawnerConfig.builder()
+            .extendsFrom(UNDERGROUND_SPAWN_CONFIG)
+            .build();
+
     public static final SpawnerConfig CRYSTAL_CAVERN_SPAWN_CONFIG = SpawnerConfig.builder()
-            .withMonster(new Biome.SpawnListEntry(EntityNova.class, 5, 1, 2))
+            .extendsFrom(UNDERGROUND_SPAWN_CONFIG)
+            .withMonster(new Biome.SpawnListEntry(EntityNova.class, 100, 1, 2))
+            .build();
+
+    public static final SpawnerConfig FUNGAL_CAVERN_SPAWN_CONFIG = SpawnerConfig.builder()
+            .extendsFrom(UNDERGROUND_SPAWN_CONFIG)
             .build();
 
     public static final SurfaceTerrainConfig WARPED_TERRAIN_CONFIG = new SurfaceTerrainConfig()
@@ -357,6 +369,7 @@ public class MidnightBiomeConfigs {
             .withHeightVariation(0.6F);
 
     public static final CavernousBiomeConfig GREAT_CAVERN_CONFIG = CavernousBiomeConfig.builder()
+            .withSpawner(GREAT_CAVERN_SPAWN_CONFIG)
             .withStructure(GREAT_CAVERN_STRUCTURE_CONFIG)
             .build();
 
@@ -368,6 +381,7 @@ public class MidnightBiomeConfigs {
 
     public static final CavernousBiomeConfig FUNGAL_CAVERN_CONFIG = CavernousBiomeConfig.builder()
             .withSurface(new SurfaceConfig().withTopState(ModBlocks.MIDNIGHT_MYCELIUM.getDefaultState()))
+            .withSpawner(FUNGAL_CAVERN_SPAWN_CONFIG)
             .withFeatures(FUNGAL_CAVERN_FEATURE_CONFIG)
             .withStructure(FUNGAL_CAVERN_STRUCTURE_CONFIG)
             .build();
