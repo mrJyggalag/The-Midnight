@@ -59,6 +59,7 @@ public class ItemDeceitfulAlgae extends ItemBlock {
                         stack.shrink(1);
                     }
 
+                    player.swingArm(hand);
                     return new ActionResult<>(EnumActionResult.SUCCESS, stack);
                 }
             }
