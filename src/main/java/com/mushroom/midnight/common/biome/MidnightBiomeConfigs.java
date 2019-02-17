@@ -176,7 +176,6 @@ public class MidnightBiomeConfigs {
             .withMonster(new Biome.SpawnListEntry(EntityRifter.class, 100, 1, 2))
             .withMonster(new Biome.SpawnListEntry(EntityEnderman.class, 10, 4, 4))
             .withMonster(new Biome.SpawnListEntry(EntityStinger.class, 100, 1, 2))
-            .withMonster(new Biome.SpawnListEntry(EntityNova.class, 20, 1, 1))
             .build();
 
     public static final SpawnerConfig ROCKY_SPAWN_CONFIG = SpawnerConfig.builder()
@@ -185,14 +184,12 @@ public class MidnightBiomeConfigs {
             .withMonster(new Biome.SpawnListEntry(EntityEnderman.class, 10, 4, 4))
             .withMonster(new Biome.SpawnListEntry(EntityHunter.class, 5, 1, 2))
             .withMonster(new Biome.SpawnListEntry(EntityStinger.class, 100, 1, 2))
-            .withMonster(new Biome.SpawnListEntry(EntityNova.class, 20, 1, 1))
             .build();
 
     public static final SpawnerConfig CRYSTAL_SPIRES_SPAWN_CONFIG = SpawnerConfig.builder()
             .withCreature(new Biome.SpawnListEntry(EntityNightStag.class, 100, 1, 3))
             .withAmbientCreature(new Biome.SpawnListEntry(EntityCrystalBug.class, 100, 7, 10))
             .withMonster(new Biome.SpawnListEntry(EntityStinger.class, 100, 1, 2))
-            .withMonster(new Biome.SpawnListEntry(EntityNova.class, 20, 1, 1))
             .build();
 
     public static final SpawnerConfig WARPED_FIELDS_SPAWN_CONFIG = SpawnerConfig.builder()
@@ -223,6 +220,10 @@ public class MidnightBiomeConfigs {
     public static final SpawnerConfig VALLEY_SPAWN_CONFIG = SpawnerConfig.builder()
             .extendsFrom(VEGETATED_SPAWN_CONFIG)
             .withMonster(new Biome.SpawnListEntry(EntityHunter.class, 5, 1, 2))
+            .build();
+
+    public static final SpawnerConfig CRYSTAL_CAVERN_SPAWN_CONFIG = SpawnerConfig.builder()
+            .withMonster(new Biome.SpawnListEntry(EntityNova.class, 5, 1, 2))
             .build();
 
     public static final SurfaceTerrainConfig WARPED_TERRAIN_CONFIG = new SurfaceTerrainConfig()
@@ -360,6 +361,7 @@ public class MidnightBiomeConfigs {
             .build();
 
     public static final CavernousBiomeConfig CRYSTAL_CAVERN_CONFIG = CavernousBiomeConfig.builder()
+            .withSpawner(CRYSTAL_CAVERN_SPAWN_CONFIG)
             .withFeatures(CRYSTAL_CAVERN_FEATURE_CONFIG)
             .withStructure(GREAT_CAVERN_STRUCTURE_CONFIG)
             .build();

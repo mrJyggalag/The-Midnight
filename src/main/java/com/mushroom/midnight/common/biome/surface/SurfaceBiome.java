@@ -1,11 +1,14 @@
 package com.mushroom.midnight.common.biome.surface;
 
 import com.mushroom.midnight.Midnight;
+import com.mushroom.midnight.common.biome.EntitySpawnConfigured;
+import com.mushroom.midnight.common.biome.config.SpawnerConfig;
 import com.mushroom.midnight.common.biome.config.SurfaceConfig;
 import com.mushroom.midnight.common.world.MidnightChunkGenerator;
 import com.mushroom.midnight.common.world.SurfaceCoverGenerator;
 import com.mushroom.midnight.common.world.SurfacePlacementLevel;
 import net.minecraft.client.resources.I18n;
+import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
@@ -13,7 +16,7 @@ import net.minecraft.world.chunk.ChunkPrimer;
 
 import java.util.Random;
 
-public class SurfaceBiome extends Biome {
+public class SurfaceBiome extends Biome implements EntitySpawnConfigured {
     protected final SurfaceBiomeConfig config;
     private final SurfaceConfig localSurfaceConfig;
 
@@ -25,9 +28,12 @@ public class SurfaceBiome extends Biome {
         this.config = config;
         this.localSurfaceConfig = new SurfaceConfig(this.config.getSurfaceConfig());
 
-        this.decorator = config.getFeatureConfig().createDecorator(PlacementLevel::new);
+        this.decorator = config.getFeatureConfig().createDecorator(PlacementLevel.INSTANCE);
 
-        config.getSpawnerConfig().apply(this);
+        for (EnumCreatureType creatureType : EnumCreatureType.values()) {
+            this.getSpawnableList(creatureType).clear();
+        }
+
         config.getSurfaceConfig().apply(this);
     }
 
@@ -69,20 +75,24 @@ public class SurfaceBiome extends Biome {
         return SurfaceTerrainConfig.DEFAULT;
     }
 
-    static class PlacementLevel implements SurfacePlacementLevel {
-        private final World world;
+    @Override
+    public SpawnerConfig getSpawnerConfig() {
+        return this.config.getSpawnerConfig();
+    }
 
-        PlacementLevel(World world) {
-            this.world = world;
+    public static final class PlacementLevel implements SurfacePlacementLevel {
+        public static SurfacePlacementLevel INSTANCE = new PlacementLevel();
+
+        private PlacementLevel() {
         }
 
         @Override
-        public BlockPos getSurfacePos(BlockPos pos) {
-            return this.world.getHeight(pos);
+        public BlockPos getSurfacePos(World world, BlockPos pos) {
+            return world.getHeight(pos);
         }
 
         @Override
-        public int generateUpTo(Random random, int y) {
+        public int generateUpTo(World world, Random random, int y) {
             int bound = Math.max(y - MidnightChunkGenerator.MIN_SURFACE_LEVEL, 1);
             return random.nextInt(bound) + MidnightChunkGenerator.MIN_SURFACE_LEVEL;
         }

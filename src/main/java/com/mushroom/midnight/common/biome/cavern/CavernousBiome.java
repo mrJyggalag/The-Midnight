@@ -1,6 +1,8 @@
 package com.mushroom.midnight.common.biome.cavern;
 
+import com.mushroom.midnight.common.biome.EntitySpawnConfigured;
 import com.mushroom.midnight.common.biome.MidnightBiomeDecorator;
+import com.mushroom.midnight.common.biome.config.SpawnerConfig;
 import com.mushroom.midnight.common.biome.config.SurfaceConfig;
 import com.mushroom.midnight.common.world.MidnightChunkGenerator;
 import com.mushroom.midnight.common.world.SurfaceCoverGenerator;
@@ -16,7 +18,7 @@ import net.minecraftforge.registries.IForgeRegistryEntry;
 
 import java.util.Random;
 
-public class CavernousBiome extends IForgeRegistryEntry.Impl<CavernousBiome> {
+public class CavernousBiome extends IForgeRegistryEntry.Impl<CavernousBiome> implements EntitySpawnConfigured {
     private final CavernousBiomeConfig config;
     private final MidnightBiomeDecorator decorator;
 
@@ -24,7 +26,7 @@ public class CavernousBiome extends IForgeRegistryEntry.Impl<CavernousBiome> {
 
     public CavernousBiome(CavernousBiomeConfig config) {
         this.config = config;
-        this.decorator = this.config.getFeatureConfig().createDecorator(PlacementLevel::new);
+        this.decorator = this.config.getFeatureConfig().createDecorator(PlacementLevel.INSTANCE);
     }
 
     public void decorate(World world, Random random, BlockPos pos) {
@@ -45,16 +47,20 @@ public class CavernousBiome extends IForgeRegistryEntry.Impl<CavernousBiome> {
         return this.config;
     }
 
-    static class PlacementLevel implements SurfacePlacementLevel {
-        private final World world;
+    @Override
+    public SpawnerConfig getSpawnerConfig() {
+        return this.config.getSpawnerConfig();
+    }
 
-        PlacementLevel(World world) {
-            this.world = world;
+    public static class PlacementLevel implements SurfacePlacementLevel {
+        public static final SurfacePlacementLevel INSTANCE = new PlacementLevel();
+
+        private PlacementLevel() {
         }
 
         @Override
-        public BlockPos getSurfacePos(BlockPos pos) {
-            Chunk chunk = this.world.getChunk(pos);
+        public BlockPos getSurfacePos(World world, BlockPos pos) {
+            Chunk chunk = world.getChunk(pos);
 
             BlockPos.MutableBlockPos mutablePos = new BlockPos.MutableBlockPos();
 
@@ -71,7 +77,7 @@ public class CavernousBiome extends IForgeRegistryEntry.Impl<CavernousBiome> {
         }
 
         @Override
-        public int generateUpTo(Random random, int y) {
+        public int generateUpTo(World world, Random random, int y) {
             return random.nextInt(Math.min(y, MidnightChunkGenerator.MIN_SURFACE_LEVEL));
         }
     }
