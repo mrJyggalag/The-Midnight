@@ -130,6 +130,15 @@ public class MidnightBiomeFeatures {
 
     public static final IMidnightFeature LARGE_BOGSHROOM_FEATURE = new LargeBogshroomFeature();
 
+    public static final IMidnightFeature BOGSHROOM_FEATURE = new PlantFeature(
+            ModBlocks.BOGSHROOM.getDefaultState(),
+            ((BlockBush) ModBlocks.BOGSHROOM)::canBlockStay
+    );
+    public static final IMidnightFeature DOUBLE_BOGSHROOM_FEATURE = new PlantFeature(
+            ModBlocks.DOUBLE_BOGSHROOM.getDefaultState(),
+            ((BlockBush) ModBlocks.DOUBLE_BOGSHROOM)::canBlockStay
+    );
+
     public static final IMidnightFeature LARGE_BULB_FUNGUS_FEATURE = new LargeBulbFungusFeature();
 
     public static final IMidnightFeature BULB_FUNGUS_FEATURE = new PlantFeature(
