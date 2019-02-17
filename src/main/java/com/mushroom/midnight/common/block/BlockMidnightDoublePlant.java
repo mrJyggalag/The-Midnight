@@ -86,19 +86,6 @@ public class BlockMidnightDoublePlant extends BlockBush implements IModelProvide
         }
     }
 
-    @Override
-    public boolean canBlockStay(World world, BlockPos pos, IBlockState state) {
-        if (state.getBlock() != this) {
-            return super.canBlockStay(world, pos, state);
-        }
-        BlockPos otherPos = this.getOtherPos(state, pos);
-        IBlockState otherState = world.getBlockState(otherPos);
-        if (otherState.getBlock() != this) {
-            return false;
-        }
-        return this.isUpper(state) || super.canBlockStay(world, pos, otherState);
-    }
-
     private BlockPos getUpperPos(IBlockState state, BlockPos pos) {
         return this.isUpper(state) ? pos : pos.up();
     }
