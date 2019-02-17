@@ -1,5 +1,6 @@
 package com.mushroom.midnight.common.world.template;
 
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.structure.template.BlockRotationProcessor;
@@ -14,6 +15,7 @@ import java.util.Map;
 import java.util.Random;
 
 public class CompiledTemplate {
+    private final ResourceLocation templateId;
     private final Template template;
     private final PlacementSettings settings;
     private final BlockPos origin;
@@ -25,11 +27,13 @@ public class CompiledTemplate {
     private final Map<BlockPos, String> dataBlocks;
 
     CompiledTemplate(
+            ResourceLocation templateId,
             Template template, PlacementSettings settings, BlockPos origin,
             ITemplateProcessor processor,
             TemplateDataProcessor dataProcessor,
             Collection<TemplatePostProcessor> postProcessors
     ) {
+        this.templateId = templateId;
         this.template = template;
         this.settings = settings;
         this.origin = origin;
@@ -84,7 +88,7 @@ public class CompiledTemplate {
     @Override
     public String toString() {
         return "CompiledTemplate{" +
-                "template=" + this.template +
+                "template=" + this.templateId +
                 ", origin=" + this.origin +
                 '}';
     }
