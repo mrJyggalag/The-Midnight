@@ -22,7 +22,8 @@ public class CavernousBiome extends IForgeRegistryEntry.Impl<CavernousBiome> imp
     private final CavernousBiomeConfig config;
     private final MidnightBiomeDecorator decorator;
 
-    private final SurfaceCoverGenerator coverGenerator = new SurfaceCoverGenerator(1, Integer.MAX_VALUE);
+    private final SurfaceCoverGenerator coverGenerator = new SurfaceCoverGenerator(1, Integer.MAX_VALUE)
+            .withMaxY(MidnightChunkGenerator.MIN_SURFACE_LEVEL);
 
     public CavernousBiome(CavernousBiomeConfig config) {
         this.config = config;

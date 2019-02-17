@@ -1,18 +1,14 @@
 package com.mushroom.midnight.common.world.feature;
 
 import com.mushroom.midnight.Midnight;
-import com.mushroom.midnight.common.block.BlockMidnightFungiShelf;
 import com.mushroom.midnight.common.registry.ModBlocks;
 import com.mushroom.midnight.common.world.template.ShelfAttachProcessor;
 import com.mushroom.midnight.common.world.template.TemplateCompiler;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-
-import java.util.Random;
 
 public class LargeBogshroomFeature extends TemplateTreeFeature {
     private static final ResourceLocation[] TEMPLATES = new ResourceLocation[] {
@@ -29,18 +25,8 @@ public class LargeBogshroomFeature extends TemplateTreeFeature {
 
     @Override
     protected TemplateCompiler buildCompiler(ResourceLocation[] templates) {
-        return super.buildCompiler(templates).withPostProcessor(new ShelfAttachProcessor(this::canPlaceShelf) {
-            @Override
-            protected void attachShelf(World world, Random random, BlockPos pos) {
-                EnumFacing attachSide = ATTACH_SIDES[random.nextInt(ATTACH_SIDES.length)];
-                BlockPos offsetPos = pos.offset(attachSide);
-                if (this.replaceable.test(world, offsetPos)) {
-                    world.setBlockState(offsetPos, ModBlocks.BOGSHROOM_SHELF.getDefaultState()
-                            .withProperty(BlockMidnightFungiShelf.FACING, attachSide)
-                    );
-                }
-            }
-        });
+        return super.buildCompiler(templates)
+                .withPostProcessor(new ShelfAttachProcessor(this::canPlaceShelf, ShelfAttachProcessor.SHELF_BLOCKS));
     }
 
     @Override

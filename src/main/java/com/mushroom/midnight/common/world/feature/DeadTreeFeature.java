@@ -29,6 +29,6 @@ public class DeadTreeFeature extends TemplateTreeFeature {
     @Override
     protected TemplateCompiler buildCompiler(ResourceLocation[] templates) {
         return super.buildCompiler(templates)
-                .withPostProcessor(new ShelfAttachProcessor(this::canReplace));
+                .withPostProcessor(new ShelfAttachProcessor(this::canReplace, ShelfAttachProcessor.SHELF_BLOCKS));
     }
 }

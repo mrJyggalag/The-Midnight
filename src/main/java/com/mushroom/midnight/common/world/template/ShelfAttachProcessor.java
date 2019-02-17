@@ -14,18 +14,26 @@ import java.util.Random;
 public class ShelfAttachProcessor implements TemplatePostProcessor {
     protected static final EnumFacing[] ATTACH_SIDES = new EnumFacing[] { EnumFacing.NORTH, EnumFacing.WEST, EnumFacing.SOUTH, EnumFacing.EAST, EnumFacing.UP };
 
-    private static final Block[] SHELF_BLOCKS = new Block[] { ModBlocks.NIGHTSHROOM_SHELF, ModBlocks.DEWSHROOM_SHELF, ModBlocks.VIRIDSHROOM_SHELF };
+    public static final Block[] FOREST_SHELF_BLOCKS = new Block[] { ModBlocks.NIGHTSHROOM_SHELF, ModBlocks.DEWSHROOM_SHELF, ModBlocks.VIRIDSHROOM_SHELF };
+    public static final Block[] SHELF_BLOCKS = new Block[] {
+            ModBlocks.NIGHTSHROOM_SHELF,
+            ModBlocks.VIRIDSHROOM_SHELF,
+            ModBlocks.DEWSHROOM_SHELF,
+            ModBlocks.BOGSHROOM_SHELF
+    };
 
     private final int attachChance;
-    protected final BlockStatePredicate replaceable;
+    private final BlockStatePredicate replaceable;
+    private final Block[] shelfBlocks;
 
-    public ShelfAttachProcessor(int attachChance, BlockStatePredicate replaceable) {
+    public ShelfAttachProcessor(int attachChance, BlockStatePredicate replaceable, Block[] shelfBlocks) {
         this.attachChance = attachChance;
         this.replaceable = replaceable;
+        this.shelfBlocks = shelfBlocks;
     }
 
-    public ShelfAttachProcessor(BlockStatePredicate replaceable) {
-        this(6, replaceable);
+    public ShelfAttachProcessor(BlockStatePredicate replaceable, Block[] shelfBlocks) {
+        this(6, replaceable, shelfBlocks);
     }
 
     @Override
@@ -36,7 +44,7 @@ public class ShelfAttachProcessor implements TemplatePostProcessor {
     }
 
     protected void attachShelf(World world, Random random, BlockPos pos) {
-        Block shelfBlock = SHELF_BLOCKS[random.nextInt(SHELF_BLOCKS.length)];
+        Block shelfBlock = this.shelfBlocks[random.nextInt(this.shelfBlocks.length)];
         EnumFacing attachSide = ATTACH_SIDES[random.nextInt(ATTACH_SIDES.length)];
 
         BlockPos offsetPos = pos.offset(attachSide);
