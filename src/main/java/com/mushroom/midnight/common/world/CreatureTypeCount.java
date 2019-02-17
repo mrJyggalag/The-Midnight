@@ -27,7 +27,7 @@ public class CreatureTypeCount {
     }
 
     public static CreatureTypeCount count(World world, Collection<EnumCreatureType> creatureTypes) {
-        int[] counts = new int[creatureTypes.size()];
+        int[] counts = new int[EnumCreatureType.values().length];
 
         for (Entity entity : world.loadedEntityList) {
             for (EnumCreatureType creatureType : creatureTypes) {
