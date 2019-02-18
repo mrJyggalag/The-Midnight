@@ -9,9 +9,16 @@ public class SurfaceCoverGenerator {
     private final int minSurfaceLayer;
     private final int maxSurfaceLayer;
 
+    private int maxY = 255;
+
     public SurfaceCoverGenerator(int minSurfaceLayer, int maxSurfaceLayer) {
         this.minSurfaceLayer = minSurfaceLayer;
         this.maxSurfaceLayer = maxSurfaceLayer;
+    }
+
+    public SurfaceCoverGenerator withMaxY(int maxY) {
+        this.maxY = maxY;
+        return this;
     }
 
     public void coverSurface(SurfaceConfig config, ChunkPrimer primer, int x, int z, int depth) {
@@ -25,7 +32,7 @@ public class SurfaceCoverGenerator {
         boolean wet = false;
         int surfaceLayer = 0;
 
-        for (int localY = 255; localY >= 0; localY--) {
+        for (int localY = this.maxY; localY >= 0; localY--) {
             IBlockState state = primer.getBlockState(localX, localY, localZ);
             Material material = state.getMaterial();
             if (material == Material.WATER) {

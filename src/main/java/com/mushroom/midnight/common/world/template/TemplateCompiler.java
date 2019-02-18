@@ -76,7 +76,7 @@ public class TemplateCompiler {
         BlockPos anchor = this.computeAnchor(template, settings);
         BlockPos anchoredOrigin = anchor != null ? origin.subtract(anchor) : origin;
 
-        return new CompiledTemplate(template, settings, anchoredOrigin, this.processor, this.dataProcessor, this.postProcessors);
+        return new CompiledTemplate(templateId, template, settings, anchoredOrigin, this.processor, this.dataProcessor, this.postProcessors);
     }
 
     @Nullable

@@ -1,5 +1,6 @@
 package com.mushroom.midnight.common.world.template;
 
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.structure.template.BlockRotationProcessor;
@@ -8,12 +9,14 @@ import net.minecraft.world.gen.structure.template.PlacementSettings;
 import net.minecraft.world.gen.structure.template.Template;
 
 import javax.annotation.Nullable;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
 import java.util.Random;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class CompiledTemplate {
+    private final ResourceLocation templateId;
     private final Template template;
     private final PlacementSettings settings;
     private final BlockPos origin;
@@ -25,11 +28,13 @@ public class CompiledTemplate {
     private final Map<BlockPos, String> dataBlocks;
 
     CompiledTemplate(
+            ResourceLocation templateId,
             Template template, PlacementSettings settings, BlockPos origin,
             ITemplateProcessor processor,
             TemplateDataProcessor dataProcessor,
             Collection<TemplatePostProcessor> postProcessors
     ) {
+        this.templateId = templateId;
         this.template = template;
         this.settings = settings;
         this.origin = origin;
@@ -63,28 +68,23 @@ public class CompiledTemplate {
 
     @Nullable
     public BlockPos lookupAny(String key) {
-        for (Map.Entry<BlockPos, String> entry : this.dataBlocks.entrySet()) {
-            if (entry.getValue().equals(key)) {
-                return entry.getKey();
-            }
-        }
-        return null;
+        return this.lookupStream(key).findFirst().orElse(null);
     }
 
     public Collection<BlockPos> lookup(String key) {
-        Collection<BlockPos> result = new ArrayList<>();
-        for (Map.Entry<BlockPos, String> entry : this.dataBlocks.entrySet()) {
-            if (entry.getValue().equals(key)) {
-                result.add(entry.getKey());
-            }
-        }
-        return result;
+        return this.lookupStream(key).collect(Collectors.toList());
+    }
+
+    public Stream<BlockPos> lookupStream(String key) {
+        return this.dataBlocks.entrySet().stream()
+                .filter(e -> e.getValue().equals(key))
+                .map(Map.Entry::getKey);
     }
 
     @Override
     public String toString() {
         return "CompiledTemplate{" +
-                "template=" + this.template +
+                "template=" + this.templateId +
                 ", origin=" + this.origin +
                 '}';
     }

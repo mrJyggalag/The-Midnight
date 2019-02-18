@@ -8,7 +8,10 @@ import net.minecraft.entity.Entity;
 import com.mushroom.midnight.common.tile.base.TileEntityShadowrootChest;
 
 import net.minecraftforge.fml.client.registry.ClientRegistry;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
+@SideOnly(Side.CLIENT)
 public class ClientProxy implements IProxy {
     private static final Minecraft MC = Minecraft.getMinecraft();
 

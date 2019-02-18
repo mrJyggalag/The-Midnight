@@ -12,11 +12,18 @@ public class CavernousBiomeConfig implements MidnightBiomeConfig {
     private final SurfaceConfig surfaceConfig;
     private final CavernStructureConfig structureConfig;
     private final FeatureConfig featureConfig;
+    private final SpawnerConfig spawnerConfig;
 
-    private CavernousBiomeConfig(@Nullable SurfaceConfig surfaceConfig, CavernStructureConfig structureConfig, FeatureConfig featureConfig) {
+    private CavernousBiomeConfig(
+            @Nullable SurfaceConfig surfaceConfig,
+            CavernStructureConfig structureConfig,
+            FeatureConfig featureConfig,
+            SpawnerConfig spawnerConfig
+    ) {
         this.surfaceConfig = surfaceConfig;
         this.structureConfig = structureConfig;
         this.featureConfig = featureConfig;
+        this.spawnerConfig = spawnerConfig;
     }
 
     public static Builder builder() {
@@ -33,7 +40,6 @@ public class CavernousBiomeConfig implements MidnightBiomeConfig {
         return this.structureConfig;
     }
 
-    // TODO: Spawner handling
     @Override
     public FeatureConfig getFeatureConfig() {
         return this.featureConfig;
@@ -41,7 +47,7 @@ public class CavernousBiomeConfig implements MidnightBiomeConfig {
 
     @Override
     public SpawnerConfig getSpawnerConfig() {
-        return SpawnerConfig.EMPTY;
+        return this.spawnerConfig;
     }
 
     @Override
@@ -55,6 +61,7 @@ public class CavernousBiomeConfig implements MidnightBiomeConfig {
         private SurfaceConfig surfaceConfig;
         private FeatureConfig featureConfig = FeatureConfig.EMPTY;
         private CavernStructureConfig structureConfig = new CavernStructureConfig();
+        private SpawnerConfig spawnerConfig = SpawnerConfig.EMPTY;
 
         Builder() {
         }
@@ -74,8 +81,13 @@ public class CavernousBiomeConfig implements MidnightBiomeConfig {
             return this;
         }
 
+        public Builder withSpawner(SpawnerConfig spawnerConfig) {
+            this.spawnerConfig = spawnerConfig;
+            return this;
+        }
+
         public CavernousBiomeConfig build() {
-            return new CavernousBiomeConfig(this.surfaceConfig, this.structureConfig, this.featureConfig);
+            return new CavernousBiomeConfig(this.surfaceConfig, this.structureConfig, this.featureConfig, this.spawnerConfig);
         }
     }
 }

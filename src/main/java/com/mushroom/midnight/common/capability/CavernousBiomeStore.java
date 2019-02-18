@@ -32,7 +32,7 @@ public class CavernousBiomeStore implements ICapabilitySerializable<NBTTagCompou
 
     @Nonnull
     public CavernousBiome getBiome(int x, int z) {
-        CavernousBiome biome = this.biomes[(x & 15) + (z & 15) << 4];
+        CavernousBiome biome = this.biomes[(x & 15) + (z & 15) * 16];
         if (biome == null) {
             return ModCavernousBiomes.CLOSED_CAVERN;
         }

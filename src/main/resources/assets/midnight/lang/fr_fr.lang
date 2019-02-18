@@ -95,7 +95,8 @@ tile.midnight.double_viridshroom.name=Grand ChampiViride
 tile.midnight.bogshroom.name=ChampiTourbe
 tile.midnight.double_bogshroom.name=Grand ChampiTourbe
 tile.midnight.bogshroom_stem.name=Tronc de ChampiTourbe
-tile.midnight.bogshroom_cap.name=Chapeau de ChampiTourbe
+tile.midnight.bogshroom_hat.name=Chapeau de ChampiTourbe
+tile.midnight.bogshroom_shelf.name=Étagères en ChampiTourbe
 
 tile.midnight.bulb_fungus.name=Bulbe Fongus
 tile.midnight.bulb_fungus_stem.name=Tronc de Bulbe Fongus
@@ -290,6 +291,7 @@ entity.midnight.penumbrian.name=Pénombrien
 entity.midnight.tree_hopper.name=Cigale Épineuse
 entity.midnight.nightstag.name=Cerf Obscure
 entity.midnight.deceitful_snapper.name=Vivaneau Fourbe
+entity.midnight.racoon.name=Raton Laveur
 
 # Config
 

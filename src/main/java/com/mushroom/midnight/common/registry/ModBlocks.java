@@ -63,6 +63,7 @@ import com.mushroom.midnight.common.item.ItemDeceitfulAlgae;
 import com.mushroom.midnight.common.item.ItemMidnightSlab;
 import com.mushroom.midnight.common.tile.base.TileEntityMidnightFurnace;
 import com.mushroom.midnight.common.tile.base.TileEntityShadowrootChest;
+import com.mushroom.midnight.common.world.feature.LargeBogshroomFeature;
 import com.mushroom.midnight.common.world.feature.DarkWillowTreeFeature;
 import com.mushroom.midnight.common.world.feature.LargeBulbFungusFeature;
 import com.mushroom.midnight.common.world.feature.LargeFungiFeature;
@@ -162,6 +163,7 @@ public class ModBlocks {
 
     public static final Block BOGSHROOM = Blocks.AIR;
     public static final Block DOUBLE_BOGSHROOM = Blocks.AIR;
+    public static final Block BOGSHROOM_SHELF = Blocks.AIR;
     public static final Block BOGSHROOM_STEM = Blocks.AIR;
     public static final Block BOGSHROOM_HAT = Blocks.AIR;
 
@@ -181,7 +183,7 @@ public class ModBlocks {
     public static final Block FINGERED_GRASS = Blocks.AIR;
     public static final Block TENDRILWEED = Blocks.AIR;
     public static final Block RUNEBUSH = Blocks.AIR;
-    public static final Block DRAGON_NEST = Blocks.AIR; // TODO generate in world hanging on trees around crater
+    public static final Block DRAGON_NEST = Blocks.AIR;
     public static final Block VIOLEAF = Blocks.AIR;
 
     public static final Block CRYSTAL_FLOWER = Blocks.AIR;
@@ -333,10 +335,8 @@ public class ModBlocks {
                         ModBlocks.VIRIDSHROOM_HAT.getDefaultState()
                 )), "double_viridshroom"),
                 RegUtil.withName(new BlockMidnightFungi(() -> DOUBLE_BOGSHROOM), "bogshroom"),
-                RegUtil.withName(new BlockMidnightDoubleFungi(() -> new LargeFungiFeature(
-                        ModBlocks.BOGSHROOM_STEM.getDefaultState(),
-                        ModBlocks.BOGSHROOM_HAT.getDefaultState()
-                )), "double_bogshroom"),
+                RegUtil.withName(new BlockMidnightDoubleFungi(LargeBogshroomFeature::new), "double_bogshroom"),
+                RegUtil.withName(new BlockMidnightFungiShelf(), "bogshroom_shelf"),
                 RegUtil.withName(new BlockMidnightFungiStem(), "bogshroom_stem"),
                 RegUtil.withName(new BlockMidnightFungiHat(() -> BOGSHROOM, MapColor.ADOBE), "bogshroom_hat"),
                 RegUtil.withName(new BlockBulbFungus(LargeBulbFungusFeature::new), "bulb_fungus"),
@@ -533,7 +533,7 @@ public class ModBlocks {
                 NIGHTSHROOM, DOUBLE_NIGHTSHROOM, NIGHTSHROOM_SHELF,
                 DEWSHROOM, DOUBLE_DEWSHROOM, DEWSHROOM_SHELF,
                 VIRIDSHROOM, DOUBLE_VIRIDSHROOM, VIRIDSHROOM_SHELF,
-                BOGSHROOM, DOUBLE_BOGSHROOM, BOGSHROOM_HAT, BOGSHROOM_STEM,
+                BOGSHROOM, DOUBLE_BOGSHROOM, BOGSHROOM_SHELF, BOGSHROOM_HAT, BOGSHROOM_STEM,
                 NIGHTSHROOM_STEM, NIGHTSHROOM_HAT,
                 DEWSHROOM_STEM, DEWSHROOM_HAT,
                 VIRIDSHROOM_STEM, VIRIDSHROOM_HAT,

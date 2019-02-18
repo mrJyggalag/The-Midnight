@@ -5,6 +5,7 @@ import com.mushroom.midnight.common.biome.BiomeLayerSampler;
 import com.mushroom.midnight.common.biome.MidnightBiomeLayer;
 import com.mushroom.midnight.common.biome.cavern.CavernousBiome;
 import com.mushroom.midnight.common.capability.CavernousBiomeStore;
+import com.mushroom.midnight.common.capability.MidnightWorldSpawners;
 import com.mushroom.midnight.common.capability.MultiLayerBiomeSampler;
 import com.mushroom.midnight.common.registry.ModBlocks;
 import com.mushroom.midnight.common.registry.ModCavernousBiomes;
@@ -199,9 +200,10 @@ public class MidnightChunkGenerator implements IChunkGenerator, PartialChunkGene
             cavernousBiome.decorate(this.world, this.random, origin);
 
             if (TerrainGen.populate(this, this.world, this.random, chunkX, chunkZ, false, PopulateChunkEvent.Populate.EventType.ANIMALS)) {
-                int originX = globalX + 8;
-                int originZ = globalZ + 8;
-                MidnightWorldEntitySpawner.performWorldGenSpawning(this.world, biome, originX, originZ, 16, 16, this.random);
+                MidnightWorldSpawners worldSpawners = this.world.getCapability(Midnight.WORLD_SPAWNERS_CAP, null);
+                if (worldSpawners != null) {
+                    worldSpawners.populateChunk(chunkX, chunkZ, this.random);
+                }
             }
 
             ForgeEventFactory.onChunkPopulate(false, this, this.world, this.random, chunkX, chunkZ, false);

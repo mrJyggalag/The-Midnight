@@ -34,7 +34,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-public class BlockMidnightDoublePlant extends BlockBush implements IModelProvider, IShearable {
+public class BlockMidnightDoublePlant extends BlockBush implements IModelProvider, IShearable, GeneratablePlant {
     protected static final PropertyEnum<BlockDoublePlant.EnumBlockHalf> HALF = BlockDoublePlant.HALF;
     private final PlantBehaviorType behaviorType;
     private final boolean glowing;
@@ -63,7 +63,7 @@ public class BlockMidnightDoublePlant extends BlockBush implements IModelProvide
 
     @Override
     protected boolean canSustainBush(IBlockState state) {
-        return state.getBlock() == ModBlocks.MIDNIGHT_DIRT || state.getBlock() == ModBlocks.MIDNIGHT_GRASS;
+        return state.getBlock() == ModBlocks.MIDNIGHT_DIRT || state.getBlock() == ModBlocks.MIDNIGHT_GRASS || state.getBlock() == ModBlocks.MIDNIGHT_MYCELIUM;
     }
 
     @Override
@@ -210,7 +210,9 @@ public class BlockMidnightDoublePlant extends BlockBush implements IModelProvide
     @SideOnly(Side.CLIENT)
     @SuppressWarnings("deprecation")
     public int getPackedLightmapCoords(IBlockState state, IBlockAccess source, BlockPos pos) {
-        if (!glowing) { return super.getPackedLightmapCoords(state, source, pos); }
+        if (!glowing) {
+            return super.getPackedLightmapCoords(state, source, pos);
+        }
         if (MinecraftForgeClient.getRenderLayer() == BlockRenderLayer.CUTOUT) {
             return source.getCombinedLight(pos, 0);
         }

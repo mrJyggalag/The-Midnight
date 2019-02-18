@@ -95,11 +95,12 @@ tile.midnight.double_viridshroom.name=Tall Viridshroom
 tile.midnight.bogshroom.name=Bogshroom
 tile.midnight.double_bogshroom.name=Tall Bogshroom
 tile.midnight.bogshroom_stem.name=Bogshroom Stem
-tile.midnight.bogshroom_cap.name=Bogshroom Cap
+tile.midnight.bogshroom_hat.name=Bogshroom Cap
+tile.midnight.bogshroom_shelf.name=Bogshroom Shelf
 
 tile.midnight.bulb_fungus.name=Bulb Fungus
 tile.midnight.bulb_fungus_stem.name=Bulb Fungus Stem
-tile.midnight.bulb_fungus_cap.name=Bulb Fungus Cap
+tile.midnight.bulb_fungus_hat.name=Bulb Fungus Cap
 
 tile.midnight.bladeshroom.name=Bladeshroom
 
@@ -290,6 +291,7 @@ entity.midnight.penumbrian.name=Penumbrian
 entity.midnight.tree_hopper.name=Treehopper
 entity.midnight.nightstag.name=Nightstag
 entity.midnight.deceitful_snapper.name=Deceitful Snapper
+entity.midnight.racoon.name=Racoon
 
 # Config
 

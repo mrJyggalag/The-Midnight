@@ -26,11 +26,12 @@ public class TemplateTreeFeature extends MidnightTreeFeature {
     private static final String TRUNK_TOP_KEY = "trunk_top";
     private static final String TRUNK_CORNER_KEY = "trunk_corner";
 
-    private final TemplateCompiler templateCompiler;
+    private final ResourceLocation[] templates;
+    private TemplateCompiler templateCompiler;
 
     public TemplateTreeFeature(ResourceLocation[] templates, IBlockState log, IBlockState leaves) {
         super(log, leaves);
-        this.templateCompiler = this.buildCompiler(templates);
+        this.templates = templates;
     }
 
     protected TemplateCompiler buildCompiler(ResourceLocation[] templates) {
@@ -45,6 +46,10 @@ public class TemplateTreeFeature extends MidnightTreeFeature {
     public boolean placeFeature(World world, Random rand, BlockPos origin) {
         if (!this.canGrow(world, origin)) {
             return false;
+        }
+
+        if (this.templateCompiler == null) {
+            this.templateCompiler = this.buildCompiler(this.templates);
         }
 
         CompiledTemplate template = this.templateCompiler.compile(world, rand, origin);
@@ -94,7 +99,10 @@ public class TemplateTreeFeature extends MidnightTreeFeature {
     protected Template.BlockInfo processState(World world, BlockPos pos, Template.BlockInfo info) {
         IBlockState state = info.blockState;
         Block block = state.getBlock();
-        if (block instanceof BlockLog || block instanceof BlockMidnightFungiStem) {
+        if (block instanceof BlockLog) {
+            BlockLog.EnumAxis axis = state.getValue(BlockLog.LOG_AXIS);
+            return new Template.BlockInfo(pos, this.log.withProperty(BlockLog.LOG_AXIS, axis), null);
+        } else if (block instanceof BlockMidnightFungiStem) {
             return new Template.BlockInfo(pos, this.log, null);
         } else if (block instanceof BlockLeaves || block instanceof BlockMidnightFungiHat) {
             return new Template.BlockInfo(pos, this.leaves, null);

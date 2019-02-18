@@ -1,5 +1,6 @@
 package com.mushroom.midnight.common.block;
 
+import com.mushroom.midnight.common.registry.ModBlocks;
 import net.minecraft.block.BlockSapling;
 import net.minecraft.block.IGrowable;
 import net.minecraft.block.state.BlockStateContainer;
@@ -24,12 +25,7 @@ public class BlockMidnightDoubleFungi extends BlockMidnightDoublePlant implement
 
     @Override
     protected boolean canSustainBush(IBlockState state) {
-        return super.canSustainBush(state) || state.getBlock() == Blocks.MYCELIUM;
-    }
-
-    @Override
-    public boolean canPlaceBlockAt(World world, BlockPos pos) {
-        return world.getBlockState(pos).getBlock().isReplaceable(world, pos) && world.getBlockState(pos.up()).getBlock().isReplaceable(world, pos.up());
+        return super.canSustainBush(state) || state.getBlock() == Blocks.MYCELIUM || state.getBlock() == ModBlocks.NIGHTSTONE || state.getBlock() == ModBlocks.DECEITFUL_PEAT;
     }
 
     @Override

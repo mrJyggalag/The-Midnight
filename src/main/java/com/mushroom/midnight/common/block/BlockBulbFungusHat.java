@@ -63,9 +63,7 @@ public class BlockBulbFungusHat extends Block implements IModelProvider {
     @SideOnly(Side.CLIENT)
     @SuppressWarnings("deprecation")
     public int getPackedLightmapCoords(IBlockState state, IBlockAccess source, BlockPos pos) {
-        int skyLight = 14;
-        int blockLight = 14;
-        return skyLight << 20 | blockLight << 4;
+        return source.getCombinedLight(pos, 13);
     }
 
     @Override

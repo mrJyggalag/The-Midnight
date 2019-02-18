@@ -1,108 +1,82 @@
 package com.mushroom.midnight.common.biome.config;
 
-import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
 import com.mushroom.midnight.Midnight;
+import com.mushroom.midnight.common.util.WeightedPool;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.world.biome.Biome;
 
-import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 public class SpawnerConfig {
-    public static final SpawnerConfig EMPTY = new SpawnerConfig(ImmutableList.of(), ImmutableList.of(), ImmutableList.of(), ImmutableList.of());
+    public static final SpawnerConfig EMPTY = new SpawnerConfig(ImmutableMap.of(), 0.0F);
 
-    private final ImmutableList<Biome.SpawnListEntry> monsterSpawns;
-    private final ImmutableList<Biome.SpawnListEntry> creatureSpawns;
-    private final ImmutableList<Biome.SpawnListEntry> ambientCreatureSpawns;
-    private final ImmutableList<Biome.SpawnListEntry> waterCreatureSpawns;
+    private final ImmutableMap<EnumCreatureType, WeightedPool<Biome.SpawnListEntry>> spawnPools;
+    private final float spawnChance;
 
-    private SpawnerConfig(
-            ImmutableList<Biome.SpawnListEntry> monsterSpawns,
-            ImmutableList<Biome.SpawnListEntry> creatureSpawns,
-            ImmutableList<Biome.SpawnListEntry> ambientCreatureSpawns,
-            ImmutableList<Biome.SpawnListEntry> waterCreatureSpawns
-    ) {
-        this.monsterSpawns = monsterSpawns;
-        this.creatureSpawns = creatureSpawns;
-        this.ambientCreatureSpawns = ambientCreatureSpawns;
-        this.waterCreatureSpawns = waterCreatureSpawns;
+    private SpawnerConfig(ImmutableMap<EnumCreatureType, WeightedPool<Biome.SpawnListEntry>> spawnPools, float spawnChance) {
+        this.spawnPools = spawnPools;
+        this.spawnChance = spawnChance;
     }
 
     public static Builder builder() {
         return new Builder();
     }
 
-    public void apply(Biome biome) {
-        for (EnumCreatureType creatureType : EnumCreatureType.values()) {
-            biome.getSpawnableList(creatureType).clear();
-        }
-
-        biome.getSpawnableList(Midnight.MIDNIGHT_MOB).addAll(this.monsterSpawns);
-        biome.getSpawnableList(Midnight.MIDNIGHT_AMBIENT).addAll(this.ambientCreatureSpawns);
-
-        biome.getSpawnableList(EnumCreatureType.CREATURE).addAll(this.creatureSpawns);
-        biome.getSpawnableList(EnumCreatureType.WATER_CREATURE).addAll(this.waterCreatureSpawns);
+    public WeightedPool<Biome.SpawnListEntry> getPool(EnumCreatureType creatureType) {
+        return this.spawnPools.getOrDefault(creatureType, WeightedPool.empty());
     }
 
-    public Collection<Biome.SpawnListEntry> getMonsterSpawns() {
-        return this.monsterSpawns;
+    public float getSpawnChance() {
+        return this.spawnChance;
     }
 
-    public Collection<Biome.SpawnListEntry> getCreatureSpawns() {
-        return this.creatureSpawns;
-    }
-
-    public Collection<Biome.SpawnListEntry> getAmbientCreatureSpawns() {
-        return this.ambientCreatureSpawns;
-    }
-
-    public Collection<Biome.SpawnListEntry> getWaterCreatureSpawns() {
-        return this.waterCreatureSpawns;
+    public boolean isEmpty() {
+        return this.spawnPools.isEmpty() || this.spawnChance <= 0.0F;
     }
 
     public static class Builder {
-        private final ImmutableList.Builder<Biome.SpawnListEntry> monsterSpawns = new ImmutableList.Builder<>();
-        private final ImmutableList.Builder<Biome.SpawnListEntry> creatureSpawns = new ImmutableList.Builder<>();
-        private final ImmutableList.Builder<Biome.SpawnListEntry> ambientCreatureSpawns = new ImmutableList.Builder<>();
-        private final ImmutableList.Builder<Biome.SpawnListEntry> waterCreatureSpawns = new ImmutableList.Builder<>();
+        private final Map<EnumCreatureType, WeightedPool<Biome.SpawnListEntry>> spawnPools = new HashMap<>();
+        private float spawnChance = 0.1F;
 
         Builder() {
         }
 
         public Builder extendsFrom(SpawnerConfig config) {
-            this.monsterSpawns.addAll(config.getMonsterSpawns());
-            this.creatureSpawns.addAll(config.getCreatureSpawns());
-            this.ambientCreatureSpawns.addAll(config.getAmbientCreatureSpawns());
-            this.waterCreatureSpawns.addAll(config.getWaterCreatureSpawns());
-            return this;
-        }
-
-        public Builder withMonster(Biome.SpawnListEntry entry) {
-            this.monsterSpawns.add(entry);
+            this.spawnPools.putAll(config.spawnPools);
+            this.spawnChance = config.spawnChance;
             return this;
         }
 
         public Builder withCreature(Biome.SpawnListEntry entry) {
-            this.creatureSpawns.add(entry);
-            return this;
+            return this.withEntity(EnumCreatureType.CREATURE, entry);
+        }
+
+        public Builder withMonster(Biome.SpawnListEntry entry) {
+            return this.withEntity(Midnight.MIDNIGHT_MOB, entry);
         }
 
         public Builder withAmbientCreature(Biome.SpawnListEntry entry) {
-            this.ambientCreatureSpawns.add(entry);
-            return this;
+            return this.withEntity(Midnight.MIDNIGHT_AMBIENT, entry);
         }
 
         public Builder withWaterCreature(Biome.SpawnListEntry entry) {
-            this.waterCreatureSpawns.add(entry);
+            return this.withEntity(EnumCreatureType.WATER_CREATURE, entry);
+        }
+
+        public Builder withEntity(EnumCreatureType creatureType, Biome.SpawnListEntry entry) {
+            this.spawnPools.computeIfAbsent(creatureType, p -> new WeightedPool<>()).add(entry);
+            return this;
+        }
+
+        public Builder withSpawnChance(float chance) {
+            this.spawnChance = chance;
             return this;
         }
 
         public SpawnerConfig build() {
-            return new SpawnerConfig(
-                    this.monsterSpawns.build(),
-                    this.creatureSpawns.build(),
-                    this.ambientCreatureSpawns.build(),
-                    this.waterCreatureSpawns.build()
-            );
+            return new SpawnerConfig(ImmutableMap.copyOf(this.spawnPools), this.spawnChance);
         }
     }
 }

@@ -27,9 +27,9 @@ public class ParcelPlacementConfig implements IPlacementConfig {
         int offsetX = random.nextInt(16) + 8;
         int offsetZ = random.nextInt(16) + 8;
         BlockPos pos = chunkOrigin.add(offsetX, 0, offsetZ);
-        int maxY = placementLevel.getSurfacePos(pos).getY() + 32;
+        int maxY = placementLevel.getSurfacePos(world, pos).getY() + 32;
         if (maxY > 0) {
-            placeParcel(world, random, pos.up(placementLevel.generateUpTo(random, maxY)), generator);
+            placeParcel(world, random, pos.up(placementLevel.generateUpTo(world, random, maxY)), generator);
         }
     }
 

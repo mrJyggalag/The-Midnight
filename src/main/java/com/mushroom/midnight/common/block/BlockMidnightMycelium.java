@@ -1,13 +1,7 @@
 package com.mushroom.midnight.common.block;
 
-import com.mushroom.midnight.client.IModelProvider;
 import com.mushroom.midnight.common.helper.Helper;
 import com.mushroom.midnight.common.registry.ModBlocks;
-import com.mushroom.midnight.common.registry.ModTabs;
-import net.minecraft.block.Block;
-import net.minecraft.block.SoundType;
-import net.minecraft.block.material.MapColor;
-import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.Item;
 import net.minecraft.util.BlockRenderLayer;
@@ -21,14 +15,10 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.Random;
 
-public class BlockMidnightMycelium extends Block implements IModelProvider {
+public class BlockMidnightMycelium extends BlockNightstone {
 
     public BlockMidnightMycelium() {
-        super(Material.GRASS, MapColor.MAGENTA_STAINED_HARDENED_CLAY);
-        setCreativeTab(ModTabs.BUILDING_TAB);
-        setHardness(0.6f);
-        setSoundType(SoundType.PLANT);
-        setLightLevel(0.1f);
+        super();
         setTickRandomly(true);
     }
 
@@ -68,18 +58,16 @@ public class BlockMidnightMycelium extends Block implements IModelProvider {
 
     @Override
     public boolean canRenderInLayer(IBlockState state, BlockRenderLayer layer) {
-        return layer == BlockRenderLayer.TRANSLUCENT || layer == BlockRenderLayer.CUTOUT;
+        return layer == BlockRenderLayer.SOLID || layer == BlockRenderLayer.CUTOUT;
     }
 
     @Override
     @SideOnly(Side.CLIENT)
     @SuppressWarnings("deprecation")
     public int getPackedLightmapCoords(IBlockState state, IBlockAccess source, BlockPos pos) {
-        if (MinecraftForgeClient.getRenderLayer() == BlockRenderLayer.CUTOUT) {
+        if (MinecraftForgeClient.getRenderLayer() == BlockRenderLayer.SOLID) {
             return source.getCombinedLight(pos, 0);
         }
-        int skyLight = 10;
-        int blockLight = 10;
-        return skyLight << 20 | blockLight << 4;
+        return source.getCombinedLight(pos, 10);
     }
 }

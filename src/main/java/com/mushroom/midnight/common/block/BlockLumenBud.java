@@ -5,6 +5,7 @@ import net.minecraft.block.BlockDoublePlant;
 import net.minecraft.block.IGrowable;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 import java.util.Random;
@@ -30,5 +31,10 @@ public class BlockLumenBud extends BlockMidnightPlant implements IGrowable {
             world.setBlockState(pos, ModBlocks.DOUBLE_LUMEN_BUD.getDefaultState().withProperty(BlockDoublePlant.HALF, BlockDoublePlant.EnumBlockHalf.LOWER), 2);
             world.setBlockState(pos.up(), ModBlocks.DOUBLE_LUMEN_BUD.getDefaultState().withProperty(BlockDoublePlant.HALF, BlockDoublePlant.EnumBlockHalf.UPPER), 2);
         }
+    }
+
+    @Override
+    public boolean isReplaceable(IBlockAccess world, BlockPos pos) {
+        return true;
     }
 }

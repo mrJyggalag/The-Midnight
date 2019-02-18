@@ -12,11 +12,14 @@ import com.mushroom.midnight.common.entity.creature.EntityDeceitfulSnapper;
 import com.mushroom.midnight.common.entity.creature.EntityHunter;
 import com.mushroom.midnight.common.entity.creature.EntityNightStag;
 import com.mushroom.midnight.common.entity.creature.EntityNova;
+import com.mushroom.midnight.common.entity.creature.EntityRacoon;
 import com.mushroom.midnight.common.entity.creature.EntityRifter;
 import com.mushroom.midnight.common.entity.creature.EntityStinger;
 import com.mushroom.midnight.common.registry.ModBlocks;
 import com.mushroom.midnight.common.world.SurfacePlacementLevel;
+import com.mushroom.midnight.common.world.feature.FeatureSorting;
 import com.mushroom.midnight.common.world.feature.IMidnightFeature;
+import com.mushroom.midnight.common.world.feature.config.DragonNestPlacementConfig;
 import com.mushroom.midnight.common.world.feature.config.ParcelPlacementConfig;
 import com.mushroom.midnight.common.world.feature.config.ScatterPlacementConfig;
 import com.mushroom.midnight.common.world.feature.config.SurfacePlacementConfig;
@@ -37,15 +40,20 @@ public class MidnightBiomeConfigs {
             .withFillerState(ModBlocks.NIGHTSTONE.getDefaultState())
             .withWetState(ModBlocks.NIGHTSTONE.getDefaultState());
 
+    public static final FeatureConfig GLOBAL_FEATURE_CONFIG = FeatureConfig.builder()
+            .withFeature(FeatureSorting.LAST, GHOST_PLANT_FEATURE, new ParcelPlacementConfig(3, 6, 0.3f))
+            .withFeature(FeatureSorting.LAST, DRAGON_NEST_FEATURE, new DragonNestPlacementConfig(32, 32))
+            .withFeature(FeatureSorting.LAST, UNDERGROUND_FEATURES, new UndergroundPlacementConfig(1, 3, 10, 50))
+            .build();
+
     public static final FeatureConfig VEGETATED_FEATURE_CONFIG = FeatureConfig.builder()
+            .extendsFrom(GLOBAL_FEATURE_CONFIG)
             .withFeature(ROCKSHROOM_HEAP_FEATURE, new SurfacePlacementConfig(-99, 1))
             .withFeature(TALL_GRASS_FEATURE, new ScatterPlacementConfig(6, 64))
             .withFeature(DOUBLE_GRASS_FEATURE, new ScatterPlacementConfig(3, 32))
             .withFeature(LUMEN_FEATURE, new ScatterPlacementConfig(1, 32))
             .withFeature(DOUBLE_LUMEN_FEATURE, new ScatterPlacementConfig(1, 16))
             .withFeature(FUNGI_FEATURE, new ScatterPlacementConfig(1, 16))
-            .withFeature(GHOST_PLANT_FEATURE, new ParcelPlacementConfig(3, 6, 0.3f))
-            .withFeature(UNDERGROUND_FEATURES, new UndergroundPlacementConfig(1, 3, 10, 50))
             .build();
 
     public static final FeatureConfig ROCKY_FEATURE_CONFIG = FeatureConfig.builder()
@@ -54,8 +62,6 @@ public class MidnightBiomeConfigs {
             .withFeature(DOUBLE_LUMEN_FEATURE, new ScatterPlacementConfig(1, 16))
             .withFeature(FUNGI_FEATURE, new ScatterPlacementConfig(1, 16))
             .withFeature(TRENCHSTONE_BOULDER_FEATURE, new SurfacePlacementConfig(-3, 1))
-            .withFeature(GHOST_PLANT_FEATURE, new ParcelPlacementConfig(3, 6, 0.3f))
-            .withFeature(UNDERGROUND_FEATURES, new UndergroundPlacementConfig(1, 3, 10, 50))
             .build();
 
     public static final FeatureConfig VIGILANT_FOREST_FEATURE_CONFIG = FeatureConfig.builder()
@@ -71,9 +77,9 @@ public class MidnightBiomeConfigs {
             .build();
 
     public static final FeatureConfig RUNEBUSH_GROVE_FEATURE_CONFIG = FeatureConfig.builder()
+            .extendsFrom(GLOBAL_FEATURE_CONFIG)
             .withFeature(LUMEN_FEATURE, new ScatterPlacementConfig(1, 32))
             .withFeature(DOUBLE_LUMEN_FEATURE, new ScatterPlacementConfig(1, 16))
-            .withFeature(UNDERGROUND_FEATURES, new UndergroundPlacementConfig(1, 3, 10, 50))
             .withFeature(new IMidnightFeature[] {
                     SHADOWROOT_TREE_FEATURE,
                     DARK_WILLOW_TREE_FEATURE
@@ -94,6 +100,7 @@ public class MidnightBiomeConfigs {
             .build();
 
     public static final FeatureConfig CRYSTAL_SPIRES_FEATURE_CONFIG = FeatureConfig.builder()
+            .extendsFrom(GLOBAL_FEATURE_CONFIG)
             .withFeature(ROCKSHROOM_HEAP_FEATURE, new SurfacePlacementConfig(-99, 1))
             .withFeature(SHADOWROOT_TREE_FEATURE, new SurfacePlacementConfig(-3, 1))
             .withFeature(BLOOMCRYSTAL_FEATURE, new SurfacePlacementConfig(3))
@@ -101,8 +108,6 @@ public class MidnightBiomeConfigs {
             .withFeature(LUMEN_FEATURE, new ScatterPlacementConfig(1, 32))
             .withFeature(DOUBLE_LUMEN_FEATURE, new ScatterPlacementConfig(1, 16))
             .withFeature(CRYSTAL_FLOWER_FEATURE, new ScatterPlacementConfig(5, 12))
-            .withFeature(GHOST_PLANT_FEATURE, new ParcelPlacementConfig(3, 6, 0.3f))
-            .withFeature(UNDERGROUND_FEATURES, new UndergroundPlacementConfig(1, 3, 10, 50))
             .build();
 
     public static final FeatureConfig WARPED_FIELDS_FEATURE_CONFIG = FeatureConfig.builder()
@@ -111,28 +116,28 @@ public class MidnightBiomeConfigs {
             .build();
 
     public static final FeatureConfig DECEITFUL_BOG_FEATURE_CONFIG = FeatureConfig.builder()
+            .extendsFrom(GLOBAL_FEATURE_CONFIG)
             .withFeature(ROCKSHROOM_HEAP_FEATURE, new SurfacePlacementConfig(-99, 1))
-            .withFeature(DEAD_TREE_FEATURE, new SurfacePlacementConfig(-1, 1))
+            .withFeature(BOG_DEAD_TREE_FEATURE, new SurfacePlacementConfig(-1, 1))
             .withFeature(new IMidnightFeature[] {
                     SHADOWROOT_TREE_FEATURE,
                     DARK_WILLOW_TREE_FEATURE
             }, new SurfacePlacementConfig(4))
-            .withFeature(LARGE_BOG_SHROOM_FEATURE, new SurfacePlacementConfig(6))
-            .withFeature(BOGWEED_FEATURE, new ScatterPlacementConfig(2, 32))
+            .withFeature(LARGE_BOGSHROOM_FEATURE, new SurfacePlacementConfig(1))
+            .withFeature(BOGWEED_FEATURE, new ScatterPlacementConfig(1, 24))
             .withFeature(TALL_GRASS_FEATURE, new ScatterPlacementConfig(5, 32))
-            .withFeature(DOUBLE_GRASS_FEATURE, new ScatterPlacementConfig(3, 32))
+            .withFeature(DOUBLE_GRASS_FEATURE, new ScatterPlacementConfig(3, 16))
             .withFeature(DECEITFUL_MOSS_FEATURE, new ScatterPlacementConfig(16, 32))
-            .withFeature(FUNGI_FEATURE, new ScatterPlacementConfig(2, 4))
+            .withFeature(BOG_FUNGI_FEATURE, new ScatterPlacementConfig(2, 16))
+            .withFeature(DOUBLE_BOG_FUNGI_FEATURE, new ScatterPlacementConfig(1, 8))
             .withFeature(DEAD_LOG_FEATURE, new SurfacePlacementConfig(5))
             .withFeature(DECEITFUL_ALGAE_FEATURE, new ScatterPlacementConfig(10, 20))
-            .withFeature(GHOST_PLANT_FEATURE, new ParcelPlacementConfig(3, 6, 0.3f))
-            .withFeature(UNDERGROUND_FEATURES, new UndergroundPlacementConfig(1, 3, 10, 50))
             .build();
 
     public static final FeatureConfig NIGHT_PLAINS_FEATURE_CONFIG = FeatureConfig.builder()
+            .extendsFrom(GLOBAL_FEATURE_CONFIG)
             .withFeature(ROCKSHROOM_HEAP_FEATURE, new SurfacePlacementConfig(-99, 1))
             .withFeature(TALL_GRASS_FEATURE, new ScatterPlacementConfig(2, 32))
-            .withFeature(GHOST_PLANT_FEATURE, new ParcelPlacementConfig(3, 6, 0.3f))
             .withFeature(FINGERED_GRASS_FEATURE, new ScatterPlacementConfig(8, 16) {
                 @Override
                 public void apply(World world, SurfacePlacementLevel placementLevel, Random random, BlockPos chunkOrigin, Consumer<BlockPos> generator) {
@@ -141,7 +146,6 @@ public class MidnightBiomeConfigs {
                     }
                 }
             })
-            .withFeature(UNDERGROUND_FEATURES, new UndergroundPlacementConfig(1, 3, 10, 50))
             .withFeature(new IMidnightFeature[] {
                     SHADOWROOT_TREE_FEATURE,
                     DEAD_TREE_FEATURE
@@ -153,9 +157,8 @@ public class MidnightBiomeConfigs {
             .build();
 
     public static final FeatureConfig VALLEY_FEATURE_CONFIG = FeatureConfig.builder()
+            .extendsFrom(GLOBAL_FEATURE_CONFIG)
             .withFeature(ROCKSHROOM_HEAP_FEATURE, new SurfacePlacementConfig(-99, 1))
-            .withFeature(GHOST_PLANT_FEATURE, new ParcelPlacementConfig(3, 6, 0.3f))
-            .withFeature(UNDERGROUND_FEATURES, new UndergroundPlacementConfig(1, 3, 10, 50))
             .build();
 
     public static final FeatureConfig CRYSTAL_CAVERN_FEATURE_CONFIG = FeatureConfig.builder()
@@ -172,8 +175,6 @@ public class MidnightBiomeConfigs {
             .withCreature(new Biome.SpawnListEntry(EntityNightStag.class, 100, 1, 3))
             .withMonster(new Biome.SpawnListEntry(EntityRifter.class, 100, 1, 2))
             .withMonster(new Biome.SpawnListEntry(EntityEnderman.class, 10, 4, 4))
-            .withMonster(new Biome.SpawnListEntry(EntityStinger.class, 100, 1, 2))
-            .withMonster(new Biome.SpawnListEntry(EntityNova.class, 20, 1, 1))
             .build();
 
     public static final SpawnerConfig ROCKY_SPAWN_CONFIG = SpawnerConfig.builder()
@@ -181,15 +182,17 @@ public class MidnightBiomeConfigs {
             .withMonster(new Biome.SpawnListEntry(EntityRifter.class, 100, 1, 2))
             .withMonster(new Biome.SpawnListEntry(EntityEnderman.class, 10, 4, 4))
             .withMonster(new Biome.SpawnListEntry(EntityHunter.class, 5, 1, 2))
-            .withMonster(new Biome.SpawnListEntry(EntityStinger.class, 100, 1, 2))
-            .withMonster(new Biome.SpawnListEntry(EntityNova.class, 20, 1, 1))
+            .build();
+
+    public static final SpawnerConfig UNDERGROUND_SPAWN_CONFIG = SpawnerConfig.builder()
+            .withMonster(new Biome.SpawnListEntry(EntityStinger.class, 100, 2, 4))
+            .withMonster(new Biome.SpawnListEntry(EntityEnderman.class, 10, 4, 4))
             .build();
 
     public static final SpawnerConfig CRYSTAL_SPIRES_SPAWN_CONFIG = SpawnerConfig.builder()
             .withCreature(new Biome.SpawnListEntry(EntityNightStag.class, 100, 1, 3))
             .withAmbientCreature(new Biome.SpawnListEntry(EntityCrystalBug.class, 100, 7, 10))
             .withMonster(new Biome.SpawnListEntry(EntityStinger.class, 100, 1, 2))
-            .withMonster(new Biome.SpawnListEntry(EntityNova.class, 20, 1, 1))
             .build();
 
     public static final SpawnerConfig WARPED_FIELDS_SPAWN_CONFIG = SpawnerConfig.builder()
@@ -197,22 +200,19 @@ public class MidnightBiomeConfigs {
             .withMonster(new Biome.SpawnListEntry(EntityHunter.class, 5, 0, 2))
             .build();
 
+    public static final SpawnerConfig VIGILANT_FOREST_SPAWN_CONFIG = SpawnerConfig.builder()
+            .extendsFrom(VEGETATED_SPAWN_CONFIG)
+            .withCreature(new Biome.SpawnListEntry(EntityRacoon.class, 100, 1, 2))
+            .build();
+
     public static final SpawnerConfig DECEITFUL_BOG_SPAWN_CONFIG = SpawnerConfig.builder()
+            .extendsFrom(VEGETATED_SPAWN_CONFIG)
             .withWaterCreature(new Biome.SpawnListEntry(EntityDeceitfulSnapper.class, 100, 5, 10))
-            .withCreature(new Biome.SpawnListEntry(EntityNightStag.class, 100, 1, 3))
-            .withMonster(new Biome.SpawnListEntry(EntityRifter.class, 100, 1, 2))
-            .withMonster(new Biome.SpawnListEntry(EntityEnderman.class, 10, 4, 4))
-            .withMonster(new Biome.SpawnListEntry(EntityStinger.class, 100, 1, 2))
-            .withMonster(new Biome.SpawnListEntry(EntityNova.class, 20, 1, 1))
             .build();
 
     public static final SpawnerConfig NIGHT_PLAINS_SPAWN_CONFIG = SpawnerConfig.builder()
-            .withCreature(new Biome.SpawnListEntry(EntityNightStag.class, 100, 1, 3))
-            .withMonster(new Biome.SpawnListEntry(EntityRifter.class, 100, 1, 2))
-            .withMonster(new Biome.SpawnListEntry(EntityEnderman.class, 10, 4, 4))
+            .extendsFrom(VEGETATED_SPAWN_CONFIG)
             .withMonster(new Biome.SpawnListEntry(EntityHunter.class, 5, 1, 2))
-            .withMonster(new Biome.SpawnListEntry(EntityStinger.class, 100, 1, 2))
-            .withMonster(new Biome.SpawnListEntry(EntityNova.class, 20, 1, 1))
             .build();
 
     public static final SpawnerConfig PLATEAU_SPAWN_CONFIG = SpawnerConfig.builder()
@@ -221,12 +221,21 @@ public class MidnightBiomeConfigs {
             .build();
 
     public static final SpawnerConfig VALLEY_SPAWN_CONFIG = SpawnerConfig.builder()
-            .withCreature(new Biome.SpawnListEntry(EntityNightStag.class, 100, 1, 3))
-            .withMonster(new Biome.SpawnListEntry(EntityRifter.class, 100, 1, 2))
-            .withMonster(new Biome.SpawnListEntry(EntityEnderman.class, 10, 4, 4))
+            .extendsFrom(VEGETATED_SPAWN_CONFIG)
             .withMonster(new Biome.SpawnListEntry(EntityHunter.class, 5, 1, 2))
-            .withMonster(new Biome.SpawnListEntry(EntityStinger.class, 100, 1, 2))
-            .withMonster(new Biome.SpawnListEntry(EntityNova.class, 20, 1, 1))
+            .build();
+
+    public static final SpawnerConfig GREAT_CAVERN_SPAWN_CONFIG = SpawnerConfig.builder()
+            .extendsFrom(UNDERGROUND_SPAWN_CONFIG)
+            .build();
+
+    public static final SpawnerConfig CRYSTAL_CAVERN_SPAWN_CONFIG = SpawnerConfig.builder()
+            .extendsFrom(UNDERGROUND_SPAWN_CONFIG)
+            .withMonster(new Biome.SpawnListEntry(EntityNova.class, 100, 1, 2))
+            .build();
+
+    public static final SpawnerConfig FUNGAL_CAVERN_SPAWN_CONFIG = SpawnerConfig.builder()
+            .extendsFrom(UNDERGROUND_SPAWN_CONFIG)
             .build();
 
     public static final SurfaceTerrainConfig WARPED_TERRAIN_CONFIG = new SurfaceTerrainConfig()
@@ -304,7 +313,7 @@ public class MidnightBiomeConfigs {
     public static final SurfaceBiomeConfig VIGILANT_FOREST_CONFIG = SurfaceBiomeConfig.builder()
             .withTerrain(FOREST_TERRAIN_CONFIG)
             .withFeatures(VIGILANT_FOREST_FEATURE_CONFIG)
-            .withSpawner(VEGETATED_SPAWN_CONFIG)
+            .withSpawner(VIGILANT_FOREST_SPAWN_CONFIG)
             .build();
 
     public static final SurfaceBiomeConfig RUNEBUSH_GROVE_CONFIG = SurfaceBiomeConfig.builder()
@@ -360,16 +369,19 @@ public class MidnightBiomeConfigs {
             .withHeightVariation(0.6F);
 
     public static final CavernousBiomeConfig GREAT_CAVERN_CONFIG = CavernousBiomeConfig.builder()
+            .withSpawner(GREAT_CAVERN_SPAWN_CONFIG)
             .withStructure(GREAT_CAVERN_STRUCTURE_CONFIG)
             .build();
 
     public static final CavernousBiomeConfig CRYSTAL_CAVERN_CONFIG = CavernousBiomeConfig.builder()
+            .withSpawner(CRYSTAL_CAVERN_SPAWN_CONFIG)
             .withFeatures(CRYSTAL_CAVERN_FEATURE_CONFIG)
             .withStructure(GREAT_CAVERN_STRUCTURE_CONFIG)
             .build();
 
     public static final CavernousBiomeConfig FUNGAL_CAVERN_CONFIG = CavernousBiomeConfig.builder()
-            .withSurface(new SurfaceConfig())
+            .withSurface(new SurfaceConfig().withTopState(ModBlocks.MIDNIGHT_MYCELIUM.getDefaultState()))
+            .withSpawner(FUNGAL_CAVERN_SPAWN_CONFIG)
             .withFeatures(FUNGAL_CAVERN_FEATURE_CONFIG)
             .withStructure(FUNGAL_CAVERN_STRUCTURE_CONFIG)
             .build();

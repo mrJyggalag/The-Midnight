@@ -4,6 +4,7 @@ import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.common.biome.BiomeLayerSampler;
 import com.mushroom.midnight.common.biome.MidnightBiomeLayer;
 import com.mushroom.midnight.common.capability.CavernousBiomeStore;
+import com.mushroom.midnight.common.capability.MidnightWorldSpawners;
 import com.mushroom.midnight.common.capability.MultiLayerBiomeSampler;
 import com.mushroom.midnight.common.capability.RiftTravelCooldown;
 import com.mushroom.midnight.common.capability.RifterCapturable;
@@ -16,7 +17,6 @@ import com.mushroom.midnight.common.registry.ModCavernousBiomes;
 import com.mushroom.midnight.common.registry.ModDimensions;
 import com.mushroom.midnight.common.registry.ModEffects;
 import com.mushroom.midnight.common.world.GlobalBridgeManager;
-import com.mushroom.midnight.common.world.MidnightWorldEntitySpawner;
 import com.mushroom.midnight.common.world.RiftSpawnHandler;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -30,7 +30,6 @@ import net.minecraft.world.DimensionType;
 import net.minecraft.world.GameRules;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
-import net.minecraft.world.WorldType;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.gen.layer.GenLayer;
@@ -80,6 +79,11 @@ public class CommonEventHandler {
             sampler.put(MidnightBiomeLayer.UNDERGROUND, BiomeLayerSampler.fromGenLayer(world, undergroundProcedure, ModCavernousBiomes::fromId));
 
             event.addCapability(new ResourceLocation(Midnight.MODID, "biome_sampler"), sampler);
+
+            if (!world.isRemote && world instanceof WorldServer) {
+                MidnightWorldSpawners spawners = new MidnightWorldSpawners.SurfaceAndCave((WorldServer) world);
+                event.addCapability(new ResourceLocation(Midnight.MODID, "world_spawners"), spawners);
+            }
         }
     }
 
@@ -104,13 +108,19 @@ public class CommonEventHandler {
     @SubscribeEvent
     public static void onWorldTick(TickEvent.WorldTickEvent event) {
         if (event.phase == TickEvent.Phase.START) {
-            if (!event.world.isRemote) {
+            World world = event.world;
+            if (!world.isRemote) {
                 GlobalBridgeManager.getServer().update();
-                if (Helper.isMidnightDimension(event.world) && event.world.getGameRules().getBoolean("doMobSpawning") && event.world.getWorldInfo().getTerrainType() != WorldType.DEBUG_ALL_BLOCK_STATES) {
-                    MidnightWorldEntitySpawner.findChunksForSpawning((WorldServer) event.world);
+
+                if (world.getGameRules().getBoolean("doMobSpawning")) {
+                    MidnightWorldSpawners worldSpawners = world.getCapability(Midnight.WORLD_SPAWNERS_CAP, null);
+                    if (worldSpawners != null) {
+                        worldSpawners.spawnAroundPlayers();
+                    }
                 }
             }
-            TICKING_DIMENSION.set(event.world.provider.getDimensionType());
+
+            TICKING_DIMENSION.set(world.provider.getDimensionType());
         } else {
             TICKING_DIMENSION.set(null);
         }

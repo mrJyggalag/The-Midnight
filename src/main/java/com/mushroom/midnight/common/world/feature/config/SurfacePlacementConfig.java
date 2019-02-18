@@ -27,7 +27,7 @@ public class SurfacePlacementConfig implements IPlacementConfig {
         for (int i = 0; i < count; i++) {
             int offsetX = random.nextInt(16) + 8;
             int offsetZ = random.nextInt(16) + 8;
-            generator.accept(placementLevel.getSurfacePos(chunkOrigin.add(offsetX, 0, offsetZ)));
+            generator.accept(placementLevel.getSurfacePos(world, chunkOrigin.add(offsetX, 0, offsetZ)));
         }
     }
 }
