@@ -169,6 +169,7 @@ public class MidnightBiomeConfigs {
             .withFeature(FUNGI_FEATURE, new ScatterPlacementConfig(6, 16))
             .withFeature(DOUBLE_FUNGI_FEATURE, new ScatterPlacementConfig(4, 8))
             .withFeature(LARGE_BULB_FUNGUS_FEATURE, new SurfacePlacementConfig(3))
+            .withFeature(BULB_FUNGUS_FEATURE, new SurfacePlacementConfig(5, 8))
             .build();
 
     public static final SpawnerConfig VEGETATED_SPAWN_CONFIG = SpawnerConfig.builder()
@@ -380,7 +381,7 @@ public class MidnightBiomeConfigs {
             .build();
 
     public static final CavernousBiomeConfig FUNGAL_CAVERN_CONFIG = CavernousBiomeConfig.builder()
-            .withSurface(new SurfaceConfig().withTopState(ModBlocks.MIDNIGHT_MYCELIUM.getDefaultState()))
+            .withSurface(new SurfaceConfig().withTopState(ModBlocks.MIDNIGHT_MYCELIUM.getDefaultState()).withFillerState(ModBlocks.NIGHTSTONE.getDefaultState()).withWetState(ModBlocks.NIGHTSTONE.getDefaultState()))
             .withSpawner(FUNGAL_CAVERN_SPAWN_CONFIG)
             .withFeatures(FUNGAL_CAVERN_FEATURE_CONFIG)
             .withStructure(FUNGAL_CAVERN_STRUCTURE_CONFIG)

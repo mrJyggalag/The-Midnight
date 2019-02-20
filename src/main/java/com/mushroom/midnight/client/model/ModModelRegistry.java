@@ -140,6 +140,26 @@ public class ModModelRegistry {
                 TileEntityRendererDispatcher.instance.render(shadowrootChest, 0.0, 0.0, 0.0, 0.0F, 1.0F);
             }
         });
+
+        ModItems.ADVANCEMENT_HIGHNESS.setTileEntityItemStackRenderer(new TileEntityItemStackRenderer() {
+            private EntityNightStag entity;
+            @Override
+            @SideOnly(Side.CLIENT)
+            public void renderByItem(ItemStack stack) {
+                // TODO improve this
+                if (entity == null && Minecraft.getMinecraft().world != null) {
+                    entity = new EntityNightStag(Minecraft.getMinecraft().world);
+                }
+                if (entity != null) {
+                    try {
+                        RenderNightStag render = new RenderNightStag(Minecraft.getMinecraft().getRenderManager());
+                        render.doRender(entity, 0d, 0d, 0d, 0f, 1f);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
     }
 
     public static void onInit() {
