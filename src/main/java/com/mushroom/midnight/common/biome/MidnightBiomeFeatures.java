@@ -184,7 +184,7 @@ public class MidnightBiomeFeatures {
 
     public static final IMidnightFeature[] UNDERGROUND_FEATURES = new IMidnightFeature[] {
             new PlantFeature(ModBlocks.TENDRILWEED.getDefaultState(), GeneratablePlant::canGenerate),
-            FUNGI_FEATURE, BULB_FUNGUS_FEATURE,
+            FUNGI_FEATURE,
             new MidnightAbstractFeature() {
                 @Override
                 public boolean placeFeature(World world, Random random, BlockPos origin) {
