@@ -11,6 +11,7 @@ import com.mushroom.midnight.common.entity.task.EntityTaskEatGrass;
 import com.mushroom.midnight.common.entity.task.EntityTaskNeutral;
 import com.mushroom.midnight.common.helper.Helper;
 import com.mushroom.midnight.common.registry.ModBlocks;
+import com.mushroom.midnight.common.registry.ModCriterion;
 import com.mushroom.midnight.common.registry.ModEffects;
 import com.mushroom.midnight.common.registry.ModItems;
 import com.mushroom.midnight.common.registry.ModSounds;
@@ -36,6 +37,7 @@ import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.IAttributeInstance;
 import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -64,7 +66,7 @@ import static com.mushroom.midnight.common.registry.ModLootTables.LOOT_TABLE_NIG
 
 public class EntityNightStag extends EntityAnimal {
     private static final DataParameter<Integer> ANTLER_TYPE = EntityDataManager.createKey(EntityNightStag.class, DataSerializers.VARINT);
-    private static final int MAX_ANTLER_TYPE = 9;
+    public static final int MAX_ANTLER_TYPE = 9;
     private static final AttributeModifier CHILD_ATTACK_MALUS = new AttributeModifier(UUID.fromString("c0f32cda-a4fd-4fe4-8b3f-15612ef9a52f"), "nightstag_child_attack_malus", -2d, 0);
     private static final int GROWING_TIME = -24000;
     private final AnimationCapability animCap = new AnimationCapability();
@@ -322,7 +324,10 @@ public class EntityNightStag extends EntityAnimal {
         @Override
         public void startExecuting() {
             super.startExecuting();
-            if (this.entity.getRNG().nextFloat() < 0.1f) {
+            if (!isChild() && getAttackTarget() == null && getRNG().nextFloat() < 0.1f) {
+                if (closestEntity instanceof EntityPlayerMP && Helper.isNotFakePlayer(closestEntity)) {
+                    ModCriterion.NIGHTSTAG_BOW[getAntlerType()].trigger((EntityPlayerMP) closestEntity);
+                }
                 animCap.setAnimation(this.entity, AnimationType.CURTSEY, 40);
             }
         }
