@@ -9,6 +9,7 @@ import com.mushroom.midnight.common.item.ItemMidnightDoor;
 import com.mushroom.midnight.common.item.ItemMidnightSeed;
 import com.mushroom.midnight.common.item.ItemDeceitfulSnapper;
 import com.mushroom.midnight.common.item.ItemRawSuavis;
+import com.mushroom.midnight.common.item.ItemUnstableFruit;
 import com.mushroom.midnight.common.item.armors.ItemMidnightBoots;
 import com.mushroom.midnight.common.item.armors.ItemMidnightChestplate;
 import com.mushroom.midnight.common.item.armors.ItemMidnightHelmet;
@@ -67,6 +68,9 @@ public class ModItems {
     public static final Item HUNTER_WING = Items.AIR;
     public static final Item COOK_HUNTER_WING = Items.AIR;
     public static final Item BULB_FUNGUS_HAND = Items.AIR;
+    public static final Item UNSTABLE_FRUIT_BLUE = Items.AIR;
+    public static final Item UNSTABLE_FRUIT_LIME = Items.AIR;
+    public static final Item UNSTABLE_FRUIT_GREEN = Items.AIR;
 
     public static final Item SHADOWROOT_PICKAXE = Items.AIR;
     public static final Item NIGHTSTONE_PICKAXE = Items.AIR;
@@ -140,6 +144,9 @@ public class ModItems {
                 RegUtil.withName(new ItemFoodBasic(3, 0.6f, false), "hunter_wing"),
                 RegUtil.withName(new ItemFoodBasic(8, 1.4f, false), "cook_hunter_wing"),
                 RegUtil.withName(new ItemFoodBasic(1, 0.3f, false), "bulb_fungus_hand"),
+                RegUtil.withName(new ItemUnstableFruit(ItemUnstableFruit.FruitColor.BLUE), "unstable_fruit_blue"),
+                RegUtil.withName(new ItemUnstableFruit(ItemUnstableFruit.FruitColor.LIME), "unstable_fruit_lime"),
+                RegUtil.withName(new ItemUnstableFruit(ItemUnstableFruit.FruitColor.GREEN), "unstable_fruit_green"),
 
                 RegUtil.withName(new ItemMidnightPickaxe(ModToolMaterials.SHADOWROOT), "shadowroot_pickaxe"),
                 RegUtil.withName(new ItemMidnightAxe(ModToolMaterials.SHADOWROOT, 6.0F, -3.2F), "shadowroot_axe"),

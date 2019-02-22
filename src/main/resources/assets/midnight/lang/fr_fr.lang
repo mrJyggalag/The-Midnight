@@ -230,7 +230,10 @@ item.midnight.cook_stag_flank.name=Flanc de Cerf Cuit
 item.midnight.cook_stinger_egg.name=Oeuf de Stinger Cuit
 item.midnight.hunter_wing.name=Aile de Chasseur
 item.midnight.cook_hunter_wing.name=Aile de Chasseur Cuite
-item.midnight.bulb_fungus_hand=Main de Fongus Gluant
+item.midnight.bulb_fungus_hand.name=Main de Fongus Gluant
+item.midnight.unstable_fruit_blue.name=Fruit Instable Bleu
+item.midnight.unstable_fruit_lime.name=Fruit Instable Vert Clair
+item.midnight.unstable_fruit_green.name=Fruit Instable Vert
 
 item.midnight.bladeshroom_cap.name=Chapeau de ChampiLame
 item.midnight.bladeshroom_spores.name=Spores de ChampiLame

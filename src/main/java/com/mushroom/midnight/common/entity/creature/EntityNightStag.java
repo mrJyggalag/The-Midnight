@@ -38,6 +38,7 @@ import net.minecraft.entity.ai.attributes.IAttributeInstance;
 import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.init.MobEffects;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -217,6 +218,7 @@ public class EntityNightStag extends EntityAnimal {
                 if (isChild()) {
                     setGrowingAge(Math.min(getGrowingAge() + 5000, 0));
                 }
+                addPotionEffect(new PotionEffect(MobEffects.LEVITATION, 2400, 2, false, true));
             }
         });
         this.tasks.addTask(6, new EntityAIWanderAvoidWater(this, 0.7d, 0.005f));

@@ -230,7 +230,10 @@ item.midnight.cook_stag_flank.name=Cooked Stag Flank
 item.midnight.cook_stinger_egg.name=Cooked Stinger Egg
 item.midnight.hunter_wing.name=Hunter Wing
 item.midnight.cook_hunter_wing.name=Cooked Hunter Wing
-item.midnight.bulb_fungus_hand=Glob Fungus Hand
+item.midnight.bulb_fungus_hand.name=Glob Fungus Hand
+item.midnight.unstable_fruit_blue.name=Unstable Fruit Blue
+item.midnight.unstable_fruit_lime.name=Unstable Fruit Lime
+item.midnight.unstable_fruit_green.name=Unstable Fruit Green
 
 item.midnight.bladeshroom_cap.name=Bladeshroom Cap
 item.midnight.bladeshroom_spores.name=Bladeshroom Spores

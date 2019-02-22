@@ -370,9 +370,9 @@ public class ModBlocks {
                 RegUtil.withName(new BlockDeceitfulMoss(), "deceitful_moss"),
                 RegUtil.withName(new BlockStingerEgg(), "stinger_egg"),
                 RegUtil.withName(new BlockUnstableBush(), "unstable_bush"),
-                RegUtil.withName(new BlockUnstableBushBloomed(), "unstable_bush_blue_bloomed"),
-                RegUtil.withName(new BlockUnstableBushBloomed(), "unstable_bush_green_bloomed"),
-                RegUtil.withName(new BlockUnstableBushBloomed(), "unstable_bush_lime_bloomed")
+                RegUtil.withName(new BlockUnstableBushBloomed(() -> ModItems.UNSTABLE_FRUIT_BLUE), "unstable_bush_blue_bloomed"),
+                RegUtil.withName(new BlockUnstableBushBloomed(() -> ModItems.UNSTABLE_FRUIT_GREEN), "unstable_bush_green_bloomed"),
+                RegUtil.withName(new BlockUnstableBushBloomed(() -> ModItems.UNSTABLE_FRUIT_LIME), "unstable_bush_lime_bloomed")
         ));
 
         blocks.addAll(Lists.newArrayList(
