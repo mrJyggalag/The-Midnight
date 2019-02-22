@@ -1,0 +1,31 @@
+{
+  "forge_marker": 1,
+  "variants": {
+    "normal": [{}],
+    "inventory": [{"model": "builtin/generated", "textures": {"layer0": "midnight:blocks/unstable_bush_stage_0"},"transform":"forge:default-item"}],
+    "stage=0": [
+      {
+        "model": "cross",
+        "textures": {"cross": "midnight:blocks/unstable_bush_stage_0"}
+      }
+    ],
+    "stage=1": [
+      {
+        "model": "cross",
+        "textures": {"cross": "midnight:blocks/unstable_bush_stage_1"}
+      }
+    ],
+    "stage=2": [
+      {
+        "model": "cross",
+        "textures": {"cross": "midnight:blocks/unstable_bush_stage_2"}
+      }
+    ],
+    "stage=3": [
+      {
+        "model": "cross",
+        "textures": {"cross": "midnight:blocks/unstable_bush_stage_3"}
+      }
+    ]
+  }
+}

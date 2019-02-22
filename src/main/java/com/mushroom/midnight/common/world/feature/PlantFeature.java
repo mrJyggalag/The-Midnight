@@ -9,7 +9,7 @@ import java.util.Random;
 
 public class PlantFeature extends MidnightAbstractFeature {
     private final IBlockState state;
-    private final ISpawnPredicate predicate;
+    protected final ISpawnPredicate predicate;
 
     public PlantFeature(IBlockState state, ISpawnPredicate predicate) {
         this.state = state;

@@ -2,6 +2,7 @@ package com.mushroom.midnight.common.biome;
 
 import com.mushroom.midnight.common.block.BlockBladeshroom;
 import com.mushroom.midnight.common.block.BlockPileOfEggs;
+import com.mushroom.midnight.common.block.BlockUnstableBushBloomed;
 import com.mushroom.midnight.common.block.GeneratablePlant;
 import com.mushroom.midnight.common.registry.ModBlocks;
 import com.mushroom.midnight.common.world.feature.BoulderFeature;
@@ -24,6 +25,7 @@ import com.mushroom.midnight.common.world.feature.PlantFeature;
 import com.mushroom.midnight.common.world.feature.ShadowrootTreeFeature;
 import com.mushroom.midnight.common.world.feature.SpikeFeature;
 import com.mushroom.midnight.common.world.template.ShelfAttachProcessor;
+import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -97,6 +99,22 @@ public class MidnightBiomeFeatures {
             ModBlocks.VIOLEAF.getDefaultState(),
             GeneratablePlant::canGenerate
     );
+
+    public static final IMidnightFeature UNSTABLE_BUSH_FEATURE = new PlantFeature(
+            ModBlocks.UNSTABLE_BUSH.getDefaultState(),
+            GeneratablePlant::canGenerate
+    ) {
+        @Override
+        public boolean placeFeature(World world, Random rand, BlockPos origin) {
+            Block block = rand.nextInt(3) != 0 ? ModBlocks.UNSTABLE_BUSH_BLUE_BLOOMED : (rand.nextInt(3) != 0 ? ModBlocks.UNSTABLE_BUSH_LIME_BLOOMED : ModBlocks.UNSTABLE_BUSH_GREEN_BLOOMED);
+            IBlockState state = block.getDefaultState().withProperty(BlockUnstableBushBloomed.HAS_FRUIT, true);
+            if (this.predicate.canSpawn(world, origin, state)) {
+                setBlockAndNotifyAdequately(world, origin, state);
+                return true;
+            }
+            return false;
+        }
+    };
 
     public static final IMidnightFeature RUNEBUSH_FEATURE = new PlantFeature(
             ModBlocks.RUNEBUSH.getDefaultState(),

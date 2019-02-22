@@ -29,7 +29,7 @@ public class EntityTaskEatGrass extends EntityAIBase {
 
     public boolean shouldExecute() {
         capAnim = owner.getCapability(Midnight.ANIMATION_CAP, null);
-        if (this.capAnim == null || this.owner.getRNG().nextInt(this.owner.isChild() ? 50 : 1000) != 0) {
+        if (this.capAnim == null || this.owner.getRNG().nextInt(this.owner.isChild() ? 50 : 500) != 0) {
             return false;
         } else {
             BlockPos currentPos = this.owner.getPosition();
@@ -58,9 +58,10 @@ public class EntityTaskEatGrass extends EntityAIBase {
     public void updateTask() {
         if (capAnim.getCurrentTick() == capAnim.getDuration() - 10) {
             BlockPos currentPos = owner.getPosition();
-            if (eatPredicate.test(this.owner.world.getBlockState(currentPos))) {
+            IBlockState currentState = this.owner.world.getBlockState(currentPos);
+            if (eatPredicate.test(currentState)) {
                 if (ForgeEventFactory.getMobGriefingEvent(this.owner.world, this.owner)) {
-                    this.owner.world.destroyBlock(currentPos, false);
+                    eatPlant(currentState, currentPos);
                 }
                 this.owner.eatGrassBonus();
             } else {
@@ -75,5 +76,9 @@ public class EntityTaskEatGrass extends EntityAIBase {
                 }
             }
         }
+    }
+
+    protected void eatPlant(IBlockState state, BlockPos pos) {
+        this.owner.world.destroyBlock(pos, false);
     }
 }

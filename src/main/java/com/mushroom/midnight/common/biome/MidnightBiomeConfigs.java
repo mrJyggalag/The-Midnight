@@ -43,6 +43,7 @@ public class MidnightBiomeConfigs {
     public static final FeatureConfig GLOBAL_FEATURE_CONFIG = FeatureConfig.builder()
             .withFeature(FeatureSorting.LAST, GHOST_PLANT_FEATURE, new ParcelPlacementConfig(3, 6, 0.3f))
             .withFeature(FeatureSorting.LAST, DRAGON_NEST_FEATURE, new DragonNestPlacementConfig(32, 32))
+            .withFeature(FeatureSorting.LAST, UNSTABLE_BUSH_FEATURE, new ParcelPlacementConfig(6, 10, 0.2f))
             .withFeature(FeatureSorting.LAST, UNDERGROUND_FEATURES, new UndergroundPlacementConfig(1, 3, 10, 50))
             .build();
 
@@ -57,6 +58,7 @@ public class MidnightBiomeConfigs {
             .build();
 
     public static final FeatureConfig ROCKY_FEATURE_CONFIG = FeatureConfig.builder()
+            .extendsFrom(GLOBAL_FEATURE_CONFIG)
             .withFeature(ROCKSHROOM_HEAP_FEATURE, new SurfacePlacementConfig(-99, 1))
             .withFeature(LUMEN_FEATURE, new ScatterPlacementConfig(1, 16))
             .withFeature(DOUBLE_LUMEN_FEATURE, new ScatterPlacementConfig(1, 16))
