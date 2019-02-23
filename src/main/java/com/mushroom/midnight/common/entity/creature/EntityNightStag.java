@@ -218,7 +218,7 @@ public class EntityNightStag extends EntityAnimal {
                 if (isChild()) {
                     setGrowingAge(Math.min(getGrowingAge() + 5000, 0));
                 }
-                addPotionEffect(new PotionEffect(MobEffects.LEVITATION, 2400, 2, false, true));
+                addPotionEffect(new PotionEffect(MobEffects.LEVITATION, 200, 2, false, true));
             }
         });
         this.tasks.addTask(6, new EntityAIWanderAvoidWater(this, 0.7d, 0.005f));

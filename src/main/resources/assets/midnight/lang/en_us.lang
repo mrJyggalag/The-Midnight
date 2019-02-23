@@ -196,9 +196,9 @@ tile.midnight.rockshroom_bricks.name=Rockshroom Bricks
 tile.midnight.stinger_egg.name=Stinger Egg
 tile.midnight.violeaf.name=Violeaf
 tile.midnight.unstable_bush.name=Unstable Bush
-tile.midnight.unstable_bush_blue.name=Unstable Bush Blue
-tile.midnight.unstable_bush_green.name=Unstable Bush Green
-tile.midnight.unstable_bush_lime.name=Unstable Bush Lime
+tile.midnight.unstable_bush_blue.name=Blue Unstable Bush
+tile.midnight.unstable_bush_green.name=Green Unstable Bush
+tile.midnight.unstable_bush_lime.name=Lime Unstable Bush 
 
 # Items
 
@@ -231,9 +231,9 @@ item.midnight.cook_stinger_egg.name=Cooked Stinger Egg
 item.midnight.hunter_wing.name=Hunter Wing
 item.midnight.cook_hunter_wing.name=Cooked Hunter Wing
 item.midnight.bulb_fungus_hand.name=Glob Fungus Hand
-item.midnight.unstable_fruit_blue.name=Unstable Fruit Blue
-item.midnight.unstable_fruit_lime.name=Unstable Fruit Lime
-item.midnight.unstable_fruit_green.name=Unstable Fruit Green
+item.midnight.unstable_fruit_blue.name=Blue Unstable Fruit 
+item.midnight.unstable_fruit_lime.name=Lime Unstable Fruit
+item.midnight.unstable_fruit_green.name=Green Unstable Fruit
 
 item.midnight.bladeshroom_cap.name=Bladeshroom Cap
 item.midnight.bladeshroom_spores.name=Bladeshroom Spores
