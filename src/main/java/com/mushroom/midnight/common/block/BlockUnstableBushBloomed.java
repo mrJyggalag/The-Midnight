@@ -14,6 +14,7 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeHooks;
+import net.minecraftforge.items.ItemHandlerHelper;
 
 import java.util.Random;
 import java.util.function.Supplier;
@@ -32,7 +33,7 @@ public class BlockUnstableBushBloomed extends BlockMidnightPlant implements IGro
     @Override
     public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
         if (state.getValue(HAS_FRUIT)) {
-            player.addItemStackToInventory(new ItemStack(fruitSupplier.get(), world.rand.nextInt(3) + 1));
+            ItemHandlerHelper.giveItemToPlayer(player, new ItemStack(fruitSupplier.get(), world.rand.nextInt(3) + 1));
             world.setBlockState(pos, ModBlocks.UNSTABLE_BUSH.getDefaultState().withProperty(BlockUnstableBush.STAGE, 3), 2);
             return true;
         }

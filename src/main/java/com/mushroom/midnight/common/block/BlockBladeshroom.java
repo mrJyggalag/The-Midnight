@@ -22,6 +22,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.items.ItemHandlerHelper;
 
 import javax.annotation.Nullable;
 import java.util.Locale;
@@ -57,7 +58,7 @@ public class BlockBladeshroom extends BlockMidnightPlant implements IGrowable {
     @Override
     public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
         if (state.getValue(STAGE) == Stage.CAPPED) {
-            player.addItemStackToInventory(new ItemStack(ModItems.BLADESHROOM_CAP));
+            ItemHandlerHelper.giveItemToPlayer(player, new ItemStack(ModItems.BLADESHROOM_CAP));
             world.setBlockState(pos, state.withProperty(STAGE, Stage.STEM));
             if (MidnightConfig.general.bladeshroomDamageChance != 0 && world.rand.nextInt(100) < MidnightConfig.general.bladeshroomDamageChance) {
                 player.attackEntityFrom(BLADESHROOM_DAMAGE, 1.0F);
