@@ -122,5 +122,23 @@
   "midnight.egg_cracked": {
     "category": "block",
     "sounds": ["midnight:blocks/egg_cracked"]
+  },
+  "midnight.crystal_bug_flying": {
+    "category": "neutral",
+    "sounds": [
+      "midnight:entity/crystal_bug_flying"
+    ]
+  },
+  "midnight.crystal_bug_death": {
+    "category": "neutral",
+    "sounds": [
+      "midnight:entity/crystal_bug_death"
+    ]
+  },
+  "midnight.crystal_bug_hurt": {
+    "category": "neutral",
+    "sounds": [
+      "midnight:entity/crystal_bug_hurt_1"
+    ]
   }
 }

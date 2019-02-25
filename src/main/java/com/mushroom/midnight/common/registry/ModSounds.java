@@ -36,6 +36,10 @@ public class ModSounds {
     public static final SoundEvent NIGHTSTAG_HURT = RegUtil.applyName(new SoundEvent(new ResourceLocation(MODID, "nightstag_hurt")));
     public static final SoundEvent NIGHTSTAG_DEATH = RegUtil.applyName(new SoundEvent(new ResourceLocation(MODID, "nightstag_death")));
 
+    public static final SoundEvent CRYSTAL_BUG_FLYING = RegUtil.applyName(new SoundEvent(new ResourceLocation(MODID, "crystal_bug_flying")));
+    public static final SoundEvent CRYSTAL_BUG_HURT = RegUtil.applyName(new SoundEvent(new ResourceLocation(MODID, "crystal_bug_hurt")));
+    public static final SoundEvent CRYSTAL_BUG_DEATH = RegUtil.applyName(new SoundEvent(new ResourceLocation(MODID, "crystal_bug_death")));
+
     public static final SoundEvent EGG_CRACKED = RegUtil.applyName(new SoundEvent(new ResourceLocation(MODID, "egg_cracked")));
 
     public static final SoundType MUD = new SoundType(1.0F, 1.0F, ModSounds.MUD_DIG, ModSounds.MUD_STEP, ModSounds.MUD_DIG, ModSounds.MUD_DIG, ModSounds.MUD_STEP);
@@ -61,6 +65,9 @@ public class ModSounds {
                 NIGHTSTAG_AMBIENT,
                 NIGHTSTAG_HURT,
                 NIGHTSTAG_DEATH,
+                CRYSTAL_BUG_FLYING,
+                CRYSTAL_BUG_HURT,
+                CRYSTAL_BUG_DEATH,
                 EGG_CRACKED
         );
     }

@@ -1,6 +1,7 @@
 package com.mushroom.midnight.common.entity.creature;
 
 import com.mushroom.midnight.common.registry.ModBlocks;
+import com.mushroom.midnight.common.registry.ModSounds;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EnumCreatureAttribute;
@@ -12,6 +13,8 @@ import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
@@ -134,6 +137,9 @@ public class EntityCrystalBug extends EntityAmbientCreature {
                 spawnPosition = blockpos1;
             }
         }
+        if (!isStanding() && ticksExisted % 80 == 0) {
+            world.playSound(null, getPosition(), ModSounds.CRYSTAL_BUG_FLYING, SoundCategory.NEUTRAL, getRNG().nextFloat() * 0.6f, getRNG().nextFloat() * 0.15f);
+        }
     }
 
     private boolean canStayOnBlock(IBlockState state) {
@@ -180,6 +186,16 @@ public class EntityCrystalBug extends EntityAmbientCreature {
     @Override
     public float getEyeHeight() {
         return height / 3f;
+    }
+
+    @Override
+    protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
+        return ModSounds.CRYSTAL_BUG_HURT;
+    }
+
+    @Override
+    protected SoundEvent getDeathSound() {
+        return ModSounds.CRYSTAL_BUG_DEATH;
     }
 
     @Override
