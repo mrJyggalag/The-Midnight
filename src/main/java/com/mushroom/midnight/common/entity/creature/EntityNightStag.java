@@ -95,7 +95,7 @@ public class EntityNightStag extends EntityAnimal {
         if (Helper.isMidnightDimension(world)) {
             Biome biome = world.getBiome(getPosition());
             int random = this.rand.nextInt(3);
-            if (biome == ModSurfaceBiomes.VIGILANT_FOREST) {
+            if (biome == ModSurfaceBiomes.VIGILANT_FOREST || biome == ModSurfaceBiomes.HILLY_VIGILANT_FOREST) {
                 setAntlerType(random == 0 ? 0 : random == 1 ? 3 : 7);
             } else if (biome == ModSurfaceBiomes.NIGHT_PLAINS || biome == ModSurfaceBiomes.WARPED_FIELDS) {
                 setAntlerType(random == 0 ? 0 : 1);
@@ -103,7 +103,7 @@ public class EntityNightStag extends EntityAnimal {
                 setAntlerType(random == 0 ? 3 : 8);
             } else if (biome == ModSurfaceBiomes.DECEITFUL_BOG) {
                 setAntlerType(random == 0 ? 0 : random == 1 ? 2 : 4);
-            } else if (biome == ModSurfaceBiomes.FUNGI_FOREST) {
+            } else if (biome == ModSurfaceBiomes.FUNGI_FOREST || biome == ModSurfaceBiomes.HILLY_FUNGI_FOREST) {
                 setAntlerType(random == 0 ? 0 : random == 1 ? 2 : 3);
             } else if (biome == ModSurfaceBiomes.CRYSTAL_SPIRES) {
                 setAntlerType(random == 0 ? 5 : 6);
