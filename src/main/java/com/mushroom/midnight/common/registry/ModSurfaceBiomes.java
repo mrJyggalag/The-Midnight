@@ -28,6 +28,8 @@ public class ModSurfaceBiomes {
     public static final Biome OBSCURED_PLATEAU = Biomes.DEFAULT;
     public static final Biome PHANTASMAL_VALLEY = Biomes.DEFAULT;
     public static final Biome RUNEBUSH_GROVE = Biomes.DEFAULT;
+    public static final Biome HILLY_VIGILANT_FOREST = Biomes.DEFAULT;
+    public static final Biome HILLY_FUNGI_FOREST = Biomes.DEFAULT;
 
     @SubscribeEvent
     public static void onRegisterBiomes(RegistryEvent.Register<Biome> event) {
@@ -42,7 +44,9 @@ public class ModSurfaceBiomes {
                 RegUtil.applyName(new SurfaceBiome("night_plains", MidnightBiomeConfigs.NIGHT_PLAINS_CONFIG)),
                 RegUtil.applyName(new SurfaceBiome("obscured_plateau", MidnightBiomeConfigs.OBSCURED_PLATEAU_CONFIG)),
                 RegUtil.applyName(new SurfaceBiome("phantasmal_valley", MidnightBiomeConfigs.PHANTASMAL_VALLEY_CONFIG)),
-                RegUtil.applyName(new SurfaceBiome("runebush_grove", MidnightBiomeConfigs.RUNEBUSH_GROVE_CONFIG))
+                RegUtil.applyName(new SurfaceBiome("runebush_grove", MidnightBiomeConfigs.RUNEBUSH_GROVE_CONFIG)),
+                RegUtil.applyName(new SurfaceBiome("hilly_vigilant_forest", MidnightBiomeConfigs.HILLY_VIGILANT_FOREST_CONFIG)),
+                RegUtil.applyName(new SurfaceBiome("hilly_fungi_forest", MidnightBiomeConfigs.HILLY_FUNGI_FOREST_CONFIG))
         );
     }
 
@@ -58,6 +62,8 @@ public class ModSurfaceBiomes {
         BiomeDictionary.addTypes(NIGHT_PLAINS, BiomeDictionary.Type.PLAINS, BiomeDictionary.Type.SPOOKY);
         BiomeDictionary.addTypes(OBSCURED_PLATEAU, BiomeDictionary.Type.MOUNTAIN, BiomeDictionary.Type.SPARSE, BiomeDictionary.Type.SPOOKY);
         BiomeDictionary.addTypes(PHANTASMAL_VALLEY, BiomeDictionary.Type.PLAINS, BiomeDictionary.Type.SPOOKY);
+        BiomeDictionary.addTypes(HILLY_VIGILANT_FOREST, BiomeDictionary.Type.FOREST, BiomeDictionary.Type.HILLS, BiomeDictionary.Type.SPOOKY);
+        BiomeDictionary.addTypes(HILLY_FUNGI_FOREST, BiomeDictionary.Type.FOREST, BiomeDictionary.Type.HILLS, BiomeDictionary.Type.SPOOKY);
 
         MidnightBiomeGroup.SURFACE.add(
                 new BiomeSpawnEntry.Basic(VIGILANT_FOREST, 100),
@@ -73,7 +79,11 @@ public class ModSurfaceBiomes {
                 new BiomeSpawnEntry.Basic(WARPED_FIELDS, 5),
                 new BiomeSpawnEntry.Basic(CRYSTAL_SPIRES, 3),
                 new BiomeSpawnEntry.Basic(RUNEBUSH_GROVE, 3)
-                        .canReplace(VIGILANT_FOREST)
+                        .canReplace(VIGILANT_FOREST),
+                new BiomeSpawnEntry.Basic(HILLY_VIGILANT_FOREST, 5)
+                        .canReplace(VIGILANT_FOREST),
+                new BiomeSpawnEntry.Basic(HILLY_FUNGI_FOREST, 5)
+                        .canReplace(FUNGI_FOREST)
         );
     }
 }

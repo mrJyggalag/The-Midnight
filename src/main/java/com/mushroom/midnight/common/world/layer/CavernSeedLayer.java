@@ -22,17 +22,21 @@ public class CavernSeedLayer extends GenLayer {
 
         for (int localY = 0; localY < height; localY++) {
             for (int localX = 0; localX < width; localX++) {
-                this.initChunkSeed(localX + originX, localY + originY);
-
-                if (this.nextInt(2) == 0) {
-                    BiomeSpawnEntry entry = this.group.selectEntry(this::nextInt);
-                    result[localX + localY * width] = entry.getBiomeId();
-                } else {
-                    result[localX + localY * width] = this.closedCavernId;
-                }
+                result[localX + localY * width] = this.selectBiome(localX + originX, localY + originY);
             }
         }
 
         return result;
+    }
+
+    private int selectBiome(int globalX, int globalY) {
+        this.initChunkSeed(globalX, globalY);
+        if (this.nextInt(2) == 0) {
+            BiomeSpawnEntry entry = this.group.getGlobalPool().selectEntry(this::nextInt);
+            if (entry != null) {
+                return entry.getBiomeId();
+            }
+        }
+        return this.closedCavernId;
     }
 }

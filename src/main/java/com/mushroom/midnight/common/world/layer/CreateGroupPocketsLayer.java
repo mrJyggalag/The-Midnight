@@ -37,8 +37,9 @@ public class CreateGroupPocketsLayer extends GenLayer {
     }
 
     private int apply(int parentValue) {
-        BiomeSpawnEntry entry = this.group.selectEntry(this::nextInt);
-        if (entry.canReplace(parentValue)) {
+        MidnightBiomeGroup.Pool pool = this.group.getPoolForBiome(parentValue);
+        BiomeSpawnEntry entry = pool.selectEntry(this::nextInt);
+        if (entry != null) {
             return entry.getBiomeId();
         }
         return parentValue;

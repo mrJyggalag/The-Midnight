@@ -350,6 +350,8 @@ biome.midnight.night_plains.name=Night Plains
 biome.midnight.obscured_plateau.name=Obscured Plateau
 biome.midnight.phantasmal_valley.name=Phantasmal Valley
 biome.midnight.runebush_grove.name=Runebush Grove
+biome.midnight.hilly_vigilant_forest.name=Hilly Vigilant Forest
+biome.midnight.hilly_fungi_forest.name=Hilly Fungi Forest
 
 # Potions
 

@@ -286,6 +286,10 @@ public class MidnightBiomeConfigs {
             .withBaseHeight(4.5F)
             .withHeightVariation(0.1F);
 
+    public static final SurfaceTerrainConfig HILL_TERRAIN_CONFIG = new SurfaceTerrainConfig()
+            .withBaseHeight(2.25F)
+            .withHeightVariation(0.4F);
+
     public static final SurfaceBiomeConfig OBSCURED_PLATEAU_CONFIG = SurfaceBiomeConfig.builder()
             .withTerrain(PLATEAU_TERRAIN_CONFIG)
             .withSurface(ROCKY_SURFACE_CONFIG)
@@ -319,6 +323,12 @@ public class MidnightBiomeConfigs {
             .withSpawner(VIGILANT_FOREST_SPAWN_CONFIG)
             .build();
 
+    public static final SurfaceBiomeConfig HILLY_VIGILANT_FOREST_CONFIG = SurfaceBiomeConfig.builder()
+            .withTerrain(HILL_TERRAIN_CONFIG)
+            .withFeatures(VIGILANT_FOREST_FEATURE_CONFIG)
+            .withSpawner(VIGILANT_FOREST_SPAWN_CONFIG)
+            .build();
+
     public static final SurfaceBiomeConfig RUNEBUSH_GROVE_CONFIG = SurfaceBiomeConfig.builder()
             .withTerrain(FOREST_TERRAIN_CONFIG)
             .withFeatures(RUNEBUSH_GROVE_FEATURE_CONFIG)
@@ -328,6 +338,13 @@ public class MidnightBiomeConfigs {
 
     public static final SurfaceBiomeConfig FUNGI_FOREST_CONFIG = SurfaceBiomeConfig.builder()
             .withTerrain(FOREST_TERRAIN_CONFIG)
+            .withFeatures(FUNGI_FOREST_FEATURE_CONFIG)
+            .withSpawner(VEGETATED_SPAWN_CONFIG)
+            .withGrassColor(0x8489B5)
+            .build();
+
+    public static final SurfaceBiomeConfig HILLY_FUNGI_FOREST_CONFIG = SurfaceBiomeConfig.builder()
+            .withTerrain(HILL_TERRAIN_CONFIG)
             .withFeatures(FUNGI_FOREST_FEATURE_CONFIG)
             .withSpawner(VEGETATED_SPAWN_CONFIG)
             .withGrassColor(0x8489B5)
