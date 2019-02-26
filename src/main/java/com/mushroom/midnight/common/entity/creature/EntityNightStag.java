@@ -275,6 +275,11 @@ public class EntityNightStag extends EntityAnimal {
     }
 
     @Override
+    public void fall(float distance, float damageMultiplier) {
+        super.fall(distance, damageMultiplier * 0.2f);
+    }
+
+    @Override
     public double getMountedYOffset() {
         return (double) this.height * 0.67d;
     }
