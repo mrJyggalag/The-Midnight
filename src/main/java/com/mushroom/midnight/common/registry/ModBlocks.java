@@ -54,6 +54,7 @@ import com.mushroom.midnight.common.block.BlockNightstone;
 import com.mushroom.midnight.common.block.BlockRockshroom;
 import com.mushroom.midnight.common.block.BlockShadowrootChest;
 import com.mushroom.midnight.common.block.BlockShadowrootCraftingTable;
+import com.mushroom.midnight.common.block.BlockSporch;
 import com.mushroom.midnight.common.block.BlockStingerEgg;
 import com.mushroom.midnight.common.block.BlockSuavis;
 import com.mushroom.midnight.common.block.BlockTendrilweed;
@@ -303,6 +304,11 @@ public class ModBlocks {
     public static final Block UNSTABLE_BUSH_GREEN_BLOOMED = Blocks.AIR;
     public static final Block UNSTABLE_BUSH_LIME_BLOOMED = Blocks.AIR;
 
+    public static final Block SPORCH_BOGSHROOM = Blocks.AIR;
+    public static final Block SPORCH_NIGHTSHROOM = Blocks.AIR;
+    public static final Block SPORCH_DEWSHROOM = Blocks.AIR;
+    public static final Block SPORCH_VIRIDSHROOM = Blocks.AIR;
+
     @SubscribeEvent
     public static void registerBlocks(RegistryEvent.Register<Block> event) {
         blocks.addAll(Lists.newArrayList(
@@ -511,7 +517,11 @@ public class ModBlocks {
                 RegUtil.withName(new BlockMidnightLadder(), "dark_willow_ladder"),
                 RegUtil.withName(new BlockMidnightLadder(), "dewshroom_ladder"),
                 RegUtil.withName(new BlockMidnightLadder(), "viridshroom_ladder"),
-                RegUtil.withName(new BlockMidnightLadder(), "nightshroom_ladder")
+                RegUtil.withName(new BlockMidnightLadder(), "nightshroom_ladder"),
+                RegUtil.withName(new BlockSporch(), "sporch_bogshroom"),
+                RegUtil.withName(new BlockSporch(), "sporch_nightshroom"),
+                RegUtil.withName(new BlockSporch(), "sporch_dewshroom"),
+                RegUtil.withName(new BlockSporch(), "sporch_viridshroom")
         ));
 
         blocks.forEach(event.getRegistry()::register);
@@ -574,6 +584,7 @@ public class ModBlocks {
                 DEWSHROOM_FENCE_GATE, VIRIDSHROOM_FENCE_GATE, NIGHTSHROOM_FENCE_GATE,
                 SUAVIS, SHADOWROOT_LADDER, DEAD_WOOD_LADDER, DARK_WILLOW_LADDER,
                 DEWSHROOM_LADDER, VIRIDSHROOM_LADDER, NIGHTSHROOM_LADDER,
+                SPORCH_BOGSHROOM, SPORCH_NIGHTSHROOM, SPORCH_DEWSHROOM, SPORCH_VIRIDSHROOM,
                 STINGER_EGG, UNSTABLE_BUSH
         ));
 

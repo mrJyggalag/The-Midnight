@@ -200,6 +200,11 @@ tile.midnight.unstable_bush_blue.name=Plante Instable Bleu
 tile.midnight.unstable_bush_green.name=Plante Instable Vert
 tile.midnight.unstable_bush_lime.name=Plante Instable Vert Clair
 
+tile.midnight.sporch_bogshroom=Sporche de ChampiTourbe
+tile.midnight.sporch_nightshroom=Sporche de ChampiNuit
+tile.midnight.sporch_dewshroom=Sporche de ChampiRosée
+tile.midnight.sporch_viridshroom=Sporche de ChampiViride
+
 # Items
 
 item.midnight.shadowroot_door.name=Porte en Ombreracine
@@ -350,6 +355,8 @@ biome.midnight.night_plains.name=Plaines de Nuit
 biome.midnight.obscured_plateau.name=Plateau Obscure
 biome.midnight.phantasmal_valley.name=Vallée Fantasmatique
 biome.midnight.runebush_grove.name=Bosquet de RunePousse
+biome.midnight.hilly_vigilant_forest.name=Forêt Vigilante Vallonnée
+biome.midnight.hilly_fungi_forest.name=Forêt Fongique Vallonnée
 
 # Potions
 

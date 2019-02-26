@@ -198,7 +198,12 @@ tile.midnight.violeaf.name=Violeaf
 tile.midnight.unstable_bush.name=Unstable Bush
 tile.midnight.unstable_bush_blue.name=Blue Unstable Bush
 tile.midnight.unstable_bush_green.name=Green Unstable Bush
-tile.midnight.unstable_bush_lime.name=Lime Unstable Bush 
+tile.midnight.unstable_bush_lime.name=Lime Unstable Bush
+
+tile.midnight.sporch_bogshroom=Sporch Bogshroom
+tile.midnight.sporch_nightshroom=Sporch Nightshroom
+tile.midnight.sporch_dewshroom=Sporch Dewshroom
+tile.midnight.sporch_viridshroom=Sporch Viridshroom
 
 # Items
 
