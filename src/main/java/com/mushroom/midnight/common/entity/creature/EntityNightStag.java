@@ -10,10 +10,10 @@ import com.mushroom.midnight.common.entity.task.EntityTaskCharge;
 import com.mushroom.midnight.common.entity.task.EntityTaskEatGrass;
 import com.mushroom.midnight.common.entity.task.EntityTaskNeutral;
 import com.mushroom.midnight.common.helper.Helper;
+import com.mushroom.midnight.common.item.ItemUnstableFruit;
 import com.mushroom.midnight.common.registry.ModBlocks;
 import com.mushroom.midnight.common.registry.ModCriterion;
 import com.mushroom.midnight.common.registry.ModEffects;
-import com.mushroom.midnight.common.registry.ModItems;
 import com.mushroom.midnight.common.registry.ModSounds;
 import com.mushroom.midnight.common.registry.ModSurfaceBiomes;
 import net.minecraft.block.Block;
@@ -38,6 +38,7 @@ import net.minecraft.entity.ai.attributes.IAttributeInstance;
 import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.init.Items;
 import net.minecraft.init.MobEffects;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
@@ -60,7 +61,6 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.Constants;
 
 import javax.annotation.Nullable;
-
 import java.util.UUID;
 
 import static com.mushroom.midnight.common.registry.ModLootTables.LOOT_TABLE_NIGHTSTAG;
@@ -209,7 +209,12 @@ public class EntityNightStag extends EntityAnimal {
         this.tasks.addTask(1, new EntityTaskNeutral(this, new EntityTaskCharge(this, 1.2d, 200, 0.25f), false));
         this.tasks.addTask(2, new EntityTaskNeutral(this, new EntityAIAttackMelee(this, 1d, false), false));
         this.tasks.addTask(2, new EntityAIMate(this, 1d));
-        this.tasks.addTask(3, new EntityAITempt(this, 1d, ModItems.RAW_SUAVIS, false));
+        this.tasks.addTask(3, new EntityAITempt(this, 1d, Items.AIR, false) {
+            @Override
+            protected boolean isTempting(ItemStack stack) {
+                return isBreedingItem(stack);
+            }
+        });
         this.tasks.addTask(4, new EntityAIFollowParent(this, 1d));
         this.tasks.addTask(5, new EntityTaskEatGrass(this, 40, false, p -> p.getBlock() instanceof BlockUnstableBushBloomed && p.getValue(BlockUnstableBushBloomed.HAS_FRUIT)) {
             @Override
@@ -276,7 +281,7 @@ public class EntityNightStag extends EntityAnimal {
 
     @Override
     public boolean isBreedingItem(ItemStack stack) {
-        return stack.getItem() == ModItems.RAW_SUAVIS;
+        return stack.getItem() instanceof ItemUnstableFruit;
     }
 
     @Override
