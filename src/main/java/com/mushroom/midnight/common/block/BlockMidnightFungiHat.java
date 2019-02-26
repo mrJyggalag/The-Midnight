@@ -30,10 +30,12 @@ public class BlockMidnightFungiHat extends Block implements IModelProvider {
     public static final PropertyBool WEST = PropertyBool.create("west");
 
     private final Supplier<Block> saplingSupplier;
+    private final Supplier<Item> powderSupplier;
 
-    public BlockMidnightFungiHat(Supplier<Block> saplingSupplier, MapColor mapColor) {
+    public BlockMidnightFungiHat(Supplier<Block> saplingSupplier, Supplier<Item> powderSupplier, MapColor mapColor) {
         super(Material.WOOD, mapColor);
         this.saplingSupplier = saplingSupplier;
+        this.powderSupplier = powderSupplier;
         this.setHardness(0.5F);
         this.setSoundType(SoundType.WOOD);
         this.setCreativeTab(ModTabs.BUILDING_TAB);
@@ -54,7 +56,7 @@ public class BlockMidnightFungiHat extends Block implements IModelProvider {
 
     @Override
     public Item getItemDropped(IBlockState state, Random rand, int fortune) {
-        return Item.getItemFromBlock(this.saplingSupplier.get());
+        return rand.nextBoolean() ? Item.getItemFromBlock(this.saplingSupplier.get()) : powderSupplier.get();
     }
 
     @Override

@@ -3,6 +3,7 @@ package com.mushroom.midnight.common.block;
 import com.mushroom.midnight.client.IModelProvider;
 import com.mushroom.midnight.common.registry.ModTabs;
 import net.minecraft.block.BlockTorch;
+import net.minecraft.block.SoundType;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumParticleTypes;
@@ -18,6 +19,9 @@ public class BlockSporch extends BlockTorch implements IModelProvider {
     public BlockSporch() {
         super();
         setCreativeTab(ModTabs.DECORATION_TAB);
+        setHardness(0f);
+        setLightLevel(0.9375f);
+        blockSoundType = SoundType.WOOD;
     }
 
     @SideOnly(Side.CLIENT)
