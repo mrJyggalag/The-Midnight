@@ -4,10 +4,10 @@ import com.google.common.collect.Lists;
 import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.common.item.ItemBasic;
 import com.mushroom.midnight.common.item.ItemBladeshroomCap;
+import com.mushroom.midnight.common.item.ItemDeceitfulSnapper;
 import com.mushroom.midnight.common.item.ItemFoodBasic;
 import com.mushroom.midnight.common.item.ItemMidnightDoor;
 import com.mushroom.midnight.common.item.ItemMidnightSeed;
-import com.mushroom.midnight.common.item.ItemDeceitfulSnapper;
 import com.mushroom.midnight.common.item.ItemRawSuavis;
 import com.mushroom.midnight.common.item.ItemUnstableFruit;
 import com.mushroom.midnight.common.item.armors.ItemMidnightBoots;
@@ -21,7 +21,9 @@ import com.mushroom.midnight.common.item.tools.ItemMidnightShovel;
 import com.mushroom.midnight.common.item.tools.ItemMidnightSword;
 import com.mushroom.midnight.common.util.CompassRotationGetter;
 import net.minecraft.init.Items;
+import net.minecraft.item.EnumAction;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -149,7 +151,12 @@ public class ModItems {
                 RegUtil.withName(new ItemDeceitfulSnapper(), "deceitful_snapper"),
                 RegUtil.withName(new ItemFoodBasic(3, 0.3f, false), "raw_stag_flank"),
                 RegUtil.withName(new ItemFoodBasic(8, 0.8f, false), "cook_stag_flank"),
-                RegUtil.withName(new ItemFoodBasic(6, 0.6f, false), "cook_stinger_egg"),
+                RegUtil.withName(new ItemFoodBasic(6, 0.6f, false) {
+                    @Override
+                    public EnumAction getItemUseAction(ItemStack stack) {
+                        return EnumAction.DRINK;
+                    }
+                }, "cook_stinger_egg"),
                 RegUtil.withName(new ItemFoodBasic(3, 0.6f, false), "hunter_wing"),
                 RegUtil.withName(new ItemFoodBasic(8, 1.4f, false), "cook_hunter_wing"),
                 RegUtil.withName(new ItemFoodBasic(1, 0.3f, false), "bulb_fungus_hand"),
