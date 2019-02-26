@@ -12,7 +12,7 @@ import com.mushroom.midnight.common.entity.creature.EntityDeceitfulSnapper;
 import com.mushroom.midnight.common.entity.creature.EntityHunter;
 import com.mushroom.midnight.common.entity.creature.EntityNightStag;
 import com.mushroom.midnight.common.entity.creature.EntityNova;
-import com.mushroom.midnight.common.entity.creature.EntityRacoon;
+import com.mushroom.midnight.common.entity.creature.EntitySkulk;
 import com.mushroom.midnight.common.entity.creature.EntityRifter;
 import com.mushroom.midnight.common.entity.creature.EntityStinger;
 import com.mushroom.midnight.common.registry.ModBlocks;
@@ -205,7 +205,7 @@ public class MidnightBiomeConfigs {
 
     public static final SpawnerConfig VIGILANT_FOREST_SPAWN_CONFIG = SpawnerConfig.builder()
             .extendsFrom(VEGETATED_SPAWN_CONFIG)
-            .withCreature(new Biome.SpawnListEntry(EntityRacoon.class, 100, 1, 2))
+            .withCreature(new Biome.SpawnListEntry(EntitySkulk.class, 100, 1, 2))
             .build();
 
     public static final SpawnerConfig DECEITFUL_BOG_SPAWN_CONFIG = SpawnerConfig.builder()

@@ -5,13 +5,13 @@ import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.math.MathHelper;
 
-public class ModelRacoon extends ModelQuadruped {
+public class ModelSkulk extends ModelQuadruped {
     private ModelRenderer Tail;
     private ModelRenderer RightEar;
     private ModelRenderer LeftEar;
     private ModelRenderer Snout;
 
-    public ModelRacoon() {
+    public ModelSkulk() {
         super(5, 0f);
         this.textureWidth = 64;
         this.textureHeight = 32;

@@ -19,9 +19,9 @@ import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
 
-public class EntityRacoon extends EntityAnimal {
+public class EntitySkulk extends EntityAnimal {
 
-    public EntityRacoon(World world) {
+    public EntitySkulk(World world) {
         super(world);
         setSize(0.6f, 0.6f);
     }
@@ -85,6 +85,6 @@ public class EntityRacoon extends EntityAnimal {
     @Override
     @Nullable
     protected ResourceLocation getLootTable() {
-        return ModLootTables.LOOT_TABLE_RACOON;
+        return ModLootTables.LOOT_TABLE_SKULK;
     }
 }
