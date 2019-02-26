@@ -45,6 +45,11 @@ public class ModItems {
     public static final Item VIRIDSHROOM_DOOR = Items.AIR;
     public static final Item TENEBRUM_DOOR = Items.AIR;
 
+    public static final Item BOGSHROOM_POWDER = Items.AIR;
+    public static final Item NIGHTSHROOM_POWDER = Items.AIR;
+    public static final Item DEWSHROOM_POWDER = Items.AIR;
+    public static final Item VIRIDSHROOM_POWDER = Items.AIR;
+
     public static final Item GEODE = Items.AIR;
     public static final Item DARK_PEARL = Items.AIR;
     public static final Item DARK_STICK = Items.AIR;
@@ -124,6 +129,10 @@ public class ModItems {
                 RegUtil.withName(new ItemMidnightDoor(ModBlocks.VIRIDSHROOM_DOOR), "viridshroom_door"),
                 RegUtil.withName(new ItemMidnightDoor(ModBlocks.TENEBRUM_DOOR), "tenebrum_door"),
                 RegUtil.withName(new ItemBasic(), "geode"),
+                RegUtil.withName(new ItemBasic(), "bogshroom_powder"),
+                RegUtil.withName(new ItemBasic(), "nightshroom_powder"),
+                RegUtil.withName(new ItemBasic(), "dewshroom_powder"),
+                RegUtil.withName(new ItemBasic(), "viridshroom_powder"),
                 RegUtil.withName(new ItemBasic(), "dark_pearl"),
                 RegUtil.withName(new ItemBasic(), "dark_stick"),
                 RegUtil.withName(new ItemBasic(), "rockshroom_clump"),

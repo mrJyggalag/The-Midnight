@@ -200,10 +200,10 @@ tile.midnight.unstable_bush_blue.name=Plante Instable Bleu
 tile.midnight.unstable_bush_green.name=Plante Instable Vert
 tile.midnight.unstable_bush_lime.name=Plante Instable Vert Clair
 
-tile.midnight.sporch_bogshroom=Sporche de ChampiTourbe
-tile.midnight.sporch_nightshroom=Sporche de ChampiNuit
-tile.midnight.sporch_dewshroom=Sporche de ChampiRosée
-tile.midnight.sporch_viridshroom=Sporche de ChampiViride
+tile.midnight.bogshroom_sporch.name=Sporche de ChampiTourbe
+tile.midnight.nightshroom_sporch.name=Sporche de ChampiNuit
+tile.midnight.dewshroom_sporch.name=Sporche de ChampiRosée
+tile.midnight.viridshroom_sporch.name=Sporche de ChampiViride
 
 # Items
 
@@ -215,6 +215,11 @@ item.midnight.tenebrum_door.name=Porte en Tenebrum
 item.midnight.nightshroom_door.name=Porte en ChampiNuit
 item.midnight.dewshroom_door.name=Porte en ChampiRosée
 item.midnight.viridshroom_door.name=Porte en ChampiViride
+
+item.midnight.bogshroom_powder.name=Poudre de ChampiTourbe
+item.midnight.nightshroom_powder.name=Poudre de ChampiNuit
+item.midnight.dewshroom_powder.name=Poudre de ChampiRosée
+item.midnight.viridshroom_powder.name=Poudre de ChampiViride
 
 item.midnight.geode.name=Géode
 item.midnight.dark_pearl.name=Perle Sombre

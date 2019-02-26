@@ -1,0 +1,21 @@
+{
+  "parent": "midnight:recipes/root",
+  "rewards": {
+    "recipes": [
+      "midnight:bogshroom_sporch", "midnight:viridshroom_sporch", "midnight:nightshroom_sporch", "midnight:dewshroom_sporch",
+      "midnight:bogshroom_powder", "midnight:viridshroom_powder", "midnight:nightshroom_powder", "midnight:dewshroom_powder"
+    ]
+  },
+  "criteria": {
+    "requirement_1": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "midnight:dark_stick"
+          }
+        ]
+      }
+    }
+  }
+}

@@ -12,10 +12,6 @@
     "facing=east": {"model": "torch_wall"},
     "facing=south": {"model": "torch_wall", "y": 90},
     "facing=west": {"model": "torch_wall", "y": 180},
-    "facing=north": {"model": "torch_wall", "y": 270},
-    "inventory": [{
-      "model": "builtin/generated",
-      "textures": {"layer0": "midnight:blocks/sporch_bogshroom", "transform": "forge:default-item"}
-    }]
+    "facing=north": {"model": "torch_wall", "y": 270}
   }
 }
