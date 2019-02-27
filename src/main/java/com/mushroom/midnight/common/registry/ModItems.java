@@ -215,6 +215,9 @@ public class ModItems {
         OreDictionary.registerOre("doorWood", SHADOWROOT_DOOR);
         OreDictionary.registerOre("doorWood", DARK_WILLOW_DOOR);
         OreDictionary.registerOre("doorWood", DEAD_WOOD_DOOR);
+
+        ModArmorMaterials.ROCKSHROOM.setRepairItem(new ItemStack(ModItems.ROCKSHROOM_CLUMP));
+        ModArmorMaterials.TENEBRUM.setRepairItem(new ItemStack(ModItems.TENEBRUM_INGOT));
     }
 
     public static Collection<Item> getItems() {
