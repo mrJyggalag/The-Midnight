@@ -9,22 +9,29 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 
-import javax.annotation.Nonnull;
+import java.util.EnumMap;
 
 @Mod.EventBusSubscriber(modid = Midnight.MODID, value = Side.CLIENT)
 public class MidnightParticleSprites {
-    private static TextureAtlasSprite sporeSprite;
+    public enum SpriteTypes {
+        SPORE, GREEN_UNSTABLE_BUSH, BLUE_UNSTABLE_BUSH, LIME_UNSTABLE_BUSH;
+    }
+
+    private static final EnumMap<SpriteTypes, TextureAtlasSprite> sprites = new EnumMap<>(SpriteTypes.class);
 
     @SubscribeEvent
     public static void onTextureStitch(TextureStitchEvent.Pre event) {
-        sporeSprite = event.getMap().registerSprite(new ResourceLocation(Midnight.MODID, "particles/spore"));
+        sprites.put(SpriteTypes.SPORE, event.getMap().registerSprite(new ResourceLocation(Midnight.MODID, "particles/spore")));
+        sprites.put(SpriteTypes.GREEN_UNSTABLE_BUSH, event.getMap().registerSprite(new ResourceLocation(Midnight.MODID, "particles/green_unstable_bush")));
+        sprites.put(SpriteTypes.BLUE_UNSTABLE_BUSH, event.getMap().registerSprite(new ResourceLocation(Midnight.MODID, "particles/blue_unstable_bush")));
+        sprites.put(SpriteTypes.LIME_UNSTABLE_BUSH, event.getMap().registerSprite(new ResourceLocation(Midnight.MODID, "particles/lime_unstable_bush")));
     }
 
-    @Nonnull
-    public static TextureAtlasSprite getSporeSprite() {
-        if (sporeSprite == null) {
+    public static TextureAtlasSprite getSprite(SpriteTypes particleType) {
+        TextureAtlasSprite sprite = sprites.get(particleType);
+        if (sprite == null) {
             return Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite("missingno");
         }
-        return sporeSprite;
+        return sprite;
     }
 }

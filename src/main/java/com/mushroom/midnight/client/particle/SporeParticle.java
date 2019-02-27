@@ -10,7 +10,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class SporeParticle extends Particle {
     protected SporeParticle(World world, double x, double y, double z, double velocityX, double velocityY, double velocityZ) {
         super(world, x, y, z, velocityX, velocityY, velocityZ);
-        this.setParticleTexture(MidnightParticleSprites.getSporeSprite());
+        this.setParticleTexture(MidnightParticleSprites.getSprite(MidnightParticleSprites.SpriteTypes.SPORE));
         float shade = this.rand.nextFloat() * 0.1F + 0.9F;
         this.particleRed = shade;
         this.particleGreen = shade;

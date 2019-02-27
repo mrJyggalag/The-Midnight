@@ -33,7 +33,7 @@ public class RiftParticle extends Particle {
         super(particleSystem.getEntity().world, x, y, z);
         this.setSize(0.2F, 0.2F);
 
-        this.setParticleTexture(MidnightParticleSprites.getSporeSprite());
+        this.setParticleTexture(MidnightParticleSprites.getSprite(MidnightParticleSprites.SpriteTypes.SPORE));
 
         this.particleSystem = particleSystem;
         this.radius = radius;

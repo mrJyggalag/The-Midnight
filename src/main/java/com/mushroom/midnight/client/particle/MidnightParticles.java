@@ -8,7 +8,8 @@ import net.minecraft.world.World;
 public enum MidnightParticles {
     AMBIENT_SPORE(new AmbientSporeParticle.Factory()),
     SPORE(new SporeParticle.Factory()),
-    DRIP(new DripParticle.Factory());
+    DRIP(new DripParticle.Factory()),
+    UNSTABLE_BUSH(new UnstableBushParticle.Factory());
 
     IParticleFactory factory;
 

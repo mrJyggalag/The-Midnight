@@ -1,5 +1,7 @@
 package com.mushroom.midnight.common.block;
 
+import com.mushroom.midnight.client.particle.MidnightParticles;
+import com.mushroom.midnight.common.item.ItemUnstableFruit;
 import com.mushroom.midnight.common.registry.ModBlocks;
 import net.minecraft.block.IGrowable;
 import net.minecraft.block.properties.PropertyBool;
@@ -17,6 +19,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeHooks;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.Random;
 import java.util.function.Supplier;
@@ -114,5 +118,13 @@ public class BlockUnstableBushBloomed extends BlockMidnightPlant implements IGro
     @Override
     public ItemStack getPickBlock(IBlockState state, RayTraceResult target, World world, BlockPos pos, EntityPlayer player) {
         return new ItemStack(ModBlocks.UNSTABLE_BUSH);
+    }
+
+    @SideOnly(Side.CLIENT)
+    public void randomDisplayTick(IBlockState state, World world, BlockPos pos, Random rand) {
+        int fruitType = this.fruitSupplier.get() instanceof ItemUnstableFruit ? ((ItemUnstableFruit) this.fruitSupplier.get()).fruitColor.ordinal() : 0;
+        if (rand.nextInt(10) == 0) {
+            MidnightParticles.UNSTABLE_BUSH.spawn(world, pos.getX() + 0.5d, pos.getY() + 0.5d, pos.getZ() + 0.5d, rand.nextFloat() * 0.1d - 0.05d, rand.nextFloat() * 0.03d, rand.nextFloat() * 0.1d - 0.05d, fruitType);
+        }
     }
 }

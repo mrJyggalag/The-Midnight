@@ -17,7 +17,7 @@ public class ItemUnstableFruit extends ItemFoodBasic {
         }
     }
 
-    private final FruitColor fruitColor;
+    public final FruitColor fruitColor;
 
     public ItemUnstableFruit(FruitColor fruitColor) {
         super(1, 0.3f, false);
