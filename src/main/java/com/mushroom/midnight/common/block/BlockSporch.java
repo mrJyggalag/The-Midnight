@@ -38,10 +38,10 @@ public class BlockSporch extends BlockTorch implements IModelProvider {
         double d4 = 0.27d;
         if (enumfacing.getAxis().isHorizontal()) {
             EnumFacing facing = enumfacing.getOpposite();
-            world.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, d0 + d4 * (double) facing.getXOffset(), d1 + d3, d2 + d4 * (double) facing.getZOffset(), 0d, 0d, 0d, 0);
+            //world.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, d0 + d4 * (double) facing.getXOffset(), d1 + d3, d2 + d4 * (double) facing.getZOffset(), 0d, 0d, 0d, 0);
             MidnightParticles.SPORCH.spawn(world, d0 + d4 * (double) facing.getXOffset(), d1 + d3, d2 + d4 * (double) facing.getZOffset(), 0d, 0d, 0d, sporchType.ordinal());
         } else {
-            world.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, d0, d1, d2, 0d, 0d, 0d);
+            //world.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, d0, d1, d2, 0d, 0d, 0d);
             MidnightParticles.SPORCH.spawn(world, d0, d1, d2, 0d, 0d, 0d, sporchType.ordinal());
         }
     }
