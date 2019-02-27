@@ -1,5 +1,6 @@
 package com.mushroom.midnight.common.item;
 
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;
 import net.minecraft.item.ItemStack;
@@ -21,6 +22,12 @@ public class ItemUnstableFruit extends ItemFoodBasic {
     public ItemUnstableFruit(FruitColor fruitColor) {
         super(1, 0.3f, false);
         this.fruitColor = fruitColor;
+    }
+
+    @Override
+    public boolean onEntityItemUpdate(EntityItem entityItem) {
+        entityItem.motionY = 0.06f;
+        return false;
     }
 
     @Override

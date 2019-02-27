@@ -290,6 +290,13 @@ public class EntityNightStag extends EntityAnimal {
     }
 
     @Override
+    protected void consumeItemFromStack(EntityPlayer player, ItemStack stack) {
+        if (isBreedingItem(stack)) {
+            addPotionEffect(new PotionEffect(MobEffects.LEVITATION, 200, 2, false, true));
+        }
+    }
+
+    @Override
     public void eatGrassBonus() {
         heal(1f);
     }

@@ -5,6 +5,8 @@ import net.minecraft.block.IGrowable;
 import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.MoverType;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -15,7 +17,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeHooks;
-import net.minecraftforge.items.ItemHandlerHelper;
 
 import java.util.Random;
 import java.util.function.Supplier;
@@ -34,8 +35,15 @@ public class BlockUnstableBushBloomed extends BlockMidnightPlant implements IGro
     @Override
     public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
         if (state.getValue(HAS_FRUIT)) {
-            ItemHandlerHelper.giveItemToPlayer(player, new ItemStack(fruitSupplier.get(), world.rand.nextInt(3) + 1));
-            world.setBlockState(pos, ModBlocks.UNSTABLE_BUSH.getDefaultState().withProperty(BlockUnstableBush.STAGE, 3), 2);
+            if (!world.isRemote) {
+                int fruitCount = world.rand.nextInt(3) + 1;
+                for (int i = 0; i < fruitCount; i++) {
+                    EntityItem entityitem = new EntityItem(world, (double) (pos.getX() + world.rand.nextFloat()), pos.getY(), (double) (pos.getZ() + world.rand.nextFloat()), new ItemStack(fruitSupplier.get()));
+                    world.spawnEntity(entityitem);
+                    entityitem.move(MoverType.SELF, (double) (world.rand.nextFloat() * 0.12f - 0.06f), -0.06f, (double) (world.rand.nextFloat() * 0.12f - 0.06f));
+                }
+                world.setBlockState(pos, ModBlocks.UNSTABLE_BUSH.getDefaultState().withProperty(BlockUnstableBush.STAGE, 3), 2);
+            }
             return true;
         }
         return false;
