@@ -18,7 +18,7 @@ public class UnstableBushParticle extends Particle {
         this.motionY = motionY;
         this.motionZ = motionZ;
         this.particleAlpha = 1f;
-        particleScale = 0.5f;
+        particleScale = 1f;
         this.particleMaxAge = 60;
         this.canCollide = false;
         onUpdate();
