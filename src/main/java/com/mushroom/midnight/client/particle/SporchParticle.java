@@ -21,6 +21,7 @@ public class SporchParticle extends Particle {
     private final int MAX_FRAME_ID = 2;
     private int currentFrame = 0;
     private boolean directionRight = true;
+    private int lastTick = 0;
 
     public SporchParticle(World world, double posX, double posY, double posZ, double motionX, double motionY, double motionZ, int sporchType) {
         super(world, posX, posY, posZ, motionX, motionY, motionZ);
@@ -45,14 +46,15 @@ public class SporchParticle extends Particle {
     }
 
     public void renderParticle(BufferBuilder buffer, Entity entity, float partialTicks, float rotationX, float rotationZ, float rotationYZ, float rotationXY, float rotationXZ) {
-        if (entity.ticksExisted % 5 == 0) {
+        if (entity.ticksExisted >= this.lastTick + 5) {
             setParticleTexture(sprites.get(currentFrame));
-            if (currentFrame == MAX_FRAME_ID) {
+            if (this.currentFrame == MAX_FRAME_ID) {
                 this.directionRight = false;
             } else if (currentFrame == 0) {
                 this.directionRight = true;
             }
-            currentFrame = currentFrame + (directionRight ? 1 : -1);
+            this.currentFrame = this.currentFrame + (directionRight ? 1 : -1);
+            this.lastTick = entity.ticksExisted;
         }
         float f = ((float) this.particleAge + partialTicks) / (float) this.particleMaxAge;
         this.particleScale = this.flameScale * (1f - f * f * 0.5f);
