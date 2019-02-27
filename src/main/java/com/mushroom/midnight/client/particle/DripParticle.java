@@ -25,6 +25,7 @@ public class DripParticle extends Particle {
         this.motionX = this.motionY = this.motionZ = 0d;
     }
 
+    @Override
     public void onUpdate() {
         prevPosX = posX;
         prevPosY = posY;

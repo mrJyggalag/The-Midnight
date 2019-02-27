@@ -8,6 +8,7 @@ import com.mushroom.midnight.common.item.ItemDeceitfulSnapper;
 import com.mushroom.midnight.common.item.ItemFoodBasic;
 import com.mushroom.midnight.common.item.ItemMidnightDoor;
 import com.mushroom.midnight.common.item.ItemMidnightSeed;
+import com.mushroom.midnight.common.item.ItemMidnightShield;
 import com.mushroom.midnight.common.item.ItemRawSuavis;
 import com.mushroom.midnight.common.item.ItemUnstableFruit;
 import com.mushroom.midnight.common.item.armors.ItemMidnightBoots;
@@ -114,6 +115,7 @@ public class ModItems {
     public static final Item TENEBRUM_CHESTPLATE = Items.AIR;
     public static final Item TENEBRUM_LEGGINGS = Items.AIR;
     public static final Item TENEBRUM_BOOTS = Items.AIR;
+    public static final Item ROCKSHROOM_SHIELD = Items.AIR;
 
     public static final Item ADVANCEMENT_SNAPPER = Items.AIR;
     public static final Item ADVANCEMENT_HIGHNESS = Items.AIR;
@@ -202,6 +204,8 @@ public class ModItems {
                 RegUtil.withName(new ItemMidnightChestplate(ModArmorMaterials.TENEBRUM), "tenebrum_chestplate"),
                 RegUtil.withName(new ItemMidnightLeggings(ModArmorMaterials.TENEBRUM), "tenebrum_leggings"),
                 RegUtil.withName(new ItemMidnightBoots(ModArmorMaterials.TENEBRUM), "tenebrum_boots"),
+                RegUtil.withName(new ItemMidnightShield(ModArmorMaterials.ROCKSHROOM), "rockshroom_shield"),
+
                 RegUtil.withName(new ItemBasic().setCreativeTab(null), "advancement_snapper"),
                 RegUtil.withName(new ItemBasic().setCreativeTab(null), "advancement_highness")
         );
