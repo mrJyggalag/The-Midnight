@@ -9,7 +9,8 @@ public enum MidnightParticles {
     AMBIENT_SPORE(new AmbientSporeParticle.Factory()),
     SPORE(new SporeParticle.Factory()),
     DRIP(new DripParticle.Factory()),
-    UNSTABLE_BUSH(new UnstableBushParticle.Factory());
+    UNSTABLE_BUSH(new UnstableBushParticle.Factory()),
+    SPORCH(new SporchParticle.Factory());
 
     IParticleFactory factory;
 

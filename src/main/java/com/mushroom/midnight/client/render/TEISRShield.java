@@ -9,11 +9,9 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import static com.mushroom.midnight.Midnight.MODID;
-
 @SideOnly(Side.CLIENT)
 public class TEISRShield extends TileEntityItemStackRenderer {
-    private static ResourceLocation TEXTURE = new ResourceLocation(MODID, "textures/blocks/hardened_clay_stained_purple.png");
+    private final static ResourceLocation TEXTURE = new ResourceLocation("textures/blocks/hardened_clay_stained_purple.png");
     private final ModelShield modelShield = new ModelShield(); // TODO model rockshroom
 
     @Override
