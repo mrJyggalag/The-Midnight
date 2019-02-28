@@ -9,6 +9,7 @@ import com.mushroom.midnight.common.item.ItemFoodBasic;
 import com.mushroom.midnight.common.item.ItemGeode;
 import com.mushroom.midnight.common.item.ItemMidnightDoor;
 import com.mushroom.midnight.common.item.ItemMidnightSeed;
+import com.mushroom.midnight.common.item.ItemMidnightShield;
 import com.mushroom.midnight.common.item.ItemRawSuavis;
 import com.mushroom.midnight.common.item.ItemUnstableFruit;
 import com.mushroom.midnight.common.item.armors.ItemMidnightBoots;
@@ -115,6 +116,7 @@ public class ModItems {
     public static final Item TENEBRUM_CHESTPLATE = Items.AIR;
     public static final Item TENEBRUM_LEGGINGS = Items.AIR;
     public static final Item TENEBRUM_BOOTS = Items.AIR;
+    public static final Item ROCKSHROOM_SHIELD = Items.AIR;
 
     public static final Item ADVANCEMENT_SNAPPER = Items.AIR;
     public static final Item ADVANCEMENT_HIGHNESS = Items.AIR;
@@ -203,6 +205,8 @@ public class ModItems {
                 RegUtil.withName(new ItemMidnightChestplate(ModArmorMaterials.TENEBRUM), "tenebrum_chestplate"),
                 RegUtil.withName(new ItemMidnightLeggings(ModArmorMaterials.TENEBRUM), "tenebrum_leggings"),
                 RegUtil.withName(new ItemMidnightBoots(ModArmorMaterials.TENEBRUM), "tenebrum_boots"),
+                RegUtil.withName(new ItemMidnightShield(ModArmorMaterials.ROCKSHROOM).setCreativeTab(null), "rockshroom_shield"),
+
                 RegUtil.withName(new ItemBasic().setCreativeTab(null), "advancement_snapper"),
                 RegUtil.withName(new ItemBasic().setCreativeTab(null), "advancement_highness")
         );
@@ -216,6 +220,9 @@ public class ModItems {
         OreDictionary.registerOre("doorWood", SHADOWROOT_DOOR);
         OreDictionary.registerOre("doorWood", DARK_WILLOW_DOOR);
         OreDictionary.registerOre("doorWood", DEAD_WOOD_DOOR);
+
+        ModArmorMaterials.ROCKSHROOM.setRepairItem(new ItemStack(ModItems.ROCKSHROOM_CLUMP));
+        ModArmorMaterials.TENEBRUM.setRepairItem(new ItemStack(ModItems.TENEBRUM_INGOT));
     }
 
     public static Collection<Item> getItems() {

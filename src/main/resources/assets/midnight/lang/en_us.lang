@@ -284,6 +284,7 @@ item.midnight.rockshroom_helmet.name=Rockshroom Helmet
 item.midnight.rockshroom_chestplate.name=Rockshroom Chestplate
 item.midnight.rockshroom_leggings.name=Rockshroom Leggings
 item.midnight.rockshroom_boots.name=Rockshroom Boots
+item.midnight.rockshroom_shield.name=Rockshroom Shield
 
 item.midnight.tenebrum_helmet.name=Tenebrum Helmet
 item.midnight.tenebrum_chestplate.name=Tenebrum Chestplate
@@ -370,11 +371,13 @@ potion.midnight.stunned.name=Stunned
 potion.midnight.pollinated.name=Pollinated
 potion.midnight.dragon_guard.name=Dragon's Guard
 potion.midnight.darkness.name=Darkness
+potion.midnight.tormented.name=Tormented
 
 # DamageSources
 death.midnight.bladeshroom=%s was pricked to death by a bladeshroom
 death.midnight.deceitful_snapper=%s was chomped up
-death.midnight.rockshroom_spore=%s was hit by a rockshroom spore
+death.midnight.rockshroom_spore=%s was hit by rockshroom spores
+death.midnight.tormented=%s was tormented to death
 
 # Advancements
 

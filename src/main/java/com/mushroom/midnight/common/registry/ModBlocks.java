@@ -518,10 +518,10 @@ public class ModBlocks {
                 RegUtil.withName(new BlockMidnightLadder(), "dewshroom_ladder"),
                 RegUtil.withName(new BlockMidnightLadder(), "viridshroom_ladder"),
                 RegUtil.withName(new BlockMidnightLadder(), "nightshroom_ladder"),
-                RegUtil.withName(new BlockSporch(), "bogshroom_sporch"),
-                RegUtil.withName(new BlockSporch(), "nightshroom_sporch"),
-                RegUtil.withName(new BlockSporch(), "dewshroom_sporch"),
-                RegUtil.withName(new BlockSporch(), "viridshroom_sporch")
+                RegUtil.withName(new BlockSporch(BlockSporch.SporchType.BOGSHROOM), "bogshroom_sporch"),
+                RegUtil.withName(new BlockSporch(BlockSporch.SporchType.NIGHTSHROOM), "nightshroom_sporch"),
+                RegUtil.withName(new BlockSporch(BlockSporch.SporchType.DEWSHROOM), "dewshroom_sporch"),
+                RegUtil.withName(new BlockSporch(BlockSporch.SporchType.VIRIDSHROOM), "viridshroom_sporch")
         ));
 
         blocks.forEach(event.getRegistry()::register);

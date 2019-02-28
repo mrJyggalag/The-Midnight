@@ -14,6 +14,7 @@ import com.mushroom.midnight.client.render.RenderRift;
 import com.mushroom.midnight.client.render.RenderRifter;
 import com.mushroom.midnight.client.render.RenderStinger;
 import com.mushroom.midnight.client.render.RenderTreeHopper;
+import com.mushroom.midnight.client.render.TEISRShield;
 import com.mushroom.midnight.common.block.BlockShadowrootChest;
 import com.mushroom.midnight.common.entity.EntityBladeshroomCap;
 import com.mushroom.midnight.common.entity.EntityRift;
@@ -143,6 +144,7 @@ public class ModModelRegistry {
                 TileEntityRendererDispatcher.instance.render(shadowrootChest, 0.0, 0.0, 0.0, 0.0F, 1.0F);
             }
         });
+        ModItems.ROCKSHROOM_SHIELD.setTileEntityItemStackRenderer(new TEISRShield());
 
         ModItems.ADVANCEMENT_HIGHNESS.setTileEntityItemStackRenderer(new TileEntityItemStackRenderer() {
             private EntityNightStag entity;

@@ -21,7 +21,6 @@ public class UnstableBushParticle extends Particle {
         particleScale = 1f;
         this.particleMaxAge = 60;
         this.canCollide = false;
-        onUpdate();
     }
 
     @Override

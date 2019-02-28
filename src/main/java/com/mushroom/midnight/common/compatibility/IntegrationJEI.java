@@ -20,5 +20,6 @@ public class IntegrationJEI implements IModPlugin {
 		blackList.addIngredientToBlacklist(new ItemStack(ModBlocks.MIASMA));
 		blackList.addIngredientToBlacklist(new ItemStack(ModItems.ADVANCEMENT_SNAPPER));
 		blackList.addIngredientToBlacklist(new ItemStack(ModItems.ADVANCEMENT_HIGHNESS));
+		blackList.addIngredientToBlacklist(new ItemStack(ModItems.ROCKSHROOM_SHIELD));
 	}
 }
