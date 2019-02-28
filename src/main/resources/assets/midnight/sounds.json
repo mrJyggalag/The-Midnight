@@ -31,6 +31,10 @@
       {
         "name": "midnight:music/ultraviolet",
         "stream": true
+      },
+      {
+        "name": "midnight:music/stegano",
+        "stream": true
       }
     ]
   },
