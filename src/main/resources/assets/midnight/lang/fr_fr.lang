@@ -370,11 +370,13 @@ potion.midnight.stunned.name=Étourdi
 potion.midnight.pollinated.name=Pollinisé
 potion.midnight.dragon_guard.name=Garde du Dragon
 potion.midnight.darkness.name=Obscurité
+potion.midnight.tormented.name=Tourmenté
 
 # DamageSources
 death.midnight.bladeshroom=%s a été piqué mortellement par un ChampiLame
 death.midnight.deceitful_snapper=%s a été dévoré
 death.midnight.rockshroom_spore=%s a été touché par un spore de ChampiRoche
+death.midnight.tormented=%s a sombré dans ses tourments
 
 # Advancements
 
