@@ -31,7 +31,7 @@ public class SporchParticle extends Particle {
         this.posX += (double) ((this.rand.nextFloat() - this.rand.nextFloat()) * 0.05f);
         this.posY += (double) ((this.rand.nextFloat() - this.rand.nextFloat()) * 0.05f);
         this.posZ += (double) ((this.rand.nextFloat() - this.rand.nextFloat()) * 0.05f);
-        this.flameScale = this.particleScale = 1f;
+        this.flameScale = this.particleScale = 1.3f;
         this.particleRed = 1f;
         this.particleGreen = 1f;
         this.particleBlue = 1f;
