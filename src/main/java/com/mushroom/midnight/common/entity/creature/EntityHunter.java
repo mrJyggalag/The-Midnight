@@ -8,6 +8,7 @@ import com.mushroom.midnight.common.entity.task.EntityTaskHunterSwoop;
 import com.mushroom.midnight.common.entity.task.EntityTaskHunterTarget;
 import com.mushroom.midnight.common.entity.task.EntityTaskHunterTrack;
 import com.mushroom.midnight.common.entity.util.ChainSolver;
+import com.mushroom.midnight.common.registry.ModEffects;
 import com.mushroom.midnight.common.registry.ModLootTables;
 import com.mushroom.midnight.common.util.MeanValueRecorder;
 import net.minecraft.block.state.IBlockState;
@@ -175,9 +176,7 @@ public class EntityHunter extends EntityMob implements EntityFlying {
 
                 float theta = (float) Math.toRadians(this.rotationYaw);
                 living.knockBack(this, 0.3F, MathHelper.sin(theta), -MathHelper.cos(theta));
-
-                living.addPotionEffect(new PotionEffect(MobEffects.SLOWNESS, 10 * 20));
-                living.addPotionEffect(new PotionEffect(MobEffects.WITHER, 6 * 20));
+                living.addPotionEffect(new PotionEffect(ModEffects.TORMENTED, 6 * 20));
 
                 animCap.setAnimation(this, AnimationCapability.AnimationType.ATTACK, 10);
             }

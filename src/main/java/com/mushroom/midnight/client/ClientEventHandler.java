@@ -109,10 +109,6 @@ public class ClientEventHandler {
     }
 
     private static void playAmbientSounds(EntityPlayer player) {
-        if (player.posY < 62 && !player.world.canSeeSky(player.getPosition())) {
-            return;
-        }
-
         Random rand = player.world.rand;
         long worldTime = player.world.getTotalWorldTime();
 
