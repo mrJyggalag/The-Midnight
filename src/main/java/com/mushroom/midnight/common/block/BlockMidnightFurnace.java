@@ -2,6 +2,7 @@ package com.mushroom.midnight.common.block;
 
 import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.client.IModelProvider;
+import com.mushroom.midnight.client.particle.MidnightParticles;
 import com.mushroom.midnight.common.network.GuiHandler;
 import com.mushroom.midnight.common.registry.ModBlocks;
 import com.mushroom.midnight.common.registry.ModTabs;
@@ -98,20 +99,20 @@ public class BlockMidnightFurnace extends BlockContainer implements IModelProvid
 
             switch (enumfacing) {
                 case WEST:
-                    worldIn.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, d0 - 0.52D, d1, d2 + d4, 0.0D, 0.0D, 0.0D);
-                    worldIn.spawnParticle(EnumParticleTypes.FLAME, d0 - 0.52D, d1, d2 + d4, 0.0D, 0.0D, 0.0D);
+                    worldIn.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, d0 - d3, d1, d2 + d4, 0.0D, 0.0D, 0.0D);
+                    MidnightParticles.FURNACE_FLAME.spawn(worldIn, d0 - d3, d1, d2 + d4, 0d, 0d, 0d);
                     break;
                 case EAST:
-                    worldIn.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, d0 + 0.52D, d1, d2 + d4, 0.0D, 0.0D, 0.0D);
-                    worldIn.spawnParticle(EnumParticleTypes.FLAME, d0 + 0.52D, d1, d2 + d4, 0.0D, 0.0D, 0.0D);
+                    worldIn.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, d0 + d3, d1, d2 + d4, 0.0D, 0.0D, 0.0D);
+                    MidnightParticles.FURNACE_FLAME.spawn(worldIn, d0 + d3, d1, d2 + d4, 0d, 0d, 0d);
                     break;
                 case NORTH:
-                    worldIn.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, d0 + d4, d1, d2 - 0.52D, 0.0D, 0.0D, 0.0D);
-                    worldIn.spawnParticle(EnumParticleTypes.FLAME, d0 + d4, d1, d2 - 0.52D, 0.0D, 0.0D, 0.0D);
+                    worldIn.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, d0 + d4, d1, d2 - d3, 0.0D, 0.0D, 0.0D);
+                    MidnightParticles.FURNACE_FLAME.spawn(worldIn, d0 + d4, d1, d2 - d3, 0d, 0d, 0d);
                     break;
                 case SOUTH:
-                    worldIn.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, d0 + d4, d1, d2 + 0.52D, 0.0D, 0.0D, 0.0D);
-                    worldIn.spawnParticle(EnumParticleTypes.FLAME, d0 + d4, d1, d2 + 0.52D, 0.0D, 0.0D, 0.0D);
+                    worldIn.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, d0 + d4, d1, d2 + d3, 0.0D, 0.0D, 0.0D);
+                    MidnightParticles.FURNACE_FLAME.spawn(worldIn, d0 + d4, d1, d2 + d3, 0d, 0d, 0d);
             }
         }
     }

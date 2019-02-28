@@ -204,7 +204,7 @@ public class ModItems {
                 RegUtil.withName(new ItemMidnightChestplate(ModArmorMaterials.TENEBRUM), "tenebrum_chestplate"),
                 RegUtil.withName(new ItemMidnightLeggings(ModArmorMaterials.TENEBRUM), "tenebrum_leggings"),
                 RegUtil.withName(new ItemMidnightBoots(ModArmorMaterials.TENEBRUM), "tenebrum_boots"),
-                RegUtil.withName(new ItemMidnightShield(ModArmorMaterials.ROCKSHROOM), "rockshroom_shield"),
+                RegUtil.withName(new ItemMidnightShield(ModArmorMaterials.ROCKSHROOM).setCreativeTab(null), "rockshroom_shield"),
 
                 RegUtil.withName(new ItemBasic().setCreativeTab(null), "advancement_snapper"),
                 RegUtil.withName(new ItemBasic().setCreativeTab(null), "advancement_highness")

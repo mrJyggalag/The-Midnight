@@ -107,7 +107,7 @@ public class SporchParticle extends Particle {
     @SideOnly(Side.CLIENT)
     public static class Factory implements IParticleFactory {
         @Override
-        public net.minecraft.client.particle.Particle createParticle(int particleID, World world, double posX, double posY, double posZ, double motionX, double motionY, double motionZ, int... params) {
+        public Particle createParticle(int particleID, World world, double posX, double posY, double posZ, double motionX, double motionY, double motionZ, int... params) {
             return new SporchParticle(world, posX, posY, posZ, motionX, motionY, motionZ, params.length > 0 ? params[0] : world.rand.nextInt(SporchType.values().length));
         }
     }
