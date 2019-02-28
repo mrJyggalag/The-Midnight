@@ -375,8 +375,8 @@ potion.midnight.tormented.name=Tormented
 # DamageSources
 death.midnight.bladeshroom=%s was pricked to death by a bladeshroom
 death.midnight.deceitful_snapper=%s was chomped up
-death.midnight.rockshroom_spore=%s was hit by a rockshroom spore
-death.midnight.tormented=%s sank into his torments
+death.midnight.rockshroom_spore=%s was hit by rockshroom spores
+death.midnight.tormented=%s was tormented to death
 
 # Advancements
 
