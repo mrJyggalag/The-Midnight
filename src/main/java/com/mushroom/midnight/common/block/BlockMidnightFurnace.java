@@ -53,7 +53,7 @@ public class BlockMidnightFurnace extends BlockContainer implements IModelProvid
         this.setCreativeTab(ModTabs.DECORATION_TAB);
 
         if (isBurning) {
-            this.setLightLevel(0.2F);
+            this.setLightLevel(0.4F);
         }
     }
 

@@ -140,7 +140,6 @@ public class EntityRifter extends EntityMob implements IRiftTraveler, IEntityAdd
         this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.25);
         this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(1.0);
         this.getEntityAttribute(SharedMonsterAttributes.ARMOR).setBaseValue(4.0);
-        this.getEntityAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE).setBaseValue(1.0);
     }
 
     @Override
