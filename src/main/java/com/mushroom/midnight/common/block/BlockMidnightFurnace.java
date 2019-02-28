@@ -22,6 +22,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.stats.StatList;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
@@ -30,7 +31,9 @@ import net.minecraft.util.Mirror;
 import net.minecraft.util.Rotation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.client.MinecraftForgeClient;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -43,10 +46,15 @@ public class BlockMidnightFurnace extends BlockContainer implements IModelProvid
 
     public BlockMidnightFurnace(boolean isBurning) {
         super(Material.ROCK);
+        this.isBurning = isBurning;
+
         this.setHardness(3.5F);
         this.setDefaultState(this.blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH));
-        this.isBurning = isBurning;
-        setCreativeTab(ModTabs.DECORATION_TAB);
+        this.setCreativeTab(ModTabs.DECORATION_TAB);
+
+        if (isBurning) {
+            this.setLightLevel(0.2F);
+        }
     }
 
     @Override
@@ -84,35 +92,35 @@ public class BlockMidnightFurnace extends BlockContainer implements IModelProvid
     @SideOnly(Side.CLIENT)
     @SuppressWarnings("incomplete-switch")
     @Override
-    public void randomDisplayTick(IBlockState stateIn, World worldIn, BlockPos pos, Random rand) {
+    public void randomDisplayTick(IBlockState state, World worldIn, BlockPos pos, Random rand) {
         if (this.isBurning) {
-            EnumFacing enumfacing = stateIn.getValue(FACING);
-            double d0 = (double) pos.getX() + 0.5D;
-            double d1 = (double) pos.getY() + rand.nextDouble() * 6.0D / 16.0D;
-            double d2 = (double) pos.getZ() + 0.5D;
-            double d3 = 0.52D;
-            double d4 = rand.nextDouble() * 0.6D - 0.3D;
+            EnumFacing facing = state.getValue(FACING);
+            double x = pos.getX() + 0.5D;
+            double y = pos.getY() + rand.nextDouble() * 6.0D / 16.0D;
+            double z = pos.getZ() + 0.5D;
+            double outwardOffset = 0.52D;
+            double sidewardOffset = rand.nextDouble() * 0.6D - 0.3D;
 
             if (rand.nextDouble() < 0.1D) {
                 worldIn.playSound((double) pos.getX() + 0.5D, (double) pos.getY(), (double) pos.getZ() + 0.5D, SoundEvents.BLOCK_FURNACE_FIRE_CRACKLE, SoundCategory.BLOCKS, 1.0F, 1.0F, false);
             }
 
-            switch (enumfacing) {
+            switch (facing) {
                 case WEST:
-                    worldIn.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, d0 - d3, d1, d2 + d4, 0.0D, 0.0D, 0.0D);
-                    MidnightParticles.FURNACE_FLAME.spawn(worldIn, d0 - d3, d1, d2 + d4, 0d, 0d, 0d);
+                    worldIn.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, x - outwardOffset, y, z + sidewardOffset, 0.0D, 0.0D, 0.0D);
+                    MidnightParticles.FURNACE_FLAME.spawn(worldIn, x - outwardOffset, y, z + sidewardOffset, 0d, 0d, 0d);
                     break;
                 case EAST:
-                    worldIn.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, d0 + d3, d1, d2 + d4, 0.0D, 0.0D, 0.0D);
-                    MidnightParticles.FURNACE_FLAME.spawn(worldIn, d0 + d3, d1, d2 + d4, 0d, 0d, 0d);
+                    worldIn.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, x + outwardOffset, y, z + sidewardOffset, 0.0D, 0.0D, 0.0D);
+                    MidnightParticles.FURNACE_FLAME.spawn(worldIn, x + outwardOffset, y, z + sidewardOffset, 0d, 0d, 0d);
                     break;
                 case NORTH:
-                    worldIn.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, d0 + d4, d1, d2 - d3, 0.0D, 0.0D, 0.0D);
-                    MidnightParticles.FURNACE_FLAME.spawn(worldIn, d0 + d4, d1, d2 - d3, 0d, 0d, 0d);
+                    worldIn.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, x + sidewardOffset, y, z - outwardOffset, 0.0D, 0.0D, 0.0D);
+                    MidnightParticles.FURNACE_FLAME.spawn(worldIn, x + sidewardOffset, y, z - outwardOffset, 0d, 0d, 0d);
                     break;
                 case SOUTH:
-                    worldIn.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, d0 + d4, d1, d2 + d3, 0.0D, 0.0D, 0.0D);
-                    MidnightParticles.FURNACE_FLAME.spawn(worldIn, d0 + d4, d1, d2 + d3, 0d, 0d, 0d);
+                    worldIn.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, x + sidewardOffset, y, z + outwardOffset, 0.0D, 0.0D, 0.0D);
+                    MidnightParticles.FURNACE_FLAME.spawn(worldIn, x + sidewardOffset, y, z + outwardOffset, 0d, 0d, 0d);
             }
         }
     }
@@ -233,6 +241,19 @@ public class BlockMidnightFurnace extends BlockContainer implements IModelProvid
     @Override
     protected BlockStateContainer createBlockState() {
         return new BlockStateContainer(this, FACING);
+    }
+
+    @Override
+    public boolean canRenderInLayer(IBlockState state, BlockRenderLayer layer) {
+        return layer == BlockRenderLayer.SOLID || (layer == BlockRenderLayer.CUTOUT && this.isBurning);
+    }
+
+    @Override
+    public int getPackedLightmapCoords(IBlockState state, IBlockAccess source, BlockPos pos) {
+        if (this.isBurning && MinecraftForgeClient.getRenderLayer() == BlockRenderLayer.CUTOUT) {
+            return source.getCombinedLight(pos, 15);
+        }
+        return source.getCombinedLight(pos, 0);
     }
 }
 
