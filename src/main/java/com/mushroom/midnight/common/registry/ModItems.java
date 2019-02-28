@@ -6,6 +6,7 @@ import com.mushroom.midnight.common.item.ItemBasic;
 import com.mushroom.midnight.common.item.ItemBladeshroomCap;
 import com.mushroom.midnight.common.item.ItemDeceitfulSnapper;
 import com.mushroom.midnight.common.item.ItemFoodBasic;
+import com.mushroom.midnight.common.item.ItemGeode;
 import com.mushroom.midnight.common.item.ItemMidnightDoor;
 import com.mushroom.midnight.common.item.ItemMidnightSeed;
 import com.mushroom.midnight.common.item.ItemRawSuavis;
@@ -130,7 +131,7 @@ public class ModItems {
                 RegUtil.withName(new ItemMidnightDoor(ModBlocks.DEWSHROOM_DOOR), "dewshroom_door"),
                 RegUtil.withName(new ItemMidnightDoor(ModBlocks.VIRIDSHROOM_DOOR), "viridshroom_door"),
                 RegUtil.withName(new ItemMidnightDoor(ModBlocks.TENEBRUM_DOOR), "tenebrum_door"),
-                RegUtil.withName(new ItemBasic(), "geode"),
+                RegUtil.withName(new ItemGeode(), "geode"),
                 RegUtil.withName(new ItemBasic(), "bogshroom_powder"),
                 RegUtil.withName(new ItemBasic(), "nightshroom_powder"),
                 RegUtil.withName(new ItemBasic(), "dewshroom_powder"),

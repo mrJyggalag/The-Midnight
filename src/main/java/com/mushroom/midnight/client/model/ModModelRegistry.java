@@ -45,6 +45,7 @@ import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.block.statemap.StateMap;
 import net.minecraft.client.renderer.color.BlockColors;
 import net.minecraft.client.renderer.color.ItemColors;
+import net.minecraft.client.renderer.entity.RenderSnowball;
 import net.minecraft.client.renderer.tileentity.TileEntityItemStackRenderer;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.init.Items;
@@ -85,6 +86,8 @@ public class ModModelRegistry {
         RenderingRegistry.registerEntityRenderingHandler(EntityNightStag.class, RenderNightStag::new);
         RenderingRegistry.registerEntityRenderingHandler(EntityDeceitfulSnapper.class, RenderDeceitfulSnapper::new);
         RenderingRegistry.registerEntityRenderingHandler(EntitySkulk.class, RenderSkulk::new);
+        RenderingRegistry.registerEntityRenderingHandler(EntityRacoon.class, RenderRacoon::new);
+        RenderingRegistry.registerEntityRenderingHandler(EntityThrownGeode.class, manager -> new RenderSnowball<>(manager, ModItems.GEODE, Minecraft.getMinecraft().getRenderItem()));
 
         ModItems.getItems().stream().filter(i -> i instanceof IModelProvider).forEach(ModModelRegistry::registerItemModel);
         ModBlocks.getBlocks().stream().filter(b -> b instanceof IModelProvider).forEach(ModModelRegistry::registerBlockModel);
@@ -143,6 +146,7 @@ public class ModModelRegistry {
 
         ModItems.ADVANCEMENT_HIGHNESS.setTileEntityItemStackRenderer(new TileEntityItemStackRenderer() {
             private EntityNightStag entity;
+
             @Override
             @SideOnly(Side.CLIENT)
             public void renderByItem(ItemStack stack) {

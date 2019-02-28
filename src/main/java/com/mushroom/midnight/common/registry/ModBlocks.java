@@ -402,7 +402,7 @@ public class ModBlocks {
                         .setHardness(4.0F),
                 RegUtil.withName(new BlockMiasmaSurface(), "miasma_surface"),
                 RegUtil.withName(new BlockMiasmaFluid(), "miasma"),
-                RegUtil.withName(new BlockMidnightGem(() -> ModItems.DARK_PEARL, 0), "dark_pearl_ore"),
+                RegUtil.withName(new BlockMidnightGem(() -> ModItems.GEODE, 0), "dark_pearl_ore"),
                 RegUtil.withName(new BlockMidnightOre(2), "tenebrum_ore"),
                 RegUtil.withName(new BlockMidnightOre(2), "nagrilite_ore"),
                 RegUtil.withName(new BlockMidnightGem(() -> ModItems.EBONYS, 1), "ebonys_ore"),

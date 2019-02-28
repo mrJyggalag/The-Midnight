@@ -3,6 +3,7 @@ package com.mushroom.midnight.common.registry;
 import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.common.entity.EntityBladeshroomCap;
 import com.mushroom.midnight.common.entity.EntityRift;
+import com.mushroom.midnight.common.entity.EntityThrownGeode;
 import com.mushroom.midnight.common.entity.creature.EntityCrystalBug;
 import com.mushroom.midnight.common.entity.creature.EntityDeceitfulSnapper;
 import com.mushroom.midnight.common.entity.creature.EntityHunter;
@@ -122,6 +123,13 @@ public class ModEntities {
                         .name(Midnight.MODID + ".skulk")
                         .tracker(80, 3, true)
                         .egg(0x4B5065, 0x4E268A)
+                        .build(),
+                EntityEntryBuilder.create()
+                        .entity(EntityThrownGeode.class)
+                        .factory(EntityThrownGeode::new)
+                        .id(new ResourceLocation(Midnight.MODID, "thrown_geode"), currentEntityId++)
+                        .name(Midnight.MODID + ".thrown_geode")
+                        .tracker(64, 10, true)
                         .build()
         );
 
