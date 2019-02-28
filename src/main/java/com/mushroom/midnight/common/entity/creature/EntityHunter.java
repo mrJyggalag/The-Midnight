@@ -176,8 +176,6 @@ public class EntityHunter extends EntityMob implements EntityFlying {
 
                 float theta = (float) Math.toRadians(this.rotationYaw);
                 living.knockBack(this, 0.3F, MathHelper.sin(theta), -MathHelper.cos(theta));
-
-                living.addPotionEffect(new PotionEffect(MobEffects.SLOWNESS, 10 * 20));
                 living.addPotionEffect(new PotionEffect(ModEffects.TORMENTED, 6 * 20));
 
                 animCap.setAnimation(this, AnimationCapability.AnimationType.ATTACK, 10);
