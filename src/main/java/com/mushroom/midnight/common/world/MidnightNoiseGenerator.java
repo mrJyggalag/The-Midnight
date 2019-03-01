@@ -134,7 +134,7 @@ public class MidnightNoiseGenerator {
         RegionInterpolator.Region[] regions = new RegionInterpolator.Region[] {
                 RegionInterpolator.region(0.0, cavernRegionStart, 2.5, curveRange),
                 RegionInterpolator.region(cavernRegionStart, cavernRegionEnd, properties.cavernDensity, curveRange),
-                RegionInterpolator.region(cavernRegionEnd, surfaceHeight, 2.5, curveRange),
+                RegionInterpolator.region(cavernRegionEnd, surfaceHeight, 3.5, curveRange),
                 RegionInterpolator.region(surfaceHeight, maxHeight, surfaceHeight - maxHeight, maxHeight - surfaceHeight)
         };
 

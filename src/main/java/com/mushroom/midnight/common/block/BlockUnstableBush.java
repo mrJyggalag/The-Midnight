@@ -6,7 +6,7 @@ import net.minecraft.block.IGrowable;
 import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeHooks;
@@ -65,8 +65,9 @@ public class BlockUnstableBush extends BlockMidnightPlant implements IGrowable {
 
     @Override
     public void updateTick(World world, BlockPos pos, IBlockState state, Random rand) {
-        if (!canSustainPlant(world.getBlockState(pos.down()), world, pos.down(), EnumFacing.UP, this)) {
-            world.destroyBlock(pos, true);
+        if (!this.canBlockStay(world, pos, state)) {
+            this.dropBlockAsItem(world, pos, state, 0);
+            world.setBlockState(pos, Blocks.AIR.getDefaultState(), 3);
         } else {
             if (ForgeHooks.onCropsGrowPre(world, pos, state, rand.nextInt(10) == 0)) {
                 grow(world, rand, pos, state);
