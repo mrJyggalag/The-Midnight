@@ -5,7 +5,6 @@ import com.mushroom.midnight.common.registry.ModBlocks;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
@@ -35,9 +34,8 @@ public class MessageRockshroomBroken implements IMessage {
         public IMessage onMessage(MessageRockshroomBroken message, MessageContext ctx) {
             if (ctx.side.isClient()) {
                 Minecraft.getMinecraft().addScheduledTask(() -> {
-                    World world = Minecraft.getMinecraft().world;
-                    if (world.isBlockLoaded(message.pos)) {
-                        ((BlockRockshroom) ModBlocks.ROCKSHROOM).spawnSpores(world, message.pos);
+                    if (Minecraft.getMinecraft().world.isBlockLoaded(message.pos)) {
+                        ((BlockRockshroom) ModBlocks.ROCKSHROOM).spawnSpores(Minecraft.getMinecraft().world, message.pos);
                     }
                 });
             }

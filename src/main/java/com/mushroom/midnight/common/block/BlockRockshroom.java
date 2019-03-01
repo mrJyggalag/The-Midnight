@@ -12,6 +12,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Enchantments;
@@ -23,6 +24,8 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.Random;
 
@@ -76,7 +79,8 @@ public class BlockRockshroom extends Block implements IModelProvider {
         }
     }
 
-    public void spawnSpores(World world, BlockPos pos) {
+    @SideOnly(Side.CLIENT)
+    public void spawnSpores(WorldClient world, BlockPos pos) {
         Random random = world.rand;
         for (int i = 0; i < SPORE_COUNT; i++) {
             Vec3d direction = new Vec3d(

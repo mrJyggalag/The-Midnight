@@ -23,6 +23,7 @@ import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.pathfinding.PathNavigate;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.DifficultyInstance;
@@ -115,6 +116,10 @@ public class EntitySkulk extends EntityAnimal {
         }
         setStealth(false);
         return flag;
+    }
+
+    @Override
+    public void swingArm(EnumHand hand) {
     }
 
     @Override
