@@ -208,6 +208,11 @@ public class MidnightBiomeConfigs {
             .withCreature(new Biome.SpawnListEntry(EntitySkulk.class, 100, 1, 2))
             .build();
 
+    public static final SpawnerConfig FUNGI_FOREST_SPAWN_CONFIG = SpawnerConfig.builder()
+            .extendsFrom(VEGETATED_SPAWN_CONFIG)
+            .withCreature(new Biome.SpawnListEntry(EntitySkulk.class, 100, 1, 2))
+            .build();
+
     public static final SpawnerConfig DECEITFUL_BOG_SPAWN_CONFIG = SpawnerConfig.builder()
             .extendsFrom(VEGETATED_SPAWN_CONFIG)
             .withWaterCreature(new Biome.SpawnListEntry(EntityDeceitfulSnapper.class, 100, 5, 10))
@@ -339,14 +344,14 @@ public class MidnightBiomeConfigs {
     public static final SurfaceBiomeConfig FUNGI_FOREST_CONFIG = SurfaceBiomeConfig.builder()
             .withTerrain(FOREST_TERRAIN_CONFIG)
             .withFeatures(FUNGI_FOREST_FEATURE_CONFIG)
-            .withSpawner(VEGETATED_SPAWN_CONFIG)
+            .withSpawner(FUNGI_FOREST_SPAWN_CONFIG)
             .withGrassColor(0x8489B5)
             .build();
 
     public static final SurfaceBiomeConfig HILLY_FUNGI_FOREST_CONFIG = SurfaceBiomeConfig.builder()
             .withTerrain(HILL_TERRAIN_CONFIG)
             .withFeatures(FUNGI_FOREST_FEATURE_CONFIG)
-            .withSpawner(VEGETATED_SPAWN_CONFIG)
+            .withSpawner(FUNGI_FOREST_SPAWN_CONFIG)
             .withGrassColor(0x8489B5)
             .build();
 
