@@ -100,7 +100,7 @@ public class BlockUnstableBushBloomed extends BlockMidnightPlant implements IGro
 
     @Override
     public void updateTick(World world, BlockPos pos, IBlockState state, Random rand) {
-        if (!canSustainPlant(world.getBlockState(pos.down()), world, pos.down(), EnumFacing.UP, this)) {
+        if (!canBlockStay(world, pos, state)) {
             world.destroyBlock(pos, true);
         } else {
             if (ForgeHooks.onCropsGrowPre(world, pos, state, rand.nextInt(10) == 0)) {
