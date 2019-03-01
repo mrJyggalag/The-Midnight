@@ -223,6 +223,12 @@ public class ModItems {
 
         ModArmorMaterials.ROCKSHROOM.setRepairItem(new ItemStack(ModItems.ROCKSHROOM_CLUMP));
         ModArmorMaterials.TENEBRUM.setRepairItem(new ItemStack(ModItems.TENEBRUM_INGOT));
+
+        ModToolMaterials.SHADOWROOT.setRepairItem(new ItemStack(ModBlocks.SHADOWROOT_PLANKS));
+        ModToolMaterials.NIGHTSTONE.setRepairItem(new ItemStack(ModBlocks.NIGHTSTONE));
+        ModToolMaterials.EBONYS.setRepairItem(new ItemStack(ModItems.EBONYS));
+        ModToolMaterials.NAGRILITE.setRepairItem(new ItemStack(ModItems.NAGRILITE_INGOT));
+        ModToolMaterials.TENEBRUM.setRepairItem(new ItemStack(ModItems.TENEBRUM_INGOT));
     }
 
     public static Collection<Item> getItems() {
