@@ -28,6 +28,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.World;
+import net.minecraftforge.common.util.Constants;
 
 import javax.annotation.Nullable;
 
@@ -163,7 +164,9 @@ public class EntitySkulk extends EntityAnimal {
     @Override
     public void readEntityFromNBT(NBTTagCompound compound) {
         super.readEntityFromNBT(compound);
-        setStealth(compound.getBoolean("stealth"));
+        if (compound.hasKey("stealth", Constants.NBT.TAG_BYTE)) {
+            setStealth(compound.getBoolean("stealth"));
+        }
     }
 
     @Override
