@@ -346,6 +346,9 @@ config.midnight.rifter_spawn_rarity.tooltip=Rareté que les failles fassent appa
 config.midnight.max_rifter_by_rift=Passeurs de faille max par rift
 config.midnight.max_rifter_by_rift.tooltip=Maximum de passeurs de faille apparaissant d'un rift.
 
+config.midnight.compatibility.thaumcraft=Active Thaumcraft
+config.midnight.compatibility.thaumcraft.tooltip=Active certaines compatibilités avec le mod Thaumcraft.
+
 status.midnight.rift_nearby=Vous ne pouvez pas rester ici pour l'instant, il y a une présence démoniaque à proximitée
 status.midnight.snapped=Le poisson t'a mordu
 

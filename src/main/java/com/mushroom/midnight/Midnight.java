@@ -9,6 +9,9 @@ import com.mushroom.midnight.common.capability.MultiLayerBiomeSampler;
 import com.mushroom.midnight.common.capability.NullStorage;
 import com.mushroom.midnight.common.capability.RiftTravelCooldown;
 import com.mushroom.midnight.common.capability.RifterCapturable;
+import com.mushroom.midnight.common.compatibility.CompatibilityThaumcraft;
+import com.mushroom.midnight.common.compatibility.SupportMods;
+import com.mushroom.midnight.common.config.MidnightConfig;
 import com.mushroom.midnight.common.loot.InBiomeLootCondition;
 import com.mushroom.midnight.common.loot.InBlockLootCondition;
 import com.mushroom.midnight.common.loot.IsChildLootCondition;
@@ -38,6 +41,7 @@ import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.passive.EntityAmbientCreature;
 import net.minecraft.world.storage.loot.conditions.LootConditionManager;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.common.capabilities.CapabilityManager;
@@ -143,6 +147,10 @@ public class Midnight {
 
         NetworkRegistry.INSTANCE.registerGuiHandler(instance, new GuiHandler());
         proxy.onInit();
+
+        if (MidnightConfig.compatibility.thaumcraft && SupportMods.THAUMCRAFT.isLoaded()) {
+            MinecraftForge.EVENT_BUS.register(CompatibilityThaumcraft.instance);
+        }
     }
 
     @Mod.EventHandler
