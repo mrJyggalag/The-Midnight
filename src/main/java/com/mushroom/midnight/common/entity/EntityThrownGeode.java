@@ -25,6 +25,10 @@ public class EntityThrownGeode extends EntityThrowable {
         super(world);
     }
 
+    public EntityThrownGeode(World world, double x, double y, double z) {
+        super(world, x, y, z);
+    }
+
     public EntityThrownGeode(World world, EntityLivingBase thrower) {
         super(world, thrower);
     }
