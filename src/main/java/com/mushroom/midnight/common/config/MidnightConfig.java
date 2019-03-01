@@ -21,11 +21,6 @@ public class MidnightConfig {
     @Config.Comment("All the options that can be modified by players on server.")
     public static CatClient client = new CatClient();
 
-    @Config.Name("compatibility")
-    @Config.LangKey("config_cat.midnight.compatibility")
-    @Config.Comment("All the options related to compatibilities between mods.")
-    public static CatCompatibility compatibility = new CatCompatibility();
-
     public static class CatGeneral {
         @Config.Name("midnight_dimension_id")
         @Config.LangKey("config.midnight.midnight_dimension_id")
@@ -78,13 +73,6 @@ public class MidnightConfig {
         @Config.LangKey("config.midnight.rift_shaders")
         @Config.Comment("If true, rifts will be rendered with custom shaders for standard effects. If false, a simpler texture will be rendered.")
         public boolean riftShaders = true;
-    }
-
-    public static class CatCompatibility {
-        @Config.Name("thaumcraft")
-        @Config.LangKey("config.midnight.compatibility.thaumcraft")
-        @Config.Comment("Enable some compatibilities with the mod Thaumcraft.")
-        public boolean thaumcraft = true;
     }
 
     @SubscribeEvent

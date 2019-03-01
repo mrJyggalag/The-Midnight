@@ -11,7 +11,6 @@ import com.mushroom.midnight.common.capability.RiftTravelCooldown;
 import com.mushroom.midnight.common.capability.RifterCapturable;
 import com.mushroom.midnight.common.compatibility.CompatibilityThaumcraft;
 import com.mushroom.midnight.common.compatibility.SupportMods;
-import com.mushroom.midnight.common.config.MidnightConfig;
 import com.mushroom.midnight.common.loot.InBiomeLootCondition;
 import com.mushroom.midnight.common.loot.InBlockLootCondition;
 import com.mushroom.midnight.common.loot.IsChildLootCondition;
@@ -148,7 +147,7 @@ public class Midnight {
         NetworkRegistry.INSTANCE.registerGuiHandler(instance, new GuiHandler());
         proxy.onInit();
 
-        if (MidnightConfig.compatibility.thaumcraft && SupportMods.THAUMCRAFT.isLoaded()) {
+        if (SupportMods.THAUMCRAFT.isLoaded()) {
             MinecraftForge.EVENT_BUS.register(CompatibilityThaumcraft.instance);
         }
     }

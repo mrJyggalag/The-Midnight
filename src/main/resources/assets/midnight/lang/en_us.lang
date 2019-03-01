@@ -346,9 +346,6 @@ config.midnight.rifter_spawn_rarity.tooltip=The rarity that rifts spawn rifters.
 config.midnight.max_rifter_by_rift=Maximum rifters by rift
 config.midnight.max_rifter_by_rift.tooltip=The maximum of rifters spawning from a rift.
 
-config.midnight.compatibility.thaumcraft=Enable Thaumcraft
-config.midnight.compatibility.thaumcraft.tooltip=Enable some compatibilities with the mod Thaumcraft.
-
 status.midnight.rift_nearby=You may not rest now, there is an evil presence nearby
 status.midnight.snapped=The fish snapped at you
 
