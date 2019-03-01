@@ -7,10 +7,12 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.projectile.EntityThrowable;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
@@ -60,7 +62,9 @@ public class EntityThrownGeode extends EntityThrowable {
         }
 
         if (!this.world.isRemote) {
-            IBlockState impactedState = this.world.getBlockState(result.getBlockPos());
+            BlockPos impactedPos = result.getBlockPos();
+            IBlockState impactedState = impactedPos != null ? this.world.getBlockState(impactedPos) : Blocks.AIR.getDefaultState();
+
             if (this.canBreakOn(impactedState)) {
                 this.entityDropItem(this.getBrokenStack(), 0.1F);
                 this.world.setEntityState(this, POPPED_STATE_ID);
@@ -77,7 +81,6 @@ public class EntityThrownGeode extends EntityThrowable {
     }
 
     private boolean canBreakOn(IBlockState state) {
-        // TODO: Migrate to tags with 1.13
         return state.getMaterial() == Material.ROCK || state.getMaterial() == Material.IRON;
     }
 }

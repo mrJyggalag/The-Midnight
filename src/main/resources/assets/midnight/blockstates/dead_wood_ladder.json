@@ -1,7 +1,7 @@
 {
   "forge_marker": 1,
   "defaults": {
-    "model": "ladder",
+    "model": "midnight:ladder",
     "textures": {
       "texture": "midnight:blocks/dead_wood_ladder"
     }
