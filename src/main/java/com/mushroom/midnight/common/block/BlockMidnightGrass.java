@@ -7,6 +7,7 @@ import com.mushroom.midnight.common.registry.ModTabs;
 import net.minecraft.block.Block;
 import net.minecraft.block.IGrowable;
 import net.minecraft.block.SoundType;
+import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.Item;
@@ -23,7 +24,7 @@ import java.util.Random;
 
 public class BlockMidnightGrass extends Block implements IGrowable, IModelProvider {
     public BlockMidnightGrass() {
-        super(Material.GRASS);
+        super(Material.GRASS, MapColor.MAGENTA_STAINED_HARDENED_CLAY);
         this.setHardness(0.6F);
         this.setSoundType(SoundType.PLANT);
         this.setTickRandomly(true);

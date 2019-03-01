@@ -5,6 +5,7 @@ import com.mushroom.midnight.common.registry.ModTabs;
 import com.mushroom.midnight.common.util.DirectionalBounds;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
+import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.state.BlockFaceShape;
@@ -30,7 +31,7 @@ public class BlockMidnightFungiShelf extends Block implements IModelProvider {
     private static final AxisAlignedBB VERTICAL_BOUNDS = new AxisAlignedBB(0.0625, 0.0, 0.0625, 0.9375, 0.4, 0.9375);
 
     public BlockMidnightFungiShelf() {
-        super(Material.PLANTS);
+        super(Material.PLANTS, MapColor.PURPLE_STAINED_HARDENED_CLAY);
         this.setHardness(0.0F);
         this.setSoundType(SoundType.PLANT);
         this.setCreativeTab(ModTabs.DECORATION_TAB);

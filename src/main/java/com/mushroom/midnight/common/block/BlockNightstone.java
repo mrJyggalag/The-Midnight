@@ -14,7 +14,7 @@ import net.minecraftforge.common.IPlantable;
 
 public class BlockNightstone extends Block implements IModelProvider {
     public BlockNightstone() {
-        super(Material.ROCK, MapColor.MAGENTA_STAINED_HARDENED_CLAY);
+        super(Material.ROCK, MapColor.BLUE_STAINED_HARDENED_CLAY);
         this.setHardness(1.5F);
         this.setResistance(10.0F);
         this.setSoundType(SoundType.STONE);

@@ -7,6 +7,7 @@ import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
+import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.IBlockAccess;
@@ -30,6 +31,8 @@ public class BlockDarkWater extends BlockMixableFluid implements IModelProvider 
     protected IBlockState getMixState(IBlockState otherState) {
         if (otherState.getMaterial() == Material.LAVA) {
             return ModBlocks.TRENCHSTONE.getDefaultState();
+        } else if (otherState.getBlock() != this && otherState.getMaterial() == Material.WATER) {
+            return Blocks.AIR.getDefaultState();
         }
         return null;
     }
@@ -37,6 +40,6 @@ public class BlockDarkWater extends BlockMixableFluid implements IModelProvider 
     @Override
     @SuppressWarnings("deprecation")
     public MapColor getMapColor(IBlockState state, IBlockAccess world, BlockPos pos) {
-        return MapColor.LIGHT_BLUE_STAINED_HARDENED_CLAY;
+        return MapColor.BLUE;
     }
 }

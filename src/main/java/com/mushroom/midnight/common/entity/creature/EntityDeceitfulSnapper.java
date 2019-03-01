@@ -1,7 +1,7 @@
 package com.mushroom.midnight.common.entity.creature;
 
-import com.mushroom.midnight.common.registry.ModBlocks;
 import com.mushroom.midnight.common.registry.ModLootTables;
+import net.minecraft.block.material.Material;
 import net.minecraft.entity.passive.EntityWaterMob;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.pathfinding.PathNavigateSwimmer;
@@ -36,7 +36,7 @@ public class EntityDeceitfulSnapper extends EntityWaterMob {
         if (inWater) {
             if (spawnPosition == null || spawnPosition.distanceSq((double) (int) posX, (double) (int) posY, (double) (int) posZ) < 4d || rand.nextInt(30) == 0) {
                 spawnPosition = new BlockPos((int) posX + rand.nextInt(7) - rand.nextInt(7), (int) posY + rand.nextInt(4) - 1, (int) posZ + rand.nextInt(7) - rand.nextInt(7));
-                if (spawnPosition.getY() < 1 || (spawnPosition.getX() == (int) posX && spawnPosition.getZ() == (int) posZ) || world.getBlockState(spawnPosition).getBlock() != ModBlocks.DARK_WATER) {
+                if (spawnPosition.getY() < 1 || (spawnPosition.getX() == (int) posX && spawnPosition.getZ() == (int) posZ) || world.getBlockState(spawnPosition).getMaterial() != Material.WATER) {
                     spawnPosition = null;
                 }
             }

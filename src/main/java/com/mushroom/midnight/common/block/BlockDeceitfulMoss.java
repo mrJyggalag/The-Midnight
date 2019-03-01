@@ -6,6 +6,7 @@ import com.mushroom.midnight.common.util.DirectionalBounds;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDirectional;
 import net.minecraft.block.SoundType;
+import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockFaceShape;
@@ -31,7 +32,7 @@ public class BlockDeceitfulMoss extends Block implements IModelProvider {
     private static final DirectionalBounds BOUNDS = new DirectionalBounds(0.0, 0.0, 0.875, 1.0, 1.0, 1.0);
 
     public BlockDeceitfulMoss() {
-        super(Material.PLANTS);
+        super(Material.PLANTS, MapColor.PURPLE_STAINED_HARDENED_CLAY);
         this.setHardness(0.2F);
         this.setSoundType(SoundType.PLANT);
         this.setCreativeTab(ModTabs.DECORATION_TAB);

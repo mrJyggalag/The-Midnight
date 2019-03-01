@@ -7,6 +7,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockBush;
 import net.minecraft.block.BlockDoublePlant;
 import net.minecraft.block.SoundType;
+import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
@@ -40,7 +41,7 @@ public class BlockMidnightDoublePlant extends BlockBush implements IModelProvide
     private final boolean glowing;
 
     public BlockMidnightDoublePlant(PlantBehaviorType behaviorType, boolean glowing) {
-        super(Material.VINE);
+        super(Material.VINE, MapColor.PURPLE_STAINED_HARDENED_CLAY);
         this.behaviorType = behaviorType;
         this.glowing = glowing;
         if (this.glowing) {

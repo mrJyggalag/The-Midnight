@@ -2,6 +2,7 @@ package com.mushroom.midnight.common.block;
 
 import com.mushroom.midnight.common.helper.Helper;
 import com.mushroom.midnight.common.registry.ModBlocks;
+import net.minecraft.block.material.MapColor;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.Item;
 import net.minecraft.util.BlockRenderLayer;
@@ -69,5 +70,10 @@ public class BlockMidnightMycelium extends BlockNightstone {
             return source.getCombinedLight(pos, 0);
         }
         return source.getCombinedLight(pos, 10);
+    }
+
+    @Override
+    public MapColor getMapColor(IBlockState state, IBlockAccess worldIn, BlockPos pos) {
+        return MapColor.PINK;
     }
 }

@@ -4,6 +4,7 @@ import com.mushroom.midnight.client.IModelProvider;
 import com.mushroom.midnight.common.registry.ModSounds;
 import com.mushroom.midnight.common.registry.ModTabs;
 import net.minecraft.block.Block;
+import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
@@ -20,7 +21,7 @@ public class BlockDeceitfulMud extends Block implements IModelProvider {
     private static final AxisAlignedBB BOUNDS = new AxisAlignedBB(0.0, 0.0, 0.0, 1.0, 0.875, 1.0);
 
     public BlockDeceitfulMud() {
-        super(Material.GROUND);
+        super(Material.GROUND, MapColor.GRAY_STAINED_HARDENED_CLAY);
         this.setHardness(0.5F);
         this.setSoundType(ModSounds.MUD);
         this.setCreativeTab(ModTabs.BUILDING_TAB);

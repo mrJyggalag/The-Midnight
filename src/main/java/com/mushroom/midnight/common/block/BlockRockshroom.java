@@ -10,6 +10,7 @@ import com.mushroom.midnight.common.registry.ModTabs;
 import com.mushroom.midnight.common.util.MidnightDamageSource;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
+import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -35,7 +36,7 @@ public class BlockRockshroom extends Block implements IModelProvider {
     private static final DamageSource ROCKSHROOM_SPORE = new MidnightDamageSource("rockshroom_spore");
 
     public BlockRockshroom() {
-        super(Material.ROCK);
+        super(Material.ROCK, MapColor.PINK_STAINED_HARDENED_CLAY);
         this.setHardness(1.5F);
         this.setResistance(10.0F);
         this.setSoundType(SoundType.STONE);

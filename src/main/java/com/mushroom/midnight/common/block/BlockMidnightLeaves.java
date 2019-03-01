@@ -6,6 +6,7 @@ import com.mushroom.midnight.common.registry.ModTabs;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLeaves;
 import net.minecraft.block.BlockPlanks;
+import net.minecraft.block.material.MapColor;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
@@ -96,5 +97,10 @@ public class BlockMidnightLeaves extends BlockLeaves implements IModelProvider {
     @Override
     public int getFlammability(IBlockAccess world, BlockPos pos, EnumFacing face) {
         return 60;
+    }
+
+    @Override
+    public MapColor getMapColor(IBlockState state, IBlockAccess worldIn, BlockPos pos) {
+        return MapColor.GRAY_STAINED_HARDENED_CLAY;
     }
 }

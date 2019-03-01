@@ -5,6 +5,7 @@ import com.mushroom.midnight.common.registry.ModBlocks;
 import com.mushroom.midnight.common.registry.ModTabs;
 import net.minecraft.block.BlockBush;
 import net.minecraft.block.SoundType;
+import net.minecraft.block.material.MapColor;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
@@ -31,7 +32,7 @@ public class BlockMidnightPlant extends BlockBush implements IModelProvider, ISh
     private final boolean glowing;
 
     public BlockMidnightPlant(PlantBehaviorType behaviorType, boolean glowing) {
-        super(behaviorType.getMaterial());
+        super(behaviorType.getMaterial(), MapColor.PURPLE_STAINED_HARDENED_CLAY);
         this.behaviorType = behaviorType;
         this.glowing = glowing;
         if (this.glowing) {
