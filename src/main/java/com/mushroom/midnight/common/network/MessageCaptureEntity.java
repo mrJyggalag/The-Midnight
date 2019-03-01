@@ -1,9 +1,8 @@
 package com.mushroom.midnight.common.network;
 
+import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.common.entity.creature.EntityRifter;
 import io.netty.buffer.ByteBuf;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.world.World;
@@ -41,9 +40,9 @@ public class MessageCaptureEntity implements IMessage {
         @Override
         public IMessage onMessage(MessageCaptureEntity message, MessageContext ctx) {
             if (ctx.side.isClient()) {
-                Minecraft.getMinecraft().addScheduledTask(() -> {
-                    EntityRifter rifterEntity = getEntity(Minecraft.getMinecraft().world, message.rifterId, EntityRifter.class);
-                    EntityLivingBase capturedEntity = getEntity(Minecraft.getMinecraft().world, message.capturedId, EntityLivingBase.class);
+                Midnight.proxy.handleMessage(ctx, player -> {
+                    EntityRifter rifterEntity = getEntity(player.world, message.rifterId, EntityRifter.class);
+                    EntityLivingBase capturedEntity = getEntity(player.world, message.capturedId, EntityLivingBase.class);
                     if (rifterEntity != null) {
                         rifterEntity.setCapturedEntity(capturedEntity);
                     }
@@ -52,12 +51,11 @@ public class MessageCaptureEntity implements IMessage {
             return null;
         }
 
-        @SuppressWarnings("unchecked")
         @SideOnly(Side.CLIENT)
-        private static <T> T getEntity(WorldClient world, int id, Class<T> type) {
+        private static <T> T getEntity(World world, int id, Class<T> type) {
             Entity entity = world.getEntityByID(id);
             if (entity != null && type.isAssignableFrom(entity.getClass())) {
-                return (T) entity;
+                return type.cast(entity);
             }
             return null;
         }

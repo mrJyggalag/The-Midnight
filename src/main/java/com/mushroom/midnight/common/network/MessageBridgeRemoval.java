@@ -1,8 +1,8 @@
 package com.mushroom.midnight.common.network;
 
+import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.common.world.GlobalBridgeManager;
 import io.netty.buffer.ByteBuf;
-import net.minecraft.client.Minecraft;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
@@ -31,7 +31,7 @@ public class MessageBridgeRemoval implements IMessage {
         @Override
         public IMessage onMessage(MessageBridgeRemoval message, MessageContext ctx) {
             if (ctx.side.isClient()) {
-                Minecraft.getMinecraft().addScheduledTask(() -> GlobalBridgeManager.getClient().removeBridge(message.handlerId));
+                Midnight.proxy.handleMessage(ctx, player -> GlobalBridgeManager.getClient().removeBridge(message.handlerId));
             }
             return null;
         }

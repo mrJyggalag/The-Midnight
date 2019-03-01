@@ -4,7 +4,6 @@ import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.common.capability.AnimationCapability;
 import com.mushroom.midnight.common.capability.AnimationCapability.AnimationType;
 import io.netty.buffer.ByteBuf;
-import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
@@ -41,8 +40,8 @@ public class MessageAnimation implements IMessage {
         @Override
         public IMessage onMessage(MessageAnimation message, MessageContext ctx) {
             if (ctx.side.isClient()) {
-                Minecraft.getMinecraft().addScheduledTask(() -> {
-                    Entity entity = Minecraft.getMinecraft().world.getEntityByID(message.entityId);
+                Midnight.proxy.handleMessage(ctx, player -> {
+                    Entity entity = player.world.getEntityByID(message.entityId);
                     if (entity != null) {
                         AnimationCapability animationCap = entity.getCapability(Midnight.ANIMATION_CAP, null);
                         if (animationCap != null) {
