@@ -144,5 +144,26 @@
     "sounds": [
       "midnight:entity/crystal_bug_hurt_1"
     ]
+  },
+  "midnight.nova_death": {
+    "category": "hostile",
+    "sounds": [
+      "midnight:entity/nova_death"
+    ]
+  },
+  "midnight.nova_hurt": {
+    "category": "hostile",
+    "sounds": [
+      "midnight:entity/nova_hurt1",
+      "midnight:entity/nova_hurt2",
+      "midnight:entity/nova_hurt3"
+    ]
+  },
+  "midnight.nova_idle": {
+    "category": "hostile",
+    "sounds": [
+      "midnight:entity/nova_idle1",
+      "midnight:entity/nova_idle2"
+    ]
   }
 }
