@@ -32,11 +32,13 @@ public class ItemUnstableFruit extends ItemFoodBasic {
 
     @Override
     protected void onFoodEaten(ItemStack stack, World world, EntityPlayer player) {
-        if (world.rand.nextFloat() < this.fruitColor.poisonChance) {
-            player.addPotionEffect(new PotionEffect(MobEffects.POISON, 200, this.fruitColor.ordinal(), false, true));
-        }
-        if (world.rand.nextFloat() < this.fruitColor.levitationChance) {
-            player.addPotionEffect(new PotionEffect(MobEffects.LEVITATION, 200, this.fruitColor.ordinal(), false, true));
+        if (!world.isRemote) {
+            if (world.rand.nextFloat() < this.fruitColor.poisonChance) {
+                player.addPotionEffect(new PotionEffect(MobEffects.POISON, 200, this.fruitColor.ordinal(), false, true));
+            }
+            if (world.rand.nextFloat() < this.fruitColor.levitationChance) {
+                player.addPotionEffect(new PotionEffect(MobEffects.LEVITATION, 200, this.fruitColor.ordinal(), false, true));
+            }
         }
     }
 }
