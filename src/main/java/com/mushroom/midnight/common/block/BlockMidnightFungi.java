@@ -29,11 +29,6 @@ public class BlockMidnightFungi extends BlockMidnightPlant implements IGrowable 
     }
 
     @Override
-    public boolean canBlockStay(World world, BlockPos pos, IBlockState state) {
-        return canSustainBush(world.getBlockState(pos.down()));
-    }
-
-    @Override
     public boolean isReplaceable(IBlockAccess world, BlockPos pos) {
         return true;
     }

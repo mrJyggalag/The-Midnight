@@ -1,7 +1,6 @@
 package com.mushroom.midnight.common.block;
 
 import com.mushroom.midnight.common.config.MidnightConfig;
-import com.mushroom.midnight.common.registry.ModBlocks;
 import com.mushroom.midnight.common.registry.ModItems;
 import com.mushroom.midnight.common.util.MidnightDamageSource;
 import net.minecraft.block.IGrowable;
@@ -52,7 +51,7 @@ public class BlockBladeshroom extends BlockMidnightPlant implements IGrowable {
 
     @Override
     protected boolean canSustainBush(IBlockState state) {
-        return super.canSustainBush(state) || state.getBlock() == ModBlocks.NIGHTSTONE;
+        return state.isBlockNormalCube();
     }
 
     @Override

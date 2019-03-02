@@ -64,12 +64,12 @@ public class BlockMidnightDoublePlant extends BlockBush implements IModelProvide
 
     @Override
     protected boolean canSustainBush(IBlockState state) {
-        return state.getBlock() == ModBlocks.MIDNIGHT_DIRT || state.getBlock() == ModBlocks.MIDNIGHT_GRASS || state.getBlock() == ModBlocks.MIDNIGHT_MYCELIUM;
+        return state.getBlock() == ModBlocks.MIDNIGHT_DIRT || state.getBlock() == ModBlocks.MIDNIGHT_GRASS || state.getBlock() == ModBlocks.MIDNIGHT_MYCELIUM || state.getBlock() == ModBlocks.NIGHTSTONE || super.canSustainBush(state);
     }
 
     @Override
     public boolean canPlaceBlockAt(World world, BlockPos pos) {
-        return super.canPlaceBlockAt(world, pos) && world.isAirBlock(pos.up());
+        return canSustainBush(world.getBlockState(pos.down())) && world.isAirBlock(pos.up()) && world.getBlockState(pos).getBlock().isReplaceable(world, pos);
     }
 
     @Override
@@ -90,14 +90,14 @@ public class BlockMidnightDoublePlant extends BlockBush implements IModelProvide
     @Override
     public boolean canBlockStay(World world, BlockPos pos, IBlockState state) {
         if (state.getBlock() != this) {
-            return super.canBlockStay(world, pos, state);
+            return canSustainBush(world.getBlockState(pos.down()));
         }
         BlockPos otherPos = this.getOtherPos(state, pos);
         IBlockState otherState = world.getBlockState(otherPos);
         if (otherState.getBlock() != this) {
             return false;
         }
-        return this.isUpper(state) || super.canBlockStay(world, pos, otherState);
+        return this.isUpper(state) || canSustainBush(world.getBlockState(pos.down()));
     }
 
     private BlockPos getUpperPos(IBlockState state, BlockPos pos) {

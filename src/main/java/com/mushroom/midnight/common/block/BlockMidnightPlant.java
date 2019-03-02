@@ -16,6 +16,7 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
+import net.minecraft.world.World;
 import net.minecraftforge.client.MinecraftForgeClient;
 import net.minecraftforge.common.IShearable;
 import net.minecraftforge.fml.relauncher.Side;
@@ -54,7 +55,12 @@ public class BlockMidnightPlant extends BlockBush implements IModelProvider, ISh
 
     @Override
     protected boolean canSustainBush(IBlockState state) {
-        return state.getBlock() == ModBlocks.MIDNIGHT_DIRT || state.getBlock() == ModBlocks.MIDNIGHT_GRASS || state.getBlock() == ModBlocks.MIDNIGHT_MYCELIUM || state.getBlock() == ModBlocks.NIGHTSTONE;
+        return state.getBlock() == ModBlocks.MIDNIGHT_DIRT || state.getBlock() == ModBlocks.MIDNIGHT_GRASS || state.getBlock() == ModBlocks.MIDNIGHT_MYCELIUM || state.getBlock() == ModBlocks.NIGHTSTONE || super.canSustainBush(state);
+    }
+
+    @Override
+    public boolean canBlockStay(World world, BlockPos pos, IBlockState state) {
+        return canSustainBush(world.getBlockState(pos.down()));
     }
 
     @Override
