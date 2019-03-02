@@ -5,7 +5,9 @@
 			"midnight:dewshroom_door",
 			"midnight:dewshroom_slab",
 			"midnight:dewshroom_stairs",
-			"midnight:dewshroom_trapdoor"
+			"midnight:dewshroom_trapdoor",
+			"midnight:shadowroot_chest",
+			"midnight:shadowroot_crafting_table"
 		]
 	},
 	"criteria": {

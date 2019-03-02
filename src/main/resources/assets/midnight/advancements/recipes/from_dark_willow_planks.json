@@ -5,7 +5,9 @@
 			"midnight:dark_willow_door",
 			"midnight:dark_willow_slab",
 			"midnight:dark_willow_stairs",
-			"midnight:dark_willow_trapdoor"
+			"midnight:dark_willow_trapdoor",
+			"midnight:shadowroot_chest",
+			"midnight:shadowroot_crafting_table"	
 		]
 	},
 	"criteria": {
