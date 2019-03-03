@@ -4,7 +4,6 @@ import com.mushroom.midnight.common.block.BlockMidnightChest;
 import com.mushroom.midnight.common.block.BlockMidnightChest.ChestModel;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockChest;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.init.SoundEvents;
@@ -24,6 +23,8 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
@@ -67,6 +68,11 @@ public class TileEntityMidnightChest extends TileEntityLockableLoot implements I
     @Override
     public String getName() {
         return hasCustomName() ? customName : "tile.midnight." + chestModel.getName() + "_chest.name";
+    }
+
+    @SideOnly(Side.CLIENT)
+    public AxisAlignedBB getRenderBoundingBox() {
+        return new AxisAlignedBB(pos.add(-1, 0, -1), pos.add(2, 2, 2));
     }
 
     protected boolean isChestAt(BlockPos posIn) {
