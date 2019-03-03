@@ -6,8 +6,8 @@
 			"midnight:viridshroom_slab",
 			"midnight:viridshroom_stairs",
 			"midnight:viridshroom_trapdoor",
-			"midnight:shadowroot_chest",
-			"midnight:shadowroot_crafting_table"
+			"midnight:viridshroom_chest",
+			"midnight:viridshroom_crafting_table"
 		]
 	},
 	"criteria": {

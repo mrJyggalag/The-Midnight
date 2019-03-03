@@ -1,0 +1,20 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "cube",
+    "textures": {
+      "all": "midnight:blocks/dark_willow_crafting_table_front",
+      "particle": "midnight:blocks/dark_willow_crafting_table_front",
+      "down": "midnight:blocks/dark_willow_planks",
+      "up": "midnight:blocks/dark_willow_crafting_table_top",
+      "north": "midnight:blocks/dark_willow_crafting_table_front",
+      "east": "midnight:blocks/dark_willow_crafting_table_side",
+      "south": "midnight:blocks/dark_willow_crafting_table_side",
+      "west": "midnight:blocks/dark_willow_crafting_table_front"
+    }
+  },
+  "variants": {
+    "normal": [{}],
+    "inventory": [{}]
+  }
+}

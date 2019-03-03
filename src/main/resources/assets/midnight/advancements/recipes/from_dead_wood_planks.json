@@ -6,8 +6,8 @@
 			"midnight:dead_wood_slab",
 			"midnight:dead_wood_stairs",
 			"midnight:dead_wood_trapdoor",
-			"midnight:shadowroot_chest",
-			"midnight:shadowroot_crafting_table"
+			"midnight:dead_wood_chest",
+			"midnight:dead_wood_crafting_table"
 		]
 	},
 	"criteria": {
