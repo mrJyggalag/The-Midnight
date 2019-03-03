@@ -1,8 +1,8 @@
 package com.mushroom.midnight.client;
 
 import com.mushroom.midnight.client.model.ModModelRegistry;
-import com.mushroom.midnight.client.render.TileShadowrootChestRenderer;
-import com.mushroom.midnight.common.tile.base.TileEntityShadowrootChest;
+import com.mushroom.midnight.client.render.TESRMidnightChestRenderer;
+import com.mushroom.midnight.common.tile.base.TileEntityMidnightChest;
 import com.mushroom.midnight.common.util.IProxy;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
@@ -22,7 +22,7 @@ public class ClientProxy implements IProxy {
     @Override
     public void onInit() {
         ModModelRegistry.onInit();
-        ClientRegistry.bindTileEntitySpecialRenderer(TileEntityShadowrootChest.class, new TileShadowrootChestRenderer());
+        ClientRegistry.bindTileEntitySpecialRenderer(TileEntityMidnightChest.class, new TESRMidnightChestRenderer());
     }
 
     @Override

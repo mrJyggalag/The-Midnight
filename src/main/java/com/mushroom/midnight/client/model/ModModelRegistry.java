@@ -15,7 +15,8 @@ import com.mushroom.midnight.client.render.RenderSkulk;
 import com.mushroom.midnight.client.render.RenderStinger;
 import com.mushroom.midnight.client.render.RenderTreeHopper;
 import com.mushroom.midnight.client.render.TEISRShield;
-import com.mushroom.midnight.common.block.BlockShadowrootChest;
+import com.mushroom.midnight.common.block.BlockMidnightChest;
+import com.mushroom.midnight.common.block.BlockMidnightChest.ChestModel;
 import com.mushroom.midnight.common.entity.EntityBladeshroomCap;
 import com.mushroom.midnight.common.entity.EntityRift;
 import com.mushroom.midnight.common.entity.EntityThrownGeode;
@@ -32,7 +33,7 @@ import com.mushroom.midnight.common.entity.creature.EntityTreeHopper;
 import com.mushroom.midnight.common.helper.Helper;
 import com.mushroom.midnight.common.registry.ModBlocks;
 import com.mushroom.midnight.common.registry.ModItems;
-import com.mushroom.midnight.common.tile.base.TileEntityShadowrootChest;
+import com.mushroom.midnight.common.tile.base.TileEntityMidnightChest;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import net.minecraft.block.Block;
@@ -135,9 +136,9 @@ public class ModModelRegistry {
         ModelLoader.setCustomStateMapper(ModBlocks.VIRIDSHROOM_FENCE_GATE, new StateMap.Builder().ignore(BlockFenceGate.POWERED).build());
         ModelLoader.setCustomStateMapper(ModBlocks.NIGHTSHROOM_FENCE_GATE, new StateMap.Builder().ignore(BlockFenceGate.POWERED).build());
 
-        ModelLoader.setCustomStateMapper(ModBlocks.SHADOWROOT_CHEST, new StateMap.Builder().ignore(BlockShadowrootChest.FACING).build());
+        ModelLoader.setCustomStateMapper(ModBlocks.SHADOWROOT_CHEST, new StateMap.Builder().ignore(BlockMidnightChest.FACING).build());
 
-        TileEntityShadowrootChest shadowrootChest = new TileEntityShadowrootChest();
+        TileEntityMidnightChest shadowrootChest = new TileEntityMidnightChest(ChestModel.SHADOWROOT);
         Item.getItemFromBlock(ModBlocks.SHADOWROOT_CHEST).setTileEntityItemStackRenderer(new TileEntityItemStackRenderer() {
             @Override
             public void renderByItem(ItemStack stack) {

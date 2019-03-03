@@ -15,6 +15,7 @@ import com.mushroom.midnight.common.block.BlockDeceitfulMoss;
 import com.mushroom.midnight.common.block.BlockDeceitfulMud;
 import com.mushroom.midnight.common.block.BlockBulbFungusStem;
 import com.mushroom.midnight.common.block.BlockLumenBud;
+import com.mushroom.midnight.common.block.BlockMidnightChest.ChestModel;
 import com.mushroom.midnight.common.block.BlockMidnightDoubleFungi;
 import com.mushroom.midnight.common.block.BlockMidnightDoublePlant;
 import com.mushroom.midnight.common.block.BlockDragonNest;
@@ -52,7 +53,7 @@ import com.mushroom.midnight.common.block.BlockMidnightWoodPlank;
 import com.mushroom.midnight.common.block.BlockMushroomInside;
 import com.mushroom.midnight.common.block.BlockNightstone;
 import com.mushroom.midnight.common.block.BlockRockshroom;
-import com.mushroom.midnight.common.block.BlockShadowrootChest;
+import com.mushroom.midnight.common.block.BlockMidnightChest;
 import com.mushroom.midnight.common.block.BlockShadowrootCraftingTable;
 import com.mushroom.midnight.common.block.BlockSporch;
 import com.mushroom.midnight.common.block.BlockStingerEgg;
@@ -64,8 +65,8 @@ import com.mushroom.midnight.common.block.BlockVioleaf;
 import com.mushroom.midnight.common.block.PlantBehaviorType;
 import com.mushroom.midnight.common.item.ItemDeceitfulAlgae;
 import com.mushroom.midnight.common.item.ItemMidnightSlab;
+import com.mushroom.midnight.common.tile.base.TileEntityMidnightChest;
 import com.mushroom.midnight.common.tile.base.TileEntityMidnightFurnace;
-import com.mushroom.midnight.common.tile.base.TileEntityShadowrootChest;
 import com.mushroom.midnight.common.world.feature.LargeBogshroomFeature;
 import com.mushroom.midnight.common.world.feature.DarkWillowTreeFeature;
 import com.mushroom.midnight.common.world.feature.LargeBulbFungusFeature;
@@ -458,7 +459,7 @@ public class ModBlocks {
                 RegUtil.withName(new BlockMidnightTrapDoor(), "dewshroom_trapdoor"),
                 RegUtil.withName(new BlockMidnightTrapDoor(), "viridshroom_trapdoor"),
                 RegUtil.withName(new BlockShadowrootCraftingTable(), "shadowroot_crafting_table"),
-                RegUtil.withName(new BlockShadowrootChest(), "shadowroot_chest"),
+                RegUtil.withName(new BlockMidnightChest(ChestModel.SHADOWROOT), "shadowroot_chest"),
                 RegUtil.withName(new BlockMidnightFurnace(false), "midnight_furnace"),
                 RegUtil.withName(new BlockMidnightFurnace(true), "midnight_furnace_lit"),
                 RegUtil.withName(new BlockMidnightSlab(() -> SHADOWROOT_PLANKS.getDefaultState()), "shadowroot_slab"),
@@ -526,7 +527,7 @@ public class ModBlocks {
 
         blocks.forEach(event.getRegistry()::register);
 
-        registerTile(TileEntityShadowrootChest.class, "tile_shadowroot_chest");
+        registerTile(TileEntityMidnightChest.class, "tile_shadowroot_chest");
         registerTile(TileEntityMidnightFurnace.class, "tile_midnight_furnace");
     }
 
