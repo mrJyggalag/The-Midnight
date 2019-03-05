@@ -1,5 +1,6 @@
 package com.mushroom.midnight.common.item;
 
+import com.mushroom.midnight.common.registry.ModEffects;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;
@@ -22,6 +23,7 @@ public class ItemUnstableFruit extends ItemFoodBasic {
     public ItemUnstableFruit(FruitColor fruitColor) {
         super(1, 0.3f, false);
         this.fruitColor = fruitColor;
+        setAlwaysEdible();
     }
 
     @Override
@@ -38,6 +40,7 @@ public class ItemUnstableFruit extends ItemFoodBasic {
             }
             if (world.rand.nextFloat() < this.fruitColor.levitationChance) {
                 player.addPotionEffect(new PotionEffect(MobEffects.LEVITATION, 200, this.fruitColor.ordinal(), false, true));
+                player.addPotionEffect(new PotionEffect(ModEffects.SLOWFALL, 400, 0, false, true));
             }
         }
     }

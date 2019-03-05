@@ -4,6 +4,7 @@ import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.common.effect.DragonGuardEffect;
 import com.mushroom.midnight.common.effect.GenericEffect;
 import com.mushroom.midnight.common.effect.PollinatedEffect;
+import com.mushroom.midnight.common.effect.SlowfallEffect;
 import com.mushroom.midnight.common.effect.StunnedEffect;
 import com.mushroom.midnight.common.effect.TormentedEffect;
 import net.minecraft.init.MobEffects;
@@ -21,6 +22,7 @@ public class ModEffects {
     public static final Potion DRAGON_GUARD = MobEffects.FIRE_RESISTANCE;
     public static final Potion DARKNESS = MobEffects.BLINDNESS;
     public static final Potion TORMENTED = MobEffects.POISON;
+    public static final Potion SLOWFALL = MobEffects.JUMP_BOOST;
 
     @SubscribeEvent
     public static void onRegisterEffects(RegistryEvent.Register<Potion> event) {
@@ -29,7 +31,8 @@ public class ModEffects {
                 RegUtil.withName(new PollinatedEffect(), "pollinated").withIcon("pollinated"),
                 RegUtil.withName(new DragonGuardEffect(), "dragon_guard").withIcon("dragons_guard"),
                 RegUtil.withName(new GenericEffect(true, 0), "darkness").withIcon("darkness"),
-                RegUtil.withName(new TormentedEffect(), "tormented").withIcon("tormented")
+                RegUtil.withName(new TormentedEffect(), "tormented").withIcon("tormented"),
+                RegUtil.withName(new SlowfallEffect(), "slowfall").withIcon("thinking")
         );
     }
 }
