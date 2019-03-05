@@ -223,7 +223,8 @@ public class EntityNightStag extends EntityAnimal {
         this.tasks.addTask(5, new EntityTaskEatGrass(this, 40, false, FRUIT_PREDICATE) {
             @Override
             public boolean shouldExecute() {
-                return getPosition().equals(getHomePosition()) || super.shouldExecute();
+                BlockPos currentPos;
+                return super.shouldExecute() || ((currentPos = getPosition()).equals(getHomePosition()) && FRUIT_PREDICATE.test(world.getBlockState(currentPos)));
             }
 
             @Override
