@@ -9,6 +9,7 @@ import com.mushroom.midnight.common.entity.navigation.CustomPathNavigateGround;
 import com.mushroom.midnight.common.entity.task.EntityTaskCharge;
 import com.mushroom.midnight.common.entity.task.EntityTaskEatGrass;
 import com.mushroom.midnight.common.entity.task.EntityTaskNeutral;
+import com.mushroom.midnight.common.entity.task.EntityTaskSearchBlock;
 import com.mushroom.midnight.common.helper.Helper;
 import com.mushroom.midnight.common.item.ItemUnstableFruit;
 import com.mushroom.midnight.common.registry.ModBlocks;
@@ -62,6 +63,7 @@ import net.minecraftforge.common.util.Constants;
 
 import javax.annotation.Nullable;
 import java.util.UUID;
+import java.util.function.Predicate;
 
 import static com.mushroom.midnight.common.registry.ModLootTables.LOOT_TABLE_NIGHTSTAG;
 
@@ -70,6 +72,7 @@ public class EntityNightStag extends EntityAnimal {
     public static final int MAX_ANTLER_TYPE = 9;
     private static final AttributeModifier CHILD_ATTACK_MALUS = new AttributeModifier(UUID.fromString("c0f32cda-a4fd-4fe4-8b3f-15612ef9a52f"), "nightstag_child_attack_malus", -2d, 0);
     private static final int GROWING_TIME = -24000;
+    private static final Predicate<IBlockState> FRUIT_PREDICATE = p -> p.getBlock() instanceof BlockUnstableBushBloomed && p.getValue(BlockUnstableBushBloomed.HAS_FRUIT);
     private final AnimationCapability animCap = new AnimationCapability();
 
     public EntityNightStag(World world) {
@@ -216,10 +219,16 @@ public class EntityNightStag extends EntityAnimal {
             }
         });
         this.tasks.addTask(4, new EntityAIFollowParent(this, 1d));
-        this.tasks.addTask(5, new EntityTaskEatGrass(this, 40, false, p -> p.getBlock() instanceof BlockUnstableBushBloomed && p.getValue(BlockUnstableBushBloomed.HAS_FRUIT)) {
+        this.tasks.addTask(4, new EntityTaskSearchBlock(this, FRUIT_PREDICATE, 0.7d, 8, 200));
+        this.tasks.addTask(5, new EntityTaskEatGrass(this, 40, false, FRUIT_PREDICATE) {
+            @Override
+            public boolean shouldExecute() {
+                return getPosition().equals(getHomePosition()) || super.shouldExecute();
+            }
+
             @Override
             protected void eatPlant(IBlockState state, BlockPos pos) {
-                this.owner.world.setBlockState(pos, ModBlocks.UNSTABLE_BUSH.getDefaultState().withProperty(BlockUnstableBush.STAGE, 3), 2);
+                this.owner.world.setBlockState(pos, ModBlocks.UNSTABLE_BUSH.getDefaultState().withProperty(BlockUnstableBush.STAGE, BlockUnstableBush.MAX_STAGE), 2);
                 if (isChild()) {
                     setGrowingAge(Math.min(getGrowingAge() + 5000, 0));
                 }
@@ -315,8 +324,8 @@ public class EntityNightStag extends EntityAnimal {
     @Override
     public void onLivingUpdate() {
         super.onLivingUpdate();
-        animCap.updateAnimation();
-        if (!world.isRemote && isChild()) {
+        this.animCap.updateAnimation();
+        if (!this.world.isRemote && isChild()) {
             IAttributeInstance attackAttrib = getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE);
             if (!attackAttrib.hasModifier(CHILD_ATTACK_MALUS)) {
                 attackAttrib.applyModifier(CHILD_ATTACK_MALUS);
@@ -331,7 +340,7 @@ public class EntityNightStag extends EntityAnimal {
     @Nullable
     public <T> T getCapability(Capability<T> capability, @Nullable EnumFacing facing) {
         if (capability == Midnight.ANIMATION_CAP) {
-            return Midnight.ANIMATION_CAP.cast(animCap);
+            return Midnight.ANIMATION_CAP.cast(this.animCap);
         }
         return super.getCapability(capability, facing);
     }

@@ -27,8 +27,9 @@ public class EntityTaskEatGrass extends EntityAIBase {
         setMutexBits(7);
     }
 
+    @Override
     public boolean shouldExecute() {
-        capAnim = owner.getCapability(Midnight.ANIMATION_CAP, null);
+        this.capAnim = this.owner.getCapability(Midnight.ANIMATION_CAP, null);
         if (this.capAnim == null || this.owner.getRNG().nextInt(this.owner.isChild() ? 50 : 500) != 0) {
             return false;
         } else {
@@ -42,24 +43,28 @@ public class EntityTaskEatGrass extends EntityAIBase {
         }
     }
 
+    @Override
     public void startExecuting() {
-        capAnim.setAnimation(this.owner, AnimationCapability.AnimationType.EAT, this.duration);
+        this.capAnim.setAnimation(this.owner, AnimationCapability.AnimationType.EAT, this.duration);
         this.owner.getNavigator().clearPath();
     }
 
+    @Override
     public void resetTask() {
-        capAnim.resetAnimation(this.owner);
+        this.capAnim.resetAnimation(this.owner);
     }
 
+    @Override
     public boolean shouldContinueExecuting() {
-        return capAnim.getProgress(1f) < 1f;
+        return this.capAnim.getProgress(1f) < 1f;
     }
 
+    @Override
     public void updateTask() {
-        if (capAnim.getCurrentTick() == capAnim.getDuration() - 10) {
-            BlockPos currentPos = owner.getPosition();
+        if (this.capAnim.getCurrentTick() == this.capAnim.getDuration() - 10) {
+            BlockPos currentPos = this.owner.getPosition();
             IBlockState currentState = this.owner.world.getBlockState(currentPos);
-            if (eatPredicate.test(currentState)) {
+            if (this.eatPredicate.test(currentState)) {
                 if (ForgeEventFactory.getMobGriefingEvent(this.owner.world, this.owner)) {
                     eatPlant(currentState, currentPos);
                 }
