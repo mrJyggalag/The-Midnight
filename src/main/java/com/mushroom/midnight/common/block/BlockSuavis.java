@@ -36,6 +36,7 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeHooks;
@@ -93,6 +94,11 @@ public class BlockSuavis extends Block implements IModelProvider, IGrowable {
     @Override
     public Item getItemDropped(IBlockState state, Random rand, int fortune) {
         return ModItems.RAW_SUAVIS;
+    }
+
+    @Override
+    public ItemStack getPickBlock(IBlockState state, RayTraceResult target, World world, BlockPos pos, EntityPlayer player) {
+        return new ItemStack(ModItems.RAW_SUAVIS);
     }
 
     @Override
