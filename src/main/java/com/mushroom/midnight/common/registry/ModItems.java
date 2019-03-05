@@ -77,6 +77,7 @@ public class ModItems {
     public static final Item HUNTER_WING = Items.AIR;
     public static final Item COOK_HUNTER_WING = Items.AIR;
     public static final Item BULB_FUNGUS_HAND = Items.AIR;
+    public static final Item UNSTABLE_SEEDS = Items.AIR;
     public static final Item UNSTABLE_FRUIT_BLUE = Items.AIR;
     public static final Item UNSTABLE_FRUIT_LIME = Items.AIR;
     public static final Item UNSTABLE_FRUIT_GREEN = Items.AIR;
@@ -163,6 +164,7 @@ public class ModItems {
                 RegUtil.withName(new ItemFoodBasic(3, 0.6f, false), "hunter_wing"),
                 RegUtil.withName(new ItemFoodBasic(8, 1.4f, false), "cook_hunter_wing"),
                 RegUtil.withName(new ItemFoodBasic(1, 0.3f, false), "bulb_fungus_hand"),
+                RegUtil.withName(new ItemMidnightSeed(() -> ModBlocks.UNSTABLE_BUSH.getDefaultState()), "unstable_seeds"),
                 RegUtil.withName(new ItemUnstableFruit(ItemUnstableFruit.FruitColor.BLUE), "unstable_fruit_blue"),
                 RegUtil.withName(new ItemUnstableFruit(ItemUnstableFruit.FruitColor.LIME), "unstable_fruit_lime"),
                 RegUtil.withName(new ItemUnstableFruit(ItemUnstableFruit.FruitColor.GREEN), "unstable_fruit_green"),
@@ -220,6 +222,10 @@ public class ModItems {
         OreDictionary.registerOre("doorWood", SHADOWROOT_DOOR);
         OreDictionary.registerOre("doorWood", DARK_WILLOW_DOOR);
         OreDictionary.registerOre("doorWood", DEAD_WOOD_DOOR);
+
+        OreDictionary.registerOre("unstableFruit", UNSTABLE_FRUIT_BLUE);
+        OreDictionary.registerOre("unstableFruit", UNSTABLE_FRUIT_GREEN);
+        OreDictionary.registerOre("unstableFruit", UNSTABLE_FRUIT_LIME);
 
         ModArmorMaterials.ROCKSHROOM.setRepairItem(new ItemStack(ModItems.ROCKSHROOM_CLUMP));
         ModArmorMaterials.TENEBRUM.setRepairItem(new ItemStack(ModItems.TENEBRUM_INGOT));

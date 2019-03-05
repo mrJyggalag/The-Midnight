@@ -15,8 +15,10 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.fml.relauncher.Side;
@@ -25,10 +27,10 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import java.util.Random;
 import java.util.function.Supplier;
 
-@SuppressWarnings("deprecation")
 public class BlockUnstableBushBloomed extends BlockMidnightPlant implements IGrowable {
     public static final PropertyBool HAS_FRUIT = PropertyBool.create("has_fruit");
     private final Supplier<Item> fruitSupplier;
+    protected static final AxisAlignedBB BOUND = new AxisAlignedBB(0d, 0d, 0d, 1d, 1d, 1d);
 
     public BlockUnstableBushBloomed(Supplier<Item> fruitSupplier) {
         super(PlantBehaviorType.FLOWER, true);
@@ -46,7 +48,7 @@ public class BlockUnstableBushBloomed extends BlockMidnightPlant implements IGro
                     world.spawnEntity(entityitem);
                     entityitem.move(MoverType.SELF, (double) (world.rand.nextFloat() * 0.12f - 0.06f), -0.06f, (double) (world.rand.nextFloat() * 0.12f - 0.06f));
                 }
-                world.setBlockState(pos, ModBlocks.UNSTABLE_BUSH.getDefaultState().withProperty(BlockUnstableBush.STAGE, 3), 2);
+                world.setBlockState(pos, ModBlocks.UNSTABLE_BUSH.getDefaultState().withProperty(BlockUnstableBush.STAGE, BlockUnstableBush.MAX_STAGE), 2);
             }
             return true;
         }
@@ -59,6 +61,7 @@ public class BlockUnstableBushBloomed extends BlockMidnightPlant implements IGro
     }
 
     @Override
+    @SuppressWarnings("deprecation")
     public IBlockState getStateFromMeta(int meta) {
         return getDefaultState().withProperty(HAS_FRUIT, (meta & 1) == 1);
     }
@@ -69,6 +72,7 @@ public class BlockUnstableBushBloomed extends BlockMidnightPlant implements IGro
     }
 
     @Override
+    @SuppressWarnings("deprecation")
     public boolean canSilkHarvest() {
         return false;
     }
@@ -126,5 +130,10 @@ public class BlockUnstableBushBloomed extends BlockMidnightPlant implements IGro
         if (rand.nextInt(10) == 0) {
             MidnightParticles.UNSTABLE_BUSH.spawn(world, pos.getX() + 0.5d, pos.getY() + 0.5d, pos.getZ() + 0.5d, rand.nextFloat() * 0.1d - 0.05d, rand.nextFloat() * 0.03d, rand.nextFloat() * 0.1d - 0.05d, fruitType);
         }
+    }
+
+    @Override
+    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess world, BlockPos pos) {
+        return BOUND;
     }
 }

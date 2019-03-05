@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "type": "forge:ore_dict",
+      "ore": "unstableFruit"
+    }
+  ],
+  "result": {
+    "item": "midnight:unstable_seeds",
+    "count": 4
+  }
+}
