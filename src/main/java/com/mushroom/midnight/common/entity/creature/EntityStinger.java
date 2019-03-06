@@ -8,7 +8,6 @@ import com.mushroom.midnight.common.registry.ModLootTables;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityAgeable;
 import net.minecraft.entity.EnumCreatureAttribute;
 import net.minecraft.entity.IEntityLivingData;
 import net.minecraft.entity.SharedMonsterAttributes;
@@ -43,14 +42,50 @@ import net.minecraftforge.common.capabilities.Capability;
 import javax.annotation.Nullable;
 import java.util.UUID;
 
-public class EntityStinger extends EntityAgeable implements IMob {
+public class EntityStinger extends EntityGrowable implements IMob {
     private static final AttributeModifier CHILD_ATTACK_MALUS = new AttributeModifier(UUID.fromString("c02aca06-ecb7-447f-bcc7-1fef82fecdbd"), "stinger_child_attack_malus", -1d, 0);
-    private static final int GROWING_TIME = -1200;
     private final AnimationCapability animCap = new AnimationCapability();
 
     public EntityStinger(World worldIn) {
         super(worldIn);
         setSize(0.2f, 0.2f);
+    }
+
+    @Override
+    public int getMaxGrowingAge() {
+        return 5;
+    }
+
+    @Override
+    public int getGrowingTimeByAge() {
+        return 1200;
+    }
+
+    @Override
+    protected void onGrowingToAge(int age) {
+        float maxHealth = 10f + age * 4f;
+        getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(maxHealth);
+        setHealth(maxHealth);
+        IAttributeInstance attackAttrib = getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE);
+        boolean hasAttackmodifier = attackAttrib.hasModifier(CHILD_ATTACK_MALUS);
+        if (age < 0) {
+            if (!hasAttackmodifier) {
+                attackAttrib.applyModifier(CHILD_ATTACK_MALUS);
+            }
+        } else {
+            if (hasAttackmodifier) {
+                attackAttrib.removeModifier(CHILD_ATTACK_MALUS);
+            }
+            if (age != 0) {
+                getEntityAttribute(SharedMonsterAttributes.ARMOR).setBaseValue(getGrowingAge());
+            }
+        }
+    }
+
+    @Nullable
+    @Override
+    public EntityGrowable createChild(EntityGrowable growable) {
+        return null;
     }
 
     @Override
@@ -124,14 +159,14 @@ public class EntityStinger extends EntityAgeable implements IMob {
     protected void applyEntityAttributes() {
         super.applyEntityAttributes();
         getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.2d);
-        getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(12d);
+        getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(10d);
         getAttributeMap().registerAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(2d);
     }
 
     @Override
     public boolean attackEntityAsMob(Entity entity) {
         super.attackEntityAsMob(entity);
-        boolean flag = entity.attackEntityFrom(DamageSource.causeMobDamage(this), (float) getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).getAttributeValue());
+        boolean flag = entity.attackEntityFrom(DamageSource.causeMobDamage(this), (float) getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).getAttributeValue() + (isChild() ? 0f : getGrowingAge()));
         if (flag) {
             if (!isChild() && entity instanceof EntityPlayer) {
                 ((EntityPlayer) entity).addPotionEffect(new PotionEffect(MobEffects.WEAKNESS, 100, 0, false, true));
@@ -152,34 +187,18 @@ public class EntityStinger extends EntityAgeable implements IMob {
         return ModLootTables.LOOT_TABLE_STINGER;
     }
 
-    @Nullable
-    @Override
-    public EntityAgeable createChild(EntityAgeable ageable) {
-        return null;
-    }
-
     @Override
     @Nullable
     public IEntityLivingData onInitialSpawn(DifficultyInstance difficulty, @Nullable IEntityLivingData livingdata) {
         if (this.rand.nextInt(5) == 0) {
-            setGrowingAge(GROWING_TIME);
+            setGrowingAge(-1);
         }
         return livingdata;
     }
 
     @Override
-    protected void onGrowingAdult() {
-        IAttributeInstance attackAttrib = getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE);
-        if (attackAttrib.hasModifier(CHILD_ATTACK_MALUS)) {
-            attackAttrib.removeModifier(CHILD_ATTACK_MALUS);
-        }
-        getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(12d);
-        setHealth(12f);
-    }
-
-    @Override
     protected int getExperiencePoints(EntityPlayer player) {
-        return isChild() ? 3 : 5;
+        return 5 + getGrowingAge() * 2;
     }
 
     @Override
@@ -188,22 +207,9 @@ public class EntityStinger extends EntityAgeable implements IMob {
     }
 
     @Override
-    public void setScaleForAge(boolean child) {
-        setScale(child ? 1f : 1.5f);
-    }
-
-    @Override
     public void onLivingUpdate() {
         super.onLivingUpdate();
         animCap.updateAnimation();
-        if (!world.isRemote && isChild()) {
-            IAttributeInstance attackAttrib = getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE);
-            if (!attackAttrib.hasModifier(CHILD_ATTACK_MALUS)) {
-                attackAttrib.applyModifier(CHILD_ATTACK_MALUS);
-                getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(6d);
-                setHealth(6f);
-            }
-        }
     }
 
     @Override
