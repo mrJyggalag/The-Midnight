@@ -5,7 +5,7 @@
     "stage=0": [
       {
         "model": "crop",
-        "textures": {"crop": "blocks/potatoes_stage_0"}
+        "textures": {"crop": "blocks/unstable_seeds"}
       }
     ],
     "stage=1": [
