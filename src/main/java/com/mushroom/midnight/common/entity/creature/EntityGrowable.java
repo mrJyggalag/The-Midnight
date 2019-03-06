@@ -48,9 +48,7 @@ public abstract class EntityGrowable extends EntityCreature {
     public void setGrowingAge(int age) {
         this.dataManager.set(GROWING_AGE, age);
         this.growingTime = 0;
-        for (int i = 0 ; i <= age ; i++) {
-            onGrowingToAge(age);
-        }
+        onGrowingToAge(age);
         setScaleForAge(age);
     }
 

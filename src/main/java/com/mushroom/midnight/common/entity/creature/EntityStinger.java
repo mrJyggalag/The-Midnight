@@ -20,8 +20,6 @@ import net.minecraft.entity.ai.EntityAIPanic;
 import net.minecraft.entity.ai.EntityAISwimming;
 import net.minecraft.entity.ai.EntityAIWanderAvoidWater;
 import net.minecraft.entity.ai.EntityAIWatchClosest;
-import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.entity.ai.attributes.IAttributeInstance;
 import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;
@@ -40,10 +38,8 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 
 import javax.annotation.Nullable;
-import java.util.UUID;
 
 public class EntityStinger extends EntityGrowable implements IMob {
-    private static final AttributeModifier CHILD_ATTACK_MALUS = new AttributeModifier(UUID.fromString("c02aca06-ecb7-447f-bcc7-1fef82fecdbd"), "stinger_child_attack_malus", -1d, 0);
     private final AnimationCapability animCap = new AnimationCapability();
 
     public EntityStinger(World worldIn) {
@@ -66,19 +62,13 @@ public class EntityStinger extends EntityGrowable implements IMob {
         float maxHealth = 10f + age * 4f;
         getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(maxHealth);
         setHealth(maxHealth);
-        IAttributeInstance attackAttrib = getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE);
-        boolean hasAttackmodifier = attackAttrib.hasModifier(CHILD_ATTACK_MALUS);
-        if (age < 0) {
-            if (!hasAttackmodifier) {
-                attackAttrib.applyModifier(CHILD_ATTACK_MALUS);
-            }
-        } else {
-            if (hasAttackmodifier) {
-                attackAttrib.removeModifier(CHILD_ATTACK_MALUS);
-            }
-            if (age != 0) {
-                getEntityAttribute(SharedMonsterAttributes.ARMOR).setBaseValue(getGrowingAge());
-            }
+        getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(2d + age);
+        if (age > 0) {
+            getEntityAttribute(SharedMonsterAttributes.ARMOR).setBaseValue(age);
+        }
+        if (age == getMaxGrowingAge()) {
+            this.targetTasks.addTask(1, new EntityTaskNeutral(this, new EntityAIHurtByTarget(this, true), false));
+            this.targetTasks.addTask(2, new EntityTaskNeutral(this, new EntityAINearestAttackableTarget<>(this, EntityPlayer.class, true, false), false));
         }
     }
 
@@ -166,10 +156,11 @@ public class EntityStinger extends EntityGrowable implements IMob {
     @Override
     public boolean attackEntityAsMob(Entity entity) {
         super.attackEntityAsMob(entity);
-        boolean flag = entity.attackEntityFrom(DamageSource.causeMobDamage(this), (float) getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).getAttributeValue() + (isChild() ? 0f : getGrowingAge()));
+        boolean flag = entity.attackEntityFrom(DamageSource.causeMobDamage(this), (float) getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).getAttributeValue());
         if (flag) {
-            if (!isChild() && entity instanceof EntityPlayer) {
-                ((EntityPlayer) entity).addPotionEffect(new PotionEffect(MobEffects.WEAKNESS, 100, 0, false, true));
+            if (!isChild()) {
+                int age = getGrowingAge();
+                ((EntityPlayer) entity).addPotionEffect(new PotionEffect(MobEffects.WEAKNESS, 100, age == getMaxGrowingAge() ? 2 : age > 2 ? 1 : 0, false, true));
             }
             applyEnchantments(this, entity);
             animCap.setAnimation(this, AnimationCapability.AnimationType.ATTACK, 10);
