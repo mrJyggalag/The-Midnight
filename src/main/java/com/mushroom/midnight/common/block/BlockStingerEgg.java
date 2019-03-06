@@ -14,7 +14,7 @@ public class BlockStingerEgg extends BlockPileOfEggs {
     @Override
     protected EntityLiving createEntityForEgg(World world, BlockPos pos, IBlockState state) {
         EntityStinger stinger = new EntityStinger(world);
-        stinger.setGrowingAge(-1200);
+        stinger.setGrowingAge(-1);
         return stinger;
     }
 }
