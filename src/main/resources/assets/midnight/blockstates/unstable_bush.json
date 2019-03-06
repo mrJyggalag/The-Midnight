@@ -4,8 +4,8 @@
     "normal": [{}],
     "stage=0": [
       {
-        "model": "crop",
-        "textures": {"crop": "blocks/unstable_seeds"}
+        "model": "cross",
+        "textures": {"cross": "blocks/unstable_seeds"}
       }
     ],
     "stage=1": [
