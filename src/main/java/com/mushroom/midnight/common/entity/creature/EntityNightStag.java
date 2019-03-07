@@ -74,6 +74,7 @@ public class EntityNightStag extends EntityAnimal {
     private static final int GROWING_TIME = -24000;
     private static final Predicate<IBlockState> FRUIT_PREDICATE = p -> p.getBlock() instanceof BlockUnstableBushBloomed && p.getValue(BlockUnstableBushBloomed.HAS_FRUIT);
     private final AnimationCapability animCap = new AnimationCapability();
+    private int temptTime = 400;
 
     public EntityNightStag(World world) {
         super(world);
@@ -217,6 +218,17 @@ public class EntityNightStag extends EntityAnimal {
             protected boolean isTempting(ItemStack stack) {
                 return isBreedingItem(stack);
             }
+            @Override
+            public boolean shouldExecute() {
+                boolean valid = super.shouldExecute();
+                if (valid && !this.temptingPlayer.isCreative()) {
+                    if (--temptTime < 0) {
+                        temptTime = 400;
+                        setAttackTarget(this.temptingPlayer);
+                    }
+                }
+                return valid;
+            }
         });
         this.tasks.addTask(4, new EntityAIFollowParent(this, 1d));
         this.tasks.addTask(4, new EntityTaskSearchBlock(this, FRUIT_PREDICATE, 0.7d, 8, 200));
@@ -303,6 +315,7 @@ public class EntityNightStag extends EntityAnimal {
     @Override
     protected void consumeItemFromStack(EntityPlayer player, ItemStack stack) {
         if (isBreedingItem(stack)) {
+            this.temptTime = 400;
             addPotionEffect(new PotionEffect(MobEffects.LEVITATION, 200, 0, false, true));
             addPotionEffect(new PotionEffect(ModEffects.SLOWFALL, 400, 0, false, true));
         }
