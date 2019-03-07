@@ -1,11 +1,14 @@
 package com.mushroom.midnight.common.entity;
 
 import com.mushroom.midnight.client.particle.MidnightParticles;
+import com.mushroom.midnight.common.registry.ModCriterion;
 import com.mushroom.midnight.common.registry.ModItems;
+import com.mushroom.midnight.common.registry.ModLootTables;
 import com.mushroom.midnight.common.registry.ModSounds;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.entity.projectile.EntityThrowable;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
@@ -15,8 +18,13 @@ import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldServer;
+import net.minecraft.world.storage.loot.LootContext;
+import net.minecraft.world.storage.loot.LootTable;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+
+import javax.annotation.Nullable;
 
 public class EntityThrownGeode extends EntityThrowable {
     private static final byte POPPED_STATE_ID = 3;
@@ -70,8 +78,13 @@ public class EntityThrownGeode extends EntityThrowable {
             IBlockState impactedState = impactedPos != null ? this.world.getBlockState(impactedPos) : Blocks.AIR.getDefaultState();
 
             if (this.canBreakOn(impactedState)) {
-                this.entityDropItem(this.getBrokenStack(), 0.1F);
+                EntityPlayerMP player = this.thrower instanceof EntityPlayerMP ? (EntityPlayerMP) this.thrower : null;
+                if (player != null) {
+                    ModCriterion.THROWN_GEODE.trigger(player);
+                }
+                dropLootWhenBroken(player);
                 this.world.setEntityState(this, POPPED_STATE_ID);
+
             } else {
                 this.dropItem(ModItems.GEODE, 1);
             }
@@ -80,11 +93,19 @@ public class EntityThrownGeode extends EntityThrowable {
         }
     }
 
-    private ItemStack getBrokenStack() {
-        return new ItemStack(ModItems.DARK_PEARL);
-    }
-
     private boolean canBreakOn(IBlockState state) {
         return state.getMaterial() == Material.ROCK || state.getMaterial() == Material.IRON;
+    }
+
+    private void dropLootWhenBroken(@Nullable EntityPlayerMP player) {
+        LootContext.Builder builder = new LootContext.Builder((WorldServer) this.world).withLootedEntity(this).withDamageSource(DamageSource.GENERIC);
+        if (player != null) {
+            builder = builder.withPlayer(player).withLuck(player.getLuck());
+        }
+
+        LootTable loottable = this.world.getLootTableManager().getLootTableFromLocation(ModLootTables.LOOT_TABLE_THROWN_GEODE);
+        for (ItemStack itemstack : loottable.generateLootForPools(this.rand, builder.build())) {
+            this.entityDropItem(itemstack, 0.1f);
+        }
     }
 }
