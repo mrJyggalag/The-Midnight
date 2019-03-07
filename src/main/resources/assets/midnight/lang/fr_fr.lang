@@ -373,6 +373,7 @@ potion.midnight.pollinated.name=Pollinisé
 potion.midnight.dragon_guard.name=Garde du Dragon
 potion.midnight.darkness.name=Obscurité
 potion.midnight.tormented.name=Tourmenté
+potion.midnight.slowfall.name=Chute Lente
 
 # DamageSources
 death.midnight.bladeshroom=%s a été piqué mortellement par un ChampiLame
@@ -399,3 +400,9 @@ advancement.snapped_by_snapper.desc=Se faire mordre par un Vivaneau Fourbe en es
 
 advancement.your_highness.title=Votre Grandeur
 advancement.your_highness.desc=Obtenir une révérence de chaque couleur de Cerf Obscure
+
+advancement.thrown_geode.title=Perle Sombre
+advancement.thrown_geode.desc=Lancer une géode sur un rocher
+
+advancement.surface_biomes.title=Surface de Minuit
+advancement.surface_biomes.desc=Trouver tous les biomes de la surface de Minuit

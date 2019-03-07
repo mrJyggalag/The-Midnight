@@ -5,7 +5,7 @@
     "stage=0": [
       {
         "model": "crop",
-        "textures": {"crop": "blocks/unstable_seeds"}
+        "textures": {"crop": "midnight:blocks/unstable_seeds"}
       }
     ],
     "stage=1": [

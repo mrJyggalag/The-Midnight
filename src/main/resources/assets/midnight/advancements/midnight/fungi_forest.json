@@ -13,7 +13,7 @@
     "show_toast": true,
     "announce_to_chat": true
   },
-  "parent": "midnight:midnight/root",
+  "parent": "midnight:midnight/surface_biomes",
   "criteria": {
     "entered_biome": {
       "trigger": "minecraft:location",

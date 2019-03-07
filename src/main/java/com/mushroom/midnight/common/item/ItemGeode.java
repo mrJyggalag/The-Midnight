@@ -2,12 +2,14 @@ package com.mushroom.midnight.common.item;
 
 import com.mushroom.midnight.client.IModelProvider;
 import com.mushroom.midnight.common.entity.EntityThrownGeode;
+import com.mushroom.midnight.common.registry.ModCriterion;
 import com.mushroom.midnight.common.registry.ModTabs;
 import net.minecraft.block.BlockDispenser;
 import net.minecraft.dispenser.BehaviorProjectileDispense;
 import net.minecraft.dispenser.IPosition;
 import net.minecraft.entity.IProjectile;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -37,6 +39,10 @@ public class ItemGeode extends Item implements IModelProvider {
             EntityThrownGeode geode = new EntityThrownGeode(world, player);
             geode.shoot(player, player.rotationPitch, player.rotationYaw, 0.0F, 1.5F, 1.0F);
             world.spawnEntity(geode);
+
+            if (player instanceof EntityPlayerMP) {
+                ModCriterion.THROWN_GEODE.trigger((EntityPlayerMP) player);
+            }
         }
 
         return new ActionResult<>(EnumActionResult.SUCCESS, heldItem);

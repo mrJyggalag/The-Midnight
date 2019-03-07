@@ -33,8 +33,8 @@ tile.midnight.chiseled_nightstone_bricks.name=Chiseled Nightstone Bricks
 tile.midnight.dark_pearl_ore.name=Dark Pearl Ore
 tile.midnight.dark_pearl_block.name=Dark Pearl Block
 
-tile.midnight.ebonys_ore.name=Ebonys Ore
-tile.midnight.ebonys_block.name=Ebonys Block
+tile.midnight.ebonys_ore.name=Ebony Ore
+tile.midnight.ebonys_block.name=Ebony Block
 
 tile.midnight.archaic_ore.name=Archaic Ore
 
@@ -229,7 +229,7 @@ item.midnight.tenebrum_ingot.name=Tenebrum Ingot
 item.midnight.tenebrum_nugget.name=Tenebrum Nugget
 item.midnight.nagrilite_ingot.name=Nagrilite Ingot
 item.midnight.nagrilite_nugget.name=Nagrilite Nugget
-item.midnight.ebonys.name=Ebonys
+item.midnight.ebonys.name=Ebony
 item.midnight.archaic_shard.name=Archaic Shard
 
 item.midnight.raw_suavis.name=Raw Suavis Slice
@@ -254,31 +254,31 @@ item.midnight.bladeshroom_spores.name=Bladeshroom Spores
 item.midnight.shadowroot_pickaxe.name=Shadowroot Pickaxe
 item.midnight.tenebrum_pickaxe.name=Tenebrum Pickaxe
 item.midnight.nagrilite_pickaxe.name=Nagrilite Pickaxe
-item.midnight.ebonys_pickaxe.name=Ebonys Pickaxe
+item.midnight.ebonys_pickaxe.name=Ebony Pickaxe
 item.midnight.nightstone_pickaxe.name=Nightstone Pickaxe
 
 item.midnight.shadowroot_shovel.name=Shadowroot Shovel
 item.midnight.tenebrum_shovel.name=Tenebrum Shovel
 item.midnight.nagrilite_shovel.name=Nagrilite Shovel
-item.midnight.ebonys_shovel.name=Ebonys Shovel
+item.midnight.ebonys_shovel.name=Ebony Shovel
 item.midnight.nightstone_shovel.name=Nightstone Shovel
 
 item.midnight.shadowroot_axe.name=Shadowroot Axe
 item.midnight.tenebrum_axe.name=Tenebrum Axe
 item.midnight.nagrilite_axe.name=Nagrilite Axe
-item.midnight.ebonys_axe.name=Ebonys Axe
+item.midnight.ebonys_axe.name=Ebony Axe
 item.midnight.nightstone_axe.name=Nightstone Axe
 
 item.midnight.shadowroot_hoe.name=Shadowroot Hoe
 item.midnight.tenebrum_hoe.name=Tenebrum Hoe
 item.midnight.nagrilite_hoe.name=Nagrilite Hoe
-item.midnight.ebonys_hoe.name=Ebonys Hoe
+item.midnight.ebonys_hoe.name=Ebony Hoe
 item.midnight.nightstone_hoe.name=Nightstone Hoe
 
 item.midnight.shadowroot_sword.name=Shadowroot Sword
 item.midnight.tenebrum_sword.name=Tenebrum Sword
 item.midnight.nagrilite_sword.name=Nagrilite Sword
-item.midnight.ebonys_sword.name=Ebonys Sword
+item.midnight.ebonys_sword.name=Ebony Sword
 item.midnight.nightstone_sword.name=Nightstone Sword
 
 item.midnight.rockshroom_helmet.name=Rockshroom Helmet
@@ -373,6 +373,7 @@ potion.midnight.pollinated.name=Pollinated
 potion.midnight.dragon_guard.name=Dragon's Guard
 potion.midnight.darkness.name=Darkness
 potion.midnight.tormented.name=Tormented
+potion.midnight.slowfall.name=Slowfall
 
 # DamageSources
 death.midnight.bladeshroom=%s was pricked to death by a bladeshroom
@@ -399,3 +400,9 @@ advancement.snapped_by_snapper.desc=Get bitten by a deceitful snapper upon tryin
 
 advancement.your_highness.title=Your Highness
 advancement.your_highness.desc=Have every color of nightstag bow down to you
+
+advancement.thrown_geode.title=Dark Pearl
+advancement.thrown_geode.desc=Throw a Geode on a rock
+
+advancement.surface_biomes.title=Midnight Surface
+advancement.surface_biomes.desc=Find all the biomes of the Midnight's surface
