@@ -25,6 +25,7 @@ public class BlockDeceitfulMud extends Block implements IModelProvider {
         this.setHardness(0.5F);
         this.setSoundType(ModSounds.MUD);
         this.setCreativeTab(ModTabs.BUILDING_TAB);
+        this.setHarvestLevel("shovel", 0);
     }
 
     @Override

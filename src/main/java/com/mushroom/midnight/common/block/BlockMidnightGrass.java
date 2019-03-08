@@ -29,6 +29,7 @@ public class BlockMidnightGrass extends Block implements IGrowable, IModelProvid
         this.setSoundType(SoundType.PLANT);
         this.setTickRandomly(true);
         this.setCreativeTab(ModTabs.BUILDING_TAB);
+        this.setHarvestLevel("shovel", 0);
     }
 
     @Override

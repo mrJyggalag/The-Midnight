@@ -18,6 +18,7 @@ public class BlockMidnightDirt extends Block implements IModelProvider {
         this.setHardness(0.5F);
         this.setSoundType(SoundType.GROUND);
         this.setCreativeTab(ModTabs.BUILDING_TAB);
+        this.setHarvestLevel("shovel", 0);
     }
 
     @Override
