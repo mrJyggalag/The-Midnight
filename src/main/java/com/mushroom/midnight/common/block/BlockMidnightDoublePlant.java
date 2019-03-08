@@ -139,9 +139,4 @@ public class BlockMidnightDoublePlant extends BlockMidnightPlant {
         }
         return super.getItemDropped(state, rand, fortune);
     }
-
-    public void placeAt(World world, BlockPos lowerPos, int flags) {
-        world.setBlockState(lowerPos, this.getDefaultState().withProperty(HALF, BlockDoublePlant.EnumBlockHalf.LOWER), flags);
-        world.setBlockState(lowerPos.up(), this.getDefaultState().withProperty(HALF, BlockDoublePlant.EnumBlockHalf.UPPER), flags);
-    }
 }

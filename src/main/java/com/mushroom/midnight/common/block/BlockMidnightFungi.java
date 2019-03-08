@@ -1,10 +1,10 @@
 package com.mushroom.midnight.common.block;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockDoublePlant;
 import net.minecraft.block.IGrowable;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 import java.util.Random;
@@ -29,11 +29,6 @@ public class BlockMidnightFungi extends BlockMidnightPlant implements IGrowable 
     }
 
     @Override
-    public boolean isReplaceable(IBlockAccess world, BlockPos pos) {
-        return true;
-    }
-
-    @Override
     public boolean canGrow(World worldIn, BlockPos pos, IBlockState state, boolean isClient) {
         return true;
     }
@@ -45,8 +40,9 @@ public class BlockMidnightFungi extends BlockMidnightPlant implements IGrowable 
 
     @Override
     public void grow(World world, Random rand, BlockPos pos, IBlockState state) {
-        if (parentSupplier.get().canPlaceBlockAt(world, pos)) {
-            ((BlockMidnightDoubleFungi)parentSupplier.get()).placeAt(world, pos, 2);
+        if (world.isAirBlock(pos.up())) {
+            world.setBlockState(pos, parentSupplier.get().getDefaultState().withProperty(BlockDoublePlant.HALF, BlockDoublePlant.EnumBlockHalf.LOWER), 2);
+            world.setBlockState(pos.up(), parentSupplier.get().getDefaultState().withProperty(BlockDoublePlant.HALF, BlockDoublePlant.EnumBlockHalf.UPPER), 2);
         }
     }
 }
