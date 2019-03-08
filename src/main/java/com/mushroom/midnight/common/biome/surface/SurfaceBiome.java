@@ -35,6 +35,7 @@ public class SurfaceBiome extends Biome implements EntitySpawnConfigured {
         }
 
         config.getSurfaceConfig().apply(this);
+        this.flowers = this.config.getFeatureConfig().getFlowers();
     }
 
     public SurfaceBiomeConfig getConfig() {

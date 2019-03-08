@@ -104,15 +104,14 @@ public class BlockMidnightGrass extends Block implements IGrowable, IModelProvid
                 }
             }
             if (worldIn.isAirBlock(blockpos1)) {
-                // TODO flowers related to biome (and for now it uses vanilla default flowers, so it's disabled)
-                /*if (rand.nextInt(8) == 0) {
+                if (rand.nextInt(30) == 0) {
                     worldIn.getBiome(blockpos1).plantFlower(worldIn, rand, blockpos1);
-                } else {*/
+                } else {
                     IBlockState tallGrassState = ModBlocks.TALL_MIDNIGHT_GRASS.getDefaultState();
                     if (GeneratablePlant.canGenerate(worldIn, blockpos1, tallGrassState)) {
                         worldIn.setBlockState(blockpos1, tallGrassState, 3);
                     }
-                //}
+                }
             }
         }
     }

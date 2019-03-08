@@ -7,6 +7,7 @@ import com.mushroom.midnight.common.biome.config.SpawnerConfig;
 import com.mushroom.midnight.common.biome.config.SurfaceConfig;
 import com.mushroom.midnight.common.biome.surface.SurfaceBiomeConfig;
 import com.mushroom.midnight.common.biome.surface.SurfaceTerrainConfig;
+import com.mushroom.midnight.common.block.BlockSuavis;
 import com.mushroom.midnight.common.entity.creature.EntityCrystalBug;
 import com.mushroom.midnight.common.entity.creature.EntityDeceitfulSnapper;
 import com.mushroom.midnight.common.entity.creature.EntityHunter;
@@ -28,6 +29,7 @@ import net.minecraft.entity.monster.EntityEnderman;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
+import net.minecraft.world.biome.Biome.FlowerEntry;
 
 import java.util.Random;
 import java.util.function.Consumer;
@@ -45,6 +47,7 @@ public class MidnightBiomeConfigs {
             .withFeature(FeatureSorting.LAST, DRAGON_NEST_FEATURE, new DragonNestPlacementConfig(32, 32))
             .withFeature(FeatureSorting.LAST, UNSTABLE_BUSH_FEATURE, new ParcelPlacementConfig(6, 10, 0.2f))
             .withFeature(FeatureSorting.LAST, UNDERGROUND_FEATURES, new UndergroundPlacementConfig(1, 3, 10, 50))
+            .withFlower(new FlowerEntry(ModBlocks.GHOST_PLANT.getDefaultState(), 20), new FlowerEntry(ModBlocks.GHOST_PLANT.getDefaultState(), 20), new FlowerEntry(ModBlocks.LUMEN_BUD.getDefaultState(), 20), new FlowerEntry(ModBlocks.NIGHTSHROOM.getDefaultState(), 5), new FlowerEntry(ModBlocks.VIRIDSHROOM.getDefaultState(), 5), new FlowerEntry(ModBlocks.DEWSHROOM.getDefaultState(), 5), new FlowerEntry(ModBlocks.BOGSHROOM.getDefaultState(), 5))
             .build();
 
     public static final FeatureConfig VEGETATED_FEATURE_CONFIG = FeatureConfig.builder()
@@ -76,6 +79,7 @@ public class MidnightBiomeConfigs {
             .withFeature(DEAD_LOG_FEATURE, new SurfacePlacementConfig(6))
             .withFeature(DEAD_TREE_FEATURE, new SurfacePlacementConfig(-5, 1))
             .withFeature(VIOLEAF_FEATURE, new ParcelPlacementConfig(2, 5, 0.3f))
+            .withFlower(new FlowerEntry(ModBlocks.VIOLEAF.getDefaultState(), 40), new FlowerEntry(ModBlocks.SUAVIS.getDefaultState().withProperty(BlockSuavis.STAGE, 0), 40))
             .build();
 
     public static final FeatureConfig RUNEBUSH_GROVE_FEATURE_CONFIG = FeatureConfig.builder()
@@ -90,6 +94,7 @@ public class MidnightBiomeConfigs {
             .withFeature(COMMON_SUAVIS_FEATURE, new ScatterPlacementConfig(8, 8))
             .withFeature(RUNEBUSH_FEATURE, new ScatterPlacementConfig(16, 128))
             .withFeature(TALL_GRASS_FEATURE, new ScatterPlacementConfig(4, 16))
+            .withFlower(new FlowerEntry(ModBlocks.RUNEBUSH.getDefaultState(), 40), new FlowerEntry(ModBlocks.SUAVIS.getDefaultState().withProperty(BlockSuavis.STAGE, 0), 40))
             .build();
 
     public static final FeatureConfig FUNGI_FOREST_FEATURE_CONFIG = FeatureConfig.builder()
@@ -99,6 +104,7 @@ public class MidnightBiomeConfigs {
             .withFeature(FUNGI_FEATURE, new ScatterPlacementConfig(6, 16))
             .withFeature(DOUBLE_FUNGI_FEATURE, new ScatterPlacementConfig(4, 8))
             .withFeature(BLADESHROOM_FEATURE, new ScatterPlacementConfig(1, 32))
+            .withFlower(new FlowerEntry(ModBlocks.BLADESHROOM.getDefaultState(), 40))
             .build();
 
     public static final FeatureConfig CRYSTAL_SPIRES_FEATURE_CONFIG = FeatureConfig.builder()
@@ -110,6 +116,7 @@ public class MidnightBiomeConfigs {
             .withFeature(LUMEN_FEATURE, new ScatterPlacementConfig(1, 32))
             .withFeature(DOUBLE_LUMEN_FEATURE, new ScatterPlacementConfig(1, 16))
             .withFeature(CRYSTAL_FLOWER_FEATURE, new ScatterPlacementConfig(5, 12))
+            .withFlower(new FlowerEntry(ModBlocks.CRYSTAL_FLOWER.getDefaultState(), 60))
             .build();
 
     public static final FeatureConfig WARPED_FIELDS_FEATURE_CONFIG = FeatureConfig.builder()
@@ -148,6 +155,7 @@ public class MidnightBiomeConfigs {
                     }
                 }
             })
+            .withFlower(new FlowerEntry(ModBlocks.FINGERED_GRASS.getDefaultState(), 40))
             .withFeature(new IMidnightFeature[] {
                     SHADOWROOT_TREE_FEATURE,
                     DEAD_TREE_FEATURE
