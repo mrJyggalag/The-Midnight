@@ -75,8 +75,8 @@ public class CommonEventHandler {
             GenLayer surfaceProcedure = MidnightBiomeLayer.SURFACE.buildProcedure();
             GenLayer undergroundProcedure = MidnightBiomeLayer.UNDERGROUND.buildProcedure();
 
-            sampler.put(MidnightBiomeLayer.SURFACE, BiomeLayerSampler.fromGenLayer(world, surfaceProcedure, Biome::getBiomeForId));
-            sampler.put(MidnightBiomeLayer.UNDERGROUND, BiomeLayerSampler.fromGenLayer(world, undergroundProcedure, ModCavernousBiomes::fromId));
+            sampler.put(MidnightBiomeLayer.SURFACE, BiomeLayerSampler.fromGenLayer(world, surfaceProcedure, Biome::getBiomeForId, false));
+            sampler.put(MidnightBiomeLayer.UNDERGROUND, BiomeLayerSampler.fromGenLayer(world, undergroundProcedure, ModCavernousBiomes::fromId, true));
 
             event.addCapability(new ResourceLocation(Midnight.MODID, "biome_sampler"), sampler);
 

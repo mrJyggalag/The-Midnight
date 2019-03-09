@@ -12,7 +12,7 @@ import java.util.Arrays;
 import java.util.function.IntFunction;
 
 public interface BiomeLayerSampler<T> {
-    static <T> BiomeLayerSampler<T> fromGenLayer(World world, GenLayer noiseLayer, IntFunction<T> function) {
+    static <T> BiomeLayerSampler<T> fromGenLayer(World world, GenLayer noiseLayer, IntFunction<T> function, boolean undergroundLayer) {
         WorldInfo worldInfo = world.getWorldInfo();
         long seed = worldInfo.getSeed();
 
@@ -21,10 +21,13 @@ public interface BiomeLayerSampler<T> {
 
         GenLayer[] layers = new GenLayer[] { noiseLayer, layer, noiseLayer };
 
-        WorldTypeEvent.InitBiomeGens event = new WorldTypeEvent.InitBiomeGens(worldInfo.getTerrainType(), seed, layers);
-        MinecraftForge.TERRAIN_GEN_BUS.post(event);
-
-        return new Vanilla<>(event.getNewBiomeGens(), function);
+        if (!undergroundLayer) {
+            WorldTypeEvent.InitBiomeGens event = new WorldTypeEvent.InitBiomeGens(worldInfo.getTerrainType(), seed, layers);
+            MinecraftForge.TERRAIN_GEN_BUS.post(event);
+            return new Vanilla<>(event.getNewBiomeGens(), function);
+        } else {
+            return new Vanilla<>(layers, function);
+        }
     }
 
     T[] sample(T[] array, int x, int y, int width, int height);
