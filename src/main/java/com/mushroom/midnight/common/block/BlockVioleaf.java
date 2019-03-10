@@ -1,5 +1,6 @@
 package com.mushroom.midnight.common.block;
 
+import com.mushroom.midnight.common.registry.ModCriterion;
 import net.minecraft.block.IGrowable;
 import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.state.BlockStateContainer;
@@ -7,6 +8,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityAreaEffectCloud;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.MobEffects;
 import net.minecraft.init.PotionTypes;
 import net.minecraft.init.SoundEvents;
@@ -33,6 +35,7 @@ public class BlockVioleaf extends BlockMidnightPlant implements IGrowable {
             EntityPlayer player = (EntityPlayer) entity;
             if (player.isPotionActive(MobEffects.NAUSEA)) {
                 player.removePotionEffect(MobEffects.NAUSEA);
+                ModCriterion.VIOLEAF.trigger((EntityPlayerMP) player);
                 world.setBlockState(pos, state.withProperty(IS_GROWN, false), 2);
                 world.playSound(null, pos, SoundEvents.BLOCK_CHORUS_FLOWER_DEATH, SoundCategory.BLOCKS, 1f, world.rand.nextFloat() * 0.4f + 0.8f);
                 Vec3d offset = getOffset(state, world, pos);

@@ -18,4 +18,5 @@ public class ModCriterion {
     static  {
         IntStream.range(0, EntityNightStag.MAX_ANTLER_TYPE).forEach(i -> NIGHTSTAG_BOW[i] = CriteriaTriggers.register(new StatelessTrigger(new ResourceLocation(MODID, "nightstag_bow" + i))));
     }
+    public static final StatelessTrigger VIOLEAF = CriteriaTriggers.register(new StatelessTrigger(new ResourceLocation(MODID, "violeaf")));
 }
