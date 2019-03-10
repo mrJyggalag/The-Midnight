@@ -1,0 +1,30 @@
+{
+  "display": {
+    "icon": {
+      "item": "midnight:violeaf"
+    },
+    "title": {
+      "translate": "advancement.violeaf.title"
+    },
+    "description": {
+      "translate": "advancement.violeaf.desc"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true
+  },
+  "parent": "midnight:midnight/inebriated",
+   "criteria": {
+    "violeaf": {
+      "trigger": "enter_block",
+      "conditions": {
+        "block": "midnight:violeaf"
+      }
+    },
+    "nausea": {
+      "trigger": "effects_changed",
+      "conditions": {
+        "effects": "minecraft:nausea"
+		}
+	}
+}

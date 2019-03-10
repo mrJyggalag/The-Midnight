@@ -406,8 +406,12 @@ advancement.snapped_by_snapper.desc=Get bitten by a deceitful snapper upon tryin
 advancement.your_highness.title=Your Highness
 advancement.your_highness.desc=Have every color of nightstag bow down to you
 
-advancement.thrown_geode.title=Placehold
-advancement.thrown_geode.desc=Crack open a geode by throwing it at something tough
+advancement.thrown_geode.title=Cracked Up
+advancement.thrown_geode.desc=Break open a geode by throwing it at something tough
 
-advancement.surface_biomes.title=Placehold
+advancement.surface_biomes.title=Nightwalker
 advancement.surface_biomes.desc=Traverse every surface biome and sub-biome in midnight
+
+advancement.violeaf.title=Herbal Remedy 
+advancement.violeaf.desc=Be cured of the nausea effect by walking through a violeaf plant
+
