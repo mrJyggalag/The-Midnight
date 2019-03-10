@@ -246,7 +246,7 @@ public class EntityNightStag extends EntityAnimal {
                     setGrowingAge(Math.min(getGrowingAge() + 5000, 0));
                 }
                 addPotionEffect(new PotionEffect(MobEffects.LEVITATION, 200, 0, false, true));
-                addPotionEffect(new PotionEffect(ModEffects.SLOWFALL, 400, 0, false, true));
+                addPotionEffect(new PotionEffect(ModEffects.UNSTABLE_FALL, 400, 0, false, true));
             }
         });
         this.tasks.addTask(6, new EntityAIWanderAvoidWater(this, 0.7d, 0.005f));
@@ -317,7 +317,7 @@ public class EntityNightStag extends EntityAnimal {
         if (isBreedingItem(stack)) {
             this.temptTime = 400;
             addPotionEffect(new PotionEffect(MobEffects.LEVITATION, 200, 0, false, true));
-            addPotionEffect(new PotionEffect(ModEffects.SLOWFALL, 400, 0, false, true));
+            addPotionEffect(new PotionEffect(ModEffects.UNSTABLE_FALL, 400, 0, false, true));
         }
     }
 

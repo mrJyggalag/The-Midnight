@@ -3,8 +3,8 @@ package com.mushroom.midnight.common.effect;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.math.Vec3d;
 
-public class SlowfallEffect extends GenericEffect {
-    public SlowfallEffect() {
+public class UnstableFallEffect extends GenericEffect {
+    public UnstableFallEffect() {
         super(false, 0x0);
         setBeneficial();
     }

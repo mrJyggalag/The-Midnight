@@ -40,7 +40,7 @@ public class ItemUnstableFruit extends ItemFoodBasic {
             }
             if (world.rand.nextFloat() < this.fruitColor.levitationChance) {
                 player.addPotionEffect(new PotionEffect(MobEffects.LEVITATION, 200, this.fruitColor.ordinal(), false, true));
-                player.addPotionEffect(new PotionEffect(ModEffects.SLOWFALL, 400, 0, false, true));
+                player.addPotionEffect(new PotionEffect(ModEffects.UNSTABLE_FALL, 400, 0, false, true));
             }
         }
     }

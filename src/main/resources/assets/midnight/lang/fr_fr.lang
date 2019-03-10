@@ -373,7 +373,7 @@ potion.midnight.pollinated.name=Pollinisé
 potion.midnight.dragon_guard.name=Garde du Dragon
 potion.midnight.darkness.name=Obscurité
 potion.midnight.tormented.name=Tourmenté
-potion.midnight.slowfall.name=Chute Lente
+potion.midnight.unstable_fall.name=Chute Instable
 
 # DamageSources
 death.midnight.bladeshroom=%s a été piqué mortellement par un ChampiLame
