@@ -16,7 +16,7 @@
   "parent": "midnight:midnight/inebriated",
    "criteria": {
     "violeaf": {
-      "trigger": "midnight:violeaf",
+      "trigger": "midnight:violeaf"
 		}
 	}
 }
