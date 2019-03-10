@@ -1,6 +1,7 @@
 package com.mushroom.midnight.common.entity.projectile;
 
 import com.mushroom.midnight.common.item.ItemSporeBomb;
+import com.mushroom.midnight.common.item.ItemSporeBomb.BombType;
 import com.mushroom.midnight.common.registry.ModItems;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -21,6 +22,7 @@ import javax.annotation.Nullable;
 
 public class EntitySporeBomb extends EntityThrowable {
     private static final DataParameter<Integer> BOMB_TYPE = EntityDataManager.createKey(EntitySporeBomb.class, DataSerializers.VARINT);
+    private int fuseTime = 0;
 
     public EntitySporeBomb(World world) {
         super(world);
@@ -43,13 +45,16 @@ public class EntitySporeBomb extends EntityThrowable {
     @Override
     public void writeEntityToNBT(NBTTagCompound compound) {
         super.writeEntityToNBT(compound);
-        compound.setInteger("bomb_type", getBombType());
+        compound.setShort("bomb_type", (short) getBombType());
+        compound.setShort("fuse_time", (short)this.fuseTime);
     }
 
     @Override
     public void readEntityFromNBT(NBTTagCompound compound) {
         super.readEntityFromNBT(compound);
-        setBombType(compound.getInteger("bomb_type"));
+        setBombType(compound.getShort("bomb_type"));
+        this.fuseTime = compound.getShort("fuse_time");
+
     }
 
     public int getBombType() {
@@ -61,19 +66,26 @@ public class EntitySporeBomb extends EntityThrowable {
     }
 
     @Override
+    @SuppressWarnings("deprecation")
     public String getName() {
         if (hasCustomName()) {
             return getCustomNameTag();
         } else {
-            return I18n.translateToLocal("item.midnight.spore_bomb." + ItemSporeBomb.BombType.values()[getBombType()].name().toLowerCase() + ".name");
+            return I18n.translateToLocal("item.midnight.spore_bomb." + BombType.values()[getBombType()].name().toLowerCase() + ".name");
         }
     }
 
     @Override
     public void onUpdate() {
         super.onUpdate();
-        if (isInWater()) {
-            entityDropItem(new ItemStack(ModItems.DARK_PEARL), 0.1f);
+        if (!this.world.isRemote) {
+            if (isInWater()) {
+                entityDropItem(new ItemStack(ModItems.DARK_PEARL), 0.1f);
+                setDead();
+            } else if (++this.fuseTime >= ItemSporeBomb.MAX_FUSE_TIME) {
+                ItemSporeBomb.explode(BombType.values()[getBombType()], this.world, this.posX, this.posY, this.posZ);
+                setDead();
+            }
         }
     }
 
@@ -83,12 +95,14 @@ public class EntitySporeBomb extends EntityThrowable {
             DamageSource source = DamageSource.causeThrownDamage(this, getThrower());
             result.entityHit.attackEntityFrom(source, 1f);
         }
-
         if (!world.isRemote) {
+            BombType bombType = BombType.values()[getBombType()];
             if (canBreakOn(result.getBlockPos())) {
-                // explode directly
+                ItemSporeBomb.explode(bombType, this.world, this.posX, this.posY, this.posZ);
             } else {
-                // drop bomb fusing
+                ItemStack stack = new ItemStack(ModItems.SPORE_BOMB, 1, getBombType());
+                ItemSporeBomb.setFuseTime(world, stack, ItemSporeBomb.MAX_FUSE_TIME - this.fuseTime);
+                entityDropItem(stack, 0.01f);
             }
             setDead();
         }
