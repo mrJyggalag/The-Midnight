@@ -16,15 +16,7 @@
   "parent": "midnight:midnight/inebriated",
    "criteria": {
     "violeaf": {
-      "trigger": "enter_block",
-      "conditions": {
-        "block": "midnight:violeaf"
-      }
-    },
-    "nausea": {
-      "trigger": "effects_changed",
-      "conditions": {
-        "effects": "minecraft:nausea"
+      "trigger": "midnight:violeaf",
 		}
 	}
 }
