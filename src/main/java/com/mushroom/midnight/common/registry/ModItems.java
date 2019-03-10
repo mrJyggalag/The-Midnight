@@ -11,6 +11,7 @@ import com.mushroom.midnight.common.item.ItemMidnightDoor;
 import com.mushroom.midnight.common.item.ItemMidnightSeed;
 import com.mushroom.midnight.common.item.ItemMidnightShield;
 import com.mushroom.midnight.common.item.ItemRawSuavis;
+import com.mushroom.midnight.common.item.ItemSporeBomb;
 import com.mushroom.midnight.common.item.ItemUnstableFruit;
 import com.mushroom.midnight.common.item.armors.ItemMidnightBoots;
 import com.mushroom.midnight.common.item.armors.ItemMidnightChestplate;
@@ -81,6 +82,8 @@ public class ModItems {
     public static final Item UNSTABLE_FRUIT_BLUE = Items.AIR;
     public static final Item UNSTABLE_FRUIT_LIME = Items.AIR;
     public static final Item UNSTABLE_FRUIT_GREEN = Items.AIR;
+
+    public static final Item SPORE_BOMB = Items.AIR;
 
     public static final Item SHADOWROOT_PICKAXE = Items.AIR;
     public static final Item NIGHTSTONE_PICKAXE = Items.AIR;
@@ -168,6 +171,8 @@ public class ModItems {
                 RegUtil.withName(new ItemUnstableFruit(ItemUnstableFruit.FruitColor.BLUE), "unstable_fruit_blue"),
                 RegUtil.withName(new ItemUnstableFruit(ItemUnstableFruit.FruitColor.LIME), "unstable_fruit_lime"),
                 RegUtil.withName(new ItemUnstableFruit(ItemUnstableFruit.FruitColor.GREEN), "unstable_fruit_green"),
+
+                RegUtil.withName(new ItemSporeBomb(), "spore_bomb"),
 
                 RegUtil.withName(new ItemMidnightPickaxe(ModToolMaterials.SHADOWROOT), "shadowroot_pickaxe"),
                 RegUtil.withName(new ItemMidnightAxe(ModToolMaterials.SHADOWROOT, 6.0F, -3.2F), "shadowroot_axe"),

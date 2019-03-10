@@ -246,6 +246,11 @@ item.midnight.unstable_fruit_blue.name=Blue Unstable Fruit
 item.midnight.unstable_fruit_lime.name=Lime Unstable Fruit
 item.midnight.unstable_fruit_green.name=Green Unstable Fruit
 
+item.midnight.spore_bomb.nightshroom.name=Nightshroom Spore Bomb
+item.midnight.spore_bomb.dewshroom.name=Dewshroom Spore Bomb
+item.midnight.spore_bomb.viridshroom.name=Viridshroom Spore Bomb
+item.midnight.spore_bomb.bogshroom.name=Bogshroom Spore Bomb
+
 item.midnight.bladeshroom_cap.name=Bladeshroom Cap
 item.midnight.bladeshroom_spores.name=Bladeshroom Spores
 

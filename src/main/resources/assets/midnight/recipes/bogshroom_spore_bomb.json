@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "spore_bomb",
+  "pattern": [
+    " 0 ",
+    "010",
+	" 0 "
+  ],
+  "key": {
+    "0": {"item": "midnight:bogshroom_powder"},
+    "1": {"item": "midnight:dark_pearl"}
+  },
+  "result": {
+    "item": "midnight:spore_bomb",
+    "data": 3
+  }
+}

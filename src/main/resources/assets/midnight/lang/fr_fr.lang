@@ -246,6 +246,11 @@ item.midnight.unstable_fruit_blue.name=Fruit Instable Bleu
 item.midnight.unstable_fruit_lime.name=Fruit Instable Vert Clair
 item.midnight.unstable_fruit_green.name=Fruit Instable Vert
 
+item.midnight.spore_bomb.nightshroom.name=Bombe de Spores de ChampiBuit
+item.midnight.spore_bomb.dewshroom.name=Bombe de Spores de ChampiRosée
+item.midnight.spore_bomb.viridshroom.name=Bombe de Spores de ChampiViride
+item.midnight.spore_bomb.bogshroom.name=Bombe de Spores de ChampiTourbe
+
 item.midnight.bladeshroom_cap.name=Chapeau de ChampiLame
 item.midnight.bladeshroom_spores.name=Spores de ChampiLame
 

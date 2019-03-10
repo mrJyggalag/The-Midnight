@@ -1,7 +1,7 @@
 package com.mushroom.midnight.common.item;
 
 import com.mushroom.midnight.client.IModelProvider;
-import com.mushroom.midnight.common.entity.EntityThrownGeode;
+import com.mushroom.midnight.common.entity.projectile.EntityThrownGeode;
 import com.mushroom.midnight.common.registry.ModTabs;
 import net.minecraft.block.BlockDispenser;
 import net.minecraft.dispenser.BehaviorProjectileDispense;

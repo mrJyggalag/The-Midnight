@@ -17,9 +17,7 @@ import com.mushroom.midnight.client.render.RenderTreeHopper;
 import com.mushroom.midnight.client.render.TEISRShield;
 import com.mushroom.midnight.common.block.BlockMidnightChest;
 import com.mushroom.midnight.common.block.BlockMidnightChest.ChestModel;
-import com.mushroom.midnight.common.entity.EntityBladeshroomCap;
 import com.mushroom.midnight.common.entity.EntityRift;
-import com.mushroom.midnight.common.entity.EntityThrownGeode;
 import com.mushroom.midnight.common.entity.creature.EntityCrystalBug;
 import com.mushroom.midnight.common.entity.creature.EntityDeceitfulSnapper;
 import com.mushroom.midnight.common.entity.creature.EntityHunter;
@@ -30,7 +28,11 @@ import com.mushroom.midnight.common.entity.creature.EntityRifter;
 import com.mushroom.midnight.common.entity.creature.EntitySkulk;
 import com.mushroom.midnight.common.entity.creature.EntityStinger;
 import com.mushroom.midnight.common.entity.creature.EntityTreeHopper;
+import com.mushroom.midnight.common.entity.projectile.EntityBladeshroomCap;
+import com.mushroom.midnight.common.entity.projectile.EntitySporeBomb;
+import com.mushroom.midnight.common.entity.projectile.EntityThrownGeode;
 import com.mushroom.midnight.common.helper.Helper;
+import com.mushroom.midnight.common.item.ItemSporeBomb;
 import com.mushroom.midnight.common.registry.ModBlocks;
 import com.mushroom.midnight.common.registry.ModItems;
 import com.mushroom.midnight.common.tile.base.TileEntityMidnightChest;
@@ -67,6 +69,8 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import javax.annotation.Nonnull;
+
 @SideOnly(Side.CLIENT)
 @Mod.EventBusSubscriber(modid = Midnight.MODID, value = Side.CLIENT)
 public class ModModelRegistry {
@@ -90,9 +94,18 @@ public class ModModelRegistry {
         RenderingRegistry.registerEntityRenderingHandler(EntityDeceitfulSnapper.class, RenderDeceitfulSnapper::new);
         RenderingRegistry.registerEntityRenderingHandler(EntitySkulk.class, RenderSkulk::new);
         RenderingRegistry.registerEntityRenderingHandler(EntityThrownGeode.class, manager -> new RenderSnowball<>(manager, ModItems.GEODE, Minecraft.getMinecraft().getRenderItem()));
+        RenderingRegistry.registerEntityRenderingHandler(EntitySporeBomb.class, manager -> new RenderSnowball<EntitySporeBomb>(manager, ModItems.SPORE_BOMB, Minecraft.getMinecraft().getRenderItem()) {
+            @Override
+            @Nonnull
+            public ItemStack getStackToRender(EntitySporeBomb entity) {
+                return new ItemStack(this.item, 1, entity.getBombType());
+            }
+        });
 
         ModItems.getItems().stream().filter(i -> i instanceof IModelProvider).forEach(ModModelRegistry::registerItemModel);
         ModBlocks.getBlocks().stream().filter(b -> b instanceof IModelProvider).forEach(ModModelRegistry::registerBlockModel);
+
+        ((ItemSporeBomb)ModItems.SPORE_BOMB).renderModel();
 
         ModelLoader.setCustomStateMapper(ModBlocks.SHADOWROOT_LEAVES, new StateMap.Builder()
                 .ignore(BlockLeaves.CHECK_DECAY, BlockLeaves.DECAYABLE)

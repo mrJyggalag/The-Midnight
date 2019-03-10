@@ -1,4 +1,4 @@
-package com.mushroom.midnight.common.entity;
+package com.mushroom.midnight.common.entity.projectile;
 
 import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.common.registry.ModItems;

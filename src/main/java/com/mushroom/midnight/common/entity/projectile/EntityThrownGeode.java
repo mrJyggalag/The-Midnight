@@ -1,4 +1,4 @@
-package com.mushroom.midnight.common.entity;
+package com.mushroom.midnight.common.entity.projectile;
 
 import com.mushroom.midnight.client.particle.MidnightParticles;
 import com.mushroom.midnight.common.registry.ModCriterion;
@@ -50,7 +50,7 @@ public class EntityThrownGeode extends EntityThrowable {
     }
 
     private void spawnPopParticles() {
-        this.world.playSound(this.posX, this.posY, this.posZ, ModSounds.EGG_CRACKED, this.getSoundCategory(), 1.0F, this.rand.nextFloat() * 0.2F + 0.85F, false);
+        this.world.playSound(this.posX, this.posY, this.posZ, ModSounds.EGG_CRACKED, this.getSoundCategory(), 1f, this.rand.nextFloat() * 0.2f + 0.85f, false);
 
         for (int i = 0; i < 8; i++) {
             double velX = (this.rand.nextDouble() - 0.5) * 0.1;
@@ -70,14 +70,11 @@ public class EntityThrownGeode extends EntityThrowable {
     protected void onImpact(RayTraceResult result) {
         if (result.entityHit != null) {
             DamageSource source = DamageSource.causeThrownDamage(this, this.getThrower());
-            result.entityHit.attackEntityFrom(source, 1.0F);
+            result.entityHit.attackEntityFrom(source, 1f);
         }
 
         if (!this.world.isRemote) {
-            BlockPos impactedPos = result.getBlockPos();
-            IBlockState impactedState = impactedPos != null ? this.world.getBlockState(impactedPos) : Blocks.AIR.getDefaultState();
-
-            if (this.canBreakOn(impactedState)) {
+            if (canBreakOn(result.getBlockPos())) {
                 EntityPlayerMP player = this.thrower instanceof EntityPlayerMP ? (EntityPlayerMP) this.thrower : null;
                 if (player != null) {
                     ModCriterion.THROWN_GEODE.trigger(player);
@@ -93,8 +90,9 @@ public class EntityThrownGeode extends EntityThrowable {
         }
     }
 
-    private boolean canBreakOn(IBlockState state) {
-        return state.getMaterial() == Material.ROCK || state.getMaterial() == Material.IRON;
+    private boolean canBreakOn(@Nullable BlockPos impactedPos) {
+        IBlockState impactedState;
+        return impactedPos != null && ((impactedState = this.world.getBlockState(impactedPos)).getMaterial() == Material.ROCK || impactedState.getMaterial() == Material.IRON);
     }
 
     private void dropLootWhenBroken(@Nullable EntityPlayerMP player) {

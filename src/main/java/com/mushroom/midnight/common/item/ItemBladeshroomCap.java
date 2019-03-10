@@ -1,7 +1,7 @@
 package com.mushroom.midnight.common.item;
 
 import com.mushroom.midnight.client.IModelProvider;
-import com.mushroom.midnight.common.entity.EntityBladeshroomCap;
+import com.mushroom.midnight.common.entity.projectile.EntityBladeshroomCap;
 import com.mushroom.midnight.common.registry.ModCriterion;
 import com.mushroom.midnight.common.registry.ModSounds;
 import com.mushroom.midnight.common.registry.ModTabs;

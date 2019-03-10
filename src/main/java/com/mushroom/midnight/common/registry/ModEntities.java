@@ -1,9 +1,10 @@
 package com.mushroom.midnight.common.registry;
 
 import com.mushroom.midnight.Midnight;
-import com.mushroom.midnight.common.entity.EntityBladeshroomCap;
+import com.mushroom.midnight.common.entity.projectile.EntityBladeshroomCap;
 import com.mushroom.midnight.common.entity.EntityRift;
-import com.mushroom.midnight.common.entity.EntityThrownGeode;
+import com.mushroom.midnight.common.entity.projectile.EntitySporeBomb;
+import com.mushroom.midnight.common.entity.projectile.EntityThrownGeode;
 import com.mushroom.midnight.common.entity.creature.EntityCrystalBug;
 import com.mushroom.midnight.common.entity.creature.EntityDeceitfulSnapper;
 import com.mushroom.midnight.common.entity.creature.EntityHunter;
@@ -129,6 +130,13 @@ public class ModEntities {
                         .factory(EntityThrownGeode::new)
                         .id(new ResourceLocation(Midnight.MODID, "thrown_geode"), currentEntityId++)
                         .name(Midnight.MODID + ".thrown_geode")
+                        .tracker(64, 10, true)
+                        .build(),
+                EntityEntryBuilder.create()
+                        .entity(EntitySporeBomb.class)
+                        .factory(EntitySporeBomb::new)
+                        .id(new ResourceLocation(Midnight.MODID, "spore_bomb"), currentEntityId++)
+                        .name(Midnight.MODID + ".spore_bomb")
                         .tracker(64, 10, true)
                         .build()
         );

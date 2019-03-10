@@ -1,6 +1,6 @@
 package com.mushroom.midnight.client.render;
 
-import com.mushroom.midnight.common.entity.EntityBladeshroomCap;
+import com.mushroom.midnight.common.entity.projectile.EntityBladeshroomCap;
 import com.mushroom.midnight.common.registry.ModItems;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
