@@ -20,8 +20,8 @@ public class DripParticle extends Particle {
         this.particleBlue = b;
         setSize(0.01f, 0.01f);
         this.particleGravity = 0.06f;
-        this.bobTimer = 40;
         this.particleMaxAge = (int) (64d / (Math.random() * 0.8d + 0.2d));
+        this.bobTimer = this.particleMaxAge * 3 / 4;
         this.motionX = this.motionY = this.motionZ = 0d;
     }
 

@@ -3,6 +3,7 @@ package com.mushroom.midnight.common.entity;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.World;
 
 public class RiftAttachment {
@@ -34,8 +35,22 @@ public class RiftAttachment {
     }
 
     public RiftAttachment fixedToSurface(World world) {
+        if (!world.isChunkGeneratedAt(this.pos.getX(), this.pos.getZ())) {
+            generateChunk(world, new ChunkPos(this.pos));
+        }
         BlockPos surfacePos = new BlockPos(pos.getX(), world.getChunk(pos).getHeight(pos), pos.getZ());
+        // TODO safe placement in the current chunk
         return new RiftAttachment(surfacePos, this.yaw);
+    }
+
+    private void generateChunk(World world, ChunkPos chunkPos) {
+        for (int x = chunkPos.x - 1; x <= chunkPos.x + 1; x++) {
+            for (int z = chunkPos.z - 1; z <= chunkPos.z + 1; z++) {
+                if (x != 0 || z != 0) {
+                    world.getBlockState(new ChunkPos(x, z).getBlock(0, 0, 0));
+                }
+            }
+        }
     }
 
     public void apply(EntityRift rift) {

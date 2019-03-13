@@ -50,7 +50,7 @@ public class BlockDragonNest extends BlockMidnightPlant {
     @SideOnly(Side.CLIENT)
     public void randomDisplayTick(IBlockState state, World world, BlockPos pos, Random rand) {
         super.randomDisplayTick(state, world, pos, rand);
-        if (rand.nextInt(10) == 0) {
+        if (rand.nextBoolean()) {
             Vec3d offset = getOffset(state, world, pos);
             double distX = rand.nextFloat() * 0.6 - 0.3d;
             double posX = pos.getX() + 0.5d + offset.x + distX;

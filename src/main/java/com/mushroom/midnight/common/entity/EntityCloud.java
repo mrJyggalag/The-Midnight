@@ -66,6 +66,7 @@ public class EntityCloud extends Entity {
         return this;
     }
 
+    @Override
     protected void entityInit() {
         this.dataManager.register(COLOR, 0);
         this.dataManager.register(RADIUS, 0.5f);
@@ -159,6 +160,7 @@ public class EntityCloud extends Entity {
         return this;
     }
 
+    @Override
     public void onUpdate() {
         super.onUpdate();
         boolean flag = shouldIgnoreRadius();
@@ -295,6 +297,7 @@ public class EntityCloud extends Entity {
         return this.owner;
     }
 
+    @Override
     protected void readEntityFromNBT(NBTTagCompound compound) {
         this.ticksExisted = compound.getInteger("Age");
         this.duration = compound.getInteger("Duration");
@@ -329,6 +332,7 @@ public class EntityCloud extends Entity {
         }
     }
 
+    @Override
     protected void writeEntityToNBT(NBTTagCompound compound) {
         compound.setInteger("Age", this.ticksExisted);
         compound.setInteger("Duration", this.duration);
@@ -358,6 +362,7 @@ public class EntityCloud extends Entity {
         }
     }
 
+    @Override
     public void notifyDataManagerChange(DataParameter<?> key) {
         if (RADIUS.equals(key)) {
             setRadius(getRadius());
@@ -365,6 +370,7 @@ public class EntityCloud extends Entity {
         super.notifyDataManagerChange(key);
     }
 
+    @Override
     public EnumPushReaction getPushReaction() {
         return EnumPushReaction.IGNORE;
     }

@@ -388,14 +388,14 @@ death.midnight.tormented=%s a sombré dans ses tourments
 
 # Advancements
 
-advancement.midnight.title=Dans l'obscurité
-advancement.midnight.desc=Entre dans la dimension Minuit
+advancement.midnight.title=Minuit
+advancement.midnight.desc=Couvre-feu !
 
 advancement.inebriated.title=Imbriqué
-advancement.inebriated.desc=Casse une plante de Suavis
+advancement.inebriated.desc=Casser une plante de Suavis
 
 advancement.shroomikens.title=Champikens
-advancement.shroomikens.desc=Lance un chapeau de ChampiLame
+advancement.shroomikens.desc=Lancer un chapeau de ChampiLame
 
 advancement.fungi_forest.title=Éclairage
 advancement.fungi_forest.desc=Trouver le biome de Forêt Fongique
@@ -406,8 +406,11 @@ advancement.snapped_by_snapper.desc=Se faire mordre par un Vivaneau Fourbe en es
 advancement.your_highness.title=Votre Grandeur
 advancement.your_highness.desc=Obtenir une révérence de chaque couleur de Cerf Obscure
 
-advancement.thrown_geode.title=Perle Sombre
-advancement.thrown_geode.desc=Lancer une géode sur un rocher
+advancement.thrown_geode.title=Fissure
+advancement.thrown_geode.desc=Casser une géode en la lançant sur quelque chose d'assez solide
 
-advancement.surface_biomes.title=Surface de Minuit
-advancement.surface_biomes.desc=Trouver tous les biomes de la surface de Minuit
+advancement.surface_biomes.title=Marche-Nuit
+advancement.surface_biomes.desc=Traverser chaque biome de la surface de Minuit
+
+advancement.violeaf.title=Remède à base de plantes
+advancement.violeaf.desc=Guérir de l'effet de nausée en marchant près d'une Viofeuille
