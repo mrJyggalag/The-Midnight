@@ -15,15 +15,13 @@ import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.Constants;
 
 import javax.annotation.Nullable;
 
 public class EntitySporeBomb extends EntityThrowable {
-    private static final DataParameter<Integer> BOMB_TYPE = EntityDataManager.createKey(EntitySporeBomb.class, DataSerializers.VARINT);
-    private ItemStack bombStack = ItemStack.EMPTY;
+    private static final DataParameter<ItemStack> BOMB_STACK = EntityDataManager.createKey(EntitySporeBomb.class, DataSerializers.ITEM_STACK);
 
     public EntitySporeBomb(World world) {
         super(world);
@@ -40,47 +38,37 @@ public class EntitySporeBomb extends EntityThrowable {
     @Override
     protected void entityInit() {
         super.entityInit();
-        this.dataManager.register(BOMB_TYPE, 0);
+        this.dataManager.register(BOMB_STACK, new ItemStack(ModItems.SPORE_BOMB));
     }
 
     @Override
     public void writeEntityToNBT(NBTTagCompound compound) {
         super.writeEntityToNBT(compound);
-        compound.setShort("bomb_type", (short) getBombType());
-        compound.setTag("bomb_stack", this.bombStack.writeToNBT(new NBTTagCompound()));
+        compound.setTag("bomb_stack", getBombStack().writeToNBT(new NBTTagCompound()));
     }
 
     @Override
     public void readEntityFromNBT(NBTTagCompound compound) {
         super.readEntityFromNBT(compound);
         if (compound.hasKey("bomb_stack", Constants.NBT.TAG_COMPOUND)) {
-            this.bombStack = new ItemStack(compound.getCompoundTag("bomb_stack"));
-        }
-        if (compound.hasKey("bomb_type", Constants.NBT.TAG_SHORT)) {
-            setBombType(compound.getShort("bomb_type"));
+            setBombStack(new ItemStack(compound.getCompoundTag("bomb_stack")));
         }
     }
 
-    public int getBombType() {
-        return this.dataManager.get(BOMB_TYPE);
+    public ItemStack getBombStack() {
+        return this.dataManager.get(BOMB_STACK);
     }
 
     public void setBombStack(ItemStack bombStack) {
-        this.bombStack = bombStack;
-        setBombType(bombStack.getMetadata());
-    }
-
-    private void setBombType(int bombType) {
-        this.dataManager.set(BOMB_TYPE, bombType);
+        this.dataManager.set(BOMB_STACK, bombStack);
     }
 
     @Override
-    @SuppressWarnings("deprecation")
     public String getName() {
         if (hasCustomName()) {
             return getCustomNameTag();
         } else {
-            return I18n.translateToLocal("item.midnight.spore_bomb." + BombType.fromId(getBombType()).name().toLowerCase() + ".name");
+            return getBombStack().getDisplayName();
         }
     }
 
@@ -91,8 +79,8 @@ public class EntitySporeBomb extends EntityThrowable {
             if (isInWater()) {
                 entityDropItem(new ItemStack(ModItems.DARK_PEARL), 0.1f);
                 setDead();
-            } else if (ItemSporeBomb.checkExplode(this.world, this.bombStack)) {
-                ItemSporeBomb.explode(BombType.fromId(getBombType()), this.world, this.posX, this.posY, this.posZ);
+            } else if (ItemSporeBomb.checkExplode(this.world, getBombStack())) {
+                ItemSporeBomb.explode(BombType.fromStack(getBombStack()), this.world, this.posX, this.posY, this.posZ);
                 setDead();
             }
         }
@@ -106,9 +94,9 @@ public class EntitySporeBomb extends EntityThrowable {
         }
         if (!world.isRemote) {
             if (canBreakOn(result.getBlockPos())) {
-                ItemSporeBomb.explode(BombType.fromId(getBombType()), this.world, this.posX, this.posY, this.posZ);
+                ItemSporeBomb.explode(BombType.fromStack(getBombStack()), this.world, this.posX, this.posY, this.posZ);
             } else {
-                entityDropItem(this.bombStack.copy(), 0.01f);
+                entityDropItem(getBombStack().copy(), 0.01f);
             }
             setDead();
         }

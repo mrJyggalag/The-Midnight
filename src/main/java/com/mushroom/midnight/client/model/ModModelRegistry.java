@@ -98,7 +98,7 @@ public class ModModelRegistry {
             @Override
             @Nonnull
             public ItemStack getStackToRender(EntitySporeBomb entity) {
-                return new ItemStack(this.item, 1, entity.getBombType());
+                return entity.getBombStack();
             }
         });
 

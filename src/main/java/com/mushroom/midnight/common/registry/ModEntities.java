@@ -1,6 +1,7 @@
 package com.mushroom.midnight.common.registry;
 
 import com.mushroom.midnight.Midnight;
+import com.mushroom.midnight.common.entity.EntityCloud;
 import com.mushroom.midnight.common.entity.projectile.EntityBladeshroomCap;
 import com.mushroom.midnight.common.entity.EntityRift;
 import com.mushroom.midnight.common.entity.projectile.EntitySporeBomb;
@@ -138,6 +139,13 @@ public class ModEntities {
                         .id(new ResourceLocation(Midnight.MODID, "spore_bomb"), currentEntityId++)
                         .name(Midnight.MODID + ".spore_bomb")
                         .tracker(64, 10, true)
+                        .build(),
+                EntityEntryBuilder.create()
+                        .entity(EntityCloud.class)
+                        .factory(EntityCloud::new)
+                        .id(new ResourceLocation(Midnight.MODID, "cloud"), currentEntityId++)
+                        .name(Midnight.MODID + ".cloud")
+                        .tracker(160, Integer.MAX_VALUE, true)
                         .build()
         );
 

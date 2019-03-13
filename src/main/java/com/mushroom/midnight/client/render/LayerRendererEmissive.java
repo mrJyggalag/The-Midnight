@@ -38,7 +38,7 @@ public class LayerRendererEmissive<T extends EntityLivingBase> implements LayerR
         if (entity.isInvisible()) {
             return;
         }
-
+        GlStateManager.pushMatrix();
         CLIENT.getTextureManager().bindTexture(this.texture);
         GlStateManager.depthMask(true);
         GlStateManager.enableBlend();
@@ -53,6 +53,7 @@ public class LayerRendererEmissive<T extends EntityLivingBase> implements LayerR
 
         GlStateManager.enableLighting();
         OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, OpenGlHelper.lastBrightnessX, OpenGlHelper.lastBrightnessY);
+        GlStateManager.popMatrix();
     }
 
     @Override

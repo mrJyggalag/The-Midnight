@@ -1,8 +1,9 @@
 package com.mushroom.midnight.common.registry;
 
 import com.mushroom.midnight.Midnight;
+import com.mushroom.midnight.common.effect.DarknessEffect;
 import com.mushroom.midnight.common.effect.DragonGuardEffect;
-import com.mushroom.midnight.common.effect.GenericEffect;
+import com.mushroom.midnight.common.effect.ConfusionEffect;
 import com.mushroom.midnight.common.effect.PollinatedEffect;
 import com.mushroom.midnight.common.effect.UnstableFallEffect;
 import com.mushroom.midnight.common.effect.StunnedEffect;
@@ -23,6 +24,7 @@ public class ModEffects {
     public static final Potion DARKNESS = MobEffects.BLINDNESS;
     public static final Potion TORMENTED = MobEffects.POISON;
     public static final Potion UNSTABLE_FALL = MobEffects.JUMP_BOOST;
+    public static final Potion CONFUSION = MobEffects.BLINDNESS;
 
     @SubscribeEvent
     public static void onRegisterEffects(RegistryEvent.Register<Potion> event) {
@@ -30,9 +32,10 @@ public class ModEffects {
                 RegUtil.withName(new StunnedEffect(), "stunned").withIcon("stunned"),
                 RegUtil.withName(new PollinatedEffect(), "pollinated").withIcon("pollinated"),
                 RegUtil.withName(new DragonGuardEffect(), "dragon_guard").withIcon("dragons_guard"),
-                RegUtil.withName(new GenericEffect(true, 0), "darkness").withIcon("darkness"),
+                RegUtil.withName(new DarknessEffect(), "darkness").withIcon("darkness"),
                 RegUtil.withName(new TormentedEffect(), "tormented").withIcon("tormented"),
-                RegUtil.withName(new UnstableFallEffect(), "unstable_fall").withIcon("unstable")
+                RegUtil.withName(new UnstableFallEffect(), "unstable_fall").withIcon("unstable"),
+                RegUtil.withName(new ConfusionEffect(), "confusion").withIcon("thinking")
         );
     }
 }
