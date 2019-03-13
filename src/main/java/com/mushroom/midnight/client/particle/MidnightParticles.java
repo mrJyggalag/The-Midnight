@@ -3,6 +3,7 @@ package com.mushroom.midnight.client.particle;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.IParticleFactory;
 import net.minecraft.client.particle.Particle;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
 public enum MidnightParticles {
@@ -33,5 +34,9 @@ public enum MidnightParticles {
 
     private void spawn(Particle particle) {
         Minecraft.getMinecraft().effectRenderer.addEffect(particle);
+    }
+
+    public static MidnightParticles fromId(int id) {
+        return values()[MathHelper.clamp(id, 0, values().length - 1)];
     }
 }

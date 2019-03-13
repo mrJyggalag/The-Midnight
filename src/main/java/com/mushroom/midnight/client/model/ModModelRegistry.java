@@ -3,6 +3,7 @@ package com.mushroom.midnight.client.model;
 import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.client.IModelProvider;
 import com.mushroom.midnight.client.render.RenderBladeshroomCap;
+import com.mushroom.midnight.client.render.RenderCloud;
 import com.mushroom.midnight.client.render.RenderCrystalBug;
 import com.mushroom.midnight.client.render.RenderDeceitfulSnapper;
 import com.mushroom.midnight.client.render.RenderHunter;
@@ -17,6 +18,7 @@ import com.mushroom.midnight.client.render.RenderTreeHopper;
 import com.mushroom.midnight.client.render.TEISRShield;
 import com.mushroom.midnight.common.block.BlockMidnightChest;
 import com.mushroom.midnight.common.block.BlockMidnightChest.ChestModel;
+import com.mushroom.midnight.common.entity.EntityCloud;
 import com.mushroom.midnight.common.entity.EntityRift;
 import com.mushroom.midnight.common.entity.creature.EntityCrystalBug;
 import com.mushroom.midnight.common.entity.creature.EntityDeceitfulSnapper;
@@ -101,6 +103,7 @@ public class ModModelRegistry {
                 return entity.getBombStack();
             }
         });
+        RenderingRegistry.registerEntityRenderingHandler(EntityCloud.class, RenderCloud::new);
 
         ModItems.getItems().stream().filter(i -> i instanceof IModelProvider).forEach(ModModelRegistry::registerItemModel);
         ModBlocks.getBlocks().stream().filter(b -> b instanceof IModelProvider).forEach(ModModelRegistry::registerBlockModel);

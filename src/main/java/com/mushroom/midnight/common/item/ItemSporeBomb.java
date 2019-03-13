@@ -1,5 +1,6 @@
 package com.mushroom.midnight.common.item;
 
+import com.mushroom.midnight.client.particle.MidnightParticles;
 import com.mushroom.midnight.common.entity.EntityCloud;
 import com.mushroom.midnight.common.entity.projectile.EntitySporeBomb;
 import com.mushroom.midnight.common.registry.ModEffects;
@@ -24,7 +25,6 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
-import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.MathHelper;
@@ -150,45 +150,47 @@ public class ItemSporeBomb extends Item {
         //world.createExplosion(null, x, y, z, explosionRadius, false);
         switch (bombType) {
             case NIGHTSHROOM:
-                entity = createLingeringCloud(bombType, world, x, y, z);
-                entity.setParticle(EnumParticleTypes.SPELL);
-                entity.addEffect(new PotionEffect(ModEffects.DARKNESS, 100, 0, false, true));
-                world.spawnEntity(entity);
+                world.spawnEntity(createLingeringCloud(bombType, world, x, y, z)
+                        .setParticle(MidnightParticles.SPORCH)
+                        .setParticleParam(2)
+                        .addEffect(new PotionEffect(ModEffects.DARKNESS, 100, 0, false, true)));
                 break;
             case DEWSHROOM:
-                entity = createLingeringCloud(bombType, world, x, y, z);
-                entity.setParticle(EnumParticleTypes.FALLING_DUST);
-                entity.setRadiusPerTick(entity.getRadius() * 0.001f);
-                entity.addEffect(new PotionEffect(ModEffects.STUNNED, 100, 0, false, true));
-                entity.addEffect(new PotionEffect(MobEffects.SLOWNESS, 100, 5, false, true));
-                world.spawnEntity(entity);
+                world.spawnEntity(createLingeringCloud(bombType, world, x, y, z)
+                        .setParticle(MidnightParticles.SPORCH)
+                        .setParticleParam(1)
+                        .setRadiusPerTick(0.0025f)
+                        .addEffect(new PotionEffect(ModEffects.STUNNED, 100, 0, false, true))
+                        .addEffect(new PotionEffect(MobEffects.SLOWNESS, 100, 5, false, true)));
                 break;
             case VIRIDSHROOM:
-                entity = createLingeringCloud(bombType, world, x, y, z).setAllowTeleport();
-                entity.setParticle(EnumParticleTypes.SLIME);
-                entity.addEffect(new PotionEffect(ModEffects.TORMENTED, 100, 0, false, true));
-                world.spawnEntity(entity);
+                world.spawnEntity(createLingeringCloud(bombType, world, x, y, z)
+                        .setAllowTeleport()
+                        .setParticle(MidnightParticles.SPORCH)
+                        .setParticleParam(3)
+                        .addEffect(new PotionEffect(ModEffects.TORMENTED, 100, 0, false, true)));
                 break;
             case BOGSHROOM:
-                entity = createLingeringCloud(bombType, world, x, y, z);
-                entity.setParticle(EnumParticleTypes.SPELL_MOB);
-                entity.addEffect(new PotionEffect(ModEffects.CONFUSION, 200, 0, false, true));
-                world.spawnEntity(entity);
+                world.spawnEntity(createLingeringCloud(bombType, world, x, y, z)
+                        .setParticle(MidnightParticles.SPORCH)
+                        .setParticleParam(0)
+                        .addEffect(new PotionEffect(ModEffects.CONFUSION, 200, 0, false, true)));
                 break;
         }
     }
 
     private static EntityCloud createLingeringCloud(BombType bombType, World world, double x, double y, double z) {
-        EntityCloud entity = new EntityCloud(world, x, y, z);
-        entity.setRadius(2.5f);
-        //entity.setRadiusOnUse(-0.5f);
-        entity.setWaitTime(10);
-        entity.setDuration(entity.getDuration() / 2);
-        entity.setRadiusPerTick(-entity.getRadius() / (float) entity.getDuration());
-        entity.setPotion(PotionTypes.EMPTY);
-        entity.setColor(bombType.getColor());
-        entity.setParticle(EnumParticleTypes.SLIME);
-        return entity;
+        float radius = 2.5f;
+        int duration = 300;
+        return new EntityCloud(world, x, y, z)
+                .setRadius(radius)
+                //.setRadiusOnUse(-0.5f)
+                .setWaitTime(10)
+                .setDuration(duration)
+                .setRadiusPerTick(-radius / (float) duration)
+                .setPotion(PotionTypes.EMPTY)
+                .setColor(bombType.getColor())
+                .setParticle(MidnightParticles.SPORCH);
     }
 
     @SideOnly(Side.CLIENT)
