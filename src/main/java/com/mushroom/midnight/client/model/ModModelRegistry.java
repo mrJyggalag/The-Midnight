@@ -15,6 +15,7 @@ import com.mushroom.midnight.client.render.RenderRifter;
 import com.mushroom.midnight.client.render.RenderSkulk;
 import com.mushroom.midnight.client.render.RenderStinger;
 import com.mushroom.midnight.client.render.RenderTreeHopper;
+import com.mushroom.midnight.client.render.TEISRBomb;
 import com.mushroom.midnight.client.render.TEISRShield;
 import com.mushroom.midnight.common.block.BlockMidnightChest;
 import com.mushroom.midnight.common.block.BlockMidnightChest.ChestModel;
@@ -34,7 +35,6 @@ import com.mushroom.midnight.common.entity.projectile.EntityBladeshroomCap;
 import com.mushroom.midnight.common.entity.projectile.EntitySporeBomb;
 import com.mushroom.midnight.common.entity.projectile.EntityThrownGeode;
 import com.mushroom.midnight.common.helper.Helper;
-import com.mushroom.midnight.common.item.ItemSporeBomb;
 import com.mushroom.midnight.common.registry.ModBlocks;
 import com.mushroom.midnight.common.registry.ModItems;
 import com.mushroom.midnight.common.tile.base.TileEntityMidnightChest;
@@ -108,8 +108,6 @@ public class ModModelRegistry {
         ModItems.getItems().stream().filter(i -> i instanceof IModelProvider).forEach(ModModelRegistry::registerItemModel);
         ModBlocks.getBlocks().stream().filter(b -> b instanceof IModelProvider).forEach(ModModelRegistry::registerBlockModel);
 
-        ((ItemSporeBomb)ModItems.SPORE_BOMB).renderModel();
-
         ModelLoader.setCustomStateMapper(ModBlocks.SHADOWROOT_LEAVES, new StateMap.Builder()
                 .ignore(BlockLeaves.CHECK_DECAY, BlockLeaves.DECAYABLE)
                 .build()
@@ -162,6 +160,7 @@ public class ModModelRegistry {
             }
         });
         ModItems.ROCKSHROOM_SHIELD.setTileEntityItemStackRenderer(new TEISRShield());
+        ModItems.SPORE_BOMB.setTileEntityItemStackRenderer(new TEISRBomb());
 
         ModItems.ADVANCEMENT_HIGHNESS.setTileEntityItemStackRenderer(new TileEntityItemStackRenderer() {
             private EntityNightStag entity;

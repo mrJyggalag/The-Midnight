@@ -15,6 +15,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import java.util.ArrayList;
 import java.util.List;
 
+@SideOnly(Side.CLIENT)
 public class SporchParticle extends Particle {
     private final float flameScale;
     private final List<TextureAtlasSprite> sprites = new ArrayList<>();

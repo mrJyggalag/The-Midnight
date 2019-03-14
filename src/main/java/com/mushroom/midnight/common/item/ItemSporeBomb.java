@@ -1,13 +1,14 @@
 package com.mushroom.midnight.common.item;
 
+import com.mushroom.midnight.client.IModelProvider;
 import com.mushroom.midnight.client.particle.MidnightParticles;
 import com.mushroom.midnight.common.entity.EntityCloud;
 import com.mushroom.midnight.common.entity.projectile.EntitySporeBomb;
 import com.mushroom.midnight.common.registry.ModEffects;
 import com.mushroom.midnight.common.registry.ModItems;
 import com.mushroom.midnight.common.registry.ModTabs;
+import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.block.BlockDispenser;
-import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.dispenser.BehaviorProjectileDispense;
 import net.minecraft.dispenser.IPosition;
@@ -29,12 +30,11 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
-import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.util.Constants;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ItemSporeBomb extends Item {
+import java.util.stream.IntStream;
+
+public class ItemSporeBomb extends Item implements IModelProvider {
     public static int MAX_FUSE_TIME = 200;
 
     public enum BombType {
@@ -108,21 +108,30 @@ public class ItemSporeBomb extends Item {
 
     @Override
     public void onUpdate(ItemStack stack, World world, Entity entity, int slotId, boolean isSelected) {
-        if (checkExplode(world, stack)) {
-            explode(BombType.fromId(stack.getMetadata()), world, entity.posX, entity.posY, entity.posZ);
-            stack.shrink(1);
-        }
+        updateBomb(world, stack, entity.posX, entity.posY, entity.posZ);
     }
 
     @Override
     public boolean onEntityItemUpdate(EntityItem entityItem) {
-        ItemStack stack = entityItem.getItem();
-        boolean valid = checkExplode(entityItem.world, stack);
+        boolean valid = updateBomb(entityItem.world, entityItem.getItem(), entityItem.posX, entityItem.posY, entityItem.posZ);
         if (valid) {
-            explode(BombType.fromId(stack.getMetadata()), entityItem.world, entityItem.posX, entityItem.posY, entityItem.posZ);
             entityItem.setDead();
         }
         return valid;
+    }
+
+    private boolean updateBomb(World world, ItemStack stack, double x, double y, double z) {
+        if (!world.isRemote) {
+            long fuseTime = getFuseTime(world, stack);
+            if (fuseTime <= 0) {
+                explode(BombType.fromId(stack.getMetadata()), world, x, y, z);
+                stack.shrink(1);
+                return true;
+            } else if (fuseTime < MAX_FUSE_TIME) {
+                world.playSound(null, x, y, z, SoundEvents.BLOCK_LAVA_EXTINGUISH, SoundCategory.HOSTILE, world.rand.nextFloat(), world.rand.nextFloat());
+            }
+        }
+        return false;
     }
 
     public static void setFuseTime(World world, ItemStack stack, int time) {
@@ -136,18 +145,21 @@ public class ItemSporeBomb extends Item {
     }
 
     public static long getFuseTime(World world, ItemStack stack) {
-        // TODO fusing animation on client
-        return stack.getItem() == ModItems.SPORE_BOMB && stack.getTagCompound() != null && stack.getTagCompound().hasKey("fuse_time", Constants.NBT.TAG_LONG) ? Math.max(0, stack.getTagCompound().getLong("fuse_time") - world.getTotalWorldTime()) : 0;
+        return stack.getItem() == ModItems.SPORE_BOMB && stack.getTagCompound() != null && stack.getTagCompound().hasKey("fuse_time", Constants.NBT.TAG_LONG) ? Math.max(0, stack.getTagCompound().getLong("fuse_time") - world.getTotalWorldTime()) : MAX_FUSE_TIME;
     }
 
     public static boolean checkExplode(World world, ItemStack stack) {
-        return !world.isRemote && stack.getItem() == ModItems.SPORE_BOMB && stack.getTagCompound() != null && stack.getTagCompound().hasKey("fuse_time", Constants.NBT.TAG_LONG) && world.getTotalWorldTime() >= stack.getTagCompound().getLong("fuse_time");
+        return getFuseTime(world, stack) <= 0;
+    }
+
+    public void gatherVariants(Int2ObjectMap<String> variants) {
+        IntStream.range(0, BombType.values().length).forEach(i -> variants.put(i, "inventory"));
     }
 
     public static void explode(BombType bombType, World world, double x, double y, double z) {
-        EntityCloud entity;
-        //float explosionRadius = 2.5f;
-        //world.createExplosion(null, x, y, z, explosionRadius, false);
+        float explosionRadius = 1f;
+        world.createExplosion(null, x, y, z, explosionRadius, false);
+        world.playSound(null, x, y, z, SoundEvents.ENTITY_GENERIC_EXPLODE, SoundCategory.HOSTILE, 1f, 1f);
         switch (bombType) {
             case NIGHTSHROOM:
                 world.spawnEntity(createLingeringCloud(bombType, world, x, y, z)
@@ -191,13 +203,6 @@ public class ItemSporeBomb extends Item {
                 .setPotion(PotionTypes.EMPTY)
                 .setColor(bombType.getColor())
                 .setParticle(MidnightParticles.SPORCH);
-    }
-
-    @SideOnly(Side.CLIENT)
-    public void renderModel() {
-        for (BombType bomb : BombType.values()) {
-            ModelLoader.setCustomModelResourceLocation(this, bomb.ordinal(), new ModelResourceLocation(getRegistryName() + "_" + bomb.ordinal(), "inventory"));
-        }
     }
 
     private static class DispenserBehavior extends BehaviorProjectileDispense {
