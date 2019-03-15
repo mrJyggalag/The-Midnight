@@ -1,9 +1,11 @@
 package com.mushroom.midnight.common.item;
 
+import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.client.IModelProvider;
 import com.mushroom.midnight.client.particle.MidnightParticles;
 import com.mushroom.midnight.common.entity.EntityCloud;
 import com.mushroom.midnight.common.entity.projectile.EntitySporeBomb;
+import com.mushroom.midnight.common.network.MessageBombExplosion;
 import com.mushroom.midnight.common.registry.ModEffects;
 import com.mushroom.midnight.common.registry.ModItems;
 import com.mushroom.midnight.common.registry.ModTabs;
@@ -31,6 +33,7 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.Constants;
+import net.minecraftforge.fml.common.network.NetworkRegistry;
 
 import java.util.stream.IntStream;
 
@@ -158,7 +161,8 @@ public class ItemSporeBomb extends Item implements IModelProvider {
 
     public static void explode(BombType bombType, World world, double x, double y, double z) {
         float explosionRadius = 1f;
-        world.createExplosion(null, x, y, z, explosionRadius, false);
+        //world.createExplosion(null, x, y, z, explosionRadius, false);
+        Midnight.NETWORK.sendToAllTracking(new MessageBombExplosion(x, y, z, bombType.getColor()), new NetworkRegistry.TargetPoint(world.provider.getDimension(), x, y, z, 50d));
         world.playSound(null, x, y, z, SoundEvents.ENTITY_GENERIC_EXPLODE, SoundCategory.HOSTILE, 1f, 1f);
         switch (bombType) {
             case NIGHTSHROOM:

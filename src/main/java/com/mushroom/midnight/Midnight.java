@@ -16,6 +16,7 @@ import com.mushroom.midnight.common.loot.InBlockLootCondition;
 import com.mushroom.midnight.common.loot.IsChildLootCondition;
 import com.mushroom.midnight.common.network.GuiHandler;
 import com.mushroom.midnight.common.network.MessageAnimation;
+import com.mushroom.midnight.common.network.MessageBombExplosion;
 import com.mushroom.midnight.common.network.MessageBridgeCreate;
 import com.mushroom.midnight.common.network.MessageBridgeRemoval;
 import com.mushroom.midnight.common.network.MessageBridgeState;
@@ -122,6 +123,7 @@ public class Midnight {
         NETWORK.registerMessage(MessageAnimation.Handler.class, MessageAnimation.class, 4, Side.CLIENT);
         NETWORK.registerMessage(MessageRockshroomBroken.Handler.class, MessageRockshroomBroken.class, 5, Side.CLIENT);
         NETWORK.registerMessage(MessageItemActivation.Handler.class, MessageItemActivation.class, 6, Side.CLIENT);
+        NETWORK.registerMessage(MessageBombExplosion.Handler.class, MessageBombExplosion.class, 7, Side.CLIENT);
 
         Reflection.initialize(ModCriterion.class, ModTabs.class);
 
