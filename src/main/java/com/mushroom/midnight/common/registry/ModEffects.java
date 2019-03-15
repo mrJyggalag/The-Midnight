@@ -35,7 +35,7 @@ public class ModEffects {
                 RegUtil.withName(new DarknessEffect(), "darkness").withIcon("darkness"),
                 RegUtil.withName(new TormentedEffect(), "tormented").withIcon("tormented"),
                 RegUtil.withName(new UnstableFallEffect(), "unstable_fall").withIcon("unstable"),
-                RegUtil.withName(new ConfusionEffect(), "confusion").withIcon("thinking")
+                RegUtil.withName(new ConfusionEffect(), "confusion").withIcon("confusion")
         );
     }
 }
