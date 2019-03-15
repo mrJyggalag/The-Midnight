@@ -379,6 +379,7 @@ potion.midnight.dragon_guard.name=Dragon's Guard
 potion.midnight.darkness.name=Darkness
 potion.midnight.tormented.name=Tormented
 potion.midnight.unstable_fall.name=Unstable Fall
+potion.midnight.confusion.name=Confusion
 
 # DamageSources
 death.midnight.bladeshroom=%s was pricked to death by a bladeshroom
