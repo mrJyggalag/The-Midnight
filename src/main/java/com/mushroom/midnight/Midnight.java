@@ -9,6 +9,7 @@ import com.mushroom.midnight.common.capability.MultiLayerBiomeSampler;
 import com.mushroom.midnight.common.capability.NullStorage;
 import com.mushroom.midnight.common.capability.RiftTravelCooldown;
 import com.mushroom.midnight.common.capability.RifterCapturable;
+import com.mushroom.midnight.common.compatibility.CompatibilityImmersiveEngineering;
 import com.mushroom.midnight.common.compatibility.CompatibilityThaumcraft;
 import com.mushroom.midnight.common.compatibility.SupportMods;
 import com.mushroom.midnight.common.loot.InBiomeLootCondition;
@@ -151,6 +152,9 @@ public class Midnight {
 
         if (SupportMods.THAUMCRAFT.isLoaded()) {
             MinecraftForge.EVENT_BUS.register(CompatibilityThaumcraft.instance);
+        }
+        if (SupportMods.IMMERSIVE_ENGINEERING.isLoaded()) {
+            CompatibilityImmersiveEngineering.instance.register();
         }
     }
 

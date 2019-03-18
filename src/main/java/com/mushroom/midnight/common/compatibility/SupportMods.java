@@ -6,7 +6,8 @@ import net.minecraftforge.fml.common.Loader;
 import javax.annotation.Nonnull;
 
 public enum SupportMods implements IStringSerializable {
-    THAUMCRAFT("thaumcraft");
+    THAUMCRAFT("thaumcraft"),
+    IMMERSIVE_ENGINEERING("immersiveengineering");
 
     private final String modid;
     private final boolean loaded;

@@ -35,6 +35,7 @@ repositories {
     maven { url = "http://dvs1.progwml6.com/files/maven" }
     maven { url = "http://maven.gegy1000.net" }
     //maven { url = "https://minecraft.curseforge.com/api/maven/" }
+    maven { url = "https://maven.blamejared.com/" }
 }
 
 dependencies {
@@ -42,6 +43,7 @@ dependencies {
     runtime "mezz.jei:jei_1.12.2:4.15.0.268"
     deobfCompile "com.azanor:thaumcraft-api:6.1-beta23"
     //deobfCompile "thaumcraft:Thaumcraft:1.12.2:6.1.BETA26"
+    deobfCompile "blusunrize:ImmersiveEngineering:0.12-89-518"
 }
 
 processResources {
