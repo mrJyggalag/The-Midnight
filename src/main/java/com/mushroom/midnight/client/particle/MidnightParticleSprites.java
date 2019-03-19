@@ -20,7 +20,7 @@ public class MidnightParticleSprites {
         SPORCH_NIGHTSHROOM_1, SPORCH_NIGHTSHROOM_2, SPORCH_NIGHTSHROOM_3,
         SPORCH_DEWSHROOM_1, SPORCH_DEWSHROOM_2, SPORCH_DEWSHROOM_3,
         SPORCH_VIRIDSHROOM_1, SPORCH_VIRIDSHROOM_2, SPORCH_VIRIDSHROOM_3,
-        FURNACE_FLAME;
+        FURNACE_FLAME, FADING_SPORE;
     }
 
     private static final EnumMap<SpriteTypes, TextureAtlasSprite> sprites = new EnumMap<>(SpriteTypes.class);
