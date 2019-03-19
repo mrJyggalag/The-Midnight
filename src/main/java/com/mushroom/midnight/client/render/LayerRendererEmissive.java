@@ -1,5 +1,6 @@
 package com.mushroom.midnight.client.render;
 
+import com.mushroom.midnight.common.helper.Helper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.GlStateManager;
@@ -7,8 +8,6 @@ import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.entity.layers.LayerRenderer;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.ResourceLocation;
-
-import java.awt.Color;
 
 public class LayerRendererEmissive<T extends EntityLivingBase> implements LayerRenderer<T> {
     private static final Minecraft CLIENT = Minecraft.getMinecraft();
@@ -45,8 +44,8 @@ public class LayerRendererEmissive<T extends EntityLivingBase> implements LayerR
 
         int brightness = this.brightnessFunction.apply(entity, partialTicks);
         OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, brightness, brightness);
-        Color color = new Color(colorFunction.getColor(entity, partialTicks));
-        GlStateManager.color(color.getRed() / 255f, color.getGreen() / 255f, color.getBlue() / 255f, 1f);
+        float[] rgbF = Helper.getRGBColorF(colorFunction.getColor(entity, partialTicks));
+        GlStateManager.color(rgbF[0], rgbF[1], rgbF[2], 1f);
         GlStateManager.disableLighting();
 
         this.model.render(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale);

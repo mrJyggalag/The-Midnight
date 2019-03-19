@@ -13,17 +13,15 @@ public class CompatibilityImmersiveEngineering {
     }
 
     public void register() {
-        ExternalHeaterHandler.registerHeatableAdapter(TileEntityMidnightFurnace.class, new MidnightFurnaceAdapter());
-    }
-
-    private static class MidnightFurnaceAdapter extends ExternalHeaterHandler.DefaultFurnaceAdapter {
-        @Override
-        public void updateFurnace(TileEntity tileEntity, boolean active) {
-            if (tileEntity.getBlockType() instanceof BlockMidnightFurnace) {
-                BlockMidnightFurnace.setState(active, tileEntity.getWorld(), tileEntity.getPos());
-                IBlockState state = tileEntity.getWorld().getBlockState(tileEntity.getPos());
-                tileEntity.getWorld().notifyBlockUpdate(tileEntity.getPos(), state, state, 3);
+        ExternalHeaterHandler.registerHeatableAdapter(TileEntityMidnightFurnace.class, new ExternalHeaterHandler.DefaultFurnaceAdapter() {
+            @Override
+            public void updateFurnace(TileEntity tileEntity, boolean active) {
+                if (tileEntity.getBlockType() instanceof BlockMidnightFurnace) {
+                    BlockMidnightFurnace.setState(active, tileEntity.getWorld(), tileEntity.getPos());
+                    IBlockState state = tileEntity.getWorld().getBlockState(tileEntity.getPos());
+                    tileEntity.getWorld().notifyBlockUpdate(tileEntity.getPos(), state, state, 3);
+                }
             }
-        }
+        });
     }
 }

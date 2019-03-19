@@ -1,5 +1,6 @@
 package com.mushroom.midnight.client.particle;
 
+import com.mushroom.midnight.common.helper.Helper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.IParticleFactory;
 import net.minecraft.client.particle.Particle;
@@ -18,8 +19,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nullable;
 
-import java.awt.Color;
-
 import static com.mushroom.midnight.Midnight.MODID;
 
 @SideOnly(Side.CLIENT)
@@ -32,15 +31,13 @@ public class BombExplosionParticle extends Particle {
     private final TextureManager textureManager;
     private final float size;
 
-    protected BombExplosionParticle(TextureManager textureManager, World world, double x, double y, double z, double scale, double unused1, double unused2, int colorCode) {
+    protected BombExplosionParticle(TextureManager textureManager, World world, double x, double y, double z, double scale, double unused1, double unused2, int color) {
         super(world, x, y, z, 0d, 0d, 0d);
         this.textureManager = textureManager;
         this.lifeTime = 6 + this.rand.nextInt(4);
         //float f = this.rand.nextFloat() * 0.6f + 0.4f;
-        Color color = new Color(colorCode);
-        this.particleRed = color.getRed() / 255f;
-        this.particleGreen = color.getGreen() / 255f;
-        this.particleBlue = color.getBlue() / 255f;
+        float[] rgbF = Helper.getRGBColorF(color);
+        setRBGColorF(rgbF[0], rgbF[1], rgbF[2]);
         this.size = 1f - (float) scale * 0.5f;
     }
 
@@ -49,22 +46,28 @@ public class BombExplosionParticle extends Particle {
         int i = (int) (((float) this.life + partialTicks) * 15f / (float) this.lifeTime);
         if (i <= 15) {
             this.textureManager.bindTexture(EXPLOSION_TEXTURE);
-            double f = (i % 4) / 4d;
-            double f1 = f + 0.24975d;
-            double f2 = (float) (i / 4) / 4d;
-            double f3 = f2 + 0.24975d;
-            double f4 = 2d * this.size;
-            float posX = (float) (this.prevPosX + (this.posX - this.prevPosX) * (double) partialTicks - interpPosX);
-            float posY = (float) (this.prevPosY + (this.posY - this.prevPosY) * (double) partialTicks - interpPosY);
-            float posZ = (float) (this.prevPosZ + (this.posZ - this.prevPosZ) * (double) partialTicks - interpPosZ);
+            double minU = (i % 4) / 4d;
+            double maxU = minU + 0.24975d;
+            double minV = (float)(i / 4) / 4d;
+            double maxV = minV + 0.24975d;
+            double scale = 2d * this.size;
+            int skyLight = 0;
+            int blockLight = 240;
+            double x = this.prevPosX + (this.posX - this.prevPosX) * partialTicks - interpPosX;
+            double y = this.prevPosY + (this.posY - this.prevPosY) * partialTicks - interpPosY;
+            double z = this.prevPosZ + (this.posZ - this.prevPosZ) * partialTicks - interpPosZ;
             GlStateManager.color(1f, 1f, 1f, 1f);
             GlStateManager.disableLighting();
             RenderHelper.disableStandardItemLighting();
             buffer.begin(7, VERTEX_FORMAT);
-            buffer.pos(posX - rotationX * f4 - rotationXY * f4, posY - rotationZ * f4, posZ - rotationYZ * f4 - rotationXZ * f4).tex(f1, f3).color(this.particleRed, this.particleGreen, this.particleBlue, 1f).lightmap(0, 240).normal(0f, 1f, 0f).endVertex();
-            buffer.pos(posX - rotationX * f4 + rotationXY * f4, posY + rotationZ * f4, posZ - rotationYZ * f4 + rotationXZ * f4).tex(f1, f2).color(this.particleRed, this.particleGreen, this.particleBlue, 1f).lightmap(0, 240).normal(0f, 1f, 0f).endVertex();
-            buffer.pos(posX + rotationX * f4 + rotationXY * f4, posY + rotationZ * f4, posZ + rotationYZ * f4 + rotationXZ * f4).tex(f, f2).color(this.particleRed, this.particleGreen, this.particleBlue, 1f).lightmap(0, 240).normal(0f, 1f, 0f).endVertex();
-            buffer.pos(posX + rotationX * f4 - rotationXY * f4, posY - rotationZ * f4, posZ + rotationYZ * f4 - rotationXZ * f4).tex(f, f3).color(this.particleRed, this.particleGreen, this.particleBlue, 1f).lightmap(0, 240).normal(0f, 1f, 0f).endVertex();
+            buffer.pos(x - rotationX * scale - rotationXY * scale, y - rotationZ * scale, z - rotationYZ * scale - rotationXZ * scale)
+                    .tex(maxU, maxV).color(this.particleRed, this.particleGreen, this.particleBlue, 1f).lightmap(skyLight, blockLight).normal(0f, 1f, 0f).endVertex();
+            buffer.pos(x - rotationX * scale + rotationXY * scale, y + rotationZ * scale, z - rotationYZ * scale + rotationXZ * scale)
+                    .tex(maxU, minV).color(this.particleRed, this.particleGreen, this.particleBlue, 1f).lightmap(skyLight, blockLight).normal(0f, 1f, 0f).endVertex();
+            buffer.pos(x + rotationX * scale + rotationXY * scale, y + rotationZ * scale, z + rotationYZ * scale + rotationXZ * scale)
+                    .tex(minU, minV).color(this.particleRed, this.particleGreen, this.particleBlue, 1f).lightmap(skyLight, blockLight).normal(0f, 1f, 0f).endVertex();
+            buffer.pos(x + rotationX * scale - rotationXY * scale, y - rotationZ * scale, z + rotationYZ * scale - rotationXZ * scale)
+                    .tex(minU, maxV).color(this.particleRed, this.particleGreen, this.particleBlue, 1f).lightmap(skyLight, blockLight).normal(0f, 1f, 0f).endVertex();
             Tessellator.getInstance().draw();
             GlStateManager.enableLighting();
         }

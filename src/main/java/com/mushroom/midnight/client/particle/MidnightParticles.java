@@ -13,7 +13,8 @@ public enum MidnightParticles {
     UNSTABLE_BUSH(new UnstableBushParticle.Factory()),
     SPORCH(new SporchParticle.Factory()),
     FURNACE_FLAME(new FurnaceFlameParticle.Factory()),
-    BOMB_EXPLOSION(new BombExplosionParticle.Factory());
+    BOMB_EXPLOSION(new BombExplosionParticle.Factory()),
+    FADING_SPORE(new FadingSporeParticle.Factory());
 
     IParticleFactory factory;
 

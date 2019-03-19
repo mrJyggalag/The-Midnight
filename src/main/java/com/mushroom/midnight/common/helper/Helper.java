@@ -15,4 +15,12 @@ public class Helper {
     public static boolean isNotFakePlayer(@Nullable Entity entity) {
         return !(entity instanceof FakePlayer);
     }
+
+    public static float[] getRGBColorF(int color) {
+        float[] rgb = new float[3];
+        rgb[0] = ((color >> 16) & 255) / 255f;
+        rgb[1] = ((color >> 8) & 255) / 255f;
+        rgb[2] = (color & 255) / 255f;
+        return rgb;
+    }
 }

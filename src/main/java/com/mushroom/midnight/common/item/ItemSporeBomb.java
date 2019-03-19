@@ -167,14 +167,14 @@ public class ItemSporeBomb extends Item implements IModelProvider {
         switch (bombType) {
             case NIGHTSHROOM:
                 world.spawnEntity(createLingeringCloud(bombType, world, x, y, z)
-                        .setParticle(MidnightParticles.SPORCH)
-                        .setParticleParam(2)
+                        .setParticle(MidnightParticles.FADING_SPORE)
+                        .setParticleParam(bombType.getColor())
                         .addEffect(new PotionEffect(ModEffects.DARKNESS, 100, 0, false, true)));
                 break;
             case DEWSHROOM:
                 world.spawnEntity(createLingeringCloud(bombType, world, x, y, z)
-                        .setParticle(MidnightParticles.SPORCH)
-                        .setParticleParam(1)
+                        .setParticle(MidnightParticles.FADING_SPORE)
+                        .setParticleParam(bombType.getColor())
                         .setRadiusPerTick(0.0025f)
                         .addEffect(new PotionEffect(ModEffects.STUNNED, 100, 0, false, true))
                         .addEffect(new PotionEffect(MobEffects.SLOWNESS, 100, 5, false, true)));
@@ -182,14 +182,14 @@ public class ItemSporeBomb extends Item implements IModelProvider {
             case VIRIDSHROOM:
                 world.spawnEntity(createLingeringCloud(bombType, world, x, y, z)
                         .setAllowTeleport()
-                        .setParticle(MidnightParticles.SPORCH)
-                        .setParticleParam(3)
+                        .setParticle(MidnightParticles.FADING_SPORE)
+                        .setParticleParam(bombType.getColor())
                         .addEffect(new PotionEffect(ModEffects.TORMENTED, 100, 0, false, true)));
                 break;
             case BOGSHROOM:
                 world.spawnEntity(createLingeringCloud(bombType, world, x, y, z)
-                        .setParticle(MidnightParticles.SPORCH)
-                        .setParticleParam(0)
+                        .setParticle(MidnightParticles.FADING_SPORE)
+                        .setParticleParam(bombType.getColor())
                         .addEffect(new PotionEffect(ModEffects.CONFUSION, 200, 0, false, true)));
                 break;
         }
@@ -205,8 +205,7 @@ public class ItemSporeBomb extends Item implements IModelProvider {
                 .setDuration(duration)
                 .setRadiusPerTick(-radius / (float) duration)
                 .setPotion(PotionTypes.EMPTY)
-                .setColor(bombType.getColor())
-                .setParticle(MidnightParticles.SPORCH);
+                .setColor(bombType.getColor());
     }
 
     private static class DispenserBehavior extends BehaviorProjectileDispense {
