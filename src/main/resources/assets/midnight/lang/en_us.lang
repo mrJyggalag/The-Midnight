@@ -352,6 +352,12 @@ config.midnight.rifter_spawn_rarity.tooltip=The rarity that rifts spawn rifters.
 config.midnight.max_rifter_by_rift=Maximum rifters by rift
 config.midnight.max_rifter_by_rift.tooltip=The maximum of rifters spawning from a rift.
 
+config.midnight.allow_rifter_teleport=Rifter teleportation
+config.midnight.allow_rifter_teleport.tooltip=Allows the rifters to teleport on players.
+
+config.midnight.monster_spawn_rate=Monster spawn rate
+config.midnight.monster_spawn_rate.tooltip=Spawn rate of creatures of type monster.
+
 status.midnight.rift_nearby=You may not rest now, there is an evil presence nearby
 status.midnight.snapped=The fish snapped at you
 

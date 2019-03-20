@@ -2,6 +2,7 @@ package com.mushroom.midnight.common.world;
 
 import com.mushroom.midnight.common.biome.EntitySpawnConfigured;
 import com.mushroom.midnight.common.biome.config.SpawnerConfig;
+import com.mushroom.midnight.common.config.MidnightConfig;
 import com.mushroom.midnight.common.util.WeightedPool;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLiving;
@@ -32,6 +33,8 @@ import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+import static com.mushroom.midnight.Midnight.MIDNIGHT_MOB;
 
 public final class MidnightEntitySpawner<T extends EntitySpawnConfigured> {
     private static final int MOB_COUNT_DIV = (int) Math.pow(17d, 2d);
@@ -108,6 +111,7 @@ public final class MidnightEntitySpawner<T extends EntitySpawnConfigured> {
             }
 
             this.spawnEntitiesAround(world, pos, creatureType);
+            if (creatureType == MIDNIGHT_MOB) { break; } // spawn slowly monsters
         }
     }
 
@@ -267,6 +271,9 @@ public final class MidnightEntitySpawner<T extends EntitySpawnConfigured> {
     private boolean shouldSpawnCreatureType(World world, EnumCreatureType creatureType) {
         if (!creatureType.getPeacefulCreature() && world.getDifficulty() == EnumDifficulty.PEACEFUL) {
             return false;
+        }
+        if (creatureType == MIDNIGHT_MOB) {
+            return world.getTotalWorldTime() % MidnightConfig.general.monsterSpawnRate == 0;
         }
         return !creatureType.getAnimal() || world.getTotalWorldTime() % ANIMAL_SPAWN_INTERVAL == 0;
     }

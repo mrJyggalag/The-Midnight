@@ -1,5 +1,6 @@
 package com.mushroom.midnight.common.entity.task;
 
+import com.mushroom.midnight.common.config.MidnightConfig;
 import com.mushroom.midnight.common.entity.creature.EntityRifter;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -25,7 +26,7 @@ public class EntityTaskRifterTeleport extends EntityAIBase {
 
     @Override
     public boolean shouldExecute() {
-        if (this.owner.getRNG().nextInt(10) != 0) {
+        if (!MidnightConfig.general.allowRifterTeleport || this.owner.getRNG().nextInt(10) != 0) {
             return false;
         }
         EntityLivingBase target = this.owner.getAttackTarget();

@@ -61,6 +61,17 @@ public class MidnightConfig {
         @Config.Comment("The maximum of rifters spawning from a rift.")
         @Config.RangeInt(min=1, max=5)
         public int maxRifterByRift = 1;
+
+        @Config.Name("allow_rifter_teleport")
+        @Config.LangKey("config.midnight.allow_rifter_teleport")
+        @Config.Comment("Allows the rifters to teleport on players.")
+        public boolean allowRifterTeleport = true;
+
+        @Config.Name("monster_spawn_rate")
+        @Config.LangKey("config.midnight.monster_spawn_rate")
+        @Config.Comment("Spawn rate of creatures of type monster.")
+        @Config.RangeInt(min=1)
+        public int monsterSpawnRate = 400;
     }
 
     public static class CatClient {

@@ -352,6 +352,12 @@ config.midnight.rifter_spawn_rarity.tooltip=Rareté que les failles fassent appa
 config.midnight.max_rifter_by_rift=Passeurs de faille max par rift
 config.midnight.max_rifter_by_rift.tooltip=Maximum de passeurs de faille apparaissant d'un rift.
 
+config.midnight.allow_rifter_teleport=Téléportation des Passeurs de faille
+config.midnight.allow_rifter_teleport.tooltip=Autorise les Passeurs de faille à se téléporter sur les joueurs.
+
+config.midnight.monster_spawn_rate=Fréquence d'apparition des monstres
+config.midnight.monster_spawn_rate.tooltip=Fréquence d'apparition des créatures de type monstre.
+
 status.midnight.rift_nearby=Vous ne pouvez pas rester ici pour l'instant, il y a une présence démoniaque à proximitée
 status.midnight.snapped=Le poisson t'a mordu
 
