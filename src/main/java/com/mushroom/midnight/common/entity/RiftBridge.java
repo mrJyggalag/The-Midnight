@@ -106,6 +106,9 @@ public class RiftBridge {
         RiftAttachment surfaceAttachment = this.attachment.fixedToSurface(world);
         surfaceAttachment.apply(rift);
 
+        // Force the chunk we're spawning in to be loaded
+        world.getChunk(rift.getPosition());
+
         world.spawnEntity(rift);
     }
 
