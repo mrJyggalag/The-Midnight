@@ -6,7 +6,6 @@ import com.mushroom.midnight.common.capability.RifterCapturable;
 import com.mushroom.midnight.common.entity.EntityRift;
 import com.mushroom.midnight.common.entity.IRiftTraveler;
 import com.mushroom.midnight.common.entity.RiftTravelEntry;
-import com.mushroom.midnight.common.entity.RiftVoidTravelEntry;
 import com.mushroom.midnight.common.entity.TargetIdleTracker;
 import com.mushroom.midnight.common.entity.navigation.CustomPathNavigateGround;
 import com.mushroom.midnight.common.entity.task.EntityTaskRifterCapture;
@@ -373,14 +372,7 @@ public class EntityRifter extends EntityMob implements IRiftTraveler, IEntityAdd
     }
 
     private RiftTravelEntry createTravelEntry(Entity entity, EntityRift rift) {
-        if (this.shouldTravelDespawn(rift)) {
-            return new RiftVoidTravelEntry(entity);
-        }
         return new RiftTravelEntry(entity);
-    }
-
-    private boolean shouldTravelDespawn(EntityRift rift) {
-        return this.spawnedThroughRift && !rift.isEndpointLoaded() && !(this.capturedEntity instanceof EntityPlayer);
     }
 
     @Override

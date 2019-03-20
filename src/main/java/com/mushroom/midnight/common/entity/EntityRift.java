@@ -239,8 +239,16 @@ public class EntityRift extends Entity implements IEntityAdditionalSpawnData {
             }
             entity.dismountRidingEntity();
 
-            entry.travel(this, endpointDimension);
+            if (this.shouldTravelThroughRift(entity)) {
+                entry.travel(this, endpointDimension);
+            } else {
+                entity.setDead();
+            }
         }
+    }
+
+    private boolean shouldTravelThroughRift(Entity entity) {
+        return this.isEndpointLoaded() || entity instanceof EntityPlayer;
     }
 
     private Set<RiftTravelEntry> getRecursedTravelers(List<Entity> entities) {
