@@ -118,8 +118,13 @@ public class RiftBridge {
             MinecraftServer server = FMLCommonHandler.instance().getMinecraftServerInstance();
             this.spawnRiftEntity(server.getWorld(endpointDimension.getId()));
         }
-
-        return endpointReference.compute();
+        EntityRift rift = endpointReference.compute();
+        // TODO fix me better, the rift can be null & can lead to an underground rift (not intended)
+        if (rift == null) {
+            MinecraftServer server = FMLCommonHandler.instance().getMinecraftServerInstance();
+            this.spawnRiftEntity(server.getWorld(endpointDimension.getId()));
+        }
+        return endpointReference.get();
     }
 
     public boolean isEndpointLoaded(DimensionType endpointDimension) {
