@@ -19,7 +19,7 @@ public class MessageBridgeState implements IMessage {
 
     public MessageBridgeState(RiftBridge bridge) {
         this.bridgeId = bridge.getId();
-        this.data = Unpooled.buffer();
+        this.data = Unpooled.buffer().retain();
         bridge.writeState(this.data);
     }
 
@@ -33,6 +33,7 @@ public class MessageBridgeState implements IMessage {
     public void toBytes(ByteBuf buf) {
         buf.writeInt(this.bridgeId);
         buf.writeBytes(this.data);
+        this.data.release();
     }
 
     public static class Handler implements IMessageHandler<MessageBridgeState, IMessage> {

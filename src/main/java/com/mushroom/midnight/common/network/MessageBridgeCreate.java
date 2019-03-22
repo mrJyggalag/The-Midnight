@@ -22,7 +22,7 @@ public class MessageBridgeCreate implements IMessage {
     public MessageBridgeCreate(RiftBridge bridge) {
         this.bridgeId = bridge.getId();
         this.attachment = bridge.getAttachment();
-        this.data = Unpooled.buffer();
+        this.data = Unpooled.buffer().retain();
         bridge.writeState(this.data);
     }
 
@@ -38,6 +38,7 @@ public class MessageBridgeCreate implements IMessage {
         buf.writeInt(this.bridgeId);
         this.attachment.write(buf);
         buf.writeBytes(this.data);
+        this.data.release();
     }
 
     public static class Handler implements IMessageHandler<MessageBridgeCreate, IMessage> {
