@@ -319,6 +319,7 @@ public class EntityNightStag extends EntityAnimal {
             addPotionEffect(new PotionEffect(MobEffects.LEVITATION, 200, 0, false, true));
             addPotionEffect(new PotionEffect(ModEffects.UNSTABLE_FALL, 400, 0, false, true));
         }
+        super.consumeItemFromStack(player, stack);
     }
 
     @Override
