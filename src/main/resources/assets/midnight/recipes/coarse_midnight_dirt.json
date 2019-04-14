@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "DG",
+    "GD"
+  ],
+  "key": {
+    "D": {
+      "item": "midnight:midnight_dirt"
+    },
+    "G": {
+      "item": "midnight:deceitful_peat"
+    }
+  },
+  "result": {
+    "item": "midnight:midnight_coarse_dirt",
+    "count": 4
+  }
+}

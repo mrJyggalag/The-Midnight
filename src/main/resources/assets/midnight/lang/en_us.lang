@@ -10,6 +10,7 @@ itemGroup.midnight_combat=Midnight Combat
 
 tile.midnight.nightstone.name=Nightstone
 tile.midnight.midnight_grass.name=Midnight Grass
+tile.midnight.coarse_midnight_dirt.name=Coarse Midnight Dirt
 tile.midnight.midnight_dirt.name=Midnight Dirt
 tile.midnight.midnight_mycelium.name=Midnight Mycelium
 
@@ -33,8 +34,8 @@ tile.midnight.chiseled_nightstone_bricks.name=Chiseled Nightstone Bricks
 tile.midnight.dark_pearl_ore.name=Dark Pearl Ore
 tile.midnight.dark_pearl_block.name=Dark Pearl Block
 
-tile.midnight.ebonys_ore.name=Ebony Ore
-tile.midnight.ebonys_block.name=Ebony Block
+tile.midnight.ebonys_ore.name=Ebonite Ore
+tile.midnight.ebonys_block.name=Ebonite Block
 
 tile.midnight.archaic_ore.name=Archaic Ore
 
@@ -253,7 +254,7 @@ item.midnight.tenebrum_ingot.name=Tenebrum Ingot
 item.midnight.tenebrum_nugget.name=Tenebrum Nugget
 item.midnight.nagrilite_ingot.name=Nagrilite Ingot
 item.midnight.nagrilite_nugget.name=Nagrilite Nugget
-item.midnight.ebonys.name=Ebony
+item.midnight.ebonys.name=Ebonite
 item.midnight.archaic_shard.name=Archaic Shard
 
 item.midnight.raw_suavis.name=Raw Suavis Slice
@@ -283,31 +284,31 @@ item.midnight.bladeshroom_spores.name=Bladeshroom Spores
 item.midnight.shadowroot_pickaxe.name=Shadowroot Pickaxe
 item.midnight.tenebrum_pickaxe.name=Tenebrum Pickaxe
 item.midnight.nagrilite_pickaxe.name=Nagrilite Pickaxe
-item.midnight.ebonys_pickaxe.name=Ebony Pickaxe
+item.midnight.ebonys_pickaxe.name=Ebonite Pickaxe
 item.midnight.nightstone_pickaxe.name=Nightstone Pickaxe
 
 item.midnight.shadowroot_shovel.name=Shadowroot Shovel
 item.midnight.tenebrum_shovel.name=Tenebrum Shovel
 item.midnight.nagrilite_shovel.name=Nagrilite Shovel
-item.midnight.ebonys_shovel.name=Ebony Shovel
+item.midnight.ebonys_shovel.name=Ebonite Shovel
 item.midnight.nightstone_shovel.name=Nightstone Shovel
 
 item.midnight.shadowroot_axe.name=Shadowroot Axe
 item.midnight.tenebrum_axe.name=Tenebrum Axe
 item.midnight.nagrilite_axe.name=Nagrilite Axe
-item.midnight.ebonys_axe.name=Ebony Axe
+item.midnight.ebonys_axe.name=Ebonite Axe
 item.midnight.nightstone_axe.name=Nightstone Axe
 
 item.midnight.shadowroot_hoe.name=Shadowroot Hoe
 item.midnight.tenebrum_hoe.name=Tenebrum Hoe
 item.midnight.nagrilite_hoe.name=Nagrilite Hoe
-item.midnight.ebonys_hoe.name=Ebony Hoe
+item.midnight.ebonys_hoe.name=Ebonite Hoe
 item.midnight.nightstone_hoe.name=Nightstone Hoe
 
 item.midnight.shadowroot_sword.name=Shadowroot Sword
 item.midnight.tenebrum_sword.name=Tenebrum Sword
 item.midnight.nagrilite_sword.name=Nagrilite Sword
-item.midnight.ebonys_sword.name=Ebony Sword
+item.midnight.ebonys_sword.name=Ebonite Sword
 item.midnight.nightstone_sword.name=Nightstone Sword
 
 item.midnight.rockshroom_helmet.name=Rockshroom Helmet
