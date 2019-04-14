@@ -31,24 +31,6 @@ public class BlockMidnightPressurePlate extends BlockPressurePlate implements IM
         this.setHardness(hardness);
         this.setSoundType(this.wooden ? SoundType.WOOD : SoundType.STONE);
     }
-
-    @Override
-    protected void playClickOnSound(World worldIn, BlockPos pos) {
-        if (this.wooden) {
-            worldIn.playSound((EntityPlayer)null, pos, SoundEvents.BLOCK_WOOD_PRESSPLATE_CLICK_ON, SoundCategory.BLOCKS, 0.3F, 0.8F);
-        } else {
-            worldIn.playSound((EntityPlayer)null, pos, SoundEvents.BLOCK_STONE_PRESSPLATE_CLICK_ON, SoundCategory.BLOCKS, 0.3F, 0.6F);
-        }
-    }
-
-    @Override
-    protected void playClickOffSound(World worldIn, BlockPos pos) {
-        if (this.wooden) {
-            worldIn.playSound((EntityPlayer)null, pos, SoundEvents.BLOCK_WOOD_PRESSPLATE_CLICK_OFF, SoundCategory.BLOCKS, 0.3F, 0.8F);
-        } else {
-            worldIn.playSound((EntityPlayer)null, pos, SoundEvents.BLOCK_STONE_PRESSPLATE_CLICK_OFF, SoundCategory.BLOCKS, 0.3F, 0.6F);
-        }
-    }
     
     @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {

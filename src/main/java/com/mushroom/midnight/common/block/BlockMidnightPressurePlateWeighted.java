@@ -33,16 +33,6 @@ public class BlockMidnightPressurePlateWeighted extends BlockPressurePlateWeight
         this.setHardness(hardness);
         this.setSoundType(SoundType.METAL);
     }
-
-    @Override
-    protected void playClickOnSound(World worldIn, BlockPos pos) {
-        worldIn.playSound((EntityPlayer)null, pos, SoundEvents.BLOCK_METAL_PRESSPLATE_CLICK_ON, SoundCategory.BLOCKS, 0.3F, 0.90000004F);
-    }
-
-    @Override
-    protected void playClickOffSound(World worldIn, BlockPos pos) {
-        worldIn.playSound((EntityPlayer)null, pos, SoundEvents.BLOCK_METAL_PRESSPLATE_CLICK_OFF, SoundCategory.BLOCKS, 0.3F, 0.75F);
-    }
     
     @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
