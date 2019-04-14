@@ -131,6 +131,7 @@ public class ModBlocks {
     public static final Block MIDNIGHT_FURNACE = Blocks.AIR;
     public static final Block MIDNIGHT_FURNACE_LIT = Blocks.AIR;
 
+    public static final Block COARSE_MIDNIGHT_DIRT = Blocks.AIR;
     public static final Block MIDNIGHT_DIRT = Blocks.AIR;
     public static final Block MIDNIGHT_GRASS = Blocks.AIR;
     public static final Block MIDNIGHT_MYCELIUM = Blocks.AIR;
@@ -315,6 +316,7 @@ public class ModBlocks {
         blocks.addAll(Lists.newArrayList(
                 RegUtil.withName(new BlockMidnightGrass(), "midnight_grass"),
                 RegUtil.withName(new BlockMidnightDirt(), "midnight_dirt"),
+                RegUtil.withName(new BlockMidnightDirt(), "coarse_midnight_dirt"),
                 RegUtil.withName(new BlockMidnightMycelium(), "midnight_mycelium"),
                 RegUtil.withName(new BlockMidnightLog(), "shadowroot_log"),
                 RegUtil.withName(new BlockMidnightLeaves(() -> SHADOWROOT_SAPLING), "shadowroot_leaves"),
@@ -549,7 +551,7 @@ public class ModBlocks {
                 SHADOWROOT_CRAFTING_TABLE,
                 SHADOWROOT_CHEST,
                 MIDNIGHT_FURNACE,
-                MIDNIGHT_DIRT, MIDNIGHT_GRASS, MIDNIGHT_MYCELIUM,
+                COARSE_MIDNIGHT_DIRT, MIDNIGHT_DIRT, MIDNIGHT_GRASS, MIDNIGHT_MYCELIUM,
                 TALL_MIDNIGHT_GRASS, DOUBLE_MIDNIGHT_GRASS,
                 NIGHTSHROOM, DOUBLE_NIGHTSHROOM, NIGHTSHROOM_SHELF,
                 DEWSHROOM, DOUBLE_DEWSHROOM, DEWSHROOM_SHELF,
