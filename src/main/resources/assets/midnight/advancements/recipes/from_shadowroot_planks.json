@@ -7,7 +7,9 @@
 			"midnight:shadowroot_stairs",
 			"midnight:shadowroot_trapdoor",
 			"midnight:shadowroot_chest",
-			"midnight:shadowroot_crafting_table"
+			"midnight:shadowroot_crafting_table",
+			"midnight:shadowroot_button",
+			"midnight:shadowroot_pressure_plate"
 		]
 	},
 	"criteria": {

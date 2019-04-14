@@ -3,7 +3,8 @@
 	"rewards": {
 		"recipes": [ 
 			"midnight:nagrilite_block",
-			"midnight:nagrilite_ingot_to_nuggets"
+			"midnight:nagrilite_ingot_to_nuggets",
+			"midnight:nagrilite_pressure_plate"
 		]
 	},
 	"criteria": {
