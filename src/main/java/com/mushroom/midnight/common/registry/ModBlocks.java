@@ -1,5 +1,11 @@
 package com.mushroom.midnight.common.registry;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+import java.util.function.Function;
+
 import com.google.common.collect.Lists;
 import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.common.block.BlockBasic;
@@ -8,23 +14,25 @@ import com.mushroom.midnight.common.block.BlockBloomCrystal;
 import com.mushroom.midnight.common.block.BlockBogweed;
 import com.mushroom.midnight.common.block.BlockBulbFungus;
 import com.mushroom.midnight.common.block.BlockBulbFungusHat;
+import com.mushroom.midnight.common.block.BlockBulbFungusStem;
 import com.mushroom.midnight.common.block.BlockCrystal;
 import com.mushroom.midnight.common.block.BlockDarkWater;
 import com.mushroom.midnight.common.block.BlockDeceitfulAlgae;
 import com.mushroom.midnight.common.block.BlockDeceitfulMoss;
 import com.mushroom.midnight.common.block.BlockDeceitfulMud;
-import com.mushroom.midnight.common.block.BlockBulbFungusStem;
-import com.mushroom.midnight.common.block.BlockLumenBud;
-import com.mushroom.midnight.common.block.BlockMidnightChest.ChestModel;
-import com.mushroom.midnight.common.block.BlockMidnightDoubleFungi;
-import com.mushroom.midnight.common.block.BlockMidnightDoublePlant;
 import com.mushroom.midnight.common.block.BlockDragonNest;
 import com.mushroom.midnight.common.block.BlockFingeredGrass;
 import com.mushroom.midnight.common.block.BlockGhostPlant;
+import com.mushroom.midnight.common.block.BlockLumenBud;
 import com.mushroom.midnight.common.block.BlockMiasmaFluid;
 import com.mushroom.midnight.common.block.BlockMiasmaSurface;
+import com.mushroom.midnight.common.block.BlockMidnightButton;
+import com.mushroom.midnight.common.block.BlockMidnightChest;
+import com.mushroom.midnight.common.block.BlockMidnightChest.ChestModel;
 import com.mushroom.midnight.common.block.BlockMidnightDirt;
 import com.mushroom.midnight.common.block.BlockMidnightDoor;
+import com.mushroom.midnight.common.block.BlockMidnightDoubleFungi;
+import com.mushroom.midnight.common.block.BlockMidnightDoublePlant;
 import com.mushroom.midnight.common.block.BlockMidnightDoubleSlab;
 import com.mushroom.midnight.common.block.BlockMidnightFence;
 import com.mushroom.midnight.common.block.BlockMidnightFenceGate;
@@ -39,10 +47,13 @@ import com.mushroom.midnight.common.block.BlockMidnightGlassPane;
 import com.mushroom.midnight.common.block.BlockMidnightGrass;
 import com.mushroom.midnight.common.block.BlockMidnightLadder;
 import com.mushroom.midnight.common.block.BlockMidnightLeaves;
+import com.mushroom.midnight.common.block.BlockMidnightLever;
 import com.mushroom.midnight.common.block.BlockMidnightLog;
 import com.mushroom.midnight.common.block.BlockMidnightMycelium;
 import com.mushroom.midnight.common.block.BlockMidnightOre;
 import com.mushroom.midnight.common.block.BlockMidnightPlant;
+import com.mushroom.midnight.common.block.BlockMidnightPressurePlate;
+import com.mushroom.midnight.common.block.BlockMidnightPressurePlateWeighted;
 import com.mushroom.midnight.common.block.BlockMidnightSapling;
 import com.mushroom.midnight.common.block.BlockMidnightSlab;
 import com.mushroom.midnight.common.block.BlockMidnightStairs;
@@ -53,7 +64,6 @@ import com.mushroom.midnight.common.block.BlockMidnightWoodPlank;
 import com.mushroom.midnight.common.block.BlockMushroomInside;
 import com.mushroom.midnight.common.block.BlockNightstone;
 import com.mushroom.midnight.common.block.BlockRockshroom;
-import com.mushroom.midnight.common.block.BlockMidnightChest;
 import com.mushroom.midnight.common.block.BlockShadowrootCraftingTable;
 import com.mushroom.midnight.common.block.BlockSporch;
 import com.mushroom.midnight.common.block.BlockStingerEgg;
@@ -67,11 +77,12 @@ import com.mushroom.midnight.common.item.ItemDeceitfulAlgae;
 import com.mushroom.midnight.common.item.ItemMidnightSlab;
 import com.mushroom.midnight.common.tile.base.TileEntityMidnightChest;
 import com.mushroom.midnight.common.tile.base.TileEntityMidnightFurnace;
-import com.mushroom.midnight.common.world.feature.LargeBogshroomFeature;
 import com.mushroom.midnight.common.world.feature.DarkWillowTreeFeature;
+import com.mushroom.midnight.common.world.feature.LargeBogshroomFeature;
 import com.mushroom.midnight.common.world.feature.LargeBulbFungusFeature;
 import com.mushroom.midnight.common.world.feature.LargeFungiFeature;
 import com.mushroom.midnight.common.world.feature.ShadowrootTreeFeature;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.MapColor;
@@ -88,12 +99,6 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.registries.IForgeRegistry;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-import java.util.function.Function;
 
 @GameRegistry.ObjectHolder(Midnight.MODID)
 @Mod.EventBusSubscriber(modid = Midnight.MODID)
@@ -309,6 +314,30 @@ public class ModBlocks {
     public static final Block NIGHTSHROOM_SPORCH = Blocks.AIR;
     public static final Block DEWSHROOM_SPORCH = Blocks.AIR;
     public static final Block VIRIDSHROOM_SPORCH = Blocks.AIR;
+    
+    public static final Block SHADOWROOT_BUTTON = Blocks.AIR;
+    public static final Block DEAD_WOOD_BUTTON = Blocks.AIR;
+    public static final Block DARK_WILLOW_BUTTON = Blocks.AIR;
+    public static final Block DEWSHROOM_BUTTON = Blocks.AIR;
+    public static final Block VIRIDSHROOM_BUTTON = Blocks.AIR;
+    public static final Block NIGHTSHROOM_BUTTON = Blocks.AIR;
+    public static final Block NIGHTSTONE_BUTTON = Blocks.AIR;
+    public static final Block TRENCHSTONE_BUTTON = Blocks.AIR;
+    public static final Block ROCKSHROOM_BRICKS_BUTTON = Blocks.AIR;
+    
+    public static final Block SHADOWROOT_PRESSURE_PLATE = Blocks.AIR;
+    public static final Block DEAD_WOOD_PRESSURE_PLATE = Blocks.AIR;
+    public static final Block DARK_WILLOW_PRESSURE_PLATE = Blocks.AIR;
+    public static final Block DEWSHROOM_PRESSURE_PLATE = Blocks.AIR;
+    public static final Block VIRIDSHROOM_PRESSURE_PLATE = Blocks.AIR;
+    public static final Block NIGHTSHROOM_PRESSURE_PLATE = Blocks.AIR;
+    public static final Block NIGHTSTONE_PRESSURE_PLATE = Blocks.AIR;
+    public static final Block TRENCHSTONE_PRESSURE_PLATE = Blocks.AIR;
+    public static final Block ROCKSHROOM_BRICKS_PRESSURE_PLATE = Blocks.AIR;
+    public static final Block NAGRILITE_PRESSURE_PLATE = Blocks.AIR;
+    public static final Block TENEBRUM_PRESSURE_PLATE = Blocks.AIR;
+    
+    public static final Block MIDNIGHT_LEVER = Blocks.AIR;
 
     @SubscribeEvent
     public static void registerBlocks(RegistryEvent.Register<Block> event) {
@@ -522,7 +551,29 @@ public class ModBlocks {
                 RegUtil.withName(new BlockSporch(BlockSporch.SporchType.BOGSHROOM), "bogshroom_sporch"),
                 RegUtil.withName(new BlockSporch(BlockSporch.SporchType.NIGHTSHROOM), "nightshroom_sporch"),
                 RegUtil.withName(new BlockSporch(BlockSporch.SporchType.DEWSHROOM), "dewshroom_sporch"),
-                RegUtil.withName(new BlockSporch(BlockSporch.SporchType.VIRIDSHROOM), "viridshroom_sporch")
+                RegUtil.withName(new BlockSporch(BlockSporch.SporchType.VIRIDSHROOM), "viridshroom_sporch"),
+                RegUtil.withName(new BlockMidnightButton(true, 0.75F), "shadowroot_button"),
+                RegUtil.withName(new BlockMidnightButton(true, 0.75F), "dead_wood_button"),
+                RegUtil.withName(new BlockMidnightButton(true, 0.75F), "dark_willow_button"),
+                RegUtil.withName(new BlockMidnightButton(true, 0.75F), "dewshroom_button"),
+                RegUtil.withName(new BlockMidnightButton(true, 0.75F), "viridshroom_button"),
+                RegUtil.withName(new BlockMidnightButton(true, 0.75F), "nightshroom_button"),
+                RegUtil.withName(new BlockMidnightButton(false, 1.0F), "nightstone_button"),
+                RegUtil.withName(new BlockMidnightButton(false, 3.75F), "trenchstone_button"),
+                RegUtil.withName(new BlockMidnightButton(false, 1.0F), "rockshroom_bricks_button"),
+                RegUtil.withName(new BlockMidnightPressurePlate(true, 0.75F), "shadowroot_pressure_plate"),
+                RegUtil.withName(new BlockMidnightPressurePlate(true, 0.75F), "dead_wood_pressure_plate"),
+                RegUtil.withName(new BlockMidnightPressurePlate(true, 0.75F), "dark_willow_pressure_plate"),
+                RegUtil.withName(new BlockMidnightPressurePlate(true, 0.75F), "dewshroom_pressure_plate"),
+                RegUtil.withName(new BlockMidnightPressurePlate(true, 0.75F), "viridshroom_pressure_plate"),
+                RegUtil.withName(new BlockMidnightPressurePlate(true, 0.75F), "nightshroom_pressure_plate"),
+                RegUtil.withName(new BlockMidnightPressurePlate(false, 1.0F), "nightstone_pressure_plate"),
+                RegUtil.withName(new BlockMidnightPressurePlate(false, 3.75F), "trenchstone_pressure_plate"),
+                RegUtil.withName(new BlockMidnightPressurePlate(false, 1.0F), "rockshroom_bricks_pressure_plate"),
+                RegUtil.withName(new BlockMidnightPressurePlateWeighted(Material.IRON, true, Material.IRON.getMaterialMapColor(), 2.0F), "nagrilite_pressure_plate"),
+                RegUtil.withName(new BlockMidnightPressurePlateWeighted(Material.IRON, false, Material.IRON.getMaterialMapColor(), 2.0F), "tenebrum_pressure_plate"),
+                RegUtil.withName(new BlockMidnightLever(), "midnight_lever")
+                
         ));
 
         blocks.forEach(event.getRegistry()::register);
@@ -586,7 +637,10 @@ public class ModBlocks {
                 SUAVIS, SHADOWROOT_LADDER, DEAD_WOOD_LADDER, DARK_WILLOW_LADDER,
                 DEWSHROOM_LADDER, VIRIDSHROOM_LADDER, NIGHTSHROOM_LADDER,
                 BOGSHROOM_SPORCH, NIGHTSHROOM_SPORCH, DEWSHROOM_SPORCH, VIRIDSHROOM_SPORCH,
-                STINGER_EGG
+                STINGER_EGG,
+                SHADOWROOT_BUTTON, DEAD_WOOD_BUTTON, DARK_WILLOW_BUTTON, DEWSHROOM_BUTTON, VIRIDSHROOM_BUTTON, NIGHTSHROOM_BUTTON, NIGHTSTONE_BUTTON, TRENCHSTONE_BUTTON, ROCKSHROOM_BRICKS_BUTTON,
+                SHADOWROOT_PRESSURE_PLATE, DEAD_WOOD_PRESSURE_PLATE, DARK_WILLOW_PRESSURE_PLATE, DEWSHROOM_PRESSURE_PLATE, VIRIDSHROOM_PRESSURE_PLATE, NIGHTSHROOM_PRESSURE_PLATE, NIGHTSTONE_PRESSURE_PLATE, TRENCHSTONE_PRESSURE_PLATE, ROCKSHROOM_BRICKS_PRESSURE_PLATE, NAGRILITE_PRESSURE_PLATE, TENEBRUM_PRESSURE_PLATE,
+                MIDNIGHT_LEVER
         ));
 
         registry.register(itemBlock(DECEITFUL_ALGAE, ItemDeceitfulAlgae::new));
