@@ -2,67 +2,8 @@ package com.mushroom.midnight.common.registry;
 
 import com.google.common.collect.Lists;
 import com.mushroom.midnight.Midnight;
-import com.mushroom.midnight.common.block.BlockBasic;
-import com.mushroom.midnight.common.block.BlockBladeshroom;
-import com.mushroom.midnight.common.block.BlockBloomCrystal;
-import com.mushroom.midnight.common.block.BlockBogweed;
-import com.mushroom.midnight.common.block.BlockBulbFungus;
-import com.mushroom.midnight.common.block.BlockBulbFungusHat;
-import com.mushroom.midnight.common.block.BlockCrystal;
-import com.mushroom.midnight.common.block.BlockDarkWater;
-import com.mushroom.midnight.common.block.BlockDeceitfulAlgae;
-import com.mushroom.midnight.common.block.BlockDeceitfulMoss;
-import com.mushroom.midnight.common.block.BlockDeceitfulMud;
-import com.mushroom.midnight.common.block.BlockBulbFungusStem;
-import com.mushroom.midnight.common.block.BlockLumenBud;
+import com.mushroom.midnight.common.block.*;
 import com.mushroom.midnight.common.block.BlockMidnightChest.ChestModel;
-import com.mushroom.midnight.common.block.BlockMidnightDoubleFungi;
-import com.mushroom.midnight.common.block.BlockMidnightDoublePlant;
-import com.mushroom.midnight.common.block.BlockDragonNest;
-import com.mushroom.midnight.common.block.BlockFingeredGrass;
-import com.mushroom.midnight.common.block.BlockGhostPlant;
-import com.mushroom.midnight.common.block.BlockMiasmaFluid;
-import com.mushroom.midnight.common.block.BlockMiasmaSurface;
-import com.mushroom.midnight.common.block.BlockMidnightDirt;
-import com.mushroom.midnight.common.block.BlockMidnightDoor;
-import com.mushroom.midnight.common.block.BlockMidnightDoubleSlab;
-import com.mushroom.midnight.common.block.BlockMidnightFence;
-import com.mushroom.midnight.common.block.BlockMidnightFenceGate;
-import com.mushroom.midnight.common.block.BlockMidnightFungi;
-import com.mushroom.midnight.common.block.BlockMidnightFungiHat;
-import com.mushroom.midnight.common.block.BlockMidnightFungiShelf;
-import com.mushroom.midnight.common.block.BlockMidnightFungiStem;
-import com.mushroom.midnight.common.block.BlockMidnightFurnace;
-import com.mushroom.midnight.common.block.BlockMidnightGem;
-import com.mushroom.midnight.common.block.BlockMidnightGlass;
-import com.mushroom.midnight.common.block.BlockMidnightGlassPane;
-import com.mushroom.midnight.common.block.BlockMidnightGrass;
-import com.mushroom.midnight.common.block.BlockMidnightLadder;
-import com.mushroom.midnight.common.block.BlockMidnightLeaves;
-import com.mushroom.midnight.common.block.BlockMidnightLog;
-import com.mushroom.midnight.common.block.BlockMidnightMycelium;
-import com.mushroom.midnight.common.block.BlockMidnightOre;
-import com.mushroom.midnight.common.block.BlockMidnightPlant;
-import com.mushroom.midnight.common.block.BlockMidnightSapling;
-import com.mushroom.midnight.common.block.BlockMidnightSlab;
-import com.mushroom.midnight.common.block.BlockMidnightStairs;
-import com.mushroom.midnight.common.block.BlockMidnightTallGrass;
-import com.mushroom.midnight.common.block.BlockMidnightTrapDoor;
-import com.mushroom.midnight.common.block.BlockMidnightWall;
-import com.mushroom.midnight.common.block.BlockMidnightWoodPlank;
-import com.mushroom.midnight.common.block.BlockMushroomInside;
-import com.mushroom.midnight.common.block.BlockNightstone;
-import com.mushroom.midnight.common.block.BlockRockshroom;
-import com.mushroom.midnight.common.block.BlockMidnightChest;
-import com.mushroom.midnight.common.block.BlockShadowrootCraftingTable;
-import com.mushroom.midnight.common.block.BlockSporch;
-import com.mushroom.midnight.common.block.BlockStingerEgg;
-import com.mushroom.midnight.common.block.BlockSuavis;
-import com.mushroom.midnight.common.block.BlockTendrilweed;
-import com.mushroom.midnight.common.block.BlockUnstableBush;
-import com.mushroom.midnight.common.block.BlockUnstableBushBloomed;
-import com.mushroom.midnight.common.block.BlockVioleaf;
-import com.mushroom.midnight.common.block.PlantBehaviorType;
 import com.mushroom.midnight.common.item.ItemDeceitfulAlgae;
 import com.mushroom.midnight.common.item.ItemMidnightSlab;
 import com.mushroom.midnight.common.tile.base.TileEntityMidnightChest;
@@ -311,6 +252,8 @@ public class ModBlocks {
     public static final Block DEWSHROOM_SPORCH = Blocks.AIR;
     public static final Block VIRIDSHROOM_SPORCH = Blocks.AIR;
 
+    public static final Block CRYSTALOTUS = Blocks.AIR;
+
     @SubscribeEvent
     public static void registerBlocks(RegistryEvent.Register<Block> event) {
         blocks.addAll(Lists.newArrayList(
@@ -381,7 +324,8 @@ public class ModBlocks {
                 RegUtil.withName(new BlockUnstableBush(), "unstable_bush"),
                 RegUtil.withName(new BlockUnstableBushBloomed(() -> ModItems.UNSTABLE_FRUIT_BLUE), "unstable_bush_blue_bloomed"),
                 RegUtil.withName(new BlockUnstableBushBloomed(() -> ModItems.UNSTABLE_FRUIT_GREEN), "unstable_bush_green_bloomed"),
-                RegUtil.withName(new BlockUnstableBushBloomed(() -> ModItems.UNSTABLE_FRUIT_LIME), "unstable_bush_lime_bloomed")
+                RegUtil.withName(new BlockUnstableBushBloomed(() -> ModItems.UNSTABLE_FRUIT_LIME), "unstable_bush_lime_bloomed"),
+                RegUtil.withName(new BlockCrystalotus(), "crystalotus")
         ));
 
         blocks.addAll(Lists.newArrayList(
@@ -588,7 +532,7 @@ public class ModBlocks {
                 SUAVIS, SHADOWROOT_LADDER, DEAD_WOOD_LADDER, DARK_WILLOW_LADDER,
                 DEWSHROOM_LADDER, VIRIDSHROOM_LADDER, NIGHTSHROOM_LADDER,
                 BOGSHROOM_SPORCH, NIGHTSHROOM_SPORCH, DEWSHROOM_SPORCH, VIRIDSHROOM_SPORCH,
-                STINGER_EGG
+                STINGER_EGG, CRYSTALOTUS
         ));
 
         registry.register(itemBlock(DECEITFUL_ALGAE, ItemDeceitfulAlgae::new));
