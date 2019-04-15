@@ -3,7 +3,7 @@
   "defaults": {
     "model": "cube_all",
     "textures": {
-      "all": "midnight:blocks/coarse_midnight_dirt"
+      "all": "midnight:blocks/midnight_coarse_dirt"
     }
   },
   "variants": {
