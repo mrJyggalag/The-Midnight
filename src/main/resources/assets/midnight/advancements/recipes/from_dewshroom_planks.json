@@ -7,7 +7,9 @@
 			"midnight:dewshroom_stairs",
 			"midnight:dewshroom_trapdoor",
 			"midnight:dewshroom_chest",
-			"midnight:dewshroom_crafting_table"
+			"midnight:dewshroom_crafting_table",
+			"midnight:dewshroom_button",
+			"midnight:dewshroom_pressure_plate"
 		]
 	},
 	"criteria": {

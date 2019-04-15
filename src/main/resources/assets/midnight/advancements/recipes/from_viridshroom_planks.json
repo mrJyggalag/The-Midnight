@@ -7,7 +7,9 @@
 			"midnight:viridshroom_stairs",
 			"midnight:viridshroom_trapdoor",
 			"midnight:viridshroom_chest",
-			"midnight:viridshroom_crafting_table"
+			"midnight:viridshroom_crafting_table",
+			"midnight:viridshroom_button",
+			"midnight:viridshroom_pressure_plate"
 		]
 	},
 	"criteria": {

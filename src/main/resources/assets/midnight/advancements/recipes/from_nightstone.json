@@ -2,7 +2,9 @@
 	"parent": "midnight:recipes/root",
 	"rewards": {
 		"recipes": [
-			"midnight:midnight_furnace"
+			"midnight:midnight_furnace",
+			"midnight:nightstone_button",
+			"midnight:nightstone_pressure_plate"
 		]
 	},
 	"criteria": {

@@ -7,7 +7,9 @@
 			"midnight:dead_wood_stairs",
 			"midnight:dead_wood_trapdoor",
 			"midnight:dead_wood_chest",
-			"midnight:dead_wood_crafting_table"
+			"midnight:dead_wood_crafting_table",
+			"midnight:dead_wood_button",
+			"midnight:dead_wood_pressure_plate"
 		]
 	},
 	"criteria": {

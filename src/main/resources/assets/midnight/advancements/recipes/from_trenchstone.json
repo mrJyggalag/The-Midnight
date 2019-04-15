@@ -5,7 +5,9 @@
 			"midnight:trenchstone_slab",
 			"midnight:trenchstone_stairs",
 			"midnight:trenchstone_wall",
-			"midnight:trenchstone_bricks"
+			"midnight:trenchstone_bricks",
+			"midnight:trenchstone_button",
+			"midnight:trenchstone_pressure_plate"
 		]
 	},
 	"criteria": {

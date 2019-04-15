@@ -10,7 +10,8 @@
 			"midnight:tenebrum_ingot_to_nuggets",
 			"midnight:tenebrum_leggings",
 			"midnight:tenebrum_block",
-			"midnight:tenebrum_block_disassemble"
+			"midnight:tenebrum_block_disassemble",
+			"midnight:tenebrum_pressure_plate"
 		]
 	},
 	"criteria": {

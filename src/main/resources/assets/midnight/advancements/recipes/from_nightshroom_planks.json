@@ -7,7 +7,9 @@
 			"midnight:nightshroom_stairs",
 			"midnight:nightshroom_trapdoor",
 			"midnight:nightshroom_chest",
-			"midnight:nightshroom_crafting_table"
+			"midnight:nightshroom_crafting_table",
+			"midnight:nightshroom_button",
+			"midnight:nightshroom_pressure_plate"
 		]
 	},
 	"criteria": {
