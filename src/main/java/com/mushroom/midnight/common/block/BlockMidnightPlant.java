@@ -55,7 +55,7 @@ public class BlockMidnightPlant extends BlockBush implements IModelProvider, ISh
 
     @Override
     protected boolean canSustainBush(IBlockState state) {
-        return state.getBlock() == ModBlocks.MIDNIGHT_DIRT || state.getBlock() == ModBlocks.MIDNIGHT_GRASS || state.getBlock() == ModBlocks.MIDNIGHT_MYCELIUM || state.getBlock() == ModBlocks.NIGHTSTONE || super.canSustainBush(state);
+        return state.getBlock() == ModBlocks.MIDNIGHT_DIRT || state.getBlock() == ModBlocks.MIDNIGHT_GRASS || state.getBlock() == ModBlocks.MIDNIGHT_MYCELIUM || state.getBlock() == ModBlocks.NIGHTSTONE || state.getBlock() == ModBlocks.DECEITFUL_MUD || state.getBlock() == ModBlocks.DECEITFUL_PEAT || super.canSustainBush(state);
     }
 
     @Override
