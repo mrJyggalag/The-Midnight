@@ -72,6 +72,11 @@ public class MidnightConfig {
         @Config.Comment("Spawn rate of creatures of type monster.")
         @Config.RangeInt(min=1)
         public int monsterSpawnRate = 400;
+
+        @Config.Name("rifter_capture_tamed_animal")
+        @Config.LangKey("config.midnight.rifter_capture_tamed_animal")
+        @Config.Comment("Allows the rifters to capture tamed animals.")
+        public boolean rifterCaptureTamedAnimal = false;
     }
 
     public static class CatClient {

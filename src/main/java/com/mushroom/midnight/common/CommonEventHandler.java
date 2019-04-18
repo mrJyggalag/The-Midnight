@@ -20,6 +20,7 @@ import com.mushroom.midnight.common.world.GlobalBridgeManager;
 import com.mushroom.midnight.common.world.RiftSpawnHandler;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.passive.EntityTameable;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
@@ -54,6 +55,9 @@ public class CommonEventHandler {
     public static void onAttachEntityCapabilities(AttachCapabilitiesEvent<Entity> event) {
         event.addCapability(new ResourceLocation(Midnight.MODID, "rift_cooldown"), new RiftTravelCooldown());
         if (event.getObject() instanceof EntityLivingBase) {
+            if (!MidnightConfig.general.rifterCaptureTamedAnimal && event.getObject() instanceof EntityTameable && ((EntityTameable)event.getObject()).isTamed()) {
+                return;
+            }
             event.addCapability(new ResourceLocation(Midnight.MODID, "rifter_captured"), new RifterCapturable());
         }
     }

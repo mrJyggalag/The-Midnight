@@ -385,6 +385,9 @@ config.midnight.allow_rifter_teleport.tooltip=Allows the rifters to teleport on 
 config.midnight.monster_spawn_rate=Monster spawn rate
 config.midnight.monster_spawn_rate.tooltip=Spawn rate of creatures of type monster.
 
+config.midnight.rifter_capture_tamed_animal=Capture tamed animals
+config.midnight.rifter_capture_tamed_animal.tooltip=Allows rifters to catch tamed animals.
+
 status.midnight.rift_nearby=You may not rest now, there is an evil presence nearby
 status.midnight.snapped=The fish snapped at you
 
