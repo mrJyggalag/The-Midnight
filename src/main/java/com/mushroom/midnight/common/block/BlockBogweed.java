@@ -19,4 +19,9 @@ public class BlockBogweed extends BlockMidnightPlant {
     public boolean canPlaceBlockAt(World worldIn, BlockPos pos) {
         return canSustainBush(worldIn.getBlockState(pos.down())) && super.canPlaceBlockAt(worldIn, pos);
     }
+
+    @Override
+    public boolean canGeneratePlant(World world, BlockPos pos, IBlockState state) {
+        return world.getBlockState(pos.down()).getBlock() == ModBlocks.DECEITFUL_PEAT;
+    }
 }
