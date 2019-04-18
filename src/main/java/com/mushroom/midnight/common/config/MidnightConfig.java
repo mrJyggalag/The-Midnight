@@ -88,7 +88,7 @@ public class MidnightConfig {
         @Config.Name("not_capturable_animals")
         @Config.RequiresWorldRestart
         @Config.LangKey("config.midnight." + "not_capturable_animals")
-        @Config.Comment("Mobs on this blacklist cannot be captured by rifters. Format is mod id:name of creature, just use the mod id to blacklist everything from it. Default= "iceandfire", "midnight:nightstag"")
+        @Config.Comment("Mobs on this blacklist cannot be captured by rifters. Format is mod id:name of creature, just use the mod id to blacklist everything from it. Default= iceandfire, midnight:nightstag")
         public String[] notCapturableAnimals = {
                 "iceandfire",
                 "midnight:nightstag"
