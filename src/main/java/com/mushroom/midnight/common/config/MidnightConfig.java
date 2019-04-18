@@ -77,6 +77,13 @@ public class MidnightConfig {
         @Config.LangKey("config.midnight.rifter_capture_tamed_animal")
         @Config.Comment("Allows the rifters to capture tamed animals.")
         public boolean rifterCaptureTamedAnimal = false;
+
+        @Config.Name("capturable_entities")
+        @Config.RequiresWorldRestart
+        @Config.LangKey("config.midnight." + "capturable_entities")
+        @Config.Comment("List of entities capturable by rifters.")
+        public String[] capturableEntities = {
+        };
     }
 
     public static class CatClient {

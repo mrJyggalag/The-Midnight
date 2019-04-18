@@ -361,6 +361,9 @@ config.midnight.monster_spawn_rate.tooltip=Fréquence d'apparition des créature
 config.midnight.rifter_capture_tamed_animal=Attrape les animaux domestiqués
 config.midnight.rifter_capture_tamed_animal.tooltip=Autorise les passeurs de faille à attraper des animaux domestiqués
 
+config.midnight.capturable_entities=Entités attrapables
+config.midnight.capturable_entities.tooltip=Liste des entités pouvant être capturées par les passeurs de faille
+
 status.midnight.rift_nearby=Vous ne pouvez pas rester ici pour l'instant, il y a une présence démoniaque à proximitée
 status.midnight.snapped=Le poisson t'a mordu
 

@@ -19,8 +19,9 @@ import com.mushroom.midnight.common.registry.ModEffects;
 import com.mushroom.midnight.common.world.GlobalBridgeManager;
 import com.mushroom.midnight.common.world.RiftSpawnHandler;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.passive.EntityTameable;
+import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
@@ -44,6 +45,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Mod.EventBusSubscriber(modid = Midnight.MODID)
@@ -55,8 +57,11 @@ public class CommonEventHandler {
     public static void onAttachEntityCapabilities(AttachCapabilitiesEvent<Entity> event) {
         event.addCapability(new ResourceLocation(Midnight.MODID, "rift_cooldown"), new RiftTravelCooldown());
         if (event.getObject() instanceof EntityLivingBase) {
-            if (!MidnightConfig.general.rifterCaptureTamedAnimal && event.getObject() instanceof EntityTameable && ((EntityTameable)event.getObject()).isTamed()) {
-                return;
+            if (!(event.getObject() instanceof EntityPlayer) && !(event.getObject() instanceof EntityAnimal)) {
+                ResourceLocation rl = EntityList.getKey(event.getObject());
+                if (rl == null || !Arrays.asList(MidnightConfig.general.capturableEntities).contains(rl.toString())) {
+                    return;
+                }
             }
             event.addCapability(new ResourceLocation(Midnight.MODID, "rifter_captured"), new RifterCapturable());
         }

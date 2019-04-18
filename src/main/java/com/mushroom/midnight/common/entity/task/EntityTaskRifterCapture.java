@@ -1,8 +1,10 @@
 package com.mushroom.midnight.common.entity.task;
 
 import com.mushroom.midnight.common.capability.RifterCapturable;
+import com.mushroom.midnight.common.config.MidnightConfig;
 import com.mushroom.midnight.common.entity.creature.EntityRifter;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.passive.EntityTameable;
 
 public class EntityTaskRifterCapture extends EntityTaskRifterFollow {
     public EntityTaskRifterCapture(EntityRifter owner, double followSpeed) {
@@ -30,7 +32,7 @@ public class EntityTaskRifterCapture extends EntityTaskRifterFollow {
     @Override
     protected void handleInteract(EntityLivingBase target) {
         this.owner.captureCooldown = EntityRifter.CAPTURE_COOLDOWN;
-        if (this.owner.attackEntityAsMob(target) && target.isEntityAlive()) {
+        if (this.owner.attackEntityAsMob(target) && target.isEntityAlive() && (MidnightConfig.general.rifterCaptureTamedAnimal || !(target instanceof EntityTameable) || !((EntityTameable)target).isTamed())) {
             this.owner.setCapturedEntity(target);
         }
     }
