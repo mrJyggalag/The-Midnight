@@ -356,16 +356,16 @@ config.midnight.midnight_dimension_id=Midnight Dimension ID
 config.midnight.midnight_dimension_id.tooltip=The ID to be used for the Midnight Dimension.
 
 config.midnight.rift_shaders=Rift Shaders
-config.midnight.rift_shaders.tooltip=If true, rifts will be rendered with custom shaders for standard effects. If false, a simpler texture will be rendered.
+config.midnight.rift_shaders.tooltip=If true, rifts will be rendered with custom shaders for standard effects. If false, a simpler (motionless) texture will be rendered.
 
 config.midnight.bladeshroom_damage_chance=Bladeshroom Damage Chance
-config.midnight.bladeshroom_damage_chance.tooltip=The chance to take damage when picking a bladeshroom cap.
+config.midnight.bladeshroom_damage_chance.tooltip=The chance to take a small amount of damage when picking a bladeshroom cap from a fully grown bladeshroom.
 
-config.midnight.can_respawn_in_midnight=Allow to respawn in Midnight
+config.midnight.can_respawn_in_midnight=Allow players to respawn in Midnight
 config.midnight.can_respawn_in_midnight.tooltip=If true, players will respawn in Midnight after dying in the dimension.
 
-config.midnight.hide_vignette_effect=Hides the vignette effect
-config.midnight.hide_vignette_effect.tooltip=Hides the vignette effect in the dark areas of Midnight.
+config.midnight.hide_vignette_effect=Hide the vignette effect
+config.midnight.hide_vignette_effect.tooltip=Hides the vignette effect in the darker areas of Midnight.
 
 config.midnight.allow_lightning_damage=Allow lightning damage
 config.midnight.allow_lightning_damage.tooltip=Allows the lightning in Midnight to burn blocks and do damage to entities.
@@ -376,23 +376,23 @@ config.midnight.rift_spawn_rarity.tooltip=The rarity that a rift appears. Larger
 config.midnight.rifter_spawn_rarity=Rarity of rifters
 config.midnight.rifter_spawn_rarity.tooltip=The rarity that rifts spawn rifters. Larger numbers increase rarity. If 0, rifters don't spawn.
 
-config.midnight.max_rifter_by_rift=Maximum rifters by rift
-config.midnight.max_rifter_by_rift.tooltip=The maximum of rifters spawning from a rift.
+config.midnight.max_rifter_by_rift=Maximum rifters from rifts
+config.midnight.max_rifter_by_rift.tooltip=The maximum amount of rifters that spawn from a rift.
 
 config.midnight.allow_rifter_teleport=Rifter teleportation
-config.midnight.allow_rifter_teleport.tooltip=Allows the rifters to teleport on players.
+config.midnight.allow_rifter_teleport.tooltip=Allows rifters to teleport to players when they aren't being looked at.
 
 config.midnight.monster_spawn_rate=Monster spawn rate
-config.midnight.monster_spawn_rate.tooltip=Spawn rate of creatures of type monster.
+config.midnight.monster_spawn_rate.tooltip=Spawn rate of creatures of the type monster (eg. Rifter, Hunter). 
 
 config.midnight.rifter_capture_tamed_animal=Capture tamed animals
-config.midnight.rifter_capture_tamed_animal.tooltip=Allows rifters to catch tamed animals.
+config.midnight.rifter_capture_tamed_animal.tooltip=Allows rifters to capture tamed animals and drag them into rifts.
 
 config.midnight.capturable_entities=Capturable entities
-config.midnight.capturable_entities.tooltip=List of entities(others than player and animal) capturable by rifters
+config.midnight.capturable_entities.tooltip=Mobs on this whitelist can be captured by rifters, players and animals are already captured by default. Format is mod id:name of creature, just use the modid to whitelist everything from it.
 
 config.midnight.not_capturable_animals=Not capturable animals
-config.midnight.not_capturable_animals.tooltip=List of animals not capturable by rifters
+config.midnight.not_capturable_animals.tooltip=Mobs on this blacklist cannot be captured by rifters. Format is mod id:name of creature, just use the mod id to blacklist everything from it.
 
 status.midnight.rift_nearby=You may not rest now, there is an evil presence nearby
 status.midnight.snapped=The fish snapped at you
