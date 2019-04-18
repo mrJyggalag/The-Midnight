@@ -57,9 +57,16 @@ public class CommonEventHandler {
     public static void onAttachEntityCapabilities(AttachCapabilitiesEvent<Entity> event) {
         event.addCapability(new ResourceLocation(Midnight.MODID, "rift_cooldown"), new RiftTravelCooldown());
         if (event.getObject() instanceof EntityLivingBase) {
-            if (!(event.getObject() instanceof EntityPlayer) && !(event.getObject() instanceof EntityAnimal)) {
+            if (!(event.getObject() instanceof EntityPlayer)) {
                 ResourceLocation rl = EntityList.getKey(event.getObject());
-                if (rl == null || !Arrays.asList(MidnightConfig.general.capturableEntities).contains(rl.toString())) {
+                if (rl == null) {
+                    return;
+                }
+                if (event.getObject() instanceof EntityAnimal) {
+                    if (Arrays.stream(MidnightConfig.general.notCapturableAnimals).anyMatch(p -> p.contains(":") ? rl.toString().equals(p) : rl.getNamespace().equals(p))) {
+                        return;
+                    }
+                } else if (!Arrays.asList(MidnightConfig.general.capturableEntities).contains(rl.toString())) {
                     return;
                 }
             }

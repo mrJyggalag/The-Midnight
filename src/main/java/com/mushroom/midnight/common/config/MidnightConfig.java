@@ -81,8 +81,17 @@ public class MidnightConfig {
         @Config.Name("capturable_entities")
         @Config.RequiresWorldRestart
         @Config.LangKey("config.midnight." + "capturable_entities")
-        @Config.Comment("List of entities capturable by rifters.")
+        @Config.Comment("List of entities(others than player and animal) capturable by rifters.")
         public String[] capturableEntities = {
+        };
+
+        @Config.Name("not_capturable_animals")
+        @Config.RequiresWorldRestart
+        @Config.LangKey("config.midnight." + "not_capturable_animals")
+        @Config.Comment("List of animals not capturable by rifters.")
+        public String[] notCapturableAnimals = {
+                "iceandfire",
+                "midnight:nighstag"
         };
     }
 
