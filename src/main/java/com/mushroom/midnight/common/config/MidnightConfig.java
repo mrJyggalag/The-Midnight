@@ -69,9 +69,9 @@ public class MidnightConfig {
 
         @Config.Name("monster_spawn_rate")
         @Config.LangKey("config.midnight.monster_spawn_rate")
-        @Config.Comment("Spawn rate of entities of the 'monster' type in midnight (eg. Rifter, Hunter). Default= 400")
+        @Config.Comment("Spawn rate of entities of the 'monster' type in midnight (eg. Rifter, Hunter). Default= 1")
         @Config.RangeInt(min=1)
-        public int monsterSpawnRate = 400;
+        public int monsterSpawnRate = 1;
 
         @Config.Name("rifter_capture_tamed_animal")
         @Config.LangKey("config.midnight.rifter_capture_tamed_animal")
