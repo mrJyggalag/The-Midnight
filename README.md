@@ -23,9 +23,9 @@ To get to the dimension, you will need to find a rift. These will spawn randomly
 - If you would like to support our work, consider donating to our Patreon
 
 ### Credits  
-- **Code**: gegy1000, Martacus, arthurbambous
-- **Textures**: Endergized, Five (Paradiscal)
-- **Models**: Cipher_Zero_X
+- **Code**: gegy1000, Martacus, arthurbambous, Corail31
+- **Textures**: Endergized, Five (Paradiscal), MCVinnyq
+- **Models**: Cipher_Zero_X, MCvinnnyq
 - **Sounds**: Lachney
 
 We owe a special thanks to ZombieEnderman5 for contributing code to The Midnight, and Terenx for being an awesome tester. They have done an outstanding job with helping us add to and improve the mod!
