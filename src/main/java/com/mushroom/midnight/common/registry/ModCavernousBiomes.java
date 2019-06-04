@@ -22,9 +22,9 @@ public class ModCavernousBiomes {
     private static final CavernStructureConfig CLOSED_STRUCTURE_CONFIG = new CavernStructureConfig()
             .withCavernDensity(5.0F);
 
-    public static final CavernousBiome CLOSED_CAVERN = RegUtil.withName(new CavernousBiome(CavernousBiomeConfig.builder()
+    public static final CavernousBiome CLOSED_CAVERN = new CavernousBiome(CavernousBiomeConfig.builder()
             .withStructure(CLOSED_STRUCTURE_CONFIG)
-            .build()), "closed_cavern");
+            .build());
 
     public static final CavernousBiome GREAT_CAVERN = CLOSED_CAVERN;
     public static final CavernousBiome CRYSTAL_CAVERN = CLOSED_CAVERN;
@@ -44,7 +44,7 @@ public class ModCavernousBiomes {
     @SubscribeEvent
     public static void onRegisterBiomes(RegistryEvent.Register<CavernousBiome> event) {
         event.getRegistry().registerAll(
-                CLOSED_CAVERN,
+                RegUtil.withName(CLOSED_CAVERN, "closed_cavern"),
                 RegUtil.withName(new CavernousBiome(GREAT_CAVERN_CONFIG), "great_cavern"),
                 RegUtil.withName(new CavernousBiome(CRYSTAL_CAVERN_CONFIG), "crystal_cavern"),
                 RegUtil.withName(new CavernousBiome(FUNGAL_CAVERN_CONFIG), "fungal_cavern")
