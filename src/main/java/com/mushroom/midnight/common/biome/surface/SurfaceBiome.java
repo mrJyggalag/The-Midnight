@@ -7,6 +7,7 @@ import com.mushroom.midnight.common.biome.config.SurfaceConfig;
 import com.mushroom.midnight.common.world.MidnightChunkGenerator;
 import com.mushroom.midnight.common.world.SurfaceCoverGenerator;
 import com.mushroom.midnight.common.world.SurfacePlacementLevel;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.util.math.BlockPos;
@@ -58,6 +59,9 @@ public class SurfaceBiome extends Biome implements EntitySpawnConfigured {
     protected SurfaceConfig configureSurface(SurfaceConfig config, SurfaceConfig parent, int x, int z, Random random) {
         return config;
     }
+
+    @Override
+    public void addFlower(IBlockState state, int weight) {}
 
     @Override
     public int getGrassColorAtPos(BlockPos pos) {
