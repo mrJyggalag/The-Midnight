@@ -9,7 +9,7 @@ import net.minecraftforge.common.IPlantable;
 public interface GeneratablePlant extends IPlantable {
     default boolean canGeneratePlant(World world, BlockPos pos, IBlockState state) {
         IBlockState soil = world.getBlockState(pos.down());
-        return soil.getBlock().canSustainPlant(soil, world, pos, EnumFacing.UP, this);
+        return soil.getBlock().canSustainPlant(soil, world, pos.down(), EnumFacing.UP, this);
     }
 
     static boolean canGenerate(World world, BlockPos pos, IBlockState state) {
