@@ -96,6 +96,7 @@ public class BlockMidnightGrass extends Block implements IGrowable, IModelProvid
     @Override
     public void grow(World worldIn, Random rand, BlockPos pos, IBlockState state) {
         BlockPos blockpos = pos.up();
+        boolean isMidnight = Helper.isMidnightDimension(worldIn);
         label35:
         for (int i = 0; i < 128; ++i) {
             BlockPos blockpos1 = blockpos;
@@ -108,7 +109,7 @@ public class BlockMidnightGrass extends Block implements IGrowable, IModelProvid
             }
             if (worldIn.isAirBlock(blockpos1)) {
                 if (rand.nextInt(8) == 0) {
-                    if (blockpos1.getY() < MidnightChunkGenerator.MAX_CAVE_HEIGHT) {
+                    if (isMidnight && blockpos1.getY() < MidnightChunkGenerator.MAX_CAVE_HEIGHT) {
                         CavernousBiomeStore.getBiome(worldIn, blockpos1.getX(), blockpos1.getZ()).plantFlower(worldIn, rand, blockpos1);
                     } else {
                         worldIn.getBiome(blockpos1).plantFlower(worldIn, rand, blockpos1);
