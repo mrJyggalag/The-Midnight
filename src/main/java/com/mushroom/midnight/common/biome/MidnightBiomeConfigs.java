@@ -47,7 +47,7 @@ public class MidnightBiomeConfigs {
             .withFeature(FeatureSorting.LAST, DRAGON_NEST_FEATURE, new DragonNestPlacementConfig(32, 32))
             .withFeature(FeatureSorting.LAST, UNSTABLE_BUSH_FEATURE, new ParcelPlacementConfig(6, 10, 0.2f))
             .withFeature(FeatureSorting.LAST, UNDERGROUND_FEATURES, new UndergroundPlacementConfig(1, 3, 10, 50))
-            .withFlower(new FlowerEntry(ModBlocks.GHOST_PLANT.getDefaultState(), 20), new FlowerEntry(ModBlocks.GHOST_PLANT.getDefaultState(), 20), new FlowerEntry(ModBlocks.LUMEN_BUD.getDefaultState(), 20), new FlowerEntry(ModBlocks.NIGHTSHROOM.getDefaultState(), 5), new FlowerEntry(ModBlocks.VIRIDSHROOM.getDefaultState(), 5), new FlowerEntry(ModBlocks.DEWSHROOM.getDefaultState(), 5), new FlowerEntry(ModBlocks.BOGSHROOM.getDefaultState(), 5))
+            .withFlower(new FlowerEntry(ModBlocks.GHOST_PLANT.getDefaultState(), 20), new FlowerEntry(ModBlocks.LUMEN_BUD.getDefaultState(), 20), new FlowerEntry(ModBlocks.NIGHTSHROOM.getDefaultState(), 5), new FlowerEntry(ModBlocks.VIRIDSHROOM.getDefaultState(), 5), new FlowerEntry(ModBlocks.DEWSHROOM.getDefaultState(), 5), new FlowerEntry(ModBlocks.BOGSHROOM.getDefaultState(), 5))
             .build();
 
     public static final FeatureConfig VEGETATED_FEATURE_CONFIG = FeatureConfig.builder()
@@ -171,8 +171,13 @@ public class MidnightBiomeConfigs {
             .withFeature(ROCKSHROOM_HEAP_FEATURE, new SurfacePlacementConfig(-99, 1))
             .build();
 
+    public static final FeatureConfig GREAT_CAVERN_FEATURE_CONFIG = FeatureConfig.builder()
+            .withFlower(new FlowerEntry(ModBlocks.LUMEN_BUD.getDefaultState(), 10), new FlowerEntry(ModBlocks.NIGHTSHROOM.getDefaultState(), 10), new FlowerEntry(ModBlocks.VIRIDSHROOM.getDefaultState(), 10), new FlowerEntry(ModBlocks.DEWSHROOM.getDefaultState(), 10), new FlowerEntry(ModBlocks.BOGSHROOM.getDefaultState(), 10))
+            .build();
+
     public static final FeatureConfig CRYSTAL_CAVERN_FEATURE_CONFIG = FeatureConfig.builder()
             .withFeature(ROUXE_FEATURE, new SurfacePlacementConfig(5))
+            .withFlower(new FlowerEntry(ModBlocks.LUMEN_BUD.getDefaultState(), 10), new FlowerEntry(ModBlocks.NIGHTSHROOM.getDefaultState(), 10), new FlowerEntry(ModBlocks.VIRIDSHROOM.getDefaultState(), 10), new FlowerEntry(ModBlocks.DEWSHROOM.getDefaultState(), 10), new FlowerEntry(ModBlocks.BOGSHROOM.getDefaultState(), 10))
             .build();
 
     public static final FeatureConfig FUNGAL_CAVERN_FEATURE_CONFIG = FeatureConfig.builder()
@@ -180,6 +185,7 @@ public class MidnightBiomeConfigs {
             .withFeature(DOUBLE_FUNGI_FEATURE, new ScatterPlacementConfig(4, 8))
             .withFeature(LARGE_BULB_FUNGUS_FEATURE, new SurfacePlacementConfig(3))
             .withFeature(BULB_FUNGUS_FEATURE, new SurfacePlacementConfig(5, 8))
+            .withFlower(new FlowerEntry(ModBlocks.BULB_FUNGUS.getDefaultState(), 10), new FlowerEntry(ModBlocks.LUMEN_BUD.getDefaultState(), 10), new FlowerEntry(ModBlocks.NIGHTSHROOM.getDefaultState(), 10), new FlowerEntry(ModBlocks.VIRIDSHROOM.getDefaultState(), 10), new FlowerEntry(ModBlocks.DEWSHROOM.getDefaultState(), 10), new FlowerEntry(ModBlocks.BOGSHROOM.getDefaultState(), 10))
             .build();
 
     public static final SpawnerConfig VEGETATED_SPAWN_CONFIG = SpawnerConfig.builder()
@@ -403,6 +409,7 @@ public class MidnightBiomeConfigs {
 
     public static final CavernousBiomeConfig GREAT_CAVERN_CONFIG = CavernousBiomeConfig.builder()
             .withSpawner(GREAT_CAVERN_SPAWN_CONFIG)
+            .withFeatures(GREAT_CAVERN_FEATURE_CONFIG)
             .withStructure(GREAT_CAVERN_STRUCTURE_CONFIG)
             .build();
 

@@ -73,6 +73,7 @@ public class BlockMidnightMycelium extends BlockNightstone {
     }
 
     @Override
+    @SuppressWarnings("deprecation")
     public MapColor getMapColor(IBlockState state, IBlockAccess worldIn, BlockPos pos) {
         return MapColor.PINK;
     }

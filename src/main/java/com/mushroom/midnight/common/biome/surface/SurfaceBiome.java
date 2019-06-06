@@ -4,18 +4,26 @@ import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.common.biome.EntitySpawnConfigured;
 import com.mushroom.midnight.common.biome.config.SpawnerConfig;
 import com.mushroom.midnight.common.biome.config.SurfaceConfig;
+import com.mushroom.midnight.common.config.MidnightConfig;
 import com.mushroom.midnight.common.world.MidnightChunkGenerator;
 import com.mushroom.midnight.common.world.SurfaceCoverGenerator;
 import com.mushroom.midnight.common.world.SurfacePlacementLevel;
+import net.minecraft.block.BlockBush;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.EnumCreatureType;
+import net.minecraft.util.WeightedRandom;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.chunk.ChunkPrimer;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
+import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class SurfaceBiome extends Biome implements EntitySpawnConfigured {
     protected final SurfaceBiomeConfig config;
@@ -36,7 +44,7 @@ public class SurfaceBiome extends Biome implements EntitySpawnConfigured {
         }
 
         config.getSurfaceConfig().apply(this);
-        this.flowers = this.config.getFeatureConfig().getFlowers();
+        this.flowers.clear();
     }
 
     public SurfaceBiomeConfig getConfig() {
@@ -44,6 +52,7 @@ public class SurfaceBiome extends Biome implements EntitySpawnConfigured {
     }
 
     @Override
+    @SideOnly(Side.CLIENT)
     public String getBiomeName() {
         return I18n.format("biome." + Midnight.MODID + "." + super.getBiomeName() + ".name");
     }
@@ -61,7 +70,11 @@ public class SurfaceBiome extends Biome implements EntitySpawnConfigured {
     }
 
     @Override
-    public void addFlower(IBlockState state, int weight) {}
+    public void addFlower(IBlockState state, int weight) {
+        if (MidnightConfig.general.foreignFlowersFromBonemeal) {
+            super.addFlower(state, weight);
+        }
+    }
 
     @Override
     public int getGrassColorAtPos(BlockPos pos) {
@@ -83,6 +96,22 @@ public class SurfaceBiome extends Biome implements EntitySpawnConfigured {
     @Override
     public SpawnerConfig getSpawnerConfig() {
         return this.config.getSpawnerConfig();
+    }
+
+    @Override
+    public void plantFlower(World world, Random rand, BlockPos pos) {
+        final List<FlowerEntry> flowerList;
+        if (MidnightConfig.general.foreignFlowersFromBonemeal && !this.flowers.isEmpty()) {
+            flowerList = Stream.concat(this.flowers.stream(), this.config.getFeatureConfig().getFlowers().stream()).collect(Collectors.toList());
+        } else {
+            flowerList = this.config.getFeatureConfig().getFlowers();
+        }
+        if (!flowerList.isEmpty()) {
+            Biome.FlowerEntry flower = WeightedRandom.getRandomItem(rand, flowerList);
+            if (flower != null && flower.state != null && (!(flower.state.getBlock() instanceof BlockBush) || ((BlockBush) flower.state.getBlock()).canBlockStay(world, pos, flower.state))) {
+                world.setBlockState(pos, flower.state, 3);
+            }
+        }
     }
 
     public static final class PlacementLevel implements SurfacePlacementLevel {

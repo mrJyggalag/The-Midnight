@@ -7,11 +7,14 @@ import com.mushroom.midnight.common.biome.config.SurfaceConfig;
 import com.mushroom.midnight.common.world.MidnightChunkGenerator;
 import com.mushroom.midnight.common.world.SurfaceCoverGenerator;
 import com.mushroom.midnight.common.world.SurfacePlacementLevel;
+import net.minecraft.block.BlockBush;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Biomes;
+import net.minecraft.util.WeightedRandom;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraft.world.biome.Biome;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.ChunkPrimer;
 import net.minecraftforge.registries.IForgeRegistryEntry;
@@ -51,6 +54,15 @@ public class CavernousBiome extends IForgeRegistryEntry.Impl<CavernousBiome> imp
     @Override
     public SpawnerConfig getSpawnerConfig() {
         return this.config.getSpawnerConfig();
+    }
+
+    public void plantFlower(World world, Random rand, BlockPos pos) {
+        if (!this.config.getFeatureConfig().getFlowers().isEmpty()) {
+            Biome.FlowerEntry flower = WeightedRandom.getRandomItem(rand, this.config.getFeatureConfig().getFlowers());
+            if (flower != null && flower.state != null && (!(flower.state.getBlock() instanceof BlockBush) || ((BlockBush) flower.state.getBlock()).canBlockStay(world, pos, flower.state))) {
+                world.setBlockState(pos, flower.state, 3);
+            }
+        }
     }
 
     public static class PlacementLevel implements SurfacePlacementLevel {

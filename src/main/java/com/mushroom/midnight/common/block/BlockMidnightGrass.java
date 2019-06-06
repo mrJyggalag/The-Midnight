@@ -1,9 +1,11 @@
 package com.mushroom.midnight.common.block;
 
 import com.mushroom.midnight.client.IModelProvider;
+import com.mushroom.midnight.common.capability.CavernousBiomeStore;
 import com.mushroom.midnight.common.helper.Helper;
 import com.mushroom.midnight.common.registry.ModBlocks;
 import com.mushroom.midnight.common.registry.ModTabs;
+import com.mushroom.midnight.common.world.MidnightChunkGenerator;
 import net.minecraft.block.Block;
 import net.minecraft.block.IGrowable;
 import net.minecraft.block.SoundType;
@@ -99,13 +101,18 @@ public class BlockMidnightGrass extends Block implements IGrowable, IModelProvid
             BlockPos blockpos1 = blockpos;
             for (int j = 0; j < i / 16; ++j) {
                 blockpos1 = blockpos1.add(rand.nextInt(3) - 1, (rand.nextInt(3) - 1) * rand.nextInt(3) / 2, rand.nextInt(3) - 1);
-                if (worldIn.getBlockState(blockpos1.down()).getBlock() != ModBlocks.MIDNIGHT_GRASS || worldIn.getBlockState(blockpos1).isNormalCube()) {
+                Block groundBlock = worldIn.getBlockState(blockpos1.down()).getBlock();
+                if ((groundBlock != ModBlocks.MIDNIGHT_GRASS && groundBlock != ModBlocks.NIGHTSTONE && groundBlock != ModBlocks.MIDNIGHT_MYCELIUM) || worldIn.getBlockState(blockpos1).isNormalCube()) {
                     continue label35;
                 }
             }
             if (worldIn.isAirBlock(blockpos1)) {
-                if (rand.nextInt(30) == 0) {
-                    worldIn.getBiome(blockpos1).plantFlower(worldIn, rand, blockpos1);
+                if (rand.nextInt(8) == 0) {
+                    if (blockpos1.getY() < MidnightChunkGenerator.MAX_CAVE_HEIGHT) {
+                        CavernousBiomeStore.getBiome(worldIn, blockpos1.getX(), blockpos1.getZ()).plantFlower(worldIn, rand, blockpos1);
+                    } else {
+                        worldIn.getBiome(blockpos1).plantFlower(worldIn, rand, blockpos1);
+                    }
                 } else {
                     IBlockState tallGrassState = ModBlocks.TALL_MIDNIGHT_GRASS.getDefaultState();
                     if (GeneratablePlant.canGenerate(worldIn, blockpos1, tallGrassState)) {

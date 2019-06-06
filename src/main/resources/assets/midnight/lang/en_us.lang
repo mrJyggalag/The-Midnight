@@ -394,6 +394,9 @@ config.midnight.capturable_entities.tooltip=Mobs on this whitelist can be captur
 config.midnight.not_capturable_animals=Not capturable entities
 config.midnight.not_capturable_animals.tooltip=Mobs on this blacklist cannot be captured by rifters. Format is mod id:name of creature, just use the mod id to blacklist everything from it.
 
+config.midnight.foreign_flowers_from_bonemeal=Foreign flowers from bonemeal
+config.midnight.foreign_flowers_from_bonemeal.tooltip=Allows the flowers of others mods to appear with bonemeal in Midnight.
+
 status.midnight.rift_nearby=You may not rest now, there is an evil presence nearby
 status.midnight.snapped=The fish snapped at you
 

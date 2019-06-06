@@ -93,6 +93,11 @@ public class MidnightConfig {
                 "iceandfire",
                 "midnight:nightstag"
         };
+
+        @Config.Name("foreign_flowers_from_bonemeal")
+        @Config.LangKey("config.midnight.foreign_flowers_from_bonemeal")
+        @Config.Comment("Allows the modded flowers to appear with bonemeal in Midnight. Default= false")
+        public boolean foreignFlowersFromBonemeal = false;
     }
 
     public static class CatClient {
