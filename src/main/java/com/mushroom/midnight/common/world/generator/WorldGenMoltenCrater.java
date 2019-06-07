@@ -62,7 +62,7 @@ public class WorldGenMoltenCrater extends MapGenBase {
             int centerX = globalX + this.rand.nextInt(16);
             int centerZ = globalZ + this.rand.nextInt(16);
             Biome biome = world.getBiomeProvider().getBiome(new BlockPos(centerX, 0, centerZ));
-            if (this.isBiomeInvalid(biome)) {
+            if (isBiomeInvalid(biome)) {
                 return;
             }
 
@@ -74,10 +74,6 @@ public class WorldGenMoltenCrater extends MapGenBase {
             int radius = this.rand.nextInt(MAX_RADIUS - MIN_RADIUS + 1) + MIN_RADIUS;
             this.generateCrater(centerX, centerY, centerZ, radius, genChunkX, genChunkZ, primer);
         }
-    }
-
-    private boolean isBiomeInvalid(Biome biome) {
-        return SurfaceBiome.getTerrainConfig(biome).isWet();
     }
 
     private void generateCrater(int centerX, int centerY, int centerZ, int radius, int genChunkX, int genChunkZ, ChunkPrimer primer) {
@@ -214,6 +210,18 @@ public class WorldGenMoltenCrater extends MapGenBase {
         long seedZ = chunkZ * RNG.nextLong();
         RNG.setSeed(seedX ^ seedZ ^ world.getSeed());
 
-        return RNG.nextInt(SPAWN_CHANCE) == 0;
+        if (RNG.nextInt(SPAWN_CHANCE) != 0) {
+            return false;
+        }
+
+        int centerX = (chunkX << 4) + RNG.nextInt(16);
+        int centerZ = (chunkZ << 4) + RNG.nextInt(16);
+        Biome biome = world.getBiomeProvider().getBiome(new BlockPos(centerX, 0, centerZ));
+
+        return !isBiomeInvalid(biome);
+    }
+
+    private static boolean isBiomeInvalid(Biome biome) {
+        return SurfaceBiome.getTerrainConfig(biome).isWet();
     }
 }
