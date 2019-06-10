@@ -7,8 +7,9 @@ import net.minecraft.inventory.*;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.common.crafting.IRecipeContainer;
 
-public class ContainerShadowrootCT extends Container
+public class ContainerShadowrootCT extends Container implements IRecipeContainer
 {
     /** The crafting matrix inventory (3x3). */
     public InventoryCrafting craftMatrix = new InventoryCrafting(this, 3, 3);
@@ -164,5 +165,15 @@ public class ContainerShadowrootCT extends Container
     public boolean canMergeSlot(ItemStack stack, Slot slotIn)
     {
         return slotIn.inventory != this.craftResult && super.canMergeSlot(stack, slotIn);
+    }
+
+    @Override
+    public InventoryCraftResult getCraftResult() {
+        return this.craftResult;
+    }
+
+    @Override
+    public InventoryCrafting getCraftMatrix() {
+        return this.craftMatrix;
     }
 }
