@@ -102,8 +102,7 @@ public class BlockMidnightGrass extends Block implements IGrowable, IModelProvid
             BlockPos blockpos1 = blockpos;
             for (int j = 0; j < i / 16; ++j) {
                 blockpos1 = blockpos1.add(rand.nextInt(3) - 1, (rand.nextInt(3) - 1) * rand.nextInt(3) / 2, rand.nextInt(3) - 1);
-                Block groundBlock = worldIn.getBlockState(blockpos1.down()).getBlock();
-                if ((groundBlock != ModBlocks.MIDNIGHT_GRASS && groundBlock != ModBlocks.NIGHTSTONE && groundBlock != ModBlocks.MIDNIGHT_MYCELIUM) || worldIn.getBlockState(blockpos1).isNormalCube()) {
+                if (!Helper.isGroundForBoneMeal(worldIn.getBlockState(blockpos1.down()).getBlock()) || worldIn.getBlockState(blockpos1).isNormalCube()) {
                     continue label35;
                 }
             }

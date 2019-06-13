@@ -1,7 +1,7 @@
 package com.mushroom.midnight.common.block;
 
 import com.mushroom.midnight.client.IModelProvider;
-import com.mushroom.midnight.common.registry.ModBlocks;
+import com.mushroom.midnight.common.helper.Helper;
 import com.mushroom.midnight.common.registry.ModTabs;
 import net.minecraft.block.BlockBush;
 import net.minecraft.block.SoundType;
@@ -49,13 +49,14 @@ public class BlockMidnightPlant extends BlockBush implements IModelProvider, ISh
     }
 
     @Override
+    @SuppressWarnings("deprecation")
     public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
         return BOUNDS;
     }
 
     @Override
     protected boolean canSustainBush(IBlockState state) {
-        return state.getBlock() == ModBlocks.MIDNIGHT_DIRT || state.getBlock() == ModBlocks.MIDNIGHT_GRASS || state.getBlock() == ModBlocks.MIDNIGHT_MYCELIUM || state.getBlock() == ModBlocks.NIGHTSTONE || state.getBlock() == ModBlocks.DECEITFUL_MUD || state.getBlock() == ModBlocks.DECEITFUL_PEAT || super.canSustainBush(state);
+        return Helper.isGroundForMidnightPlant(state.getBlock());
     }
 
     @Override
@@ -120,9 +121,5 @@ public class BlockMidnightPlant extends BlockBush implements IModelProvider, ISh
     @Override
     public int getFlammability(IBlockAccess world, BlockPos pos, EnumFacing face) {
         return 100;
-    }
-
-    public PlantBehaviorType getBehaviorType() {
-        return behaviorType;
     }
 }
