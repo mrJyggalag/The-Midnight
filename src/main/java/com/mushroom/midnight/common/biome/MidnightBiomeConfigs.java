@@ -268,8 +268,8 @@ public class MidnightBiomeConfigs {
             .wet();
 
     public static final SurfaceTerrainConfig BOG_TERRAIN_CONFIG = new SurfaceTerrainConfig()
-            .withBaseHeight(-1.7F)
-            .withHeightVariation(0.3F)
+            .withBaseHeight(-0.9F)
+            .withHeightVariation(0.2F)
             .withRidgeWeight(0.0F)
             .wet();
 

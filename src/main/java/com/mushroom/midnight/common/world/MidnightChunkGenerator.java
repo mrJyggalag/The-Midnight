@@ -82,7 +82,7 @@ public class MidnightChunkGenerator implements IChunkGenerator, PartialChunkGene
         this.caveGenerator = TerrainGen.getModdedMapGen(new WorldGenMidnightCaves(), InitMapGenEvent.EventType.CAVE);
         this.craterGenerator = TerrainGen.getModdedMapGen(new WorldGenMoltenCrater(this.random, this), InitMapGenEvent.EventType.CUSTOM);
 
-        this.world.setSeaLevel(SURFACE_LEVEL + 1);
+        this.world.setSeaLevel(SURFACE_LEVEL + 2);
     }
 
     @Override
