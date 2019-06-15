@@ -21,18 +21,19 @@ import static com.mushroom.midnight.Midnight.MODID;
 @Mod.EventBusSubscriber(modid = MODID)
 public class FishingLoot {
     private static final Field fieldPools;
-    private static final Field poolConditions;
+    private static final Field fieldPoolConditions;
+
     static {
         fieldPools = ReflectionHelper.findField(LootTable.class, "pools", "field_186466_c");
-        poolConditions = ReflectionHelper.findField(LootPool.class, "poolConditions", "field_186454_b");
+        fieldPoolConditions = ReflectionHelper.findField(LootPool.class, "poolConditions", "field_186454_b");
     }
 
-    @SubscribeEvent(priority= EventPriority.LOWEST)
+    @SubscribeEvent(priority = EventPriority.LOWEST)
     public static void onLootTableLoad(LootTableLoadEvent event) {
         if (event.getName() == LootTableList.GAMEPLAY_FISHING) {
             addConditionToAllMainPools(event.getTable(), (rand, context) -> !Helper.isMidnightDimension(context.getWorld()));
             LootTable midnightTable = event.getLootTableManager().getLootTableFromLocation(new ResourceLocation(MODID, "fishing"));
-            if (midnightTable == null) {
+            if (midnightTable == LootTable.EMPTY_LOOT_TABLE) {
                 LOGGER.warn("The Midnight fishing loottable is absent");
             } else {
                 LootPool midnightPool = midnightTable.getPool("midnight_fishing");
@@ -60,7 +61,7 @@ public class FishingLoot {
     @SuppressWarnings("unchecked")
     private static void addConditionToPool(LootCondition condition, LootPool pool) {
         try {
-            List<LootCondition> conditions = (List<LootCondition>) poolConditions.get(pool);
+            List<LootCondition> conditions = (List<LootCondition>) fieldPoolConditions.get(pool);
             conditions.add(condition);
         } catch (IllegalAccessException e) {
             e.printStackTrace();
