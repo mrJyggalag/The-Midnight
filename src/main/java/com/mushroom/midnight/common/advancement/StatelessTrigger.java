@@ -8,6 +8,7 @@ import net.minecraft.advancements.critereon.AbstractCriterionInstance;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.ResourceLocation;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -88,9 +89,7 @@ public class StatelessTrigger implements ICriterionTrigger<StatelessTrigger.Inst
         }
 
         public void trigger() {
-            for (Listener<Instance> listener : this.listeners) {
-                listener.grantCriterion(this.advancements);
-            }
+            new ArrayList<>(this.listeners).forEach(listener -> listener.grantCriterion(this.advancements));
         }
     }
 }
