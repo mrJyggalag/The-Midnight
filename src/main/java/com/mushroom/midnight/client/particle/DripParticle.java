@@ -3,12 +3,12 @@ package com.mushroom.midnight.client.particle;
 import net.minecraft.client.particle.IParticleFactory;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
 import javax.annotation.Nullable;
 
-@SideOnly(Side.CLIENT)
+@OnlyIn(Dist.CLIENT)
 public class DripParticle extends Particle {
     private int bobTimer;
 
@@ -26,7 +26,7 @@ public class DripParticle extends Particle {
     }
 
     @Override
-    public void onUpdate() {
+    public void tick() {
         prevPosX = posX;
         prevPosY = posY;
         prevPosZ = posZ;
@@ -55,7 +55,7 @@ public class DripParticle extends Particle {
         return bobTimer <= 0 ? 0xe000e0 : 0xe000e0 - (0x010001 * bobTimer);
     }
 
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     public static class Factory implements IParticleFactory {
         @Nullable
         @Override

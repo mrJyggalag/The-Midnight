@@ -1,24 +1,24 @@
 package com.mushroom.midnight.common.tile.base;
 
-import com.mushroom.midnight.common.block.BlockMidnightFurnace;
-import com.mushroom.midnight.common.container.ContainerMidnightFurnace;
-import com.mushroom.midnight.common.registry.ModBlocks;
-import com.mushroom.midnight.common.registry.ModItems;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.InventoryPlayer;
+import com.mushroom.midnight.common.block.MidnightFurnaceBlock;
+import com.mushroom.midnight.common.container.MidnightFurnaceContainer;
+import com.mushroom.midnight.common.registry.MidnightBlocks;
+import com.mushroom.midnight.common.registry.MidnightItems;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.SlotFurnaceFuel;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntityFurnace;
 import net.minecraft.util.math.MathHelper;
 
 public class TileEntityMidnightFurnace extends TileEntityFurnace {
 
     @Override
-    public void readFromNBT(NBTTagCompound compound) {
+    public void readFromNBT(CompoundNBT compound) {
         super.readFromNBT(compound);
         currentItemBurnTime = TileEntityMidnightFurnace.getItemBurnTime(furnaceItemStacks.get(1));
     }
@@ -29,8 +29,8 @@ public class TileEntityMidnightFurnace extends TileEntityFurnace {
     }
 
     @Override
-    public ContainerMidnightFurnace createContainer(InventoryPlayer playerInventory, EntityPlayer playerIn) {
-        return new ContainerMidnightFurnace(playerIn.inventory, this);
+    public MidnightFurnaceContainer createContainer(PlayerInventory playerInventory, PlayerEntity playerIn) {
+        return new MidnightFurnaceContainer(playerIn.inventory, this);
     }
 
     @Override
@@ -55,13 +55,13 @@ public class TileEntityMidnightFurnace extends TileEntityFurnace {
                 return burnTime;
             }
             Item item = stack.getItem();
-            if (item == Item.getItemFromBlock(ModBlocks.SHADOWROOT_SLAB) || item == Item.getItemFromBlock(ModBlocks.DARK_WILLOW_SLAB) || item == Item.getItemFromBlock(ModBlocks.DEAD_WOOD_SLAB)) {
+            if (item == Item.getItemFromBlock(MidnightBlocks.SHADOWROOT_SLAB) || item == Item.getItemFromBlock(MidnightBlocks.DARK_WILLOW_SLAB) || item == Item.getItemFromBlock(MidnightBlocks.DEAD_WOOD_SLAB)) {
                 return 150;
-            } else if (item == Item.getItemFromBlock(ModBlocks.DARK_PEARL_BLOCK)) {
+            } else if (item == Item.getItemFromBlock(MidnightBlocks.DARK_PEARL_BLOCK)) {
                 return 16000;
-            } else if (item == ModItems.DARK_STICK) {
+            } else if (item == MidnightItems.DARK_STICK) {
                 return 100;
-            } else if (item == ModItems.DARK_PEARL) {
+            } else if (item == MidnightItems.DARK_PEARL) {
                 return 1600;
             } else {
                 return TileEntityFurnace.getItemBurnTime(stack);
@@ -110,7 +110,7 @@ public class TileEntityMidnightFurnace extends TileEntityFurnace {
             }
             if (flag != isBurning()) {
                 flag1 = true;
-                BlockMidnightFurnace.setState(isBurning(), world, pos);
+                MidnightFurnaceBlock.setState(isBurning(), world, pos);
             }
         }
         if (flag1) {

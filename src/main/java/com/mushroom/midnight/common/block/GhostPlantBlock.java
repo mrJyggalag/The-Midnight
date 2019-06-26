@@ -1,0 +1,22 @@
+package com.mushroom.midnight.common.block;
+
+import net.minecraft.block.state.BlockState;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockAccess;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.OnlyIn;
+
+public class GhostPlantBlock extends MidnightPlantBlock {
+    public GhostPlantBlock() {
+        super(true);
+        this.setLightLevel(0.8F);
+    }
+
+    @Override
+    @OnlyIn(Dist.CLIENT)
+    public int getPackedLightmapCoords(BlockState state, IBlockAccess source, BlockPos pos) {
+        int skyLight = 12;
+        int blockLight = 12;
+        return skyLight << 20 | blockLight << 4;
+    }
+}

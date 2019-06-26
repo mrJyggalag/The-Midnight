@@ -1,6 +1,6 @@
 package com.mushroom.midnight.common.util;
 
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
@@ -13,13 +13,13 @@ public class WorldUtil {
     public static BlockPos findSurface(World world, BlockPos pos, int maxSteps) {
         BlockPos.MutableBlockPos mutablePos = new BlockPos.MutableBlockPos(pos);
         int steps = 0;
-        while (!world.isSideSolid(mutablePos, EnumFacing.UP)) {
-            mutablePos.move(EnumFacing.DOWN);
+        while (!world.isSideSolid(mutablePos, Direction.UP)) {
+            mutablePos.move(Direction.DOWN);
             if (steps++ > maxSteps) {
                 return null;
             }
         }
-        mutablePos.move(EnumFacing.UP);
+        mutablePos.move(Direction.UP);
         return mutablePos.toImmutable();
     }
 

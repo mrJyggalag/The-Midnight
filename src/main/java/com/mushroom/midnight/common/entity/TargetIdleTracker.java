@@ -1,25 +1,25 @@
 package com.mushroom.midnight.common.entity;
 
-import net.minecraft.entity.EntityLiving;
-import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.MobEntity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.math.Vec3d;
 
 public class TargetIdleTracker {
-    private final EntityLiving owner;
+    private final MobEntity owner;
     private final double idleBreakDistanceSq;
 
-    private EntityLivingBase lastTarget;
+    private LivingEntity lastTarget;
 
     private int idleTime;
     private Vec3d lastTargetPos;
 
-    public TargetIdleTracker(EntityLiving owner, double idleBreakDistance) {
+    public TargetIdleTracker(MobEntity owner, double idleBreakDistance) {
         this.owner = owner;
         this.idleBreakDistanceSq = idleBreakDistance * idleBreakDistance;
     }
 
     public void update() {
-        EntityLivingBase target = this.owner.getAttackTarget();
+        LivingEntity target = this.owner.getAttackTarget();
         if (target != this.lastTarget) {
             this.reset();
         }

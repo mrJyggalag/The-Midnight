@@ -1,20 +1,23 @@
 package com.mushroom.midnight.common.effect;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.Gui;
-import net.minecraft.potion.Potion;
-import net.minecraft.potion.PotionEffect;
+import net.minecraft.client.gui.AbstractGui;
+import net.minecraft.client.gui.DisplayEffectsScreen;
+import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.potion.Effect;
+import net.minecraft.potion.EffectInstance;
+import net.minecraft.potion.EffectType;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
 import static com.mushroom.midnight.Midnight.MODID;
 
-public class GenericEffect extends Potion {
+public class GenericEffect extends Effect {
     private ResourceLocation icon = null;
 
-    public GenericEffect(boolean isBadEffect, int color) {
-        super(isBadEffect, color);
+    public GenericEffect(EffectType type, int color) {
+        super(type, color);
     }
 
     public GenericEffect withIcon(String name) {
@@ -28,20 +31,21 @@ public class GenericEffect extends Potion {
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
-    public void renderInventoryEffect(int x, int y, PotionEffect effect, Minecraft mc) {
-        if (icon != null && mc.currentScreen != null) {
-            mc.renderEngine.bindTexture(icon);
-            Gui.drawModalRectWithCustomSizedTexture(x + 6, y + 7, 0, 0, 18, 18, 18, 18);
+    @OnlyIn(Dist.CLIENT)
+    public void renderInventoryEffect(EffectInstance effect, DisplayEffectsScreen<?> gui, int x, int y, float z) {
+        if (icon != null && gui != null) {
+            gui.getMinecraft().getTextureManager().bindTexture(icon);
+            Screen.blit(x + 6, y + 7, 0, 0, 18, 18, 18, 18);
         }
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
-    public void renderHUDEffect(int x, int y, PotionEffect effect, Minecraft mc, float alpha) {
-        if (icon != null && !mc.gameSettings.showDebugInfo) {
-            mc.renderEngine.bindTexture(icon);
-            Gui.drawModalRectWithCustomSizedTexture(x + 3, y + 3, 0, 0, 18, 18, 18, 18);
+    @OnlyIn(Dist.CLIENT)
+    public void renderHUDEffect(EffectInstance effect, AbstractGui gui, int x, int y, float z, float alpha) {
+        Minecraft client = Minecraft.getInstance();
+        if (icon != null && !client.gameSettings.showDebugInfo) {
+            client.getTextureManager().bindTexture(icon);
+            Screen.blit(x + 3, y + 3, 0, 0, 18, 18, 18, 18);
         }
     }
 

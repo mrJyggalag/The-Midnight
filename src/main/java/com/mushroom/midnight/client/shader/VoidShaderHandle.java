@@ -1,10 +1,10 @@
 package com.mushroom.midnight.client.shader;
 
-import net.minecraft.client.shader.ShaderUniform;
+import net.minecraft.client.shader.ShaderDefault;
 
 public class VoidShaderHandle implements ShaderHandle {
     @Override
-    public ShaderUniform get(String key) {
+    public ShaderDefault getUniform(String key) {
         return DEFAULT_UNIFORM;
     }
 

@@ -1,30 +1,30 @@
 package com.mushroom.midnight.common.world.feature;
 
-import com.mushroom.midnight.common.registry.ModBlocks;
+import com.mushroom.midnight.common.registry.MidnightBlocks;
 import com.mushroom.midnight.common.util.WorldUtil;
 import net.minecraft.block.BlockLog;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.block.state.BlockState;
+import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 import java.util.Random;
 
 public class DeadLogFeature extends MidnightNaturalFeature {
-    private final IBlockState log;
+    private final BlockState log;
 
-    public DeadLogFeature(IBlockState log) {
+    public DeadLogFeature(BlockState log) {
         this.log = log;
     }
 
     public DeadLogFeature() {
-        this(ModBlocks.DEAD_WOOD_LOG.getDefaultState());
+        this(MidnightBlocks.DEAD_WOOD_LOG.getDefaultState());
     }
 
     @Override
     public boolean placeFeature(World world, Random rand, BlockPos origin) {
-        EnumFacing direction = EnumFacing.HORIZONTALS[rand.nextInt(EnumFacing.HORIZONTALS.length)];
-        BlockLog.EnumAxis axis = direction.getAxis() == EnumFacing.Axis.X ? BlockLog.EnumAxis.X : BlockLog.EnumAxis.Z;
+        Direction direction = Direction.HORIZONTALS[rand.nextInt(Direction.HORIZONTALS.length)];
+        BlockLog.EnumAxis axis = direction.getAxis() == Direction.Axis.X ? BlockLog.EnumAxis.X : BlockLog.EnumAxis.Z;
         BlockLog.EnumAxis perpendicular = axis == BlockLog.EnumAxis.X ? BlockLog.EnumAxis.Z : BlockLog.EnumAxis.X;
 
         int length = rand.nextInt(4) + 3;
@@ -44,7 +44,7 @@ public class DeadLogFeature extends MidnightNaturalFeature {
         int extrusionCount = rand.nextInt(3);
         for (int i = 0; i < extrusionCount; i++) {
             BlockPos intermediate = basePos.offset(direction, rand.nextInt(length));
-            EnumFacing side = rand.nextBoolean() ? direction.rotateY() : direction.rotateYCCW();
+            Direction side = rand.nextBoolean() ? direction.rotateY() : direction.rotateYCCW();
             this.placeState(world, intermediate.offset(side), this.log.withProperty(BlockLog.LOG_AXIS, perpendicular));
         }
 
@@ -62,14 +62,14 @@ public class DeadLogFeature extends MidnightNaturalFeature {
         }
 
         for (BlockPos.MutableBlockPos pos : BlockPos.getAllInBoxMutable(basePos, endPos)) {
-            pos.move(EnumFacing.DOWN);
+            pos.move(Direction.DOWN);
 
-            IBlockState groundState = world.getBlockState(pos);
-            if (!groundState.isSideSolid(world, pos, EnumFacing.UP)) {
+            BlockState groundState = world.getBlockState(pos);
+            if (!groundState.isSideSolid(world, pos, Direction.UP)) {
                 return false;
             }
 
-            pos.move(EnumFacing.UP);
+            pos.move(Direction.UP);
         }
 
         return true;

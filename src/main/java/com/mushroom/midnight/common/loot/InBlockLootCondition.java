@@ -5,16 +5,16 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSyntaxException;
 import net.minecraft.block.Block;
+import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.storage.loot.LootContext;
-import net.minecraft.world.storage.loot.conditions.LootCondition;
-import net.minecraftforge.fml.common.registry.ForgeRegistries;
-
-import java.util.Random;
+import net.minecraft.world.storage.loot.LootParameters;
+import net.minecraft.world.storage.loot.conditions.ILootCondition;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import static com.mushroom.midnight.Midnight.MODID;
 
-public class InBlockLootCondition implements LootCondition {
+public class InBlockLootCondition implements ILootCondition {
     private final Block block;
 
     public InBlockLootCondition(Block block) {
@@ -22,12 +22,13 @@ public class InBlockLootCondition implements LootCondition {
     }
 
     @Override
-    public boolean testCondition(Random rand, LootContext context) {
-        return context.getLootedEntity() != null && context.getWorld().getBlockState(context.getLootedEntity().getPosition()).getBlock() == block;
+    public boolean test(LootContext context) {
+        Entity entity = context.get(LootParameters.THIS_ENTITY);
+        return entity != null && context.getWorld().getBlockState(entity.getPosition()).getBlock() == block;
     }
 
-    public static class Serialiser extends LootCondition.Serializer<InBlockLootCondition> {
-        public Serialiser() {
+    public static class Serializer extends ILootCondition.AbstractSerializer<InBlockLootCondition> {
+        public Serializer() {
             super(new ResourceLocation(MODID, "in_block"), InBlockLootCondition.class);
         }
 

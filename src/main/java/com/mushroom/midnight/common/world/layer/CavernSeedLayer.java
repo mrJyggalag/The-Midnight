@@ -2,7 +2,7 @@ package com.mushroom.midnight.common.world.layer;
 
 import com.mushroom.midnight.common.biome.MidnightBiomeGroup;
 import com.mushroom.midnight.common.biome.config.BiomeSpawnEntry;
-import com.mushroom.midnight.common.registry.ModCavernousBiomes;
+import com.mushroom.midnight.common.registry.MidnightCavernousBiomes;
 import net.minecraft.world.gen.layer.GenLayer;
 import net.minecraft.world.gen.layer.IntCache;
 
@@ -13,7 +13,7 @@ public class CavernSeedLayer extends GenLayer {
     public CavernSeedLayer(long seed, MidnightBiomeGroup group) {
         super(seed);
         this.group = group;
-        this.closedCavernId = ModCavernousBiomes.getId(ModCavernousBiomes.CLOSED_CAVERN);
+        this.closedCavernId = MidnightCavernousBiomes.getId(MidnightCavernousBiomes.CLOSED_CAVERN);
     }
 
     @Override

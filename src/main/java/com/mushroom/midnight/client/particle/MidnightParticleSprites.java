@@ -12,7 +12,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import java.util.EnumMap;
 import java.util.Locale;
 
-@Mod.EventBusSubscriber(modid = Midnight.MODID, value = Side.CLIENT)
+@Mod.EventBusSubscriber(modid = Midnight.MODID, value = Dist.CLIENT)
 public class MidnightParticleSprites {
     public enum SpriteTypes {
         SPORE, GREEN_UNSTABLE_BUSH, BLUE_UNSTABLE_BUSH, LIME_UNSTABLE_BUSH,
@@ -35,7 +35,7 @@ public class MidnightParticleSprites {
     public static TextureAtlasSprite getSprite(SpriteTypes particleType) {
         TextureAtlasSprite sprite = sprites.get(particleType);
         if (sprite == null) {
-            return Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite("missingno");
+            return Minecraft.getInstance().getTextureMapBlocks().getAtlasSprite("missingno");
         }
         return sprite;
     }

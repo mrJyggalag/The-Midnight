@@ -1,7 +1,7 @@
 package com.mushroom.midnight.common.world.generator;
 
 import com.mushroom.midnight.common.helper.Helper;
-import com.mushroom.midnight.common.registry.ModBlocks;
+import com.mushroom.midnight.common.registry.MidnightBlocks;
 import net.minecraft.block.state.pattern.BlockMatcher;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -16,12 +16,12 @@ import java.util.Random;
 public class MidnightOreGenerator implements IWorldGenerator {
     private static final long SEED = 21052088057241959L;
 
-    private static final BlockMatcher NIGHTSTONE_MATCHER = BlockMatcher.forBlock(ModBlocks.NIGHTSTONE);
+    private static final BlockMatcher NIGHTSTONE_MATCHER = BlockMatcher.forBlock(MidnightBlocks.NIGHTSTONE);
 
-    private static final WorldGenerator DARK_PEARL_GENERATOR = new WorldGenMinable(ModBlocks.DARK_PEARL_ORE.getDefaultState(), 14, NIGHTSTONE_MATCHER);
-    private static final WorldGenerator TENEBRUM_GENERATOR = new WorldGenMinable(ModBlocks.TENEBRUM_ORE.getDefaultState(), 4, NIGHTSTONE_MATCHER);
-    private static final WorldGenerator NAGRILITE_GENERATOR = new WorldGenMinable(ModBlocks.NAGRILITE_ORE.getDefaultState(), 4, NIGHTSTONE_MATCHER);
-    private static final WorldGenerator EBONYS_GENERATOR = new WorldGenMinable(ModBlocks.EBONYS_ORE.getDefaultState(), 6, NIGHTSTONE_MATCHER);
+    private static final WorldGenerator DARK_PEARL_GENERATOR = new WorldGenMinable(MidnightBlocks.DARK_PEARL_ORE.getDefaultState(), 14, NIGHTSTONE_MATCHER);
+    private static final WorldGenerator TENEBRUM_GENERATOR = new WorldGenMinable(MidnightBlocks.TENEBRUM_ORE.getDefaultState(), 4, NIGHTSTONE_MATCHER);
+    private static final WorldGenerator NAGRILITE_GENERATOR = new WorldGenMinable(MidnightBlocks.NAGRILITE_ORE.getDefaultState(), 4, NIGHTSTONE_MATCHER);
+    private static final WorldGenerator EBONYS_GENERATOR = new WorldGenMinable(MidnightBlocks.EBONYS_ORE.getDefaultState(), 6, NIGHTSTONE_MATCHER);
 
     private static final int DARK_PEARL_PER_CHUNK = 8;
     private static final int TENEBRUM_PER_CHUNK = 6;

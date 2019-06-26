@@ -6,11 +6,11 @@ import net.minecraft.client.particle.Particle;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.fml.relauncher.OnlyIn;
 
 import javax.annotation.Nullable;
 
-@SideOnly(Side.CLIENT)
+@OnlyIn(Dist.CLIENT)
 public class FadingSporeParticle extends Particle {
     private final float scaleMax;
 
@@ -31,7 +31,7 @@ public class FadingSporeParticle extends Particle {
     }
 
     @Override
-    public void onUpdate() {
+    public void tick() {
         this.prevPosX = this.posX;
         this.prevPosY = this.posY;
         this.prevPosZ = this.posZ;
@@ -64,7 +64,7 @@ public class FadingSporeParticle extends Particle {
         return 1;
     }
 
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     public static class Factory implements IParticleFactory {
         @Override
         @Nullable

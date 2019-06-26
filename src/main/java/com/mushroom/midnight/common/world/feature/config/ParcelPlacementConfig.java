@@ -1,8 +1,8 @@
 package com.mushroom.midnight.common.world.feature.config;
 
 import com.mushroom.midnight.common.world.SurfacePlacementLevel;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.block.state.BlockState;
+import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
@@ -35,13 +35,13 @@ public class ParcelPlacementConfig implements IPlacementConfig {
 
     private void placeParcel(World world, Random random, BlockPos pos, Consumer<BlockPos> generator) {
         BlockPos.MutableBlockPos mutablePos = new BlockPos.MutableBlockPos(pos);
-        IBlockState state;
+        BlockState state;
         while (mutablePos.getY() > 0) {
             state = world.getBlockState(mutablePos);
             if (!state.getBlock().isAir(state, world, mutablePos) && !state.getBlock().isLeaves(state, world, mutablePos)) {
                 break;
             }
-            mutablePos.move(EnumFacing.DOWN);
+            mutablePos.move(Direction.DOWN);
         }
         pos = mutablePos.toImmutable();
 
@@ -56,7 +56,7 @@ public class ParcelPlacementConfig implements IPlacementConfig {
             mutablePos.setPos(pos.getX() + offsetX, Math.max(1, pos.getY() - 1), pos.getZ() + offsetZ);
             boolean isValid;
             while ((isValid = mutablePos.getY() <= pos.getY() + 1) && !world.isAirBlock(mutablePos)) {
-                mutablePos.move(EnumFacing.UP);
+                mutablePos.move(Direction.UP);
             }
             if (isValid) {
                 generator.accept(mutablePos.toImmutable());

@@ -1,8 +1,8 @@
 package com.mushroom.midnight.common.world.feature;
 
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.state.BlockState;
 import net.minecraft.init.Blocks;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
@@ -13,10 +13,10 @@ public class CrystalClusterFeature extends MidnightAbstractFeature {
     private final int radius;
     private final int maxHeight;
 
-    private final IBlockState rock;
-    private final IBlockState crystal;
+    private final BlockState rock;
+    private final BlockState crystal;
 
-    public CrystalClusterFeature(int radius, int maxHeight, IBlockState rock, IBlockState crystal) {
+    public CrystalClusterFeature(int radius, int maxHeight, BlockState rock, BlockState crystal) {
         this.radius = radius;
         this.maxHeight = maxHeight;
         this.rock = rock;
@@ -104,13 +104,13 @@ public class CrystalClusterFeature extends MidnightAbstractFeature {
     }
 
     private BlockPos findSurfaceBelow(World world, BlockPos origin, int maxSteps) {
-        IBlockState currentState = world.getBlockState(origin);
+        BlockState currentState = world.getBlockState(origin);
         BlockPos.MutableBlockPos currentPos = new BlockPos.MutableBlockPos(origin);
         for (int i = 0; i < maxSteps; i++) {
-            currentPos.move(EnumFacing.DOWN);
-            IBlockState nextState = world.getBlockState(currentPos);
-            if (currentState.getBlock() == Blocks.AIR && nextState.isSideSolid(world, currentPos, EnumFacing.UP)) {
-                currentPos.move(EnumFacing.UP);
+            currentPos.move(Direction.DOWN);
+            BlockState nextState = world.getBlockState(currentPos);
+            if (currentState.getBlock() == Blocks.AIR && nextState.isSideSolid(world, currentPos, Direction.UP)) {
+                currentPos.move(Direction.UP);
                 return currentPos.toImmutable();
             }
             currentState = nextState;
@@ -118,8 +118,8 @@ public class CrystalClusterFeature extends MidnightAbstractFeature {
         return null;
     }
 
-    private void trySetBlock(World world, BlockPos pos, IBlockState state) {
-        IBlockState currentState = world.getBlockState(pos);
+    private void trySetBlock(World world, BlockPos pos, BlockState state) {
+        BlockState currentState = world.getBlockState(pos);
         if (currentState.getBlock().isReplaceable(world, pos)) {
             world.setBlockState(pos, state, 3);
         }

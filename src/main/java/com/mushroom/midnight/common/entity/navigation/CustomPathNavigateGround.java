@@ -1,12 +1,12 @@
 package com.mushroom.midnight.common.entity.navigation;
 
-import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.MobEntity;
 import net.minecraft.pathfinding.PathFinder;
 import net.minecraft.pathfinding.PathNavigateGround;
 import net.minecraft.pathfinding.PathNodeType;
 import net.minecraft.pathfinding.PathPoint;
 import net.minecraft.pathfinding.WalkNodeProcessor;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
@@ -14,7 +14,7 @@ import net.minecraft.world.World;
 import javax.annotation.Nullable;
 
 public class CustomPathNavigateGround extends PathNavigateGround {
-    public CustomPathNavigateGround(EntityLiving owner, World world) {
+    public CustomPathNavigateGround(MobEntity owner, World world) {
         super(owner, world);
     }
 
@@ -40,10 +40,10 @@ public class CustomPathNavigateGround extends PathNavigateGround {
                 }
                 BlockPos blockpos = (new BlockPos(currentPoint.x, currentPoint.y, currentPoint.z)).down();
                 double d0 = currentPoint.y - (1.0 - blockaccess.getBlockState(blockpos).getBoundingBox(blockaccess, blockpos).maxY);
-                PathPoint pointS = getSafePoint(currentPoint.x, currentPoint.y, currentPoint.z + 1, stepHeight, d0, EnumFacing.SOUTH);
-                PathPoint pointW = getSafePoint(currentPoint.x - 1, currentPoint.y, currentPoint.z, stepHeight, d0, EnumFacing.WEST);
-                PathPoint pointE = getSafePoint(currentPoint.x + 1, currentPoint.y, currentPoint.z, stepHeight, d0, EnumFacing.EAST);
-                PathPoint pointN = getSafePoint(currentPoint.x, currentPoint.y, currentPoint.z - 1, stepHeight, d0, EnumFacing.NORTH);
+                PathPoint pointS = getSafePoint(currentPoint.x, currentPoint.y, currentPoint.z + 1, stepHeight, d0, Direction.SOUTH);
+                PathPoint pointW = getSafePoint(currentPoint.x - 1, currentPoint.y, currentPoint.z, stepHeight, d0, Direction.WEST);
+                PathPoint pointE = getSafePoint(currentPoint.x + 1, currentPoint.y, currentPoint.z, stepHeight, d0, Direction.EAST);
+                PathPoint pointN = getSafePoint(currentPoint.x, currentPoint.y, currentPoint.z - 1, stepHeight, d0, Direction.NORTH);
                 if (pointS != null && !pointS.visited && pointS.distanceTo(targetPoint) < maxDistance) {
                     pathOptions[optionIndex++] = pointS;
                 }
@@ -61,25 +61,25 @@ public class CustomPathNavigateGround extends PathNavigateGround {
                 boolean allowDiagonalW = isValidForDiagonal(currentPoint, pointW);
                 boolean allowDiagonalE = isValidForDiagonal(currentPoint, pointE);
                 if (allowDiagonalN && allowDiagonalW) {
-                    PathPoint pointNW = getSafePoint(currentPoint.x - 1, currentPoint.y, currentPoint.z - 1, stepHeight, d0, EnumFacing.NORTH);
+                    PathPoint pointNW = getSafePoint(currentPoint.x - 1, currentPoint.y, currentPoint.z - 1, stepHeight, d0, Direction.NORTH);
                     if (pointNW != null && !pointNW.visited && pointNW.distanceTo(targetPoint) < maxDistance) {
                         pathOptions[optionIndex++] = pointNW;
                     }
                 }
                 if (allowDiagonalN && allowDiagonalE) {
-                    PathPoint pointNE = getSafePoint(currentPoint.x + 1, currentPoint.y, currentPoint.z - 1, stepHeight, d0, EnumFacing.NORTH);
+                    PathPoint pointNE = getSafePoint(currentPoint.x + 1, currentPoint.y, currentPoint.z - 1, stepHeight, d0, Direction.NORTH);
                     if (pointNE != null && !pointNE.visited && pointNE.distanceTo(targetPoint) < maxDistance) {
                         pathOptions[optionIndex++] = pointNE;
                     }
                 }
                 if (allowDiagonalS && allowDiagonalW) {
-                    PathPoint pointSW = getSafePoint(currentPoint.x - 1, currentPoint.y, currentPoint.z + 1, stepHeight, d0, EnumFacing.SOUTH);
+                    PathPoint pointSW = getSafePoint(currentPoint.x - 1, currentPoint.y, currentPoint.z + 1, stepHeight, d0, Direction.SOUTH);
                     if (pointSW != null && !pointSW.visited && pointSW.distanceTo(targetPoint) < maxDistance) {
                         pathOptions[optionIndex++] = pointSW;
                     }
                 }
                 if (allowDiagonalS && allowDiagonalE) {
-                    PathPoint pointSE = getSafePoint(currentPoint.x + 1, currentPoint.y, currentPoint.z + 1, stepHeight, d0, EnumFacing.SOUTH);
+                    PathPoint pointSE = getSafePoint(currentPoint.x + 1, currentPoint.y, currentPoint.z + 1, stepHeight, d0, Direction.SOUTH);
                     if (pointSE != null && !pointSE.visited && pointSE.distanceTo(targetPoint) < maxDistance) {
                         pathOptions[optionIndex++] = pointSE;
                     }

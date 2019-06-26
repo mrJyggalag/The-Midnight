@@ -1,6 +1,6 @@
 package com.mushroom.midnight.common.entity.util;
 
-import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MoverType;
 
 import javax.vecmath.Vector3d;
@@ -9,13 +9,13 @@ public class AttachmentSolver {
     private final AttachmentPoint attachmentPoint = new AttachmentPoint();
     private final Vector3d snappedAttachmentPoint = new Vector3d();
 
-    private final EntityLivingBase origin;
+    private final LivingEntity origin;
 
-    public AttachmentSolver(EntityLivingBase origin) {
+    public AttachmentSolver(LivingEntity origin) {
         this.origin = origin;
     }
 
-    public Result solveAttachment(EntityLivingBase entity) {
+    public Result solveAttachment(LivingEntity entity) {
         double globalX = this.attachmentPoint.getX() + this.origin.posX;
         double globalY = this.attachmentPoint.getY() + this.origin.posY;
         double globalZ = this.attachmentPoint.getZ() + this.origin.posZ;

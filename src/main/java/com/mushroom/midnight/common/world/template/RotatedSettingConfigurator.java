@@ -2,7 +2,7 @@ package com.mushroom.midnight.common.world.template;
 
 import net.minecraft.util.Mirror;
 import net.minecraft.util.Rotation;
-import net.minecraft.world.gen.structure.template.PlacementSettings;
+import net.minecraft.world.gen.feature.template.PlacementSettings;
 
 import java.util.Random;
 import java.util.function.BiConsumer;

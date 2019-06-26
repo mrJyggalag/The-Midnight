@@ -104,7 +104,7 @@ public class MidnightConfig {
         @Config.Name("hide_vignette_effect")
         @Config.LangKey("config.midnight.hide_vignette_effect")
         @Config.Comment("Hides the vignette effect in the darker areas of Midnight. Default= true")
-        public boolean hideVignetteEffect = true;
+        public boolean hideVignetteEffect = false;
 
         @Config.Name("rift_shaders")
         @Config.LangKey("config.midnight.rift_shaders")

@@ -1,13 +1,14 @@
 package com.mushroom.midnight.common.entity.util;
 
-import net.minecraft.entity.EntityCreature;
+import net.minecraft.entity.CreatureEntity;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.gen.Heightmap;
 
 import javax.annotation.Nullable;
 import java.util.Random;
 
 public class FlyingTargetGenerator implements IRandomTargetGenerator {
-    private final EntityCreature owner;
+    private final CreatureEntity owner;
 
     private final int minRange;
     private final int maxRange;
@@ -15,7 +16,7 @@ public class FlyingTargetGenerator implements IRandomTargetGenerator {
     private final int minHeight;
     private final int maxHeight;
 
-    public FlyingTargetGenerator(EntityCreature owner, int minRange, int maxRange, int minHeight, int maxHeight) {
+    public FlyingTargetGenerator(CreatureEntity owner, int minRange, int maxRange, int minHeight, int maxHeight) {
         this.owner = owner;
         this.minRange = minRange;
         this.maxRange = maxRange;
@@ -66,7 +67,7 @@ public class FlyingTargetGenerator implements IRandomTargetGenerator {
 
     private BlockPos generateTarget(Random random, BlockPos displacedPos) {
         int flightHeight = random.nextInt(this.maxHeight - this.minHeight + 1) + this.minHeight;
-        BlockPos surface = this.owner.world.getHeight(displacedPos);
+        BlockPos surface = this.owner.world.getHeight(Heightmap.Type.MOTION_BLOCKING, displacedPos);
         return surface.up(flightHeight);
     }
 

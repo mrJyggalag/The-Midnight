@@ -1,8 +1,8 @@
 package com.mushroom.midnight.common.world.feature;
 
 import com.mushroom.midnight.Midnight;
-import com.mushroom.midnight.common.registry.ModBlocks;
-import net.minecraft.block.state.IBlockState;
+import com.mushroom.midnight.common.registry.MidnightBlocks;
+import net.minecraft.block.state.BlockState;
 import net.minecraft.util.ResourceLocation;
 
 public class DarkWillowTreeFeature extends TemplateTreeFeature {
@@ -12,11 +12,11 @@ public class DarkWillowTreeFeature extends TemplateTreeFeature {
             new ResourceLocation(Midnight.MODID, "trees/dark_willow_3")
     };
 
-    public DarkWillowTreeFeature(IBlockState log, IBlockState leaves) {
+    public DarkWillowTreeFeature(BlockState log, BlockState leaves) {
         super(TEMPLATES, log, leaves);
     }
 
     public DarkWillowTreeFeature() {
-        this(ModBlocks.DARK_WILLOW_LOG.getDefaultState(), ModBlocks.DARK_WILLOW_LEAVES.getDefaultState());
+        this(MidnightBlocks.DARK_WILLOW_LOG.getDefaultState(), MidnightBlocks.DARK_WILLOW_LEAVES.getDefaultState());
     }
 }

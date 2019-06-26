@@ -1,0 +1,24 @@
+package com.mushroom.midnight.common.block;
+
+import com.mushroom.midnight.common.registry.MidnightItemGroups;
+import net.minecraft.block.BlockPane;
+import net.minecraft.block.SoundType;
+import net.minecraft.block.material.Material;
+import net.minecraft.util.BlockRenderLayer;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.OnlyIn;
+
+public class MidnightGlassPaneBlock extends BlockPane {
+    public MidnightGlassPaneBlock() {
+        super(Material.GLASS, false);
+        setSoundType(SoundType.GLASS);
+        setCreativeTab(MidnightItemGroups.DECORATION);
+    }
+
+    @Override
+    @OnlyIn(Dist.CLIENT)
+    public BlockRenderLayer getRenderLayer()
+    {
+        return BlockRenderLayer.TRANSLUCENT;
+    }
+}

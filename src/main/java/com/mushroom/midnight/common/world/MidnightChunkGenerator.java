@@ -7,14 +7,14 @@ import com.mushroom.midnight.common.biome.cavern.CavernousBiome;
 import com.mushroom.midnight.common.capability.CavernousBiomeStore;
 import com.mushroom.midnight.common.capability.MidnightWorldSpawners;
 import com.mushroom.midnight.common.capability.MultiLayerBiomeSampler;
-import com.mushroom.midnight.common.registry.ModBlocks;
-import com.mushroom.midnight.common.registry.ModCavernousBiomes;
+import com.mushroom.midnight.common.registry.MidnightBlocks;
+import com.mushroom.midnight.common.registry.MidnightCavernousBiomes;
 import com.mushroom.midnight.common.world.generator.WorldGenMidnightCaves;
 import com.mushroom.midnight.common.world.generator.WorldGenMoltenCrater;
 import com.mushroom.midnight.common.world.noise.OctaveNoiseSampler;
 import com.mushroom.midnight.common.world.util.NoiseChunkPrimer;
 import net.minecraft.block.BlockFalling;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.state.BlockState;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
@@ -37,7 +37,7 @@ import java.util.Random;
 import static com.mushroom.midnight.common.world.MidnightNoiseGenerator.*;
 
 public class MidnightChunkGenerator implements IChunkGenerator, PartialChunkGenerator {
-    private static final BiomeLayerSampler<CavernousBiome> DEFAULT_CAVERN_SAMPLER = new BiomeLayerSampler.Constant<>(ModCavernousBiomes.CLOSED_CAVERN);
+    private static final BiomeLayerSampler<CavernousBiome> DEFAULT_CAVERN_SAMPLER = new BiomeLayerSampler.Constant<>(MidnightCavernousBiomes.CLOSED_CAVERN);
 
     public static final int SURFACE_LEVEL = 78;
 
@@ -46,9 +46,9 @@ public class MidnightChunkGenerator implements IChunkGenerator, PartialChunkGene
 
     public static final int MIN_SURFACE_LEVEL = MAX_CAVE_HEIGHT + 12;
 
-    private static final IBlockState STONE = ModBlocks.NIGHTSTONE.getDefaultState();
-    private static final IBlockState WATER = ModBlocks.DARK_WATER.getDefaultState();
-    private static final IBlockState BEDROCK = Blocks.BEDROCK.getDefaultState();
+    private static final BlockState STONE = MidnightBlocks.NIGHTSTONE.getDefaultState();
+    private static final BlockState WATER = MidnightBlocks.DARK_WATER.getDefaultState();
+    private static final BlockState BEDROCK = Blocks.BEDROCK.getDefaultState();
 
     private final World world;
     private final Random random;

@@ -2,20 +2,20 @@ package com.mushroom.midnight.client.sound;
 
 import com.mushroom.midnight.client.IdleSoundController;
 import com.mushroom.midnight.common.helper.Helper;
-import com.mushroom.midnight.common.registry.ModSounds;
+import com.mushroom.midnight.common.registry.MidnightSounds;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.ITickableSound;
 import net.minecraft.client.audio.PositionedSound;
 import net.minecraft.util.SoundCategory;
 import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.fml.relauncher.OnlyIn;
 
-@SideOnly(Side.CLIENT)
+@OnlyIn(Dist.CLIENT)
 public class MidnightIdleSound extends PositionedSound implements ITickableSound {
-    private static final Minecraft MC = Minecraft.getMinecraft();
+    private static final Minecraft MC = Minecraft.getInstance();
 
     public MidnightIdleSound() {
-        super(ModSounds.IDLE, SoundCategory.AMBIENT);
+        super(MidnightSounds.IDLE, SoundCategory.AMBIENT);
         this.attenuationType = AttenuationType.NONE;
         this.repeat = true;
     }

@@ -3,7 +3,7 @@ package com.mushroom.midnight.common.capability;
 import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.common.biome.BiomeLayerSampler;
 import com.mushroom.midnight.common.biome.BiomeLayerType;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 
@@ -26,13 +26,13 @@ public class MultiLayerBiomeSampler implements ICapabilityProvider {
     }
 
     @Override
-    public boolean hasCapability(@Nonnull Capability<?> capability, @Nullable EnumFacing facing) {
+    public boolean hasCapability(@Nonnull Capability<?> capability, @Nullable Direction facing) {
         return capability == Midnight.MULTI_LAYER_BIOME_SAMPLER_CAP;
     }
 
     @Nullable
     @Override
-    public <T> T getCapability(@Nonnull Capability<T> capability, @Nullable EnumFacing facing) {
+    public <T> T getCapability(@Nonnull Capability<T> capability, @Nullable Direction facing) {
         if (capability == Midnight.MULTI_LAYER_BIOME_SAMPLER_CAP) {
             return Midnight.MULTI_LAYER_BIOME_SAMPLER_CAP.cast(this);
         }

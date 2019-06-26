@@ -1,8 +1,8 @@
 package com.mushroom.midnight.common.biome;
 
 import com.mushroom.midnight.common.biome.cavern.CavernousBiome;
-import com.mushroom.midnight.common.registry.ModCavernousBiomes;
-import com.mushroom.midnight.common.registry.ModSurfaceBiomes;
+import com.mushroom.midnight.common.registry.MidnightCavernousBiomes;
+import com.mushroom.midnight.common.registry.MidnightSurfaceBiomes;
 import com.mushroom.midnight.common.world.layer.AddOutlineLayer;
 import com.mushroom.midnight.common.world.layer.CavernSeedLayer;
 import com.mushroom.midnight.common.world.layer.CellSeedLayer;
@@ -47,8 +47,8 @@ public final class MidnightBiomeLayer<T> implements BiomeLayerType<T> {
 
         layer = GenLayerZoom.magnify(5000, layer, 2);
 
-        int plateauId = Biome.getIdForBiome(ModSurfaceBiomes.OBSCURED_PLATEAU);
-        int valleyId = Biome.getIdForBiome(ModSurfaceBiomes.PHANTASMAL_VALLEY);
+        int plateauId = Biome.getIdForBiome(MidnightSurfaceBiomes.OBSCURED_PLATEAU);
+        int valleyId = Biome.getIdForBiome(MidnightSurfaceBiomes.PHANTASMAL_VALLEY);
         layer = new EdgeMergeLayer(6000, layer, valleyLayer, plateauId, valleyId);
 
         layer = GenLayerZoom.magnify(7000, layer, 1);
@@ -58,7 +58,7 @@ public final class MidnightBiomeLayer<T> implements BiomeLayerType<T> {
     }
 
     private static GenLayer buildUndergroundProcedure() {
-        int closedCavernId = ModCavernousBiomes.getId(ModCavernousBiomes.CLOSED_CAVERN);
+        int closedCavernId = MidnightCavernousBiomes.getId(MidnightCavernousBiomes.CLOSED_CAVERN);
 
         GenLayer passageLayer = buildEdgeHighlightLayer(300);
 
@@ -71,7 +71,7 @@ public final class MidnightBiomeLayer<T> implements BiomeLayerType<T> {
 
         layer = GenLayerZoom.magnify(5000, layer, 2);
 
-        int fungalCavernId = ModCavernousBiomes.getId(ModCavernousBiomes.FUNGAL_CAVERN);
+        int fungalCavernId = MidnightCavernousBiomes.getId(MidnightCavernousBiomes.FUNGAL_CAVERN);
         layer = new EdgeMergeLayer(6000, layer, passageLayer, closedCavernId, fungalCavernId);
 
         layer = GenLayerZoom.magnify(7000, layer, 1);

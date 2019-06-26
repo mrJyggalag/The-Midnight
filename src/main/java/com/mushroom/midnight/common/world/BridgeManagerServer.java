@@ -3,14 +3,15 @@ package com.mushroom.midnight.common.world;
 import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.common.entity.RiftAttachment;
 import com.mushroom.midnight.common.entity.RiftBridge;
-import com.mushroom.midnight.common.network.MessageBridgeRemoval;
+import com.mushroom.midnight.common.network.BridgeRemovalMessage;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import it.unimi.dsi.fastutil.objects.ObjectIterator;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.ListNBT;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.world.storage.MapStorage;
+import net.minecraft.world.dimension.DimensionType;
+import net.minecraft.world.storage.DimensionSavedDataManager;
 import net.minecraft.world.storage.WorldSavedData;
 import net.minecraftforge.common.util.Constants;
 
@@ -27,13 +28,8 @@ public class BridgeManagerServer extends WorldSavedData implements BridgeManager
     }
 
     public static BridgeManagerServer get(MinecraftServer server) {
-        MapStorage storage = server.getWorld(0).getMapStorage();
-        BridgeManagerServer data = (BridgeManagerServer) storage.getOrLoadData(BridgeManagerServer.class, KEY);
-        if (data == null) {
-            data = new BridgeManagerServer(KEY);
-            storage.setData(KEY, data);
-        }
-        return data;
+        DimensionSavedDataManager storage = server.getWorld(DimensionType.field_223227_a_).getSavedData();
+        return storage.getOrCreate(() -> new BridgeManagerServer(KEY), KEY);
     }
 
     @Override
@@ -73,7 +69,7 @@ public class BridgeManagerServer extends WorldSavedData implements BridgeManager
 
     private void notifyRemoval(RiftBridge bridge) {
         bridge.exists = false;
-        bridge.getTracker().sendToTracking(new MessageBridgeRemoval(bridge.getId()));
+        bridge.getTracker().sendToTracking(new BridgeRemovalMessage(bridge.getId()));
 
         this.markDirty();
     }
@@ -85,25 +81,25 @@ public class BridgeManagerServer extends WorldSavedData implements BridgeManager
     }
 
     @Override
-    public NBTTagCompound writeToNBT(NBTTagCompound compound) {
-        compound.setInteger("current_id", this.currentId);
+    public CompoundNBT write(CompoundNBT compound) {
+        compound.putInt("current_id", this.currentId);
 
-        NBTTagList bridgeList = new NBTTagList();
+        ListNBT bridgeList = new ListNBT();
         for (RiftBridge bridge : this.bridges.values()) {
-            bridgeList.appendTag(bridge.serialize(new NBTTagCompound()));
+            bridgeList.add(bridge.serialize(new CompoundNBT()));
         }
-        compound.setTag("bridges", bridgeList);
+        compound.put("bridges", bridgeList);
 
         return compound;
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound compound) {
-        this.currentId = compound.getInteger("current_id");
+    public void read(CompoundNBT compound) {
+        this.currentId = compound.getInt("current_id");
 
-        NBTTagList bridgeList = compound.getTagList("bridges", Constants.NBT.TAG_COMPOUND);
-        for (int i = 0; i < bridgeList.tagCount(); i++) {
-            NBTTagCompound bridgeCompound = bridgeList.getCompoundTagAt(i);
+        ListNBT bridgeList = compound.getList("bridges", Constants.NBT.TAG_COMPOUND);
+        for (int i = 0; i < bridgeList.size(); i++) {
+            CompoundNBT bridgeCompound = bridgeList.getCompound(i);
             RiftBridge bridge = RiftBridge.deserialize(bridgeCompound);
             this.bridges.put(bridge.getId(), bridge);
         }

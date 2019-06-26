@@ -1,16 +1,16 @@
 package com.mushroom.midnight.common.entity.util;
 
 import com.mushroom.midnight.common.util.MatrixStack;
-import net.minecraft.client.model.ModelRenderer;
-import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.client.renderer.entity.model.RendererModel;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.math.MathHelper;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
 import javax.vecmath.Point3f;
 import javax.vecmath.Vector3f;
 
-public class ChainSolver<E extends EntityLivingBase> {
+public class ChainSolver<E extends LivingEntity> {
     private final Point3f rootNode;
 
     private final Point3f[] restingPoints;
@@ -109,8 +109,8 @@ public class ChainSolver<E extends EntityLivingBase> {
         }
     }
 
-    @SideOnly(Side.CLIENT)
-    public void apply(ModelRenderer[] parts, float partialTicks) {
+    @OnlyIn(Dist.CLIENT)
+    public void apply(RendererModel[] parts, float partialTicks) {
         if (parts.length != this.solvedNodes.length) {
             throw new IllegalArgumentException("Expected " + this.solvedNodes.length + " parts but got " + parts.length);
         }
@@ -126,7 +126,7 @@ public class ChainSolver<E extends EntityLivingBase> {
 
             float distanceHorizontal = MathHelper.sqrt(deltaX * deltaX + deltaZ * deltaZ);
 
-            ModelRenderer part = parts[i];
+            RendererModel part = parts[i];
             part.rotateAngleY = (float) (Math.atan2(deltaZ, deltaX) - Math.PI / 2.0F);
             part.rotateAngleX = (float) Math.atan2(deltaY, distanceHorizontal);
         }

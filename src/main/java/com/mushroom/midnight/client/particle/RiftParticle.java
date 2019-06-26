@@ -1,6 +1,6 @@
 package com.mushroom.midnight.client.particle;
 
-import com.mushroom.midnight.common.entity.EntityRift;
+import com.mushroom.midnight.common.entity.RiftEntity;
 import com.mushroom.midnight.common.util.MatrixStack;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.util.math.MathHelper;
@@ -12,7 +12,7 @@ public class RiftParticle extends Particle {
     private static final float MIN_RETURN_DISTANCE = 0.2F;
 
     private static final int MIN_RETURN_CHANCE = 400;
-    private static final int RETURN_DECAY_TIME = EntityRift.UNSTABLE_TIME + EntityRift.CLOSE_TIME - TRANSITION_TIME - 2;
+    private static final int RETURN_DECAY_TIME = RiftEntity.UNSTABLE_TIME + RiftEntity.CLOSE_TIME - TRANSITION_TIME - 2;
 
     private final RiftParticleSystem particleSystem;
     private final RiftParticleSystem.Ring ring;
@@ -55,12 +55,12 @@ public class RiftParticle extends Particle {
     }
 
     @Override
-    public void onUpdate() {
+    public void tick() {
         this.prevPosX = this.posX;
         this.prevPosY = this.posY;
         this.prevPosZ = this.posZ;
 
-        EntityRift rift = this.particleSystem.getEntity();
+        RiftEntity rift = this.particleSystem.getEntity();
 
         if (this.shouldExpire() || !rift.isBridgeValid()) {
             this.setExpired();
@@ -121,7 +121,7 @@ public class RiftParticle extends Particle {
 
         this.matrix.pop();
 
-        EntityRift rift = this.particleSystem.getEntity();
+        RiftEntity rift = this.particleSystem.getEntity();
         double targetX = rift.posX + point.x;
         double targetY = rift.posY + rift.height / 2.0F + point.y;
         double targetZ = rift.posZ + point.z;

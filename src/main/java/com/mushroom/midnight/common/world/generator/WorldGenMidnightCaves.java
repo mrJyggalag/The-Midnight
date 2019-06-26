@@ -5,9 +5,9 @@ import com.mushroom.midnight.common.biome.BiomeLayerSampler;
 import com.mushroom.midnight.common.biome.MidnightBiomeLayer;
 import com.mushroom.midnight.common.biome.cavern.CavernousBiome;
 import com.mushroom.midnight.common.capability.MultiLayerBiomeSampler;
-import com.mushroom.midnight.common.registry.ModBlocks;
+import com.mushroom.midnight.common.registry.MidnightBlocks;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.state.BlockState;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
@@ -51,10 +51,10 @@ public class WorldGenMidnightCaves extends MapGenCaves {
     }
 
     @Override
-    protected void digBlock(ChunkPrimer data, int x, int y, int z, int chunkX, int chunkZ, boolean foundTop, IBlockState state, IBlockState up) {
+    protected void digBlock(ChunkPrimer data, int x, int y, int z, int chunkX, int chunkZ, boolean foundTop, BlockState state, BlockState up) {
         Biome biome = this.world.getBiome(new BlockPos(x + chunkX * 16, 0, z + chunkZ * 16));
-        IBlockState top = biome.topBlock;
-        IBlockState filler = biome.fillerBlock;
+        BlockState top = biome.topBlock;
+        BlockState filler = biome.fillerBlock;
 
         if (this.canReplaceBlock(state, up) || state.getBlock() == top.getBlock() || state.getBlock() == filler.getBlock()) {
             if (y > 10) {
@@ -63,13 +63,13 @@ public class WorldGenMidnightCaves extends MapGenCaves {
                     data.setBlockState(x, y - 1, z, top.getBlock().getDefaultState());
                 }
             } else {
-                data.setBlockState(x, y, z, ModBlocks.MIASMA.getDefaultState());
+                data.setBlockState(x, y, z, MidnightBlocks.MIASMA.getDefaultState());
             }
         }
     }
 
     @Override
-    protected boolean canReplaceBlock(IBlockState state, IBlockState aboveState) {
+    protected boolean canReplaceBlock(BlockState state, BlockState aboveState) {
         Material material = state.getMaterial();
         Material aboveMaterial = aboveState.getMaterial();
         return (material == Material.ROCK || material == Material.GROUND || material == Material.GRASS)

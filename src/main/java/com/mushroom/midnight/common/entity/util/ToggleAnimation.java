@@ -1,6 +1,6 @@
 package com.mushroom.midnight.common.entity.util;
 
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 
 public class ToggleAnimation {
     private final int length;
@@ -46,14 +46,14 @@ public class ToggleAnimation {
         return this.timer / (float) this.length;
     }
 
-    public NBTTagCompound serialize(NBTTagCompound compound) {
-        compound.setBoolean("state", this.state);
+    public CompoundNBT serialize(CompoundNBT compound) {
+        compound.putBoolean("state", this.state);
         compound.setShort("timer", (short) this.timer);
         compound.setByte("rate", (byte) this.rate);
         return compound;
     }
 
-    public void deserialize(NBTTagCompound compound) {
+    public void deserialize(CompoundNBT compound) {
         this.state = compound.getBoolean("state");
         this.timer = compound.getShort("timer");
         this.rate = compound.getByte("rate");

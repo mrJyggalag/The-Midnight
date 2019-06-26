@@ -1,11 +1,11 @@
 package com.mushroom.midnight.common.tile.base;
 
-import com.mushroom.midnight.common.block.BlockMidnightChest;
-import com.mushroom.midnight.common.block.BlockMidnightChest.ChestModel;
+import com.mushroom.midnight.common.block.MidnightChestBlock;
+import com.mushroom.midnight.common.block.MidnightChestBlock.ChestModel;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockChest;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.ContainerChest;
@@ -13,10 +13,10 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.InventoryLargeChest;
 import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityLockableLoot;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.SoundCategory;
@@ -24,7 +24,7 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.fml.relauncher.OnlyIn;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
@@ -70,7 +70,7 @@ public class TileEntityMidnightChest extends TileEntityLockableLoot implements I
         return hasCustomName() ? customName : "tile.midnight." + chestModel.getName() + "_chest.name";
     }
 
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     public AxisAlignedBB getRenderBoundingBox() {
         return new AxisAlignedBB(pos.add(-1, 0, -1), pos.add(2, 2, 2));
     }
@@ -78,7 +78,7 @@ public class TileEntityMidnightChest extends TileEntityLockableLoot implements I
     protected boolean isChestAt(BlockPos posIn) {
         if (this.world != null) {
             Block block = this.world.getBlockState(posIn).getBlock();
-            if (block instanceof BlockMidnightChest && ((BlockChest) block).chestType == getChestType()) {
+            if (block instanceof MidnightChestBlock && ((BlockChest) block).chestType == getChestType()) {
                 TileEntity tile = this.world.getTileEntity(posIn);
                 if (tile instanceof TileEntityMidnightChest) {
                     return isSameChest(((TileEntityMidnightChest) tile).getChestModel());
@@ -94,21 +94,21 @@ public class TileEntityMidnightChest extends TileEntityLockableLoot implements I
                 return; // Forge: prevent loading unloaded chunks when checking neighbors
             }
             this.adjacentChestChecked = true;
-            this.adjacentChestXNeg = this.getAdjacentChest(EnumFacing.WEST);
-            this.adjacentChestXPos = this.getAdjacentChest(EnumFacing.EAST);
-            this.adjacentChestZNeg = this.getAdjacentChest(EnumFacing.NORTH);
-            this.adjacentChestZPos = this.getAdjacentChest(EnumFacing.SOUTH);
+            this.adjacentChestXNeg = this.getAdjacentChest(Direction.WEST);
+            this.adjacentChestXPos = this.getAdjacentChest(Direction.EAST);
+            this.adjacentChestZNeg = this.getAdjacentChest(Direction.NORTH);
+            this.adjacentChestZPos = this.getAdjacentChest(Direction.SOUTH);
         }
     }
 
     @Nullable
-    protected TileEntityMidnightChest getAdjacentChest(EnumFacing side) {
+    protected TileEntityMidnightChest getAdjacentChest(Direction side) {
         BlockPos blockpos = this.pos.offset(side);
         if (isChestAt(blockpos)) {
             TileEntity tileentity = this.world.getTileEntity(blockpos);
             if (tileentity instanceof TileEntityMidnightChest) {
                 TileEntityMidnightChest tileentitychest = (TileEntityMidnightChest) tileentity;
-                tileentitychest.setNeighbor(this, side.getOpposite());
+                tileentitychest.setNeighbor(this, Dist.getOpposite());
                 return tileentitychest;
             }
         }
@@ -129,7 +129,7 @@ public class TileEntityMidnightChest extends TileEntityLockableLoot implements I
         return true;
     }
 
-    public void readFromNBT(NBTTagCompound compound) {
+    public void readFromNBT(CompoundNBT compound) {
         super.readFromNBT(compound);
         this.chestContents = NonNullList.withSize(this.getSizeInventory(), ItemStack.EMPTY);
 
@@ -142,7 +142,7 @@ public class TileEntityMidnightChest extends TileEntityLockableLoot implements I
         }
     }
 
-    public NBTTagCompound writeToNBT(NBTTagCompound compound) {
+    public CompoundNBT writeToNBT(CompoundNBT compound) {
         super.writeToNBT(compound);
 
         if (!this.checkLootAndWrite(compound)) {
@@ -150,7 +150,7 @@ public class TileEntityMidnightChest extends TileEntityLockableLoot implements I
         }
 
         if (this.hasCustomName()) {
-            compound.setString("CustomName", this.customName);
+            compound.putString("CustomName", this.customName);
         }
 
         return compound;
@@ -167,7 +167,7 @@ public class TileEntityMidnightChest extends TileEntityLockableLoot implements I
     }
 
     @SuppressWarnings("incomplete-switch")
-    protected void setNeighbor(TileEntityMidnightChest chestTe, EnumFacing side) {
+    protected void setNeighbor(TileEntityMidnightChest chestTe, Direction side) {
         if (chestTe.isInvalid()) {
             this.adjacentChestChecked = false;
         } else if (this.adjacentChestChecked) {
@@ -213,9 +213,9 @@ public class TileEntityMidnightChest extends TileEntityLockableLoot implements I
             this.numPlayersUsing = 0;
             float f = 5.0F;
 
-            for (EntityPlayer entityplayer : this.world.getEntitiesWithinAABB(EntityPlayer.class, new AxisAlignedBB((double) ((float) i - 5.0F), (double) ((float) j - 5.0F), (double) ((float) k - 5.0F), (double) ((float) (i + 1) + 5.0F), (double) ((float) (j + 1) + 5.0F), (double) ((float) (k + 1) + 5.0F)))) {
-                if (entityplayer.openContainer instanceof ContainerChest) {
-                    IInventory iinventory = ((ContainerChest) entityplayer.openContainer).getLowerChestInventory();
+            for (PlayerEntity PlayerEntity : this.world.getEntitiesWithinAABB(PlayerEntity.class, new AxisAlignedBB((double) ((float) i - 5.0F), (double) ((float) j - 5.0F), (double) ((float) k - 5.0F), (double) ((float) (i + 1) + 5.0F), (double) ((float) (j + 1) + 5.0F), (double) ((float) (k + 1) + 5.0F)))) {
+                if (PlayerEntity.openContainer instanceof ContainerChest) {
+                    IInventory iinventory = ((ContainerChest) PlayerEntity.openContainer).getLowerChestInventory();
 
                     if (iinventory == this || iinventory instanceof InventoryLargeChest && ((InventoryLargeChest) iinventory).isPartOfLargeChest(this)) {
                         ++this.numPlayersUsing;
@@ -287,7 +287,7 @@ public class TileEntityMidnightChest extends TileEntityLockableLoot implements I
         }
     }
 
-    public void openInventory(EntityPlayer player) {
+    public void openInventory(PlayerEntity player) {
         if (!player.isSpectator()) {
             if (this.numPlayersUsing < 0) {
                 this.numPlayersUsing = 0;
@@ -303,7 +303,7 @@ public class TileEntityMidnightChest extends TileEntityLockableLoot implements I
         }
     }
 
-    public void closeInventory(EntityPlayer player) {
+    public void closeInventory(PlayerEntity player) {
         if (!player.isSpectator() && this.getBlockType() instanceof BlockChest) {
             --this.numPlayersUsing;
             this.world.addBlockEvent(this.pos, this.getBlockType(), 1, this.numPlayersUsing);
@@ -320,7 +320,7 @@ public class TileEntityMidnightChest extends TileEntityLockableLoot implements I
     @SuppressWarnings("unchecked")
     @Override
     @Nullable
-    public <T> T getCapability(Capability<T> capability, @Nullable EnumFacing facing) {
+    public <T> T getCapability(Capability<T> capability, @Nullable Direction facing) {
         if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
             if (doubleChestHandler == null || doubleChestHandler.needsRefresh()) {
                 doubleChestHandler = MidnightVanillaDoubleChestItemHandler.get(this);
@@ -361,7 +361,7 @@ public class TileEntityMidnightChest extends TileEntityLockableLoot implements I
         return "minecraft:chest";
     }
 
-    public Container createContainer(InventoryPlayer playerInventory, EntityPlayer playerIn) {
+    public Container createContainer(PlayerInventory playerInventory, PlayerEntity playerIn) {
         this.fillWithLoot(playerIn);
         return new ContainerChest(playerInventory, this, playerIn);
     }

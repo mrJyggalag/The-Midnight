@@ -1,17 +1,15 @@
 package com.mushroom.midnight.common.registry;
 
-import com.mushroom.midnight.Midnight;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
-import net.minecraft.potion.Potion;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.world.biome.Biome;
-import net.minecraftforge.fml.relauncher.ReflectionHelper;
 import net.minecraftforge.registries.GameData;
-import net.minecraftforge.registries.IForgeRegistryEntry;
+import net.minecraftforge.registries.IForgeRegistry;
 
 import javax.annotation.Nonnull;
+import java.util.function.BiFunction;
+import java.util.function.Function;
+import java.util.function.Supplier;
 
 public class RegUtil {
     @Nonnull
@@ -20,47 +18,65 @@ public class RegUtil {
         return null;
     }
 
-    public static <T extends Block> T withName(T block, String name) {
-        ResourceLocation registryName = GameData.checkPrefix(name);
-        block.setRegistryName(registryName);
-        block.setTranslationKey(registryName.getNamespace() + "." + registryName.getPath());
-        return block;
+    public static Blocks blocks(IForgeRegistry<Block> registry) {
+        return new Blocks(registry);
     }
 
-    public static <T extends Item> T withName(T item, String name) {
-        ResourceLocation registryName = GameData.checkPrefix(name);
-        item.setRegistryName(registryName);
-        item.setTranslationKey(registryName.getNamespace() + "." + registryName.getPath());
-        return item;
+    public static Items items(IForgeRegistry<Item> registry) {
+        return new Items(registry);
     }
 
-    public static <T extends Potion> T withName(T potion, String name) {
-        ResourceLocation registryName = GameData.checkPrefix(name);
-        potion.setRegistryName(registryName);
-        potion.setPotionName(registryName.getNamespace() + "." + registryName.getPath());
-        return potion;
+    public static class Items {
+        private final IForgeRegistry<Item> registry;
+        private Supplier<Item.Properties> propertiesSupplier = Item.Properties::new;
+
+        private Items(IForgeRegistry<Item> registry) {
+            this.registry = registry;
+        }
+
+        public Items withProperties(Supplier<Item.Properties> propertiesSupplier) {
+            this.propertiesSupplier = propertiesSupplier;
+            return this;
+        }
+
+        public Items add(String name, Item item) {
+            ResourceLocation registryName = GameData.checkPrefix(name, false);
+            item.setRegistryName(registryName);
+
+            this.registry.register(item);
+
+            return this;
+        }
+
+        public Items add(String name, Function<Item.Properties, Item> function) {
+            Item item = function.apply(this.propertiesSupplier.get());
+            return this.add(name, item);
+        }
+
+        public Items add(Block block, BiFunction<Block, Item.Properties, Item> function) {
+            Item item = function.apply(block, this.propertiesSupplier.get());
+            item.setRegistryName(block.getRegistryName());
+
+            this.registry.register(item);
+
+            return this;
+        }
     }
 
-    public static <T extends IForgeRegistryEntry<T>> T withName(T entry, String name) {
-        ResourceLocation registryName = GameData.checkPrefix(name);
-        entry.setRegistryName(registryName);
-        return entry;
-    }
+    public static class Blocks {
+        private final IForgeRegistry<Block> registry;
 
-    public static <T extends Biome> T applyName(T biome) {
-        String name = ReflectionHelper.getPrivateValue(Biome.class, biome, "biomeName", "field_76791_y");
-        ResourceLocation registryName = GameData.checkPrefix(name);
-        biome.setRegistryName(registryName);
-        return biome;
-    }
+        private Blocks(IForgeRegistry<Block> registry) {
+            this.registry = registry;
+        }
 
-    public static <T extends SoundEvent> T applyName(T sound) {
-        ResourceLocation name = ReflectionHelper.getPrivateValue(SoundEvent.class, sound, "soundName", "field_187506_b");
-        sound.setRegistryName(name);
+        public Blocks add(String name, Block block) {
+            ResourceLocation registryName = GameData.checkPrefix(name, false);
+            block.setRegistryName(registryName);
 
-        ResourceLocation prefixedName = new ResourceLocation(name.getNamespace(), Midnight.MODID + "." + name.getPath());
-        ReflectionHelper.setPrivateValue(SoundEvent.class, sound, prefixedName, "soundName", "field_187506_b");
+            this.registry.register(block);
 
-        return sound;
+            return this;
+        }
     }
 }

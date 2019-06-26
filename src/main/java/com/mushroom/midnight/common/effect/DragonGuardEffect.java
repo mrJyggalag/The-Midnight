@@ -1,15 +1,15 @@
 package com.mushroom.midnight.common.effect;
 
-import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.potion.EffectType;
 
 public class DragonGuardEffect extends GenericEffect {
     public DragonGuardEffect() {
-        super(false, 0);
-        setBeneficial();
+        super(EffectType.BENEFICIAL, 0);
     }
 
     @Override
-    public void performEffect(EntityLivingBase entity, int amplifier) {
+    public void performEffect(LivingEntity entity, int amplifier) {
         entity.extinguish();
     }
 

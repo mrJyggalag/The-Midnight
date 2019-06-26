@@ -1,6 +1,6 @@
 package com.mushroom.midnight.common.world.feature;
 
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.state.BlockState;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenerator;
@@ -18,7 +18,7 @@ public abstract class MidnightAbstractFeature extends WorldGenerator implements 
     }
 
     @Override
-    protected void setBlockAndNotifyAdequately(World world, BlockPos pos, IBlockState state) {
+    protected void setBlockAndNotifyAdequately(World world, BlockPos pos, BlockState state) {
         world.setBlockState(pos, state, 2 | 16);
     }
 }

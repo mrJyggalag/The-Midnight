@@ -4,7 +4,7 @@ import com.google.common.base.Objects;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.items.IItemHandler;
@@ -35,16 +35,16 @@ public class MidnightVanillaDoubleChestItemHandler extends WeakReference<TileEnt
             return null; // Still loading
         }
         Block blockType = chest.getBlockType();
-        EnumFacing[] horizontals = EnumFacing.HORIZONTALS;
+        Direction[] horizontals = Direction.HORIZONTALS;
         for (int i = horizontals.length - 1; i >= 0; i--) { // Use reverse order so we can return early
-            EnumFacing enumfacing = horizontals[i];
-            BlockPos blockpos = pos.offset(enumfacing);
+            Direction Direction = horizontals[i];
+            BlockPos blockpos = pos.offset(Direction);
             Block block = world.getBlockState(blockpos).getBlock();
             if (block == blockType) {
                 TileEntity otherTE = world.getTileEntity(blockpos);
                 if (otherTE instanceof TileEntityMidnightChest) {
                     TileEntityMidnightChest otherChest = (TileEntityMidnightChest) otherTE;
-                    return new MidnightVanillaDoubleChestItemHandler(chest, otherChest, enumfacing != EnumFacing.WEST && enumfacing != EnumFacing.NORTH);
+                    return new MidnightVanillaDoubleChestItemHandler(chest, otherChest, Direction != Direction.WEST && Direction != Direction.NORTH);
                 }
             }
         }

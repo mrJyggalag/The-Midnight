@@ -1,27 +1,27 @@
 package com.mushroom.midnight.client.shader;
 
-import net.minecraft.client.shader.ShaderManager;
-import net.minecraft.client.shader.ShaderUniform;
+import net.minecraft.client.shader.ShaderDefault;
+import net.minecraft.client.shader.ShaderInstance;
 
 public class PresentShaderHandle implements ShaderHandle {
-    private final ShaderManager handle;
+    private final ShaderInstance handle;
 
-    PresentShaderHandle(ShaderManager handle) {
+    PresentShaderHandle(ShaderInstance handle) {
         this.handle = handle;
     }
 
     @Override
-    public ShaderUniform get(String key) {
-        return this.handle.getShaderUniformOrDefault(key);
+    public ShaderDefault getUniform(String key) {
+        return this.handle.func_216539_a(key);
     }
 
     @Override
     public void use() {
-        this.handle.useShader();
+        this.handle.func_216535_f();
     }
 
     @Override
     public void close() {
-        this.handle.endShader();
+        this.handle.close();
     }
 }

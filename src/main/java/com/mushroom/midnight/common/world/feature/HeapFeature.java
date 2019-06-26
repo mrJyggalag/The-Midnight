@@ -1,25 +1,25 @@
 package com.mushroom.midnight.common.world.feature;
 
-import com.mushroom.midnight.common.registry.ModBlocks;
+import com.mushroom.midnight.common.registry.MidnightBlocks;
 import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.state.BlockState;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 import java.util.Random;
 
 public class HeapFeature extends MidnightAbstractFeature {
-    private final IBlockState state;
+    private final BlockState state;
 
-    public HeapFeature(IBlockState state) {
+    public HeapFeature(BlockState state) {
         this.state = state;
     }
 
     @Override
     public boolean placeFeature(World world, Random random, BlockPos origin) {
-        IBlockState belowState = world.getBlockState(origin.down());
+        BlockState belowState = world.getBlockState(origin.down());
         Block belowBlock = belowState.getBlock();
-        if (belowBlock.isLeaves(belowState, world, origin.down()) || belowBlock == ModBlocks.NIGHTSHROOM_HAT || belowBlock == ModBlocks.DEWSHROOM_HAT || belowBlock == ModBlocks.VIRIDSHROOM_HAT || belowBlock == ModBlocks.TRENCHSTONE) {
+        if (belowBlock.isLeaves(belowState, world, origin.down()) || belowBlock == MidnightBlocks.NIGHTSHROOM_HAT || belowBlock == MidnightBlocks.DEWSHROOM_HAT || belowBlock == MidnightBlocks.VIRIDSHROOM_HAT || belowBlock == MidnightBlocks.TRENCHSTONE) {
             return false;
         }
         int rangeXZ = 1, rangeY = 1;

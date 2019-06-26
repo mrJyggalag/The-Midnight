@@ -15,76 +15,60 @@ import com.mushroom.midnight.common.compatibility.SupportMods;
 import com.mushroom.midnight.common.loot.InBiomeLootCondition;
 import com.mushroom.midnight.common.loot.InBlockLootCondition;
 import com.mushroom.midnight.common.loot.IsChildLootCondition;
+import com.mushroom.midnight.common.network.AnimationMessage;
+import com.mushroom.midnight.common.network.BombExplosionMessage;
+import com.mushroom.midnight.common.network.BridgeCreateMessage;
+import com.mushroom.midnight.common.network.BridgeRemovalMessage;
+import com.mushroom.midnight.common.network.BridgeStateMessage;
+import com.mushroom.midnight.common.network.CaptureEntityMessage;
 import com.mushroom.midnight.common.network.GuiHandler;
-import com.mushroom.midnight.common.network.MessageAnimation;
-import com.mushroom.midnight.common.network.MessageBombExplosion;
-import com.mushroom.midnight.common.network.MessageBridgeCreate;
-import com.mushroom.midnight.common.network.MessageBridgeRemoval;
-import com.mushroom.midnight.common.network.MessageBridgeState;
-import com.mushroom.midnight.common.network.MessageCaptureEntity;
-import com.mushroom.midnight.common.network.MessageItemActivation;
-import com.mushroom.midnight.common.network.MessageRockshroomBroken;
-import com.mushroom.midnight.common.registry.ModBlocks;
-import com.mushroom.midnight.common.registry.ModCavernousBiomes;
-import com.mushroom.midnight.common.registry.ModCriterion;
-import com.mushroom.midnight.common.registry.ModDimensions;
-import com.mushroom.midnight.common.registry.ModFluids;
-import com.mushroom.midnight.common.registry.ModItems;
-import com.mushroom.midnight.common.registry.ModRecipes;
-import com.mushroom.midnight.common.registry.ModSurfaceBiomes;
-import com.mushroom.midnight.common.registry.ModTabs;
-import com.mushroom.midnight.common.registry.RegUtil;
+import com.mushroom.midnight.common.network.ItemActivationMessage;
+import com.mushroom.midnight.common.network.RockshroomBrokenMessage;
+import com.mushroom.midnight.common.registry.MidnightBlocks;
+import com.mushroom.midnight.common.registry.MidnightCavernousBiomes;
+import com.mushroom.midnight.common.registry.MidnightCriterion;
+import com.mushroom.midnight.common.registry.MidnightDimensions;
+import com.mushroom.midnight.common.registry.MidnightFluids;
+import com.mushroom.midnight.common.registry.MidnightItemGroups;
+import com.mushroom.midnight.common.registry.MidnightItems;
+import com.mushroom.midnight.common.registry.MidnightRecipes;
+import com.mushroom.midnight.common.registry.MidnightSurfaceBiomes;
 import com.mushroom.midnight.common.util.EntityUtil;
-import com.mushroom.midnight.common.util.IProxy;
 import com.mushroom.midnight.common.world.generator.MidnightOreGenerator;
 import net.minecraft.block.material.Material;
-import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.entity.monster.IMob;
-import net.minecraft.entity.passive.EntityAmbientCreature;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.storage.loot.conditions.LootConditionManager;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.common.capabilities.CapabilityManager;
-import net.minecraftforge.common.util.EnumHelper;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.SidedProxy;
-import net.minecraftforge.fml.common.event.FMLInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import net.minecraftforge.fml.common.network.NetworkRegistry;
-import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import net.minecraftforge.fml.common.registry.GameRegistry;
-import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.fml.network.NetworkRegistry;
+import net.minecraftforge.fml.network.simple.SimpleChannel;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-@Mod(
-        modid = Midnight.MODID,
-        name = Midnight.NAME,
-        version = Midnight.VERSION,
-        dependencies = "required:forge@[14.23.5.2768,)",
-        updateJSON = "https://gist.githubusercontent.com/gegy1000/a3f1f593c43f88d7f01a3560ac32e216/raw/midnight_updates.json"
-)
+@Mod(Midnight.MODID)
 @Mod.EventBusSubscriber(modid = Midnight.MODID)
 public class Midnight {
-
     public static final String MODID = "midnight";
-    public static final String NAME = "Midnight";
-    public static final String VERSION = "@VERSION@";
+    public static final String NETWORK_PROTOCOL = "1";
 
-    public static final Logger LOGGER = LogManager.getLogger(NAME);
-    public static final SimpleNetworkWrapper NETWORK = new SimpleNetworkWrapper(MODID);
+    public static final Logger LOGGER = LogManager.getLogger(Midnight.class);
+
+    public static final SimpleChannel CHANNEL = NetworkRegistry.ChannelBuilder.named(new ResourceLocation(MODID, "net"))
+            .networkProtocolVersion(() -> NETWORK_PROTOCOL)
+            .clientAcceptedVersions(NETWORK_PROTOCOL::equals)
+            .serverAcceptedVersions(NETWORK_PROTOCOL::equals)
+            .simpleChannel();
 
     public static final EnumCreatureType MIDNIGHT_MOB = EnumHelper.addCreatureType("midnight_mob", IMob.class, 20, Material.AIR, false, false);
     public static final EnumCreatureType MIDNIGHT_AMBIENT = EnumHelper.addCreatureType("midnight_ambient", EntityAmbientCreature.class, 30, Material.AIR, true, false);
-
-    @SidedProxy(serverSide = "com.mushroom.midnight.common.ServerProxy", clientSide = "com.mushroom.midnight.client.ClientProxy")
-    public static IProxy proxy;
-
-    @Mod.Instance(MODID)
-    public static Midnight instance;
 
     @CapabilityInject(RiftTravelCooldown.class)
     public static final Capability<RiftTravelCooldown> RIFT_TRAVEL_COOLDOWN_CAP = RegUtil.injected();
@@ -104,12 +88,13 @@ public class Midnight {
     @CapabilityInject(MidnightWorldSpawners.class)
     public static final Capability<MidnightWorldSpawners> WORLD_SPAWNERS_CAP = RegUtil.injected();
 
-    static {
+    public Midnight() {
+        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
+
         FluidRegistry.enableUniversalBucket();
     }
 
-    @Mod.EventHandler
-    public void preInit(FMLPreInitializationEvent event) {
+    private void setup(FMLCommonSetupEvent event) {
         CapabilityManager.INSTANCE.register(RiftTravelCooldown.class, new NullStorage<>(), RiftTravelCooldown::new);
         CapabilityManager.INSTANCE.register(RifterCapturable.class, new NullStorage<>(), RifterCapturable::new);
         CapabilityManager.INSTANCE.register(CavernousBiomeStore.class, new DelegatedStorage<>(), CavernousBiomeStore::new);
@@ -117,38 +102,27 @@ public class Midnight {
         CapabilityManager.INSTANCE.register(AnimationCapability.class, new NullStorage<>(), AnimationCapability::new);
         CapabilityManager.INSTANCE.register(MidnightWorldSpawners.class, new NullStorage<>(), MidnightWorldSpawners.Void::new);
 
-        NETWORK.registerMessage(MessageCaptureEntity.Handler.class, MessageCaptureEntity.class, 0, Side.CLIENT);
-        NETWORK.registerMessage(MessageBridgeCreate.Handler.class, MessageBridgeCreate.class, 1, Side.CLIENT);
-        NETWORK.registerMessage(MessageBridgeState.Handler.class, MessageBridgeState.class, 2, Side.CLIENT);
-        NETWORK.registerMessage(MessageBridgeRemoval.Handler.class, MessageBridgeRemoval.class, 3, Side.CLIENT);
-        NETWORK.registerMessage(MessageAnimation.Handler.class, MessageAnimation.class, 4, Side.CLIENT);
-        NETWORK.registerMessage(MessageRockshroomBroken.Handler.class, MessageRockshroomBroken.class, 5, Side.CLIENT);
-        NETWORK.registerMessage(MessageItemActivation.Handler.class, MessageItemActivation.class, 6, Side.CLIENT);
-        NETWORK.registerMessage(MessageBombExplosion.Handler.class, MessageBombExplosion.class, 7, Side.CLIENT);
+        this.setupMessages();
 
-        Reflection.initialize(ModCriterion.class, ModTabs.class);
+        Reflection.initialize(MidnightCriterion.class, MidnightItemGroups.class);
 
-        EntityUtil.onPreInit();
-        ModFluids.register();
-        ModDimensions.register();
+        EntityUtil.register();
+        MidnightFluids.register();
+        MidnightDimensions.register();
 
-        LootConditionManager.registerCondition(new InBiomeLootCondition.Serialiser());
-        LootConditionManager.registerCondition(new InBlockLootCondition.Serialiser());
-        LootConditionManager.registerCondition(new IsChildLootCondition.Serialiser());
-    }
+        LootConditionManager.registerCondition(new InBiomeLootCondition.Serializer());
+        LootConditionManager.registerCondition(new InBlockLootCondition.Serializer());
+        LootConditionManager.registerCondition(new IsChildLootCondition.Serializer());
 
-    @Mod.EventHandler
-    public void init(FMLInitializationEvent event) {
         GameRegistry.registerWorldGenerator(new MidnightOreGenerator(), Integer.MAX_VALUE);
 
-        ModSurfaceBiomes.onInit();
-        ModCavernousBiomes.onInit();
-        ModItems.onInit();
-        ModBlocks.onInit();
-        ModRecipes.onInit();
+        MidnightSurfaceBiomes.onInit();
+        MidnightCavernousBiomes.onInit();
+        MidnightItems.onInit();
+        MidnightBlocks.onInit();
+        MidnightRecipes.onInit();
 
         NetworkRegistry.INSTANCE.registerGuiHandler(instance, new GuiHandler());
-        proxy.onInit();
 
         if (SupportMods.THAUMCRAFT.isLoaded()) {
             MinecraftForge.EVENT_BUS.register(CompatibilityThaumcraft.instance);
@@ -158,8 +132,45 @@ public class Midnight {
         }
     }
 
-    @Mod.EventHandler
-    public void postInit(FMLPostInitializationEvent event) {
+    private void setupMessages() {
+        CHANNEL.messageBuilder(CaptureEntityMessage.class, 0)
+                .encoder(CaptureEntityMessage::serialize).decoder(CaptureEntityMessage::deserialize)
+                .consumer(CaptureEntityMessage::handle)
+                .add();
 
+        CHANNEL.messageBuilder(BridgeCreateMessage.class, 1)
+                .encoder(BridgeCreateMessage::serialize).decoder(BridgeCreateMessage::deserialize)
+                .consumer(BridgeCreateMessage::handle)
+                .add();
+
+        CHANNEL.messageBuilder(BridgeStateMessage.class, 2)
+                .encoder(BridgeStateMessage::serialize).decoder(BridgeStateMessage::deserialize)
+                .consumer(BridgeStateMessage::handle)
+                .add();
+
+        CHANNEL.messageBuilder(BridgeRemovalMessage.class, 3)
+                .encoder(BridgeRemovalMessage::serialize).decoder(BridgeRemovalMessage::deserialize)
+                .consumer(BridgeRemovalMessage::handle)
+                .add();
+
+        CHANNEL.messageBuilder(AnimationMessage.class, 4)
+                .encoder(AnimationMessage::serialize).decoder(AnimationMessage::deserialize)
+                .consumer(AnimationMessage::handle)
+                .add();
+
+        CHANNEL.messageBuilder(RockshroomBrokenMessage.class, 5)
+                .encoder(RockshroomBrokenMessage::serialize).decoder(RockshroomBrokenMessage::deserialize)
+                .consumer(RockshroomBrokenMessage::handle)
+                .add();
+
+        CHANNEL.messageBuilder(ItemActivationMessage.class, 6)
+                .encoder(ItemActivationMessage::serialize).decoder(ItemActivationMessage::deserialize)
+                .consumer(ItemActivationMessage::handle)
+                .add();
+
+        CHANNEL.messageBuilder(BombExplosionMessage.class, 7)
+                .encoder(BombExplosionMessage::serialize).decoder(BombExplosionMessage::deserialize)
+                .consumer(BombExplosionMessage::handle)
+                .add();
     }
 }

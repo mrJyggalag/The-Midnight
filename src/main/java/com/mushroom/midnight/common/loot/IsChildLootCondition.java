@@ -3,17 +3,17 @@ package com.mushroom.midnight.common.loot;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.util.JsonUtils;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.util.JSONUtils;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.storage.loot.LootContext;
-import net.minecraft.world.storage.loot.conditions.LootCondition;
-
-import java.util.Random;
+import net.minecraft.world.storage.loot.LootParameters;
+import net.minecraft.world.storage.loot.conditions.ILootCondition;
 
 import static com.mushroom.midnight.Midnight.MODID;
 
-public class IsChildLootCondition implements LootCondition {
+public class IsChildLootCondition implements ILootCondition {
     private final boolean inverse;
 
     public IsChildLootCondition(boolean inverse) {
@@ -21,12 +21,13 @@ public class IsChildLootCondition implements LootCondition {
     }
 
     @Override
-    public boolean testCondition(Random rand, LootContext context) {
-        return context.getLootedEntity() instanceof EntityLivingBase && ((EntityLivingBase) context.getLootedEntity()).isChild() == !inverse;
+    public boolean test(LootContext context) {
+        Entity entity = context.get(LootParameters.THIS_ENTITY);
+        return entity instanceof LivingEntity && ((LivingEntity) entity).isChild() == !inverse;
     }
 
-    public static class Serialiser extends LootCondition.Serializer<IsChildLootCondition> {
-        public Serialiser() {
+    public static class Serializer extends ILootCondition.AbstractSerializer<IsChildLootCondition> {
+        public Serializer() {
             super(new ResourceLocation(MODID, "is_child"), IsChildLootCondition.class);
         }
 
@@ -37,7 +38,7 @@ public class IsChildLootCondition implements LootCondition {
 
         @Override
         public IsChildLootCondition deserialize(JsonObject json, JsonDeserializationContext context) {
-            return new IsChildLootCondition(JsonUtils.getBoolean(json, "inverse", false));
+            return new IsChildLootCondition(JSONUtils.getBoolean(json, "inverse", false));
         }
     }
 }

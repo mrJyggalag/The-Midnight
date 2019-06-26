@@ -2,20 +2,20 @@ package com.mushroom.midnight.client.sound;
 
 import com.mushroom.midnight.client.IdleSoundController;
 import com.mushroom.midnight.common.helper.Helper;
-import com.mushroom.midnight.common.registry.ModSounds;
+import com.mushroom.midnight.common.registry.MidnightSounds;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.ITickableSound;
-import net.minecraft.client.audio.PositionedSound;
+import net.minecraft.client.audio.TickableSound;
 import net.minecraft.util.SoundCategory;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
-@SideOnly(Side.CLIENT)
-public class MidnightCaveSound extends PositionedSound implements ITickableSound {
-    private static final Minecraft MC = Minecraft.getMinecraft();
+@OnlyIn(Dist.CLIENT)
+public class MidnightCaveSound extends TickableSound implements ITickableSound {
+    private static final Minecraft MC = Minecraft.getInstance();
 
     public MidnightCaveSound() {
-        super(ModSounds.CAVE_IDLE, SoundCategory.AMBIENT);
+        super(MidnightSounds.CAVE_IDLE, SoundCategory.AMBIENT);
         this.attenuationType = AttenuationType.NONE;
         this.repeat = true;
     }
@@ -26,7 +26,7 @@ public class MidnightCaveSound extends PositionedSound implements ITickableSound
     }
 
     @Override
-    public void update() {
+    public void tick() {
         this.volume = Math.max(IdleSoundController.CAVE_ANIMATION.getScale(), 0.01F);
     }
 }

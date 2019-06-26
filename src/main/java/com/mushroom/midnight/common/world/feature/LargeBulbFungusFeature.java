@@ -1,8 +1,8 @@
 package com.mushroom.midnight.common.world.feature;
 
 import com.mushroom.midnight.Midnight;
-import com.mushroom.midnight.common.registry.ModBlocks;
-import net.minecraft.block.state.IBlockState;
+import com.mushroom.midnight.common.registry.MidnightBlocks;
+import net.minecraft.block.state.BlockState;
 import net.minecraft.util.ResourceLocation;
 
 public class LargeBulbFungusFeature extends TemplateTreeFeature {
@@ -11,11 +11,11 @@ public class LargeBulbFungusFeature extends TemplateTreeFeature {
             new ResourceLocation(Midnight.MODID, "mushroom/bulbfungus_2")
     };
 
-    public LargeBulbFungusFeature(IBlockState log, IBlockState leaves) {
+    public LargeBulbFungusFeature(BlockState log, BlockState leaves) {
         super(TEMPLATES, log, leaves);
     }
 
     public LargeBulbFungusFeature() {
-        this(ModBlocks.BULB_FUNGUS_STEM.getDefaultState(), ModBlocks.BULB_FUNGUS_HAT.getDefaultState());
+        this(MidnightBlocks.BULB_FUNGUS_STEM.getDefaultState(), MidnightBlocks.BULB_FUNGUS_HAT.getDefaultState());
     }
 }

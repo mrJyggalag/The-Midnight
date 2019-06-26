@@ -2,28 +2,28 @@ package com.mushroom.midnight.common.capability;
 
 import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.common.biome.cavern.CavernousBiome;
-import com.mushroom.midnight.common.registry.ModCavernousBiomes;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.EnumFacing;
+import com.mushroom.midnight.common.registry.MidnightCavernousBiomes;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.util.Direction;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
+import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.registries.ForgeRegistry;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public class CavernousBiomeStore implements ICapabilitySerializable<NBTTagCompound> {
+public class CavernousBiomeStore implements ICapabilitySerializable<CompoundNBT> {
     private final CavernousBiome[] biomes = new CavernousBiome[256];
 
     public static CavernousBiome getBiome(World world, int x, int z) {
         Chunk chunk = world.getChunk(x >> 4, z >> 4);
-        CavernousBiomeStore biomeStore = chunk.getCapability(Midnight.CAVERNOUS_BIOME_CAP, null);
-        if (biomeStore != null) {
-            return biomeStore.getBiome(x & 15, z & 15);
-        }
-        return ModCavernousBiomes.CLOSED_CAVERN;
+
+        return chunk.getCapability(Midnight.CAVERNOUS_BIOME_CAP)
+                .map(store -> store.getBiome(x & 15, z & 15))
+                .orElse(MidnightCavernousBiomes.CLOSED_CAVERN);
     }
 
     public void populate(CavernousBiome[] biomes) {
@@ -34,31 +34,31 @@ public class CavernousBiomeStore implements ICapabilitySerializable<NBTTagCompou
     public CavernousBiome getBiome(int x, int z) {
         CavernousBiome biome = this.biomes[(x & 15) + (z & 15) * 16];
         if (biome == null) {
-            return ModCavernousBiomes.CLOSED_CAVERN;
+            return MidnightCavernousBiomes.CLOSED_CAVERN;
         }
         return biome;
     }
 
     @Override
-    public NBTTagCompound serializeNBT() {
-        NBTTagCompound compound = new NBTTagCompound();
+    public CompoundNBT serializeNBT() {
+        CompoundNBT compound = new CompoundNBT();
 
         byte[] bytes = new byte[this.biomes.length];
         for (int i = 0; i < this.biomes.length; i++) {
             CavernousBiome biome = this.biomes[i];
             if (biome != null) {
-                bytes[i] = (byte) (ModCavernousBiomes.getId(biome) & 0xFF);
+                bytes[i] = (byte) (MidnightCavernousBiomes.getId(biome) & 0xFF);
             }
         }
 
-        compound.setByteArray("biomes", bytes);
+        compound.putByteArray("biomes", bytes);
 
         return compound;
     }
 
     @Override
-    public void deserializeNBT(NBTTagCompound compound) {
-        ForgeRegistry<CavernousBiome> registry = ModCavernousBiomes.getRegistry();
+    public void deserializeNBT(CompoundNBT compound) {
+        ForgeRegistry<CavernousBiome> registry = MidnightCavernousBiomes.getRegistry();
 
         byte[] bytes = compound.getByteArray("biomes");
         for (int i = 0; i < bytes.length; i++) {
@@ -66,17 +66,9 @@ public class CavernousBiomeStore implements ICapabilitySerializable<NBTTagCompou
         }
     }
 
+    @Nonnull
     @Override
-    public boolean hasCapability(@Nonnull Capability<?> capability, @Nullable EnumFacing facing) {
-        return capability == Midnight.CAVERNOUS_BIOME_CAP;
-    }
-
-    @Nullable
-    @Override
-    public <T> T getCapability(@Nonnull Capability<T> capability, @Nullable EnumFacing facing) {
-        if (capability == Midnight.CAVERNOUS_BIOME_CAP) {
-            return Midnight.CAVERNOUS_BIOME_CAP.cast(this);
-        }
-        return null;
+    public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side) {
+        return Midnight.CAVERNOUS_BIOME_CAP.orEmpty(cap, LazyOptional.of(() -> this));
     }
 }

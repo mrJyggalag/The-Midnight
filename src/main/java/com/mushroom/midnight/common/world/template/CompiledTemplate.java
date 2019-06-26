@@ -1,12 +1,15 @@
 package com.mushroom.midnight.common.world.template;
 
+import com.google.common.collect.ImmutableMap;
+import net.minecraft.block.Blocks;
+import net.minecraft.state.properties.StructureMode;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraft.world.gen.feature.template.PlacementSettings;
+import net.minecraft.world.gen.feature.template.Template;
 import net.minecraft.world.gen.structure.template.BlockRotationProcessor;
 import net.minecraft.world.gen.structure.template.ITemplateProcessor;
-import net.minecraft.world.gen.structure.template.PlacementSettings;
-import net.minecraft.world.gen.structure.template.Template;
 
 import javax.annotation.Nullable;
 import java.util.Collection;
@@ -43,7 +46,19 @@ public class CompiledTemplate {
         this.dataProcessor = dataProcessor;
         this.postProcessors = postProcessors;
 
-        this.dataBlocks = this.template.getDataBlocks(origin, settings);
+        ImmutableMap.Builder<BlockPos, String> dataBuilder = ImmutableMap.builder();
+
+        for (Template.BlockInfo info : this.template.func_215381_a(origin, settings, Blocks.STRUCTURE_BLOCK)) {
+            if (info.nbt != null) {
+                StructureMode mode = StructureMode.valueOf(info.nbt.getString("mode"));
+                if (mode == StructureMode.DATA) {
+                    String metadata = info.nbt.getString("metadata");
+                    dataBuilder.put(info.pos, metadata);
+                }
+            }
+        }
+
+        this.dataBlocks = dataBuilder.build();
     }
 
     public void addTo(World world, Random random, int flags) {

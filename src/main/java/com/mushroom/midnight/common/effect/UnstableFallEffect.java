@@ -1,24 +1,25 @@
 package com.mushroom.midnight.common.effect;
 
-import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.potion.EffectType;
 import net.minecraft.util.math.Vec3d;
 
 public class UnstableFallEffect extends GenericEffect {
     public UnstableFallEffect() {
-        super(false, 0x0);
-        setBeneficial();
+        super(EffectType.BENEFICIAL, 0x0);
     }
 
     @Override
-    public void performEffect(EntityLivingBase entity, int amplifier) {
+    public void performEffect(LivingEntity entity, int amplifier) {
         if (!entity.isSneaking()) {
-            if (entity.motionY < -0.079d) {
-                entity.motionY -= entity.motionY * 0.3d;
+            Vec3d motion = entity.getMotion();
+            if (motion.y < -0.079d) {
+                entity.setMotion(motion.subtract(0.0, motion.y * 0.3, 0.0));
                 entity.fallDistance = 0f;
             }
+
             Vec3d lookVec = entity.getLookVec();
-            entity.motionX = lookVec.x * 0.3d;
-            entity.motionZ = lookVec.z * 0.3d;
+            entity.setMotion(new Vec3d(lookVec.x * 0.3, entity.getMotion().y, lookVec.z * 0.3));
         }
     }
 

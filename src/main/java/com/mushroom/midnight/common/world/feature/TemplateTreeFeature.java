@@ -1,8 +1,8 @@
 package com.mushroom.midnight.common.world.feature;
 
 import com.mushroom.midnight.Midnight;
-import com.mushroom.midnight.common.block.BlockMidnightFungiHat;
-import com.mushroom.midnight.common.block.BlockMidnightFungiStem;
+import com.mushroom.midnight.common.block.MidnightFungiHatBlock;
+import com.mushroom.midnight.common.block.MidnightFungiStemBlock;
 import com.mushroom.midnight.common.util.WorldUtil;
 import com.mushroom.midnight.common.world.template.CompiledTemplate;
 import com.mushroom.midnight.common.world.template.RotatedSettingConfigurator;
@@ -11,7 +11,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockAir;
 import net.minecraft.block.BlockLeaves;
 import net.minecraft.block.BlockLog;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.state.BlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
@@ -29,7 +29,7 @@ public class TemplateTreeFeature extends MidnightTreeFeature {
     private final ResourceLocation[] templates;
     private TemplateCompiler templateCompiler;
 
-    public TemplateTreeFeature(ResourceLocation[] templates, IBlockState log, IBlockState leaves) {
+    public TemplateTreeFeature(ResourceLocation[] templates, BlockState log, BlockState leaves) {
         super(log, leaves);
         this.templates = templates;
     }
@@ -97,14 +97,14 @@ public class TemplateTreeFeature extends MidnightTreeFeature {
     }
 
     protected Template.BlockInfo processState(World world, BlockPos pos, Template.BlockInfo info) {
-        IBlockState state = info.blockState;
+        BlockState state = info.blockState;
         Block block = state.getBlock();
         if (block instanceof BlockLog) {
-            BlockLog.EnumAxis axis = state.getValue(BlockLog.LOG_AXIS);
+            BlockLog.EnumAxis axis = state.get(BlockLog.LOG_AXIS);
             return new Template.BlockInfo(pos, this.log.withProperty(BlockLog.LOG_AXIS, axis), null);
-        } else if (block instanceof BlockMidnightFungiStem) {
+        } else if (block instanceof MidnightFungiStemBlock) {
             return new Template.BlockInfo(pos, this.log, null);
-        } else if (block instanceof BlockLeaves || block instanceof BlockMidnightFungiHat) {
+        } else if (block instanceof BlockLeaves || block instanceof MidnightFungiHatBlock) {
             return new Template.BlockInfo(pos, this.leaves, null);
         } else if (block == Blocks.STRUCTURE_BLOCK || block instanceof BlockAir) {
             return null;

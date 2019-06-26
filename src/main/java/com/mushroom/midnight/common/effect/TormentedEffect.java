@@ -1,7 +1,8 @@
 package com.mushroom.midnight.common.effect;
 
 import com.mushroom.midnight.common.util.MidnightDamageSource;
-import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.potion.EffectType;
 import net.minecraft.util.DamageSource;
 
 public class TormentedEffect extends GenericEffect {
@@ -9,13 +10,13 @@ public class TormentedEffect extends GenericEffect {
     private double posX, posZ;
 
     public TormentedEffect() {
-        super(true, 0x0);
+        super(EffectType.HARMFUL, 0x0);
     }
 
     @Override
-    public void performEffect(EntityLivingBase entity, int amplifier) {
+    public void performEffect(LivingEntity entity, int amplifier) {
         if (!entity.world.isRemote) {
-            if (entity.posX != this.posX || entity.posZ != this.posZ || entity.isSneaking() || entity.motionY > 0) {
+            if (entity.posX != this.posX || entity.posZ != this.posZ || entity.isSneaking() || entity.getMotion().y > 0) {
                 this.posX = entity.posX;
                 this.posZ = entity.posZ;
                 entity.attackEntityFrom(TORMENTED_DAMAGE, 0.5f);

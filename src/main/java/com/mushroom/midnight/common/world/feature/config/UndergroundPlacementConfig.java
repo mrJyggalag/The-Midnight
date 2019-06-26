@@ -1,7 +1,7 @@
 package com.mushroom.midnight.common.world.feature.config;
 
 import com.mushroom.midnight.common.world.SurfacePlacementLevel;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
@@ -50,7 +50,7 @@ public class UndergroundPlacementConfig implements IPlacementConfig {
                         generator.accept(mutablePos.toImmutable());
                         break;
                     }
-                    mutablePos.move(EnumFacing.UP);
+                    mutablePos.move(Direction.UP);
                 }
             }
         }

@@ -1,0 +1,20 @@
+{
+	"parent": "midnight:recipes/root",
+	"rewards": {
+		"recipes": [
+			"midnight:midnight_furnace",
+			"midnight:nightstone_button",
+			"midnight:nightstone_pressure_plate"
+		]
+	},
+	"criteria": {
+		"requirement_1": {
+			"trigger": "minecraft:inventory_changed",
+			"conditions": {
+				"items": [{
+					"item": "midnight:nightstone"
+				}]
+			}
+		}
+	}
+}

@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "midnight:rockshroom_bricks"
+    }
+  ],
+  "result": {
+    "item": "midnight:rockshroom_bricks_button"
+  }
+}

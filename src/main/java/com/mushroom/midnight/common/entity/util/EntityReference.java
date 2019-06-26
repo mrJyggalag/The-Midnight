@@ -2,7 +2,7 @@ package com.mushroom.midnight.common.entity.util;
 
 import com.mushroom.midnight.Midnight;
 import net.minecraft.entity.Entity;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.Constants;
 
@@ -37,7 +37,7 @@ public class EntityReference<T extends Entity> {
         }
 
         T cached = this.getCachedEntity();
-        if (cached != null && !cached.isEntityAlive()) {
+        if (cached != null && !cached.isAlive()) {
             this.cachedEntity = null;
             return Optional.empty();
         }
@@ -77,14 +77,14 @@ public class EntityReference<T extends Entity> {
         return this.cachedEntity != null ? this.cachedEntity.get() : null;
     }
 
-    public NBTTagCompound serialize(NBTTagCompound compound) {
+    public CompoundNBT serialize(CompoundNBT compound) {
         if (this.entityId != null) {
-            compound.setString("uuid", this.entityId.toString());
+            compound.putString("uuid", this.entityId.toString());
         }
         return compound;
     }
 
-    public void deserialize(NBTTagCompound compound) {
+    public void deserialize(CompoundNBT compound) {
         if (compound.hasKey("uuid", Constants.NBT.TAG_STRING)) {
             this.entityId = UUID.fromString(compound.getString("uuid"));
         } else {

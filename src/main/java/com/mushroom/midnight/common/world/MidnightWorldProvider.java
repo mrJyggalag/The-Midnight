@@ -2,21 +2,21 @@ package com.mushroom.midnight.common.world;
 
 import com.mushroom.midnight.common.biome.MidnightBiomeLayer;
 import com.mushroom.midnight.common.config.MidnightConfig;
-import com.mushroom.midnight.common.registry.ModDimensions;
+import com.mushroom.midnight.common.registry.MidnightDimensions;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.effect.EntityLightningBolt;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.management.PlayerChunkMap;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.DimensionType;
 import net.minecraft.world.WorldProvider;
-import net.minecraft.world.WorldServer;
+import net.minecraft.world.ServerWorld;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.gen.IChunkGenerator;
 import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.fml.relauncher.OnlyIn;
 
 import java.util.Iterator;
 import java.util.Random;
@@ -42,11 +42,11 @@ public class MidnightWorldProvider extends WorldProvider {
 
     @Override
     public DimensionType getDimensionType() {
-        return ModDimensions.MIDNIGHT;
+        return MidnightDimensions.MIDNIGHT;
     }
 
     @Override
-    public WorldSleepResult canSleepAt(EntityPlayer player, BlockPos pos) {
+    public WorldSleepResult canSleepAt(PlayerEntity player, BlockPos pos) {
         return WorldSleepResult.BED_EXPLODES;
     }
 
@@ -93,21 +93,21 @@ public class MidnightWorldProvider extends WorldProvider {
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     public float getSunBrightness(float partialTicks) {
         return 0.0F;
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     public boolean isSkyColored() {
         return false;
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     public Vec3d getFogColor(float celestialAngle, float partialTicks) {
-        if (this.world.getLastLightningBolt() > 0 && Minecraft.getMinecraft().player.posY > 50) {
+        if (this.world.getLastLightningBolt() > 0 && Minecraft.getInstance().player.posY > 50) {
             return LIGHTING_FOG_COLOR;
         }
         return FOG_COLOR;
@@ -125,9 +125,9 @@ public class MidnightWorldProvider extends WorldProvider {
     @Override
     public void updateWeather() {
         setAllowedSpawnTypes(false, false);
-        if (this.world instanceof WorldServer) {
-            WorldServer worldServer = (WorldServer) this.world;
-            PlayerChunkMap chunkMap = worldServer.getPlayerChunkMap();
+        if (this.world instanceof ServerWorld) {
+            ServerWorld ServerWorld = (ServerWorld) this.world;
+            PlayerChunkMap chunkMap = ServerWorld.getPlayerChunkMap();
             Random rand = this.world.rand;
 
             Iterator<Chunk> iterator = this.world.getPersistentChunkIterable(chunkMap.getChunkIterator());

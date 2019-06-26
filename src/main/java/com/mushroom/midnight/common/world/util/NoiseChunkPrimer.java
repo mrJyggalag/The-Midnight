@@ -1,6 +1,6 @@
 package com.mushroom.midnight.common.world.util;
 
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.state.BlockState;
 import net.minecraft.world.chunk.ChunkPrimer;
 
 public class NoiseChunkPrimer {
@@ -59,7 +59,7 @@ public class NoiseChunkPrimer {
                                 int blockX = noiseX * this.horizontalGranularity + localX;
                                 int blockY = noiseY * this.verticalGranularity + localY;
                                 int blockZ = noiseZ * this.horizontalGranularity + localZ;
-                                IBlockState state = handler.getState(density, blockX, blockY, blockZ);
+                                BlockState state = handler.getState(density, blockX, blockY, blockZ);
                                 if (state != null) {
                                     primer.setBlockState(blockX, blockY, blockZ, state);
                                 }
@@ -81,6 +81,6 @@ public class NoiseChunkPrimer {
     }
 
     public interface Handler {
-        IBlockState getState(double density, int x, int y, int z);
+        BlockState getState(double density, int x, int y, int z);
     }
 }

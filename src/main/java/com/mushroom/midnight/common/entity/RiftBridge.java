@@ -2,22 +2,23 @@ package com.mushroom.midnight.common.entity;
 
 import com.mushroom.midnight.common.entity.util.RiftEntityReference;
 import com.mushroom.midnight.common.entity.util.ToggleAnimation;
-import com.mushroom.midnight.common.registry.ModDimensions;
+import com.mushroom.midnight.common.registry.MidnightDimensions;
 import com.mushroom.midnight.common.util.BitFlags;
 import io.netty.buffer.ByteBuf;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.world.DimensionType;
+import net.minecraft.world.ServerWorld;
 import net.minecraft.world.World;
-import net.minecraft.world.WorldServer;
+import net.minecraft.world.ServerWorld;
+import net.minecraft.world.dimension.DimensionType;
 import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 
 import javax.annotation.Nullable;
 
 public class RiftBridge {
-    public final ToggleAnimation open = new ToggleAnimation(EntityRift.OPEN_TIME);
-    public final ToggleAnimation unstable = new ToggleAnimation(EntityRift.UNSTABLE_TIME);
+    public final ToggleAnimation open = new ToggleAnimation(RiftEntity.OPEN_TIME);
+    public final ToggleAnimation unstable = new ToggleAnimation(RiftEntity.UNSTABLE_TIME);
     public boolean used;
 
     public boolean exists = true;
@@ -55,7 +56,7 @@ public class RiftBridge {
         if (this.open.get()) {
             this.open.setRate(1);
         } else {
-            this.open.setRate(EntityRift.CLOSE_SPEED);
+            this.open.setRate(RiftEntity.CLOSE_SPEED);
         }
 
         this.open.update();
@@ -65,24 +66,24 @@ public class RiftBridge {
     public boolean tickState() {
         this.tracker.update();
 
-        this.trySpawnEndpoint(DimensionType.OVERWORLD);
-        this.trySpawnEndpoint(ModDimensions.MIDNIGHT);
+        this.trySpawnEndpoint(DimensionType.field_223227_a_);
+        this.trySpawnEndpoint(MidnightDimensions.MIDNIGHT);
 
         if (this.unstable.get()) {
-            if (this.unstable.getTimer() >= EntityRift.UNSTABLE_TIME && this.open.get()) {
+            if (this.unstable.getTimer() >= RiftEntity.UNSTABLE_TIME && this.open.get()) {
                 this.open.set(false);
             }
-        } else if (this.ticks > EntityRift.LIFETIME) {
+        } else if (this.ticks > RiftEntity.LIFETIME) {
             this.unstable.set(true);
         }
 
-        EntityRift source = this.getSource();
-        if (source != null && source.isDead) {
+        RiftEntity source = this.getSource();
+        if (source != null && !source.isAlive()) {
             return true;
         }
 
-        EntityRift target = this.getTarget();
-        if (target != null && target.isDead) {
+        RiftEntity target = this.getTarget();
+        if (target != null && !target.isAlive()) {
             return true;
         }
 
@@ -100,7 +101,7 @@ public class RiftBridge {
     }
 
     private void spawnRiftEntity(World world) {
-        EntityRift rift = new EntityRift(world);
+        RiftEntity rift = new RiftEntity(world);
         rift.acceptBridge(this);
 
         RiftAttachment surfaceAttachment = this.attachment.fixedToSurface(world);
@@ -109,16 +110,16 @@ public class RiftBridge {
         // Force the chunk we're spawning in to be loaded
         world.getChunk(rift.getPosition());
 
-        world.spawnEntity(rift);
+        world.addEntity(rift);
     }
 
-    public EntityRift computeEndpoint(DimensionType endpointDimension) {
+    public RiftEntity computeEndpoint(DimensionType endpointDimension) {
         RiftEntityReference endpointReference = this.getEndpointReference(endpointDimension);
         if (!endpointReference.hasReference()) {
             MinecraftServer server = FMLCommonHandler.instance().getMinecraftServerInstance();
             this.spawnRiftEntity(server.getWorld(endpointDimension.getId()));
         }
-        EntityRift rift = endpointReference.compute();
+        RiftEntity rift = endpointReference.compute();
         // TODO fix me better, the rift can be null & can lead to an underground rift (not intended)
         if (rift == null) {
             MinecraftServer server = FMLCommonHandler.instance().getMinecraftServerInstance();
@@ -128,7 +129,7 @@ public class RiftBridge {
     }
 
     public boolean isEndpointLoaded(DimensionType endpointDimension) {
-        WorldServer world = DimensionManager.getWorld(endpointDimension.getId());
+        ServerWorld world = DimensionManager.getWorld(endpointDimension.getId());
         return world != null && world.isBlockLoaded(this.attachment.getPos());
     }
 
@@ -196,16 +197,16 @@ public class RiftBridge {
         if (this.unstable.get()) {
             return 0;
         }
-        return Math.max(EntityRift.LIFETIME - this.ticks, 0);
+        return Math.max(RiftEntity.LIFETIME - this.ticks, 0);
     }
 
-    public void accept(EntityRift rift) {
-        DimensionType endpointDimension = rift.world.provider.getDimensionType();
+    public void accept(RiftEntity rift) {
+        DimensionType endpointDimension = rift.world.dimension.getType();
         this.getEndpointReference(endpointDimension).set(rift);
     }
 
     private RiftEntityReference getEndpointReference(DimensionType endpointDimension) {
-        return endpointDimension == ModDimensions.MIDNIGHT ? this.target : this.source;
+        return endpointDimension == MidnightDimensions.MIDNIGHT ? this.target : this.source;
     }
 
     public void close() {
@@ -218,12 +219,12 @@ public class RiftBridge {
     }
 
     @Nullable
-    public EntityRift getSource() {
+    public RiftEntity getSource() {
         return this.source.get();
     }
 
     @Nullable
-    public EntityRift getTarget() {
+    public RiftEntity getTarget() {
         return this.target.get();
     }
 
@@ -233,33 +234,33 @@ public class RiftBridge {
         this.prevUnstableTimer = this.unstable.getTimer();
     }
 
-    public NBTTagCompound serialize(NBTTagCompound compound) {
-        compound.setInteger("id", this.id);
-        compound.setTag("attachment", this.attachment.serialize(new NBTTagCompound()));
+    public CompoundNBT serialize(CompoundNBT compound) {
+        compound.putInt("id", this.id);
+        compound.put("attachment", this.attachment.serialize(new CompoundNBT()));
 
-        compound.setTag("open", this.open.serialize(new NBTTagCompound()));
-        compound.setTag("unstable", this.unstable.serialize(new NBTTagCompound()));
-        compound.setBoolean("used", this.used);
-        compound.setInteger("ticks", this.ticks);
+        compound.put("open", this.open.serialize(new CompoundNBT()));
+        compound.put("unstable", this.unstable.serialize(new CompoundNBT()));
+        compound.putBoolean("used", this.used);
+        compound.putInt("ticks", this.ticks);
 
-        compound.setTag("source", this.source.serialize(new NBTTagCompound()));
-        compound.setTag("target", this.target.serialize(new NBTTagCompound()));
+        compound.put("source", this.source.serialize(new CompoundNBT()));
+        compound.put("target", this.target.serialize(new CompoundNBT()));
 
         return compound;
     }
 
-    public static RiftBridge deserialize(NBTTagCompound compound) {
-        int id = compound.getInteger("id");
-        RiftAttachment attachment = RiftAttachment.deserialize(compound.getCompoundTag("attachment"));
+    public static RiftBridge deserialize(CompoundNBT compound) {
+        int id = compound.getInt("id");
+        RiftAttachment attachment = RiftAttachment.deserialize(compound.getCompound("attachment"));
 
         RiftBridge bridge = new RiftBridge(id, attachment);
-        bridge.open.deserialize(compound.getCompoundTag("open"));
-        bridge.unstable.deserialize(compound.getCompoundTag("unstable"));
+        bridge.open.deserialize(compound.getCompound("open"));
+        bridge.unstable.deserialize(compound.getCompound("unstable"));
         bridge.used = compound.getBoolean("used");
-        bridge.ticks = compound.getInteger("ticks");
+        bridge.ticks = compound.getInt("ticks");
 
-        bridge.source.deserialize(compound.getCompoundTag("source"));
-        bridge.target.deserialize(compound.getCompoundTag("target"));
+        bridge.source.deserialize(compound.getCompound("source"));
+        bridge.target.deserialize(compound.getCompound("target"));
 
         return bridge;
     }

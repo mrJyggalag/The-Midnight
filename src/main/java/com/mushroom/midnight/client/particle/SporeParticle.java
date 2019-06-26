@@ -4,9 +4,9 @@ import net.minecraft.client.particle.IParticleFactory;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.fml.relauncher.OnlyIn;
 
-@SideOnly(Side.CLIENT)
+@OnlyIn(Dist.CLIENT)
 public class SporeParticle extends Particle {
     protected SporeParticle(World world, double x, double y, double z, double velocityX, double velocityY, double velocityZ) {
         super(world, x, y, z, velocityX, velocityY, velocityZ);
@@ -26,7 +26,7 @@ public class SporeParticle extends Particle {
     }
 
     @Override
-    public void onUpdate() {
+    public void tick() {
         this.prevPosX = this.posX;
         this.prevPosY = this.posY;
         this.prevPosZ = this.posZ;
@@ -56,7 +56,7 @@ public class SporeParticle extends Particle {
         return 1;
     }
 
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     public static class Factory implements IParticleFactory {
         @Override
         public Particle createParticle(int particleID, World world, double x, double y, double z, double velocityX, double velocityY, double velocityZ, int... parameters) {

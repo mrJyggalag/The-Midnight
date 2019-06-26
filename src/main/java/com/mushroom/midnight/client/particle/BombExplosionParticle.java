@@ -15,13 +15,13 @@ import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.fml.relauncher.OnlyIn;
 
 import javax.annotation.Nullable;
 
 import static com.mushroom.midnight.Midnight.MODID;
 
-@SideOnly(Side.CLIENT)
+@OnlyIn(Dist.CLIENT)
 public class BombExplosionParticle extends Particle {
     private static final ResourceLocation EXPLOSION_TEXTURE = new ResourceLocation(MODID, "textures/particles/bomb_explosion.png");
     private static final VertexFormat VERTEX_FORMAT = (new VertexFormat()).addElement(DefaultVertexFormats.POSITION_3F).addElement(DefaultVertexFormats.TEX_2F).addElement(DefaultVertexFormats.COLOR_4UB).addElement(DefaultVertexFormats.TEX_2S).addElement(DefaultVertexFormats.NORMAL_3B).addElement(DefaultVertexFormats.PADDING_1B);
@@ -79,7 +79,7 @@ public class BombExplosionParticle extends Particle {
     }
 
     @Override
-    public void onUpdate() {
+    public void tick() {
         this.prevPosX = this.posX;
         this.prevPosY = this.posY;
         this.prevPosZ = this.posZ;
@@ -94,12 +94,12 @@ public class BombExplosionParticle extends Particle {
         return 3;
     }
 
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     public static class Factory implements IParticleFactory {
         @Override
         @Nullable
         public Particle createParticle(int particleID, World world, double x, double y, double z, double scale, double unused1, double unused2, int... params) {
-            return new BombExplosionParticle(Minecraft.getMinecraft().getTextureManager(), world, x, y, z, scale, 0d, 0d, params.length > 0 ? params[0] : 0xffffff);
+            return new BombExplosionParticle(Minecraft.getInstance().getTextureManager(), world, x, y, z, scale, 0d, 0d, params.length > 0 ? params[0] : 0xffffff);
         }
     }
 }

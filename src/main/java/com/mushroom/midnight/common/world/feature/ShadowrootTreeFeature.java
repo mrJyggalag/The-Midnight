@@ -1,9 +1,9 @@
 package com.mushroom.midnight.common.world.feature;
 
-import com.mushroom.midnight.common.registry.ModBlocks;
+import com.mushroom.midnight.common.registry.MidnightBlocks;
 import net.minecraft.block.BlockLog;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.block.state.BlockState;
+import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
@@ -19,12 +19,12 @@ import java.util.function.IntFunction;
 public class ShadowrootTreeFeature extends MidnightTreeFeature {
     private static final int BRANCH_SPACING = 3;
 
-    public ShadowrootTreeFeature(IBlockState log, IBlockState leaves) {
+    public ShadowrootTreeFeature(BlockState log, BlockState leaves) {
         super(log, leaves);
     }
 
     public ShadowrootTreeFeature() {
-        this(ModBlocks.SHADOWROOT_LOG.getDefaultState(), ModBlocks.SHADOWROOT_LEAVES.getDefaultState());
+        this(MidnightBlocks.SHADOWROOT_LOG.getDefaultState(), MidnightBlocks.SHADOWROOT_LEAVES.getDefaultState());
     }
 
     @Override
@@ -73,12 +73,12 @@ public class ShadowrootTreeFeature extends MidnightTreeFeature {
     private void generateRoots(World world, Random random, BlockPos origin) {
         BlockPos.MutableBlockPos mutablePos = new BlockPos.MutableBlockPos();
 
-        List<EnumFacing> availableSides = new ArrayList<>(4);
-        Collections.addAll(availableSides, EnumFacing.HORIZONTALS);
+        List<Direction> availableSides = new ArrayList<>(4);
+        Collections.addAll(availableSides, Direction.HORIZONTALS);
 
         int count = random.nextInt(3) + 1;
         for (int i = 0; i < count; i++) {
-            EnumFacing side = availableSides.remove(random.nextInt(availableSides.size()));
+            Direction side = availableSides.remove(random.nextInt(availableSides.size()));
             BlockPos rootOrigin = origin.offset(side);
 
             int height = random.nextInt(3) + 1;
@@ -111,14 +111,14 @@ public class ShadowrootTreeFeature extends MidnightTreeFeature {
         int branchCount = heightRange / BRANCH_SPACING;
         double normalizedSpacing = (double) heightRange / branchCount;
 
-        EnumFacing lastDirection = null;
+        Direction lastDirection = null;
 
         for (int branch = 0; branch < branchCount; branch++) {
             int y = MathHelper.ceil(minBranchHeight + 1 + branch * normalizedSpacing);
 
-            EnumFacing direction = null;
+            Direction direction = null;
             while (direction == null || direction == lastDirection) {
-                direction = EnumFacing.HORIZONTALS[random.nextInt(EnumFacing.HORIZONTALS.length)];
+                direction = Direction.HORIZONTALS[random.nextInt(Direction.HORIZONTALS.length)];
             }
             lastDirection = direction;
 
@@ -156,10 +156,10 @@ public class ShadowrootTreeFeature extends MidnightTreeFeature {
 
     private static class Branch {
         final BlockPos pos;
-        final EnumFacing direction;
+        final Direction direction;
         final float angle;
 
-        private Branch(BlockPos pos, EnumFacing direction, float angle) {
+        private Branch(BlockPos pos, Direction direction, float angle) {
             this.pos = pos;
             this.direction = direction;
             this.angle = angle;

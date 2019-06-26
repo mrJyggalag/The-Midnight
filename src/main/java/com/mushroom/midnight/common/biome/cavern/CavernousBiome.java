@@ -8,20 +8,20 @@ import com.mushroom.midnight.common.world.MidnightChunkGenerator;
 import com.mushroom.midnight.common.world.SurfaceCoverGenerator;
 import com.mushroom.midnight.common.world.SurfacePlacementLevel;
 import net.minecraft.block.BlockBush;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.init.Biomes;
 import net.minecraft.util.WeightedRandom;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
-import net.minecraft.world.chunk.Chunk;
+import net.minecraft.world.biome.Biomes;
 import net.minecraft.world.chunk.ChunkPrimer;
-import net.minecraftforge.registries.IForgeRegistryEntry;
+import net.minecraft.world.chunk.IChunk;
+import net.minecraftforge.registries.ForgeRegistryEntry;
 
 import java.util.Random;
 
-public class CavernousBiome extends IForgeRegistryEntry.Impl<CavernousBiome> implements EntitySpawnConfigured {
+public class CavernousBiome extends ForgeRegistryEntry<CavernousBiome> implements EntitySpawnConfigured {
     private final CavernousBiomeConfig config;
     private final MidnightBiomeDecorator decorator;
 
@@ -73,14 +73,14 @@ public class CavernousBiome extends IForgeRegistryEntry.Impl<CavernousBiome> imp
 
         @Override
         public BlockPos getSurfacePos(World world, BlockPos pos) {
-            Chunk chunk = world.getChunk(pos);
+            IChunk chunk = world.getChunk(pos);
 
             BlockPos.MutableBlockPos mutablePos = new BlockPos.MutableBlockPos();
 
             for (int y = 5; y < MidnightChunkGenerator.MIN_SURFACE_LEVEL; y++) {
                 mutablePos.setPos(pos.getX(), y, pos.getZ());
 
-                IBlockState state = chunk.getBlockState(mutablePos);
+                BlockState state = chunk.getBlockState(mutablePos);
                 if (state.getMaterial() == Material.AIR) {
                     return mutablePos.toImmutable();
                 }

@@ -1,9 +1,9 @@
 package com.mushroom.midnight.common.network;
 
-import com.mushroom.midnight.client.gui.GuiMidnightFurnace;
-import com.mushroom.midnight.common.container.ContainerMidnightFurnace;
+import com.mushroom.midnight.client.gui.MidnightFurnaceScreen;
+import com.mushroom.midnight.common.container.MidnightFurnaceContainer;
 import com.mushroom.midnight.common.tile.base.TileEntityMidnightFurnace;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -18,12 +18,12 @@ public class GuiHandler implements IGuiHandler {
 
     @Nullable
     @Override
-    public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
+    public Object getServerGuiElement(int ID, PlayerEntity player, World world, int x, int y, int z) {
         switch (ID) {
             case MIDNIGHT_FURNACE:
                 TileEntity tile = world.getTileEntity(new BlockPos(x, y, z));
                 if (tile instanceof TileEntityMidnightFurnace) {
-                    return new ContainerMidnightFurnace(player.inventory, (TileEntityMidnightFurnace) tile);
+                    return new MidnightFurnaceContainer(player.inventory, (TileEntityMidnightFurnace) tile);
                 }
                 break;
             default:
@@ -34,12 +34,12 @@ public class GuiHandler implements IGuiHandler {
 
     @Nullable
     @Override
-    public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
+    public Object getClientGuiElement(int ID, PlayerEntity player, World world, int x, int y, int z) {
         switch (ID) {
             case MIDNIGHT_FURNACE:
                 TileEntity tile = world.getTileEntity(new BlockPos(x, y, z));
                 if (tile instanceof TileEntityMidnightFurnace) {
-                    return new GuiMidnightFurnace(player.inventory, (TileEntityMidnightFurnace) tile);
+                    return new MidnightFurnaceScreen(player.inventory, (TileEntityMidnightFurnace) tile);
                 }
                 break;
             default:

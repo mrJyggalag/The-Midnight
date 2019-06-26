@@ -3,11 +3,12 @@ package com.mushroom.midnight.common.world.template;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.ServerWorld;
 import net.minecraft.world.World;
+import net.minecraft.world.gen.feature.template.PlacementSettings;
+import net.minecraft.world.gen.feature.template.Template;
+import net.minecraft.world.gen.feature.template.TemplateManager;
 import net.minecraft.world.gen.structure.template.ITemplateProcessor;
-import net.minecraft.world.gen.structure.template.PlacementSettings;
-import net.minecraft.world.gen.structure.template.Template;
-import net.minecraft.world.gen.structure.template.TemplateManager;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -65,13 +66,16 @@ public class TemplateCompiler {
     }
 
     public CompiledTemplate compile(World world, Random random, BlockPos origin) {
+        if (!(world instanceof ServerWorld)) {
+            throw new IllegalArgumentException("Cannot load template on client world");
+        }
+
         ResourceLocation templateId = this.templates.get(random.nextInt(this.templates.size()));
 
-        MinecraftServer server = world.getMinecraftServer();
-        TemplateManager templateManager = world.getSaveHandler().getStructureTemplateManager();
+        TemplateManager templateManager = ((ServerWorld) world).getStructureTemplateManager();
 
         PlacementSettings settings = this.buildPlacementSettings(random);
-        Template template = templateManager.getTemplate(server, templateId);
+        Template template = templateManager.getTemplate(templateId);
 
         BlockPos anchor = this.computeAnchor(template, settings);
         BlockPos anchoredOrigin = anchor != null ? origin.subtract(anchor) : origin;

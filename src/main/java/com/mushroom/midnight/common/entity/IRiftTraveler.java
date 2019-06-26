@@ -4,11 +4,11 @@ import java.util.Collection;
 import java.util.Collections;
 
 public interface IRiftTraveler {
-    void onEnterRift(EntityRift rift);
+    void onEnterRift(RiftEntity rift);
 
-    RiftTravelEntry createTravelEntry(EntityRift rift);
+    RiftTravelEntry createTravelEntry(RiftEntity rift);
 
-    default Collection<RiftTravelEntry> getAdditionalTravelers(EntityRift rift) {
+    default Collection<RiftTravelEntry> getAdditionalTravelers(RiftEntity rift) {
         return Collections.emptyList();
     }
 }

@@ -1,8 +1,8 @@
 package com.mushroom.midnight.common.world.feature;
 
-import com.mushroom.midnight.common.block.BlockDeceitfulMoss;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.util.EnumFacing;
+import com.mushroom.midnight.common.block.DeceitfulMossBlock;
+import net.minecraft.block.state.BlockState;
+import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.event.terraingen.DecorateBiomeEvent;
@@ -10,17 +10,17 @@ import net.minecraftforge.event.terraingen.DecorateBiomeEvent;
 import java.util.Random;
 
 public class MossFeature extends MidnightAbstractFeature {
-    private final IBlockState state;
+    private final BlockState state;
 
-    public MossFeature(IBlockState state) {
+    public MossFeature(BlockState state) {
         this.state = state;
     }
 
     @Override
     public boolean placeFeature(World world, Random rand, BlockPos origin) {
-        EnumFacing facing = EnumFacing.VALUES[rand.nextInt(EnumFacing.VALUES.length)];
+        Direction facing = Direction.VALUES[rand.nextInt(Direction.VALUES.length)];
         if (this.state.getBlock().canPlaceBlockOnSide(world, origin, facing)) {
-            this.setBlockAndNotifyAdequately(world, origin, this.state.withProperty(BlockDeceitfulMoss.FACING, facing));
+            this.setBlockAndNotifyAdequately(world, origin, this.state.with(DeceitfulMossBlock.FACING, facing));
             return true;
         }
         return false;

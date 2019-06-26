@@ -1,6 +1,6 @@
 package com.mushroom.midnight.common.world.feature;
 
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.state.BlockState;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
@@ -45,5 +45,5 @@ public abstract class BoulderFeature extends MidnightAbstractFeature {
         }
     }
 
-    protected abstract IBlockState getStateForPlacement(World world, BlockPos origin, BlockPos pos, double dist, float radiusSquare, Random random);
+    protected abstract BlockState getStateForPlacement(World world, BlockPos origin, BlockPos pos, double dist, float radiusSquare, Random random);
 }

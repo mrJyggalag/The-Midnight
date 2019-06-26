@@ -6,7 +6,7 @@ import net.minecraft.client.particle.Particle;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.fml.relauncher.OnlyIn;
 
 import javax.annotation.Nullable;
 
@@ -16,14 +16,14 @@ public enum MidnightParticles {
     MidnightParticles() {
     }
 
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     @Nullable
     public Particle create(World world, double x, double y, double z, double velocityX, double velocityY, double velocityZ, int... parameters) {
         IParticleFactory factory = getFactory();
         return factory == null ? null : factory.createParticle(-1, world, x, y, z, velocityX, velocityY, velocityZ, parameters);
     }
 
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     @Nullable
     public IParticleFactory getFactory() {
         switch (this) {
@@ -56,9 +56,9 @@ public enum MidnightParticles {
         }
     }
 
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     private void spawn(Particle particle) {
-        Minecraft.getMinecraft().effectRenderer.addEffect(particle);
+        Minecraft.getInstance().effectRenderer.addEffect(particle);
     }
 
     public static MidnightParticles fromId(int id) {

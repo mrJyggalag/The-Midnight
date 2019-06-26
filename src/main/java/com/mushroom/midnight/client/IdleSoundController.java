@@ -8,15 +8,15 @@ import com.mushroom.midnight.common.helper.Helper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.ISound;
 import net.minecraft.client.audio.SoundHandler;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
-import net.minecraftforge.fml.relauncher.Side;
 
-@Mod.EventBusSubscriber(modid = Midnight.MODID, value = Side.CLIENT)
+@Mod.EventBusSubscriber(modid = Midnight.MODID, value = Dist.CLIENT)
 public class IdleSoundController {
-    private static final Minecraft MC = Minecraft.getMinecraft();
+    private static final Minecraft CLIENT = Minecraft.getInstance();
 
     private static final ISound IDLE_SOUND = new MidnightIdleSound();
     private static final ISound CAVE_IDLE_SOUND = new MidnightCaveSound();
@@ -25,14 +25,14 @@ public class IdleSoundController {
 
     @SubscribeEvent
     public static void onClientTick(TickEvent.ClientTickEvent event) {
-        if (!MC.isGamePaused()) {
-            EntityPlayer player = MC.player;
+        if (!CLIENT.isGamePaused()) {
+            PlayerEntity player = CLIENT.player;
             if (player == null || event.phase == TickEvent.Phase.START) {
                 return;
             }
 
             if (Helper.isMidnightDimension(player.world)) {
-                CAVE_ANIMATION.set(player.posY < 62 && !player.world.canSeeSky(player.getPosition()));
+                CAVE_ANIMATION.set(player.posY < 62 && !player.world.canBlockSeeSky(player.getPosition()));
                 CAVE_ANIMATION.update();
 
                 retainIdleSound(IDLE_SOUND);
@@ -42,12 +42,12 @@ public class IdleSoundController {
     }
 
     private static void retainIdleSound(ISound sound) {
-        SoundHandler soundHandler = MC.getSoundHandler();
-        if (!soundHandler.isSoundPlaying(sound)) {
+        SoundHandler soundHandler = CLIENT.getSoundHandler();
+        if (!soundHandler.func_215294_c(sound)) {
             try {
                 // Fix very odd bug where playSound would complain that the sound is already playing
-                soundHandler.stopSound(sound);
-                soundHandler.playSound(sound);
+                soundHandler.stop(sound);
+                soundHandler.play(sound);
             } catch (IllegalArgumentException e) {
                 // Ignore SoundHandler complaints
             }

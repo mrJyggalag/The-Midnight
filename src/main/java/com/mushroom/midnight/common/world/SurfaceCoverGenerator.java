@@ -2,7 +2,7 @@ package com.mushroom.midnight.common.world;
 
 import com.mushroom.midnight.common.biome.config.SurfaceConfig;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.state.BlockState;
 import net.minecraft.world.chunk.ChunkPrimer;
 
 public class SurfaceCoverGenerator {
@@ -22,8 +22,8 @@ public class SurfaceCoverGenerator {
     }
 
     public void coverSurface(SurfaceConfig config, ChunkPrimer primer, int x, int z, int depth) {
-        IBlockState topBlock = config.getTopState();
-        IBlockState fillerBlock = config.getFillerState();
+        BlockState topBlock = config.getTopState();
+        BlockState fillerBlock = config.getFillerState();
 
         int currentDepth = -1;
         int localX = x & 15;
@@ -33,7 +33,7 @@ public class SurfaceCoverGenerator {
         int surfaceLayer = 0;
 
         for (int localY = this.maxY; localY >= 0; localY--) {
-            IBlockState state = primer.getBlockState(localX, localY, localZ);
+            BlockState state = primer.getBlockState(localX, localY, localZ);
             Material material = state.getMaterial();
             if (material == Material.WATER) {
                 wet = true;

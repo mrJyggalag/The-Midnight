@@ -1,13 +1,15 @@
 buildscript {
     repositories {
-        jcenter()
         maven { url = "http://files.minecraftforge.net/maven" }
+        jcenter()
+        mavenCentral()
     }
     dependencies {
-        classpath 'net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT'
+        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '3.+', changing: true
     }
 }
-apply plugin: 'net.minecraftforge.gradle.forge'
+
+apply plugin: 'net.minecraftforge.gradle'
 
 version = "0.3.4"
 group = "com.mushroom"
@@ -18,55 +20,63 @@ sourceCompatibility = targetCompatibility = '1.8'
 def core_plugin = "com.mushroom.midnight.core.MidnightLoadingPlugin"
 
 minecraft {
-    version = "1.12.2-14.23.5.2768"
-    runDir = "run"
+    mappings channel: 'snapshot', version: '20190625-1.14.3'
+    accessTransformer = file('build/resources/main/META-INF/midnight_at.cfg')
 
-    replace "@VERSION@", project.version
-    replaceIn "Midnight.java"
+    runs {
+        client {
+            workingDirectory project.file('run')
 
-    mappings = "stable_39"
-    makeObfSourceJar = false
+            property 'forge.logging.markers', 'REGISTRIES'
+            property 'forge.logging.console.level', 'debug'
 
-    clientJvmArgs = ["-Dfml.coreMods.load=$core_plugin"]
-    serverJvmArgs = ["-Dfml.coreMods.load=$core_plugin"]
+            mods {
+                midnight {
+                    source sourceSets.main
+                }
+            }
+        }
+
+        server {
+            workingDirectory project.file('run')
+
+            property 'forge.logging.markers', 'REGISTRIES'
+            property 'forge.logging.console.level', 'debug'
+
+            mods {
+                midnight {
+                    source sourceSets.main
+                }
+            }
+        }
+    }
 }
 
 repositories {
     maven { url = "http://dvs1.progwml6.com/files/maven" }
     maven { url = "http://maven.gegy1000.net" }
-    //maven { url = "https://minecraft.curseforge.com/api/maven/" }
     maven { url = "https://maven.blamejared.com/" }
 }
 
 dependencies {
-    deobfCompile "mezz.jei:jei_1.12.2:4.15.0.268:api"
-    runtime "mezz.jei:jei_1.12.2:4.15.0.268"
-    deobfCompile "com.azanor:thaumcraft-api:6.1-beta23"
-    //deobfCompile "thaumcraft:Thaumcraft:1.12.2:6.1.BETA26"
-    deobfCompile "blusunrize:ImmersiveEngineering:0.12-89-518"
-}
+    minecraft 'net.minecraftforge:forge:1.14.3-27.0.2'
 
-processResources {
-    inputs.property "version", project.version
-    inputs.property "mcversion", project.minecraft.version
-
-    from(sourceSets.main.resources.srcDirs) {
-        include 'mcmod.info'
-
-        expand 'version':project.version, 'mcversion':project.minecraft.version
-    }
-
-    from(sourceSets.main.resources.srcDirs) {
-        exclude 'mcmod.info'
-    }
+//    deobfCompile "mezz.jei:jei_1.12.2:4.15.0.268:api"
+//    runtime "mezz.jei:jei_1.12.2:4.15.0.268"
+//    deobfCompile "com.azanor:thaumcraft-api:6.1-beta23"
+//    deobfCompile "blusunrize:ImmersiveEngineering:0.12-89-518"
 }
 
 jar {
     manifest {
-        attributes "FMLCorePlugin": core_plugin
-        attributes "FMLCorePluginContainsFMLMod": "true"
-        attributes "FMLAT": "midnight_at.cfg"
-        attributes "Maven-Artifact": "${project.group}:${project.archivesBaseName}:${project.version}"
-        attributes "Timestamp": System.currentTimeMillis()
+        attributes([
+            "Specification-Title": "midnight",
+            "Specification-Vendor": "cryptic-mushroom",
+            "Specification-Version": "1",
+            "Implementation-Title": project.name,
+            "Implementation-Version": "${version}",
+            "Implementation-Vendor" :"cryptic-mushroom",
+            "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
+        ])
     }
 }

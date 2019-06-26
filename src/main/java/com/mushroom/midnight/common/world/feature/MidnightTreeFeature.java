@@ -1,11 +1,11 @@
 package com.mushroom.midnight.common.world.feature;
 
-import com.mushroom.midnight.common.registry.ModBlocks;
+import com.mushroom.midnight.common.registry.MidnightBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLeaves;
 import net.minecraft.block.BlockLog;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.block.state.BlockState;
+import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
@@ -17,10 +17,10 @@ import java.util.Set;
 import java.util.function.IntFunction;
 
 public abstract class MidnightTreeFeature extends MidnightNaturalFeature {
-    protected final IBlockState log;
-    protected final IBlockState leaves;
+    protected final BlockState log;
+    protected final BlockState leaves;
 
-    protected MidnightTreeFeature(IBlockState log, IBlockState leaves) {
+    protected MidnightTreeFeature(BlockState log, BlockState leaves) {
         this.log = log;
         if (leaves.getBlock() instanceof BlockLeaves) {
             leaves = leaves.withProperty(BlockLeaves.CHECK_DECAY, false);
@@ -48,14 +48,14 @@ public abstract class MidnightTreeFeature extends MidnightNaturalFeature {
 
     protected boolean canGrow(World world, BlockPos pos) {
         BlockPos groundPos = pos.down();
-        IBlockState groundState = world.getBlockState(groundPos);
+        BlockState groundState = world.getBlockState(groundPos);
         Block groundBlock = groundState.getBlock();
-        return groundBlock.canSustainPlant(groundState, world, groundPos, EnumFacing.UP, (IPlantable) ModBlocks.SHADOWROOT_SAPLING);
+        return groundBlock.canSustainPlant(groundState, world, groundPos, Direction.UP, (IPlantable) MidnightBlocks.SHADOWROOT_SAPLING);
     }
 
     protected void notifyGrowth(World world, BlockPos pos) {
         BlockPos groundPos = pos.down();
-        IBlockState groundState = world.getBlockState(groundPos);
+        BlockState groundState = world.getBlockState(groundPos);
         Block groundBlock = groundState.getBlock();
         groundBlock.onPlantGrow(groundState, world, groundPos, pos);
     }

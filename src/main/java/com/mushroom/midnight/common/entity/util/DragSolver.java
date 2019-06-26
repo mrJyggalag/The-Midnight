@@ -1,28 +1,29 @@
 package com.mushroom.midnight.common.entity.util;
 
-import com.mushroom.midnight.common.entity.creature.EntityRifter;
+import com.mushroom.midnight.common.entity.creature.RifterEntity;
 import com.mushroom.midnight.common.util.EntityUtil;
-import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Vec3d;
 
 import javax.annotation.Nullable;
 import javax.vecmath.Vector3d;
 
 public class DragSolver {
-    private final EntityRifter owner;
+    private final RifterEntity owner;
     private final AttachmentSolver attachmentSolver;
 
-    private EntityLivingBase dragged;
+    private LivingEntity dragged;
 
     private Vector3d attachmentPoint;
     private Vector3d prevAttachmentPoint;
 
-    public DragSolver(EntityRifter owner) {
+    public DragSolver(RifterEntity owner) {
         this.owner = owner;
         this.attachmentSolver = new AttachmentSolver(this.owner);
     }
 
-    public void setDragged(EntityLivingBase dragged) {
+    public void setDragged(LivingEntity dragged) {
         if (this.dragged != null) {
             this.resetDragged(this.dragged);
         }
@@ -32,15 +33,13 @@ public class DragSolver {
         }
     }
 
-    private void initDragged(EntityLivingBase entity) {
+    private void initDragged(LivingEntity entity) {
         entity.noClip = true;
     }
 
-    private void resetDragged(EntityLivingBase entity) {
+    private void resetDragged(LivingEntity entity) {
         entity.noClip = false;
-        entity.motionX = entity.posX - entity.prevPosX;
-        entity.motionY = entity.posY - entity.prevPosY;
-        entity.motionZ = entity.posZ - entity.prevPosZ;
+        entity.setMotion(new Vec3d(entity.posX - entity.prevPosX, entity.posY - entity.prevPosY, entity.posZ - entity.prevPosZ));
     }
 
     public void solveDrag() {
@@ -53,7 +52,7 @@ public class DragSolver {
 
         float entityWidth = this.getTransformedWidth();
 
-        float dragOffset = (this.owner.width + entityWidth) / 2.0F + 0.2F;
+        float dragOffset = (this.owner.getWidth() + entityWidth) / 2.0F + 0.2F;
 
         float theta = (float) Math.toRadians(this.owner.renderYawOffset);
         double dragOriginX = MathHelper.sin(theta) * dragOffset;
@@ -69,16 +68,16 @@ public class DragSolver {
             this.attachmentPoint = result.getSnappedPoint();
         } finally {
             this.dragged.noClip = true;
-            this.dragged.motionX = this.dragged.motionY = this.dragged.motionZ = 0.0;
+            this.dragged.setMotion(Vec3d.ZERO);
         }
     }
 
     private float getTransformedWidth() {
         EntityUtil.Stance stance = EntityUtil.getStance(this.dragged);
-        return stance == EntityUtil.Stance.QUADRUPEDAL ? this.dragged.width : this.dragged.height;
+        return stance == EntityUtil.Stance.QUADRUPEDAL ? this.dragged.getWidth() : this.dragged.getHeight();
     }
 
-    private void solveRotation(EntityLivingBase entity) {
+    private void solveRotation(LivingEntity entity) {
         entity.setRenderYawOffset(this.owner.rotationYaw);
 
         float deltaYaw = this.owner.rotationYaw - this.owner.prevRotationYaw;

@@ -1,25 +1,25 @@
 package com.mushroom.midnight.common.world.template;
 
-import com.mushroom.midnight.common.block.BlockMidnightFungiShelf;
-import com.mushroom.midnight.common.registry.ModBlocks;
+import com.mushroom.midnight.common.block.MidnightFungiShelfBlock;
+import com.mushroom.midnight.common.registry.MidnightBlocks;
 import com.mushroom.midnight.common.world.util.BlockStatePredicate;
 import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.block.BlockState;
+import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 import java.util.Random;
 
 public class ShelfAttachProcessor implements TemplatePostProcessor {
-    protected static final EnumFacing[] ATTACH_SIDES = new EnumFacing[] { EnumFacing.NORTH, EnumFacing.WEST, EnumFacing.SOUTH, EnumFacing.EAST, EnumFacing.UP };
+    protected static final Direction[] ATTACH_SIDES = new Direction[] { Direction.NORTH, Direction.WEST, Direction.SOUTH, Direction.EAST, Direction.UP };
 
-    public static final Block[] FOREST_SHELF_BLOCKS = new Block[] { ModBlocks.NIGHTSHROOM_SHELF, ModBlocks.DEWSHROOM_SHELF, ModBlocks.VIRIDSHROOM_SHELF };
+    public static final Block[] FOREST_SHELF_BLOCKS = new Block[] { MidnightBlocks.NIGHTSHROOM_SHELF, MidnightBlocks.DEWSHROOM_SHELF, MidnightBlocks.VIRIDSHROOM_SHELF };
     public static final Block[] SHELF_BLOCKS = new Block[] {
-            ModBlocks.NIGHTSHROOM_SHELF,
-            ModBlocks.VIRIDSHROOM_SHELF,
-            ModBlocks.DEWSHROOM_SHELF,
-            ModBlocks.BOGSHROOM_SHELF
+            MidnightBlocks.NIGHTSHROOM_SHELF,
+            MidnightBlocks.VIRIDSHROOM_SHELF,
+            MidnightBlocks.DEWSHROOM_SHELF,
+            MidnightBlocks.BOGSHROOM_SHELF
     };
 
     private final int attachChance;
@@ -37,20 +37,20 @@ public class ShelfAttachProcessor implements TemplatePostProcessor {
     }
 
     @Override
-    public void process(World world, Random random, BlockPos pos, IBlockState state) {
-        if (state.isFullCube() && random.nextInt(this.attachChance) == 0) {
+    public void process(World world, Random random, BlockPos pos, BlockState state) {
+        if (state.isSolid() && random.nextInt(this.attachChance) == 0) {
             this.attachShelf(world, random, pos);
         }
     }
 
     protected void attachShelf(World world, Random random, BlockPos pos) {
         Block shelfBlock = this.shelfBlocks[random.nextInt(this.shelfBlocks.length)];
-        EnumFacing attachSide = ATTACH_SIDES[random.nextInt(ATTACH_SIDES.length)];
+        Direction attachSide = ATTACH_SIDES[random.nextInt(ATTACH_SIDES.length)];
 
         BlockPos offsetPos = pos.offset(attachSide);
         if (this.replaceable.test(world, offsetPos)) {
             world.setBlockState(offsetPos, shelfBlock.getDefaultState()
-                    .withProperty(BlockMidnightFungiShelf.FACING, attachSide)
+                    .with(MidnightFungiShelfBlock.FACING, attachSide)
             );
         }
     }

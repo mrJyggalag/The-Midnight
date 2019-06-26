@@ -1,8 +1,8 @@
 package com.mushroom.midnight.common.container;
 
-import com.mushroom.midnight.common.registry.ModBlocks;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.InventoryPlayer;
+import com.mushroom.midnight.common.registry.MidnightBlocks;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.*;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
@@ -17,9 +17,9 @@ public class ContainerShadowrootCT extends Container implements IRecipeContainer
     private final World world;
     /** Position of the workbench */
     private final BlockPos pos;
-    private final EntityPlayer player;
+    private final PlayerEntity player;
 
-    public ContainerShadowrootCT(InventoryPlayer playerInventory, World worldIn, BlockPos posIn)
+    public ContainerShadowrootCT(PlayerInventory playerInventory, World worldIn, BlockPos posIn)
     {
         this.world = worldIn;
         this.pos = posIn;
@@ -61,7 +61,7 @@ public class ContainerShadowrootCT extends Container implements IRecipeContainer
      * Called when the container is closed.
      */
     @Override
-    public void onContainerClosed(EntityPlayer playerIn)
+    public void onContainerClosed(PlayerEntity playerIn)
     {
         super.onContainerClosed(playerIn);
 
@@ -75,9 +75,9 @@ public class ContainerShadowrootCT extends Container implements IRecipeContainer
      * Determines whether supplied player can use this container
      */
     @Override
-    public boolean canInteractWith(EntityPlayer playerIn)
+    public boolean canInteractWith(PlayerEntity playerIn)
     {
-        if (this.world.getBlockState(this.pos).getBlock() != ModBlocks.SHADOWROOT_CRAFTING_TABLE)
+        if (this.world.getBlockState(this.pos).getBlock() != MidnightBlocks.SHADOWROOT_CRAFTING_TABLE)
         {
             return false;
         }
@@ -92,7 +92,7 @@ public class ContainerShadowrootCT extends Container implements IRecipeContainer
      * inventory and the other inventory(s).
      */
     @Override
-    public ItemStack transferStackInSlot(EntityPlayer playerIn, int index)
+    public ItemStack transferStackInSlot(PlayerEntity playerIn, int index)
     {
         ItemStack itemstack = ItemStack.EMPTY;
         Slot slot = this.inventorySlots.get(index);

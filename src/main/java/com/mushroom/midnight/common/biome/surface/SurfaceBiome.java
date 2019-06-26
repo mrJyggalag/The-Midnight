@@ -9,7 +9,7 @@ import com.mushroom.midnight.common.world.MidnightChunkGenerator;
 import com.mushroom.midnight.common.world.SurfaceCoverGenerator;
 import com.mushroom.midnight.common.world.SurfacePlacementLevel;
 import net.minecraft.block.BlockBush;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.state.BlockState;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.util.WeightedRandom;
@@ -18,7 +18,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.chunk.ChunkPrimer;
 import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.fml.relauncher.OnlyIn;
 
 import java.util.List;
 import java.util.Random;
@@ -52,7 +52,7 @@ public class SurfaceBiome extends Biome implements EntitySpawnConfigured {
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     public String getBiomeName() {
         return I18n.format("biome." + Midnight.MODID + "." + super.getBiomeName() + ".name");
     }
@@ -70,7 +70,7 @@ public class SurfaceBiome extends Biome implements EntitySpawnConfigured {
     }
 
     @Override
-    public void addFlower(IBlockState state, int weight) {
+    public void addFlower(BlockState state, int weight) {
         if (MidnightConfig.general.foreignFlowersFromBonemeal) {
             super.addFlower(state, weight);
         }

@@ -1,12 +1,14 @@
 package com.mushroom.midnight.common.entity;
 
 import com.mushroom.midnight.Midnight;
-import com.mushroom.midnight.common.network.MessageBridgeCreate;
-import com.mushroom.midnight.common.network.MessageBridgeRemoval;
-import com.mushroom.midnight.common.network.MessageBridgeState;
-import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.world.WorldServer;
+import com.mushroom.midnight.common.network.BridgeCreateMessage;
+import com.mushroom.midnight.common.network.BridgeRemovalMessage;
+import com.mushroom.midnight.common.network.BridgeStateMessage;
+import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.world.ServerWorld;
+import net.minecraft.world.ServerWorld;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
+import net.minecraftforge.fml.network.PacketDistributor;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -16,7 +18,7 @@ import java.util.stream.Collectors;
 
 public class BridgeTracker {
     private final RiftBridge bridge;
-    private final Set<EntityPlayerMP> currentTrackingPlayers = new HashSet<>();
+    private final Set<ServerPlayerEntity> currentTrackingPlayers = new HashSet<>();
 
     public BridgeTracker(RiftBridge bridge) {
         this.bridge = bridge;
@@ -24,21 +26,21 @@ public class BridgeTracker {
 
     public void update() {
         if (this.bridge.isDirty() && !this.currentTrackingPlayers.isEmpty()) {
-            this.sendToTracking(new MessageBridgeState(this.bridge));
+            this.sendToTracking(new BridgeStateMessage(this.bridge));
             this.bridge.clearDirt();
         }
 
-        Collection<EntityPlayerMP> trackingPlayers = this.collectTrackingPlayers();
+        Collection<ServerPlayerEntity> trackingPlayers = this.collectTrackingPlayers();
 
-        for (EntityPlayerMP player : trackingPlayers) {
+        for (ServerPlayerEntity player : trackingPlayers) {
             if (!this.currentTrackingPlayers.contains(player)) {
-                Midnight.NETWORK.sendTo(new MessageBridgeCreate(this.bridge), player);
+                Midnight.NETWORK.sendTo(new BridgeCreateMessage(this.bridge), player);
             }
         }
 
-        for (EntityPlayerMP player : this.currentTrackingPlayers) {
+        for (ServerPlayerEntity player : this.currentTrackingPlayers) {
             if (!trackingPlayers.contains(player)) {
-                Midnight.NETWORK.sendTo(new MessageBridgeRemoval(this.bridge.getId()), player);
+                Midnight.NETWORK.sendTo(new BridgeRemovalMessage(this.bridge.getId()), player);
             }
         }
 
@@ -46,21 +48,21 @@ public class BridgeTracker {
         this.currentTrackingPlayers.addAll(trackingPlayers);
     }
 
-    public void sendToTracking(IMessage message) {
-        for (EntityPlayerMP player : this.currentTrackingPlayers) {
-            Midnight.NETWORK.sendTo(message, player);
+    public <M> void sendToTracking(M message) {
+        for (ServerPlayerEntity player : this.currentTrackingPlayers) {
+            Midnight.CHANNEL.send(PacketDistributor.PLAYER.with(() -> player), message);
         }
     }
 
-    private Collection<EntityPlayerMP> collectTrackingPlayers() {
-        Collection<EntityPlayerMP> trackingPlayers = new ArrayList<>();
+    private Collection<ServerPlayerEntity> collectTrackingPlayers() {
+        Collection<ServerPlayerEntity> trackingPlayers = new ArrayList<>();
 
-        EntityRift source = this.bridge.getSource();
+        RiftEntity source = this.bridge.getSource();
         if (source != null) {
             this.collectTrackingPlayers(trackingPlayers, source);
         }
 
-        EntityRift target = this.bridge.getTarget();
+        RiftEntity target = this.bridge.getTarget();
         if (target != null) {
             this.collectTrackingPlayers(trackingPlayers, target);
         }
@@ -68,14 +70,14 @@ public class BridgeTracker {
         return trackingPlayers;
     }
 
-    private void collectTrackingPlayers(Collection<EntityPlayerMP> trackingPlayers, EntityRift target) {
-        if (!(target.world instanceof WorldServer)) {
+    private void collectTrackingPlayers(Collection<ServerPlayerEntity> trackingPlayers, RiftEntity target) {
+        if (!(target.world instanceof ServerWorld)) {
             return;
         }
-        WorldServer world = (WorldServer) target.world;
+        ServerWorld world = (ServerWorld) target.world;
         trackingPlayers.addAll(world.getEntityTracker().getTrackingPlayers(target).stream()
-                .filter(o -> o instanceof EntityPlayerMP)
-                .map(o -> (EntityPlayerMP) o)
+                .filter(o -> o instanceof ServerPlayerEntity)
+                .map(o -> (ServerPlayerEntity) o)
                 .collect(Collectors.toList())
         );
     }

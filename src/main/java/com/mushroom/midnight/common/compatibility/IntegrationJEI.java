@@ -1,7 +1,7 @@
 package com.mushroom.midnight.common.compatibility;
 
-import com.mushroom.midnight.common.registry.ModBlocks;
-import com.mushroom.midnight.common.registry.ModItems;
+import com.mushroom.midnight.common.registry.MidnightBlocks;
+import com.mushroom.midnight.common.registry.MidnightItems;
 import mezz.jei.api.IJeiHelpers;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.IModRegistry;
@@ -16,10 +16,10 @@ public class IntegrationJEI implements IModPlugin {
 		IJeiHelpers jeiHelpers = registry.getJeiHelpers();
 		// blacklisted items
 		IIngredientBlacklist blackList = jeiHelpers.getIngredientBlacklist();
-		blackList.addIngredientToBlacklist(new ItemStack(ModBlocks.DARK_WATER));
-		blackList.addIngredientToBlacklist(new ItemStack(ModBlocks.MIASMA));
-		blackList.addIngredientToBlacklist(new ItemStack(ModItems.ADVANCEMENT_SNAPPER));
-		blackList.addIngredientToBlacklist(new ItemStack(ModItems.ADVANCEMENT_HIGHNESS));
-		blackList.addIngredientToBlacklist(new ItemStack(ModItems.ROCKSHROOM_SHIELD));
+		blackList.addIngredientToBlacklist(new ItemStack(MidnightBlocks.DARK_WATER));
+		blackList.addIngredientToBlacklist(new ItemStack(MidnightBlocks.MIASMA));
+		blackList.addIngredientToBlacklist(new ItemStack(MidnightItems.ADVANCEMENT_SNAPPER));
+		blackList.addIngredientToBlacklist(new ItemStack(MidnightItems.ADVANCEMENT_HIGHNESS));
+		blackList.addIngredientToBlacklist(new ItemStack(MidnightItems.ROCKSHROOM_SHIELD));
 	}
 }

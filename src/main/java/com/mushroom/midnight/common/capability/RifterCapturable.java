@@ -2,9 +2,10 @@ package com.mushroom.midnight.common.capability;
 
 import com.mushroom.midnight.Midnight;
 import net.minecraft.entity.Entity;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
+import net.minecraftforge.common.util.LazyOptional;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -13,8 +14,8 @@ public class RifterCapturable implements ICapabilityProvider {
     private boolean captured;
 
     public static boolean isCaptured(Entity entity) {
-        RifterCapturable capability = entity.getCapability(Midnight.RIFTER_CAPTURABLE_CAP, null);
-        return capability != null && capability.isCaptured();
+        LazyOptional<RifterCapturable> capability = entity.getCapability(Midnight.RIFTER_CAPTURABLE_CAP);
+        return capability.map(RifterCapturable::isCaptured).orElse(false);
     }
 
     public void setCaptured(boolean captured) {
@@ -26,13 +27,13 @@ public class RifterCapturable implements ICapabilityProvider {
     }
 
     @Override
-    public boolean hasCapability(@Nonnull Capability<?> capability, @Nullable EnumFacing facing) {
+    public boolean hasCapability(@Nonnull Capability<?> capability, @Nullable Direction facing) {
         return capability == Midnight.RIFTER_CAPTURABLE_CAP;
     }
 
     @Nullable
     @Override
-    public <T> T getCapability(@Nonnull Capability<T> capability, @Nullable EnumFacing facing) {
+    public <T> T getCapability(@Nonnull Capability<T> capability, @Nullable Direction facing) {
         if (capability == Midnight.RIFTER_CAPTURABLE_CAP) {
             return Midnight.RIFTER_CAPTURABLE_CAP.cast(this);
         }

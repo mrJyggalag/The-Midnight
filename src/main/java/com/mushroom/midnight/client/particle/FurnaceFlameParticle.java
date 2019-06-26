@@ -6,9 +6,9 @@ import net.minecraft.client.particle.Particle;
 import net.minecraft.client.particle.ParticleFlame;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.fml.relauncher.OnlyIn;
 
-@SideOnly(Side.CLIENT)
+@OnlyIn(Dist.CLIENT)
 public class FurnaceFlameParticle extends ParticleFlame {
     private int layer = 0;
 
@@ -23,7 +23,7 @@ public class FurnaceFlameParticle extends ParticleFlame {
         return layer;
     }
 
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     public static class Factory implements IParticleFactory {
         @Override
         public Particle createParticle(int particleID, World world, double posX, double posY, double posZ, double motionX, double motionY, double motionZ, int... params) {

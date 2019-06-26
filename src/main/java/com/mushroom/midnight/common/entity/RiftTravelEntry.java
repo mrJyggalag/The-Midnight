@@ -11,7 +11,7 @@ public class RiftTravelEntry {
         this.entity = entity;
     }
 
-    public void travel(EntityRift rift, DimensionType endpointDimension) {
+    public void travel(RiftEntity rift, DimensionType endpointDimension) {
         this.entity.changeDimension(endpointDimension.getId(), new MidnightTeleporter(rift));
     }
 

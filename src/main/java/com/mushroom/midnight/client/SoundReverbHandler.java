@@ -11,7 +11,7 @@ import org.lwjgl.openal.ALC10;
 import org.lwjgl.openal.EFX10;
 
 public class SoundReverbHandler {
-    private static final Minecraft MC = Minecraft.getMinecraft();
+    private static final Minecraft MC = Minecraft.getInstance();
 
     private static boolean available;
     private static boolean setup;

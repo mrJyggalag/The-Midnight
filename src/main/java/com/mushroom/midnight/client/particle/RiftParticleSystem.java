@@ -1,6 +1,6 @@
 package com.mushroom.midnight.client.particle;
 
-import com.mushroom.midnight.common.entity.EntityRift;
+import com.mushroom.midnight.common.entity.RiftEntity;
 import com.mushroom.midnight.common.helper.Helper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.ParticleManager;
@@ -9,16 +9,16 @@ import net.minecraft.util.math.MathHelper;
 import javax.vecmath.Vector2f;
 import java.util.Random;
 
-public class RiftParticleSystem implements ParticleSystem<EntityRift> {
+public class RiftParticleSystem implements ParticleSystem<RiftEntity> {
     private static final int ORBITAL_RING_COUNT = 3;
     private static final int ORBITAL_PARTICLE_COUNT = 240;
 
-    private final EntityRift rift;
+    private final RiftEntity rift;
 
     private Ring[] particleRings;
     private int releasedParticleCount;
 
-    public RiftParticleSystem(EntityRift rift) {
+    public RiftParticleSystem(RiftEntity rift) {
         this.rift = rift;
     }
 
@@ -37,7 +37,7 @@ public class RiftParticleSystem implements ParticleSystem<EntityRift> {
             if (!this.rift.isUnstable()) {
                 this.spawnOrbitalParticles(this.rift, random);
             }
-        } else if (this.rift.getBridge().open.getTimer() == EntityRift.CLOSE_SPEED) {
+        } else if (this.rift.getBridge().open.getTimer() == RiftEntity.CLOSE_SPEED) {
             int sporeCount = random.nextInt(3) + 8;
             for (int i = 0; i < sporeCount; i++) {
                 this.spawnSpore(this.rift, random, 1.0F);
@@ -46,16 +46,16 @@ public class RiftParticleSystem implements ParticleSystem<EntityRift> {
     }
 
     @Override
-    public EntityRift getEntity() {
+    public RiftEntity getEntity() {
         return this.rift;
     }
 
-    private void spawnSpore(EntityRift rift, Random random, float displacementScale) {
+    private void spawnSpore(RiftEntity rift, Random random, float displacementScale) {
         double velocityX = random.nextGaussian() * 0.3F;
         double velocityY = random.nextGaussian() * 0.3F;
         double velocityZ = random.nextGaussian() * 0.3F;
         double particleX = rift.posX + velocityX * displacementScale;
-        double particleY = rift.posY + rift.height / 2.0F + velocityY * displacementScale;
+        double particleY = rift.posY + rift.getHeight() / 2.0F + velocityY * displacementScale;
         double particleZ = rift.posZ + velocityZ * displacementScale;
         MidnightParticles.AMBIENT_SPORE.spawn(rift.world, particleX, particleY, particleZ, velocityX, velocityY, velocityZ);
     }
@@ -84,17 +84,17 @@ public class RiftParticleSystem implements ParticleSystem<EntityRift> {
         return rings;
     }
 
-    private void spawnOrbitalParticles(EntityRift rift, Random random) {
-        ParticleManager effectRenderer = Minecraft.getMinecraft().effectRenderer;
+    private void spawnOrbitalParticles(RiftEntity rift, Random random) {
+        ParticleManager particleManager = Minecraft.getInstance().particles;
 
         int count = Math.min(random.nextInt(2) + 1, ORBITAL_PARTICLE_COUNT - this.releasedParticleCount);
         for (int i = 0; i < count; i++) {
-            float offsetHorizontal = (random.nextFloat() - 0.5F) * rift.width * 0.8F;
-            float offsetVertical = (random.nextFloat() - 0.5F) * rift.height * 0.8F;
+            float offsetHorizontal = (random.nextFloat() - 0.5F) * rift.getWidth() * 0.8F;
+            float offsetVertical = (random.nextFloat() - 0.5F) * rift.getHeight() * 0.8F;
 
             float theta = (float) Math.toRadians(rift.rotationYaw);
             double particleX = rift.posX + MathHelper.cos(theta) * offsetHorizontal;
-            double particleY = rift.posY + rift.height / 2.0F + offsetVertical;
+            double particleY = rift.posY + rift.getHeight() / 2.0F + offsetVertical;
             double particleZ = rift.posZ + MathHelper.sin(theta) * offsetHorizontal;
 
             Ring ring = this.particleRings[random.nextInt(this.particleRings.length)];
@@ -105,7 +105,7 @@ public class RiftParticleSystem implements ParticleSystem<EntityRift> {
             float rotateSpeed = random.nextFloat() * 0.5F + 1.25F;
 
             RiftParticle particle = new RiftParticle(this, ring, particleX, particleY, particleZ, radius, angleOffset, verticalOffset, rotateSpeed);
-            effectRenderer.addEffect(particle);
+            particleManager.addEffect(particle);
 
             this.releasedParticleCount++;
         }

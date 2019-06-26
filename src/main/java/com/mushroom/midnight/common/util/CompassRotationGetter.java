@@ -1,9 +1,9 @@
 package com.mushroom.midnight.common.util;
 
-import com.mushroom.midnight.common.entity.EntityRift;
+import com.mushroom.midnight.common.entity.RiftEntity;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.item.EntityItemFrame;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.item.ItemFrameEntity;
 import net.minecraft.item.IItemPropertyGetter;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -22,11 +22,11 @@ public class CompassRotationGetter implements IItemPropertyGetter {
     private double rotVelocity;
     private long lastUpdateTick;
 
-    private EntityRift closestRift;
+    private RiftEntity closestRift;
     private long lastRiftCheck;
 
     @Override
-    public float apply(ItemStack stack, @Nullable World world, @Nullable EntityLivingBase livingHolder) {
+    public float call(ItemStack stack, @Nullable World world, @Nullable LivingEntity livingHolder) {
         boolean heldByLiving = livingHolder != null;
         Entity entity = (livingHolder != null ? livingHolder : stack.getItemFrame());
         if (entity == null) {
@@ -46,8 +46,8 @@ public class CompassRotationGetter implements IItemPropertyGetter {
     }
 
     private double applyWobble(World world, double targetAngle) {
-        if (world.getTotalWorldTime() != this.lastUpdateTick) {
-            this.lastUpdateTick = world.getTotalWorldTime();
+        if (world.getGameTime() != this.lastUpdateTick) {
+            this.lastUpdateTick = world.getGameTime();
             double deltaAngle = targetAngle - this.rotation;
             deltaAngle = MathHelper.positiveModulo(deltaAngle + 0.5, 1.0) - 0.5;
             this.rotVelocity += deltaAngle * 0.1;
@@ -59,13 +59,13 @@ public class CompassRotationGetter implements IItemPropertyGetter {
 
     private double computeTargetAngle(World world, Entity entity) {
         double angle;
-        if (world.provider.isSurfaceWorld()) {
+        if (world.dimension.isSurfaceWorld()) {
             angle = this.computeAngle(entity, world.getSpawnPoint());
         } else {
             angle = Math.random();
         }
 
-        EntityRift closestRift = this.getClosestRift(entity);
+        RiftEntity closestRift = this.getClosestRift(entity);
         if (closestRift == null) {
             return angle;
         }
@@ -77,13 +77,13 @@ public class CompassRotationGetter implements IItemPropertyGetter {
     }
 
     @Nullable
-    private EntityRift getClosestRift(Entity entity) {
+    private RiftEntity getClosestRift(Entity entity) {
         World world = entity.world;
-        long time = world.getTotalWorldTime();
+        long time = world.getGameTime();
 
         if (time - this.lastRiftCheck > RIFT_CHECK_INTERVAL) {
             AxisAlignedBB bounds = new AxisAlignedBB(entity.getPosition()).grow(RIFT_INFLUENCE_RANGE);
-            Collection<EntityRift> rifts = world.getEntitiesWithinAABB(EntityRift.class, bounds);
+            Collection<RiftEntity> rifts = world.getEntitiesWithinAABB(RiftEntity.class, bounds);
             this.closestRift = this.findClosestRift(entity, rifts);
             this.lastRiftCheck = time;
         }
@@ -92,10 +92,10 @@ public class CompassRotationGetter implements IItemPropertyGetter {
     }
 
     @Nullable
-    private EntityRift findClosestRift(Entity entity, Collection<EntityRift> rifts) {
-        EntityRift closestRift = null;
+    private RiftEntity findClosestRift(Entity entity, Collection<RiftEntity> rifts) {
+        RiftEntity closestRift = null;
         double closestRiftDistanceSq = Double.MAX_VALUE;
-        for (EntityRift rift : rifts) {
+        for (RiftEntity rift : rifts) {
             double distanceSq = rift.getDistanceSq(entity);
             if (distanceSq < closestRiftDistanceSq) {
                 closestRiftDistanceSq = distanceSq;
@@ -113,13 +113,13 @@ public class CompassRotationGetter implements IItemPropertyGetter {
 
     private double computeSourceAngle(Entity entity) {
         double sourceAngle = entity.rotationYaw;
-        if (entity instanceof EntityItemFrame) {
-            sourceAngle = this.getFrameRotation((EntityItemFrame) entity);
+        if (entity instanceof ItemFrameEntity) {
+            sourceAngle = this.getFrameRotation((ItemFrameEntity) entity);
         }
         return MathHelper.positiveModulo(sourceAngle / 360.0, 1.0);
     }
 
-    private double getFrameRotation(EntityItemFrame itemFrame) {
-        return MathHelper.wrapDegrees(180 + itemFrame.facingDirection.getHorizontalIndex() * 90);
+    private double getFrameRotation(ItemFrameEntity itemFrame) {
+        return MathHelper.wrapDegrees(180 + itemFrame.getHorizontalFacing().getHorizontalIndex() * 90);
     }
 }

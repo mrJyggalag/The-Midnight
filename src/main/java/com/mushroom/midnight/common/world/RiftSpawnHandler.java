@@ -2,17 +2,18 @@ package com.mushroom.midnight.common.world;
 
 import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.common.config.MidnightConfig;
-import com.mushroom.midnight.common.entity.EntityRift;
+import com.mushroom.midnight.common.entity.RiftEntity;
 import com.mushroom.midnight.common.entity.RiftAttachment;
 import com.mushroom.midnight.common.entity.RiftBridge;
 import com.mushroom.midnight.common.helper.Helper;
-import com.mushroom.midnight.common.registry.ModDimensions;
+import com.mushroom.midnight.common.registry.MidnightDimensions;
 import com.mushroom.midnight.common.util.WorldUtil;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.EnumSkyBlock;
+import net.minecraft.world.LightType;
 import net.minecraft.world.World;
 import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.fml.common.FMLCommonHandler;
@@ -49,7 +50,7 @@ public class RiftSpawnHandler {
             return;
         }
 
-        World endpointWorld = DimensionManager.getWorld(ModDimensions.MIDNIGHT.getId());
+        World endpointWorld = DimensionManager.getWorld(MidnightDimensions.MIDNIGHT);
         if (!world.isDaytime()) {
             Random random = world.rand;
             Set<BlockPos> spawnRegions = collectPlayerRegions(world.playerEntities);
@@ -74,19 +75,17 @@ public class RiftSpawnHandler {
         }
     }
 
-    private static Set<BlockPos> collectPlayerRegions(List<EntityPlayer> players) {
+    private static Set<BlockPos> collectPlayerRegions(List<PlayerEntity> players) {
         Set<BlockPos> spawnRegions = new HashSet<>();
 
-        for (EntityPlayer player : players) {
+        for (PlayerEntity player : players) {
             int regionX = (int) player.posX >> 5;
             int regionY = (int) player.posY >> 5;
             int regionZ = (int) player.posZ >> 5;
-            for (BlockPos pos : BlockPos.getAllInBox(
+            BlockPos.getAllInBox(
                     regionX - REGION_RANGE, regionY - REGION_RANGE, regionZ - REGION_RANGE,
                     regionX + REGION_RANGE, regionY + REGION_RANGE, regionZ + REGION_RANGE
-            )) {
-                spawnRegions.add(pos);
-            }
+            ).forEach(spawnRegions::add);
         }
         return spawnRegions;
     }
@@ -108,28 +107,28 @@ public class RiftSpawnHandler {
         BridgeManager trackerHandler = GlobalBridgeManager.getServer();
         RiftBridge bridge = trackerHandler.createBridge(attachment);
 
-        EntityRift rift = new EntityRift(world);
+        RiftEntity rift = new RiftEntity(world);
         rift.acceptBridge(bridge);
         bridge.getAttachment().apply(rift);
 
         trackerHandler.addBridge(bridge);
 
-        world.spawnEntity(rift);
+        world.addEntity(rift);
     }
 
     private static boolean canRiftSpawn(World world, BlockPos pos) {
-        if (world.isAnyPlayerWithinRangeAt(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, PLAYER_SEPARATION)) {
+        if (world.isPlayerWithin(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, PLAYER_SEPARATION)) {
             return false;
         }
         AxisAlignedBB riftBounds = new AxisAlignedBB(pos).grow(RIFT_SEPARATION);
-        if (!world.getEntitiesWithinAABB(EntityRift.class, riftBounds).isEmpty()) {
+        if (!world.getEntitiesWithinAABB(RiftEntity.class, riftBounds).isEmpty()) {
             return false;
         }
         AxisAlignedBB bounds = new AxisAlignedBB(pos).grow(1.0, 0.0, 1.0).expand(0.0, 1.0, 0.0);
         if (!world.getCollisionBoxes(null, bounds).isEmpty()) {
             return false;
         }
-        return Helper.isMidnightDimension(world) || (!world.containsAnyLiquid(bounds) && world.getLightFor(EnumSkyBlock.BLOCK, pos) < 4);
+        return Helper.isMidnightDimension(world) || (!world.containsAnyLiquid(bounds) && world.getLightFor(LightType.BLOCK, pos) < 4);
     }
 
     private static BlockPos generateRiftPosition(Random random, BlockPos region) {

@@ -1,13 +1,13 @@
 package com.mushroom.midnight.common.biome.config;
 
-import com.mushroom.midnight.common.registry.ModBlocks;
-import net.minecraft.block.state.IBlockState;
+import com.mushroom.midnight.common.registry.MidnightBlocks;
+import net.minecraft.block.state.BlockState;
 import net.minecraft.world.biome.Biome;
 
 public class SurfaceConfig {
-    private IBlockState topState = ModBlocks.MIDNIGHT_GRASS.getDefaultState();
-    private IBlockState fillerState = ModBlocks.MIDNIGHT_DIRT.getDefaultState();
-    private IBlockState wetState = ModBlocks.DECEITFUL_MUD.getDefaultState();
+    private BlockState topState = MidnightBlocks.MIDNIGHT_GRASS.getDefaultState();
+    private BlockState fillerState = MidnightBlocks.MIDNIGHT_DIRT.getDefaultState();
+    private BlockState wetState = MidnightBlocks.DECEITFUL_MUD.getDefaultState();
 
     public SurfaceConfig() {
     }
@@ -18,30 +18,30 @@ public class SurfaceConfig {
         this.wetState = config.wetState;
     }
 
-    public SurfaceConfig withTopState(IBlockState state) {
+    public SurfaceConfig withTopState(BlockState state) {
         this.topState = state;
         return this;
     }
 
-    public SurfaceConfig withFillerState(IBlockState state) {
+    public SurfaceConfig withFillerState(BlockState state) {
         this.fillerState = state;
         return this;
     }
 
-    public SurfaceConfig withWetState(IBlockState state) {
+    public SurfaceConfig withWetState(BlockState state) {
         this.wetState = state;
         return this;
     }
 
-    public IBlockState getTopState() {
+    public BlockState getTopState() {
         return this.topState;
     }
 
-    public IBlockState getFillerState() {
+    public BlockState getFillerState() {
         return this.fillerState;
     }
 
-    public IBlockState getWetState() {
+    public BlockState getWetState() {
         return this.wetState;
     }
 

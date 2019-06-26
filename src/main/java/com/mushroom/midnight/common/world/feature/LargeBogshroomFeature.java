@@ -1,11 +1,11 @@
 package com.mushroom.midnight.common.world.feature;
 
 import com.mushroom.midnight.Midnight;
-import com.mushroom.midnight.common.registry.ModBlocks;
+import com.mushroom.midnight.common.registry.MidnightBlocks;
 import com.mushroom.midnight.common.world.template.ShelfAttachProcessor;
 import com.mushroom.midnight.common.world.template.TemplateCompiler;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.state.BlockState;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -15,12 +15,12 @@ public class LargeBogshroomFeature extends TemplateTreeFeature {
             new ResourceLocation(Midnight.MODID, "mushroom/bogshroom")
     };
 
-    public LargeBogshroomFeature(IBlockState log, IBlockState leaves) {
+    public LargeBogshroomFeature(BlockState log, BlockState leaves) {
         super(TEMPLATES, log, leaves);
     }
 
     public LargeBogshroomFeature() {
-        this(ModBlocks.BOGSHROOM_STEM.getDefaultState(), ModBlocks.BOGSHROOM_HAT.getDefaultState());
+        this(MidnightBlocks.BOGSHROOM_STEM.getDefaultState(), MidnightBlocks.BOGSHROOM_HAT.getDefaultState());
     }
 
     @Override
@@ -32,7 +32,7 @@ public class LargeBogshroomFeature extends TemplateTreeFeature {
     @Override
     protected void processData(World world, BlockPos pos, String key) {
         if (key.equals("inside")) {
-            world.setBlockState(pos, ModBlocks.MUSHROOM_INSIDE.getDefaultState(), 2 | 16);
+            world.setBlockState(pos, MidnightBlocks.MUSHROOM_INDist.getDefaultState(), 2 | 16);
         }
         super.processData(world, pos, key);
     }
@@ -42,8 +42,8 @@ public class LargeBogshroomFeature extends TemplateTreeFeature {
             return false;
         }
 
-        IBlockState state = world.getBlockState(pos);
-        if (state.getBlock() == ModBlocks.MUSHROOM_INSIDE) {
+        BlockState state = world.getBlockState(pos);
+        if (state.getBlock() == MidnightBlocks.MUSHROOM_INSIDE) {
             return false;
         }
 

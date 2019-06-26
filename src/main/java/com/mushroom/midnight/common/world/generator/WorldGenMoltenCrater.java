@@ -1,13 +1,13 @@
 package com.mushroom.midnight.common.world.generator;
 
 import com.mushroom.midnight.common.biome.surface.SurfaceBiome;
-import com.mushroom.midnight.common.registry.ModBlocks;
+import com.mushroom.midnight.common.registry.MidnightBlocks;
 import com.mushroom.midnight.common.world.MidnightChunkGenerator;
 import com.mushroom.midnight.common.world.PartialChunkGenerator;
 import com.mushroom.midnight.common.world.noise.INoiseSampler;
 import com.mushroom.midnight.common.world.noise.PerlinNoiseSampler;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.init.Blocks;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
@@ -33,9 +33,9 @@ public class WorldGenMoltenCrater extends MapGenBase {
     private static final int EDGE_DEPTH = 12;
     private static final int POOL_DEPTH = 3;
 
-    private static final IBlockState AIR_STATE = Blocks.AIR.getDefaultState();
-    private static final IBlockState MIASMA_STATE = ModBlocks.MIASMA.getDefaultState();
-    private static final IBlockState SURFACE_STATE = ModBlocks.TRENCHSTONE.getDefaultState();
+    private static final BlockState AIR_STATE = Blocks.AIR.getDefaultState();
+    private static final BlockState MIASMA_STATE = MidnightBlocks.MIASMA.getDefaultState();
+    private static final BlockState SURFACE_STATE = MidnightBlocks.TRENCHSTONE.getDefaultState();
 
     private final PartialChunkGenerator generator;
 
@@ -140,7 +140,7 @@ public class WorldGenMoltenCrater extends MapGenBase {
     }
 
     private void hardenEdgeBlock(ChunkPrimer primer, int localX, int localY, int localZ) {
-        IBlockState currentState = primer.getBlockState(localX, localY, localZ);
+        BlockState currentState = primer.getBlockState(localX, localY, localZ);
         if (currentState.isFullCube()) {
             primer.setBlockState(localX, localY, localZ, SURFACE_STATE);
         }
@@ -160,7 +160,7 @@ public class WorldGenMoltenCrater extends MapGenBase {
                     int localZ = z & 15;
                     int localY = findSurfaceFixed(primer, localX, localZ);
                     if (primer.getBlockState(localX, localY, localZ) == SURFACE_STATE) {
-                        IBlockState state = this.selectSurfaceState();
+                        BlockState state = this.selectSurfaceState();
                         if (state != null) {
                             primer.setBlockState(localX, localY, localZ, state);
                         }
@@ -171,12 +171,12 @@ public class WorldGenMoltenCrater extends MapGenBase {
     }
 
     @Nullable
-    private IBlockState selectSurfaceState() {
+    private BlockState selectSurfaceState() {
         float chance = this.rand.nextFloat();
         if (chance > 0.95F) {
             return MIASMA_STATE;
         } else if (chance > 0.7F) {
-            return ModBlocks.MIASMA_SURFACE.getDefaultState();
+            return MidnightBlocks.MIASMA_SURFACE.getDefaultState();
         }
         return null;
     }
@@ -194,7 +194,7 @@ public class WorldGenMoltenCrater extends MapGenBase {
         }
 
         for (int y = 255; y >= 0; y--) {
-            IBlockState state = primer.getBlockState(x, y, z);
+            BlockState state = primer.getBlockState(x, y, z);
             if (state != AIR_STATE) {
                 return y;
             }

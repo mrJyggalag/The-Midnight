@@ -4,11 +4,11 @@ import net.minecraft.client.particle.IParticleFactory;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.fml.relauncher.OnlyIn;
 
 import static com.mushroom.midnight.client.particle.MidnightParticleSprites.*;
 
-@SideOnly(Side.CLIENT)
+@OnlyIn(Dist.CLIENT)
 public class UnstableBushParticle extends Particle {
 
     protected UnstableBushParticle(World world, double posX, double posY, double posZ, double motionX, double motionY, double motionZ, int fruitId) {
@@ -24,9 +24,9 @@ public class UnstableBushParticle extends Particle {
     }
 
     @Override
-    public void onUpdate() {
+    public void tick() {
         this.particleAlpha = particleAge / (float)particleMaxAge;
-        super.onUpdate();
+        super.tick();
     }
 
     @Override
@@ -41,7 +41,7 @@ public class UnstableBushParticle extends Particle {
         return 1;
     }
 
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     public static class Factory implements IParticleFactory {
         @Override
         public Particle createParticle(int particleID, World world, double posX, double posY, double posZ, double velocityX, double velocityY, double velocityZ, int... params) {

@@ -1,10 +1,10 @@
 package com.mushroom.midnight.common.biome;
 
-import com.mushroom.midnight.common.block.BlockBladeshroom;
-import com.mushroom.midnight.common.block.BlockPileOfEggs;
-import com.mushroom.midnight.common.block.BlockUnstableBushBloomed;
+import com.mushroom.midnight.common.block.BladeshroomBlock;
+import com.mushroom.midnight.common.block.PileOfEggsBlock;
+import com.mushroom.midnight.common.block.UnstableBushBloomedBlock;
 import com.mushroom.midnight.common.block.GeneratablePlant;
-import com.mushroom.midnight.common.registry.ModBlocks;
+import com.mushroom.midnight.common.registry.MidnightBlocks;
 import com.mushroom.midnight.common.world.feature.BoulderFeature;
 import com.mushroom.midnight.common.world.feature.CrystalClusterFeature;
 import com.mushroom.midnight.common.world.feature.DarkWillowTreeFeature;
@@ -26,7 +26,7 @@ import com.mushroom.midnight.common.world.feature.ShadowrootTreeFeature;
 import com.mushroom.midnight.common.world.feature.SpikeFeature;
 import com.mushroom.midnight.common.world.template.ShelfAttachProcessor;
 import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.state.BlockState;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
@@ -42,72 +42,72 @@ public class MidnightBiomeFeatures {
     public static final IMidnightFeature DEAD_LOG_FEATURE = new DeadLogFeature();
 
     public static final IMidnightFeature TALL_GRASS_FEATURE = new PlantFeature(
-            ModBlocks.TALL_MIDNIGHT_GRASS.getDefaultState(),
+            MidnightBlocks.TALL_MIDNIGHT_GRASS.getDefaultState(),
             GeneratablePlant::canGenerate
     );
 
     public static final IMidnightFeature DOUBLE_GRASS_FEATURE = new DoublePlantFeature(
-            ModBlocks.DOUBLE_MIDNIGHT_GRASS.getDefaultState(),
+            MidnightBlocks.DOUBLE_MIDNIGHT_GRASS.getDefaultState(),
             GeneratablePlant::canGenerate
     );
 
     public static final IMidnightFeature LUMEN_FEATURE = new PlantFeature(
-            ModBlocks.LUMEN_BUD.getDefaultState(),
+            MidnightBlocks.LUMEN_BUD.getDefaultState(),
             GeneratablePlant::canGenerate
     );
 
     public static final IMidnightFeature BLADESHROOM_FEATURE = new PlantFeature(
-            ModBlocks.BLADESHROOM.getDefaultState().withProperty(BlockBladeshroom.STAGE, BlockBladeshroom.Stage.CAPPED),
+            MidnightBlocks.BLADESHROOM.getDefaultState().withProperty(BladeshroomBlock.STAGE, BladeshroomBlock.Stage.CAPPED),
             GeneratablePlant::canGenerate
     );
 
     public static final IMidnightFeature SUAVIS_FEATURE = new GourdFeature(
-            ModBlocks.SUAVIS.getDefaultState(),
-            ModBlocks.MIDNIGHT_GRASS,
+            MidnightBlocks.SUAVIS.getDefaultState(),
+            MidnightBlocks.MIDNIGHT_GRASS,
             2
     );
 
     public static final IMidnightFeature COMMON_SUAVIS_FEATURE = new GourdFeature(
-            ModBlocks.SUAVIS.getDefaultState(),
-            ModBlocks.MIDNIGHT_GRASS,
+            MidnightBlocks.SUAVIS.getDefaultState(),
+            MidnightBlocks.MIDNIGHT_GRASS,
             1
     );
 
     public static final IMidnightFeature DECEITFUL_ALGAE_FEATURE = new PlantFeature(
-            ModBlocks.DECEITFUL_ALGAE.getDefaultState(),
-            (world, pos, state) -> ModBlocks.DECEITFUL_ALGAE.canPlaceBlockAt(world, pos)
+            MidnightBlocks.DECEITFUL_ALGAE.getDefaultState(),
+            (world, pos, state) -> MidnightBlocks.DECEITFUL_ALGAE.canPlaceBlockAt(world, pos)
     );
 
-    public static final IMidnightFeature DECEITFUL_MOSS_FEATURE = new MossFeature(ModBlocks.DECEITFUL_MOSS.getDefaultState());
+    public static final IMidnightFeature DECEITFUL_MOSS_FEATURE = new MossFeature(MidnightBlocks.DECEITFUL_MOSS.getDefaultState());
 
     public static final IMidnightFeature BOGWEED_FEATURE = new PlantFeature(
-            ModBlocks.BOGWEED.getDefaultState(),
+            MidnightBlocks.BOGWEED.getDefaultState(),
             GeneratablePlant::canGenerate
     );
 
     public static final IMidnightFeature GHOST_PLANT_FEATURE = new PlantFeature(
-            ModBlocks.GHOST_PLANT.getDefaultState(),
+            MidnightBlocks.GHOST_PLANT.getDefaultState(),
             GeneratablePlant::canGenerate
     );
 
     public static final IMidnightFeature FINGERED_GRASS_FEATURE = new PlantFeature(
-            ModBlocks.FINGERED_GRASS.getDefaultState(),
+            MidnightBlocks.FINGERED_GRASS.getDefaultState(),
             GeneratablePlant::canGenerate
     );
 
     public static final IMidnightFeature VIOLEAF_FEATURE = new PlantFeature(
-            ModBlocks.VIOLEAF.getDefaultState(),
+            MidnightBlocks.VIOLEAF.getDefaultState(),
             GeneratablePlant::canGenerate
     );
 
     public static final IMidnightFeature UNSTABLE_BUSH_FEATURE = new PlantFeature(
-            ModBlocks.UNSTABLE_BUSH.getDefaultState(),
+            MidnightBlocks.UNSTABLE_BUSH.getDefaultState(),
             GeneratablePlant::canGenerate
     ) {
         @Override
         public boolean placeFeature(World world, Random rand, BlockPos origin) {
-            Block block = rand.nextInt(3) != 0 ? ModBlocks.UNSTABLE_BUSH_BLUE_BLOOMED : (rand.nextInt(3) != 0 ? ModBlocks.UNSTABLE_BUSH_LIME_BLOOMED : ModBlocks.UNSTABLE_BUSH_GREEN_BLOOMED);
-            IBlockState state = block.getDefaultState().withProperty(BlockUnstableBushBloomed.HAS_FRUIT, true);
+            Block block = rand.nextInt(3) != 0 ? MidnightBlocks.UNSTABLE_BUSH_BLUE_BLOOMED : (rand.nextInt(3) != 0 ? MidnightBlocks.UNSTABLE_BUSH_LIME_BLOOMED : MidnightBlocks.UNSTABLE_BUSH_GREEN_BLOOMED);
+            BlockState state = block.getDefaultState().withProperty(UnstableBushBloomedBlock.HAS_FRUIT, true);
             if (this.predicate.canSpawn(world, origin, state)) {
                 setBlockAndNotifyAdequately(world, origin, state);
                 return true;
@@ -117,12 +117,12 @@ public class MidnightBiomeFeatures {
     };
 
     public static final IMidnightFeature RUNEBUSH_FEATURE = new PlantFeature(
-            ModBlocks.RUNEBUSH.getDefaultState(),
+            MidnightBlocks.RUNEBUSH.getDefaultState(),
             GeneratablePlant::canGenerate
     );
 
     public static final IMidnightFeature DOUBLE_LUMEN_FEATURE = new DoublePlantFeature(
-            ModBlocks.DOUBLE_LUMEN_BUD.getDefaultState(),
+            MidnightBlocks.DOUBLE_LUMEN_BUD.getDefaultState(),
             GeneratablePlant::canGenerate
     );
 
@@ -133,27 +133,27 @@ public class MidnightBiomeFeatures {
     public static final IMidnightFeature DOUBLE_BOG_FUNGI_FEATURE = new DoubleFungiFeature(DoubleFungiFeature.BOG_FUNGI_STATES);
 
     public static final IMidnightFeature DRAGON_NEST_FEATURE = new PlantFeature(
-            ModBlocks.DRAGON_NEST.getDefaultState(),
-            (world, pos, state) -> ModBlocks.DRAGON_NEST.canPlaceBlockAt(world, pos)
+            MidnightBlocks.DRAGON_NEST.getDefaultState(),
+            (world, pos, state) -> MidnightBlocks.DRAGON_NEST.canPlaceBlockAt(world, pos)
     );
 
     public static final IMidnightFeature CRYSTAL_FLOWER_FEATURE = new PlantFeature(
-            ModBlocks.CRYSTAL_FLOWER.getDefaultState(),
+            MidnightBlocks.CRYSTAL_FLOWER.getDefaultState(),
             GeneratablePlant::canGenerate
     );
 
     public static final IMidnightFeature[] LARGE_FUNGI_FEATURES = new LargeFungiFeature[] {
             new LargeFungiFeature(
-                    ModBlocks.DEWSHROOM_STEM.getDefaultState(),
-                    ModBlocks.DEWSHROOM_HAT.getDefaultState()
+                    MidnightBlocks.DEWSHROOM_STEM.getDefaultState(),
+                    MidnightBlocks.DEWSHROOM_HAT.getDefaultState()
             ),
             new LargeFungiFeature(
-                    ModBlocks.NIGHTSHROOM_STEM.getDefaultState(),
-                    ModBlocks.NIGHTSHROOM_HAT.getDefaultState()
+                    MidnightBlocks.NIGHTSHROOM_STEM.getDefaultState(),
+                    MidnightBlocks.NIGHTSHROOM_HAT.getDefaultState()
             ),
             new LargeFungiFeature(
-                    ModBlocks.VIRIDSHROOM_STEM.getDefaultState(),
-                    ModBlocks.VIRIDSHROOM_HAT.getDefaultState()
+                    MidnightBlocks.VIRIDSHROOM_STEM.getDefaultState(),
+                    MidnightBlocks.VIRIDSHROOM_HAT.getDefaultState()
             )
     };
 
@@ -162,52 +162,52 @@ public class MidnightBiomeFeatures {
     public static final IMidnightFeature LARGE_BULB_FUNGUS_FEATURE = new LargeBulbFungusFeature();
 
     public static final IMidnightFeature BULB_FUNGUS_FEATURE = new PlantFeature(
-            ModBlocks.BULB_FUNGUS.getDefaultState(),
+            MidnightBlocks.BULB_FUNGUS.getDefaultState(),
             GeneratablePlant::canGenerate
     );
 
     public static final IMidnightFeature BLOOMCRYSTAL_FEATURE = new CrystalClusterFeature(3, 4,
-            ModBlocks.BLOOMCRYSTAL_ROCK.getDefaultState(),
-            ModBlocks.BLOOMCRYSTAL.getDefaultState()
+            MidnightBlocks.BLOOMCRYSTAL_ROCK.getDefaultState(),
+            MidnightBlocks.BLOOMCRYSTAL.getDefaultState()
     );
 
     public static final IMidnightFeature BLOOMCRYSTAL_SPIRE_FEATURE = new CrystalClusterFeature(4, 13,
-            ModBlocks.BLOOMCRYSTAL_ROCK.getDefaultState(),
-            ModBlocks.BLOOMCRYSTAL.getDefaultState()
+            MidnightBlocks.BLOOMCRYSTAL_ROCK.getDefaultState(),
+            MidnightBlocks.BLOOMCRYSTAL.getDefaultState()
     );
 
     public static final IMidnightFeature ROUXE_FEATURE = new CrystalClusterFeature(3, 4,
-            ModBlocks.ROUXE_ROCK.getDefaultState(),
-            ModBlocks.ROUXE.getDefaultState()
+            MidnightBlocks.ROUXE_ROCK.getDefaultState(),
+            MidnightBlocks.ROUXE.getDefaultState()
     );
 
     public static final IMidnightFeature NIGHTSTONE_BOULDER_FEATURE = new BoulderFeature(2) {
         @Override
-        protected IBlockState getStateForPlacement(World world, BlockPos origin, BlockPos pos, double dist, float radiusSquare, Random random) {
-            return ModBlocks.NIGHTSTONE.getDefaultState();
+        protected BlockState getStateForPlacement(World world, BlockPos origin, BlockPos pos, double dist, float radiusSquare, Random random) {
+            return MidnightBlocks.NIGHTSTONE.getDefaultState();
         }
     };
-    public static final IMidnightFeature NIGHTSTONE_SPIKE_FEATURE = new SpikeFeature(ModBlocks.NIGHTSTONE.getDefaultState());
+    public static final IMidnightFeature NIGHTSTONE_SPIKE_FEATURE = new SpikeFeature(MidnightBlocks.NIGHTSTONE.getDefaultState());
 
     public static final IMidnightFeature TRENCHSTONE_BOULDER_FEATURE = new BoulderFeature(2) {
         private final float radiusSquareIn = radius <= 1f ? 0f : (radius - 1f) * (radius - 1f);
 
         @Override
-        protected IBlockState getStateForPlacement(World world, BlockPos origin, BlockPos pos, double dist, float radiusSquare, Random random) {
-            return dist <= radiusSquareIn && random.nextFloat() < 0.1f ? ModBlocks.ARCHAIC_ORE.getDefaultState() : ModBlocks.TRENCHSTONE.getDefaultState();
+        protected BlockState getStateForPlacement(World world, BlockPos origin, BlockPos pos, double dist, float radiusSquare, Random random) {
+            return dist <= radiusSquareIn && random.nextFloat() < 0.1f ? MidnightBlocks.ARCHAIC_ORE.getDefaultState() : MidnightBlocks.TRENCHSTONE.getDefaultState();
         }
     };
 
-    public static final IMidnightFeature ROCKSHROOM_HEAP_FEATURE = new HeapFeature(ModBlocks.ROCKSHROOM.getDefaultState());
+    public static final IMidnightFeature ROCKSHROOM_HEAP_FEATURE = new HeapFeature(MidnightBlocks.ROCKSHROOM.getDefaultState());
 
     public static final IMidnightFeature[] UNDERGROUND_FEATURES = new IMidnightFeature[] {
-            new PlantFeature(ModBlocks.TENDRILWEED.getDefaultState(), GeneratablePlant::canGenerate),
+            new PlantFeature(MidnightBlocks.TENDRILWEED.getDefaultState(), GeneratablePlant::canGenerate),
             FUNGI_FEATURE,
             new MidnightAbstractFeature() {
                 @Override
                 public boolean placeFeature(World world, Random random, BlockPos origin) {
                     if (world.getBlockState(origin.down()).isFullBlock()) {
-                        world.setBlockState(origin, ModBlocks.STINGER_EGG.getDefaultState().withProperty(BlockPileOfEggs.EGGS, random.nextInt(4) + 1), 2 | 16);
+                        world.setBlockState(origin, MidnightBlocks.STINGER_EGG.getDefaultState().withProperty(PileOfEggsBlock.EGGS, random.nextInt(4) + 1), 2 | 16);
                         return true;
                     }
                     return false;

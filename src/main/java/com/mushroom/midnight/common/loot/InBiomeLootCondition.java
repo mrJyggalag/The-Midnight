@@ -4,17 +4,17 @@ import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSyntaxException;
+import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.storage.loot.LootContext;
-import net.minecraft.world.storage.loot.conditions.LootCondition;
-import net.minecraftforge.fml.common.registry.ForgeRegistries;
-
-import java.util.Random;
+import net.minecraft.world.storage.loot.LootParameters;
+import net.minecraft.world.storage.loot.conditions.ILootCondition;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import static com.mushroom.midnight.Midnight.MODID;
 
-public class InBiomeLootCondition implements LootCondition {
+public class InBiomeLootCondition implements ILootCondition {
     private final Biome requiredBiome;
 
     public InBiomeLootCondition(Biome requiredBiome) {
@@ -22,16 +22,17 @@ public class InBiomeLootCondition implements LootCondition {
     }
 
     @Override
-    public boolean testCondition(Random rand, LootContext context) {
-        if (context.getLootedEntity() == null) {
+    public boolean test(LootContext context) {
+        Entity entity = context.get(LootParameters.THIS_ENTITY);
+        if (entity == null) {
             return false;
         }
-        Biome biome = context.getWorld().getBiome(context.getLootedEntity().getPosition());
+        Biome biome = context.getWorld().getBiome(entity.getPosition());
         return biome == requiredBiome;
     }
 
-    public static class Serialiser extends LootCondition.Serializer<InBiomeLootCondition> {
-        public Serialiser() {
+    public static class Serializer extends ILootCondition.AbstractSerializer<InBiomeLootCondition> {
+        public Serializer() {
             super(new ResourceLocation(MODID, "in_biome"), InBiomeLootCondition.class);
         }
 

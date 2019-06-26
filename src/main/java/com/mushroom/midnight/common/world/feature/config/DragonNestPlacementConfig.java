@@ -1,9 +1,9 @@
 package com.mushroom.midnight.common.world.feature.config;
 
-import com.mushroom.midnight.common.registry.ModBlocks;
+import com.mushroom.midnight.common.registry.MidnightBlocks;
 import com.mushroom.midnight.common.world.SurfacePlacementLevel;
 import com.mushroom.midnight.common.world.generator.WorldGenMoltenCrater;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.state.BlockState;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
@@ -47,8 +47,8 @@ public class DragonNestPlacementConfig implements IPlacementConfig {
 
             mutablePos.setPos(pos.getX() + offsetX, pos.getY() + offsetY, pos.getZ() + offsetZ);
 
-            IBlockState existingState = world.getBlockState(mutablePos);
-            if (existingState.getBlock().isAir(existingState, world, mutablePos) && existingState.getBlock() != ModBlocks.MUSHROOM_INSIDE) {
+            BlockState existingState = world.getBlockState(mutablePos);
+            if (existingState.getBlock().isAir(existingState, world, mutablePos) && existingState.getBlock() != MidnightBlocks.MUSHROOM_INSIDE) {
                 generator.accept(mutablePos.toImmutable());
             }
         }

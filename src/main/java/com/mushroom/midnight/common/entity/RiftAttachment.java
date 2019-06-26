@@ -1,7 +1,7 @@
 package com.mushroom.midnight.common.entity;
 
 import io.netty.buffer.ByteBuf;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
@@ -38,20 +38,20 @@ public class RiftAttachment {
         return new RiftAttachment(surfacePos, this.yaw);
     }
 
-    public void apply(EntityRift rift) {
+    public void apply(RiftEntity rift) {
         rift.setPositionAndRotation(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, this.yaw, 0.0F);
     }
 
-    public NBTTagCompound serialize(NBTTagCompound compound) {
-        compound.setInteger("x", this.pos.getX());
-        compound.setInteger("y", this.pos.getY());
-        compound.setInteger("z", this.pos.getZ());
+    public CompoundNBT serialize(CompoundNBT compound) {
+        compound.putInt("x", this.pos.getX());
+        compound.putInt("y", this.pos.getY());
+        compound.putInt("z", this.pos.getZ());
         compound.setFloat("yaw", this.yaw);
         return compound;
     }
 
-    public static RiftAttachment deserialize(NBTTagCompound compound) {
-        BlockPos pos = new BlockPos(compound.getInteger("x"), compound.getInteger("y"), compound.getInteger("z"));
+    public static RiftAttachment deserialize(CompoundNBT compound) {
+        BlockPos pos = new BlockPos(compound.getInt("x"), compound.getInt("y"), compound.getInt("z"));
         float yaw = compound.getFloat("yaw");
         return new RiftAttachment(pos, yaw);
     }

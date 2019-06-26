@@ -1,7 +1,7 @@
 package com.mushroom.midnight.client.particle;
 
 import com.mushroom.midnight.client.particle.MidnightParticleSprites.SpriteTypes;
-import com.mushroom.midnight.common.block.BlockSporch.SporchType;
+import com.mushroom.midnight.common.block.SporchBlock.SporchType;
 import net.minecraft.client.particle.IParticleFactory;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.renderer.BufferBuilder;
@@ -10,12 +10,12 @@ import net.minecraft.entity.Entity;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.fml.relauncher.OnlyIn;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@SideOnly(Side.CLIENT)
+@OnlyIn(Dist.CLIENT)
 public class SporchParticle extends Particle {
     private final float flameScale;
     private final List<TextureAtlasSprite> sprites = new ArrayList<>();
@@ -105,7 +105,7 @@ public class SporchParticle extends Particle {
         return 1;
     }
 
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     public static class Factory implements IParticleFactory {
         @Override
         public Particle createParticle(int particleID, World world, double posX, double posY, double posZ, double motionX, double motionY, double motionZ, int... params) {

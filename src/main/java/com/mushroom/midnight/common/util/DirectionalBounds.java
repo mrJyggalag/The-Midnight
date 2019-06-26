@@ -1,6 +1,6 @@
 package com.mushroom.midnight.common.util;
 
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import net.minecraft.util.math.AxisAlignedBB;
 
 public class DirectionalBounds {
@@ -11,7 +11,7 @@ public class DirectionalBounds {
     private final double maxY;
     private final double maxZ;
 
-    private final AxisAlignedBB[] cache = new AxisAlignedBB[EnumFacing.VALUES.length];
+    private final AxisAlignedBB[] cache = new AxisAlignedBB[Direction.values().length];
 
     public DirectionalBounds(double minX, double minY, double minZ, double maxX, double maxY, double maxZ) {
         this.minX = minX;
@@ -22,7 +22,7 @@ public class DirectionalBounds {
         this.maxZ = maxZ;
     }
 
-    public AxisAlignedBB get(EnumFacing facing) {
+    public AxisAlignedBB get(Direction facing) {
         AxisAlignedBB cached = this.cache[facing.getIndex()];
         if (cached == null) {
             AxisAlignedBB computed = this.compute(facing);
@@ -32,7 +32,7 @@ public class DirectionalBounds {
         return cached;
     }
 
-    private AxisAlignedBB compute(EnumFacing facing) {
+    private AxisAlignedBB compute(Direction facing) {
         switch (facing) {
             case NORTH:
             default:

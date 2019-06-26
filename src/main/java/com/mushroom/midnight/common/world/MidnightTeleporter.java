@@ -2,26 +2,27 @@ package com.mushroom.midnight.common.world;
 
 import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.common.capability.RiftTravelCooldown;
-import com.mushroom.midnight.common.entity.EntityRift;
+import com.mushroom.midnight.common.entity.RiftEntity;
 import com.mushroom.midnight.common.entity.RiftBridge;
-import com.mushroom.midnight.common.registry.ModArmorMaterials;
+import com.mushroom.midnight.common.registry.MidnightArmorMaterials;
 import com.mushroom.midnight.common.util.EntityUtil;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import net.minecraft.world.gen.Heightmap;
 import net.minecraftforge.common.util.ITeleporter;
 
 public class MidnightTeleporter implements ITeleporter {
     public static final int COOLDOWN = 40;
 
-    private final EntityRift originRift;
+    private final RiftEntity originRift;
 
-    public MidnightTeleporter(EntityRift originRift) {
+    public MidnightTeleporter(RiftEntity originRift) {
         this.originRift = originRift;
     }
 
@@ -33,11 +34,11 @@ public class MidnightTeleporter implements ITeleporter {
             return;
         }
 
-        if (entity instanceof EntityPlayer && !EntityUtil.isCoveredBy((EntityLivingBase) entity, ModArmorMaterials.TENEBRUM)) {
+        if (entity instanceof PlayerEntity && !EntityUtil.isCoveredBy((LivingEntity) entity, MidnightArmorMaterials.TENEBRUM)) {
             bridge.close();
         }
 
-        EntityRift endpointRift = bridge.computeEndpoint(world.provider.getDimensionType());
+        RiftEntity endpointRift = bridge.computeEndpoint(world.provider.getDimensionType());
         if (endpointRift == null) {
             Midnight.LOGGER.warn("Unable to teleport entity through rift! Endpoint not present from portal {}", this.originRift);
             return;
@@ -56,13 +57,13 @@ public class MidnightTeleporter implements ITeleporter {
         }
     }
 
-    private Vec3d findPlacementPos(World world, Entity entity, EntityRift endpointRift) {
+    private Vec3d findPlacementPos(World world, Entity entity, RiftEntity endpointRift) {
         float angle = (float) Math.toRadians(entity.rotationYaw);
-        float displacementX = -MathHelper.sin(angle) * endpointRift.width / 2.0F;
-        float displacementZ = MathHelper.cos(angle) * endpointRift.width / 2.0F;
+        float displacementX = -MathHelper.sin(angle) * endpointRift.getWidth() / 2.0F;
+        float displacementZ = MathHelper.cos(angle) * endpointRift.getWidth() / 2.0F;
 
         Vec3d placementPos = new Vec3d(endpointRift.posX + displacementX, endpointRift.posY + 0.5, endpointRift.posZ + displacementZ);
-        if (!world.collidesWithAnyBlock(this.getEntityBoundAt(entity, placementPos))) {
+        if (!world.checkBlockCollision(this.getEntityBoundAt(entity, placementPos))) {
             return placementPos;
         }
 
@@ -72,23 +73,23 @@ public class MidnightTeleporter implements ITeleporter {
         for (BlockPos pos : BlockPos.getAllInBoxMutable(minPos, maxPos)) {
             Vec3d originPos = new Vec3d(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5);
             AxisAlignedBB entityBound = this.getEntityBoundAt(entity, originPos);
-            if (entityBound.intersects(endpointRift.getEntityBoundingBox())) {
+            if (entityBound.intersects(endpointRift.getBoundingBox())) {
                 continue;
             }
-            if (!world.collidesWithAnyBlock(entityBound)) {
+            if (!world.checkBlockCollision(entityBound)) {
                 return originPos;
             }
         }
 
-        BlockPos surface = world.getTopSolidOrLiquidBlock(placementBlockPos);
+        BlockPos surface = world.getHeight(Heightmap.Type.MOTION_BLOCKING, placementBlockPos);
         return new Vec3d(placementPos.x, surface.getY(), placementPos.z);
     }
 
     private AxisAlignedBB getEntityBoundAt(Entity entity, Vec3d pos) {
-        float halfWidth = entity.width / 2.0F;
+        float halfWidth = entity.getWidth() / 2.0F;
         return new AxisAlignedBB(
                 pos.x - halfWidth, pos.y, pos.z - halfWidth,
-                pos.x + halfWidth, pos.y + entity.height, pos.z + halfWidth
+                pos.x + halfWidth, pos.y + entity.getHeight(), pos.z + halfWidth
         );
     }
 }

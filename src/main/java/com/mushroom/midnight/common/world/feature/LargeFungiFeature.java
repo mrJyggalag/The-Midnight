@@ -1,16 +1,16 @@
 package com.mushroom.midnight.common.world.feature;
 
 import com.mushroom.midnight.Midnight;
-import com.mushroom.midnight.common.block.BlockMidnightFungiHat;
-import com.mushroom.midnight.common.block.BlockMidnightFungiShelf;
-import com.mushroom.midnight.common.block.BlockMidnightFungiStem;
-import com.mushroom.midnight.common.registry.ModBlocks;
+import com.mushroom.midnight.common.block.MidnightFungiHatBlock;
+import com.mushroom.midnight.common.block.MidnightFungiShelfBlock;
+import com.mushroom.midnight.common.block.MidnightFungiStemBlock;
+import com.mushroom.midnight.common.registry.MidnightBlocks;
 import com.mushroom.midnight.common.util.WorldUtil;
 import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.state.BlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import net.minecraft.util.Mirror;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Rotation;
@@ -28,13 +28,13 @@ import java.util.Map;
 import java.util.Random;
 
 public class LargeFungiFeature extends MidnightNaturalFeature {
-    private static final Block[] SHELF_BLOCKS = new Block[] { ModBlocks.NIGHTSHROOM_SHELF, ModBlocks.DEWSHROOM_SHELF, ModBlocks.VIRIDSHROOM_SHELF };
+    private static final Block[] SHELF_BLOCKS = new Block[] { MidnightBlocks.NIGHTSHROOM_SHELF, MidnightBlocks.DEWSHROOM_SHELF, MidnightBlocks.VIRIDSHROOM_SHELF };
     private static final int SHELF_ATTACH_CHANCE = 6;
 
-    private final IBlockState stem;
-    private final IBlockState hat;
+    private final BlockState stem;
+    private final BlockState hat;
 
-    public LargeFungiFeature(IBlockState stem, IBlockState hat) {
+    public LargeFungiFeature(BlockState stem, BlockState hat) {
         this.stem = stem;
         this.hat = hat;
     }
@@ -100,18 +100,18 @@ public class LargeFungiFeature extends MidnightNaturalFeature {
 
     private boolean canGrow(World world, BlockPos groundPos) {
         // TODO: Delegate to plant
-        IBlockState groundState = world.getBlockState(groundPos);
+        BlockState groundState = world.getBlockState(groundPos);
         Block groundBlock = groundState.getBlock();
-        return groundBlock == ModBlocks.MIDNIGHT_GRASS || groundBlock == ModBlocks.MIDNIGHT_DIRT || groundBlock == ModBlocks.MIDNIGHT_MYCELIUM
-                || groundBlock == ModBlocks.NIGHTSTONE
+        return groundBlock == MidnightBlocks.MIDNIGHT_GRASS || groundBlock == MidnightBlocks.MIDNIGHT_DIRT || groundBlock == MidnightBlocks.MIDNIGHT_MYCELIUM
+                || groundBlock == MidnightBlocks.NIGHTSTONE
                 || groundBlock == Blocks.MYCELIUM;
     }
 
     private Template.BlockInfo processState(World world, BlockPos pos, Template.BlockInfo info) {
-        IBlockState state = info.blockState;
-        if (state.getBlock() instanceof BlockMidnightFungiStem) {
+        BlockState state = info.blockState;
+        if (state.getBlock() instanceof MidnightFungiStemBlock) {
             return new Template.BlockInfo(pos, this.stem, null);
-        } else if (state.getBlock() instanceof BlockMidnightFungiHat) {
+        } else if (state.getBlock() instanceof MidnightFungiHatBlock) {
             return new Template.BlockInfo(pos, this.hat, null);
         } else if (state.getBlock() == Blocks.STRUCTURE_BLOCK || state.getBlock() == Blocks.AIR) {
             return null;
@@ -121,8 +121,8 @@ public class LargeFungiFeature extends MidnightNaturalFeature {
 
     private void attachShelfBlocks(World world, Random random, BlockPos hatOrigin, Template hatTemplate, PlacementSettings placementSettings) {
         for (Template.BlockInfo block : hatTemplate.blocks) {
-            IBlockState state = block.blockState;
-            if (state.getBlock() instanceof BlockMidnightFungiHat) {
+            BlockState state = block.blockState;
+            if (state.getBlock() instanceof MidnightFungiHatBlock) {
                 if (random.nextInt(SHELF_ATTACH_CHANCE) == 0) {
                     BlockPos transformedPos = Template.transformedBlockPos(placementSettings, block.pos).add(hatOrigin);
                     this.attachShelf(world, random, transformedPos);
@@ -132,18 +132,18 @@ public class LargeFungiFeature extends MidnightNaturalFeature {
     }
 
     private void attachShelf(World world, Random random, BlockPos pos) {
-        IBlockState state = world.getBlockState(pos);
-        List<EnumFacing> attachSides = BlockMidnightFungiHat.getOuterSides(state.getActualState(world, pos));
-        attachSides.remove(EnumFacing.DOWN);
+        BlockState state = world.getBlockState(pos);
+        List<Direction> attachSides = MidnightFungiHatBlock.getOuterSides(state.getActualState(world, pos));
+        attachSides.remove(Direction.DOWN);
 
         if (!attachSides.isEmpty()) {
             Block shelfBlock = SHELF_BLOCKS[random.nextInt(SHELF_BLOCKS.length)];
-            EnumFacing attachSide = attachSides.get(random.nextInt(attachSides.size()));
+            Direction attachSide = attachSides.get(random.nextInt(attachSides.size()));
 
             BlockPos offsetPos = pos.offset(attachSide);
             if (this.canReplace(world, offsetPos)) {
                 world.setBlockState(offsetPos, shelfBlock.getDefaultState()
-                        .withProperty(BlockMidnightFungiShelf.FACING, attachSide)
+                        .withProperty(MidnightFungiShelfBlock.FACING, attachSide)
                 );
             }
         }
@@ -154,7 +154,7 @@ public class LargeFungiFeature extends MidnightNaturalFeature {
             BlockPos pos = entry.getKey();
             String tag = entry.getValue();
             if (tag.equals("inside")) {
-                world.setBlockState(pos, ModBlocks.MUSHROOM_INSIDE.getDefaultState(), 2 | 16);
+                world.setBlockState(pos, MidnightBlocks.MUSHROOM_INDist.getDefaultState(), 2 | 16);
             } else if (tag.equals("origin")) {
                 world.setBlockState(pos, this.stem, 2 | 16);
             }

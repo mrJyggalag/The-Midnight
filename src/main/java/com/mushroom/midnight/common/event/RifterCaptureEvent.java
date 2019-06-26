@@ -1,25 +1,25 @@
 package com.mushroom.midnight.common.event;
 
-import com.mushroom.midnight.common.entity.creature.EntityRifter;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraftforge.fml.common.eventhandler.Cancelable;
-import net.minecraftforge.fml.common.eventhandler.Event;
+import com.mushroom.midnight.common.entity.creature.RifterEntity;
+import net.minecraft.entity.LivingEntity;
+import net.minecraftforge.eventbus.api.Cancelable;
+import net.minecraftforge.eventbus.api.Event;
 
 @Cancelable
 public class RifterCaptureEvent extends Event {
-    private final EntityRifter rifter;
-    private final EntityLivingBase captured;
+    private final RifterEntity rifter;
+    private final LivingEntity captured;
 
-    public RifterCaptureEvent(EntityRifter rifter, EntityLivingBase captured) {
+    public RifterCaptureEvent(RifterEntity rifter, LivingEntity captured) {
         this.rifter = rifter;
         this.captured = captured;
     }
 
-    public EntityRifter getRifter() {
+    public RifterEntity getRifter() {
         return this.rifter;
     }
 
-    public EntityLivingBase getCaptured() {
+    public LivingEntity getCaptured() {
         return this.captured;
     }
 }

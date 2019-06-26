@@ -1,9 +1,9 @@
 package com.mushroom.midnight.common.capability;
 
 import com.mushroom.midnight.Midnight;
-import com.mushroom.midnight.common.entity.EntityRift;
+import com.mushroom.midnight.common.entity.RiftEntity;
 import net.minecraft.entity.Entity;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
@@ -16,8 +16,8 @@ public class RiftTravelCooldown implements ICapabilityProvider {
 
     public void update(Entity entity) {
         if (this.cooldown > 0) {
-            AxisAlignedBB bounds = entity.getEntityBoundingBox();
-            if (entity.world.getEntitiesWithinAABB(EntityRift.class, bounds).isEmpty()) {
+            AxisAlignedBB bounds = entity.getBoundingBox();
+            if (entity.world.getEntitiesWithinAABB(RiftEntity.class, bounds).isEmpty()) {
                 this.cooldown--;
             }
         }
@@ -32,13 +32,13 @@ public class RiftTravelCooldown implements ICapabilityProvider {
     }
 
     @Override
-    public boolean hasCapability(@Nonnull Capability<?> capability, @Nullable EnumFacing facing) {
+    public boolean hasCapability(@Nonnull Capability<?> capability, @Nullable Direction facing) {
         return capability == Midnight.RIFT_TRAVEL_COOLDOWN_CAP;
     }
 
     @Nullable
     @Override
-    public <T> T getCapability(@Nonnull Capability<T> capability, @Nullable EnumFacing facing) {
+    public <T> T getCapability(@Nonnull Capability<T> capability, @Nullable Direction facing) {
         if (capability == Midnight.RIFT_TRAVEL_COOLDOWN_CAP) {
             return Midnight.RIFT_TRAVEL_COOLDOWN_CAP.cast(this);
         }

@@ -1,7 +1,7 @@
 package com.mushroom.midnight.common.biome.config;
 
 import com.mushroom.midnight.common.biome.cavern.CavernousBiome;
-import com.mushroom.midnight.common.registry.ModCavernousBiomes;
+import com.mushroom.midnight.common.registry.MidnightCavernousBiomes;
 import com.mushroom.midnight.common.util.SessionLocal;
 import it.unimi.dsi.fastutil.ints.IntOpenHashSet;
 import it.unimi.dsi.fastutil.ints.IntSet;
@@ -29,7 +29,7 @@ public interface BiomeSpawnEntry {
         }
 
         public Basic(CavernousBiome biome, int weight) {
-            this.biomeId = SessionLocal.register(() -> ModCavernousBiomes.getId(biome));
+            this.biomeId = SessionLocal.register(() -> MidnightCavernousBiomes.getId(biome));
             this.weight = weight;
         }
 
@@ -56,7 +56,7 @@ public interface BiomeSpawnEntry {
             SessionLocal<IntSet> biomeIds = SessionLocal.register(() -> {
                 IntSet ids = new IntOpenHashSet();
                 for (CavernousBiome biome : biomes) {
-                    ids.add(ModCavernousBiomes.getId(biome));
+                    ids.add(MidnightCavernousBiomes.getId(biome));
                 }
                 return ids;
             });

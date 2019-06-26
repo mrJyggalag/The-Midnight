@@ -1,30 +1,33 @@
 package com.mushroom.midnight.common.capability;
 
 import com.mushroom.midnight.Midnight;
-import com.mushroom.midnight.common.network.MessageAnimation;
+import com.mushroom.midnight.common.network.AnimationMessage;
 import net.minecraft.entity.Entity;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
+import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.fml.network.PacketDistributor;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 public class AnimationCapability implements ICapabilityProvider {
-    private AnimationType animationType = AnimationType.NONE;
+    private Type animationType = Type.NONE;
     private int maxTicks, prevTick, currentTick;
-    public enum AnimationType { NONE, ATTACK, EAT, CURTSEY, CHARGE }
+    public enum Type { NONE, ATTACK, EAT, CURTSEY, CHARGE }
 
-    public void setAnimation(Entity animable, AnimationType animationType, int duration) {
+    public void setAnimation(Entity animatable, Type animationType, int duration) {
         this.animationType = animationType;
         this.maxTicks = duration;
         this.currentTick = 0;
-        if (!animable.world.isRemote) {
-            Midnight.NETWORK.sendToAllTracking(new MessageAnimation(animable, animationType, duration), animable);
+        if (!animatable.world.isRemote) {
+            AnimationMessage message = new AnimationMessage(animatable, animationType, duration);
+            Midnight.CHANNEL.send(PacketDistributor.TRACKING_ENTITY.with(() -> animatable), message);
         }
     }
 
-    public AnimationType getAnimationType() {
+    public Type getAnimationType() {
         return this.animationType;
     }
 
@@ -41,11 +44,11 @@ public class AnimationCapability implements ICapabilityProvider {
     }
 
     public void updateAnimation() {
-        if (this.animationType != AnimationType.NONE) {
+        if (this.animationType != Type.NONE) {
             this.prevTick = this.currentTick;
             if (this.currentTick >= this.maxTicks) {
                 this.currentTick = this.maxTicks = 0;
-                this.animationType = AnimationType.NONE;
+                this.animationType = Type.NONE;
             } else {
                 this.currentTick++;
             }
@@ -53,24 +56,16 @@ public class AnimationCapability implements ICapabilityProvider {
     }
 
     public void resetAnimation(Entity animable) {
-        setAnimation(animable, AnimationType.NONE, 0);
+        setAnimation(animable, Type.NONE, 0);
     }
 
     public boolean isAnimate() {
-        return this.animationType != AnimationType.NONE;
+        return this.animationType != Type.NONE;
     }
 
+    @Nonnull
     @Override
-    public boolean hasCapability(@Nonnull Capability<?> capability, @Nullable EnumFacing facing) {
-        return capability == Midnight.ANIMATION_CAP;
-    }
-
-    @Nullable
-    @Override
-    public <T> T getCapability(@Nonnull Capability<T> capability, @Nullable EnumFacing facing) {
-        if (capability == Midnight.ANIMATION_CAP) {
-            return Midnight.ANIMATION_CAP.cast(this);
-        }
-        return null;
+    public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap) {
+        return Midnight.ANIMATION_CAP.orEmpty(cap, LazyOptional.of(() -> this));
     }
 }
