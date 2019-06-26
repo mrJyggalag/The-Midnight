@@ -20,29 +20,23 @@ sourceCompatibility = targetCompatibility = '1.8'
 def core_plugin = "com.mushroom.midnight.core.MidnightLoadingPlugin"
 
 minecraft {
-    mappings channel: 'snapshot', version: '20190625-1.14.3'
+    mappings channel: 'snapshot', version: '20190626-1.14.3'
     accessTransformer = file('build/resources/main/META-INF/midnight_at.cfg')
-
     runs {
         client {
             workingDirectory project.file('run')
-
             property 'forge.logging.markers', 'REGISTRIES'
             property 'forge.logging.console.level', 'debug'
-
             mods {
                 midnight {
                     source sourceSets.main
                 }
             }
         }
-
         server {
             workingDirectory project.file('run')
-
             property 'forge.logging.markers', 'REGISTRIES'
             property 'forge.logging.console.level', 'debug'
-
             mods {
                 midnight {
                     source sourceSets.main
@@ -54,17 +48,12 @@ minecraft {
 
 repositories {
     maven { url = "http://dvs1.progwml6.com/files/maven" }
-    maven { url = "http://maven.gegy1000.net" }
-    maven { url = "https://maven.blamejared.com/" }
 }
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.14.3-27.0.2'
-
-//    deobfCompile "mezz.jei:jei_1.12.2:4.15.0.268:api"
-//    runtime "mezz.jei:jei_1.12.2:4.15.0.268"
-//    deobfCompile "com.azanor:thaumcraft-api:6.1-beta23"
-//    deobfCompile "blusunrize:ImmersiveEngineering:0.12-89-518"
+    minecraft 'net.minecraftforge:forge:1.14.3-27.0.12'
+    runtimeOnly fg.deobf("mezz.jei:jei-1.14.2:6.0.0.2")
+    compileOnly fg.deobf("mezz.jei:jei-1.14.2:6.0.0.2:api")
 }
 
 jar {

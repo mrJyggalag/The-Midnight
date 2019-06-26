@@ -1,25 +1,25 @@
 package com.mushroom.midnight.common.compatibility;
 
-import com.mushroom.midnight.common.registry.MidnightBlocks;
-import com.mushroom.midnight.common.registry.MidnightItems;
-import mezz.jei.api.IJeiHelpers;
+import com.mushroom.midnight.Midnight;
 import mezz.jei.api.IModPlugin;
-import mezz.jei.api.IModRegistry;
-import mezz.jei.api.JEIPlugin;
-import mezz.jei.api.ingredients.IIngredientBlacklist;
-import net.minecraft.item.ItemStack;
+import mezz.jei.api.JeiPlugin;
+import mezz.jei.api.registration.IRecipeRegistration;
+import mezz.jei.api.runtime.IJeiRuntime;
+import net.minecraft.util.ResourceLocation;
 
-@JEIPlugin
+@JeiPlugin
 public class IntegrationJEI implements IModPlugin {
-	@Override
-	public void register(IModRegistry registry) {
-		IJeiHelpers jeiHelpers = registry.getJeiHelpers();
-		// blacklisted items
-		IIngredientBlacklist blackList = jeiHelpers.getIngredientBlacklist();
-		blackList.addIngredientToBlacklist(new ItemStack(MidnightBlocks.DARK_WATER));
-		blackList.addIngredientToBlacklist(new ItemStack(MidnightBlocks.MIASMA));
-		blackList.addIngredientToBlacklist(new ItemStack(MidnightItems.ADVANCEMENT_SNAPPER));
-		blackList.addIngredientToBlacklist(new ItemStack(MidnightItems.ADVANCEMENT_HIGHNESS));
-		blackList.addIngredientToBlacklist(new ItemStack(MidnightItems.ROCKSHROOM_SHIELD));
-	}
+    private final ResourceLocation rl = new ResourceLocation(Midnight.MODID);
+    @Override
+    public ResourceLocation getPluginUid() {
+        return rl;
+    }
+
+    @Override
+    public void registerRecipes(IRecipeRegistration registry) {
+    }
+
+    @Override
+    public void onRuntimeAvailable(IJeiRuntime jeiRuntime) {
+    }
 }

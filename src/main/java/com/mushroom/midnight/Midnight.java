@@ -9,8 +9,6 @@ import com.mushroom.midnight.common.capability.MultiLayerBiomeSampler;
 import com.mushroom.midnight.common.capability.NullStorage;
 import com.mushroom.midnight.common.capability.RiftTravelCooldown;
 import com.mushroom.midnight.common.capability.RifterCapturable;
-import com.mushroom.midnight.common.compatibility.CompatibilityImmersiveEngineering;
-import com.mushroom.midnight.common.compatibility.CompatibilityThaumcraft;
 import com.mushroom.midnight.common.compatibility.SupportMods;
 import com.mushroom.midnight.common.loot.InBiomeLootCondition;
 import com.mushroom.midnight.common.loot.InBlockLootCondition;
