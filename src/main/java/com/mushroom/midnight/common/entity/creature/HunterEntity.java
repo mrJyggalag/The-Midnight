@@ -68,7 +68,6 @@ public class HunterEntity extends FlyingEntity {
 
     public HunterEntity(EntityType<HunterEntity> entityType, World world) {
         super(entityType, world);
-        this.setSize(1.0F, 1.0F);
         this.moveController = new MoveHelper(this);
         this.lookController = new LookHelper(this);
     }

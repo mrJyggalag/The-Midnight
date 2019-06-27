@@ -1,6 +1,7 @@
 package com.mushroom.midnight.common.entity;
 
 import com.mushroom.midnight.client.particle.MidnightParticles;
+import com.mushroom.midnight.common.registry.MidnightEntities;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.block.material.PushReaction;
 import net.minecraft.entity.Entity;
@@ -57,17 +58,16 @@ public class CloudEntity extends Entity {
     public CloudEntity(EntityType<CloudEntity> entityType, World world) {
         super(entityType, world);
         this.noClip = true;
-        this.isImmuneToFire = true; // entityType builder
         setRadius(3f);
     }
 
     public CloudEntity(World world, double x, double y, double z) {
-        this(ModEntityTypeCloud, world);
+        this(MidnightEntities.cloud, world);
         setPosition(x, y, z);
     }
 
     public CloudEntity(FMLPlayMessages.SpawnEntity spawnEntity, World world) {
-        this(ModEntityTypeCloud, world);
+        this(MidnightEntities.cloud, world);
     }
 
     public CloudEntity setAllowTeleport() {

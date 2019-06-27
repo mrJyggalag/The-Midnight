@@ -6,6 +6,7 @@ import com.mushroom.midnight.common.entity.task.NeutralGoal;
 import com.mushroom.midnight.common.registry.MidnightLootTables;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ILivingEntityData;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.SpawnReason;
@@ -30,9 +31,8 @@ import javax.annotation.Nullable;
 public class StingerEntity extends GrowableEntity implements IMob {
     private final AnimationCapability animCap = new AnimationCapability();
 
-    public StingerEntity(World worldIn) {
-        super(worldIn);
-        setSize(0.2f, 0.2f);
+    public StingerEntity(EntityType<? extends GrowableEntity> entityType, World worldIn) {
+        super(entityType, worldIn);
     }
 
     @Override

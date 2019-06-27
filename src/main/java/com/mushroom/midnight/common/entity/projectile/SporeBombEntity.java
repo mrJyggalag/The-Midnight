@@ -2,6 +2,7 @@ package com.mushroom.midnight.common.entity.projectile;
 
 import com.mushroom.midnight.common.item.SporeBombItem;
 import com.mushroom.midnight.common.item.SporeBombItem.Type;
+import com.mushroom.midnight.common.registry.MidnightEntities;
 import com.mushroom.midnight.common.registry.MidnightItems;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.material.Material;
@@ -30,11 +31,11 @@ public class SporeBombEntity extends ThrowableEntity {
     }
 
     public SporeBombEntity(World world, double x, double y, double z) {
-        super(ModEntityType, world, x, y, z);
+        super(MidnightEntities.spore_bomb, x, y, z, world);
     }
 
     public SporeBombEntity(World world, LivingEntity thrower) {
-        super(ModEntityType, world, thrower);
+        super(MidnightEntities.spore_bomb, thrower, world);
     }
 
     @Override

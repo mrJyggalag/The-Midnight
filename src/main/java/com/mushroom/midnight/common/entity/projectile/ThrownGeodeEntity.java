@@ -2,11 +2,13 @@ package com.mushroom.midnight.common.entity.projectile;
 
 import com.mushroom.midnight.client.particle.MidnightParticles;
 import com.mushroom.midnight.common.registry.MidnightCriterion;
+import com.mushroom.midnight.common.registry.MidnightEntities;
 import com.mushroom.midnight.common.registry.MidnightItems;
 import com.mushroom.midnight.common.registry.MidnightLootTables;
 import com.mushroom.midnight.common.registry.MidnightSounds;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.material.Material;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -35,11 +37,11 @@ public class ThrownGeodeEntity extends ThrowableEntity {
     }
 
     public ThrownGeodeEntity(World world, double x, double y, double z) {
-        super(ModEntityType, world, x, y, z);
+        super(MidnightEntities.thrown_geode, x, y, z, world);
     }
 
     public ThrownGeodeEntity(World world, LivingEntity thrower) {
-        super(ModEntityType, world, thrower);
+        super(MidnightEntities.thrown_geode, thrower, world);
     }
 
     @Override

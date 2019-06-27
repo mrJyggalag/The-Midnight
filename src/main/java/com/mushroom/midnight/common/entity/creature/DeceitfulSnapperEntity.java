@@ -2,6 +2,7 @@ package com.mushroom.midnight.common.entity.creature;
 
 import com.mushroom.midnight.common.registry.MidnightLootTables;
 import net.minecraft.block.material.Material;
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.passive.WaterMobEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.pathfinding.PathNavigator;
@@ -16,9 +17,8 @@ import javax.annotation.Nullable;
 public class DeceitfulSnapperEntity extends WaterMobEntity {
     private BlockPos spawnPosition;
 
-    public DeceitfulSnapperEntity(World world) {
-        super(world);
-        setSize(0.4f, 0.4f); // builder
+    public DeceitfulSnapperEntity(EntityType<DeceitfulSnapperEntity> entityType, World world) {
+        super(entityType, world);
     }
 
     @Override

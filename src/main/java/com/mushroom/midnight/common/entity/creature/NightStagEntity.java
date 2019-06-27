@@ -20,6 +20,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.AgeableEntity;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ILivingEntityData;
 import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.SharedMonsterAttributes;
@@ -79,9 +80,8 @@ public class NightStagEntity extends AnimalEntity {
     private final AnimationCapability animCap = new AnimationCapability();
     private int temptTime = 400;
 
-    public NightStagEntity(World world) {
-        super(world);
-        setSize(0.9f, 1.87f);
+    public NightStagEntity(EntityType<NightStagEntity> entityType, World world) {
+        super(entityType, world);
     }
 
     @Override

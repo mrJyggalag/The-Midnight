@@ -4,15 +4,9 @@ import com.mushroom.midnight.common.entity.FlyingNavigator;
 import com.mushroom.midnight.common.registry.MidnightLootTables;
 import com.mushroom.midnight.common.registry.MidnightSounds;
 import net.minecraft.block.BlockState;
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.EntityAIAttackMelee;
-import net.minecraft.entity.ai.EntityAIHurtByTarget;
-import net.minecraft.entity.ai.EntityAILookIdle;
-import net.minecraft.entity.ai.EntityAIMoveTowardsTarget;
-import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
-import net.minecraft.entity.ai.EntityAIWanderAvoidWaterFlying;
-import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.ai.controller.FlyingMovementController;
 import net.minecraft.entity.ai.goal.HurtByTargetGoal;
 import net.minecraft.entity.ai.goal.LookAtWithoutMovingGoal;
@@ -23,13 +17,10 @@ import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
 import net.minecraft.entity.ai.goal.WaterAvoidingRandomWalkingGoal;
 import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.passive.AnimalEntity;
-import net.minecraft.entity.passive.EntityAnimal;
-import net.minecraft.entity.passive.EntityFlying;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
-import net.minecraft.pathfinding.PathNavigate;
 import net.minecraft.pathfinding.PathNavigator;
 import net.minecraft.pathfinding.PathNodeType;
 import net.minecraft.util.DamageSource;
@@ -47,11 +38,9 @@ public class NovaEntity extends MonsterEntity implements EntityFlying {
     private float heightOffset = 0.5f;
     private int heightOffsetUpdateTime;
 
-    public NovaEntity(World world) {
-        super(world);
-        setSize(1.2f, 1.8f);
+    public NovaEntity(EntityType<NovaEntity> entityType, World world) {
+        super(entityType, world);
         this.experienceValue = 10;
-        this.isImmuneToFire = true;
         setPathPriority(PathNodeType.LAVA, 8f);
         setPathPriority(PathNodeType.DANGER_FIRE, 0f);
         setPathPriority(PathNodeType.DAMAGE_FIRE, 0f);

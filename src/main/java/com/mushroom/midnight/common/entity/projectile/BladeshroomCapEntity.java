@@ -24,7 +24,7 @@ public class BladeshroomCapEntity extends ArrowEntity {
     public float spin;
     public float prevSpin;
 
-    public BladeshroomCapEntity(EntityType<? extends ArrowEntity> entityType, World world) {
+    public BladeshroomCapEntity(EntityType<BladeshroomCapEntity> entityType, World world) {
         super(entityType, world);
         this.setDamage(DAMAGE);
     }

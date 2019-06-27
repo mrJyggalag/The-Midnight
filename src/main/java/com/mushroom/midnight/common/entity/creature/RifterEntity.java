@@ -23,6 +23,7 @@ import com.mushroom.midnight.common.registry.MidnightEffects;
 import com.mushroom.midnight.common.registry.MidnightLootTables;
 import com.mushroom.midnight.common.registry.MidnightSounds;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.SpawnReason;
@@ -83,13 +84,12 @@ public class RifterEntity extends MonsterEntity implements IRiftTraveler, IEntit
 
     private LivingEntity capturedEntity;
 
-    public RifterEntity(World world) {
-        super(world);
+    public RifterEntity(EntityType<RifterEntity> entityType, World world) {
+        super(entityType, world);
         this.homeRift = new EntityReference<>(world);
         this.dragSolver = new DragSolver(this);
 
         float scaleModifier = Helper.isMidnightDimension(world) ? HOME_SCALE_MODIFIER : 1.0F;
-        this.setSize(0.6F * scaleModifier, 1.8F * scaleModifier);
         stepHeight = 1f;
     }
 

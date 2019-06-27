@@ -1,6 +1,7 @@
 package com.mushroom.midnight.common.entity.creature;
 
 import com.mushroom.midnight.common.registry.MidnightLootTables;
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.pathfinding.GroundPathNavigator;
@@ -12,9 +13,8 @@ import net.minecraft.world.World;
 import javax.annotation.Nullable;
 
 public class PenumbrianEntity extends MonsterEntity {
-    public PenumbrianEntity(World world) {
-        super(world);
-        setSize(0.5f, 0.5f);
+    public PenumbrianEntity(EntityType<PenumbrianEntity> entityType, World world) {
+        super(entityType, world);
     }
 
     @Override

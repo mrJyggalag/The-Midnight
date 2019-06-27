@@ -1,157 +1,160 @@
 package com.mushroom.midnight.common.registry;
 
-import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.common.entity.CloudEntity;
-import com.mushroom.midnight.common.entity.projectile.BladeshroomCapEntity;
 import com.mushroom.midnight.common.entity.RiftEntity;
-import com.mushroom.midnight.common.entity.projectile.SporeBombEntity;
-import com.mushroom.midnight.common.entity.projectile.ThrownGeodeEntity;
 import com.mushroom.midnight.common.entity.creature.CrystalBugEntity;
 import com.mushroom.midnight.common.entity.creature.DeceitfulSnapperEntity;
 import com.mushroom.midnight.common.entity.creature.HunterEntity;
 import com.mushroom.midnight.common.entity.creature.NightStagEntity;
 import com.mushroom.midnight.common.entity.creature.NovaEntity;
 import com.mushroom.midnight.common.entity.creature.PenumbrianEntity;
-import com.mushroom.midnight.common.entity.creature.SkulkEntity;
 import com.mushroom.midnight.common.entity.creature.RifterEntity;
+import com.mushroom.midnight.common.entity.creature.SkulkEntity;
 import com.mushroom.midnight.common.entity.creature.StingerEntity;
 import com.mushroom.midnight.common.entity.creature.TreeHopperEntity;
-import net.minecraft.entity.MobEntity;
-import net.minecraft.entity.EntitySpawnPlacementRegistry;
-import net.minecraft.util.ResourceLocation;
+import com.mushroom.midnight.common.entity.projectile.BladeshroomCapEntity;
+import com.mushroom.midnight.common.entity.projectile.SporeBombEntity;
+import com.mushroom.midnight.common.entity.projectile.ThrownGeodeEntity;
+import net.minecraft.entity.EntityClassification;
+import net.minecraft.entity.EntityType;
 import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.registry.EntityEntry;
-import net.minecraftforge.fml.common.registry.EntityEntryBuilder;
+import net.minecraftforge.registries.ObjectHolder;
 
-@Mod.EventBusSubscriber(modid = Midnight.MODID)
+import static com.mushroom.midnight.Midnight.*;
+
+@Mod.EventBusSubscriber(modid = MODID)
+@ObjectHolder(MODID)
 public class MidnightEntities {
-    private static int currentEntityId;
+    public static final EntityType<RiftEntity> rift = EntityType.Builder.<RiftEntity>create(RiftEntity::new, EntityClassification.MISC)
+            .setTrackingRange(1024)
+            .setUpdateInterval(20)
+            .setShouldReceiveVelocityUpdates(false)
+            .size(1.8f, 4.0f)
+            .setCustomClientFactory(RiftEntity::new)
+            .immuneToFire()
+            .build(MODID + ":rift");
+    public static final EntityType<RifterEntity> rifter = EntityType.Builder.create(RifterEntity::new, MIDNIGHT_MOB)
+            .setTrackingRange(80)
+            .setUpdateInterval(3)
+            .setShouldReceiveVelocityUpdates(true)
+            .size(0.6f, 1.8f) // .egg(0x384740, 0x5E8C6C)
+            .build(MODID + ":rifter");
+    public static final EntityType<HunterEntity> hunter = EntityType.Builder.create(HunterEntity::new, MIDNIGHT_MOB)
+            .setTrackingRange(80)
+            .setUpdateInterval(2)
+            .setShouldReceiveVelocityUpdates(true)
+            .size(1f, 1f) // .egg(0x2C3964, 0x19203A)
+            .build(MODID + ":hunter");
+    public static final EntityType<BladeshroomCapEntity> bladeshroom_cap = EntityType.Builder.<BladeshroomCapEntity>create(BladeshroomCapEntity::new, EntityClassification.MISC)
+            .setTrackingRange(64)
+            .setUpdateInterval(1)
+            .setShouldReceiveVelocityUpdates(true)
+            .build(MODID + ":bladeshroom_cap");
+    public static final EntityType<NovaEntity> nova = EntityType.Builder.create(NovaEntity::new, MIDNIGHT_MOB)
+            .setTrackingRange(80)
+            .setUpdateInterval(2)
+            .setShouldReceiveVelocityUpdates(true)
+            .size(1.2f, 1.8f) // .egg(0x932C3B, 0x47415E)
+            .immuneToFire()
+            .build(MODID + ":nova");
+    public static final EntityType<CrystalBugEntity> crystal_bug = EntityType.Builder.create(CrystalBugEntity::new, MIDNIGHT_AMBIENT)
+            .setTrackingRange(80)
+            .setUpdateInterval(3)
+            .setShouldReceiveVelocityUpdates(false)
+            .size(0.2f, 0.2f) // .egg(0x4B2277, 0xAF27E0)
+            .build(MODID + ":crystal_bug");
+    public static final EntityType<PenumbrianEntity> penumbrian = EntityType.Builder.create(PenumbrianEntity::new, MIDNIGHT_MOB)
+            .setTrackingRange(80)
+            .setUpdateInterval(3)
+            .setShouldReceiveVelocityUpdates(true)
+            .size(0.5f, 0.5f) // .egg(0x8CDCC9, 0x456B6F)
+            .build(MODID + ":penumbrian");
+    public static final EntityType<TreeHopperEntity> tree_hopper = EntityType.Builder.create(TreeHopperEntity::new, MIDNIGHT_MOB)
+            .setTrackingRange(80)
+            .setUpdateInterval(3)
+            .setShouldReceiveVelocityUpdates(true)
+            .size(0.5f, 0.5f) // .egg(0x6E5A84, 0x303847)
+            .build(MODID + ":tree_hopper");
+    public static final EntityType<StingerEntity> stinger = EntityType.Builder.create(StingerEntity::new, MIDNIGHT_MOB)
+            .setTrackingRange(80)
+            .setUpdateInterval(3)
+            .setShouldReceiveVelocityUpdates(true)
+            .size(0.2f, 0.2f) // .egg(0x291E23, 0x4D6A43)
+            .build(MODID + ":stinger");
+    public static final EntityType<NightStagEntity> nightstag = EntityType.Builder.create(NightStagEntity::new, EntityClassification.CREATURE)
+            .setTrackingRange(80)
+            .setUpdateInterval(3)
+            .setShouldReceiveVelocityUpdates(true)
+            .size(0.9f, 1.87f) // .egg(0x946CC2, 0x221F1D)
+            .build(MODID + ":nightstag");
+    public static final EntityType<DeceitfulSnapperEntity> deceitful_snapper = EntityType.Builder.create(DeceitfulSnapperEntity::new, MIDNIGHT_MOB)
+            .setTrackingRange(80)
+            .setUpdateInterval(3)
+            .setShouldReceiveVelocityUpdates(true)
+            .size(0.4f, 0.4f) // .egg(0x45404E, 0x906F99)
+            .build(MODID + ":deceitful_snapper");
+    public static final EntityType<SkulkEntity> skulk = EntityType.Builder.create(SkulkEntity::new, EntityClassification.CREATURE)
+            .setTrackingRange(80)
+            .setUpdateInterval(3)
+            .setShouldReceiveVelocityUpdates(true)
+            .size(0.6f, 0.6f) // .egg(0x4B5065, 0x4E268A)
+            .build(MODID + ":skulk");
+    public static final EntityType<ThrownGeodeEntity> thrown_geode = EntityType.Builder.<ThrownGeodeEntity>create(ThrownGeodeEntity::new, EntityClassification.MISC)
+            .setTrackingRange(64)
+            .setUpdateInterval(10)
+            .setShouldReceiveVelocityUpdates(true)
+            .build(MODID + ":thrown_geode");
+    public static final EntityType<SporeBombEntity> spore_bomb = EntityType.Builder.<SporeBombEntity>create(SporeBombEntity::new, EntityClassification.MISC)
+            .setTrackingRange(64)
+            .setUpdateInterval(10)
+            .setShouldReceiveVelocityUpdates(true)
+            .build(MODID + ":spore_bomb");
+    public static final EntityType<CloudEntity> cloud = EntityType.Builder.<CloudEntity>create(CloudEntity::new, EntityClassification.MISC)
+            .setTrackingRange(160)
+            .setUpdateInterval(Integer.MAX_VALUE)
+            .setShouldReceiveVelocityUpdates(true)
+            .immuneToFire()
+            .build(MODID + ":cloud");
 
     @SubscribeEvent
-    public static void onRegisterEntities(RegistryEvent.Register<EntityEntry> event) {
-        event.getRegistry().registerAll(
-                EntityEntryBuilder.create()
-                        .entity(RiftEntity.class)
-                        .factory(RiftEntity::new)
-                        .id(new ResourceLocation(Midnight.MODID, "rift"), currentEntityId++)
-                        .name(Midnight.MODID + ".rift")
-                        .tracker(1024, 20, false)
-                        .build(),
-                EntityEntryBuilder.create()
-                        .entity(RifterEntity.class)
-                        .factory(RifterEntity::new)
-                        .id(new ResourceLocation(Midnight.MODID, "rifter"), currentEntityId++)
-                        .name(Midnight.MODID + ".rifter")
-                        .tracker(80, 3, true)
-                        .egg(0x384740, 0x5E8C6C)
-                        .build(),
-                EntityEntryBuilder.create()
-                        .entity(HunterEntity.class)
-                        .factory(HunterEntity::new)
-                        .id(new ResourceLocation(Midnight.MODID, "hunter"), currentEntityId++)
-                        .name(Midnight.MODID + ".hunter")
-                        .tracker(80, 2, true)
-                        .egg(0x2C3964, 0x19203A)
-                        .build(),
-                EntityEntryBuilder.create()
-                        .entity(BladeshroomCapEntity.class)
-                        .factory(BladeshroomCapEntity::new)
-                        .id(new ResourceLocation(Midnight.MODID, "bladeshroom_cap"), currentEntityId++)
-                        .name(Midnight.MODID + ".bladeshroom_cap")
-                        .tracker(64, 1, true)
-                        .build(),
-                EntityEntryBuilder.create()
-                        .entity(NovaEntity.class)
-                        .factory(NovaEntity::new)
-                        .id(new ResourceLocation(Midnight.MODID, "nova"), currentEntityId++)
-                        .name(Midnight.MODID + ".nova")
-                        .tracker(80, 2, true)
-                        .egg(0x932C3B, 0x47415E)
-                        .build(),
-                EntityEntryBuilder.create()
-                        .entity(CrystalBugEntity.class)
-                        .factory(CrystalBugEntity::new)
-                        .id(new ResourceLocation(Midnight.MODID, "crystal_bug"), currentEntityId++)
-                        .name(Midnight.MODID + ".crystal_bug")
-                        .tracker(80, 3, false)
-                        .egg(0x4B2277, 0xAF27E0)
-                        .build(),
-                EntityEntryBuilder.create()
-                        .entity(PenumbrianEntity.class)
-                        .factory(PenumbrianEntity::new)
-                        .id(new ResourceLocation(Midnight.MODID, "penumbrian"), currentEntityId++)
-                        .name(Midnight.MODID + ".penumbrian")
-                        .tracker(80, 3, true)
-                        //.egg(0x8CDCC9, 0x456B6F)
-                        .build(),
-                EntityEntryBuilder.create()
-                        .entity(TreeHopperEntity.class)
-                        .factory(TreeHopperEntity::new)
-                        .id(new ResourceLocation(Midnight.MODID, "tree_hopper"), currentEntityId++)
-                        .name(Midnight.MODID + ".tree_hopper")
-                        .tracker(80, 3, true)
-                        //.egg(0x6E5A84, 0x303847)
-                        .build(),
-                EntityEntryBuilder.create()
-                        .entity(StingerEntity.class)
-                        .factory(StingerEntity::new)
-                        .id(new ResourceLocation(Midnight.MODID, "stinger"), currentEntityId++)
-                        .name(Midnight.MODID + ".stinger")
-                        .tracker(80, 3, true)
-                        .egg(0x291E23, 0x4D6A43)
-                        .build(),
-                EntityEntryBuilder.create()
-                        .entity(NightStagEntity.class)
-                        .factory(NightStagEntity::new)
-                        .id(new ResourceLocation(Midnight.MODID, "nightstag"), currentEntityId++)
-                        .name(Midnight.MODID + ".nightstag")
-                        .tracker(80, 3, true)
-                        .egg(0x946CC2, 0x221F1D)
-                        .build(),
-                EntityEntryBuilder.create()
-                        .entity(DeceitfulSnapperEntity.class)
-                        .factory(DeceitfulSnapperEntity::new)
-                        .id(new ResourceLocation(Midnight.MODID, "deceitful_snapper"), currentEntityId++)
-                        .name(Midnight.MODID + ".deceitful_snapper")
-                        .tracker(80, 3, true)
-                        .egg(0x45404E, 0x906F99)
-                        .build(),
-                EntityEntryBuilder.create()
-                        .entity(SkulkEntity.class)
-                        .factory(SkulkEntity::new)
-                        .id(new ResourceLocation(Midnight.MODID, "skulk"), currentEntityId++)
-                        .name(Midnight.MODID + ".skulk")
-                        .tracker(80, 3, true)
-                        .egg(0x4B5065, 0x4E268A)
-                        .build(),
-                EntityEntryBuilder.create()
-                        .entity(ThrownGeodeEntity.class)
-                        .factory(ThrownGeodeEntity::new)
-                        .id(new ResourceLocation(Midnight.MODID, "thrown_geode"), currentEntityId++)
-                        .name(Midnight.MODID + ".thrown_geode")
-                        .tracker(64, 10, true)
-                        .build(),
-                EntityEntryBuilder.create()
-                        .entity(SporeBombEntity.class)
-                        .factory(SporeBombEntity::new)
-                        .id(new ResourceLocation(Midnight.MODID, "spore_bomb"), currentEntityId++)
-                        .name(Midnight.MODID + ".spore_bomb")
-                        .tracker(64, 10, true)
-                        .build(),
-                EntityEntryBuilder.create()
-                        .entity(CloudEntity.class)
-                        .factory(CloudEntity::new)
-                        .id(new ResourceLocation(Midnight.MODID, "cloud"), currentEntityId++)
-                        .name(Midnight.MODID + ".cloud")
-                        .tracker(160, Integer.MAX_VALUE, true)
-                        .build()
-        );
+    public static void onRegisterEntities(final RegistryEvent.Register<EntityType<?>> event) {
+        rift.setRegistryName(MODID, "rift");
+        event.getRegistry().register(rift);
+        rifter.setRegistryName(MODID, "rifter");
+        event.getRegistry().register(rifter);
+        hunter.setRegistryName(MODID, "hunter");
+        event.getRegistry().register(hunter);
+        bladeshroom_cap.setRegistryName(MODID, "bladeshroom_cap");
+        event.getRegistry().register(bladeshroom_cap);
+        nova.setRegistryName(MODID, "nova");
+        event.getRegistry().register(nova);
+        crystal_bug.setRegistryName(MODID, "crystal_bug");
+        event.getRegistry().register(crystal_bug);
+        penumbrian.setRegistryName(MODID, "penumbrian");
+        event.getRegistry().register(penumbrian);
+        tree_hopper.setRegistryName(MODID, "tree_hopper");
+        event.getRegistry().register(tree_hopper);
+        stinger.setRegistryName(MODID, "stinger");
+        event.getRegistry().register(stinger);
+        nightstag.setRegistryName(MODID, "nightstag");
+        event.getRegistry().register(nightstag);
+        deceitful_snapper.setRegistryName(MODID, "deceitful_snapper");
+        event.getRegistry().register(deceitful_snapper);
+        skulk.setRegistryName(MODID, "skulk");
+        event.getRegistry().register(skulk);
+        thrown_geode.setRegistryName(MODID, "thrown_geode");
+        event.getRegistry().register(thrown_geode);
+        spore_bomb.setRegistryName(MODID, "spore_bomb");
+        event.getRegistry().register(spore_bomb);
+        cloud.setRegistryName(MODID, "cloud");
+        event.getRegistry().register(cloud);
 
-        EntitySpawnPlacementRegistry.setPlacementType(HunterEntity.class, MobEntity.SpawnPlacementType.IN_AIR);
-        EntitySpawnPlacementRegistry.setPlacementType(CrystalBugEntity.class, MobEntity.SpawnPlacementType.IN_AIR);
-        EntitySpawnPlacementRegistry.setPlacementType(NovaEntity.class, MobEntity.SpawnPlacementType.IN_AIR);
-        EntitySpawnPlacementRegistry.setPlacementType(DeceitfulSnapperEntity.class, MobEntity.SpawnPlacementType.IN_WATER);
+        // TODO check placement logic for spawn
+        //EntitySpawnPlacementRegistry.setPlacementType(HunterEntity.class, MobEntity.SpawnPlacementType.IN_AIR);
+        //EntitySpawnPlacementRegistry.setPlacementType(CrystalBugEntity.class, MobEntity.SpawnPlacementType.IN_AIR);
+        //EntitySpawnPlacementRegistry.setPlacementType(NovaEntity.class, MobEntity.SpawnPlacementType.IN_AIR);
+        //EntitySpawnPlacementRegistry.setPlacementType(DeceitfulSnapperEntity.class, MobEntity.SpawnPlacementType.IN_WATER);
     }
 }

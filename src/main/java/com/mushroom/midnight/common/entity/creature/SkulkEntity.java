@@ -2,8 +2,10 @@ package com.mushroom.midnight.common.entity.creature;
 
 import com.mushroom.midnight.common.entity.task.NeutralGoal;
 import com.mushroom.midnight.common.registry.MidnightLootTables;
+import net.minecraft.block.BlockState;
 import net.minecraft.entity.AgeableEntity;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ILivingEntityData;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.SpawnReason;
@@ -37,9 +39,8 @@ public class SkulkEntity extends AnimalEntity {
     private static final DataParameter<Boolean> STEALTH = EntityDataManager.createKey(SkulkEntity.class, DataSerializers.BOOLEAN);
     private int stealthCooldown = 0;
 
-    public SkulkEntity(World world) {
-        super(world);
-        setSize(0.6f, 0.6f);
+    public SkulkEntity(EntityType<SkulkEntity> entityType, World world) {
+        super(entityType, world);
     }
 
     @Override
@@ -60,7 +61,7 @@ public class SkulkEntity extends AnimalEntity {
     }
 
     @Override
-    public boolean getCanSpawnHere() {
+    public boolean canSpawn(IWorld worldIn, SpawnReason spawnReasonIn) {
         if (getPosition().getY() <= world.getSeaLevel()) {
             return false;
         }

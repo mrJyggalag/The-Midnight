@@ -8,14 +8,16 @@ import com.mushroom.midnight.common.entity.creature.HunterEntity;
 import com.mushroom.midnight.common.entity.creature.RifterEntity;
 import com.mushroom.midnight.common.helper.Helper;
 import com.mushroom.midnight.common.registry.MidnightDimensions;
+import com.mushroom.midnight.common.registry.MidnightEntities;
 import com.mushroom.midnight.common.registry.MidnightSounds;
 import com.mushroom.midnight.common.world.BridgeManager;
 import com.mushroom.midnight.common.world.GlobalBridgeManager;
-import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.network.IPacket;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.MathHelper;
@@ -25,6 +27,8 @@ import net.minecraft.world.LightType;
 import net.minecraft.world.World;
 import net.minecraft.world.dimension.DimensionType;
 import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
+import net.minecraftforge.fml.network.FMLPlayMessages;
+import net.minecraftforge.fml.network.NetworkHooks;
 
 import javax.annotation.Nullable;
 import java.util.HashSet;
@@ -58,15 +62,17 @@ public class RiftEntity extends Entity implements IEntityAdditionalSpawnData {
 
     private boolean invalid;
 
-    public RiftEntity(World world) {
-        super(world);
-        this.setSize(1.8F, 4.0F);
+    public RiftEntity(EntityType<RiftEntity> entityType, World world) {
+        super(entityType, world);
         this.noClip = true;
         this.initGeometry(new Random().nextLong());
-        this.isImmuneToFire = true;
         if (world.isRemote) {
             this.particleSystem = new RiftParticleSystem(this);
         }
+    }
+
+    public RiftEntity(FMLPlayMessages.SpawnEntity spawnEntity, World world) {
+        this(MidnightEntities.rift, world);
     }
 
     private void initGeometry(long seed) {
@@ -344,6 +350,11 @@ public class RiftEntity extends Entity implements IEntityAdditionalSpawnData {
         if (this.bridge != null) {
             compound.putInt("bridge_id", this.bridge.getId());
         }
+    }
+
+    @Override
+    public IPacket<?> createSpawnPacket() {
+        return NetworkHooks.getEntitySpawningPacket(this);
     }
 
     @Override

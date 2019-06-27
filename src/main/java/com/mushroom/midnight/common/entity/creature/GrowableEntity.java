@@ -23,8 +23,8 @@ public abstract class GrowableEntity extends CreatureEntity {
     private float ageWidth = -1f;
     private float ageHeight;
 
-    public GrowableEntity(EntityType<GrowableEntity> entityType, World world) {
-        super(entityType, world);
+    public GrowableEntity(EntityType<? extends GrowableEntity> entityType, World worldIn) {
+        super(entityType, worldIn);
     }
 
     public abstract int getMaxGrowingAge();

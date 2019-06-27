@@ -5,6 +5,7 @@ import com.mushroom.midnight.common.registry.MidnightSounds;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.CreatureAttribute;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.passive.AmbientEntity;
@@ -32,9 +33,8 @@ public class CrystalBugEntity extends AmbientEntity {
     private static final DataParameter<Boolean> IS_STANDING = EntityDataManager.createKey(CrystalBugEntity.class, DataSerializers.BOOLEAN);
     private BlockPos spawnPosition;
 
-    public CrystalBugEntity(World world) {
-        super(world);
-        setSize(0.2f, 0.2f); // builder
+    public CrystalBugEntity(EntityType<CrystalBugEntity> entityType, World world) {
+        super(entityType, world);
         experienceValue = 3;
     }
 
