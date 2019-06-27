@@ -120,10 +120,6 @@ public class CommonEventHandler {
             World world = event.world;
             if (!world.isRemote) {
                 GlobalBridgeManager.getServer().update();
-
-                if (world.getGameRules().getBoolean(GameRules.DO_MOB_SPAWNING)) {
-                    world.getCapability(Midnight.WORLD_SPAWNERS_CAP, null).ifPresent(MidnightWorldSpawners::spawnAroundPlayers);
-                }
             }
 
             TICKING_DIMENSION.set(world.dimension.getType());

@@ -62,6 +62,7 @@ import com.mushroom.midnight.common.world.feature.LargeFungiFeature;
 import com.mushroom.midnight.common.world.feature.ShadowrootTreeFeature;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
+import net.minecraft.block.LogBlock;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
@@ -336,16 +337,28 @@ public class MidnightBlocks {
                         Block.Properties.create(Material.EARTH, MaterialColor.BLUE_TERRACOTTA)
                                 .hardnessAndResistance(0.5F)
                                 .sound(SoundType.GROUND)
+                ))
+                .add("midnight_mycelium", new MidnightMyceliumBlock(
+                        Block.Properties.create(Material.ROCK, MaterialColor.PINK)
+                                .hardnessAndResistance(1.5F, 10.0F)
+                                .sound(SoundType.STONE)
                 ));
+
+        RegUtil.blocks(event.getRegistry())
+                .withProperties(() ->
+                        Block.Properties.create(Material.WOOD, MaterialColor.BLUE_TERRACOTTA)
+                                .hardnessAndResistance(2.0F)
+                                .sound(SoundType.WOOD)
+                )
+                .add("shadowroot_log", props -> new LogBlock(MaterialColor.BROWN, props))
+                .add("dead_wood_log", props -> new LogBlock(MaterialColor.BROWN, props))
+                .add("dark_willow_log", props -> new LogBlock(MaterialColor.BROWN, props));
 
         // TODO: Port all registration
 
         blocks.addAll(Lists.newArrayList(
-                RegUtil.withName(new MidnightMyceliumBlock(), "midnight_mycelium"),
                 RegUtil.withName(new BlockMidnightLog(), "shadowroot_log"),
                 RegUtil.withName(new MidnightLeavesBlock(() -> SHADOWROOT_SAPLING), "shadowroot_leaves"),
-                RegUtil.withName(new BlockMidnightLog(), "dead_wood_log"),
-                RegUtil.withName(new BlockMidnightLog(), "dark_willow_log"),
                 RegUtil.withName(new MidnightLeavesBlock(() -> DARK_WILLOW_SAPLING), "dark_willow_leaves"),
                 RegUtil.withName(new MidnightFungiStemBlock(), "nightshroom_stem"),
                 RegUtil.withName(new MidnightFungiHatBlock(() -> NIGHTSHROOM, () -> MidnightItems.NIGHTSHROOM_POWDER, MapColor.CYAN), "nightshroom_hat"),
@@ -410,7 +423,7 @@ public class MidnightBlocks {
         ));
 
         blocks.addAll(Lists.newArrayList(
-                RegUtil.withName(new NightstoneBlock(), "nightstone"),
+                RegUtil.withName(new NightstoneBlock(), "nightstone"), // BLUE_STAINED_HARDENED_CLAY
                 RegUtil.withName(new BlockBasic(Material.ROCK), "trenchstone")
                         .withHarvestLevel("pickaxe", 2)
                         .setHardness(5.0F)

@@ -1,7 +1,7 @@
 package com.mushroom.midnight.common.biome.config;
 
 import com.mushroom.midnight.common.registry.MidnightBlocks;
-import net.minecraft.block.state.BlockState;
+import net.minecraft.block.BlockState;
 import net.minecraft.world.biome.Biome;
 
 public class SurfaceConfig {

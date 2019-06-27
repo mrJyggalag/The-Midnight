@@ -22,7 +22,7 @@ import net.minecraftforge.common.IPlantable;
 import java.util.Random;
 
 public class NightstoneBlock extends Block implements IGrowable {
-    public NightstoneBlock() {
+    public NightstoneBlock(Block.Properties properties) {
         super(Material.ROCK, MapColor.BLUE_STAINED_HARDENED_CLAY);
         this.setHardness(1.5F);
         this.setResistance(10.0F);

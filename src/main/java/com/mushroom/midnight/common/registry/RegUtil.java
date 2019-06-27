@@ -1,5 +1,6 @@
 package com.mushroom.midnight.common.registry;
 
+import com.google.common.base.Preconditions;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
@@ -70,9 +71,15 @@ public class RegUtil {
 
     public static class Blocks {
         private final IForgeRegistry<Block> registry;
+        private Supplier<Block.Properties> propertiesSupplier;
 
         private Blocks(IForgeRegistry<Block> registry) {
             this.registry = registry;
+        }
+
+        public Blocks withProperties(Supplier<Block.Properties> propertiesSupplier) {
+            this.propertiesSupplier = propertiesSupplier;
+            return this;
         }
 
         public Blocks add(String name, Block block) {
@@ -82,6 +89,12 @@ public class RegUtil {
             this.registry.register(block);
 
             return this;
+        }
+
+        public Blocks add(String name, Function<Block.Properties, Block> function) {
+            Preconditions.checkNotNull(this.propertiesSupplier, "properties supplier not set");
+            Block block = function.apply(this.propertiesSupplier.get());
+            return this.add(name, block);
         }
     }
 

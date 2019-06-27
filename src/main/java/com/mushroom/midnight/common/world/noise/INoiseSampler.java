@@ -7,9 +7,9 @@ public interface INoiseSampler {
 
     void setAmplitude(double amplitude);
 
-    void sample2D(double[] buffer, double originX, double originY, int sizeX, int sizeY);
+    double get(double x, double y);
 
-    void sample3D(double[] buffer, double originX, double originY, double originZ, int sizeX, int sizeY, int sizeZ);
+    double get(double x, double y, double z);
 
     default double maintainPrecision(double coordinate) {
         long origin = MathHelper.lfloor(coordinate);

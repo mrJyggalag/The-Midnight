@@ -1,8 +1,8 @@
 package com.mushroom.midnight.common.world;
 
 import com.mushroom.midnight.common.biome.config.SurfaceConfig;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.state.BlockState;
 import net.minecraft.world.chunk.ChunkPrimer;
 
 public class SurfaceCoverGenerator {

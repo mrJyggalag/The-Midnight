@@ -20,7 +20,7 @@ sourceCompatibility = targetCompatibility = '1.8'
 def core_plugin = "com.mushroom.midnight.core.MidnightLoadingPlugin"
 
 minecraft {
-    mappings channel: 'snapshot', version: '20190626-1.14.3'
+    mappings channel: 'snapshot', version: '20190627-1.14.3'
     accessTransformer = file('build/resources/main/META-INF/midnight_at.cfg')
     runs {
         client {

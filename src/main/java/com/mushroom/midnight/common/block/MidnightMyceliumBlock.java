@@ -2,23 +2,25 @@ package com.mushroom.midnight.common.block;
 
 import com.mushroom.midnight.common.helper.Helper;
 import com.mushroom.midnight.common.registry.MidnightBlocks;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.material.MapColor;
 import net.minecraft.item.Item;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
+import net.minecraft.world.IBlockReader;
+import net.minecraft.world.IEnviromentBlockReader;
 import net.minecraft.world.World;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.MinecraftForgeClient;
-import net.minecraftforge.fml.relauncher.OnlyIn;
 
 import java.util.Random;
 
 public class MidnightMyceliumBlock extends NightstoneBlock {
-    public MidnightMyceliumBlock() {
-        super();
-        setTickRandomly(true);
+    public MidnightMyceliumBlock(Block.Properties properties) {
+        super(properties);
     }
 
     @Override
@@ -64,16 +66,10 @@ public class MidnightMyceliumBlock extends NightstoneBlock {
     @Override
     @OnlyIn(Dist.CLIENT)
     @SuppressWarnings("deprecation")
-    public int getPackedLightmapCoords(BlockState state, IBlockAccess source, BlockPos pos) {
+    public int getPackedLightmapCoords(BlockState state, IEnviromentBlockReader source, BlockPos pos) {
         if (MinecraftForgeClient.getRenderLayer() == BlockRenderLayer.SOLID) {
             return source.getCombinedLight(pos, 0);
         }
         return source.getCombinedLight(pos, 10);
-    }
-
-    @Override
-    @SuppressWarnings("deprecation")
-    public MapColor getMapColor(BlockState state, IBlockAccess worldIn, BlockPos pos) {
-        return MapColor.PINK;
     }
 }

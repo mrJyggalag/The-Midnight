@@ -12,7 +12,6 @@ import com.mushroom.midnight.common.world.util.BiomeWeightTable;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.biome.Biome;
 
-import java.util.Arrays;
 import java.util.Random;
 
 import static com.mushroom.midnight.common.world.MidnightChunkGenerator.*;
@@ -40,13 +39,6 @@ public class MidnightNoiseGenerator {
     private final OctaveNoiseSampler ridgedSurfaceNoise;
     private final PerlinNoiseSampler pillarNoise;
 
-    private final double[] worldNoiseBuffer = new double[BUFFER_WIDTH * BUFFER_WIDTH * BUFFER_HEIGHT];
-    private final double[] terrainBuffer = new double[BUFFER_WIDTH * BUFFER_WIDTH * BUFFER_HEIGHT];
-    private final double[] surfaceBuffer = new double[BUFFER_WIDTH * BUFFER_WIDTH];
-    private final double[] ceilingBuffer = new double[BUFFER_WIDTH * BUFFER_WIDTH];
-    private final double[] ridgedSurfaceBuffer = new double[BUFFER_WIDTH * BUFFER_WIDTH];
-    private final double[] pillarBuffer = new double[BUFFER_WIDTH * BUFFER_WIDTH];
-
     private final BiomeWeightTable weightTable;
 
     public MidnightNoiseGenerator(Random random) {
@@ -72,31 +64,9 @@ public class MidnightNoiseGenerator {
         this.weightTable = new BiomeWeightTable(BIOME_WEIGHT_RADIUS);
     }
 
-    protected double[] populateNoise(int chunkX, int chunkZ, Biome[] biomeBuffer, CavernousBiome[] cavernousBiomeBuffer) {
+    public void populateColumnNoise(double[] noise, int x, int z, Biome[] biomeBuffer, CavernousBiome[] cavernousBiomeBuffer) {
         GenerationContext context = new GenerationContext(biomeBuffer, cavernousBiomeBuffer);
-
-        this.worldNoise.sample3D(this.worldNoiseBuffer, chunkX * NOISE_WIDTH, 0, chunkZ * NOISE_WIDTH, BUFFER_WIDTH, BUFFER_HEIGHT, BUFFER_WIDTH);
-        this.surfaceNoise.sample2D(this.surfaceBuffer, chunkX * NOISE_WIDTH, chunkZ * NOISE_WIDTH, BUFFER_WIDTH, BUFFER_WIDTH);
-        this.ceilingNoise.sample2D(this.ceilingBuffer, chunkX * NOISE_WIDTH, chunkZ * NOISE_WIDTH, BUFFER_WIDTH, BUFFER_WIDTH);
-        this.ridgedSurfaceNoise.sample2D(this.ridgedSurfaceBuffer, chunkX * NOISE_WIDTH, chunkZ * NOISE_WIDTH, BUFFER_WIDTH, BUFFER_WIDTH);
-
-        Arrays.fill(this.pillarBuffer, 0.0);
-        this.pillarNoise.sample2D(this.pillarBuffer, chunkX * NOISE_WIDTH, chunkZ * NOISE_WIDTH, BUFFER_WIDTH, BUFFER_WIDTH);
-
-        int index = 0;
-        int surfaceIndex = 0;
-
-        for (int localZ = 0; localZ < NOISE_WIDTH + 1; localZ++) {
-            for (int localX = 0; localX < NOISE_WIDTH + 1; localX++) {
-                index = this.populateColumnNoise(context, index, surfaceIndex++, localX, localZ);
-            }
-        }
-
-        return this.terrainBuffer;
-    }
-
-    private int populateColumnNoise(GenerationContext context,  int index, int surfaceIndex, int localX, int localZ) {
-        BiomeProperties properties = this.computeBiomeProperties(context, localX, localZ);
+        BiomeProperties properties = this.computeBiomeProperties(context, x, z);
 
         float heightOrigin = (float) SURFACE_LEVEL / VERTICAL_GRANULARITY;
         float maxHeight = 256.0F / VERTICAL_GRANULARITY;
@@ -115,11 +85,11 @@ public class MidnightNoiseGenerator {
         float heightVariation = properties.heightVariation * 0.9F + 0.1F;
         float cavernHeightVariation = properties.cavernHeightVariation * 0.9F + 0.1F;
 
-        double perlinSurfaceNoise = (this.surfaceBuffer[surfaceIndex] + 1.5) / 3.0;
-        double perlinCeilingNoise = (this.ceilingBuffer[surfaceIndex] + 1.5) / 3.0;
-        double ridgedSurfaceNoise = (this.ridgedSurfaceBuffer[surfaceIndex] + 1.5) / 3.0;
+        double perlinSurfaceNoise = (this.surfaceNoise.get(x, z) + 1.5) / 3.0;
+        double perlinCeilingNoise = (this.ceilingNoise.get(x, z) + 1.5) / 3.0;
+        double ridgedSurfaceNoise = (this.ridgedSurfaceNoise.get(x, z) + 1.5) / 3.0;
 
-        double pillarDensity = Math.pow((this.pillarBuffer[surfaceIndex] + 1.0) * 0.5, 4.0);
+        double pillarDensity = Math.pow((this.pillarNoise.get(x, z) + 1.0) * 0.5, 4.0);
 
         double surfaceHeightVariationScale = Math.pow(heightVariation * 2.0, 3.0);
         double cavernHeightVariationScale = Math.pow(cavernHeightVariation * 2.0, 3.0);
@@ -140,29 +110,25 @@ public class MidnightNoiseGenerator {
 
         RegionInterpolator interpolator = new RegionInterpolator(regions, Curve.linear());
 
-        for (int localY = 0; localY < NOISE_HEIGHT + 1; localY++) {
-            double surfaceWeight = MathHelper.clamp((localY - cavernRegionEnd) / (surfaceHeight - cavernRegionEnd), 0.0, 1.0);
+        for (int y = 0; y < NOISE_HEIGHT + 1; y++) {
+            double surfaceWeight = MathHelper.clamp((y - cavernRegionEnd) / (surfaceHeight - cavernRegionEnd), 0.0, 1.0);
             double cavernWeight = 1.0 - surfaceWeight;
 
-            double densityBias = interpolator.get(localY);
+            double densityBias = interpolator.get(y);
 
-            double cavernCenterDistance = Math.min(Math.abs(localY - cavernCenter) / cavernHeight, 1.0);
+            double cavernCenterDistance = Math.min(Math.abs(y - cavernCenter) / cavernHeight, 1.0);
             double pillarFalloff = Math.max(1.0 - Math.pow(cavernCenterDistance, 2.0), 0.0) * 0.125;
 
             densityBias += (Math.max(pillarDensity * 3.5 - pillarFalloff, 0.0) * cavernWeight * 5.0) * properties.pillarWeight;
 
-            double sampledNoise = this.worldNoiseBuffer[index];
+            double sampledNoise = this.worldNoise.get(x, y, z);
 
             double surfaceNoiseDensity = sampledNoise * surfaceHeightVariationScale;
             double cavernNoiseDensity = sampledNoise * cavernHeightVariationScale;
             double noiseDensity = (surfaceNoiseDensity * surfaceWeight) + (cavernNoiseDensity * cavernWeight);
 
-            this.terrainBuffer[index] = noiseDensity + densityBias;
-
-            index++;
+            noise[y] = noiseDensity + densityBias;
         }
-
-        return index;
     }
 
     private BiomeProperties computeBiomeProperties(GenerationContext context, int localX, int localZ) {
@@ -192,7 +158,7 @@ public class MidnightNoiseGenerator {
                 float nCavernPillarWeight = cavernStructureConfig.getPillarWeight();
 
                 float biomeWeight = this.weightTable.get(neighborX, neighborZ) / (nBaseHeight + 2.0F);
-                if (neighborBiome.getBaseHeight() > originBiome.getBaseHeight()) {
+                if (neighborBiome.getDepth() > originBiome.getDepth()) {
                     biomeWeight *= 2.0F;
                 }
 

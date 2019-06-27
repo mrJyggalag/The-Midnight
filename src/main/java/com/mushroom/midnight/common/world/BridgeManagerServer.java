@@ -28,7 +28,7 @@ public class BridgeManagerServer extends WorldSavedData implements BridgeManager
     }
 
     public static BridgeManagerServer get(MinecraftServer server) {
-        DimensionSavedDataManager storage = server.getWorld(DimensionType.field_223227_a_).getSavedData();
+        DimensionSavedDataManager storage = server.getWorld(DimensionType.OVERWORLD).getSavedData();
         return storage.getOrCreate(() -> new BridgeManagerServer(KEY), KEY);
     }
 

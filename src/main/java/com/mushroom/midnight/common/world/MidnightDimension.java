@@ -1,5 +1,6 @@
 package com.mushroom.midnight.common.world;
 
+import com.mushroom.midnight.common.biome.MidnightBiomeLayer;
 import com.mushroom.midnight.common.config.MidnightConfig;
 import com.mushroom.midnight.common.registry.MidnightDimensions;
 import net.minecraft.client.Minecraft;
@@ -10,6 +11,7 @@ import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.ServerWorld;
 import net.minecraft.world.World;
+import net.minecraft.world.biome.provider.BiomeProvider;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.ChunkHolder;
 import net.minecraft.world.chunk.ServerChunkProvider;
@@ -33,7 +35,8 @@ public class MidnightDimension extends Dimension {
 
     @Override
     public ChunkGenerator<?> createChunkGenerator() {
-        return null;
+        BiomeProvider biomeProvider = new MidnightBiomeProvider(this.world, MidnightBiomeLayer.SURFACE);
+        return new MidnightChunkGenerator(this.world, biomeProvider, MidnightChunkGenerator.Config.createDefault());
     }
 
     @Nullable

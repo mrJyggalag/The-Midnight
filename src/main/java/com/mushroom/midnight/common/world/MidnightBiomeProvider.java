@@ -6,6 +6,8 @@ import com.mushroom.midnight.common.biome.BiomeLayerType;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
+import net.minecraft.world.biome.Biomes;
+import net.minecraft.world.biome.provider.BiomeProvider;
 
 import javax.annotation.Nullable;
 import java.util.List;

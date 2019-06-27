@@ -5,8 +5,8 @@ import com.mushroom.midnight.common.biome.config.SpawnerConfig;
 import com.mushroom.midnight.common.config.MidnightConfig;
 import com.mushroom.midnight.common.util.WeightedPool;
 import net.minecraft.block.BlockState;
+import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntitySpawnPlacementRegistry;
-import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.entity.IMobEntityData;
 import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -14,7 +14,7 @@ import net.minecraft.server.management.PlayerChunkMapEntry;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.world.EnumDifficulty;
+import net.minecraft.world.Difficulty;
 import net.minecraft.world.ServerWorld;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
@@ -55,20 +55,20 @@ public final class MidnightEntitySpawner<T extends EntitySpawnConfigured> {
     public void spawnAroundPlayers(ServerWorld world) {
         Set<ChunkPos> spawnChunks = this.computeEligibleSpawnChunks(world);
 
-        Collection<EnumCreatureType> validCreatureTypes = Arrays.stream(EnumCreatureType.values())
+        Collection<EntityClassification> validClassifications = Arrays.stream(EntityClassification.values())
                 .filter(c -> this.shouldSpawnCreatureType(world, c))
                 .collect(Collectors.toList());
 
-        if (validCreatureTypes.isEmpty()) {
+        if (validClassifications.isEmpty()) {
             return;
         }
 
-        CreatureTypeCount entityCount = CreatureTypeCount.count(world, validCreatureTypes);
-        for (EnumCreatureType creatureType : validCreatureTypes) {
-            int actualCreatureCount = entityCount.getCount(creatureType);
-            int maxCreatureCount = creatureType.getMaxNumberOfCreature() * spawnChunks.size() / MOB_COUNT_DIV;
+        EntityClassificationCount entityCount = EntityClassificationCount.count(world, validClassifications);
+        for (EntityClassification classification : validClassifications) {
+            int actualCreatureCount = entityCount.getCount(classification);
+            int maxCreatureCount = classification.getMaxNumberOfCreature() * spawnChunks.size() / MOB_COUNT_DIV;
             if (actualCreatureCount <= maxCreatureCount) {
-                this.spawnCreaturesOfType(world, spawnChunks, creatureType);
+                this.spawnEntitiesOfClassification(world, spawnChunks, classification);
             }
         }
     }
@@ -89,7 +89,7 @@ public final class MidnightEntitySpawner<T extends EntitySpawnConfigured> {
         }
 
         while (random.nextFloat() < spawnerConfig.getSpawnChance()) {
-            WeightedPool<Biome.SpawnListEntry> pool = spawnerConfig.getPool(EnumCreatureType.CREATURE);
+            WeightedPool<Biome.SpawnListEntry> pool = spawnerConfig.getPool(EntityClassification.CREATURE);
             Biome.SpawnListEntry entry = pool.pick(world.rand);
             if (entry == null) {
                 continue;
@@ -99,7 +99,7 @@ public final class MidnightEntitySpawner<T extends EntitySpawnConfigured> {
         }
     }
 
-    private void spawnCreaturesOfType(ServerWorld world, Set<ChunkPos> spawnChunks, EnumCreatureType creatureType) {
+    private void spawnEntitiesOfClassification(ServerWorld world, Set<ChunkPos> spawnChunks, EntityClassification classification) {
         List<ChunkPos> shuffledChunks = new ArrayList<>(spawnChunks);
         Collections.shuffle(shuffledChunks);
 
@@ -110,12 +110,12 @@ public final class MidnightEntitySpawner<T extends EntitySpawnConfigured> {
                 continue;
             }
 
-            this.spawnEntitiesAround(world, pos, creatureType);
-            if (creatureType == MIDNIGHT_MOB) { break; } // spawn slowly monsters
+            this.spawnEntitiesAround(world, pos, classification);
+            if (classification == MIDNIGHT_MOB) { break; } // spawn slowly monsters
         }
     }
 
-    private void spawnEntitiesAround(ServerWorld world, BlockPos pos, EnumCreatureType creatureType) {
+    private void spawnEntitiesAround(ServerWorld world, BlockPos pos, EntityClassification classification) {
         BlockPos.MutableBlockPos mutablePos = new BlockPos.MutableBlockPos();
 
         int spawnedEntities = 0;
@@ -141,7 +141,7 @@ public final class MidnightEntitySpawner<T extends EntitySpawnConfigured> {
 
                 if (selectedEntry == null) {
                     T biome = this.biomeFunction.apply(pos);
-                    WeightedPool<Biome.SpawnListEntry> pool = biome.getSpawnerConfig().getPool(creatureType);
+                    WeightedPool<Biome.SpawnListEntry> pool = biome.getSpawnerConfig().getPool(classification);
 
                     selectedEntry = pool.pick(world.rand);
                     if (selectedEntry == null) {
@@ -149,7 +149,7 @@ public final class MidnightEntitySpawner<T extends EntitySpawnConfigured> {
                     }
                 }
 
-                if (this.canSpawnAt(world, creatureType, mutablePos, selectedEntry)) {
+                if (this.canSpawnAt(world, classification, mutablePos, selectedEntry)) {
                     MobEntity creature = this.createEntity(world, mutablePos, selectedEntry);
 
                     float spawnX = mutablePos.getX() + 0.5f;
@@ -200,11 +200,11 @@ public final class MidnightEntitySpawner<T extends EntitySpawnConfigured> {
                 if (this.isSpawnPositionValid(MobEntity.SpawnPlacementType.ON_GROUND, world, pos)) {
                     MobEntity creature = this.createEntity(world, pos, spawnEntry);
                     if (ForgeEventFactory.canEntitySpawn(creature, world, x + 0.5F, pos.getY(), z + 0.5F, null) == Event.Result.DENY) {
-                        creature.setDead();
+                        creature.remove();
                         continue;
                     }
 
-                    world.spawnEntity(creature);
+                    world.addEntity(creature);
                     livingData = creature.onInitialSpawn(world.getDifficultyForLocation(new BlockPos(creature)), livingData);
                     spawnedEntity = true;
                 }
@@ -235,7 +235,7 @@ public final class MidnightEntitySpawner<T extends EntitySpawnConfigured> {
         }
     }
 
-    private boolean canSpawnAt(ServerWorld world, EnumCreatureType creatureType, BlockPos pos, Biome.SpawnListEntry selectedEntry) {
+    private boolean canSpawnAt(ServerWorld world, EntityClassification classification, BlockPos pos, Biome.SpawnListEntry selectedEntry) {
         MobEntity.SpawnPlacementType placementType = EntitySpawnPlacementRegistry.getPlacementForEntity(selectedEntry.entityClass);
         return this.isSpawnPositionValid(placementType, world, pos);
     }
@@ -268,14 +268,14 @@ public final class MidnightEntitySpawner<T extends EntitySpawnConfigured> {
         return world.getPlayers().stream().filter(player -> !player.isSpectator());
     }
 
-    private boolean shouldSpawnCreatureType(World world, EnumCreatureType creatureType) {
-        if (!creatureType.getPeacefulCreature() && world.getDifficulty() == EnumDifficulty.PEACEFUL) {
+    private boolean shouldSpawnCreatureType(World world, EntityClassification classification) {
+        if (!classification.getPeacefulCreature() && world.getDifficulty() == Difficulty.PEACEFUL) {
             return false;
         }
-        if (creatureType == MIDNIGHT_MOB) {
-            return world.getTotalWorldTime() % MidnightConfig.general.monsterSpawnRate.get() == 0;
+        if (classification == MIDNIGHT_MOB) {
+            return world.getGameTime() % MidnightConfig.general.monsterSpawnRate.get() == 0;
         }
-        return !creatureType.getAnimal() || world.getTotalWorldTime() % ANIMAL_SPAWN_INTERVAL == 0;
+        return !classification.getAnimal() || world.getGameTime() % ANIMAL_SPAWN_INTERVAL == 0;
     }
 
     private BlockPos getRandomPositionInChunk(World world, int chunkX, int chunkZ) {

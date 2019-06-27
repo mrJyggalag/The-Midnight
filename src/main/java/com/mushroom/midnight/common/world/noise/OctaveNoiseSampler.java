@@ -1,6 +1,5 @@
 package com.mushroom.midnight.common.world.noise;
 
-import java.util.Arrays;
 import java.util.Random;
 import java.util.function.Supplier;
 
@@ -53,8 +52,8 @@ public class OctaveNoiseSampler implements INoiseSampler {
     }
 
     @Override
-    public void sample2D(double[] buffer, double originX, double originY, int sizeX, int sizeY) {
-        Arrays.fill(buffer, 0.0);
+    public double get(double x, double y) {
+        double value = 0.0;
 
         double currentAmplitude = this.amplitude;
         double currentFrequency = this.frequency;
@@ -64,16 +63,18 @@ public class OctaveNoiseSampler implements INoiseSampler {
 
             sampler.setAmplitude(currentAmplitude);
             sampler.setFrequency(currentFrequency);
-            sampler.sample2D(buffer, originX, originY, sizeX, sizeY);
+            value += sampler.get(x, y);
 
             currentAmplitude *= this.persistence;
             currentFrequency *= this.lacunarity;
         }
+
+        return value;
     }
 
     @Override
-    public void sample3D(double[] buffer, double originX, double originY, double originZ, int sizeX, int sizeY, int sizeZ) {
-        Arrays.fill(buffer, 0.0);
+    public double get(double x, double y, double z) {
+        double value = 0.0;
 
         double currentAmplitude = this.amplitude;
         double currentFrequency = this.frequency;
@@ -83,10 +84,12 @@ public class OctaveNoiseSampler implements INoiseSampler {
 
             sampler.setAmplitude(currentAmplitude);
             sampler.setFrequency(currentFrequency);
-            sampler.sample3D(buffer, originX, originY, originZ, sizeX, sizeY, sizeZ);
+            value += sampler.get(x, y, z);
 
             currentAmplitude *= this.persistence;
             currentFrequency *= this.lacunarity;
         }
+
+        return value;
     }
 }
