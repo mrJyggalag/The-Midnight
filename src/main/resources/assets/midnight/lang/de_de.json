@@ -1,0 +1,120 @@
+{
+  "_comment": "Item Groups",
+
+  "itemGroup.midnight": "Mitternacht",
+
+  "_comment": "Blocks",
+
+  "block.midnight.nightstone": "Nachtstein",
+  "block.midnight.midnight_grass": "Mitternachtsgras",
+  "block.midnight.midnight_dirt": "Mitternachtserde",
+
+  "block.midnight.trenchstone": "Tiefstein",
+
+  "block.midnight.shadowroot_log": "Schattenwurzelstamm",
+  "block.midnight.shadowroot_planks": "Schattenwurzelbretter",
+  "block.midnight.shadowroot_leaves": "Schattenwurzellaub",
+
+  "block.midnight.dead_wood_log": "Verrotteter Baumstamm",
+  "block.midnight.dead_wood_planks": "Verrottete Bretter",
+
+  "block.midnight.dark_willow_log": "Dunkelweidenstamm",
+  "block.midnight.dark_willow_planks": "Dunkelweidenbretter",
+  "block.midnight.dark_willow_leaves": "Dunkelweidenlaub",
+
+  "block.midnight.nightstone_bricks": "Nachtsteinziegel",
+  "block.midnight.chiseled_nightstone_bricks": "Gemeißelte Nachtsteinziegel",
+
+  "block.midnight.dark_pearl_ore": "Dunkelperlerz",
+  "block.midnight.dark_pearl_block": "Dunkelperlblock",
+
+  "block.midnight.ebonys_ore": "Ebonyserz",
+  "block.midnight.ebonys_block": "Ebonysblock",
+
+  "block.midnight.nagrilite_ore": "Nagriliterz",
+  "block.midnight.nagrilite_block": "Nagrilitblock",
+
+  "block.midnight.tenebrum_ore": "Tenebrumerz",
+  "block.midnight.tenebrum_block": "Tenebrumblock",
+
+  "block.midnight.shadowroot_chest": "Schattenwurzeltruhe",
+  "block.midnight.shadowroot_crafting_table": "Schattenwurzelwerkbank",
+  "block.midnight.midnight_furnace": "Mitternachtsofen",
+
+  "block.midnight.tall_midnight_grass": "Hohes Mitternachtsgras",
+  "block.midnight.double_midnight_grass": "Doppeltes Mitternachtsgras",
+
+  "block.midnight.lumen_bud": "Lumenknospe",
+  "block.midnight.double_lumen_bud": "Doppelte Lumenknospe",
+
+  "block.midnight.shadowroot_trapdoor": "Schattenwurzelfalltür",
+  "block.midnight.dark_willow_trapdoor": "Dunkelweidenfalltür",
+  "block.midnight.dead_wood_trapdoor": "Verrottete Falltür",
+
+  "block.midnight.shadowroot_sapling": "Schattenwurzelsetzling",
+  "block.midnight.dark_willow_sapling": "Dunkelweidensetzling",
+
+  "block.midnight.bloomcrystal": "Blütkristall",
+  "block.midnight.bloomcrystal_rock": "Blütkristallblock",
+
+  "block.midnight.rouxe": "Rouxkristall",
+  "block.midnight.rouxe_rock": "Rouxfelsen",
+
+  "block.midnight.miasma_surface": "Miasma-oberfläche",
+  "block.midnight.misama": "Miasma",
+
+  "block.midnight.crystal_flower": "Kristallblume",
+
+  "block.midnight.dewshroom": "Dewpilz",
+  "block.midnight.double_dewshroom": "Doppelter Dewpilz",
+
+  "block.midnight.nightshroom": "Nachtspilz",
+  "block.midnight.double_nightshroom": "Doppelter Nachtspilz",
+
+  "block.midnight.viridshroom": "Viridpilz",
+  "block.midnight.double_viridshroom": "Doppelter Viridpilz",
+
+  "block.midnight.nightshroom_stem": "Nachtspilzstamm",
+  "block.midnight.nightshroom_hat": "Nachtspilzkappe",
+  "block.midnight.nightshroom_planks": "Nachtspilzbretter",
+  "block.midnight.nightshroom_shelf": "Nachtspilzregal",
+  "block.midnight.nightshroom_trapdoor": "Nachtspilzfalltür",
+
+  "block.midnight.dewshroom_stem": "Dewpilzstamm",
+  "block.midnight.dewshroom_hat": "Dewpilzkappe",
+  "block.midnight.dewshroom_planks": "Dewpilzbretter",
+  "block.midnight.dewshroom_shelf": "Dewpilzregal",
+  "block.midnight.dewshroom_trapdoor": "Dewpilzfalltür",
+
+  "block.midnight.viridshroom_stem": "Viridpilzstamm",
+  "block.midnight.viridshroom_hat": "Viridpilzkappe",
+  "block.midnight.viridshroom_planks": "Viridpilzbretter",
+  "block.midnight.viridshroom_shelf": "Viridpilzregal",
+  "block.midnight.viridshroom_trapdoor": "Viridpilzfalltür",
+
+  "_comment": "Items",
+
+  "item.midnight.shadowroot_door": "Schattenwurzeltür",
+  "item.midnight.dark_willow_door": "Dunkelweidentür",
+  "item.midnight.dead_wood_door": "Verrottete Tür",
+
+  "item.midnight.nightshroom_door": "Nachtspilztür",
+  "item.midnight.dewshroom_door": "Dewpilztür",
+  "item.midnight.viridshroom_door": "Viridpilztür",
+
+  "item.midnight.dark_pearl": "Dunkle Perle",
+
+  "_comment": "Fluids",
+
+  "fluid.midnight.miasma": "Miasma",
+
+  "_comment": "Entities",
+
+  "entity.midnight.rift": "Mitternachtsriss",
+  "entity.midnight.rifter": "Reißer",
+
+  "_comment": "Config",
+
+  "config.midnight.midnight_dimension_id": "Mitternacht Dimension ID",
+  "config.midnight.midnight_dimension_id.tooltip": "Die ID die für die Mitternacht Dimension benutzt wird"
+}

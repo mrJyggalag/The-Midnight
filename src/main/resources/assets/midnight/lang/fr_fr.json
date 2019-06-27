@@ -1,0 +1,438 @@
+{
+  "_comment": "Item Groups",
+
+  "itemGroup.midnight_building": "Midnight Construction",
+  "itemGroup.midnight_decoration": "Midnight Décoration",
+  "itemGroup.midnight_items": "Midnight Objets",
+  "itemGroup.midnight_tools": "Midnight Outils",
+  "itemGroup.midnight_combat": "Midnight Combat",
+
+  "_comment": "Blocks",
+
+  "block.midnight.nightstone": "Pierre de Nuit",
+  "block.midnight.midnight_grass": "Herbe de Minuit",
+  "block.midnight.midnight_coarse_dirt": "Terre Stérile de Minuit",
+  "block.midnight.midnight_dirt": "Terre de Minuit",
+  "block.midnight.midnight_mycelium": "Mycélium de Minuit",
+
+  "block.midnight.trenchstone": "Pierre de Tranchée",
+  "block.midnight.trenchstone_bricks": "Briques de Tranchée",
+
+  "block.midnight.shadowroot_log": "Bûche d'Ombreracine",
+  "block.midnight.shadowroot_planks": "Planches d'Ombreracine",
+  "block.midnight.shadowroot_leaves": "Feuilles d'Ombreracine",
+
+  "block.midnight.dead_wood_log": "Bûche de Bois Mort",
+  "block.midnight.dead_wood_planks": "Planches de Bois Mort",
+
+  "block.midnight.dark_willow_log": "Bûche de Saule Sombre",
+  "block.midnight.dark_willow_planks": "Planches de Saule Sombre",
+  "block.midnight.dark_willow_leaves": "Feuilles de Saule Sombre",
+
+  "block.midnight.nightstone_bricks": "Briques en Pierre de Nuit",
+  "block.midnight.chiseled_nightstone_bricks": "Briques ciselées en Pierre de Nuit",
+
+  "block.midnight.dark_pearl_ore": "Minerai de Perle Noire",
+  "block.midnight.dark_pearl_block": "Bloc de Perle Noire",
+
+  "block.midnight.ebonys_ore": "Minerai d'Ébène",
+  "block.midnight.ebonys_block": "Bloc d'Ébène",
+
+  "block.midnight.archaic_ore": "Minerai Archaïque",
+
+  "block.midnight.nagrilite_ore": "Minerai de Nagrilite",
+  "block.midnight.nagrilite_block": "Bloc de Nagrilite",
+
+  "block.midnight.tenebrum_ore": "Minerai de Tenebrum",
+  "block.midnight.tenebrum_block": "Bloc de Tenebrum",
+
+  "block.midnight.shadowroot_chest": "Coffre en Ombreracine",
+  "block.midnight.shadowroot_double_chest": "Coffre Double en Ombreracine",
+  "block.midnight.shadowroot_crafting_table": "Établi en Ombreracine",
+  "block.midnight.midnight_furnace": "Fourneau de Minuit",
+
+  "block.midnight.tall_midnight_grass": "Hautes Herbes de Minuit",
+  "block.midnight.double_midnight_grass": "Très Hautes Herbes de Minuit",
+
+  "block.midnight.lumen_bud": "Bourgeon de Lumen",
+  "block.midnight.double_lumen_bud": "Grand Bourgeon de Lumen",
+
+  "block.midnight.shadowroot_trapdoor": "Trappe en Ombreracine",
+  "block.midnight.dark_willow_trapdoor": "Trappe en Saule Sombre",
+  "block.midnight.dead_wood_trapdoor": "Trappe en Bois Mort",
+  "block.midnight.tenebrum_trapdoor": "Trappe en Tenebrum",
+
+  "block.midnight.shadowroot_sapling": "Pousse d'Ombreracine",
+  "block.midnight.dark_willow_sapling": "Pousse de Saule Sombre",
+
+  "block.midnight.bloomcrystal": "Cristal de Floraison",
+  "block.midnight.bloomcrystal_rock": "Roche de Cristal de Floraison",
+
+  "block.midnight.rouxe": "Cristal de Rouxe",
+  "block.midnight.rouxe_rock": "Roche de Rouxe",
+
+  "block.midnight.archaic_glass": "Verre Archaïque",
+  "block.midnight.archaic_glass_pane": "Vitre Archaïque",
+
+  "block.midnight.miasma_surface": "Surface de Miasme",
+  "block.midnight.miasma": "Miasme",
+
+  "block.midnight.crystal_flower": "Fleur de Cristal",
+  "block.midnight.ghost_plant": "Plante Fantôme",
+  "block.midnight.fingered_grass": "Herbe Fourchue",
+  "block.midnight.bogweed": "Mauvaise Herbe de Tourbière",
+  "block.midnight.tendrilweed": "Mauvaise Herbe Torsadée",
+  "block.midnight.runebush": "RunePousse",
+  "block.midnight.dragon_nest": "Nid de Dragon",
+
+  "block.midnight.dewshroom": "ChampiRosée",
+  "block.midnight.double_dewshroom": "Grand ChampiRosée",
+
+  "block.midnight.nightshroom": "ChampiNuit",
+  "block.midnight.double_nightshroom": "Grand ChampiNuit",
+
+  "block.midnight.viridshroom": "ChampiViride",
+  "block.midnight.double_viridshroom": "Grand ChampiViride",
+
+  "block.midnight.bogshroom": "ChampiTourbe",
+  "block.midnight.double_bogshroom": "Grand ChampiTourbe",
+  "block.midnight.bogshroom_stem": "Tronc de ChampiTourbe",
+  "block.midnight.bogshroom_hat": "Chapeau de ChampiTourbe",
+  "block.midnight.bogshroom_shelf": "Étagères en ChampiTourbe",
+
+  "block.midnight.bulb_fungus": "Fongus Gluant",
+  "block.midnight.bulb_fungus_stem": "Tronc de Fongus Gluant",
+  "block.midnight.bulb_fungus_cap": "Chapeau de Fongus Gluant",
+
+  "block.midnight.bladeshroom": "ChampiLame",
+
+  "block.midnight.nightshroom_stem": "Tronc de ChampiNuit",
+  "block.midnight.nightshroom_hat": "Chapeau de ChampiNuit",
+  "block.midnight.nightshroom_planks": "Planches de ChampiNuit",
+  "block.midnight.nightshroom_shelf": "Étagères en ChampiNuit",
+  "block.midnight.nightshroom_trapdoor": "Trappe en ChampiNuit",
+
+  "block.midnight.dewshroom_stem": "Tronc de ChampiRosée",
+  "block.midnight.dewshroom_hat": "Chapeau de ChampiRosée",
+  "block.midnight.dewshroom_planks": "Planches de ChampiRosée",
+  "block.midnight.dewshroom_shelf": "Étagères en ChampiRosée",
+  "block.midnight.dewshroom_trapdoor": "Trappe en ChampiRosée",
+
+  "block.midnight.viridshroom_stem": "Tronc de ChampiViride",
+  "block.midnight.viridshroom_hat": "Chapeau de ChampiViride",
+  "block.midnight.viridshroom_planks": "Planches de ChampiViride",
+  "block.midnight.viridshroom_shelf": "Étagères en ChampiViride",
+  "block.midnight.viridshroom_trapdoor": "Trappe en ChampiViride",
+
+  "block.midnight.deceitful_mud": "Boue Trompeuse",
+  "block.midnight.deceitful_peat": "Tourbe Trompeuse",
+  "block.midnight.deceitful_algae": "Algues Trompeuse",
+  "block.midnight.deceitful_moss": "Mousse Trompeuse",
+
+  "block.midnight.shadowroot_ladder": "Échelle en Ombreracine",
+  "block.midnight.dead_wood_ladder": "Échelle en Bois Mort",
+  "block.midnight.dark_willow_ladder": "Échelle en Saule Sombre",
+  "block.midnight.dewshroom_ladder": "Échelle en ChampiRosée",
+  "block.midnight.viridshroom_ladder": "Échelle en ChampiViride",
+  "block.midnight.nightshroom_ladder": "Échelle en ChampiNuit",
+
+  "block.midnight.shadowroot_slab": "Dalle en Ombreracine",
+  "block.midnight.shadowroot_double_slab": "Double Dalle en Ombreracine",
+  "block.midnight.dead_wood_slab": "Dalle en Bois Mort",
+  "block.midnight.dead_wood_double_slab": "Double Dalle en Bois Mort",
+  "block.midnight.dark_willow_slab": "Dalle en Saule Sombre",
+  "block.midnight.dark_willow_double_slab": "Double Dalle en Saule Sombre",
+  "block.midnight.nightstone_slab": "Dalle en Pierre de Nuit",
+  "block.midnight.nightstone_double_slab": "Double Dalle en Pierre de Nuit",
+  "block.midnight.nightstone_brick_slab": "Dalle en Briques de Pierre de Nuit",
+  "block.midnight.nightstone_brick_double_slab": "Double Dalle en Briques de Pierre de Nuit",
+  "block.midnight.trenchstone_slab": "Dalle en Pierre de Tranchée",
+  "block.midnight.trenchstone_double_slab": "Double Dalle en Pierre de Tranchée",
+  "block.midnight.trenchstone_brick_slab": "Dalle en Briques de Tranchée",
+  "block.midnight.trenchstone_brick_double_slab": "Double Dalle en Briques de Tranchée",
+  "block.midnight.dewshroom_slab": "Dalle en ChampiRosée",
+  "block.midnight.dewshroom_double_slab": "Double Dalle en ChampiRosée",
+  "block.midnight.viridshroom_slab": "Dalle en ChampiViride",
+  "block.midnight.viridshroom_double_slab": "Double Dalle en ChampiViride",
+  "block.midnight.nightshroom_slab": "Dalle en ChampiNuit",
+  "block.midnight.nightshroom_double_slab": "Double Dalle en ChampiNuit",
+  "block.midnight.rockshroom_bricks_slab": "Dalle en Briques de ChampiRoche",
+  "block.midnight.rockshroom_bricks_double_slab": "Double Dalle en Briques de ChampiRoche",
+
+  "block.midnight.shadowroot_stairs": "Escaliers en Ombreracine",
+  "block.midnight.dead_wood_stairs": "Escaliers en Bois Mort",
+  "block.midnight.dark_willow_stairs": "Escaliers en Saule Sombre",
+  "block.midnight.nightstone_stairs": "Escaliers en Pierre de Nuit",
+  "block.midnight.nightstone_brick_stairs": "Escaliers en Briques de Pierre de Nuit",
+  "block.midnight.trenchstone_stairs": "Escaliers en Pierre de Tranchée",
+  "block.midnight.trenchstone_brick_stairs": "Escaliers en Briques de Tranchée",
+  "block.midnight.dewshroom_stairs": "Escaliers en ChampiRosée",
+  "block.midnight.viridshroom_stairs": "Escaliers en ChampiViride",
+  "block.midnight.nightshroom_stairs": "Escaliers en ChampiNuit",
+  "block.midnight.rockshroom_bricks_stairs": "Escaliers en Briques de ChampiRoche",
+
+  "block.midnight.shadowroot_fence": "Barrière en Ombreracine",
+  "block.midnight.dead_wood_fence": "Barrière en Bois Mort",
+  "block.midnight.dark_willow_fence": "Barrière en Saule Sombre",
+  "block.midnight.dewshroom_fence": "Barrière en ChampiRosée",
+  "block.midnight.viridshroom_fence": "Barrière en ChampiViride",
+  "block.midnight.nightshroom_fence": "Barrière en ChampiNuit",
+
+  "block.midnight.nightstone_wall": "Muret en Pierre de Nuit",
+  "block.midnight.nightstone_brick_wall": "Muret en Briques de Pierre de Nuit",
+  "block.midnight.trenchstone_wall": "Muret en Pierre de Tranchée",
+  "block.midnight.trenchstone_brick_wall": "Muret en Briques de Tranchée",
+  "block.midnight.rockshroom_bricks_wall": "Muret en Briques de ChampiRoche",
+
+  "block.midnight.shadowroot_fence_gate": "Portillon en Ombreracine",
+  "block.midnight.dead_wood_fence_gate": "Portillon en Bois Mort",
+  "block.midnight.dark_willow_fence_gate": "Portillon en Saule Sombre",
+  "block.midnight.dewshroom_fence_gate": "Portillon en ChampiRosée",
+  "block.midnight.viridshroom_fence_gate": "Portillon en ChampiViride",
+  "block.midnight.nightshroom_fence_gate": "Portillon en ChampiNuit",
+
+  "block.midnight.suavis": "Suavis",
+  "block.midnight.rockshroom": "ChampiRoche",
+  "block.midnight.rockshroom_bricks": "Briques de ChampiRoche",
+
+  "block.midnight.stinger_egg": "Oeuf de Piqueur",
+  "block.midnight.violeaf": "Viofeuille",
+  "block.midnight.unstable_bush": "Plante Instable",
+  "block.midnight.unstable_bush_blue": "Plante Instable Bleu",
+  "block.midnight.unstable_bush_green": "Plante Instable Vert",
+  "block.midnight.unstable_bush_lime": "Plante Instable Vert Clair",
+
+  "block.midnight.bogshroom_sporch": "Sporche de ChampiTourbe",
+  "block.midnight.nightshroom_sporch": "Sporche de ChampiNuit",
+  "block.midnight.dewshroom_sporch": "Sporche de ChampiRosée",
+  "block.midnight.viridshroom_sporch": "Sporche de ChampiViride",
+
+  "_comment": "Items",
+
+  "item.midnight.shadowroot_door": "Porte en Ombreracine",
+  "item.midnight.dark_willow_door": "Porte en Saule Sombre",
+  "item.midnight.dead_wood_door": "Porte en Bois Mort",
+  "item.midnight.tenebrum_door": "Porte en Tenebrum",
+
+  "item.midnight.nightshroom_door": "Porte en ChampiNuit",
+  "item.midnight.dewshroom_door": "Porte en ChampiRosée",
+  "item.midnight.viridshroom_door": "Porte en ChampiViride",
+
+  "item.midnight.bogshroom_powder": "Poudre de ChampiTourbe",
+  "item.midnight.nightshroom_powder": "Poudre de ChampiNuit",
+  "item.midnight.dewshroom_powder": "Poudre de ChampiRosée",
+  "item.midnight.viridshroom_powder": "Poudre de ChampiViride",
+
+  "item.midnight.geode": "Géode",
+  "item.midnight.dark_pearl": "Perle Sombre",
+  "item.midnight.dark_stick": "Bâton Sombre",
+  "item.midnight.rockshroom_clump": "Amas de ChampiRoche",
+  "item.midnight.tenebrum_ingot": "Lingot de Tenebrum",
+  "item.midnight.tenebrum_nugget": "Pépite de Tenebrum",
+  "item.midnight.nagrilite_ingot": "Lingot de Nagrilite",
+  "item.midnight.nagrilite_nugget": "Pépite de Nagrilite",
+  "item.midnight.ebonys": "Ébène",
+  "item.midnight.archaic_shard": "Tesson Archaïque",
+
+  "item.midnight.raw_suavis": "Tranche de Suavis Cru",
+  "item.midnight.cook_suavis": "Tranche de Suavis Cuit",
+  "item.midnight.deceitful_snapper": "Vivaneau Fourbe",
+  "item.midnight.raw_stag_flank": "Flanc de Cerf Cru",
+  "item.midnight.cook_stag_flank": "Flanc de Cerf Cuit",
+  "item.midnight.cook_stinger_egg": "Oeuf de Stinger Cuit",
+  "item.midnight.hunter_wing": "Aile de Chasseur",
+  "item.midnight.cook_hunter_wing": "Aile de Chasseur Cuite",
+  "item.midnight.bulb_fungus_hand": "Main de Fongus Gluant",
+  "item.midnight.unstable_seeds": "Graines Instables",
+  "item.midnight.unstable_fruit_blue": "Fruit Instable Bleu",
+  "item.midnight.unstable_fruit_lime": "Fruit Instable Vert Clair",
+  "item.midnight.unstable_fruit_green": "Fruit Instable Vert",
+
+  "item.midnight.spore_bomb.nightshroom": "Bombe de Spores de ChampiBuit",
+  "item.midnight.spore_bomb.dewshroom": "Bombe de Spores de ChampiRosée",
+  "item.midnight.spore_bomb.viridshroom": "Bombe de Spores de ChampiViride",
+  "item.midnight.spore_bomb.bogshroom": "Bombe de Spores de ChampiTourbe",
+
+  "item.midnight.bladeshroom_cap": "Chapeau de ChampiLame",
+  "item.midnight.bladeshroom_spores": "Spores de ChampiLame",
+
+  "_comment": "Tools, Weapons and Armors",
+
+  "item.midnight.shadowroot_pickaxe": "Pioche en OmbreRacine",
+  "item.midnight.tenebrum_pickaxe": "Pioche en Tenebrum",
+  "item.midnight.nagrilite_pickaxe": "Pioche en Nagrilite",
+  "item.midnight.ebonys_pickaxe": "Pioche en Ébène",
+  "item.midnight.nightstone_pickaxe": "Pioche en Pierre de Nuit",
+
+  "item.midnight.shadowroot_shovel": "Pelle en OmbreRacine",
+  "item.midnight.tenebrum_shovel": "Pelle en Tenebrum",
+  "item.midnight.nagrilite_shovel": "Pelle en Nagrilite",
+  "item.midnight.ebonys_shovel": "Pelle en Ébène",
+  "item.midnight.nightstone_shovel": "Pelle en Pierre de Nuit",
+
+  "item.midnight.shadowroot_axe": "Hache en OmbreRacine",
+  "item.midnight.tenebrum_axe": "Hache en Tenebrum",
+  "item.midnight.nagrilite_axe": "Hache en Nagrilite",
+  "item.midnight.ebonys_axe": "Hache en Ébène",
+  "item.midnight.nightstone_axe": "Hache en Pierre de Nuit",
+
+  "item.midnight.shadowroot_hoe": "Houe en OmbreRacine",
+  "item.midnight.tenebrum_hoe": "Houe en Tenebrum",
+  "item.midnight.nagrilite_hoe": "Houe en Nagrilite",
+  "item.midnight.ebonys_hoe": "Houe en Ébène",
+  "item.midnight.nightstone_hoe": "Houe en Pierre de Nuit",
+
+  "item.midnight.shadowroot_sword": "Épée en OmbreRacine",
+  "item.midnight.tenebrum_sword": "Épée en Tenebrum",
+  "item.midnight.nagrilite_sword": "Épée en Nagrilite",
+  "item.midnight.ebonys_sword": "Épée en Ébène",
+  "item.midnight.nightstone_sword": "Épée en Pierre de Nuit",
+
+  "item.midnight.rockshroom_helmet": "Heaume en ChampiRoche",
+  "item.midnight.rockshroom_chestplate": "Plastron en ChampiRoche",
+  "item.midnight.rockshroom_leggings": "Jambières en ChampiRoche",
+  "item.midnight.rockshroom_boots": "Bottes en ChampiRoche",
+  "item.midnight.rockshroom_shield": "Bouclier en ChampiRoche",
+
+  "item.midnight.tenebrum_helmet": "Heaume en Tenebrum",
+  "item.midnight.tenebrum_chestplate": "Plastron en Tenebrum",
+  "item.midnight.tenebrum_leggings": "Jambières en Tenebrum",
+  "item.midnight.tenebrum_boots": "Bottes en Tenebrum",
+
+  "_comment": "Fluids",
+
+  "fluid.midnight.miasma": "Miasme",
+  "fluid.midnight.dark_water": "Eau Sombre",
+
+  "_comment": "Entities",
+
+  "entity.midnight.rift": "Faille de Minuit",
+  "entity.midnight.rifter": "Passeur de Faille",
+  "entity.midnight.hunter": "Chasseur de Minuit",
+  "entity.midnight.bladeshroom_cap": "Chapeau de ChampiLame",
+  "entity.midnight.nova": "Nova",
+  "entity.midnight.crystal_bug": "Insecte de Cristal",
+  "entity.midnight.stinger": "Piqueur",
+  "entity.midnight.penumbrian": "Pénombrien",
+  "entity.midnight.tree_hopper": "Cigale Épineuse",
+  "entity.midnight.nightstag": "Cerf Obscure",
+  "entity.midnight.deceitful_snapper": "Vivaneau Fourbe",
+  "entity.midnight.skulk": "Faufileur",
+  "entity.midnight.thrown_geode": "Géode Lancée",
+
+  "_comment": "Config",
+
+  "config_cat.midnight.general": "Général",
+  "config_cat.midnight.general.tooltip": "Toutes les options qui ne peuvent être configurée que sur le server.",
+  "config_cat.midnight.client": "Client",
+  "config_cat.midnight.client.tooltip": "Toutes les options qui peuvent être modifiées par les joueurs sur serveur.",
+
+  "config.midnight.midnight_dimension_id": "ID de la dimension de Minuit",
+  "config.midnight.midnight_dimension_id.tooltip": "L'ID qui va être utilisé pour la dimension de Minuit.",
+
+  "config.midnight.rift_shaders": "Ombrages des Failles",
+  "config.midnight.rift_shaders.tooltip": "Si vrai, les failles seront affichées avec des ombrages personalisés pour les effets standards. Si faux, une texture plus simple sera utilisée.",
+
+  "config.midnight.bladeshroom_damage_chance": "Chance de dégâts des ChampiLames",
+  "config.midnight.bladeshroom_damage_chance.tooltip": "La chance de subir des dégâts quand un Chapeau de ChampiLame est ramassé.",
+
+  "config.midnight.can_respawn_in_midnight": "Permet de réapparaître dans Minuit",
+  "config.midnight.can_respawn_in_midnight.tooltip": "Si vrai, les joueurs seront autorisés à réapparaître dans la dimension de Minuit.",
+
+  "config.midnight.hide_vignette_effect": "Cache l'effet de vignette",
+  "config.midnight.hide_vignette_effect.tooltip": "Cache l'effet de vignette dans les zones sombres de Minuit.",
+
+  "config.midnight.allow_lightning_damage": "Autoriser les dégâts des éclairs",
+  "config.midnight.allow_lightning_damage.tooltip": "Permet aux éclairs de Minuit de brûler les terres et d'endommager les entités.",
+
+  "config.midnight.rift_spawn_rarity": "Rareté des failles",
+  "config.midnight.rift_spawn_rarity.tooltip": "La rareté qu'une faille apparaisse. Les nombres plus grands augmentent la rareté. Si 0, les failles n'apparaissent pas.",
+
+  "config.midnight.rifter_spawn_rarity": "Rareté des passeurs de faille",
+  "config.midnight.rifter_spawn_rarity.tooltip": "Rareté que les failles fassent apparaître un passeur de faille. Les nombres plus grands augmentent la rareté. Si 0, les passeurs de faille n'apparaissent pas.",
+
+  "config.midnight.max_rifter_by_rift": "Passeurs de faille max par rift",
+  "config.midnight.max_rifter_by_rift.tooltip": "Maximum de passeurs de faille apparaissant d'un rift.",
+
+  "config.midnight.allow_rifter_teleport": "Téléportation des Passeurs de faille",
+  "config.midnight.allow_rifter_teleport.tooltip": "Autorise les Passeurs de faille à se téléporter sur les joueurs.",
+
+  "config.midnight.monster_spawn_rate": "Fréquence d'apparition des monstres",
+  "config.midnight.monster_spawn_rate.tooltip": "Fréquence d'apparition des créatures de type monstre.",
+
+  "config.midnight.rifter_capture_tamed_animal": "Attrape les animaux domestiqués",
+  "config.midnight.rifter_capture_tamed_animal.tooltip": "Autorise les passeurs de faille à attraper des animaux domestiqués",
+
+  "config.midnight.capturable_entities": "Entités attrapables",
+  "config.midnight.capturable_entities.tooltip": "Liste des entités(autres que joueur et animal) pouvant être capturées par les passeurs de faille",
+
+  "config.midnight.not_capturable_animals": "Animaux non attrapables",
+  "config.midnight.not_capturable_animals.tooltip": "Liste des animaux non attrapables par les passeurs de faille",
+
+  "config.midnight.foreign_flowers_from_bonemeal": "Fleurs étrangères de Poudre d'os",
+  "config.midnight.foreign_flowers_from_bonemeal.tooltip": "Autorise les fleurs d'autres mods à apparaître avec de la poudre d'os dans Minuit",
+
+  "status.midnight.rift_nearby": "Vous ne pouvez pas rester ici pour l'instant, il y a une présence démoniaque à proximitée",
+  "status.midnight.snapped": "Le poisson t'a mordu",
+
+  "_comment": "Biomes",
+
+  "biome.midnight.vigilant_forest": "Forêt Vigilante",
+  "biome.midnight.black_ridge": "Crête Noire",
+  "biome.midnight.deceitful_bog": "Tourbière Trompeuse",
+  "biome.midnight.fungi_forest": "Forêt Fongique",
+  "biome.midnight.obscured_peaks": "Pics Obscures",
+  "biome.midnight.warped_fields": "Champs Voilés",
+  "biome.midnight.crystal_spires": "Cimes de Cristal",
+  "biome.midnight.night_plains": "Plaines de Nuit",
+  "biome.midnight.obscured_plateau": "Plateau Obscure",
+  "biome.midnight.phantasmal_valley": "Vallée Fantasmatique",
+  "biome.midnight.runebush_grove": "Bosquet de RunePousse",
+  "biome.midnight.hilly_vigilant_forest": "Forêt Vigilante Vallonnée",
+  "biome.midnight.hilly_fungi_forest": "Forêt Fongique Vallonnée",
+
+  "_comment": "Potions",
+
+  "potion.midnight.stunned": "Étourdi",
+  "potion.midnight.pollinated": "Pollinisé",
+  "potion.midnight.dragon_guard": "Garde du Dragon",
+  "potion.midnight.darkness": "Obscurité",
+  "potion.midnight.tormented": "Tourmenté",
+  "potion.midnight.unstable_fall": "Chute Instable",
+  "potion.midnight.confusion": "Confusion",
+
+  "_comment": "DamageSources",
+  "death.midnight.bladeshroom": "%s a été piqué mortellement par un ChampiLame",
+  "death.midnight.deceitful_snapper": "%s a été dévoré",
+  "death.midnight.rockshroom_spore": "%s a été touché par un spore de ChampiRoche",
+  "death.midnight.tormented": "%s a sombré dans ses tourments",
+
+  "_comment": "Advancements",
+
+  "advancement.midnight.title": "Minuit",
+  "advancement.midnight.desc": "Couvre-feu !",
+
+  "advancement.inebriated.title": "Imbriqué",
+  "advancement.inebriated.desc": "Casser une plante de Suavis",
+
+  "advancement.shroomikens.title": "Champikens",
+  "advancement.shroomikens.desc": "Lancer un chapeau de ChampiLame",
+
+  "advancement.fungi_forest.title": "Éclairage",
+  "advancement.fungi_forest.desc": "Trouver le biome de Forêt Fongique",
+
+  "advancement.snapped_by_snapper.title": "Revanche",
+  "advancement.snapped_by_snapper.desc": "Se faire mordre par un Vivaneau Fourbe en essayant de le manger",
+
+  "advancement.your_highness.title": "Votre Grandeur",
+  "advancement.your_highness.desc": "Obtenir une révérence de chaque couleur de Cerf Obscure",
+
+  "advancement.thrown_geode.title": "Fissure",
+  "advancement.thrown_geode.desc": "Casser une géode en la lançant sur quelque chose d'assez solide",
+
+  "advancement.surface_biomes.title": "Marche-Nuit",
+  "advancement.surface_biomes.desc": "Traverser chaque biome de la surface de Minuit",
+
+  "advancement.violeaf.title": "Remède à base de plantes",
+  "advancement.violeaf.desc": "Guérir de l'effet de nausée en marchant près d'une Viofeuille"
+}
