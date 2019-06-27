@@ -25,11 +25,13 @@ import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.ChunkPrimer;
 import net.minecraft.world.gen.IChunkGenerator;
 import net.minecraft.world.gen.MapGenBase;
+import net.minecraftforge.common.util.NonNullConsumer;
 import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.event.terraingen.InitMapGenEvent;
 import net.minecraftforge.event.terraingen.PopulateChunkEvent;
 import net.minecraftforge.event.terraingen.TerrainGen;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Random;
@@ -99,10 +101,7 @@ public class MidnightChunkGenerator implements IChunkGenerator, PartialChunkGene
             chunkBiomes[i] = (byte) Biome.getIdForBiome(this.biomeBuffer[i]);
         }
 
-        CavernousBiomeStore cavernousBiomeStore = chunk.getCapability(Midnight.CAVERNOUS_BIOME_CAP, null);
-        if (cavernousBiomeStore != null) {
-            cavernousBiomeStore.populate(this.cavernBiomeBuffer);
-        }
+        chunk.getCapability(Midnight.CAVERNOUS_BIOME_CAP, null).ifPresent(cavernousBiomeStore -> cavernousBiomeStore.populate(MidnightChunkGenerator.this.cavernBiomeBuffer));
 
         chunk.generateSkylightMap();
 
@@ -200,10 +199,9 @@ public class MidnightChunkGenerator implements IChunkGenerator, PartialChunkGene
             cavernousBiome.decorate(this.world, this.random, origin);
 
             if (TerrainGen.populate(this, this.world, this.random, chunkX, chunkZ, false, PopulateChunkEvent.Populate.EventType.ANIMALS)) {
-                MidnightWorldSpawners worldSpawners = this.world.getCapability(Midnight.WORLD_SPAWNERS_CAP, null);
-                if (worldSpawners != null) {
+                this.world.getCapability(Midnight.WORLD_SPAWNERS_CAP, null).ifPresent(worldSpawners -> {
                     worldSpawners.populateChunk(chunkX, chunkZ, this.random);
-                }
+                });
             }
 
             ForgeEventFactory.onChunkPopulate(false, this, this.world, this.random, chunkX, chunkZ, false);
@@ -238,14 +236,9 @@ public class MidnightChunkGenerator implements IChunkGenerator, PartialChunkGene
     }
 
     private BiomeLayerSampler<CavernousBiome> getCavernousBiomeSampler() {
-        MultiLayerBiomeSampler multiLayerSampler = this.world.getCapability(Midnight.MULTI_LAYER_BIOME_SAMPLER_CAP, null);
-        if (multiLayerSampler != null) {
+        return this.world.getCapability(Midnight.MULTI_LAYER_BIOME_SAMPLER_CAP, null).map(multiLayerSampler -> {
             BiomeLayerSampler<CavernousBiome> layer = multiLayerSampler.getLayer(MidnightBiomeLayer.UNDERGROUND);
-            if (layer != null) {
-                return layer;
-            }
-        }
-
-        return DEFAULT_CAVERN_SAMPLER;
+            return layer != null ? layer : DEFAULT_CAVERN_SAMPLER;
+        }).orElse(DEFAULT_CAVERN_SAMPLER);
     }
 }

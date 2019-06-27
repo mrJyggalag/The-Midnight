@@ -3,12 +3,9 @@ package com.mushroom.midnight.common.world;
 import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.common.biome.BiomeLayerSampler;
 import com.mushroom.midnight.common.biome.BiomeLayerType;
-import com.mushroom.midnight.common.capability.MultiLayerBiomeSampler;
-import net.minecraft.init.Biomes;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
-import net.minecraft.world.biome.BiomeProvider;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -92,14 +89,9 @@ public class MidnightBiomeProvider extends BiomeProvider {
     }
 
     private BiomeLayerSampler<Biome> getSampler() {
-        MultiLayerBiomeSampler multiLayerSampler = this.world.getCapability(Midnight.MULTI_LAYER_BIOME_SAMPLER_CAP, null);
-        if (multiLayerSampler != null) {
+        return this.world.getCapability(Midnight.MULTI_LAYER_BIOME_SAMPLER_CAP, null).map(multiLayerSampler -> {
             BiomeLayerSampler<Biome> layer = multiLayerSampler.getLayer(this.sampleLayer);
-            if (layer != null) {
-                return layer;
-            }
-        }
-
-        return DEFAULT_SAMPLER;
+            return layer != null ? layer : DEFAULT_SAMPLER;
+        }).orElse(DEFAULT_SAMPLER);
     }
 }

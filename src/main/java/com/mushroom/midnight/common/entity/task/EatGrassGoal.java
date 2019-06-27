@@ -17,7 +17,6 @@ import java.util.function.Predicate;
 public class EatGrassGoal extends Goal {
     private final Predicate<BlockState> eatPredicate;
     protected final MobEntity owner;
-    protected AnimationCapability capAnim;
     protected final int duration;
 
     public EatGrassGoal(MobEntity owner, int duration, boolean vanillaBehavior, Predicate<BlockState> eatPredicate) {
@@ -29,8 +28,7 @@ public class EatGrassGoal extends Goal {
 
     @Override
     public boolean shouldExecute() {
-        this.capAnim = this.owner.getCapability(Midnight.ANIMATION_CAP, null);
-        if (this.capAnim == null || this.owner.getRNG().nextInt(this.owner.isChild() ? 50 : 500) != 0) {
+        if (this.owner.getCapability(Midnight.ANIMATION_CAP, null).map(cap -> false).orElse(true) || this.owner.getRNG().nextInt(this.owner.isChild() ? 50 : 500) != 0) {
             return false;
         } else {
             BlockPos currentPos = this.owner.getPosition();
@@ -45,23 +43,27 @@ public class EatGrassGoal extends Goal {
 
     @Override
     public void startExecuting() {
-        this.capAnim.setAnimation(this.owner, AnimationCapability.Type.EAT, this.duration);
+        this.owner.getCapability(Midnight.ANIMATION_CAP, null).ifPresent(capAnim -> {
+            capAnim.setAnimation(this.owner, AnimationCapability.Type.EAT, this.duration);
+        });
         this.owner.getNavigator().clearPath();
     }
 
     @Override
     public void resetTask() {
-        this.capAnim.resetAnimation(this.owner);
+        this.owner.getCapability(Midnight.ANIMATION_CAP, null).ifPresent(capAnim -> {
+            capAnim.resetAnimation(this.owner);
+        });
     }
 
     @Override
     public boolean shouldContinueExecuting() {
-        return this.capAnim.getProgress(1f) < 1f;
+        return this.owner.getCapability(Midnight.ANIMATION_CAP, null).map(capAnim -> capAnim.getProgress(1f) < 1f).orElse(false);
     }
 
     @Override
     public void tick() {
-        if (this.capAnim.getCurrentTick() == this.capAnim.getDuration() - 10) {
+        if (this.owner.getCapability(Midnight.ANIMATION_CAP, null).map(capAnim -> capAnim.getCurrentTick() == capAnim.getDuration() - 10).orElse(false)) {
             BlockPos currentPos = this.owner.getPosition();
             BlockState currentState = this.owner.world.getBlockState(currentPos);
             if (this.eatPredicate.test(currentState)) {

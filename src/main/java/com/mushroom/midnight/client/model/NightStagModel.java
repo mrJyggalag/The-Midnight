@@ -88,40 +88,41 @@ public class NightStagModel extends QuadrupedModel<NightStagEntity> {
         this.head.rotationPointX = 0f;
         this.leg3.rotateAngleZ = 0f;
 
-        AnimationCapability animationCap = entity.getCapability(Midnight.ANIMATION_CAP, null);
-        if (animationCap != null && animationCap.isAnimate()) {
-            float partialTicks = Minecraft.getInstance().getRenderPartialTicks();
-            float progress = animationCap.getProgress(partialTicks);
-            float fctAnimation;
-            switch (animationCap.getAnimationType()) {
-                case ATTACK:
-                    fctAnimation = MathHelper.sin((float) (progress * Math.PI));
-                    this.body.rotateAngleX = fctAnimation * 0.2f;
-                    this.head.rotateAngleX = 0.17453292519943295f + (fctAnimation * 1.5f);
-                    break;
-                case CURTSEY:
-                    fctAnimation = MathHelper.sin((float) (progress * Math.PI));
-                    this.head.rotateAngleX = 0.17453292519943295f + fctAnimation;
-                    this.body.rotateAngleX = this.leg1.rotateAngleX = this.leg3.rotateAngleZ = fctAnimation * 0.2f;
-                    this.leg3.rotateAngleX = -this.leg3.rotateAngleZ;
-                    break;
-                case EAT:
-                    this.body.rotateAngleX = MathHelper.sin((float) (progress * Math.PI)) * 0.2f;
-                    this.head.rotateAngleX = 0.17453292519943295f + (progress <= 0.1f ? progress * 15f : progress >= 0.9f ? (1f - progress) * 15f : 1.5f);
-                    if (progress > 0.1f && progress <0.9f) {
-                        this.head.rotationPointX = -partialTicks;
-                    }
-                    break;
-                case CHARGE:
-                    fctAnimation = MathHelper.sin((float) ((progress % 1) * 10f * Math.PI));
-                    this.head.rotateAngleX = 0.17453292519943295f + (progress <= 0.05f ? progress * 28f : progress >= 0.9f ? (1f - progress) * 14f : 1.4f + fctAnimation* 0.02f);
-                    this.head.rotateAngleY = 0f;
-                    this.body.rotateAngleX = fctAnimation * 0.05f;
-                    if (progress <= 0.1f) {
-                        this.leg1.rotateAngleX = this.leg1.rotateAngleY = fctAnimation * 0.3f;
-                    }
-                    break;
+        entity.getCapability(Midnight.ANIMATION_CAP, null).ifPresent(animationCap -> {
+            if (animationCap.isAnimate()) {
+                float partialTicks = Minecraft.getInstance().getRenderPartialTicks();
+                float progress = animationCap.getProgress(partialTicks);
+                float fctAnimation;
+                switch (animationCap.getAnimationType()) {
+                    case ATTACK:
+                        fctAnimation = MathHelper.sin((float) (progress * Math.PI));
+                        this.body.rotateAngleX = fctAnimation * 0.2f;
+                        this.head.rotateAngleX = 0.17453292519943295f + (fctAnimation * 1.5f);
+                        break;
+                    case CURTSEY:
+                        fctAnimation = MathHelper.sin((float) (progress * Math.PI));
+                        this.head.rotateAngleX = 0.17453292519943295f + fctAnimation;
+                        this.body.rotateAngleX = this.leg1.rotateAngleX = this.leg3.rotateAngleZ = fctAnimation * 0.2f;
+                        this.leg3.rotateAngleX = -this.leg3.rotateAngleZ;
+                        break;
+                    case EAT:
+                        this.body.rotateAngleX = MathHelper.sin((float) (progress * Math.PI)) * 0.2f;
+                        this.head.rotateAngleX = 0.17453292519943295f + (progress <= 0.1f ? progress * 15f : progress >= 0.9f ? (1f - progress) * 15f : 1.5f);
+                        if (progress > 0.1f && progress <0.9f) {
+                            this.head.rotationPointX = -partialTicks;
+                        }
+                        break;
+                    case CHARGE:
+                        fctAnimation = MathHelper.sin((float) ((progress % 1) * 10f * Math.PI));
+                        this.head.rotateAngleX = 0.17453292519943295f + (progress <= 0.05f ? progress * 28f : progress >= 0.9f ? (1f - progress) * 14f : 1.4f + fctAnimation* 0.02f);
+                        this.head.rotateAngleY = 0f;
+                        this.body.rotateAngleX = fctAnimation * 0.05f;
+                        if (progress <= 0.1f) {
+                            this.leg1.rotateAngleX = this.leg1.rotateAngleY = fctAnimation * 0.3f;
+                        }
+                        break;
+                }
             }
-        }
+        });
     }
 }

@@ -5,6 +5,8 @@ import com.mushroom.midnight.common.capability.AnimationCapability;
 import com.mushroom.midnight.common.entity.task.NeutralGoal;
 import com.mushroom.midnight.common.registry.MidnightLootTables;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
+import net.minecraft.entity.CreatureAttribute;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ILivingEntityData;
@@ -15,16 +17,21 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.pathfinding.GroundPathNavigator;
 import net.minecraft.pathfinding.PathNavigator;
+import net.minecraft.potion.EffectInstance;
+import net.minecraft.potion.Effects;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.Direction;
+import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
+import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.util.LazyOptional;
 
 import javax.annotation.Nullable;
 
@@ -72,7 +79,7 @@ public class StingerEntity extends GrowableEntity implements IMob {
     }
 
     @Override
-    public boolean getCanSpawnHere() {
+    public boolean canSpawn(IWorld worldIn, SpawnReason spawnReasonIn) {
         if (getPosition().getY() > 50) {
             return false;
         }
@@ -138,17 +145,17 @@ public class StingerEntity extends GrowableEntity implements IMob {
         super.registerAttributes();
         getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.2d);
         getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(10d);
-        getAttributeMap().registerAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(2d);
+        getAttributes().registerAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(2d);
     }
 
     @Override
     public boolean attackEntityAsMob(Entity entity) {
         super.attackEntityAsMob(entity);
-        boolean flag = entity.attackEntityFrom(DamageSource.causeMobDamage(this), (float) getAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).getAttributeValue());
+        boolean flag = entity.attackEntityFrom(DamageSource.causeMobDamage(this), (float) getAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).getValue());
         if (flag) {
             if (!isChild()) {
                 int age = getGrowingAge();
-                ((PlayerEntity) entity).addPotionEffect(new EffectInstance(MobEffects.WEAKNESS, 100, age == getMaxGrowingAge() ? 2 : age > 2 ? 1 : 0, false, true));
+                ((PlayerEntity) entity).addPotionEffect(new EffectInstance(Effects.WEAKNESS, 100, age == getMaxGrowingAge() ? 2 : age > 2 ? 1 : 0, false, true));
             }
             applyEnchantments(this, entity);
             animCap.setAnimation(this, AnimationCapability.Type.ATTACK, 10);
@@ -157,7 +164,7 @@ public class StingerEntity extends GrowableEntity implements IMob {
     }
 
     @Override
-    public void swingArm(EnumHand hand) {
+    public void swingArm(Hand hand) {
     }
 
     @Override
@@ -181,8 +188,8 @@ public class StingerEntity extends GrowableEntity implements IMob {
     }
 
     @Override
-    public EnumCreatureAttribute getCreatureAttribute() {
-        return EnumCreatureAttribute.ARTHROPOD;
+    public CreatureAttribute getCreatureAttribute() {
+        return CreatureAttribute.ARTHROPOD;
     }
 
     @Override
@@ -192,16 +199,7 @@ public class StingerEntity extends GrowableEntity implements IMob {
     }
 
     @Override
-    @Nullable
-    public <T> T getCapability(Capability<T> capability, @Nullable Direction facing) {
-        if (capability == Midnight.ANIMATION_CAP) {
-            return Midnight.ANIMATION_CAP.cast(animCap);
-        }
-        return super.getCapability(capability, facing);
-    }
-
-    @Override
-    public boolean hasCapability(Capability<?> capability, @Nullable Direction facing) {
-        return capability == Midnight.ANIMATION_CAP || super.hasCapability(capability, facing);
+    public <T> LazyOptional<T> getCapability(Capability<T> capability, @Nullable Direction facing) {
+        return capability == Midnight.ANIMATION_CAP ? LazyOptional.of(() -> this.animCap).cast() : LazyOptional.empty();
     }
 }

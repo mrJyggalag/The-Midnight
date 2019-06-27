@@ -51,10 +51,7 @@ public class MidnightTeleporter implements ITeleporter {
         entity.posZ = placementPos.z + 0.5;
         entity.fallDistance = 0.0F;
 
-        RiftTravelCooldown capability = entity.getCapability(Midnight.RIFT_TRAVEL_COOLDOWN_CAP, null);
-        if (capability != null) {
-            capability.setCooldown(COOLDOWN);
-        }
+        entity.getCapability(Midnight.RIFT_TRAVEL_COOLDOWN_CAP, null).ifPresent(capability -> capability.setCooldown(COOLDOWN));
     }
 
     private Vec3d findPlacementPos(World world, Entity entity, RiftEntity endpointRift) {

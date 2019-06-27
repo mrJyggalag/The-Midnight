@@ -32,9 +32,9 @@ public class RiftTravelCooldown implements ICapabilityProvider {
         return this.cooldown <= 0;
     }
 
-    @Nullable
     @Override
+    @Nonnull
     public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> capability, @Nullable Direction facing) {
-        return Midnight.RIFT_TRAVEL_COOLDOWN_CAP.orEmpty(capability, LazyOptional.of(() -> this));
+        return capability == Midnight.RIFT_TRAVEL_COOLDOWN_CAP ? LazyOptional.of(() -> this).cast() : LazyOptional.empty();
     }
 }

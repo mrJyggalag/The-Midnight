@@ -224,13 +224,14 @@ public class StingerModel extends EntityModel<StingerEntity> {
         this.PincerLeftExt.rotateAngleY = this.PincerRightInt.rotateAngleY = MathHelper.sin((float) (limbSwing * Math.PI)) * limbSwingAmount * 0.5f;
         this.PincerRightExt.rotateAngleY = this.PincerLeftInt.rotateAngleY = -this.PincerLeftExt.rotateAngleY;
 
-        AnimationCapability animationCap = entity.getCapability(Midnight.ANIMATION_CAP, null);
-        if (animationCap != null && animationCap.getAnimationType() == AnimationCapability.Type.ATTACK) {
-            float partialTicks = Minecraft.getInstance().getRenderPartialTicks();
-            float attackProgress = animationCap.getProgress(partialTicks);
-            float attackAnimation = MathHelper.sin((float) (attackProgress * Math.PI));
-            // TODO
-        }
+        entity.getCapability(Midnight.ANIMATION_CAP, null).ifPresent(animationCap -> {
+            if (animationCap.getAnimationType() == AnimationCapability.Type.ATTACK) {
+                float partialTicks = Minecraft.getInstance().getRenderPartialTicks();
+                float attackProgress = animationCap.getProgress(partialTicks);
+                float attackAnimation = MathHelper.sin((float) (attackProgress * Math.PI));
+                // TODO
+            }
+        });
     }
 
     private void setRotateAngle(RendererModel RendererModel, float x, float y, float z) {

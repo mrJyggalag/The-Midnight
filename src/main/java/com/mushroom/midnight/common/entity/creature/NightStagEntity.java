@@ -358,7 +358,6 @@ public class NightStagEntity extends AnimalEntity {
     }
 
     @Override
-    @Nullable
     public <T> LazyOptional<T> getCapability(Capability<T> capability, @Nullable Direction facing) {
         return capability == Midnight.ANIMATION_CAP ? LazyOptional.of(() -> this.animCap).cast() : LazyOptional.empty();
     }

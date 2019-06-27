@@ -5,7 +5,9 @@ import com.mushroom.midnight.common.registry.MidnightSounds;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.CreatureAttribute;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.Pose;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.passive.AmbientEntity;
@@ -24,8 +26,6 @@ import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-
-import javax.annotation.Nullable;
 
 import static com.mushroom.midnight.common.registry.MidnightLootTables.LOOT_TABLE_CRYSTAL_BUG;
 
@@ -186,8 +186,8 @@ public class CrystalBugEntity extends AmbientEntity {
     }
 
     @Override
-    public float getEyeHeight() {
-        return this.size.height / 3f;
+    public float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn) {
+        return sizeIn.height / 3f;
     }
 
     @Override
@@ -201,7 +201,6 @@ public class CrystalBugEntity extends AmbientEntity {
     }
 
     @Override
-    @Nullable
     protected ResourceLocation getLootTable() {
         return LOOT_TABLE_CRYSTAL_BUG;
     }

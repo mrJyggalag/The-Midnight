@@ -1,14 +1,9 @@
 package com.mushroom.midnight.common.network;
 
 import com.mushroom.midnight.Midnight;
-import com.mushroom.midnight.common.capability.AnimationCapability;
 import com.mushroom.midnight.common.capability.AnimationCapability.Type;
-import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.Entity;
 import net.minecraft.network.PacketBuffer;
-import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
-import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
-import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 public class AnimationMessage {
     private int entityId;
@@ -45,10 +40,7 @@ public class AnimationMessage {
                 Midnight.proxy.handleMessage(ctx, player -> {
                     Entity entity = player.world.getEntityByID(message.entityId);
                     if (entity != null) {
-                        AnimationCapability animationCap = entity.getCapability(Midnight.ANIMATION_CAP, null);
-                        if (animationCap != null) {
-                            animationCap.setAnimation(entity, message.animationType, message.duration);
-                        }
+                        entity.getCapability(Midnight.ANIMATION_CAP, null).ifPresent(animationCap -> animationCap.setAnimation(entity, message.animationType, message.duration));
                     }
                 });
             }

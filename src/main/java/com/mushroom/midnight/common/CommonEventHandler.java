@@ -19,7 +19,6 @@ import com.mushroom.midnight.common.registry.MidnightEffects;
 import com.mushroom.midnight.common.world.GlobalBridgeManager;
 import com.mushroom.midnight.common.world.RiftSpawnHandler;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityList;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -27,7 +26,6 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.GameRules;
 import net.minecraft.world.ServerWorld;
@@ -35,7 +33,6 @@ import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.dimension.DimensionType;
-import net.minecraft.world.gen.layer.GenLayer;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.entity.PlaySoundAtEntityEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
@@ -46,7 +43,6 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 
-import java.util.Arrays;
 import java.util.List;
 
 @Mod.EventBusSubscriber(modid = Midnight.MODID)
@@ -115,11 +111,9 @@ public class CommonEventHandler {
     @SubscribeEvent
     public static void onEntityTick(LivingEvent.LivingUpdateEvent event) {
         LivingEntity entity = event.getMobEntity();
-
-        RiftTravelCooldown cooldownCap = entity.getCapability(Midnight.RIFT_TRAVEL_COOLDOWN_CAP, null);
-        if (cooldownCap != null) {
+        entity.getCapability(Midnight.RIFT_TRAVEL_COOLDOWN_CAP, null).isPresent(cooldownCap -> {
             cooldownCap.update(entity);
-        }
+        });
     }
 
     @SubscribeEvent
@@ -129,11 +123,8 @@ public class CommonEventHandler {
             if (!world.isRemote) {
                 GlobalBridgeManager.getServer().update();
 
-                if (world.getGameRules().getBoolean("doMobSpawning")) {
-                    MidnightWorldSpawners worldSpawners = world.getCapability(Midnight.WORLD_SPAWNERS_CAP, null);
-                    if (worldSpawners != null) {
-                        worldSpawners.spawnAroundPlayers();
-                    }
+                if (world.getGameRules().getBoolean(GameRules.DO_MOB_SPAWNING)) {
+                    world.getCapability(Midnight.WORLD_SPAWNERS_CAP, null).ifPresent(MidnightWorldSpawners::spawnAroundPlayers);
                 }
             }
 
