@@ -19,7 +19,6 @@ public class ChargeGoal extends Goal {
     private final double speed;
     private final int duration;
     private final float chance;
-    protected AnimationCapability capAnim;
     protected int tickCounter;
     protected LivingEntity target;
     protected Vec3d direction;
@@ -51,9 +50,7 @@ public class ChargeGoal extends Goal {
     public void startExecuting() {
         this.tickCounter = 0;
         this.owner.getMoveHelper().setMoveTo(this.target.posX, this.target.posY, this.target.posZ, this.speed);
-        if (owner.getCapability(Midnight.ANIMATION_CAP).isPresent()) {
-            capAnim.setAnimation(this.owner, AnimationCapability.Type.CHARGE, 200);
-        }
+        owner.getCapability(Midnight.ANIMATION_CAP).ifPresent(capAnim -> capAnim.setAnimation(this.owner, AnimationCapability.Type.CHARGE, 200));
     }
 
     @Override
@@ -61,9 +58,7 @@ public class ChargeGoal extends Goal {
         this.tickCounter = 0;
         this.target = null;
         this.direction = null;
-        if (this.capAnim != null) {
-            capAnim.resetAnimation(this.owner);
-        }
+        owner.getCapability(Midnight.ANIMATION_CAP).ifPresent(capAnim -> capAnim.resetAnimation(this.owner));
     }
 
     @Override

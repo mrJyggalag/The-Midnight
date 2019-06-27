@@ -110,10 +110,8 @@ public class CommonEventHandler {
 
     @SubscribeEvent
     public static void onEntityTick(LivingEvent.LivingUpdateEvent event) {
-        LivingEntity entity = event.getMobEntity();
-        entity.getCapability(Midnight.RIFT_TRAVEL_COOLDOWN_CAP, null).isPresent(cooldownCap -> {
-            cooldownCap.update(entity);
-        });
+        LivingEntity entity = event.getEntityLiving();
+        entity.getCapability(Midnight.RIFT_TRAVEL_COOLDOWN_CAP, null).ifPresent(cooldownCap -> cooldownCap.update(entity));
     }
 
     @SubscribeEvent
