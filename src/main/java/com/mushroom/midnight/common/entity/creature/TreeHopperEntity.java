@@ -1,10 +1,8 @@
 package com.mushroom.midnight.common.entity.creature;
 
-import com.mushroom.midnight.common.entity.navigation.CustomPathNavigateGround;
 import com.mushroom.midnight.common.registry.MidnightLootTables;
-import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.monster.MonsterEntity;
-import net.minecraft.pathfinding.PathNavigate;
+import net.minecraft.pathfinding.GroundPathNavigator;
 import net.minecraft.pathfinding.PathNavigator;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
@@ -19,7 +17,7 @@ public class TreeHopperEntity extends MonsterEntity {
 
     @Override
     protected PathNavigator createNavigator(World world) {
-        return new CustomPathNavigateGround(this, world);
+        return new GroundPathNavigator(this, world);
     }
 
     @Override

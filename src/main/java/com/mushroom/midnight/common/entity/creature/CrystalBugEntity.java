@@ -2,10 +2,11 @@ package com.mushroom.midnight.common.entity.creature;
 
 import com.mushroom.midnight.common.registry.MidnightBlocks;
 import com.mushroom.midnight.common.registry.MidnightSounds;
-import net.minecraft.block.state.BlockState;
+import net.minecraft.block.BlockState;
+import net.minecraft.entity.CreatureAttribute;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EnumCreatureAttribute;
 import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.passive.AmbientEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.datasync.DataParameter;
@@ -18,6 +19,7 @@ import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -32,7 +34,7 @@ public class CrystalBugEntity extends AmbientEntity {
 
     public CrystalBugEntity(World world) {
         super(world);
-        setSize(0.2f, 0.2f);
+        setSize(0.2f, 0.2f); // builder
         experienceValue = 3;
     }
 
@@ -42,10 +44,9 @@ public class CrystalBugEntity extends AmbientEntity {
         dataManager.register(IS_STANDING, false);
     }
 
-
     @Override
-    public boolean getCanSpawnHere() {
-        return getPosition().getY() > world.getSeaLevel() && super.getCanSpawnHere();
+    public boolean canSpawn(IWorld worldIn, SpawnReason spawnReasonIn) {
+        return getPosition().getY() > world.getSeaLevel();
     }
 
     @Override
@@ -90,7 +91,7 @@ public class CrystalBugEntity extends AmbientEntity {
 
     @Override
     public boolean attackEntityFrom(DamageSource source, float amount) {
-        if (isEntityInvulnerable(source)) {
+        if (isInvulnerableTo(source)) {
             return false;
         }
         if (!world.isRemote && isStanding()) {
@@ -106,7 +107,7 @@ public class CrystalBugEntity extends AmbientEntity {
         BlockPos blockpos1 = blockpos.offset(getHorizontalFacing());
         if (isStanding()) {
             if (canStayOnBlock(world.getBlockState(blockpos1))) {
-                if (world.getNearestPlayerNotCreative(this, 4d) != null) {
+                if (world.getClosestPlayer(this, 4d) != null) {
                     setStanding(false);
                     world.playEvent(null, 1025, blockpos, 0);
                 }
@@ -118,16 +119,18 @@ public class CrystalBugEntity extends AmbientEntity {
             if (spawnPosition != null && (!world.isAirBlock(spawnPosition) || spawnPosition.getY() < 1)) {
                 spawnPosition = null;
             }
-            if (spawnPosition == null || rand.nextInt(30) == 0 || spawnPosition.distanceSq((double) ((int) posX), (double) ((int) posY), (double) ((int) posZ)) < 4d) {
+            if (spawnPosition == null || rand.nextInt(30) == 0 || spawnPosition.distanceSq((double) ((int) posX), (double) ((int) posY), (double) ((int) posZ), true) < 4d) {
                 spawnPosition = new BlockPos((int) posX + rand.nextInt(7) - rand.nextInt(7), (int) posY + rand.nextInt(6) - 2, (int) posZ + rand.nextInt(7) - rand.nextInt(7));
             }
             double d0 = (double) spawnPosition.getX() + 0.5d - posX;
             double d1 = (double) spawnPosition.getY() + 0.1d - posY;
             double d2 = (double) spawnPosition.getZ() + 0.5d - posZ;
-            motionX += (Math.signum(d0) * 0.2d - motionX) * 0.1d;
-            motionY += (Math.signum(d1) * 0.4d - motionY) * 0.1d;
-            motionZ += (Math.signum(d2) * 0.2d - motionZ) * 0.1d;
-            float f = (float) (MathHelper.atan2(motionZ, motionX) * (180d / Math.PI)) - 90f;
+            double addX = (Math.signum(d0) * 0.2d - getMotion().x) * 0.1d;
+            double addY = (Math.signum(d1) * 0.4d - getMotion().y) * 0.1d;
+            double addZ = (Math.signum(d2) * 0.2d - getMotion().z) * 0.1d;
+            setMotion(getMotion().add(addX, addY, addZ));
+
+            float f = (float) (MathHelper.atan2(getMotion().z, getMotion().x) * (180d / Math.PI)) - 90f;
             float f1 = MathHelper.wrapDegrees(f - rotationYaw);
             moveForward = 0.2f;
             rotationYaw += f1;
@@ -184,7 +187,7 @@ public class CrystalBugEntity extends AmbientEntity {
 
     @Override
     public float getEyeHeight() {
-        return height / 3f;
+        return this.size.height / 3f;
     }
 
     @Override
@@ -210,7 +213,7 @@ public class CrystalBugEntity extends AmbientEntity {
     }
 
     @Override
-    public EnumCreatureAttribute getCreatureAttribute() {
-        return EnumCreatureAttribute.ARTHROPOD;
+    public CreatureAttribute getCreatureAttribute() {
+        return CreatureAttribute.ARTHROPOD;
     }
 }

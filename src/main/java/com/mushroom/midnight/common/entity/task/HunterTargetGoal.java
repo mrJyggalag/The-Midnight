@@ -1,10 +1,8 @@
 package com.mushroom.midnight.common.entity.task;
 
 import net.minecraft.entity.CreatureEntity;
-import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntityPredicate;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
 import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;

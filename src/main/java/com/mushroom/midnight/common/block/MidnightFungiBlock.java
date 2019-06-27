@@ -1,10 +1,10 @@
 package com.mushroom.midnight.common.block;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockDoublePlant;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.IGrowable;
-import net.minecraft.block.state.BlockState;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 
 import java.util.Random;
@@ -29,7 +29,7 @@ public class MidnightFungiBlock extends MidnightPlantBlock implements IGrowable 
     }
 
     @Override
-    public boolean canGrow(World worldIn, BlockPos pos, BlockState state, boolean isClient) {
+    public boolean canGrow(IBlockReader worldIn, BlockPos pos, BlockState state, boolean isClient) {
         return true;
     }
 

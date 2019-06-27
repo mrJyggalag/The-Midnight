@@ -2,30 +2,27 @@ package com.mushroom.midnight.common.entity;
 
 import com.mushroom.midnight.client.particle.MidnightParticles;
 import mcp.MethodsReturnNonnullByDefault;
-import net.minecraft.block.material.EnumPushReaction;
 import net.minecraft.block.material.PushReaction;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.init.PotionTypes;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.ListNBT;
-import net.minecraft.nbt.NBTTagList;
+import net.minecraft.network.IPacket;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Potion;
-import net.minecraft.potion.PotionEffect;
-import net.minecraft.potion.PotionType;
 import net.minecraft.potion.PotionUtils;
 import net.minecraft.potion.Potions;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 import net.minecraft.world.ServerWorld;
 import net.minecraftforge.common.util.Constants;
+import net.minecraftforge.fml.network.FMLPlayMessages;
+import net.minecraftforge.fml.network.NetworkHooks;
 import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.ForgeRegistry;
 
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -57,16 +54,20 @@ public class CloudEntity extends Entity {
     private UUID ownerUniqueId;
     private boolean allowTeleport = false;
 
-    public CloudEntity(World world) {
-        super(world);
+    public CloudEntity(EntityType<CloudEntity> entityType, World world) {
+        super(entityType, world);
         this.noClip = true;
-        this.isImmuneToFire = true;
+        this.isImmuneToFire = true; // entityType builder
         setRadius(3f);
     }
 
     public CloudEntity(World world, double x, double y, double z) {
-        this(world);
+        this(ModEntityTypeCloud, world);
         setPosition(x, y, z);
+    }
+
+    public CloudEntity(FMLPlayMessages.SpawnEntity spawnEntity, World world) {
+        this(ModEntityTypeCloud, world);
     }
 
     public CloudEntity setAllowTeleport() {
@@ -87,7 +88,7 @@ public class CloudEntity extends Entity {
         double x = this.posX;
         double y = this.posY;
         double z = this.posZ;
-        setSize(radius * 2f, 0.5f);
+        setSize(radius * 2f, 0.5f); // builder
         setPosition(x, y, z);
         if (!this.world.isRemote) {
             this.dataManager.set(RADIUS, radius);
@@ -378,5 +379,10 @@ public class CloudEntity extends Entity {
     @Override
     public PushReaction getPushReaction() {
         return PushReaction.IGNORE;
+    }
+
+    @Override
+    public IPacket<?> createSpawnPacket() {
+        return NetworkHooks.getEntitySpawningPacket(this);
     }
 }

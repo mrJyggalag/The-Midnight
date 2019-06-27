@@ -6,26 +6,26 @@ import com.mushroom.midnight.common.registry.MidnightBlocks;
 import com.mushroom.midnight.common.registry.MidnightItems;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.init.Items;
-import net.minecraft.inventory.SlotFurnaceFuel;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.FurnaceRecipes;
+import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.TileEntityFurnace;
+import net.minecraft.tileentity.FurnaceTileEntity;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 
-public class TileEntityMidnightFurnace extends TileEntityFurnace {
+public class TileEntityMidnightFurnace extends FurnaceTileEntity {
 
     @Override
-    public void readFromNBT(CompoundNBT compound) {
-        super.readFromNBT(compound);
-        currentItemBurnTime = TileEntityMidnightFurnace.getItemBurnTime(furnaceItemStacks.get(1));
+    public void read(CompoundNBT compound) {
+        super.read(compound);
+        this.burnTime = TileEntityMidnightFurnace.getItemBurnTime(this.items.get(1));
     }
 
     @Override
-    public String getName() {
-        return hasCustomName() ? furnaceCustomName : "tile.midnight.midnight_furnace.name";
+    public ITextComponent getDefaultName() {
+        return new TranslationTextComponent("tile.midnight.midnight_furnace.name");
     }
 
     @Override
@@ -36,7 +36,7 @@ public class TileEntityMidnightFurnace extends TileEntityFurnace {
     @Override
     public boolean isItemValidForSlot(int index, ItemStack stack) {
         if (index == 1) {
-            ItemStack itemstack = this.furnaceItemStacks.get(1);
+            ItemStack itemstack = this.items.get(1);
             return TileEntityMidnightFurnace.isItemFuel(stack) || SlotFurnaceFuel.isBucket(stack) && itemstack.getItem() != Items.BUCKET;
         }
         return index != 2;
@@ -64,14 +64,14 @@ public class TileEntityMidnightFurnace extends TileEntityFurnace {
             } else if (item == MidnightItems.DARK_PEARL) {
                 return 1600;
             } else {
-                return TileEntityFurnace.getItemBurnTime(stack);
+                return FurnaceTileEntity.getBurnTimes().getOrDefault(stack.getItem(), 0);
             }
         }
     }
 
     @Override
-    public void update() {
-        boolean flag = isBurning();
+    public void tick() {
+        boolean flag = this.isBurning();
         boolean flag1 = false;
         if (isBurning()) {
             --furnaceBurnTime;

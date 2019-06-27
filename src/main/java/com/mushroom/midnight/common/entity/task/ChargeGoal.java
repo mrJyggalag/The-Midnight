@@ -8,7 +8,6 @@ import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.network.play.server.SEntityVelocityPacket;
-import net.minecraft.network.play.server.SPacketEntityVelocity;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 
@@ -52,8 +51,7 @@ public class ChargeGoal extends Goal {
     public void startExecuting() {
         this.tickCounter = 0;
         this.owner.getMoveHelper().setMoveTo(this.target.posX, this.target.posY, this.target.posZ, this.speed);
-        capAnim = owner.getCapability(Midnight.ANIMATION_CAP);
-        if (this.capAnim != null) {
+        if (owner.getCapability(Midnight.ANIMATION_CAP).isPresent()) {
             capAnim.setAnimation(this.owner, AnimationCapability.Type.CHARGE, 200);
         }
     }

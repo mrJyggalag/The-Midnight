@@ -11,6 +11,7 @@ import net.minecraft.world.ServerWorld;
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
+import net.minecraftforge.common.util.LazyOptional;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -21,18 +22,10 @@ public interface MidnightWorldSpawners extends ICapabilityProvider {
 
     void spawnAroundPlayers();
 
-    @Override
-    default boolean hasCapability(@Nonnull Capability<?> capability, @Nullable Direction facing) {
-        return capability == Midnight.WORLD_SPAWNERS_CAP;
-    }
-
     @Nullable
     @Override
-    default <T> T getCapability(@Nonnull Capability<T> capability, @Nullable Direction facing) {
-        if (capability == Midnight.WORLD_SPAWNERS_CAP) {
-            return Midnight.WORLD_SPAWNERS_CAP.cast(this);
-        }
-        return null;
+    default <T> LazyOptional<T> getCapability(@Nonnull Capability<T> capability, @Nullable Direction facing) {
+        return Midnight.WORLD_SPAWNERS_CAP.orEmpty(capability, LazyOptional.of(() -> this));
     }
 
     class Void implements MidnightWorldSpawners {

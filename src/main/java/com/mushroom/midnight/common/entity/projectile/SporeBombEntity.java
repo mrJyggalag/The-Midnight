@@ -5,6 +5,7 @@ import com.mushroom.midnight.common.item.SporeBombItem.Type;
 import com.mushroom.midnight.common.registry.MidnightItems;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.material.Material;
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.projectile.ThrowableEntity;
 import net.minecraft.item.ItemStack;
@@ -24,16 +25,16 @@ import javax.annotation.Nullable;
 public class SporeBombEntity extends ThrowableEntity {
     private static final DataParameter<ItemStack> BOMB_STACK = EntityDataManager.createKey(SporeBombEntity.class, DataSerializers.ITEMSTACK);
 
-    public SporeBombEntity(World world) {
-        super(world);
+    public SporeBombEntity(EntityType<? extends ThrowableEntity> entityType, World world) {
+        super(entityType, world);
     }
 
     public SporeBombEntity(World world, double x, double y, double z) {
-        super(world, x, y, z);
+        super(ModEntityType, world, x, y, z);
     }
 
     public SporeBombEntity(World world, LivingEntity thrower) {
-        super(world, thrower);
+        super(ModEntityType, world, thrower);
     }
 
     @Override

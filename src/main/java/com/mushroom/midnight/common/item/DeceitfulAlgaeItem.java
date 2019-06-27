@@ -1,34 +1,33 @@
 package com.mushroom.midnight.common.item;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockLiquid;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.state.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemBlock;
+import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.Hand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 
-public class DeceitfulAlgaeItem extends ItemBlock {
+public class DeceitfulAlgaeItem extends BlockItem {
     public DeceitfulAlgaeItem(Block block) {
         super(block);
     }
 
     @Override
-    public ActionResultType onItemUse(PlayerEntity player, World worldIn, BlockPos pos, EnumHand hand, Direction facing, float hitX, float hitY, float hitZ) {
+    public ActionResultType onItemUse(PlayerEntity player, World worldIn, BlockPos pos, Hand hand, Direction facing, float hitX, float hitY, float hitZ) {
         return ActionResultType.PASS;
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, EnumHand hand) {
+    public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand) {
         ItemStack stack = player.getHeldItem(hand);
         RayTraceResult result = this.rayTrace(world, player, true);
         if (result == null) {
@@ -55,7 +54,7 @@ public class DeceitfulAlgaeItem extends ItemBlock {
                 if (this.placeBlockAt(stack, player, world, placePos, sideHit, hitX, hitY, hitZ, placeState)) {
                     this.applyPlaceEffect(world, player, placePos);
 
-                    if (!player.capabilities.isCreativeMode) {
+                    if (!player.abilities.isCreativeMode) {
                         stack.shrink(1);
                     }
 

@@ -7,6 +7,7 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
+import net.minecraftforge.common.util.LazyOptional;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -31,17 +32,9 @@ public class RiftTravelCooldown implements ICapabilityProvider {
         return this.cooldown <= 0;
     }
 
-    @Override
-    public boolean hasCapability(@Nonnull Capability<?> capability, @Nullable Direction facing) {
-        return capability == Midnight.RIFT_TRAVEL_COOLDOWN_CAP;
-    }
-
     @Nullable
     @Override
-    public <T> T getCapability(@Nonnull Capability<T> capability, @Nullable Direction facing) {
-        if (capability == Midnight.RIFT_TRAVEL_COOLDOWN_CAP) {
-            return Midnight.RIFT_TRAVEL_COOLDOWN_CAP.cast(this);
-        }
-        return null;
+    public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> capability, @Nullable Direction facing) {
+        return Midnight.RIFT_TRAVEL_COOLDOWN_CAP.orEmpty(capability, LazyOptional.of(() -> this));
     }
 }

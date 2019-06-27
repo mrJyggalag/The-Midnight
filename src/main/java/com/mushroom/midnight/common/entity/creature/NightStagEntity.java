@@ -5,7 +5,6 @@ import com.mushroom.midnight.common.block.UnstableBushBlock;
 import com.mushroom.midnight.common.block.UnstableBushBloomedBlock;
 import com.mushroom.midnight.common.capability.AnimationCapability;
 import com.mushroom.midnight.common.capability.AnimationCapability.Type;
-import com.mushroom.midnight.common.entity.navigation.CustomPathNavigateGround;
 import com.mushroom.midnight.common.entity.task.ChargeGoal;
 import com.mushroom.midnight.common.entity.task.EatGrassGoal;
 import com.mushroom.midnight.common.entity.task.NeutralGoal;
@@ -21,14 +20,10 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.AgeableEntity;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.IMobEntityData;
+import net.minecraft.entity.ILivingEntityData;
 import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.EntityAIFollowParent;
-import net.minecraft.entity.ai.EntityAIHurtByTarget;
-import net.minecraft.entity.ai.EntityAILookIdle;
-import net.minecraft.entity.ai.EntityAIWanderAvoidWater;
-import net.minecraft.entity.ai.EntityAIWatchClosest;
+import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.IAttributeInstance;
 import net.minecraft.entity.ai.goal.BreedGoal;
@@ -44,30 +39,30 @@ import net.minecraft.entity.ai.goal.WaterAvoidingRandomWalkingGoal;
 import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.init.MobEffects;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
-import net.minecraft.pathfinding.PathNavigate;
+import net.minecraft.pathfinding.GroundPathNavigator;
+import net.minecraft.pathfinding.PathNavigator;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
-import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.Direction;
-import net.minecraft.util.EnumHand;
 import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.DifficultyInstance;
+import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.Constants;
+import net.minecraftforge.common.util.LazyOptional;
 
 import javax.annotation.Nullable;
 import java.util.UUID;
@@ -100,7 +95,7 @@ public class NightStagEntity extends AnimalEntity {
 
     @Override
     @Nullable
-    public IMobEntityData onInitialSpawn(DifficultyInstance difficulty, @Nullable IMobEntityData livingdata) {
+    public ILivingEntityData onInitialSpawn(IWorld worldIn, DifficultyInstance difficulty, SpawnReason reason, @Nullable ILivingEntityData livingdata, @Nullable CompoundNBT dataTag) {
         if (this.rand.nextInt(5) == 0) {
             setGrowingAge(GROWING_TIME);
         }
@@ -210,8 +205,8 @@ public class NightStagEntity extends AnimalEntity {
     }
 
     @Override
-    protected PathNavigate createNavigator(World world) {
-        return new CustomPathNavigateGround(this, world);
+    protected PathNavigator createNavigator(World world) {
+        return new GroundPathNavigator(this, world);
     }
 
     @Override
@@ -364,11 +359,8 @@ public class NightStagEntity extends AnimalEntity {
 
     @Override
     @Nullable
-    public <T> T getCapability(Capability<T> capability, @Nullable Direction facing) {
-        if (capability == Midnight.ANIMATION_CAP) {
-            return Midnight.ANIMATION_CAP.cast(this.animCap);
-        }
-        return super.getCapability(capability, facing);
+    public <T> LazyOptional<T> getCapability(Capability<T> capability, @Nullable Direction facing) {
+        return capability == Midnight.ANIMATION_CAP ? LazyOptional.of(() -> this.animCap).cast() : LazyOptional.empty();
     }
 
     public class CurtseyGoal extends LookAtGoal {

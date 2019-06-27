@@ -7,11 +7,13 @@ import com.mushroom.midnight.common.registry.MidnightLootTables;
 import com.mushroom.midnight.common.registry.MidnightSounds;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.material.Material;
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.entity.projectile.ThrowableEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.particles.ItemParticleData;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.BlockPos;
@@ -28,16 +30,21 @@ import javax.annotation.Nullable;
 public class ThrownGeodeEntity extends ThrowableEntity {
     private static final byte POPPED_STATE_ID = 3;
 
-    public ThrownGeodeEntity(World world) {
-        super(world);
+    public ThrownGeodeEntity(EntityType<? extends ThrowableEntity> entityType, World world) {
+        super(entityType, world);
     }
 
     public ThrownGeodeEntity(World world, double x, double y, double z) {
-        super(world, x, y, z);
+        super(ModEntityType, world, x, y, z);
     }
 
     public ThrownGeodeEntity(World world, LivingEntity thrower) {
-        super(world, thrower);
+        super(ModEntityType, world, thrower);
+    }
+
+    @Override
+    protected void registerData() {
+        // TODO ?
     }
 
     @Override
@@ -54,7 +61,7 @@ public class ThrownGeodeEntity extends ThrowableEntity {
         for (int i = 0; i < 8; i++) {
             double velX = (this.rand.nextDouble() - 0.5) * 0.1;
             double velY = (this.rand.nextDouble() - 0.5) * 0.1;
-            this.world.addParticle(ParticleTypes.ITEM, this.posX, this.posY + 0.1, this.posZ, velX, 0.1, velY, Item.getIdFromItem(MidnightItems.GEODE));
+            this.world.addParticle(new ItemParticleData(ParticleTypes.ITEM, new ItemStack(MidnightItems.GEODE)), this.posX, this.posY + 0.1, this.posZ, velX, 0.1, velY);
         }
 
         for (int i = 0; i < 2; i++) {
@@ -74,7 +81,7 @@ public class ThrownGeodeEntity extends ThrowableEntity {
 
         if (!this.world.isRemote) {
             if (canBreakOn(result.getBlockPos())) {
-                ServerPlayerEntity player = this.thrower instanceof ServerPlayerEntity ? (ServerPlayerEntity) this.thrower : null;
+                ServerPlayerEntity player = this.owner instanceof ServerPlayerEntity ? (ServerPlayerEntity) this.owner : null;
                 if (player != null) {
                     MidnightCriterion.THROWN_GEODE.trigger(player);
                 }
@@ -100,7 +107,7 @@ public class ThrownGeodeEntity extends ThrowableEntity {
             builder = builder.withPlayer(player).withLuck(player.getLuck());
         }
 
-        LootTable loottable = this.world.getLootTableManager().getLootTableFromLocation(MidnightLootTables.LOOT_TABLE_THROWN_GEODE);
+        LootTable loottable = this.world.getServer().getLootTableManager().getLootTableFromLocation(MidnightLootTables.LOOT_TABLE_THROWN_GEODE);
         for (ItemStack itemstack : loottable.generateLootForPools(this.rand, builder.build())) {
             this.entityDropItem(itemstack, 0.1f);
         }

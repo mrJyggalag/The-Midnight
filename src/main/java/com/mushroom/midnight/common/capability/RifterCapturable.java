@@ -26,17 +26,9 @@ public class RifterCapturable implements ICapabilityProvider {
         return this.captured;
     }
 
-    @Override
-    public boolean hasCapability(@Nonnull Capability<?> capability, @Nullable Direction facing) {
-        return capability == Midnight.RIFTER_CAPTURABLE_CAP;
-    }
-
     @Nullable
     @Override
-    public <T> T getCapability(@Nonnull Capability<T> capability, @Nullable Direction facing) {
-        if (capability == Midnight.RIFTER_CAPTURABLE_CAP) {
-            return Midnight.RIFTER_CAPTURABLE_CAP.cast(this);
-        }
-        return null;
+    public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> capability, @Nullable Direction facing) {
+        return Midnight.RIFTER_CAPTURABLE_CAP.orEmpty(capability, LazyOptional.of(() -> this));
     }
 }

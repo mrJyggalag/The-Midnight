@@ -24,17 +24,17 @@ public class MidnightFurnaceScreen extends ContainerScreen<MidnightFurnaceContai
     }
 
     @Override
-    public void drawScreen(int mouseX, int mouseY, float partialTicks) {
-        drawDefaultBackground();
-        super.drawScreen(mouseX, mouseY, partialTicks);
+    public void render(int mouseX, int mouseY, float partialTicks) {
+        renderBackground();
+        super.render(mouseX, mouseY, partialTicks);
         renderHoveredToolTip(mouseX, mouseY);
     }
 
     @Override
     protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-        String s = tileFurnace.getDisplayName().getUnformattedText();
+        String s = this.title.getFormattedText();
         font.drawString(s, xSize / 2.0F - font.getStringWidth(s) / 2.0F, 6, 4210752);
-        font.drawString(playerInventory.getDisplayName().getUnformattedText(), 8, ySize - 96 + 2, 4210752);
+        font.drawString(playerInventory.getDisplayName().getFormattedText(), 8, ySize - 96 + 2, 4210752);
     }
 
     @Override

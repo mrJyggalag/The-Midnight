@@ -4,7 +4,7 @@ import com.mushroom.midnight.common.config.MidnightConfig;
 import com.mushroom.midnight.common.entity.creature.RifterEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.Goal;
+import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;

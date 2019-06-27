@@ -3,6 +3,7 @@ package com.mushroom.midnight.common.entity.projectile;
 import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.common.registry.MidnightItems;
 import com.mushroom.midnight.common.registry.MidnightSounds;
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.projectile.ArrowEntity;
 import net.minecraft.item.ItemStack;
@@ -23,8 +24,8 @@ public class BladeshroomCapEntity extends ArrowEntity {
     public float spin;
     public float prevSpin;
 
-    public BladeshroomCapEntity(World world) {
-        super(world);
+    public BladeshroomCapEntity(EntityType<? extends ArrowEntity> entityType, World world) {
+        super(entityType, world);
         this.setDamage(DAMAGE);
     }
 

@@ -5,8 +5,8 @@ import net.minecraft.client.particle.IParticleFactory;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.OnlyIn;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
 import javax.annotation.Nullable;
 
@@ -58,7 +58,7 @@ public enum MidnightParticles {
 
     @OnlyIn(Dist.CLIENT)
     private void spawn(Particle particle) {
-        Minecraft.getInstance().effectRenderer.addEffect(particle);
+        Minecraft.getInstance().particles.addEffect(particle);
     }
 
     public static MidnightParticles fromId(int id) {

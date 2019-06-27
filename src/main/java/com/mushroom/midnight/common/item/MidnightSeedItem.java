@@ -24,7 +24,7 @@ public class MidnightSeedItem extends Item {
 
     public MidnightSeedItem(Supplier<BlockState> plantSupplier) {
         this.plantSupplier = plantSupplier;
-        this.setCreativeTab(MidnightItemGroups.ITEMS);
+        this.setCreativeTab(MidnightItemGroups.ITEMS); //itemGroup in properties
     }
 
     @Override

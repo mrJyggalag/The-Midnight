@@ -33,8 +33,7 @@ import com.mushroom.midnight.common.registry.MidnightRecipes;
 import com.mushroom.midnight.common.registry.MidnightSurfaceBiomes;
 import com.mushroom.midnight.common.util.EntityUtil;
 import com.mushroom.midnight.common.world.generator.MidnightOreGenerator;
-import net.minecraft.block.material.Material;
-import net.minecraft.entity.monster.IMob;
+import net.minecraft.entity.EntityClassification;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.storage.loot.conditions.LootConditionManager;
 import net.minecraftforge.common.MinecraftForge;
@@ -65,8 +64,9 @@ public class Midnight {
             .serverAcceptedVersions(NETWORK_PROTOCOL::equals)
             .simpleChannel();
 
-    public static final EnumCreatureType MIDNIGHT_MOB = EnumHelper.addCreatureType("midnight_mob", IMob.class, 20, Material.AIR, false, false);
-    public static final EnumCreatureType MIDNIGHT_AMBIENT = EnumHelper.addCreatureType("midnight_ambient", EntityAmbientCreature.class, 30, Material.AIR, true, false);
+    // TODO not sure why there're 2 strings param here (they can be replaced with normal entityClassification and directly set their number max in the mob spawner)
+    public static final EntityClassification MIDNIGHT_MOB = EntityClassification.create("midnight_mob", "midnight_mob", 20, false, false);
+    public static final EntityClassification MIDNIGHT_AMBIENT = EntityClassification.create("midnight_ambient", "midnight_ambient", 30, true, false);
 
     @CapabilityInject(RiftTravelCooldown.class)
     public static final Capability<RiftTravelCooldown> RIFT_TRAVEL_COOLDOWN_CAP = RegUtil.injected();

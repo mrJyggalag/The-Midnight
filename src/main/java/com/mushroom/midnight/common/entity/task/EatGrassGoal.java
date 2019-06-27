@@ -4,11 +4,11 @@ import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.common.capability.AnimationCapability;
 import com.mushroom.midnight.common.registry.MidnightBlocks;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockTallGrass;
-import net.minecraft.block.state.BlockState;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
+import net.minecraft.block.TallGrassBlock;
 import net.minecraft.entity.MobEntity;
-import net.minecraft.entity.ai.Goal;
-import net.minecraft.init.Blocks;
+import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.event.ForgeEventFactory;
 
@@ -22,7 +22,7 @@ public class EatGrassGoal extends Goal {
 
     public EatGrassGoal(MobEntity owner, int duration, boolean vanillaBehavior, Predicate<BlockState> eatPredicate) {
         this.owner = owner;
-        this.eatPredicate = vanillaBehavior ? eatPredicate.or(p -> p.getBlock() == Blocks.TALLGRASS && p.getValue(BlockTallGrass.TYPE) == BlockTallGrass.EnumType.GRASS) : eatPredicate;
+        this.eatPredicate = vanillaBehavior ? eatPredicate.or(p -> p.getBlock() == Blocks.TALL_GRASS && p.getValue(TallGrassBlock.TYPE) == TallGrassBlock.EnumType.GRASS) : eatPredicate;
         this.duration = duration;
         setMutexBits(7);
     }

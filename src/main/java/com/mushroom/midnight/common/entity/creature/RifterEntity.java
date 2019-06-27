@@ -7,7 +7,6 @@ import com.mushroom.midnight.common.entity.IRiftTraveler;
 import com.mushroom.midnight.common.entity.RiftEntity;
 import com.mushroom.midnight.common.entity.RiftTravelEntry;
 import com.mushroom.midnight.common.entity.TargetIdleTracker;
-import com.mushroom.midnight.common.entity.navigation.CustomPathNavigateGround;
 import com.mushroom.midnight.common.entity.task.RifterCaptureGoalGoal;
 import com.mushroom.midnight.common.entity.task.RifterKeepNearRiftGoal;
 import com.mushroom.midnight.common.entity.task.RifterMeleeGoal;
@@ -26,29 +25,24 @@ import com.mushroom.midnight.common.registry.MidnightSounds;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.EntityAILookIdle;
-import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
-import net.minecraft.entity.ai.EntityAIOpenDoor;
-import net.minecraft.entity.ai.EntityAISwimming;
-import net.minecraft.entity.ai.EntityAIWanderAvoidWater;
-import net.minecraft.entity.ai.EntityAIWatchClosest;
+import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.IAttribute;
 import net.minecraft.entity.ai.attributes.IAttributeInstance;
 import net.minecraft.entity.monster.MonsterEntity;
-import net.minecraft.entity.passive.EntityAnimal;
+import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.init.MobEffects;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.PacketBuffer;
-import net.minecraft.pathfinding.PathNavigate;
+import net.minecraft.pathfinding.GroundPathNavigator;
+import net.minecraft.pathfinding.PathNavigator;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
-import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
@@ -100,13 +94,13 @@ public class RifterEntity extends MonsterEntity implements IRiftTraveler, IEntit
     }
 
     @Override
-    protected PathNavigate createNavigator(World world) {
-        return new CustomPathNavigateGround(this, world);
+    protected PathNavigator createNavigator(World world) {
+        return new GroundPathNavigator(this, world);
     }
 
     @Override
-    public boolean getCanSpawnHere() {
-        return getPosition().getY() > world.getSeaLevel() && super.getCanSpawnHere();
+    public boolean canSpawn(IWorld worldIn, SpawnReason spawnReasonIn) {
+        return getPosition().getY() > world.getSeaLevel();
     }
 
     @Override
@@ -239,7 +233,7 @@ public class RifterEntity extends MonsterEntity implements IRiftTraveler, IEntit
         if (entity == null || RifterCapturable.isCaptured(entity)) {
             return false;
         }
-        if (entity instanceof EntityAnimal) {
+        if (entity instanceof AnimalEntity) {
             return !Helper.isMidnightDimension(entity.world);
         }
         if (entity instanceof PlayerEntity && ((PlayerEntity) entity).isPlayerSleeping()) {

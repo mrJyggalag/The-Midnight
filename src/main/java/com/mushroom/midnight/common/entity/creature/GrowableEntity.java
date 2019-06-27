@@ -2,16 +2,15 @@ package com.mushroom.midnight.common.entity.creature;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.CreatureEntity;
-import net.minecraft.entity.EntityList;
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.init.Items;
-import net.minecraft.item.ItemMonsterPlacer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.Constants;
@@ -24,8 +23,8 @@ public abstract class GrowableEntity extends CreatureEntity {
     private float ageWidth = -1f;
     private float ageHeight;
 
-    public GrowableEntity(World world) {
-        super(world);
+    public GrowableEntity(EntityType<GrowableEntity> entityType, World world) {
+        super(entityType, world);
     }
 
     public abstract int getMaxGrowingAge();
@@ -58,19 +57,19 @@ public abstract class GrowableEntity extends CreatureEntity {
     }
 
     @Override
-    public void writeEntityToNBT(CompoundNBT compound) {
-        super.writeEntityToNBT(compound);
+    public void writeAdditional(CompoundNBT compound) {
+        super.writeAdditional(compound);
         compound.putInt("growing_age", getGrowingAge());
         compound.putInt("growing_time", this.growingTime);
     }
 
     @Override
-    public void readEntityFromNBT(CompoundNBT compound) {
-        super.readEntityFromNBT(compound);
-        if (compound.hasKey("growing_age", Constants.NBT.TAG_INT)) {
+    public void readAdditional(CompoundNBT compound) {
+        super.readAdditional(compound);
+        if (compound.contains("growing_age", Constants.NBT.TAG_INT)) {
             setGrowingAge(compound.getInt("growing_age"));
         }
-        if (compound.hasKey("growing_time", Constants.NBT.TAG_INT)) {
+        if (compound.contains("growing_time", Constants.NBT.TAG_INT)) {
             this.growingTime = compound.getInt("growing_time");
         }
     }
@@ -111,7 +110,7 @@ public abstract class GrowableEntity extends CreatureEntity {
     }
 
     @Override
-    public boolean processInteract(PlayerEntity player, EnumHand hand) {
+    public boolean processInteract(PlayerEntity player, Hand hand) {
         ItemStack stack = player.getHeldItem(hand);
         if (stack.getItem() == Items.SPAWN_EGG) {
             if (!this.world.isRemote && holdingSpawnEggOfClass(stack, getClass())) {
@@ -123,7 +122,7 @@ public abstract class GrowableEntity extends CreatureEntity {
                     if (stack.hasDisplayName()) {
                         entity.setCustomNameTag(stack.getDisplayName());
                     }
-                    if (!player.capabilities.isCreativeMode) {
+                    if (!player.abilities.isCreativeMode) {
                         stack.shrink(1);
                     }
                 }

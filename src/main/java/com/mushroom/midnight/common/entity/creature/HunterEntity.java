@@ -13,11 +13,13 @@ import com.mushroom.midnight.common.registry.MidnightLootTables;
 import com.mushroom.midnight.common.util.MeanValueRecorder;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.FlyingEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.MoverType;
 import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.controller.LookController;
 import net.minecraft.entity.ai.controller.MovementController;
 import net.minecraft.entity.passive.AnimalEntity;
@@ -28,6 +30,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
@@ -63,8 +66,8 @@ public class HunterEntity extends FlyingEntity {
             }
     );
 
-    public HunterEntity(World world) {
-        super(world);
+    public HunterEntity(EntityType<HunterEntity> entityType, World world) {
+        super(entityType, world);
         this.setSize(1.0F, 1.0F);
         this.moveController = new MoveHelper(this);
         this.lookController = new LookHelper(this);
@@ -80,8 +83,8 @@ public class HunterEntity extends FlyingEntity {
     }
 
     @Override
-    public boolean getCanSpawnHere() {
-        return this.getPosition().getY() > this.world.getSeaLevel() && super.getCanSpawnHere();
+    public boolean canSpawn(IWorld worldIn, SpawnReason spawnReasonIn) {
+        return this.getPosition().getY() > this.world.getSeaLevel();
     }
 
     @Override

@@ -15,7 +15,8 @@ import javax.annotation.Nullable;
 public class AnimationCapability implements ICapabilityProvider {
     private Type animationType = Type.NONE;
     private int maxTicks, prevTick, currentTick;
-    public enum Type { NONE, ATTACK, EAT, CURTSEY, CHARGE }
+
+    public enum Type {NONE, ATTACK, EAT, CURTSEY, CHARGE}
 
     public void setAnimation(Entity animatable, Type animationType, int duration) {
         this.animationType = animationType;
@@ -65,7 +66,7 @@ public class AnimationCapability implements ICapabilityProvider {
 
     @Nonnull
     @Override
-    public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap) {
+    public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side) {
         return Midnight.ANIMATION_CAP.orEmpty(cap, LazyOptional.of(() -> this));
     }
 }

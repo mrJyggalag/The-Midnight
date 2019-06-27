@@ -4,53 +4,41 @@ import com.mushroom.midnight.common.helper.Helper;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.storage.loot.LootPool;
 import net.minecraft.world.storage.loot.LootTable;
-import net.minecraft.world.storage.loot.LootTableList;
-import net.minecraft.world.storage.loot.conditions.LootCondition;
+import net.minecraft.world.storage.loot.LootTables;
+import net.minecraft.world.storage.loot.conditions.ILootCondition;
 import net.minecraftforge.event.LootTableLoadEvent;
+import net.minecraftforge.eventbus.api.EventPriority;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.eventhandler.EventPriority;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.relauncher.ReflectionHelper;
+import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 
-import java.lang.reflect.Field;
 import java.util.List;
 
-import static com.mushroom.midnight.Midnight.LOGGER;
 import static com.mushroom.midnight.Midnight.MODID;
 
 @Mod.EventBusSubscriber(modid = MODID)
 public class FishingLoot {
-    private static final Field fieldPools;
-    private static final Field fieldPoolConditions;
-
-    static {
-        fieldPools = ReflectionHelper.findField(LootTable.class, "pools", "field_186466_c");
-        fieldPoolConditions = ReflectionHelper.findField(LootPool.class, "poolConditions", "field_186454_b");
-    }
+    private static ResourceLocation MIDNIGHT_FISHING = new ResourceLocation(MODID, "fishing");
 
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public static void onLootTableLoad(LootTableLoadEvent event) {
-        if (event.getName() == LootTableList.GAMEPLAY_FISHING) {
-            addConditionToAllMainPools(event.getTable(), (rand, context) -> !Helper.isMidnightDimension(context.getWorld()));
-            LootTable midnightTable = event.getLootTableManager().getLootTableFromLocation(new ResourceLocation(MODID, "fishing"));
-            if (midnightTable == LootTable.EMPTY_LOOT_TABLE) {
-                LOGGER.warn("The Midnight fishing loottable is absent");
-            } else {
-                LootPool midnightPool = midnightTable.getPool("midnight_fishing");
-                event.getTable().addPool(midnightPool);
-                addConditionToPool((rand, context) -> Helper.isMidnightDimension(context.getWorld()), midnightPool);
+        if (event.getName() == MIDNIGHT_FISHING) {
+            LootTable vanillaTable = event.getLootTableManager().getLootTableFromLocation(LootTables.GAMEPLAY_FISHING_JUNK);
+            if (vanillaTable != LootTable.EMPTY_LOOT_TABLE) {
+                ObfuscationReflectionHelper.setPrivateValue(LootTable.class, vanillaTable, false, "isFrozen");
+                addConditionToAllMainPools(vanillaTable, context -> !Helper.isMidnightDimension(context.getWorld()));
+                LootPool midnightPool = event.getTable().getPool("midnight_fishing");
+                vanillaTable.addPool(midnightPool);
+                addConditionToPool(context -> Helper.isMidnightDimension(context.getWorld()), midnightPool);
+                ObfuscationReflectionHelper.setPrivateValue(LootTable.class, vanillaTable, true, "isFrozen");
             }
         }
     }
 
     @SuppressWarnings("unchecked")
-    private static void addConditionToAllMainPools(LootTable table, LootCondition condition) {
+    private static void addConditionToAllMainPools(LootTable table, ILootCondition condition) {
         List<LootPool> pools = null;
-        try {
-            pools = (List<LootPool>) fieldPools.get(table);
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }
+        pools = ObfuscationReflectionHelper.getPrivateValue(LootTable.class, table, "field_186466_c");
         if (pools != null) {
             for (LootPool pool : pools) {
                 addConditionToPool(condition, pool);
@@ -59,12 +47,8 @@ public class FishingLoot {
     }
 
     @SuppressWarnings("unchecked")
-    private static void addConditionToPool(LootCondition condition, LootPool pool) {
-        try {
-            List<LootCondition> conditions = (List<LootCondition>) fieldPoolConditions.get(pool);
-            conditions.add(condition);
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }
+    private static void addConditionToPool(ILootCondition condition, LootPool pool) {
+        List<ILootCondition> conditions = ObfuscationReflectionHelper.getPrivateValue(LootPool.class, pool, "field_186454_b");
+        conditions.add(condition);
     }
 }

@@ -2,38 +2,26 @@ package com.mushroom.midnight.common.entity.creature;
 
 import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.common.capability.AnimationCapability;
-import com.mushroom.midnight.common.entity.navigation.CustomPathNavigateGround;
 import com.mushroom.midnight.common.entity.task.NeutralGoal;
 import com.mushroom.midnight.common.registry.MidnightLootTables;
 import net.minecraft.block.Block;
-import net.minecraft.block.state.BlockState;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EnumCreatureAttribute;
-import net.minecraft.entity.IMobEntityData;
+import net.minecraft.entity.ILivingEntityData;
 import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.EntityAIAttackMelee;
-import net.minecraft.entity.ai.EntityAIHurtByTarget;
-import net.minecraft.entity.ai.EntityAILookIdle;
-import net.minecraft.entity.ai.EntityAIMoveTowardsRestriction;
-import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
-import net.minecraft.entity.ai.EntityAIPanic;
-import net.minecraft.entity.ai.EntityAISwimming;
-import net.minecraft.entity.ai.EntityAIWanderAvoidWater;
-import net.minecraft.entity.ai.EntityAIWatchClosest;
+import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.init.MobEffects;
-import net.minecraft.init.SoundEvents;
-import net.minecraft.pathfinding.PathNavigate;
-import net.minecraft.potion.PotionEffect;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.pathfinding.GroundPathNavigator;
+import net.minecraft.pathfinding.PathNavigator;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.Direction;
-import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.DifficultyInstance;
+import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 
@@ -79,8 +67,8 @@ public class StingerEntity extends GrowableEntity implements IMob {
     }
 
     @Override
-    protected PathNavigate createNavigator(World world) {
-        return new CustomPathNavigateGround(this, world);
+    protected PathNavigator createNavigator(World world) {
+        return new GroundPathNavigator(this, world);
     }
 
     @Override
@@ -180,7 +168,7 @@ public class StingerEntity extends GrowableEntity implements IMob {
 
     @Override
     @Nullable
-    public IMobEntityData onInitialSpawn(DifficultyInstance difficulty, @Nullable IMobEntityData livingdata) {
+    public ILivingEntityData onInitialSpawn(IWorld worldIn, DifficultyInstance difficulty, SpawnReason reason, @Nullable ILivingEntityData livingdata, @Nullable CompoundNBT dataTag) {
         if (this.rand.nextInt(5) == 0) {
             setGrowingAge(-1);
         }

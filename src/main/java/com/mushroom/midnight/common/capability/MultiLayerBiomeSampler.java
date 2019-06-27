@@ -6,6 +6,7 @@ import com.mushroom.midnight.common.biome.BiomeLayerType;
 import net.minecraft.util.Direction;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
+import net.minecraftforge.common.util.LazyOptional;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -25,17 +26,9 @@ public class MultiLayerBiomeSampler implements ICapabilityProvider {
         return (BiomeLayerSampler<T>) this.layers.get(layerType);
     }
 
-    @Override
-    public boolean hasCapability(@Nonnull Capability<?> capability, @Nullable Direction facing) {
-        return capability == Midnight.MULTI_LAYER_BIOME_SAMPLER_CAP;
-    }
-
     @Nullable
     @Override
-    public <T> T getCapability(@Nonnull Capability<T> capability, @Nullable Direction facing) {
-        if (capability == Midnight.MULTI_LAYER_BIOME_SAMPLER_CAP) {
-            return Midnight.MULTI_LAYER_BIOME_SAMPLER_CAP.cast(this);
-        }
-        return null;
+    public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> capability, @Nullable Direction facing) {
+        return Midnight.MULTI_LAYER_BIOME_SAMPLER_CAP.orEmpty(capability, LazyOptional.of(() -> this));
     }
 }
