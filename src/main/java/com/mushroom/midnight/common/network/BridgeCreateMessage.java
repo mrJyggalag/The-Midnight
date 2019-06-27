@@ -1,6 +1,5 @@
 package com.mushroom.midnight.common.network;
 
-import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.common.entity.RiftAttachment;
 import com.mushroom.midnight.common.entity.RiftBridge;
 import com.mushroom.midnight.common.world.BridgeManager;
@@ -8,9 +7,10 @@ import com.mushroom.midnight.common.world.GlobalBridgeManager;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import net.minecraft.network.PacketBuffer;
-import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
-import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
-import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
+import net.minecraftforge.fml.LogicalSide;
+import net.minecraftforge.fml.network.NetworkEvent;
+
+import java.util.function.Supplier;
 
 public class BridgeCreateMessage {
     private int bridgeId;
@@ -44,26 +44,25 @@ public class BridgeCreateMessage {
         return new BridgeCreateMessage(bridgeId, attachment, data);
     }
 
-    public static class Handler implements IMessageHandler<BridgeCreateMessage, IMessage> {
-        @Override
-        public IMessage onMessage(BridgeCreateMessage message, MessageContext ctx) {
-            if (ctx.Dist.isClient()) {
-                Midnight.proxy.handleMessage(ctx, player -> {
-                    BridgeManager trackerHandler = GlobalBridgeManager.getClient();
+    public static void handle(BridgeCreateMessage message, Supplier<NetworkEvent.Context> contextSupplier) {
+        NetworkEvent.Context context = contextSupplier.get();
 
-                    RiftBridge bridge = trackerHandler.getBridge(message.bridgeId);
-                    if (bridge == null) {
-                        bridge = new RiftBridge(message.bridgeId, message.attachment);
-                        trackerHandler.addBridge(bridge);
-                    }
+        if (context.getDirection().getReceptionSide() == LogicalSide.CLIENT) {
+            context.enqueueWork(() -> {
+                BridgeManager trackerHandler = GlobalBridgeManager.getClient();
 
-                    bridge.setAttachment(message.attachment);
-                    bridge.handleState(message.data);
+                RiftBridge bridge = trackerHandler.getBridge(message.bridgeId);
+                if (bridge == null) {
+                    bridge = new RiftBridge(message.bridgeId, message.attachment);
+                    trackerHandler.addBridge(bridge);
+                }
 
-                    message.data.release();
-                });
-            }
-            return null;
+                bridge.setAttachment(message.attachment);
+                bridge.handleState(message.data);
+
+                message.data.release();
+            });
+            context.setPacketHandled(true);
         }
     }
 }

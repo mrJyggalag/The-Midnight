@@ -1,15 +1,15 @@
 package com.mushroom.midnight.common.network;
 
-import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.common.entity.RiftBridge;
 import com.mushroom.midnight.common.world.BridgeManager;
 import com.mushroom.midnight.common.world.GlobalBridgeManager;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import net.minecraft.network.PacketBuffer;
-import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
-import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
-import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
+import net.minecraftforge.fml.LogicalSide;
+import net.minecraftforge.fml.network.NetworkEvent;
+
+import java.util.function.Supplier;
 
 public class BridgeStateMessage {
     private int bridgeId;
@@ -38,20 +38,19 @@ public class BridgeStateMessage {
         return new BridgeStateMessage(bridgeId, data);
     }
 
-    public static class Handler implements IMessageHandler<BridgeStateMessage, IMessage> {
-        @Override
-        public IMessage onMessage(BridgeStateMessage message, MessageContext ctx) {
-            if (ctx.Dist.isClient()) {
-                Midnight.proxy.handleMessage(ctx, player -> {
-                    BridgeManager trackerHandler = GlobalBridgeManager.getClient();
-                    RiftBridge bridge = trackerHandler.getBridge(message.bridgeId);
-                    if (bridge != null) {
-                        bridge.handleState(message.data);
-                    }
-                    message.data.release();
-                });
-            }
-            return null;
+    public static void handle(BridgeStateMessage message, Supplier<NetworkEvent.Context> contextSupplier) {
+        NetworkEvent.Context context = contextSupplier.get();
+
+        if (context.getDirection().getReceptionSide() == LogicalSide.CLIENT) {
+            context.enqueueWork(() -> {
+                BridgeManager trackerHandler = GlobalBridgeManager.getClient();
+                RiftBridge bridge = trackerHandler.getBridge(message.bridgeId);
+                if (bridge != null) {
+                    bridge.handleState(message.data);
+                }
+                message.data.release();
+            });
+            context.setPacketHandled(true);
         }
     }
 }

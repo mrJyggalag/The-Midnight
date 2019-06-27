@@ -9,7 +9,6 @@ import com.mushroom.midnight.common.capability.MultiLayerBiomeSampler;
 import com.mushroom.midnight.common.capability.NullStorage;
 import com.mushroom.midnight.common.capability.RiftTravelCooldown;
 import com.mushroom.midnight.common.capability.RifterCapturable;
-import com.mushroom.midnight.common.compatibility.SupportMods;
 import com.mushroom.midnight.common.config.MidnightConfig;
 import com.mushroom.midnight.common.loot.InBiomeLootCondition;
 import com.mushroom.midnight.common.loot.InBlockLootCondition;
@@ -38,7 +37,6 @@ import com.mushroom.midnight.common.world.generator.MidnightOreGenerator;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.storage.loot.conditions.LootConditionManager;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.common.capabilities.CapabilityManager;
@@ -93,8 +91,8 @@ public class Midnight {
     public Midnight() {
         ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, MidnightConfig.CLIENT_SPEC);
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, MidnightConfig.GENERAL_SPEC);
+        setupMessages();
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
-
         FluidRegistry.enableUniversalBucket();
     }
 
@@ -105,8 +103,6 @@ public class Midnight {
         CapabilityManager.INSTANCE.register(MultiLayerBiomeSampler.class, new NullStorage<>(), MultiLayerBiomeSampler::new);
         CapabilityManager.INSTANCE.register(AnimationCapability.class, new NullStorage<>(), AnimationCapability::new);
         CapabilityManager.INSTANCE.register(MidnightWorldSpawners.class, new NullStorage<>(), MidnightWorldSpawners.Void::new);
-
-        this.setupMessages();
 
         Reflection.initialize(MidnightCriterion.class, MidnightItemGroups.class);
 
@@ -127,13 +123,6 @@ public class Midnight {
         MidnightRecipes.onInit();
 
         NetworkRegistry.INSTANCE.registerGuiHandler(instance, new GuiHandler());
-
-        if (SupportMods.THAUMCRAFT.isLoaded()) {
-            MinecraftForge.EVENT_BUS.register(CompatibilityThaumcraft.instance);
-        }
-        if (SupportMods.IMMERSIVE_ENGINEERING.isLoaded()) {
-            CompatibilityImmersiveEngineering.instance.register();
-        }
     }
 
     private void setupMessages() {

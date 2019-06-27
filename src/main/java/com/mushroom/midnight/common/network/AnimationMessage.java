@@ -2,8 +2,13 @@ package com.mushroom.midnight.common.network;
 
 import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.common.capability.AnimationCapability.Type;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.network.PacketBuffer;
+import net.minecraftforge.fml.LogicalSide;
+import net.minecraftforge.fml.network.NetworkEvent;
+
+import java.util.function.Supplier;
 
 public class AnimationMessage {
     private int entityId;
@@ -33,18 +38,17 @@ public class AnimationMessage {
         return new AnimationMessage(entityId, animationType, duration);
     }
 
-    public static class Handler implements IMessageHandler<AnimationMessage, IMessage> {
-        @Override
-        public IMessage onMessage(AnimationMessage message, MessageContext ctx) {
-            if (ctx.Dist.isClient()) {
-                Midnight.proxy.handleMessage(ctx, player -> {
-                    Entity entity = player.world.getEntityByID(message.entityId);
-                    if (entity != null) {
-                        entity.getCapability(Midnight.ANIMATION_CAP, null).ifPresent(animationCap -> animationCap.setAnimation(entity, message.animationType, message.duration));
-                    }
-                });
-            }
-            return null;
+    public static void handle(AnimationMessage message, Supplier<NetworkEvent.Context> contextSupplier) {
+        NetworkEvent.Context context = contextSupplier.get();
+
+        if (context.getDirection().getReceptionSide() == LogicalSide.CLIENT) {
+            context.enqueueWork(() -> {
+                Entity entity = Minecraft.getInstance().player.world.getEntityByID(message.entityId);
+                if (entity != null) {
+                    entity.getCapability(Midnight.ANIMATION_CAP, null).ifPresent(animationCap -> animationCap.setAnimation(entity, message.animationType, message.duration));
+                }
+            });
+            context.setPacketHandled(true);
         }
     }
 }

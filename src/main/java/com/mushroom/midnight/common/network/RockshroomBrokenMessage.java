@@ -1,14 +1,15 @@
 package com.mushroom.midnight.common.network;
 
-import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.common.block.RockshroomBlock;
 import com.mushroom.midnight.common.registry.MidnightBlocks;
-import io.netty.buffer.ByteBuf;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.math.BlockPos;
-import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
-import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
-import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
+import net.minecraftforge.fml.LogicalSide;
+import net.minecraftforge.fml.network.NetworkEvent;
+
+import java.util.function.Supplier;
 
 public class RockshroomBrokenMessage {
     private BlockPos pos;
@@ -30,17 +31,18 @@ public class RockshroomBrokenMessage {
         return new RockshroomBrokenMessage(new BlockPos(x, y, z));
     }
 
-    public static class Handler implements IMessageHandler<RockshroomBrokenMessage, IMessage> {
-        @Override
-        public IMessage onMessage(RockshroomBrokenMessage message, MessageContext ctx) {
-            if (ctx.Dist.isClient()) {
-                Midnight.proxy.handleMessage(ctx, player -> {
-                    if (player.world.isBlockLoaded(message.pos)) {
-                        ((RockshroomBlock) MidnightBlocks.ROCKSHROOM).spawnSpores(player.world, message.pos);
-                    }
-                });
-            }
-            return null;
+    public static void handle(RockshroomBrokenMessage message, Supplier<NetworkEvent.Context> contextSupplier) {
+        NetworkEvent.Context context = contextSupplier.get();
+
+        if (context.getDirection().getReceptionSide() == LogicalSide.CLIENT) {
+            context.enqueueWork(() -> {
+                ClientPlayerEntity player = Minecraft.getInstance().player;
+                if (player.world.isBlockLoaded(message.pos)) {
+                    ((RockshroomBlock) MidnightBlocks.ROCKSHROOM).spawnSpores(player.world, message.pos);
+                }
+            });
+
+            context.setPacketHandled(true);
         }
     }
 }

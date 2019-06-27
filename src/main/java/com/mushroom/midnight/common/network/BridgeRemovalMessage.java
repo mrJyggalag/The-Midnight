@@ -1,8 +1,11 @@
 package com.mushroom.midnight.common.network;
 
-import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.common.world.GlobalBridgeManager;
 import net.minecraft.network.PacketBuffer;
+import net.minecraftforge.fml.LogicalSide;
+import net.minecraftforge.fml.network.NetworkEvent;
+
+import java.util.function.Supplier;
 
 public class BridgeRemovalMessage {
     private int bridgeId;
@@ -19,13 +22,14 @@ public class BridgeRemovalMessage {
         return new BridgeRemovalMessage(buffer.readInt());
     }
 
-    public static class Handler implements IMessageHandler<BridgeRemovalMessage, IMessage> {
-        @Override
-        public IMessage onMessage(BridgeRemovalMessage message, MessageContext ctx) {
-            if (ctx.Dist.isClient()) {
-                Midnight.proxy.handleMessage(ctx, player -> GlobalBridgeManager.getClient().removeBridge(message.bridgeId));
-            }
-            return null;
+    public static void handle(BridgeRemovalMessage message, Supplier<NetworkEvent.Context> contextSupplier) {
+        NetworkEvent.Context context = contextSupplier.get();
+
+        if (context.getDirection().getReceptionSide() == LogicalSide.CLIENT) {
+            context.enqueueWork(() -> {
+                GlobalBridgeManager.getClient().removeBridge(message.bridgeId);
+            });
+            context.setPacketHandled(true);
         }
     }
 }
