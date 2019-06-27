@@ -6,12 +6,12 @@ import com.mushroom.midnight.common.registry.MidnightBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
-import net.minecraft.block.TallGrassBlock;
 import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.event.ForgeEventFactory;
 
+import java.util.EnumSet;
 import java.util.function.Predicate;
 
 public class EatGrassGoal extends Goal {
@@ -21,9 +21,9 @@ public class EatGrassGoal extends Goal {
 
     public EatGrassGoal(MobEntity owner, int duration, boolean vanillaBehavior, Predicate<BlockState> eatPredicate) {
         this.owner = owner;
-        this.eatPredicate = vanillaBehavior ? eatPredicate.or(p -> p.getBlock() == Blocks.TALL_GRASS && p.getValue(TallGrassBlock.TYPE) == TallGrassBlock.EnumType.GRASS) : eatPredicate;
+        this.eatPredicate = vanillaBehavior ? eatPredicate.or(p -> p.getBlock() == Blocks.GRASS) : eatPredicate;
         this.duration = duration;
-        setMutexBits(7);
+        setMutexFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.LOOK, Goal.Flag.JUMP));
     }
 
     @Override
@@ -31,29 +31,25 @@ public class EatGrassGoal extends Goal {
         if (this.owner.getCapability(Midnight.ANIMATION_CAP, null).map(cap -> false).orElse(true) || this.owner.getRNG().nextInt(this.owner.isChild() ? 50 : 500) != 0) {
             return false;
         } else {
-            BlockPos currentPos = this.owner.getPosition();
+            BlockPos currentPos = new BlockPos(this.owner);
             if (this.eatPredicate.test(this.owner.world.getBlockState(currentPos))) {
                 return true;
             } else {
                 Block belowBlock = this.owner.world.getBlockState(currentPos.down()).getBlock();
-                return belowBlock == Blocks.GRASS || belowBlock == MidnightBlocks.MIDNIGHT_GRASS;
+                return belowBlock == Blocks.GRASS_BLOCK || belowBlock == MidnightBlocks.MIDNIGHT_GRASS;
             }
         }
     }
 
     @Override
     public void startExecuting() {
-        this.owner.getCapability(Midnight.ANIMATION_CAP, null).ifPresent(capAnim -> {
-            capAnim.setAnimation(this.owner, AnimationCapability.Type.EAT, this.duration);
-        });
+        this.owner.getCapability(Midnight.ANIMATION_CAP, null).ifPresent(capAnim -> capAnim.setAnimation(this.owner, AnimationCapability.Type.EAT, this.duration));
         this.owner.getNavigator().clearPath();
     }
 
     @Override
     public void resetTask() {
-        this.owner.getCapability(Midnight.ANIMATION_CAP, null).ifPresent(capAnim -> {
-            capAnim.resetAnimation(this.owner);
-        });
+        this.owner.getCapability(Midnight.ANIMATION_CAP, null).ifPresent(capAnim -> capAnim.resetAnimation(this.owner));
     }
 
     @Override
@@ -73,10 +69,11 @@ public class EatGrassGoal extends Goal {
                 this.owner.eatGrassBonus();
             } else {
                 BlockPos belowPos = currentPos.down();
-                Block belowBlock = this.owner.world.getBlockState(belowPos).getBlock();
+                BlockState belowState = this.owner.world.getBlockState(belowPos);
+                Block belowBlock = belowState.getBlock();
                 if (belowBlock == Blocks.GRASS || belowBlock == MidnightBlocks.MIDNIGHT_GRASS) {
                     if (ForgeEventFactory.getMobGriefingEvent(this.owner.world, this.owner)) {
-                        this.owner.world.playEvent(2001, belowPos, Block.getIdFromBlock(belowBlock));
+                        this.owner.world.playEvent(2001, belowPos, Block.getStateId(belowState));
                         this.owner.world.setBlockState(belowPos, (belowBlock == Blocks.GRASS ? Blocks.DIRT : MidnightBlocks.MIDNIGHT_DIRT).getDefaultState(), 2);
                     }
                     this.owner.eatGrassBonus();
