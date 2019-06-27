@@ -6,6 +6,7 @@ import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.util.math.BlockPos;
 
 import javax.annotation.Nullable;
+import java.util.EnumSet;
 import java.util.function.Predicate;
 
 public class SearchForBlockGoal extends Goal {
@@ -26,7 +27,7 @@ public class SearchForBlockGoal extends Goal {
         this.searchDist = searchDist;
         this.searchDelay = searchDelay / 2 + (int)(searchDelay * owner.getRNG().nextFloat());
         this.speed = speed;
-        setMutexBits(5);
+        setMutexFlags(EnumSet.of(Flag.MOVE, Flag.JUMP));
     }
 
     @Override

@@ -14,6 +14,7 @@ import com.mushroom.midnight.common.item.UnstableFruitItem;
 import com.mushroom.midnight.common.registry.MidnightBlocks;
 import com.mushroom.midnight.common.registry.MidnightCriterion;
 import com.mushroom.midnight.common.registry.MidnightEffects;
+import com.mushroom.midnight.common.registry.MidnightEntities;
 import com.mushroom.midnight.common.registry.MidnightSounds;
 import com.mushroom.midnight.common.registry.MidnightSurfaceBiomes;
 import net.minecraft.block.Block;
@@ -22,6 +23,7 @@ import net.minecraft.entity.AgeableEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ILivingEntityData;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.SpawnReason;
@@ -41,7 +43,7 @@ import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
+import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
@@ -66,6 +68,7 @@ import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.common.util.LazyOptional;
 
 import javax.annotation.Nullable;
+import java.util.EnumSet;
 import java.util.UUID;
 import java.util.function.Predicate;
 
@@ -74,22 +77,24 @@ import static com.mushroom.midnight.common.registry.MidnightLootTables.LOOT_TABL
 public class NightStagEntity extends AnimalEntity {
     private static final DataParameter<Integer> ANTLER_TYPE = EntityDataManager.createKey(NightStagEntity.class, DataSerializers.VARINT);
     public static final int MAX_ANTLER_TYPE = 9;
-    private static final AttributeModifier CHILD_ATTACK_MALUS = new AttributeModifier(UUID.fromString("c0f32cda-a4fd-4fe4-8b3f-15612ef9a52f"), "nightstag_child_attack_malus", -2d, 0);
+    private static final AttributeModifier CHILD_ATTACK_MALUS = new AttributeModifier(UUID.fromString("c0f32cda-a4fd-4fe4-8b3f-15612ef9a52f"), "nightstag_child_attack_malus", -2d, AttributeModifier.Operation.ADDITION);
     private static final int GROWING_TIME = -24000;
     private static final Predicate<BlockState> FRUIT_PREDICATE = p -> p.getBlock() instanceof UnstableBushBloomedBlock && p.get(UnstableBushBloomedBlock.HAS_FRUIT);
     private final AnimationCapability animCap = new AnimationCapability();
     private int temptTime = 400;
 
-    public NightStagEntity(EntityType<NightStagEntity> entityType, World world) {
+    public NightStagEntity(EntityType<? extends NightStagEntity> entityType, World world) {
         super(entityType, world);
     }
 
     @Override
     @Nullable
     public AgeableEntity createChild(AgeableEntity entity) {
-        NightStagEntity child = new NightStagEntity(world);
-        child.setGrowingAge(GROWING_TIME);
-        child.setAntlerType(((NightStagEntity) entity).getAntlerType());
+        NightStagEntity child = MidnightEntities.nightstag.create(world);
+        if (child != null) {
+            child.setGrowingAge(GROWING_TIME);
+            child.setAntlerType(((NightStagEntity) entity).getAntlerType());
+        }
         return child;
     }
 
@@ -185,23 +190,22 @@ public class NightStagEntity extends AnimalEntity {
     }
 
     @Override
-    protected void playStepSound(BlockPos pos, Block blockIn) {
+    protected void playStepSound(BlockPos pos, BlockState stateIn) {
         playSound(SoundEvents.ENTITY_LLAMA_STEP, 0.15f, 1f);
     }
 
     @Override
     public float getBlockPathWeight(BlockPos pos) {
         Block belowBlock = world.getBlockState(pos.down()).getBlock();
-        return belowBlock == MidnightBlocks.MIDNIGHT_GRASS || belowBlock == MidnightBlocks.NIGHTSTONE ? 10f : 9f - (world.getLightBrightness(pos) * 10f);
+        return belowBlock == MidnightBlocks.MIDNIGHT_GRASS || belowBlock == MidnightBlocks.NIGHTSTONE ? 10f : 9f - (world.getBrightness(pos) * 10f);
     }
 
     @Override
-    public boolean getCanSpawnHere() {
-        if (getPosition().getY() <= world.getSeaLevel()) {
+    public boolean canSpawn(IWorld worldIn, SpawnReason spawnReasonIn) {
+        if (getPosition().getY() <= worldIn.getSeaLevel()) {
             return false;
         }
-        BlockState belowState = world.getBlockState(new BlockPos(this).down());
-        return belowState.isFullCube() && belowState.canEntitySpawn(this);
+        return super.canSpawn(worldIn, spawnReasonIn);
     }
 
     @Override
@@ -216,7 +220,7 @@ public class NightStagEntity extends AnimalEntity {
         this.goalSelector.addGoal(1, new NeutralGoal(this, new ChargeGoal(this, 1.2d, 200, 0.25f), false));
         this.goalSelector.addGoal(2, new NeutralGoal(this, new MeleeAttackGoal(this, 1d, false), false));
         this.goalSelector.addGoal(2, new BreedGoal(this, 1d));
-        this.goalSelector.addGoal(3, new TemptGoal(this, 1d, Items.AIR, false) {
+        this.goalSelector.addGoal(3, new TemptGoal(this, 1d, Ingredient.EMPTY, false) {
             @Override
             protected boolean isTempting(ItemStack stack) {
                 return isBreedingItem(stack);
@@ -256,7 +260,7 @@ public class NightStagEntity extends AnimalEntity {
         this.goalSelector.addGoal(6, new WaterAvoidingRandomWalkingGoal(this, 0.7d, 0.005f));
         this.goalSelector.addGoal(7, new CurtseyGoal(this, PlayerEntity.class, 12f, 0.02f));
         this.goalSelector.addGoal(8, new LookRandomlyGoal(this));
-        this.targetSelector.addGoal(1, new NeutralGoal(this, new HurtByTargetGoal(this, true), false));
+        this.targetSelector.addGoal(1, new NeutralGoal(this, new HurtByTargetGoal(this), false));
     }
 
     @Override
@@ -308,7 +312,7 @@ public class NightStagEntity extends AnimalEntity {
 
     @Override
     public double getMountedYOffset() {
-        return (double) this.height * 0.67d;
+        return super.getHeight() * 0.9d;
     }
 
     @Override
@@ -337,7 +341,6 @@ public class NightStagEntity extends AnimalEntity {
     }
 
     @Override
-    @Nullable
     protected ResourceLocation getLootTable() {
         return LOOT_TABLE_NIGHTSTAG;
     }
@@ -364,9 +367,9 @@ public class NightStagEntity extends AnimalEntity {
 
     public class CurtseyGoal extends LookAtGoal {
 
-        CurtseyGoal(MobEntity entity, Class<? extends Entity> watchTargetClass, float maxDistance, float chance) {
+        CurtseyGoal(MobEntity entity, Class<? extends LivingEntity> watchTargetClass, float maxDistance, float chance) {
             super(entity, watchTargetClass, maxDistance, chance);
-            setMutexBits(3);
+            setMutexFlags(EnumSet.of(Flag.MOVE, Flag.LOOK));
         }
 
         @Override

@@ -13,7 +13,7 @@ import net.minecraft.world.World;
 import javax.annotation.Nullable;
 
 public class PenumbrianEntity extends MonsterEntity {
-    public PenumbrianEntity(EntityType<PenumbrianEntity> entityType, World world) {
+    public PenumbrianEntity(EntityType<? extends PenumbrianEntity> entityType, World world) {
         super(entityType, world);
     }
 
@@ -28,7 +28,6 @@ public class PenumbrianEntity extends MonsterEntity {
     }
 
     @Override
-    @Nullable
     protected ResourceLocation getLootTable() {
         return MidnightLootTables.LOOT_TABLE_PENUMBRIAN;
     }

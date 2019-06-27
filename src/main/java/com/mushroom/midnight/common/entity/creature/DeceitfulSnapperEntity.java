@@ -15,7 +15,7 @@ import net.minecraft.world.World;
 public class DeceitfulSnapperEntity extends WaterMobEntity {
     private BlockPos spawnPosition;
 
-    public DeceitfulSnapperEntity(EntityType<DeceitfulSnapperEntity> entityType, World world) {
+    public DeceitfulSnapperEntity(EntityType<? extends DeceitfulSnapperEntity> entityType, World world) {
         super(entityType, world);
     }
 

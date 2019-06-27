@@ -1,6 +1,8 @@
 package com.mushroom.midnight;
 
 import com.google.common.reflect.Reflection;
+import com.mushroom.midnight.client.ClientProxy;
+import com.mushroom.midnight.common.ServerProxy;
 import com.mushroom.midnight.common.capability.AnimationCapability;
 import com.mushroom.midnight.common.capability.CavernousBiomeStore;
 import com.mushroom.midnight.common.capability.DelegatedStorage;
@@ -33,6 +35,7 @@ import com.mushroom.midnight.common.registry.MidnightRecipes;
 import com.mushroom.midnight.common.registry.MidnightSurfaceBiomes;
 import com.mushroom.midnight.common.registry.RegUtil;
 import com.mushroom.midnight.common.util.EntityUtil;
+import com.mushroom.midnight.common.util.IProxy;
 import com.mushroom.midnight.common.world.generator.MidnightOreGenerator;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.util.ResourceLocation;
@@ -41,6 +44,7 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.common.capabilities.CapabilityManager;
 import net.minecraftforge.fluids.FluidRegistry;
+import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.registry.GameRegistry;
@@ -59,6 +63,7 @@ public class Midnight {
     public static final String NETWORK_PROTOCOL = "1";
 
     public static final Logger LOGGER = LogManager.getLogger(Midnight.class);
+    public static final IProxy PROXY = DistExecutor.runForDist(() -> ClientProxy::new, () -> ServerProxy::new);
 
     public static final SimpleChannel CHANNEL = NetworkRegistry.ChannelBuilder.named(new ResourceLocation(MODID, "net"))
             .networkProtocolVersion(() -> NETWORK_PROTOCOL)

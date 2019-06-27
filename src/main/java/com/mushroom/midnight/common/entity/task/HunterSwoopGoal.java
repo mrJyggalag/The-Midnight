@@ -128,7 +128,7 @@ public class HunterSwoopGoal extends Goal {
     }
 
     private double getAttackReach(LivingEntity target) {
-        double meanWidth = (2.0 + target.width) / 2.0;
+        double meanWidth = (2.0 + target.getWidth()) / 2.0;
         return meanWidth + 0.5;
     }
 }

@@ -4,9 +4,12 @@ import com.mushroom.midnight.common.entity.FlyingNavigator;
 import com.mushroom.midnight.common.registry.MidnightLootTables;
 import com.mushroom.midnight.common.registry.MidnightSounds;
 import net.minecraft.block.BlockState;
+import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.Pose;
 import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.controller.FlyingMovementController;
 import net.minecraft.entity.ai.goal.HurtByTargetGoal;
 import net.minecraft.entity.ai.goal.LookAtWithoutMovingGoal;
@@ -17,6 +20,7 @@ import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
 import net.minecraft.entity.ai.goal.WaterAvoidingRandomWalkingGoal;
 import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.passive.AnimalEntity;
+import net.minecraft.entity.passive.IFlyingAnimal;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
@@ -27,18 +31,17 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-import javax.annotation.Nullable;
-
-public class NovaEntity extends MonsterEntity implements EntityFlying {
+public class NovaEntity extends MonsterEntity implements IFlyingAnimal {
     private static final DataParameter<Boolean> IS_ATTACKING = EntityDataManager.createKey(NovaEntity.class, DataSerializers.BOOLEAN);
     private float heightOffset = 0.5f;
     private int heightOffsetUpdateTime;
 
-    public NovaEntity(EntityType<NovaEntity> entityType, World world) {
+    public NovaEntity(EntityType<? extends NovaEntity> entityType, World world) {
         super(entityType, world);
         this.experienceValue = 10;
         setPathPriority(PathNodeType.LAVA, 8f);
@@ -50,24 +53,22 @@ public class NovaEntity extends MonsterEntity implements EntityFlying {
     @Override
     protected PathNavigator createNavigator(World world) {
         FlyingNavigator nav = new FlyingNavigator(this, world);
-        nav.setCanFloat(true);
         nav.setCanOpenDoors(false);
         nav.setCanEnterDoors(false);
         return nav;
     }
 
     @Override
-    public float getEyeHeight() {
-        return this.height * 0.5f;
+    protected float getStandingEyeHeight(Pose pose, EntitySize size) {
+        return super.getEyeHeight(pose, size) * 0.5f;
     }
 
     @Override
-    public boolean getCanSpawnHere() {
+    public boolean canSpawn(IWorld worldIn, SpawnReason spawnReasonIn) {
         if (getPosition().getY() > 50) {
             return false;
         }
-        BlockState belowState = world.getBlockState(new BlockPos(this).down());
-        return belowState.isFullCube() && belowState.canEntitySpawn(this);
+        return super.canSpawn(worldIn, spawnReasonIn);
     }
 
     @Override
@@ -95,7 +96,7 @@ public class NovaEntity extends MonsterEntity implements EntityFlying {
         this.goalSelector.addGoal(7, new WaterAvoidingRandomWalkingGoal(this, 0.8d));
         this.goalSelector.addGoal(8, new LookAtWithoutMovingGoal(this, PlayerEntity.class, 8f, 0.01f));
         this.goalSelector.addGoal(8, new LookRandomlyGoal(this));
-        this.targetSelector.addGoal(1, new HurtByTargetGoal(this, true));
+        this.targetSelector.addGoal(1, new HurtByTargetGoal(this));
         this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, true, false));
         this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, AnimalEntity.class, true, false));
     }
@@ -113,7 +114,7 @@ public class NovaEntity extends MonsterEntity implements EntityFlying {
         }
         LivingEntity target = getAttackTarget();
         if (target != null && target.isAlive() && target.posY + (double) target.getEyeHeight() > this.posY + (double) getEyeHeight() + (double) this.heightOffset) {
-            this.motionY += (0.3 - this.motionY) * 0.3;
+            getMotion().add(0d, (0.3 - getMotion().y) * 0.3, 0d);
             this.isAirBorne = true;
         }
         super.updateAITasks();
@@ -132,7 +133,6 @@ public class NovaEntity extends MonsterEntity implements EntityFlying {
     }
 
     @Override
-    @Nullable
     protected ResourceLocation getLootTable() {
         return MidnightLootTables.LOOT_TABLE_NOVA;
     }

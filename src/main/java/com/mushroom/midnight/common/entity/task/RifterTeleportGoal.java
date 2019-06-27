@@ -83,10 +83,10 @@ public class RifterTeleportGoal extends Goal {
         double x = pos.getX() + 0.5;
         double y = pos.getY();
         double z = pos.getZ() + 0.5;
-        float halfWidth = entity.width / 2.0F;
+        float halfWidth = entity.getWidth() / 2.0F;
         return new AxisAlignedBB(
                 x - halfWidth, y, z - halfWidth,
-                x + halfWidth, y + entity.height, z + halfWidth
+                x + halfWidth, y + entity.getHeight(), z + halfWidth
         );
     }
 

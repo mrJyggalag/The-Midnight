@@ -14,7 +14,6 @@ import com.mushroom.midnight.common.util.MeanValueRecorder;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.FlyingEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.MoverType;
@@ -22,7 +21,9 @@ import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.controller.LookController;
 import net.minecraft.entity.ai.controller.MovementController;
+import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.passive.AnimalEntity;
+import net.minecraft.entity.passive.IFlyingAnimal;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.pathfinding.PathNavigator;
 import net.minecraft.potion.EffectInstance;
@@ -40,7 +41,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.vecmath.Point3f;
 
-public class HunterEntity extends FlyingEntity {
+public class HunterEntity extends MonsterEntity implements IFlyingAnimal {
     private final AnimationCapability animCap = new AnimationCapability();
 
     public static final int FLIGHT_HEIGHT = 40;
@@ -67,7 +68,7 @@ public class HunterEntity extends FlyingEntity {
             }
     );
 
-    public HunterEntity(EntityType<HunterEntity> entityType, World world) {
+    public HunterEntity(EntityType<? extends HunterEntity> entityType, World world) {
         super(entityType, world);
         this.moveController = new MoveHelper(this);
         this.lookController = new LookHelper(this);
@@ -267,7 +268,6 @@ public class HunterEntity extends FlyingEntity {
     }
 
     @Override
-    @Nullable
     protected ResourceLocation getLootTable() { return MidnightLootTables.LOOT_TABLE_HUNTER; }
 
     @Override

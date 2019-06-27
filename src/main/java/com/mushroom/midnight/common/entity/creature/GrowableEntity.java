@@ -1,17 +1,17 @@
 package com.mushroom.midnight.common.entity.creature;
 
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.CreatureEntity;
+import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.Pose;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
+import net.minecraft.item.SpawnEggItem;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.Hand;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.Constants;
 
@@ -21,7 +21,7 @@ public abstract class GrowableEntity extends CreatureEntity {
     private static final DataParameter<Integer> GROWING_AGE = EntityDataManager.createKey(GrowableEntity.class, DataSerializers.VARINT);
     protected int growingTime = 0;
     private float ageWidth = -1f;
-    private float ageHeight;
+    private float ageHeight = -1f;
 
     public GrowableEntity(EntityType<? extends GrowableEntity> entityType, World worldIn) {
         super(entityType, worldIn);
@@ -48,12 +48,13 @@ public abstract class GrowableEntity extends CreatureEntity {
         this.dataManager.set(GROWING_AGE, age);
         this.growingTime = 0;
         onGrowingToAge(age);
-        setScaleForAge(age);
+        recalculateSize();
     }
 
-    public void setScaleForAge(int age) {
-        float scale = 1f + age * 0.5f;
-        super.setSize(this.ageWidth * scale, this.ageHeight * scale);
+    @Override
+    public EntitySize getSize(Pose poseIn) {
+        float scale = 1f + getGrowingAge() * 0.5f;
+        return EntitySize.flexible(this.ageWidth * scale, this.ageHeight * scale);
     }
 
     @Override
@@ -77,7 +78,7 @@ public abstract class GrowableEntity extends CreatureEntity {
     @Override
     public void notifyDataManagerChange(DataParameter<?> key) {
         if (GROWING_AGE.equals(key)) {
-            setScaleForAge(getGrowingAge());
+            recalculateSize();
         }
         super.notifyDataManagerChange(key);
     }
@@ -100,28 +101,19 @@ public abstract class GrowableEntity extends CreatureEntity {
     }
 
     @Override
-    protected final void setSize(float width, float height) {
-        boolean flag = this.ageWidth > 0f;
-        this.ageWidth = width;
-        this.ageHeight = height;
-        if (!flag) {
-            super.setSize(this.ageWidth, this.ageHeight);
-        }
-    }
-
-    @Override
     public boolean processInteract(PlayerEntity player, Hand hand) {
         ItemStack stack = player.getHeldItem(hand);
-        if (stack.getItem() == Items.SPAWN_EGG) {
-            if (!this.world.isRemote && holdingSpawnEggOfClass(stack, getClass())) {
+        if (stack.getItem() instanceof SpawnEggItem && ((SpawnEggItem) stack.getItem()).hasType(stack.getTag(), this.getType())) {
+            if (!this.world.isRemote) {
                 GrowableEntity entity = createChild(this);
                 if (entity != null) {
                     entity.setGrowingAge(-1);
                     entity.setLocationAndAngles(this.posX, this.posY, this.posZ, 0f, 0f);
-                    this.world.spawnEntity(entity);
+                    this.world.addEntity(entity);
                     if (stack.hasDisplayName()) {
-                        entity.setCustomNameTag(stack.getDisplayName());
+                        entity.setCustomName(stack.getDisplayName());
                     }
+                    onChildSpawnFromEgg(player, entity);
                     if (!player.abilities.isCreativeMode) {
                         stack.shrink(1);
                     }
@@ -133,16 +125,6 @@ public abstract class GrowableEntity extends CreatureEntity {
         }
     }
 
-    private boolean holdingSpawnEggOfClass(ItemStack stack, Class<? extends Entity> entityClass) {
-        if (stack.getItem() != Items.SPAWN_EGG) {
-            return false;
-        } else {
-            ResourceLocation rl = ItemMonsterPlacer.getNamedIdFrom(stack);
-            if (rl != null) {
-                Class<? extends Entity> oclass = EntityList.getClass(rl);
-                return entityClass == oclass;
-            }
-            return false;
-        }
+    protected void onChildSpawnFromEgg(PlayerEntity playerIn, GrowableEntity child) {
     }
 }

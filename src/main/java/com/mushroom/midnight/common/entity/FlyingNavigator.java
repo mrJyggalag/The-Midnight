@@ -4,7 +4,6 @@ import net.minecraft.block.Block;
 import net.minecraft.entity.MobEntity;
 import net.minecraft.pathfinding.FlyingPathNavigator;
 import net.minecraft.pathfinding.Path;
-import net.minecraft.pathfinding.PathNavigateFlying;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;

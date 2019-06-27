@@ -4,7 +4,6 @@ import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.common.capability.AnimationCapability;
 import com.mushroom.midnight.common.entity.task.NeutralGoal;
 import com.mushroom.midnight.common.registry.MidnightLootTables;
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.CreatureAttribute;
 import net.minecraft.entity.Entity;
@@ -12,6 +11,15 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ILivingEntityData;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.SpawnReason;
+import net.minecraft.entity.ai.goal.HurtByTargetGoal;
+import net.minecraft.entity.ai.goal.LookAtWithoutMovingGoal;
+import net.minecraft.entity.ai.goal.LookRandomlyGoal;
+import net.minecraft.entity.ai.goal.MeleeAttackGoal;
+import net.minecraft.entity.ai.goal.MoveTowardsRestrictionGoal;
+import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
+import net.minecraft.entity.ai.goal.PanicGoal;
+import net.minecraft.entity.ai.goal.SwimGoal;
+import net.minecraft.entity.ai.goal.WaterAvoidingRandomWalkingGoal;
 import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
@@ -38,7 +46,7 @@ import javax.annotation.Nullable;
 public class StingerEntity extends GrowableEntity implements IMob {
     private final AnimationCapability animCap = new AnimationCapability();
 
-    public StingerEntity(EntityType<? extends GrowableEntity> entityType, World worldIn) {
+    public StingerEntity(EntityType<? extends StingerEntity> entityType, World worldIn) {
         super(entityType, worldIn);
     }
 
@@ -62,8 +70,8 @@ public class StingerEntity extends GrowableEntity implements IMob {
             getAttribute(SharedMonsterAttributes.ARMOR).setBaseValue(age);
         }
         if (age == getMaxGrowingAge()) {
-            this.targetSelector.addGoal(1, new NeutralGoal(this, new EntityAIHurtByTarget(this, true), false));
-            this.targetSelector.addGoal(2, new NeutralGoal(this, new EntityAINearestAttackableTarget<>(this, PlayerEntity.class, true, false), false));
+            this.targetSelector.addGoal(1, new NeutralGoal(this, new HurtByTargetGoal(this), false));
+            this.targetSelector.addGoal(2, new NeutralGoal(this, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, true, false), false));
         }
     }
 
@@ -83,12 +91,11 @@ public class StingerEntity extends GrowableEntity implements IMob {
         if (getPosition().getY() > 50) {
             return false;
         }
-        BlockState belowState = world.getBlockState(new BlockPos(this).down());
-        return belowState.isFullCube() && belowState.canEntitySpawn(this);
+        return super.canSpawn(worldIn, spawnReasonIn);
     }
 
     @Override
-    protected boolean canDespawn() {
+    public boolean canDespawn(double distanceToClosestPlayer) {
         return !isChild();
     }
 
@@ -123,21 +130,21 @@ public class StingerEntity extends GrowableEntity implements IMob {
     }
 
     @Override
-    protected void playStepSound(BlockPos pos, Block block) {
+    protected void playStepSound(BlockPos pos, BlockState blockIn) {
         playSound(SoundEvents.ENTITY_SPIDER_STEP, 0.15f, 1f);
     }
 
     @Override
     protected void registerGoals() {
-        this.goalSelector.addGoal(0, new EntityAISwimming(this));
-        this.goalSelector.addGoal(1, new NeutralGoal(this, new EntityAIPanic(this, 1.2d), true));
-        this.goalSelector.addGoal(2, new NeutralGoal(this, new EntityAIAttackMelee(this, 1d, false), false));
-        this.goalSelector.addGoal(5, new EntityAIMoveTowardsRestriction(this, 1d));
-        this.goalSelector.addGoal(6, new EntityAIWanderAvoidWater(this, 0.7d, 0.005f));
-        this.goalSelector.addGoal(7, new EntityAIWatchClosest(this, PlayerEntity.class, 8f, 0.02f));
-        this.goalSelector.addGoal(8, new EntityAILookIdle(this));
-        this.targetSelector.addGoal(1, new NeutralGoal(this, new EntityAIHurtByTarget(this, true), false));
-        this.targetSelector.addGoal(2, new NeutralGoal(this, new EntityAINearestAttackableTarget<>(this, PlayerEntity.class, true, true), false));
+        this.goalSelector.addGoal(0, new SwimGoal(this));
+        this.goalSelector.addGoal(1, new NeutralGoal(this, new PanicGoal(this, 1.2d), true));
+        this.goalSelector.addGoal(2, new NeutralGoal(this, new MeleeAttackGoal(this, 1d, false), false));
+        this.goalSelector.addGoal(5, new MoveTowardsRestrictionGoal(this, 1d));
+        this.goalSelector.addGoal(6, new WaterAvoidingRandomWalkingGoal(this, 0.7d, 0.005f));
+        this.goalSelector.addGoal(7, new LookAtWithoutMovingGoal(this, PlayerEntity.class, 8f, 0.02f));
+        this.goalSelector.addGoal(8, new LookRandomlyGoal(this));
+        this.targetSelector.addGoal(1, new NeutralGoal(this, new HurtByTargetGoal(this), false));
+        this.targetSelector.addGoal(2, new NeutralGoal(this, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, true, true), false));
     }
 
     @Override
@@ -168,7 +175,6 @@ public class StingerEntity extends GrowableEntity implements IMob {
     }
 
     @Override
-    @Nullable
     protected ResourceLocation getLootTable() {
         return MidnightLootTables.LOOT_TABLE_STINGER;
     }

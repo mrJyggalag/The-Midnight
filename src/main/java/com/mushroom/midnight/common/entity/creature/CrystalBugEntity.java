@@ -33,7 +33,7 @@ public class CrystalBugEntity extends AmbientEntity {
     private static final DataParameter<Boolean> IS_STANDING = EntityDataManager.createKey(CrystalBugEntity.class, DataSerializers.BOOLEAN);
     private BlockPos spawnPosition;
 
-    public CrystalBugEntity(EntityType<CrystalBugEntity> entityType, World world) {
+    public CrystalBugEntity(EntityType<? extends CrystalBugEntity> entityType, World world) {
         super(entityType, world);
         experienceValue = 3;
     }

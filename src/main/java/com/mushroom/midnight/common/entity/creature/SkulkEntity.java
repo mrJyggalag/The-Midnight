@@ -2,11 +2,12 @@ package com.mushroom.midnight.common.entity.creature;
 
 import com.mushroom.midnight.common.entity.task.NeutralGoal;
 import com.mushroom.midnight.common.registry.MidnightLootTables;
-import net.minecraft.block.BlockState;
 import net.minecraft.entity.AgeableEntity;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ILivingEntityData;
+import net.minecraft.entity.Pose;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.goal.HurtByTargetGoal;
@@ -27,7 +28,6 @@ import net.minecraft.pathfinding.PathNavigator;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
@@ -39,7 +39,7 @@ public class SkulkEntity extends AnimalEntity {
     private static final DataParameter<Boolean> STEALTH = EntityDataManager.createKey(SkulkEntity.class, DataSerializers.BOOLEAN);
     private int stealthCooldown = 0;
 
-    public SkulkEntity(EntityType<SkulkEntity> entityType, World world) {
+    public SkulkEntity(EntityType<? extends SkulkEntity> entityType, World world) {
         super(entityType, world);
     }
 
@@ -65,8 +65,7 @@ public class SkulkEntity extends AnimalEntity {
         if (getPosition().getY() <= world.getSeaLevel()) {
             return false;
         }
-        BlockState belowState = world.getBlockState(new BlockPos(this).down());
-        return belowState.isFullCube() && belowState.canEntitySpawn(this);
+        return super.canSpawn(worldIn, spawnReasonIn);
     }
 
     @Override
@@ -98,7 +97,7 @@ public class SkulkEntity extends AnimalEntity {
                 return valid;
             }
         });
-        this.targetSelector.addGoal(1, new NeutralGoal(this, new HurtByTargetGoal(this, true), false));
+        this.targetSelector.addGoal(1, new NeutralGoal(this, new HurtByTargetGoal(this), false));
     }
 
     @Override
@@ -158,22 +157,22 @@ public class SkulkEntity extends AnimalEntity {
     }
 
     @Override
-    public void writeEntityToNBT(CompoundNBT compound) {
-        super.writeEntityToNBT(compound);
+    public void writeAdditional(CompoundNBT compound) {
+        super.writeAdditional(compound);
         compound.putBoolean("stealth", isStealth());
     }
 
     @Override
-    public void readEntityFromNBT(CompoundNBT compound) {
-        super.readEntityFromNBT(compound);
-        if (compound.hasKey("stealth", Constants.NBT.TAG_BYTE)) {
+    public void readAdditional(CompoundNBT compound) {
+        super.readAdditional(compound);
+        if (compound.contains("stealth", Constants.NBT.TAG_BYTE)) {
             setStealth(compound.getBoolean("stealth"));
         }
     }
 
     @Override
-    public float getEyeHeight() {
-        return this.height * 0.5f;
+    public float getStandingEyeHeight(Pose pose, EntitySize size) {
+        return super.getEyeHeight(pose, size) * 0.5f;
     }
 
     @Override
@@ -192,7 +191,6 @@ public class SkulkEntity extends AnimalEntity {
     }
 
     @Override
-    @Nullable
     protected ResourceLocation getLootTable() {
         return MidnightLootTables.LOOT_TABLE_SKULK;
     }

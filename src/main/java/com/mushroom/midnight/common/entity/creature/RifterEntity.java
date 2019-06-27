@@ -30,6 +30,12 @@ import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.IAttribute;
 import net.minecraft.entity.ai.attributes.IAttributeInstance;
+import net.minecraft.entity.ai.goal.LookAtWithoutMovingGoal;
+import net.minecraft.entity.ai.goal.LookRandomlyGoal;
+import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
+import net.minecraft.entity.ai.goal.OpenDoorGoal;
+import net.minecraft.entity.ai.goal.SwimGoal;
+import net.minecraft.entity.ai.goal.WaterAvoidingRandomWalkingGoal;
 import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -60,13 +66,13 @@ public class RifterEntity extends MonsterEntity implements IRiftTraveler, IEntit
     public static final float HOME_SCALE_MODIFIER = 1.4F;
 
     private static final UUID SPEED_MODIFIER_ID = UUID.fromString("3b8cda1f-c11d-478b-98b1-6144940c7ba1");
-    private static final AttributeModifier HOME_SPEED_MODIFIER = new AttributeModifier(SPEED_MODIFIER_ID, "home_speed_modifier", 0.15, 2);
+    private static final AttributeModifier HOME_SPEED_MODIFIER = new AttributeModifier(SPEED_MODIFIER_ID, "home_speed_modifier", 0.15, AttributeModifier.Operation.MULTIPLY_TOTAL);
 
     private static final UUID ARMOR_MODIFIER_ID = UUID.fromString("8cea53c5-1b5c-4b7c-9c86-192bf255c3d4");
-    private static final AttributeModifier HOME_ARMOR_MODIFIER = new AttributeModifier(ARMOR_MODIFIER_ID, "home_armor_modifier", 2.0, 2);
+    private static final AttributeModifier HOME_ARMOR_MODIFIER = new AttributeModifier(ARMOR_MODIFIER_ID, "home_armor_modifier", 2.0, AttributeModifier.Operation.MULTIPLY_TOTAL);
 
     private static final UUID ATTACK_MODIFIER_ID = UUID.fromString("0e13d84c-52ed-4335-a284-49596533f445");
-    private static final AttributeModifier HOME_ATTACK_MODIFIER = new AttributeModifier(ATTACK_MODIFIER_ID, "home_attack_modifier", 3.0, 2);
+    private static final AttributeModifier HOME_ATTACK_MODIFIER = new AttributeModifier(ATTACK_MODIFIER_ID, "home_attack_modifier", 3.0, AttributeModifier.Operation.MULTIPLY_TOTAL);
 
     public static final int CAPTURE_COOLDOWN = 15;
 
@@ -84,7 +90,7 @@ public class RifterEntity extends MonsterEntity implements IRiftTraveler, IEntit
 
     private LivingEntity capturedEntity;
 
-    public RifterEntity(EntityType<RifterEntity> entityType, World world) {
+    public RifterEntity(EntityType<? extends RifterEntity> entityType, World world) {
         super(entityType, world);
         this.homeRift = new EntityReference<>(world);
         this.dragSolver = new DragSolver(this);
@@ -107,7 +113,7 @@ public class RifterEntity extends MonsterEntity implements IRiftTraveler, IEntit
     protected void registerGoals() {
         super.registerGoals();
 
-        this.goalSelector.addGoal(0, new EntityAISwimming(this));
+        this.goalSelector.addGoal(0, new SwimGoal(this));
         this.goalSelector.addGoal(0, new RifterReturnGoal(this, 1.3));
 
         this.goalSelector.addGoal(1, new RifterKeepNearRiftGoal(this, 1.0));
@@ -117,15 +123,15 @@ public class RifterEntity extends MonsterEntity implements IRiftTraveler, IEntit
         this.goalSelector.addGoal(3, new RifterCaptureGoalGoal(this, 1.0));
         this.goalSelector.addGoal(4, new RifterMeleeGoal(this, 1.0));
 
-        this.goalSelector.addGoal(4, new EntityAIOpenDoor(this, false));
+        this.goalSelector.addGoal(4, new OpenDoorGoal(this, false));
 
-        this.goalSelector.addGoal(4, new EntityAIWatchClosest(this, LivingEntity.class, 8.0F));
-        this.goalSelector.addGoal(4, new EntityAILookIdle(this));
+        this.goalSelector.addGoal(4, new LookAtWithoutMovingGoal(this, LivingEntity.class, 8.0F, 0.2f));
+        this.goalSelector.addGoal(4, new LookRandomlyGoal(this));
 
-        this.goalSelector.addGoal(5, new EntityAIWanderAvoidWater(this, 0.4, 0.005F));
+        this.goalSelector.addGoal(5, new WaterAvoidingRandomWalkingGoal(this, 0.4, 0.005F));
 
-        this.targetSelector.addGoal(2, new EntityAINearestAttackableTarget<>(this, PlayerEntity.class, 2, true, false, this::shouldAttack));
-        this.targetSelector.addGoal(3, new EntityAINearestAttackableTarget<>(this, EntityAnimal.class, 4, true, false, this::shouldAttack));
+        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, 2, true, false, this::shouldAttack));
+        this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, AnimalEntity.class, 4, true, false, this::shouldAttack));
     }
 
     @Override
@@ -162,7 +168,7 @@ public class RifterEntity extends MonsterEntity implements IRiftTraveler, IEntit
             }
         }
 
-        if (!this.world.isRemote || Midnight.proxy.isClientPlayer(this.capturedEntity)) {
+        if (!this.world.isRemote || Midnight.PROXY.isClientPlayer(this.capturedEntity)) {
             this.dragSolver.solveDrag();
         }
 
@@ -236,7 +242,7 @@ public class RifterEntity extends MonsterEntity implements IRiftTraveler, IEntit
         if (entity instanceof AnimalEntity) {
             return !Helper.isMidnightDimension(entity.world);
         }
-        if (entity instanceof PlayerEntity && ((PlayerEntity) entity).isPlayerSleeping()) {
+        if (entity instanceof PlayerEntity && ((PlayerEntity) entity).isSleeping()) {
             return false;
         }
         return !(entity instanceof RifterEntity);

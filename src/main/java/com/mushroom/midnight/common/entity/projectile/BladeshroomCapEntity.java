@@ -14,7 +14,7 @@ import net.minecraftforge.event.entity.PlaySoundAtEntityEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
-@Mod.EventBusSubscriber(modid = Midnight.MODID)
+@Mod.EventBusSubscriber(modid = Midnight.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class BladeshroomCapEntity extends ArrowEntity {
     private static final ThreadLocal<Boolean> HIT_ACTIVE = ThreadLocal.withInitial(() -> false);
 

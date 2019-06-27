@@ -10,10 +10,8 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 
-import javax.annotation.Nullable;
-
 public class TreeHopperEntity extends MonsterEntity {
-    public TreeHopperEntity(EntityType<TreeHopperEntity> entityType, World world) {
+    public TreeHopperEntity(EntityType<? extends TreeHopperEntity> entityType, World world) {
         super(entityType, world);
     }
 
@@ -28,7 +26,6 @@ public class TreeHopperEntity extends MonsterEntity {
     }
 
     @Override
-    @Nullable
     protected ResourceLocation getLootTable() {
         return MidnightLootTables.LOOT_TABLE_TREE_HOPPER;
     }
