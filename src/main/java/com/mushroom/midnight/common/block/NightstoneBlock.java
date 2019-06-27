@@ -6,6 +6,7 @@ import com.mushroom.midnight.common.registry.MidnightBlocks;
 import com.mushroom.midnight.common.registry.MidnightItemGroups;
 import com.mushroom.midnight.common.world.MidnightChunkGenerator;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.IGrowable;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.MapColor;
@@ -14,12 +15,13 @@ import net.minecraft.block.state.BlockState;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
+import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraftforge.common.IPlantable;
 
 import java.util.Random;
 
-public class NightstoneBlock extends Block implements IGrowable, IModelProvider {
+public class NightstoneBlock extends Block implements IGrowable {
     public NightstoneBlock() {
         super(Material.ROCK, MapColor.BLUE_STAINED_HARDENED_CLAY);
         this.setHardness(1.5F);
@@ -29,12 +31,12 @@ public class NightstoneBlock extends Block implements IGrowable, IModelProvider 
     }
 
     @Override
-    public boolean canSustainPlant(BlockState state, IBlockAccess world, BlockPos pos, Direction direction, IPlantable plantable) {
+    public boolean canSustainPlant(BlockState state, IBlockReader world, BlockPos pos, Direction direction, IPlantable plantable) {
         return true;
     }
 
     @Override
-    public boolean canGrow(World worldIn, BlockPos pos, BlockState state, boolean isClient) {
+    public boolean canGrow(IBlockReader world, BlockPos pos, BlockState state, boolean isClient) {
         return true;
     }
 

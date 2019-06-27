@@ -16,7 +16,6 @@ import static com.mushroom.midnight.Midnight.MODID;
 public class MidnightConfig {
 
     public static class CatGeneral {
-        public final ForgeConfigSpec.ConfigValue<Integer> midnightDimensionId;
         public final ForgeConfigSpec.ConfigValue<Integer> bladeshroomDamageChance;
         public final ForgeConfigSpec.ConfigValue<Boolean> canRespawnInMidnight;
         public final ForgeConfigSpec.ConfigValue<Boolean> allowLightningDamage;
@@ -32,11 +31,6 @@ public class MidnightConfig {
 
         public CatGeneral(ForgeConfigSpec.Builder builder) {
             builder.comment("All the options that can only be set on the server.").push("general");
-            midnightDimensionId = builder
-                    .comment("The ID to be used for the Midnight Dimension. Default= -23")
-                    .translation(getTranslation("midnight_dimension_id"))
-                    .worldRestart()
-                    .define("midnight_dimension_id", -23);
             bladeshroomDamageChance = builder
                     .comment("The chance to take a small amount of damage when picking a bladeshroom cap as a percentage. If 0, this is disabled. Default= 5")
                     .translation(getTranslation("bladeshroom_damage_chance"))

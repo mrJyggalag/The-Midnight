@@ -1,53 +1,66 @@
 package com.mushroom.midnight.common.world;
 
-import com.mushroom.midnight.common.biome.MidnightBiomeLayer;
 import com.mushroom.midnight.common.config.MidnightConfig;
 import com.mushroom.midnight.common.registry.MidnightDimensions;
 import net.minecraft.client.Minecraft;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.effect.EntityLightningBolt;
+import net.minecraft.entity.effect.LightningBoltEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.server.management.PlayerChunkMap;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.world.DimensionType;
-import net.minecraft.world.WorldProvider;
 import net.minecraft.world.ServerWorld;
+import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
-import net.minecraft.world.gen.IChunkGenerator;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.OnlyIn;
+import net.minecraft.world.chunk.ChunkHolder;
+import net.minecraft.world.chunk.ServerChunkProvider;
+import net.minecraft.world.dimension.Dimension;
+import net.minecraft.world.dimension.DimensionType;
+import net.minecraft.world.gen.ChunkGenerator;
+import net.minecraft.world.gen.Heightmap;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
-import java.util.Iterator;
+import javax.annotation.Nullable;
 import java.util.Random;
 
-public class MidnightWorldProvider extends WorldProvider {
+public class MidnightDimension extends Dimension {
     private static final Vec3d FOG_COLOR = new Vec3d(0.085, 0.04, 0.1225);
     private static final Vec3d LIGHTING_FOG_COLOR = new Vec3d(1.0, 0.35, 0.25);
 
-    @Override
-    protected void init() {
-        this.hasSkyLight = false;
-        this.biomeProvider = new MidnightBiomeProvider(this.world, MidnightBiomeLayer.SURFACE);
-        this.nether = false;
+    public MidnightDimension(World world, DimensionType type) {
+        super(world, type);
     }
 
     @Override
-    public int getActualHeight() { return 255; }
+    public ChunkGenerator<?> createChunkGenerator() {
+        return null;
+    }
 
+    @Nullable
     @Override
-    public IChunkGenerator createChunkGenerator() {
-        return new MidnightChunkGenerator(this.world);
+    public BlockPos findSpawn(ChunkPos chunkPosIn, boolean checkValid) {
+        return null;
+    }
+
+    @Nullable
+    @Override
+    public BlockPos findSpawn(int posX, int posZ, boolean checkValid) {
+        return null;
     }
 
     @Override
-    public DimensionType getDimensionType() {
+    public int getActualHeight() {
+        return 255;
+    }
+
+    @Override
+    public DimensionType getType() {
         return MidnightDimensions.MIDNIGHT;
     }
 
     @Override
-    public WorldSleepResult canSleepAt(PlayerEntity player, BlockPos pos) {
-        return WorldSleepResult.BED_EXPLODES;
+    public SleepResult canSleepAt(PlayerEntity player, BlockPos pos) {
+        return SleepResult.BED_EXPLODES;
     }
 
     @Override
@@ -88,11 +101,6 @@ public class MidnightWorldProvider extends WorldProvider {
     }
 
     @Override
-    public float getSunBrightnessFactor(float partialTicks) {
-        return 0.0F;
-    }
-
-    @Override
     @OnlyIn(Dist.CLIENT)
     public float getSunBrightness(float partialTicks) {
         return 0.0F;
@@ -123,25 +131,32 @@ public class MidnightWorldProvider extends WorldProvider {
     }
 
     @Override
-    public void updateWeather() {
-        setAllowedSpawnTypes(false, false);
+    public void updateWeather(Runnable defaultLogic) {
+        this.setAllowedSpawnTypes(false, false);
+
         if (this.world instanceof ServerWorld) {
-            ServerWorld ServerWorld = (ServerWorld) this.world;
-            PlayerChunkMap chunkMap = ServerWorld.getPlayerChunkMap();
-            Random rand = this.world.rand;
+            ServerWorld serverWorld = (ServerWorld) this.world;
+            ServerChunkProvider chunkProvider = serverWorld.func_72863_F();
 
-            Iterator<Chunk> iterator = this.world.getPersistentChunkIterable(chunkMap.getChunkIterator());
-            iterator.forEachRemaining(chunk -> {
-                int globalX = chunk.x << 4;
-                int globalZ = chunk.z << 4;
-                if (rand.nextInt(200000) == 0) {
-                    int lightningX = globalX + rand.nextInt(16);
-                    int lightningZ = globalZ + rand.nextInt(16);
-                    BlockPos pos = this.world.getPrecipitationHeight(new BlockPos(lightningX, 0, lightningZ));
+            // TODO
+            chunkProvider.chunkManager.func_223491_f().forEach(chunkHolder -> {
+                chunkHolder.func_219297_b().getNow(ChunkHolder.UNLOADED_CHUNK).left().ifPresent(chunk -> {
+                    Random rand = this.world.rand;
 
-                    Entity lightning = new EntityLightningBolt(this.world, pos.getX(), pos.getY(), pos.getZ(), !MidnightConfig.general.allowLightningDamage.get());
-                    this.world.addWeatherEffect(lightning);
-                }
+                    ChunkPos chunkPos = chunkHolder.getPosition();
+                    if (!chunkProvider.chunkManager.isOutsideSpawningRadius(chunkPos)) {
+                        int globalX = chunkPos.getXStart();
+                        int globalZ = chunkPos.getZStart();
+                        if (rand.nextInt(200000) == 0) {
+                            int lightningX = globalX + rand.nextInt(16);
+                            int lightningZ = globalZ + rand.nextInt(16);
+                            BlockPos pos = this.world.getHeight(Heightmap.Type.MOTION_BLOCKING, new BlockPos(lightningX, 0, lightningZ));
+
+                            LightningBoltEntity lightning = new LightningBoltEntity(this.world, pos.getX(), pos.getY(), pos.getZ(), !MidnightConfig.general.allowLightningDamage.get());
+                            serverWorld.addLightningBolt(lightning);
+                        }
+                    }
+                });
             });
         }
     }
@@ -157,7 +172,7 @@ public class MidnightWorldProvider extends WorldProvider {
     }
 
     @Override
-    public boolean shouldClientCheckLighting() {
-        return true;
+    public boolean doesXZShowFog(int x, int z) {
+        return false;
     }
 }

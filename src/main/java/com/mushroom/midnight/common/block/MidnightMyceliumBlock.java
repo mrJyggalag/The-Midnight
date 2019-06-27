@@ -2,8 +2,8 @@ package com.mushroom.midnight.common.block;
 
 import com.mushroom.midnight.common.helper.Helper;
 import com.mushroom.midnight.common.registry.MidnightBlocks;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.material.MapColor;
-import net.minecraft.block.state.BlockState;
 import net.minecraft.item.Item;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumParticleTypes;
@@ -11,7 +11,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.client.MinecraftForgeClient;
-import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.OnlyIn;
 
 import java.util.Random;
@@ -23,16 +22,17 @@ public class MidnightMyceliumBlock extends NightstoneBlock {
     }
 
     @Override
-    public void updateTick(World world, BlockPos pos, BlockState state, Random rand) {
+    public void tick(BlockState state, World world, BlockPos pos, Random random) {
         if (world.isRemote || !world.isAreaLoaded(pos, 2)) {
             return;
         }
+
         if (!Helper.isMidnightDimension(world) || world.getBlockState(pos.up()).getLightOpacity(world, pos.up()) > 2) {
             world.setBlockState(pos, MidnightBlocks.NIGHTSTONE.getDefaultState());
         } else {
             if (world.getLightFromNeighbors(pos.up()) >= 2) {
                 for (int i = 0; i < 4; ++i) {
-                    BlockPos spreadPos = pos.add(rand.nextInt(3) - 1, rand.nextInt(5) - 3, rand.nextInt(3) - 1);
+                    BlockPos spreadPos = pos.add(random.nextInt(3) - 1, random.nextInt(5) - 3, random.nextInt(3) - 1);
                     BlockState surfaceState = world.getBlockState(spreadPos);
                     BlockState coverState = world.getBlockState(spreadPos.up());
                     if (surfaceState.getBlock() == MidnightBlocks.NIGHTSTONE && coverState.getLightOpacity(world, spreadPos.up()) <= 2) {

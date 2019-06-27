@@ -3,7 +3,6 @@ package com.mushroom.midnight.common.world.generator;
 import com.mushroom.midnight.common.biome.surface.SurfaceBiome;
 import com.mushroom.midnight.common.registry.MidnightBlocks;
 import com.mushroom.midnight.common.world.MidnightChunkGenerator;
-import com.mushroom.midnight.common.world.PartialChunkGenerator;
 import com.mushroom.midnight.common.world.noise.INoiseSampler;
 import com.mushroom.midnight.common.world.noise.PerlinNoiseSampler;
 import net.minecraft.block.BlockState;

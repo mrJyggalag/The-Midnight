@@ -25,7 +25,6 @@ import com.mushroom.midnight.common.block.MidnightChestBlock.ChestModel;
 import com.mushroom.midnight.common.block.MidnightDirtBlock;
 import com.mushroom.midnight.common.block.MidnightDoubleFungiBlock;
 import com.mushroom.midnight.common.block.MidnightDoublePlantBlock;
-import com.mushroom.midnight.common.block.MidnightDoubleSlabBlock;
 import com.mushroom.midnight.common.block.MidnightFenceBlock;
 import com.mushroom.midnight.common.block.MidnightFenceGateBlock;
 import com.mushroom.midnight.common.block.MidnightFungiBlock;
@@ -37,24 +36,13 @@ import com.mushroom.midnight.common.block.MidnightGemBlock;
 import com.mushroom.midnight.common.block.MidnightGlassBlock;
 import com.mushroom.midnight.common.block.MidnightGlassPaneBlock;
 import com.mushroom.midnight.common.block.MidnightGrassBlock;
-import com.mushroom.midnight.common.block.MidnightLadderBlock;
-import com.mushroom.midnight.common.block.MidnightLeavesBlock;
-import com.mushroom.midnight.common.block.MidnightLeverBlock;
 import com.mushroom.midnight.common.block.MidnightMyceliumBlock;
 import com.mushroom.midnight.common.block.MidnightOreBlock;
 import com.mushroom.midnight.common.block.MidnightPlantBlock;
-import com.mushroom.midnight.common.block.MidnightPressurePlateBlock;
-import com.mushroom.midnight.common.block.MidnightPressurePlateWeightedBlock;
-import com.mushroom.midnight.common.block.MidnightSaplingBlock;
-import com.mushroom.midnight.common.block.MidnightSlabBlock;
-import com.mushroom.midnight.common.block.MidnightStairsBlock;
 import com.mushroom.midnight.common.block.MidnightTallGrassBlock;
-import com.mushroom.midnight.common.block.MidnightTrapDoorBlock;
-import com.mushroom.midnight.common.block.MidnightWallBlock;
 import com.mushroom.midnight.common.block.MidnightWoodPlankBlock;
 import com.mushroom.midnight.common.block.MushroomInsideBlock;
 import com.mushroom.midnight.common.block.NightstoneBlock;
-import com.mushroom.midnight.common.block.PlantBehaviorType;
 import com.mushroom.midnight.common.block.RockshroomBlock;
 import com.mushroom.midnight.common.block.ShadowrootCraftingTableBlock;
 import com.mushroom.midnight.common.block.SporchBlock;
@@ -353,9 +341,6 @@ public class MidnightBlocks {
         // TODO: Port all registration
 
         blocks.addAll(Lists.newArrayList(
-                RegUtil.withName(new MidnightGrassBlock(), "midnight_grass"),
-                RegUtil.withName(new MidnightDirtBlock(), "midnight_dirt"),
-                RegUtil.withName(new MidnightDirtBlock(), "midnight_coarse_dirt"),
                 RegUtil.withName(new MidnightMyceliumBlock(), "midnight_mycelium"),
                 RegUtil.withName(new BlockMidnightLog(), "shadowroot_log"),
                 RegUtil.withName(new MidnightLeavesBlock(() -> SHADOWROOT_SAPLING), "shadowroot_leaves"),
@@ -430,14 +415,14 @@ public class MidnightBlocks {
                         .withHarvestLevel("pickaxe", 2)
                         .setHardness(5.0F)
                         .setResistance(200.0F),
-                RegUtil.withName(new BloomCrystalBlock(), "bloomcrystal"),
+                RegUtil.withName(new BloomCrystalBlock(Block.Properties.create(Material.ROCK, MaterialColor.PINK).hardnessAndResistance(2.0F).sound(SoundType.GLASS).lightValue(15).tickRandomly()), "bloomcrystal"),
                 RegUtil.withName(new BlockBasic(Material.ROCK, MapColor.PINK), "bloomcrystal_rock")
                         .withSoundType(SoundType.GLASS)
                         .withHarvestLevel("pickaxe", 1)
                         .setLightLevel(1.0F)
                         .setHardness(4.0F),
-                RegUtil.withName(new CrystalBlock(MapColor.RED), "rouxe"),
-                RegUtil.withName(new BlockBasic(Material.ROCK, MapColor.RED), "rouxe_rock")
+                RegUtil.withName(new CrystalBlock(Block.Properties.create(Material.ROCK, MaterialColor.RED).hardnessAndResistance(2.0F).sound(SoundType.GLASS).lightValue(3)), "rouxe"),
+                RegUtil.withName(new Block(Material.ROCK, MapColor.RED), "rouxe_rock")
                         .withSoundType(SoundType.GLASS)
                         .withHarvestLevel("pickaxe", 1)
                         .withGlow()

@@ -4,25 +4,28 @@ import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.client.particle.MidnightParticles;
 import com.mushroom.midnight.common.network.RockshroomBrokenMessage;
 import com.mushroom.midnight.common.registry.MidnightBlocks;
-import com.mushroom.midnight.common.registry.MidnightItems;
 import com.mushroom.midnight.common.registry.MidnightItemGroups;
+import com.mushroom.midnight.common.registry.MidnightItems;
 import com.mushroom.midnight.common.util.MidnightDamageSource;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.state.BlockState;
 import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.init.Enchantments;
+import net.minecraft.fluid.IFluidState;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.RayTraceContext;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
+import net.minecraftforge.fml.network.PacketDistributor;
 
 import java.util.Random;
 
@@ -43,8 +46,8 @@ public class RockshroomBlock extends Block {
     }
 
     @Override
-    public boolean removedByPlayer(BlockState state, World world, BlockPos pos, PlayerEntity player, boolean willHarvest) {
-        boolean result = super.removedByPlayer(state, world, pos, player, willHarvest);
+    public boolean removedByPlayer(BlockState state, World world, BlockPos pos, PlayerEntity player, boolean willHarvest, IFluidState fluid) {
+        boolean result = super.removedByPlayer(state, world, pos, player, willHarvest, fluid);
         this.onBroken(world, pos, player);
 
         return result;
@@ -57,21 +60,22 @@ public class RockshroomBlock extends Block {
         }
 
         if (!world.isRemote) {
-            NetworkRegistry.TargetPoint point = new NetworkRegistry.TargetPoint(world.provider.getDimension(), pos.getX(), pos.getY(), pos.getZ(), 0.0);
-            Midnight.NETWORK.sendToAllTracking(new RockshroomBrokenMessage(pos), point);
+            RockshroomBrokenMessage message = new RockshroomBrokenMessage(pos);
+            Midnight.CHANNEL.send(PacketDistributor.TRACKING_CHUNK.with(() -> world.getChunkAt(pos)), message);
             this.damagePlayer(world, pos, player);
         }
     }
 
     private void damagePlayer(World world, BlockPos pos, PlayerEntity player) {
         Vec3d origin = new Vec3d(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5);
-        Vec3d target = player.getPositionEyes(1.0F);
+        Vec3d target = player.getEyePosition(1.0F);
         if (target.subtract(origin).lengthSquared() > DAMAGE_RANGE * DAMAGE_RANGE) {
             return;
         }
 
-        RayTraceResult rayTrace = world.rayTraceBlocks(origin, target);
-        if (rayTrace == null || rayTrace.typeOfHit == RayTraceResult.Type.MISS) {
+        RayTraceContext context = new RayTraceContext(origin, target, RayTraceContext.BlockMode.COLLIDER, RayTraceContext.FluidMode.NONE, player);
+        RayTraceResult rayTrace = world.rayTraceBlocks(context);
+        if (rayTrace.getType() == RayTraceResult.Type.MISS) {
             player.attackEntityFrom(ROCKSHROOM_SPORE, world.rand.nextFloat() * 3.5F + 0.5F);
         }
     }

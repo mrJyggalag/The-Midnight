@@ -1,76 +1,74 @@
 package com.mushroom.midnight.common.item;
 
+import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.SoundType;
-import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.fluid.IFluidState;
 import net.minecraft.item.BlockItem;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemUseContext;
+import net.minecraft.stats.Stats;
+import net.minecraft.tags.FluidTags;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.SoundCategory;
+import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.BlockRayTraceResult;
+import net.minecraft.util.math.RayTraceContext;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 
 public class DeceitfulAlgaeItem extends BlockItem {
-    public DeceitfulAlgaeItem(Block block) {
-        super(block);
+    public DeceitfulAlgaeItem(Block block, Item.Properties properties) {
+        super(block, properties);
     }
 
     @Override
-    public ActionResultType onItemUse(PlayerEntity player, World worldIn, BlockPos pos, Hand hand, Direction facing, float hitX, float hitY, float hitZ) {
+    public ActionResultType onItemUse(ItemUseContext context) {
         return ActionResultType.PASS;
     }
 
     @Override
     public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand) {
-        ItemStack stack = player.getHeldItem(hand);
-        RayTraceResult result = this.rayTrace(world, player, true);
-        if (result == null) {
-            return new ActionResult<>(ActionResultType.PASS, stack);
+        ItemStack heldItem = player.getHeldItem(hand);
+        RayTraceResult rayTraceResult = rayTrace(world, player, RayTraceContext.FluidMode.SOURCE_ONLY);
+        if (rayTraceResult.getType() == RayTraceResult.Type.MISS) {
+            return new ActionResult<>(ActionResultType.PASS, heldItem);
         }
 
-        if (result.typeOfHit == RayTraceResult.Type.BLOCK) {
-            BlockPos pos = result.getBlockPos();
-            Direction sideHit = result.sideHit;
-            float hitX = (float) (result.hitVec.x - pos.getX());
-            float hitY = (float) (result.hitVec.y - pos.getY());
-            float hitZ = (float) (result.hitVec.z - pos.getZ());
+        if (rayTraceResult.getType() == RayTraceResult.Type.BLOCK) {
+            BlockRayTraceResult blockHit = (BlockRayTraceResult) rayTraceResult;
+            BlockPos pos = blockHit.getPos();
+            Direction direction = blockHit.getFace();
 
-            if (!world.isBlockModifiable(player, pos) || !player.canPlayerEdit(pos.offset(sideHit), sideHit, stack)) {
-                return new ActionResult<>(ActionResultType.FAIL, stack);
+            if (!world.isBlockModifiable(player, pos) || !player.canPlayerEdit(pos.offset(direction), direction, heldItem)) {
+                return new ActionResult<>(ActionResultType.FAIL, heldItem);
             }
 
-            BlockState state = world.getBlockState(pos);
             BlockPos placePos = pos.up();
+            IFluidState fluidState = world.getFluidState(pos);
 
-            if (state.getMaterial() == Material.WATER && state.get(BlockLiquid.LEVEL) == 0 && world.isAirBlock(placePos)) {
-                BlockState placeState = this.block.getStateForPlacement(world, placePos, sideHit, hitX, hitY, hitZ, 0, player, hand);
-
-                if (this.placeBlockAt(stack, player, world, placePos, sideHit, hitX, hitY, hitZ, placeState)) {
-                    this.applyPlaceEffect(world, player, placePos);
-
-                    if (!player.abilities.isCreativeMode) {
-                        stack.shrink(1);
-                    }
-
-                    player.swingArm(hand);
-                    return new ActionResult<>(ActionResultType.SUCCESS, stack);
+            if (fluidState.getFluid().isIn(FluidTags.WATER) && world.isAirBlock(placePos)) {
+                if (player instanceof ServerPlayerEntity) {
+                    CriteriaTriggers.PLACED_BLOCK.trigger((ServerPlayerEntity) player, placePos, heldItem);
                 }
+
+                if (!player.abilities.isCreativeMode) {
+                    heldItem.shrink(1);
+                }
+
+                player.addStat(Stats.ITEM_USED.get(this));
+
+                world.playSound(player, pos, SoundEvents.BLOCK_LILY_PAD_PLACE, SoundCategory.BLOCKS, 1.0F, 1.0F);
+                return new ActionResult<>(ActionResultType.SUCCESS, heldItem);
             }
         }
 
-        return new ActionResult<>(ActionResultType.FAIL, stack);
-    }
-
-    private void applyPlaceEffect(World world, PlayerEntity player, BlockPos pos) {
-        BlockState placedState = world.getBlockState(pos);
-
-        SoundType soundType = placedState.getBlock().getSoundType(placedState, world, pos, player);
-        world.playSound(player, pos, soundType.getPlaceSound(), SoundCategory.BLOCKS, (soundType.getVolume() + 1.0F) / 2.0F, soundType.getPitch() * 0.8F);
+        return new ActionResult<>(ActionResultType.FAIL, heldItem);
     }
 }

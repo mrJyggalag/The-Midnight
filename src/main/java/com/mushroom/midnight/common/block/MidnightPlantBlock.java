@@ -2,40 +2,34 @@ package com.mushroom.midnight.common.block;
 
 import com.mushroom.midnight.common.helper.Helper;
 import com.mushroom.midnight.common.registry.MidnightItemGroups;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.BushBlock;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.MapColor;
-import net.minecraft.init.Items;
+import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.Direction;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IBlockAccess;
+import net.minecraft.util.math.shapes.ISelectionContext;
+import net.minecraft.util.math.shapes.VoxelShape;
+import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IEnviromentBlockReader;
-import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.MinecraftForgeClient;
-import net.minecraftforge.common.IShearable;
 
-import javax.annotation.Nonnull;
-import java.util.Collections;
-import java.util.List;
-import java.util.Random;
+// TODO: Shearability in loot table
+// TODO: subclass overriding isReplaceable
+public class MidnightPlantBlock extends BushBlock implements GeneratablePlant {
+    private static final VoxelShape SHAPE = Block.makeCuboidShape(2.0, 0.0, 2.0, 14.0, 13.0, 14.0);
 
-public class MidnightPlantBlock extends BushBlock implements IShearable, GeneratablePlant {
-    private static final AxisAlignedBB BOUNDS = new AxisAlignedBB(0.1, 0.0, 0.1, 0.9, 0.8, 0.9);
-    private final PlantBehaviorType behaviorType;
-    private final boolean glowing;
+    private boolean glowing;
+    private boolean replacable;
 
-    public MidnightPlantBlock(PlantBehaviorType behaviorType, boolean glowing) {
-        super(behaviorType.getMaterial(), MapColor.PURPLE_STAINED_HARDENED_CLAY);
-        this.behaviorType = behaviorType;
-        this.glowing = glowing;
+    public MidnightPlantBlock(Block.Properties properties) {
+        super(properties);
         if (this.glowing) {
             setLightLevel(0.8F);
         }
@@ -44,64 +38,48 @@ public class MidnightPlantBlock extends BushBlock implements IShearable, Generat
         this.setCreativeTab(MidnightItemGroups.DECORATION);
     }
 
-    public MidnightPlantBlock(boolean glowing) {
-        this(PlantBehaviorType.FLOWER, glowing);
+    public MidnightPlantBlock setReplacable() {
+        this.replacable = true;
+        return this;
+    }
+
+    public MidnightPlantBlock setGlowing() {
+        this.glowing = true;
+        return this;
     }
 
     @Override
-    @SuppressWarnings("deprecation")
-    public AxisAlignedBB getBoundingBox(BlockState state, IBlockAccess source, BlockPos pos) {
-        return BOUNDS;
+    public VoxelShape getShape(BlockState state, IBlockReader world, BlockPos pos, ISelectionContext context) {
+        return SHAPE;
     }
 
     @Override
-    protected boolean canSustainBush(BlockState state) {
+    protected boolean isValidGround(BlockState state, IBlockReader world, BlockPos pos) {
         return Helper.isGroundForMidnightPlant(state.getBlock());
     }
 
     @Override
-    public boolean canBlockStay(World world, BlockPos pos, BlockState state) {
-        return canSustainBush(world.getBlockState(pos.down()));
+    public boolean isReplaceable(BlockState state, BlockItemUseContext context) {
+        return this.replacable;
     }
 
     @Override
-    public Block.OffsetType getOffsetType() {
-        return Block.OffsetType.XZ;
-    }
-
-    @Override
-    public boolean isShearable(@Nonnull ItemStack item, IBlockAccess world, BlockPos pos) {
-        return this.behaviorType.isShearable();
-    }
-
-    @Nonnull
-    @Override
-    public List<ItemStack> onSheared(@Nonnull ItemStack item, IBlockAccess world, BlockPos pos, int fortune) {
-        if (this.behaviorType.isShearable()) {
-            return NonNullList.withSize(1, new ItemStack(this));
-        }
-        return Collections.emptyList();
-    }
-
-    @Override
-    public boolean isReplaceable(IBlockAccess world, BlockPos pos) {
-        return this.behaviorType.isReplacable();
-    }
-
-    @Override
-    public Item getItemDropped(BlockState state, Random rand, int fortune) {
-        return this.behaviorType.isShearable() ? Items.AIR : super.getItemDropped(state, rand, fortune);
+    public OffsetType getOffsetType() {
+        return OffsetType.XZ;
     }
 
     @Override
     public boolean canRenderInLayer(BlockState state, BlockRenderLayer layer) {
-        return glowing ? layer == BlockRenderLayer.TRANSLUCENT || layer == BlockRenderLayer.CUTOUT : super.canRenderInLayer(state, layer);
+        if (this.glowing) {
+            return layer == BlockRenderLayer.TRANSLUCENT || layer == BlockRenderLayer.CUTOUT;
+        }
+        return super.canRenderInLayer(state, layer);
     }
 
     @Override
     @OnlyIn(Dist.CLIENT)
     public int getPackedLightmapCoords(BlockState state, IEnviromentBlockReader world, BlockPos pos) {
-        if (!glowing) {
+        if (!this.glowing) {
             return super.getPackedLightmapCoords(state, world, pos);
         }
         if (MinecraftForgeClient.getRenderLayer() == BlockRenderLayer.CUTOUT) {
@@ -113,12 +91,12 @@ public class MidnightPlantBlock extends BushBlock implements IShearable, Generat
     }
 
     @Override
-    public int getFireSpreadSpeed(IBlockAccess world, BlockPos pos, Direction face) {
+    public int getFireSpreadSpeed(BlockState state, IBlockReader world, BlockPos pos, Direction face) {
         return 60;
     }
 
     @Override
-    public int getFlammability(IBlockAccess world, BlockPos pos, Direction face) {
+    public int getFlammability(BlockState state, IBlockReader world, BlockPos pos, Direction face) {
         return 100;
     }
 }
