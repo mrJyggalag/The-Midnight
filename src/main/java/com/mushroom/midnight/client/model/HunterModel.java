@@ -6,7 +6,10 @@ import com.mushroom.midnight.common.entity.creature.HunterEntity;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.model.EntityModel;
 import net.minecraft.client.renderer.entity.model.RendererModel;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
+@OnlyIn(Dist.CLIENT)
 public class HunterModel extends EntityModel<HunterEntity> {
     private final RendererModel Body;
     private final RendererModel Head;

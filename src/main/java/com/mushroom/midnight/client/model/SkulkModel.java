@@ -3,9 +3,11 @@ package com.mushroom.midnight.client.model;
 import com.mushroom.midnight.common.entity.creature.SkulkEntity;
 import net.minecraft.client.renderer.entity.model.QuadrupedModel;
 import net.minecraft.client.renderer.entity.model.RendererModel;
-import net.minecraft.entity.Entity;
 import net.minecraft.util.math.MathHelper;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
+@OnlyIn(Dist.CLIENT)
 public class SkulkModel extends QuadrupedModel<SkulkEntity> {
     private RendererModel Tail;
     private RendererModel RightEar;
@@ -16,24 +18,24 @@ public class SkulkModel extends QuadrupedModel<SkulkEntity> {
         super(5, 0f);
         this.textureWidth = 64;
         this.textureHeight = 32;
-        this.head = new RendererModel(this, 0, 12);
-        this.head.setRotationPoint(0.0F, 20.0F, -4.0F);
-        this.head.addBox(-3.5F, -2.0F, -3.0F, 7, 4, 4, 0.0F);
-        this.body = new RendererModel(this, 0, 2);
-        this.body.setRotationPoint(0.0F, 20.0F, 4.0F);
-        this.body.addBox(-2.5F, -1.5F, -7.0F, 5, 3, 7, 0.0F);
-        this.leg1 = new RendererModel(this, 0, 26);
-        this.leg1.setRotationPoint(-1.4F, 22.0F, -2.1F);
-        this.leg1.addBox(-1.0F, -2.0F, -1.0F, 2, 4, 2, 0.0F);
-        this.leg2 = new RendererModel(this, 0, 26);
-        this.leg2.setRotationPoint(-1.6F, 22.0F, 2.5F);
-        this.leg2.addBox(-1.0F, -2.0F, -1.0F, 2, 4, 2, 0.0F);
-        this.leg3 = new RendererModel(this, 0, 26);
-        this.leg3.setRotationPoint(1.4F, 22.0F, -2.1F);
-        this.leg3.addBox(-1.0F, -2.0F, -1.0F, 2, 4, 2, 0.0F);
-        this.leg4 = new RendererModel(this, 0, 26);
-        this.leg4.setRotationPoint(1.6F, 22.0F, 2.5F);
-        this.leg4.addBox(-1.0F, -2.0F, -1.0F, 2, 4, 2, 0.0F);
+        this.headModel = new RendererModel(this, 0, 12);
+        this.headModel.setRotationPoint(0.0F, 20.0F, -4.0F);
+        this.headModel.addBox(-3.5F, -2.0F, -3.0F, 7, 4, 4, 0.0F);
+        this.field_78148_b = new RendererModel(this, 0, 2); // body
+        this.field_78148_b.setRotationPoint(0.0F, 20.0F, 4.0F);
+        this.field_78148_b.addBox(-2.5F, -1.5F, -7.0F, 5, 3, 7, 0.0F);
+        this.field_78149_c = new RendererModel(this, 0, 26); // leg1
+        this.field_78149_c.setRotationPoint(-1.4F, 22.0F, -2.1F);
+        this.field_78149_c.addBox(-1.0F, -2.0F, -1.0F, 2, 4, 2, 0.0F);
+        this.field_78146_d = new RendererModel(this, 0, 26); // leg2
+        this.field_78146_d.setRotationPoint(-1.6F, 22.0F, 2.5F);
+        this.field_78146_d.addBox(-1.0F, -2.0F, -1.0F, 2, 4, 2, 0.0F);
+        this.field_78147_e = new RendererModel(this, 0, 26); // leg3
+        this.field_78147_e.setRotationPoint(1.4F, 22.0F, -2.1F);
+        this.field_78147_e.addBox(-1.0F, -2.0F, -1.0F, 2, 4, 2, 0.0F);
+        this.field_78144_f = new RendererModel(this, 0, 26); // leg4
+        this.field_78144_f.setRotationPoint(1.6F, 22.0F, 2.5F);
+        this.field_78144_f.addBox(-1.0F, -2.0F, -1.0F, 2, 4, 2, 0.0F);
         this.LeftEar = new RendererModel(this, 1, 0);
         this.LeftEar.setRotationPoint(2.5F, -1.0F, -0.5F);
         this.LeftEar.addBox(-1.0F, -3.0F, 0.0F, 2, 3, 1, 0.0F);
@@ -49,9 +51,9 @@ public class SkulkModel extends QuadrupedModel<SkulkEntity> {
         this.Tail.setRotationPoint(0.0F, 19.5F, 3.5F);
         this.Tail.addBox(-1.0F, -1.0F, 0.0F, 2, 2, 8, 0.0F);
         this.setRotateAngle(Tail, -0.4363323129985824F, 0.0F, 0.0F);
-        this.head.addChild(this.LeftEar);
-        this.head.addChild(this.RightEar);
-        this.head.addChild(this.Snout);
+        this.headModel.addChild(this.LeftEar);
+        this.headModel.addChild(this.RightEar);
+        this.headModel.addChild(this.Snout);
     }
 
     @Override
@@ -63,7 +65,7 @@ public class SkulkModel extends QuadrupedModel<SkulkEntity> {
     @Override
     public void setRotationAngles(SkulkEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scaleFactor) {
         super.setRotationAngles(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scaleFactor);
-        this.body.rotateAngleX = 0f;
+        this.field_78148_b.rotateAngleX = 0f;
         this.Tail.rotateAngleY = MathHelper.sin((float) (ageInTicks * Math.PI * 0.25f)) * 0.1f;
         this.LeftEar.rotateAngleX = this.RightEar.rotateAngleX = MathHelper.sin((float) (ageInTicks * Math.PI * 0.2f)) * 0.1f;
     }

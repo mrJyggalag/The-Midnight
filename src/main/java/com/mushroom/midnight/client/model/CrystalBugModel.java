@@ -4,7 +4,10 @@ import com.mushroom.midnight.common.entity.creature.CrystalBugEntity;
 import net.minecraft.client.renderer.entity.model.EntityModel;
 import net.minecraft.client.renderer.entity.model.RendererModel;
 import net.minecraft.util.math.MathHelper;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
+@OnlyIn(Dist.CLIENT)
 public class CrystalBugModel extends EntityModel<CrystalBugEntity> {
     private final RendererModel body;
     private final RendererModel wingL;

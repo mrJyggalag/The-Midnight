@@ -3,11 +3,14 @@ package com.mushroom.midnight.client.model;
 import com.mushroom.midnight.common.entity.creature.TreeHopperEntity;
 import net.minecraft.client.renderer.entity.model.EntityModel;
 import net.minecraft.client.renderer.entity.model.RendererModel;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
 /**
  * TreehopperModel - xenoform
  * Created using Tabula 7.0.0
  */
+@OnlyIn(Dist.CLIENT)
 public class TreehopperModel extends EntityModel<TreeHopperEntity> {
     public RendererModel Body;
     public RendererModel Seg1;

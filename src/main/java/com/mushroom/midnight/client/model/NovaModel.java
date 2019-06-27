@@ -3,7 +3,10 @@ package com.mushroom.midnight.client.model;
 import com.mushroom.midnight.common.entity.creature.NovaEntity;
 import net.minecraft.client.renderer.entity.model.EntityModel;
 import net.minecraft.client.renderer.entity.model.RendererModel;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
+@OnlyIn(Dist.CLIENT)
 public class NovaModel extends EntityModel<NovaEntity> {
     private RendererModel Face;
     private RendererModel rotChunks;
