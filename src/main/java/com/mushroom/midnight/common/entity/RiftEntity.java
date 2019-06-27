@@ -132,13 +132,13 @@ public class RiftEntity extends Entity implements IEntityAdditionalSpawnData {
         }
 
         if (this.world.getGameRules().getBoolean(GameRules.DO_MOB_SPAWNING)) {
-            if (!this.isUnstable() && MidnightConfig.general.rifterSpawnRarity > 0 && this.spawnedRifters < MidnightConfig.general.maxRifterByRift && this.world.rand.nextInt(MidnightConfig.general.rifterSpawnRarity) == 0) {
+            if (!this.isUnstable() && MidnightConfig.general.rifterSpawnRarity.get() > 0 && this.spawnedRifters < MidnightConfig.general.maxRifterByRift.get() && this.world.rand.nextInt(MidnightConfig.general.rifterSpawnRarity.get()) == 0) {
                 if (trySpawnRifter()) {
                     this.spawnedRifters++;
                     this.failedSpawn = 0;
                 } else {
                     if (++failedSpawn > 5) {
-                        this.spawnedRifters = MidnightConfig.general.maxRifterByRift;
+                        this.spawnedRifters = MidnightConfig.general.maxRifterByRift.get();
                     }
                 }
             }
@@ -165,7 +165,7 @@ public class RiftEntity extends Entity implements IEntityAdditionalSpawnData {
         if (entity.isNotColliding(this.world)) {
             this.world.addEntity(entity);
             if (isHunter) {
-                spawnedRifters = MidnightConfig.general.maxRifterByRift;
+                spawnedRifters = MidnightConfig.general.maxRifterByRift.get();
             }
             return true;
         }

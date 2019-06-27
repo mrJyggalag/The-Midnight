@@ -273,7 +273,7 @@ public final class MidnightEntitySpawner<T extends EntitySpawnConfigured> {
             return false;
         }
         if (creatureType == MIDNIGHT_MOB) {
-            return world.getTotalWorldTime() % MidnightConfig.general.monsterSpawnRate == 0;
+            return world.getTotalWorldTime() % MidnightConfig.general.monsterSpawnRate.get() == 0;
         }
         return !creatureType.getAnimal() || world.getTotalWorldTime() % ANIMAL_SPAWN_INTERVAL == 0;
     }

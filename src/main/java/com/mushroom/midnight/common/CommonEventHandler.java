@@ -64,10 +64,10 @@ public class CommonEventHandler {
                     return;
                 }
                 if (event.getObject() instanceof AnimalEntity) {
-                    if (Arrays.stream(MidnightConfig.general.notCapturableAnimals).anyMatch(p -> p.contains(":") ? rl.toString().equals(p) : rl.getNamespace().equals(p))) {
+                    if (MidnightConfig.general.notCapturableAnimals.get().stream().anyMatch(p -> p.contains(":") ? rl.toString().equals(p) : rl.getNamespace().equals(p))) {
                         return;
                     }
-                } else if (!Arrays.asList(MidnightConfig.general.capturableEntities).contains(rl.toString())) {
+                } else if (!MidnightConfig.general.capturableEntities.get().contains(rl.toString())) {
                     return;
                 }
             }
@@ -145,7 +145,7 @@ public class CommonEventHandler {
 
     @SubscribeEvent
     public static void onServerTick(TickEvent.ServerTickEvent event) {
-        if (MidnightConfig.general.riftSpawnRarity > 0 && event.phase == TickEvent.Phase.END) {
+        if (MidnightConfig.general.riftSpawnRarity.get() > 0 && event.phase == TickEvent.Phase.END) {
             RiftSpawnHandler.update();
         }
     }

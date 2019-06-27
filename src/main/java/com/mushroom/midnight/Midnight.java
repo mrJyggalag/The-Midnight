@@ -10,6 +10,7 @@ import com.mushroom.midnight.common.capability.NullStorage;
 import com.mushroom.midnight.common.capability.RiftTravelCooldown;
 import com.mushroom.midnight.common.capability.RifterCapturable;
 import com.mushroom.midnight.common.compatibility.SupportMods;
+import com.mushroom.midnight.common.config.MidnightConfig;
 import com.mushroom.midnight.common.loot.InBiomeLootCondition;
 import com.mushroom.midnight.common.loot.InBlockLootCondition;
 import com.mushroom.midnight.common.loot.IsChildLootCondition;
@@ -31,6 +32,7 @@ import com.mushroom.midnight.common.registry.MidnightItemGroups;
 import com.mushroom.midnight.common.registry.MidnightItems;
 import com.mushroom.midnight.common.registry.MidnightRecipes;
 import com.mushroom.midnight.common.registry.MidnightSurfaceBiomes;
+import com.mushroom.midnight.common.registry.RegUtil;
 import com.mushroom.midnight.common.util.EntityUtil;
 import com.mushroom.midnight.common.world.generator.MidnightOreGenerator;
 import net.minecraft.entity.EntityClassification;
@@ -41,8 +43,10 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.common.capabilities.CapabilityManager;
 import net.minecraftforge.fluids.FluidRegistry;
+import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.network.NetworkRegistry;
@@ -87,6 +91,8 @@ public class Midnight {
     public static final Capability<MidnightWorldSpawners> WORLD_SPAWNERS_CAP = RegUtil.injected();
 
     public Midnight() {
+        ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, MidnightConfig.CLIENT_SPEC);
+        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, MidnightConfig.GENERAL_SPEC);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
 
         FluidRegistry.enableUniversalBucket();

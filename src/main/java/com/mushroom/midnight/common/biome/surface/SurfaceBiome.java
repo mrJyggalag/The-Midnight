@@ -71,7 +71,7 @@ public class SurfaceBiome extends Biome implements EntitySpawnConfigured {
 
     @Override
     public void addFlower(BlockState state, int weight) {
-        if (MidnightConfig.general.foreignFlowersFromBonemeal) {
+        if (MidnightConfig.general.foreignFlowersFromBonemeal.get()) {
             super.addFlower(state, weight);
         }
     }
@@ -101,7 +101,7 @@ public class SurfaceBiome extends Biome implements EntitySpawnConfigured {
     @Override
     public void plantFlower(World world, Random rand, BlockPos pos) {
         final List<FlowerEntry> flowerList;
-        if (MidnightConfig.general.foreignFlowersFromBonemeal && !this.flowers.isEmpty()) {
+        if (MidnightConfig.general.foreignFlowersFromBonemeal.get() && !this.flowers.isEmpty()) {
             flowerList = Stream.concat(this.flowers.stream(), this.config.getFeatureConfig().getFlowers().stream()).collect(Collectors.toList());
         } else {
             flowerList = this.config.getFeatureConfig().getFlowers();

@@ -25,6 +25,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.init.MobEffects;
 import net.minecraft.network.play.client.CEntityActionPacket;
+import net.minecraft.potion.Effects;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
@@ -36,6 +37,7 @@ import net.minecraftforge.client.event.EntityViewRenderEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.sound.PlaySoundEvent;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
+import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
@@ -136,7 +138,7 @@ public class ClientEventHandler {
         }
         LivingEntity entity = event.getEntity() instanceof LivingEntity ? (LivingEntity) event.getEntity() : null;
         if (entity != null) {
-            if (entity.isPotionActive(MobEffects.BLINDNESS)) {
+            if (entity.isPotionActive(Effects.BLINDNESS)) {
                 return;
             }
             if (entity.isPotionActive(MidnightEffects.DARKNESS)) {
@@ -251,7 +253,7 @@ public class ClientEventHandler {
 
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public static void onRenderVignetteOverLay(RenderGameOverlayEvent.Pre event) {
-        if (MidnightConfig.client.hideVignetteEffect && event.getType() == RenderGameOverlayEvent.ElementType.VIGNETTE) {
+        if (MidnightConfig.client.hideVignetteEffect.get() && event.getType() == RenderGameOverlayEvent.ElementType.VIGNETTE) {
             if (Helper.isMidnightDimension(CLIENT.world)) {
                 WorldBorder worldborder = CLIENT.world.getWorldBorder();
                 float distWarn = Math.max(worldborder.getWarningDistance(), (float) Math.min(worldborder.getResizeSpeed() * worldborder.getWarningTime() * 1000d, Math.abs(worldborder.getTargetSize() - worldborder.getDiameter())));

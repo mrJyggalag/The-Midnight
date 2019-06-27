@@ -64,7 +64,7 @@ public class BladeshroomBlock extends MidnightPlantBlock implements IGrowable {
         if (state.get(STAGE) == Stage.CAPPED) {
             ItemHandlerHelper.giveItemToPlayer(player, new ItemStack(MidnightItems.BLADESHROOM_CAP));
             world.setBlockState(pos, state.with(STAGE, Stage.STEM));
-            if (MidnightConfig.general.bladeshroomDamageChance != 0 && world.rand.nextInt(100) < MidnightConfig.general.bladeshroomDamageChance) {
+            if (MidnightConfig.general.bladeshroomDamageChance.get() != 0 && world.rand.nextInt(100) < MidnightConfig.general.bladeshroomDamageChance.get()) {
                 player.attackEntityFrom(BLADESHROOM_DAMAGE, 1.0F);
             }
             return true;

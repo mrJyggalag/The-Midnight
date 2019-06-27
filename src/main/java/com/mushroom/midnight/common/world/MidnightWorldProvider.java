@@ -139,7 +139,7 @@ public class MidnightWorldProvider extends WorldProvider {
                     int lightningZ = globalZ + rand.nextInt(16);
                     BlockPos pos = this.world.getPrecipitationHeight(new BlockPos(lightningX, 0, lightningZ));
 
-                    Entity lightning = new EntityLightningBolt(this.world, pos.getX(), pos.getY(), pos.getZ(), !MidnightConfig.general.allowLightningDamage);
+                    Entity lightning = new EntityLightningBolt(this.world, pos.getX(), pos.getY(), pos.getZ(), !MidnightConfig.general.allowLightningDamage.get());
                     this.world.addWeatherEffect(lightning);
                 }
             });
@@ -153,7 +153,7 @@ public class MidnightWorldProvider extends WorldProvider {
 
     @Override
     public boolean canRespawnHere() {
-        return MidnightConfig.general.canRespawnInMidnight;
+        return MidnightConfig.general.canRespawnInMidnight.get();
     }
 
     @Override

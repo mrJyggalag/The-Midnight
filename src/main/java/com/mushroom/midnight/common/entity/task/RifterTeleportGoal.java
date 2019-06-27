@@ -26,7 +26,7 @@ public class RifterTeleportGoal extends Goal {
 
     @Override
     public boolean shouldExecute() {
-        if (!MidnightConfig.general.allowRifterTeleport || this.owner.getRNG().nextInt(10) != 0) {
+        if (!MidnightConfig.general.allowRifterTeleport.get() || this.owner.getRNG().nextInt(10) != 0) {
             return false;
         }
         LivingEntity target = this.owner.getAttackTarget();

@@ -60,7 +60,7 @@ public class RiftSpawnHandler {
             }
 
             for (BlockPos spawnRegion : spawnRegions) {
-                if (random.nextInt(MidnightConfig.general.riftSpawnRarity) == 0) {
+                if (random.nextInt(MidnightConfig.general.riftSpawnRarity.get()) == 0) {
                     BlockPos riftPosition = generateRiftPosition(random, spawnRegion);
                     if (endpointWorld != null && (world.getWorldBorder().contains(riftPosition) != endpointWorld.getWorldBorder().contains(riftPosition))) {
                         continue;
