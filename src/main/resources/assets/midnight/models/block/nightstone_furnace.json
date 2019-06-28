@@ -1,0 +1,8 @@
+{
+    "parent": "block/orientable",
+    "textures": {
+        "top": "midnight:blocks/nightstone_furnace_top",
+        "front": "midnight:blocks/nightstone_furnace_front",
+        "side": "midnight:blocks/nightstone_furnace_side"
+    }
+}

@@ -4,13 +4,15 @@ import com.mushroom.midnight.Midnight;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.TextureStitchEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.relauncher.Side;
 
 import java.util.EnumMap;
 import java.util.Locale;
+
+import static com.mushroom.midnight.Midnight.MODID;
 
 @Mod.EventBusSubscriber(modid = Midnight.MODID, value = Dist.CLIENT)
 public class MidnightParticleSprites {
@@ -39,4 +41,11 @@ public class MidnightParticleSprites {
         }
         return sprite;
     }
+
+    public static final ResourceLocation SPORE = new ResourceLocation(MODID, "textures/particles/spore.png");
+    public static final ResourceLocation FADING_SPORE = new ResourceLocation(MODID, "textures/particles/fading_spore.png");
+    public static final ResourceLocation FURNACE_FLAME = new ResourceLocation(MODID, "textures/particles/furnace_flame.png");
+    public static final ResourceLocation BLUE_UNSTABLE_BUSH = new ResourceLocation(MODID, "textures/particles/blue_unstable_bush.png");
+    public static final ResourceLocation LIME_UNSTABLE_BUSH = new ResourceLocation(MODID, "textures/particles/lime_unstable_bush.png");
+    public static final ResourceLocation GREEN_UNSTABLE_BUSH = new ResourceLocation(MODID, "textures/particles/green_unstable_bush.png");
 }

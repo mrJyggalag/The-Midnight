@@ -2,12 +2,15 @@ package com.mushroom.midnight.client.particle;
 
 import com.mushroom.midnight.common.entity.RiftEntity;
 import com.mushroom.midnight.common.util.MatrixStack;
-import net.minecraft.client.particle.Particle;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
 import javax.vecmath.Point3d;
 
-public class RiftParticle extends Particle {
+@OnlyIn(Dist.CLIENT)
+public class RiftParticle extends MidnightParticle {
     private static final int TRANSITION_TIME = 20;
     private static final float MIN_RETURN_DISTANCE = 0.2F;
 
@@ -32,8 +35,6 @@ public class RiftParticle extends Particle {
     public RiftParticle(RiftParticleSystem particleSystem, RiftParticleSystem.Ring ring, double x, double y, double z, float radius, float angleOffset, float verticalOffset, float rotateSpeed) {
         super(particleSystem.getEntity().world, x, y, z);
         this.setSize(0.2F, 0.2F);
-
-        this.setParticleTexture(MidnightParticleSprites.getSprite(MidnightParticleSprites.SpriteTypes.SPORE));
 
         this.particleSystem = particleSystem;
         this.radius = radius;
@@ -85,7 +86,7 @@ public class RiftParticle extends Particle {
         this.posY = this.origin.y + (target.y - this.origin.y) * transitionAnimation;
         this.posZ = this.origin.z + (target.z - this.origin.z) * transitionAnimation;
 
-        this.particleAge++;
+        this.age++;
     }
 
     private void updateTransitionTimer() {
@@ -97,7 +98,7 @@ public class RiftParticle extends Particle {
     }
 
     private boolean shouldExpire() {
-        if (this.particleSystem.getEntity().isDead) {
+        if (this.particleSystem.getEntity().removed) {
             return true;
         }
         if (this.returning) {
@@ -114,7 +115,7 @@ public class RiftParticle extends Particle {
         this.matrix.push();
         this.matrix.rotate(this.ring.getTiltX(), 1.0F, 0.0F, 0.0F);
         this.matrix.rotate(this.ring.getTiltZ(), 0.0F, 0.0F, 1.0F);
-        this.matrix.rotate(this.particleAge * this.rotateSpeed + this.angleOffset, 0.0F, 1.0F, 0.0F);
+        this.matrix.rotate(this.age * this.rotateSpeed + this.angleOffset, 0.0F, 1.0F, 0.0F);
 
         Point3d point = new Point3d(this.radius, this.verticalOffset, 0.0);
         this.matrix.transform(point);
@@ -123,13 +124,13 @@ public class RiftParticle extends Particle {
 
         RiftEntity rift = this.particleSystem.getEntity();
         double targetX = rift.posX + point.x;
-        double targetY = rift.posY + rift.height / 2.0F + point.y;
+        double targetY = rift.posY + rift.getHeight() / 2.0F + point.y;
         double targetZ = rift.posZ + point.z;
         return new Point3d(targetX, targetY, targetZ);
     }
 
     @Override
-    public int getFXLayer() {
-        return 1;
+    ResourceLocation getTexture() {
+        return MidnightParticleSprites.SPORE;
     }
 }

@@ -2,15 +2,16 @@ package com.mushroom.midnight.client.particle;
 
 import net.minecraft.client.particle.IParticleFactory;
 import net.minecraft.client.particle.Particle;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
-public class AmbientSporeParticle extends Particle {
+public class AmbientSporeParticle extends MidnightParticle {
+
     protected AmbientSporeParticle(World world, double x, double y, double z, double velocityX, double velocityY, double velocityZ) {
         super(world, x, y, z, velocityX, velocityY, velocityZ);
-        this.setParticleTexture(MidnightParticleSprites.getSprite(MidnightParticleSprites.SpriteTypes.SPORE));
         float shade = this.rand.nextFloat() * 0.1F + 0.9F;
         this.particleRed = shade;
         this.particleGreen = shade;
@@ -21,8 +22,13 @@ public class AmbientSporeParticle extends Particle {
         this.motionX *= 0.1;
         this.motionY *= 0.1;
         this.motionZ *= 0.1;
-        this.particleMaxAge = 200;
+        this.maxAge = 200;
         this.canCollide = true;
+    }
+
+    @Override
+    ResourceLocation getTexture() {
+        return MidnightParticleSprites.SPORE;
     }
 
     @Override
@@ -37,17 +43,17 @@ public class AmbientSporeParticle extends Particle {
         this.motionY *= 0.99;
         this.motionZ *= 0.99;
 
-        this.particleMaxAge--;
+        this.maxAge--;
 
-        if (this.particleMaxAge < 20) {
-            this.particleAlpha = this.particleMaxAge / 20.0F;
-        } else if (this.particleMaxAge >= 180) {
-            this.particleAlpha = (200 - this.particleMaxAge) / 20.0F;
+        if (this.maxAge < 20) {
+            this.particleAlpha = this.maxAge / 20.0F;
+        } else if (this.maxAge >= 180) {
+            this.particleAlpha = (200 - this.maxAge) / 20.0F;
         } else {
             this.particleAlpha = 1.0F;
         }
 
-        if (this.particleMaxAge <= 0 || this.onGround) {
+        if (this.maxAge <= 0 || this.onGround) {
             this.setExpired();
         }
     }
@@ -57,11 +63,6 @@ public class AmbientSporeParticle extends Particle {
         int skylight = 10;
         int blocklight = 5;
         return skylight << 20 | blocklight << 4;
-    }
-
-    @Override
-    public int getFXLayer() {
-        return 1;
     }
 
     @OnlyIn(Dist.CLIENT)

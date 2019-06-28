@@ -2,30 +2,31 @@ package com.mushroom.midnight.client.particle;
 
 import net.minecraft.client.particle.IParticleFactory;
 import net.minecraft.client.particle.Particle;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.OnlyIn;
-
-import static com.mushroom.midnight.client.particle.MidnightParticleSprites.*;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
-public class UnstableBushParticle extends Particle {
+public class UnstableBushParticle extends MidnightParticle {
+    private final int fruitId;
 
     protected UnstableBushParticle(World world, double posX, double posY, double posZ, double motionX, double motionY, double motionZ, int fruitId) {
         super(world, posX, posY, posZ);
-        setParticleTexture(getSprite(fruitId == 0 ? SpriteTypes.BLUE_UNSTABLE_BUSH : (fruitId == 1 ? SpriteTypes.LIME_UNSTABLE_BUSH : SpriteTypes.GREEN_UNSTABLE_BUSH)));
+        this.fruitId = fruitId;
+
         this.motionX = motionX;
         this.motionY = motionY;
         this.motionZ = motionZ;
         this.particleAlpha = 1f;
         particleScale = 1f;
-        this.particleMaxAge = 60;
+        this.maxAge = 60;
         this.canCollide = false;
     }
 
     @Override
     public void tick() {
-        this.particleAlpha = particleAge / (float)particleMaxAge;
+        this.particleAlpha = age / (float)maxAge;
         super.tick();
     }
 
@@ -37,8 +38,8 @@ public class UnstableBushParticle extends Particle {
     }
 
     @Override
-    public int getFXLayer() {
-        return 1;
+    ResourceLocation getTexture() {
+        return fruitId == 0 ? MidnightParticleSprites.BLUE_UNSTABLE_BUSH : (fruitId == 1 ? MidnightParticleSprites.LIME_UNSTABLE_BUSH : MidnightParticleSprites.GREEN_UNSTABLE_BUSH);
     }
 
     @OnlyIn(Dist.CLIENT)

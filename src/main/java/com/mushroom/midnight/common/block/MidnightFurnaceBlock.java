@@ -1,16 +1,17 @@
 package com.mushroom.midnight.common.block;
 
 import com.mushroom.midnight.Midnight;
-import com.mushroom.midnight.client.particle.MidnightParticles;
+import com.mushroom.midnight.client.particle.FurnaceFlameParticle;
 import com.mushroom.midnight.common.network.GuiHandler;
 import com.mushroom.midnight.common.registry.MidnightBlocks;
 import com.mushroom.midnight.common.registry.MidnightItemGroups;
 import com.mushroom.midnight.common.tile.base.TileEntityMidnightFurnace;
+import net.minecraft.block.AbstractFurnaceBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.ContainerBlock;
 import net.minecraft.block.material.Material;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.InventoryHelper;
@@ -40,13 +41,13 @@ import net.minecraftforge.client.MinecraftForgeClient;
 import javax.annotation.Nullable;
 import java.util.Random;
 
-public class MidnightFurnaceBlock extends ContainerBlock {
+public class MidnightFurnaceBlock extends AbstractFurnaceBlock {
     public static final DirectionProperty FACING = BlockStateProperties.FACING;
     private final boolean isBurning;
     private static boolean keepInventory;
 
-    public MidnightFurnaceBlock(boolean isBurning) {
-        super(Material.ROCK);
+    public MidnightFurnaceBlock(Properties props) {
+        super(props);
         this.isBurning = isBurning;
 
         this.setHardness(3.5F);
@@ -60,7 +61,7 @@ public class MidnightFurnaceBlock extends ContainerBlock {
 
     @Override
     public Item getItemDropped(BlockState state, Random rand, int fortune) {
-        return Item.getItemFromBlock(MidnightBlocks.MIDNIGHT_FURNACE);
+        return Item.getItemFromBlock(MidnightBlocks.NIGHTSTONE_FURNACE);
     }
 
     @Override
@@ -91,49 +92,34 @@ public class MidnightFurnaceBlock extends ContainerBlock {
     }
 
     @OnlyIn(Dist.CLIENT)
-    @SuppressWarnings("incomplete-switch")
-    @Override
-    public void randomTick(BlockState state, World worldIn, BlockPos pos, Random rand) {
-        if (this.isBurning) {
+    public void animateTick(BlockState state, World world, BlockPos pos, Random random) {
+        if (state.get(LIT)) {
+            double x = (double)pos.getX() + 0.5d;
+            double y = (double)pos.getY() + random.nextDouble() * 6d / 16d;
+            double z = (double)pos.getZ() + 0.5d;
+            if (random.nextDouble() < 0.1d) {
+                world.playSound(x, y, z, SoundEvents.BLOCK_FURNACE_FIRE_CRACKLE, SoundCategory.BLOCKS, 1.0F, 1.0F, false);
+            }
+
             Direction facing = state.get(FACING);
-            double x = pos.getX() + 0.5D;
-            double y = pos.getY() + rand.nextDouble() * 6.0D / 16.0D;
-            double z = pos.getZ() + 0.5D;
-            double outwardOffset = 0.52D;
-            double sidewardOffset = rand.nextDouble() * 0.6D - 0.3D;
-
-            if (rand.nextDouble() < 0.1D) {
-                worldIn.playSound((double) pos.getX() + 0.5D, (double) pos.getY(), (double) pos.getZ() + 0.5D, SoundEvents.BLOCK_FURNACE_FIRE_CRACKLE, SoundCategory.BLOCKS, 1.0F, 1.0F, false);
-            }
-
-            switch (facing) {
-                case WEST:
-                    worldIn.addParticle(ParticleTypes.SMOKE, x - outwardOffset, y, z + sidewardOffset, 0.0D, 0.0D, 0.0D);
-                    MidnightParticles.FURNACE_FLAME.spawn(worldIn, x - outwardOffset, y, z + sidewardOffset, 0d, 0d, 0d);
-                    break;
-                case EAST:
-                    worldIn.addParticle(ParticleTypes.SMOKE, x + outwardOffset, y, z + sidewardOffset, 0.0D, 0.0D, 0.0D);
-                    MidnightParticles.FURNACE_FLAME.spawn(worldIn, x + outwardOffset, y, z + sidewardOffset, 0d, 0d, 0d);
-                    break;
-                case NORTH:
-                    worldIn.addParticle(ParticleTypes.SMOKE, x + sidewardOffset, y, z - outwardOffset, 0.0D, 0.0D, 0.0D);
-                    MidnightParticles.FURNACE_FLAME.spawn(worldIn, x + sidewardOffset, y, z - outwardOffset, 0d, 0d, 0d);
-                    break;
-                case SOUTH:
-                    worldIn.addParticle(ParticleTypes.SMOKE, x + sidewardOffset, y, z + outwardOffset, 0.0D, 0.0D, 0.0D);
-                    MidnightParticles.FURNACE_FLAME.spawn(worldIn, x + sidewardOffset, y, z + outwardOffset, 0d, 0d, 0d);
-            }
+            Direction.Axis facingAxis = facing.getAxis();
+            double outwardOffset = 0.52d;
+            double sidewardOffset = random.nextDouble() * 0.6d - 0.3d;
+            double addX = facingAxis == Direction.Axis.X ? (double)facing.getXOffset() * outwardOffset : sidewardOffset;
+            double addY = random.nextDouble() * 6d / 16d;
+            double addZ = facingAxis == Direction.Axis.Z ? (double)facing.getZOffset() * outwardOffset : sidewardOffset;
+            world.addParticle(ParticleTypes.SMOKE, x + addX, y + addY, z + addZ, 0d, 0d, 0d);
+            Minecraft.getInstance().particles.addEffect(new FurnaceFlameParticle(world, x + addX, y + addY, z + addZ, 0d, 0d, 0d));
         }
     }
 
     @Override
-    public boolean onBlockActivated(World world, BlockPos pos, BlockState state, PlayerEntity playerIn, EnumHand hand, Direction facing, float hitX, float hitY, float hitZ) {
+    protected void interactWith(World world, BlockPos pos, PlayerEntity player) {
         TileEntity tileentity = world.getTileEntity(pos);
         if (tileentity instanceof TileEntityMidnightFurnace) {
-            playerIn.openGui(Midnight.instance, GuiHandler.MIDNIGHT_FURNACE, world, pos.getX(), pos.getY(), pos.getZ());
-            playerIn.addStat(Stats.FURNACE_INTERACTION);
+            player.openGui(Midnight.instance, GuiHandler.MIDNIGHT_FURNACE, world, pos.getX(), pos.getY(), pos.getZ());
+            player.addStat(Stats.FURNACE_INTERACTION);
         }
-        return true;
     }
 
     public static void setState(boolean active, World worldIn, BlockPos pos) {
@@ -145,8 +131,8 @@ public class MidnightFurnaceBlock extends ContainerBlock {
             worldIn.setBlockState(pos, MidnightBlocks.MIDNIGHT_FURNACE_LIT.getDefaultState().with(FACING, state.get(FACING)), 3);
             worldIn.setBlockState(pos, MidnightBlocks.MIDNIGHT_FURNACE_LIT.getDefaultState().with(FACING, state.get(FACING)), 3);
         } else {
-            worldIn.setBlockState(pos, MidnightBlocks.MIDNIGHT_FURNACE.getDefaultState().with(FACING, state.get(FACING)), 3);
-            worldIn.setBlockState(pos, MidnightBlocks.MIDNIGHT_FURNACE.getDefaultState().with(FACING, state.get(FACING)), 3);
+            worldIn.setBlockState(pos, MidnightBlocks.NIGHTSTONE_FURNACE.getDefaultState().with(FACING, state.get(FACING)), 3);
+            worldIn.setBlockState(pos, MidnightBlocks.NIGHTSTONE_FURNACE.getDefaultState().with(FACING, state.get(FACING)), 3);
         }
 
         keepInventory = false;
@@ -158,7 +144,8 @@ public class MidnightFurnaceBlock extends ContainerBlock {
     }
 
     @Override
-    public TileEntity createTileEntity(BlockState state, IBlockReader world) {
+    @Nullable
+    public TileEntity createNewTileEntity(IBlockReader worldIn) {
         return new TileEntityMidnightFurnace();
     }
 
@@ -207,7 +194,7 @@ public class MidnightFurnaceBlock extends ContainerBlock {
 
     @Override
     public ItemStack getItem(World worldIn, BlockPos pos, BlockState state) {
-        return new ItemStack(MidnightBlocks.MIDNIGHT_FURNACE);
+        return new ItemStack(MidnightBlocks.NIGHTSTONE_FURNACE);
     }
 
     @Override

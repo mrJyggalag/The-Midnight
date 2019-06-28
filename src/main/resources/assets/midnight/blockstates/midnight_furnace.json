@@ -1,8 +1,0 @@
-{
-  "variants": {
-    "facing=north": {"model": "midnight:midnight_furnace"},
-    "facing=south": {"model": "midnight:midnight_furnace", "y": 180},
-    "facing=west": {"model": "midnight:midnight_furnace", "y": 270},
-    "facing=east": {"model": "midnight:midnight_furnace", "y": 90}
-  }
-}

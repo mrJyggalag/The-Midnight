@@ -87,7 +87,6 @@ public class MidnightBlocks {
     public static final Block DARK_WILLOW_PLANKS = Blocks.AIR;
     public static final Block NIGHTSTONE = Blocks.AIR;
     public static final Block NIGHTSTONE_BRICKS = Blocks.AIR;
-    public static final Block CHISELED_NIGHTSTONE_BRICKS = Blocks.AIR;
     public static final Block TRENCHSTONE = Blocks.AIR;
     public static final Block TRENCHSTONE_BRICKS = Blocks.AIR;
 
@@ -103,8 +102,7 @@ public class MidnightBlocks {
 
     public static final Block SHADOWROOT_CRAFTING_TABLE = Blocks.AIR;
     public static final Block SHADOWROOT_CHEST = Blocks.AIR;
-    public static final Block MIDNIGHT_FURNACE = Blocks.AIR;
-    public static final Block MIDNIGHT_FURNACE_LIT = Blocks.AIR;
+    public static final Block NIGHTSTONE_FURNACE = Blocks.AIR;
 
     public static final Block MIDNIGHT_COARSE_DIRT = Blocks.AIR;
     public static final Block MIDNIGHT_DIRT = Blocks.AIR;
@@ -352,6 +350,15 @@ public class MidnightBlocks {
                 .add("dead_wood_log", props -> new LogBlock(MaterialColor.BROWN, props))
                 .add("dark_willow_log", props -> new LogBlock(MaterialColor.BROWN, props));
 
+        RegUtil.blocks(event.getRegistry())
+                .withProperties(() ->
+                        Block.Properties.create(Material.ROCK)
+                                .hardnessAndResistance(3.5f)
+                                .lightValue(13)
+                                .tickRandomly()
+                )
+                .add("nighstone_furnace", MidnightFurnaceBlock::new);
+
         // TODO: Port all registration
 
         blocks.addAll(Lists.newArrayList(
@@ -498,8 +505,6 @@ public class MidnightBlocks {
                 RegUtil.withName(new MidnightTrapDoorBlock(), "viridshroom_trapdoor"),
                 RegUtil.withName(new ShadowrootCraftingTableBlock(), "shadowroot_crafting_table"),
                 RegUtil.withName(new MidnightChestBlock(ChestModel.SHADOWROOT), "shadowroot_chest"),
-                RegUtil.withName(new MidnightFurnaceBlock(false), "midnight_furnace"),
-                RegUtil.withName(new MidnightFurnaceBlock(true), "midnight_furnace_lit"),
                 RegUtil.withName(new MidnightSlabBlock(() -> SHADOWROOT_PLANKS.getDefaultState()), "shadowroot_slab"),
                 RegUtil.withName(new MidnightSlabBlock(() -> DEAD_WOOD_PLANKS.getDefaultState()), "dead_wood_slab"),
                 RegUtil.withName(new MidnightSlabBlock(() -> DARK_WILLOW_PLANKS.getDefaultState()), "dark_willow_slab"),
@@ -611,7 +616,7 @@ public class MidnightBlocks {
                 ARCHAIC_ORE,
                 SHADOWROOT_CRAFTING_TABLE,
                 SHADOWROOT_CHEST,
-                MIDNIGHT_FURNACE,
+                NIGHTSTONE_FURNACE,
                 MIDNIGHT_COARSE_DIRT, MIDNIGHT_DIRT, MIDNIGHT_GRASS, MIDNIGHT_MYCELIUM,
                 TALL_MIDNIGHT_GRASS, DOUBLE_MIDNIGHT_GRASS,
                 NIGHTSHROOM, DOUBLE_NIGHTSHROOM, NIGHTSHROOM_SHELF,
