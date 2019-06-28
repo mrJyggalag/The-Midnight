@@ -34,7 +34,7 @@ public class RiftAttachment {
     }
 
     public RiftAttachment fixedToSurface(World world) {
-        BlockPos surfacePos = new BlockPos(pos.getX(), world.getChunk(pos).getHeight(pos), pos.getZ());
+        BlockPos surfacePos = new BlockPos(pos.getX(), world.getChunk(pos).getHeight(), pos.getZ());
         return new RiftAttachment(surfacePos, this.yaw);
     }
 
@@ -46,7 +46,7 @@ public class RiftAttachment {
         compound.putInt("x", this.pos.getX());
         compound.putInt("y", this.pos.getY());
         compound.putInt("z", this.pos.getZ());
-        compound.setFloat("yaw", this.yaw);
+        compound.putFloat("yaw", this.yaw);
         return compound;
     }
 

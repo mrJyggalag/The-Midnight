@@ -1,27 +1,27 @@
 package com.mushroom.midnight.common.block;
 
 import com.mushroom.midnight.common.registry.MidnightItemGroups;
-import net.minecraft.block.BlockFenceGate;
-import net.minecraft.block.BlockPlanks;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.FenceGateBlock;
 import net.minecraft.block.SoundType;
-import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.state.BlockState;
+import net.minecraft.block.material.MaterialColor;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.Explosion;
-import net.minecraft.world.IBlockAccess;
+import net.minecraft.world.IBlockReader;
+import net.minecraft.world.IEnviromentBlockReader;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.OnlyIn;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
 import javax.annotation.Nullable;
 import java.util.Random;
 import java.util.function.Supplier;
 
-public class MidnightFenceGateBlock extends BlockFenceGate {
+public class MidnightFenceGateBlock extends FenceGateBlock {
     private final Supplier<BlockState> parentSupplier;
 
     public MidnightFenceGateBlock(Supplier<BlockState> parentSupplier) {
@@ -54,15 +54,15 @@ public class MidnightFenceGateBlock extends BlockFenceGate {
 
     @Override
     @OnlyIn(Dist.CLIENT)
-    public void randomDisplayTick(BlockState state, World world, BlockPos pos, Random rand) {
+    public void randomTick(BlockState state, World world, BlockPos pos, Random rand) {
         BlockState parentState = this.parentSupplier.get();
-        parentState.getBlock().randomDisplayTick(parentState, world, pos, rand);
+        parentState.getBlock().randomTick(parentState, world, pos, rand);
     }
 
     @Override
     @OnlyIn(Dist.CLIENT)
-    public int getPackedLightmapCoords(BlockState state, IBlockAccess source, BlockPos pos) {
-        return this.parentSupplier.get().getPackedLightmapCoords(source, pos);
+    public int getPackedLightmapCoords(BlockState state, IEnviromentBlockReader worldIn, BlockPos pos) {
+        return this.parentSupplier.get().getPackedLightmapCoords(worldIn, pos);
     }
 
     @Override
@@ -78,17 +78,17 @@ public class MidnightFenceGateBlock extends BlockFenceGate {
     }
 
     @Override
-    public MapColor getMapColor(BlockState state, IBlockAccess world, BlockPos pos) {
-        return this.parentSupplier.get().getMapColor(world, pos);
+    public MaterialColor getMaterialColor(BlockState state, IBlockReader worldIn, BlockPos pos) {
+        return this.parentSupplier.get().getMaterialColor(worldIn, pos);
     }
 
     @Override
-    public int getFireSpreadSpeed(IBlockAccess world, BlockPos pos, Direction face) {
-        return parentSupplier.get().getBlock().getFireSpreadSpeed(world, pos, face);
+    public int getFireSpreadSpeed(BlockState state, IBlockReader world, BlockPos pos, Direction face) {
+        return parentSupplier.get().getBlock().getFireSpreadSpeed(parentSupplier.get(), world, pos, face);
     }
 
     @Override
-    public int getFlammability(IBlockAccess world, BlockPos pos, Direction face) {
-        return parentSupplier.get().getBlock().getFlammability(world, pos, face);
+    public int getFlammability(BlockState state, IBlockReader world, BlockPos pos, Direction face) {
+        return parentSupplier.get().getBlock().getFlammability(parentSupplier.get(), world, pos, face);
     }
 }

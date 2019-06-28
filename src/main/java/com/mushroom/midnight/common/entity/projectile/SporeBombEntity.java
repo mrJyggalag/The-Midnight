@@ -67,11 +67,7 @@ public class SporeBombEntity extends ThrowableEntity {
 
     @Override
     public ITextComponent getName() {
-        if (hasCustomName()) {
-            return getCustomName();
-        } else {
-            return getBombStack().getDisplayName();
-        }
+        return hasCustomName() ? super.getName() : getBombStack().getDisplayName();
     }
 
     @Override

@@ -2,18 +2,18 @@ package com.mushroom.midnight.common.block;
 
 import com.mushroom.midnight.client.particle.MidnightParticles;
 import com.mushroom.midnight.common.registry.MidnightItemGroups;
-import net.minecraft.block.BlockTorch;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.SoundType;
-import net.minecraft.block.state.BlockState;
+import net.minecraft.block.TorchBlock;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.OnlyIn;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
 import java.util.Random;
 
-public class SporchBlock extends BlockTorch {
+public class SporchBlock extends TorchBlock {
     public enum SporchType {BOGSHROOM, DEWSHROOM, NIGHTSHROOM, VIRIDSHROOM;}
 
     private final SporchType sporchType;

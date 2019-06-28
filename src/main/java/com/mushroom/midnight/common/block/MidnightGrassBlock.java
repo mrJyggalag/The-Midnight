@@ -11,7 +11,7 @@ import net.minecraft.item.Item;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IBlockAccess;
+import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -87,7 +87,7 @@ public class MidnightGrassBlock extends Block implements IGrowable {
     }
 
     @Override
-    public boolean canGrow(World worldIn, BlockPos pos, BlockState state, boolean isClient) {
+    public boolean canGrow(IBlockReader worldIn, BlockPos pos, BlockState state, boolean isClient) {
         return true;
     }
 
@@ -114,7 +114,7 @@ public class MidnightGrassBlock extends Block implements IGrowable {
                     if (isMidnight && blockpos1.getY() < MidnightChunkGenerator.MAX_CAVE_HEIGHT) {
                         CavernousBiomeStore.getBiome(worldIn, blockpos1.getX(), blockpos1.getZ()).plantFlower(worldIn, rand, blockpos1);
                     } else {
-                        worldIn.getBiome(blockpos1).plantFlower(worldIn, rand, blockpos1);
+                        worldIn.getBiome(blockpos1).plantFlower(worldIn, rand, blockpos1); // plant flower is done now in the grass block
                     }
                 } else {
                     BlockState tallGrassState = MidnightBlocks.TALL_MIDNIGHT_GRASS.getDefaultState();

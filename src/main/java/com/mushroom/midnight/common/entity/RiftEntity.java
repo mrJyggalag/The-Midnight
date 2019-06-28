@@ -153,13 +153,16 @@ public class RiftEntity extends Entity implements IEntityAdditionalSpawnData {
         MobEntity entity;
         boolean isHunter = rand.nextFloat() < 0.01f;
         if (isHunter) {
-            entity = new HunterEntity(this.world);
-            isHunter = true;
+            entity = MidnightEntities.hunter.create(this.world);
         } else {
-            entity = new RifterEntity(this.world);
-            ((RifterEntity)entity).spawnedThroughRift = true;
+            entity = MidnightEntities.rifter.create(this.world);
         }
-
+        if (entity == null) {
+            return false;
+        }
+        if (!isHunter) {
+            ((RifterEntity) entity).spawnedThroughRift = true;
+        }
         entity.setPositionAndRotation(this.posX + offsetX, this.posY, this.posZ + offsetZ, (float) Math.toDegrees(theta), 0.0F);
 
         if (entity.isNotColliding(this.world)) {
@@ -226,14 +229,10 @@ public class RiftEntity extends Entity implements IEntityAdditionalSpawnData {
         AxisAlignedBB bounds = this.getBoundingBox().grow(-0.4, 0.0, -0.4);
         DimensionType endpointDimension = this.getEndpointDimension();
         List<Entity> entities = this.world.getEntitiesInAABBexcluding(this, bounds, entity -> {
-            if (entity.isRiding() || (entity instanceof PlayerEntity && entity.isSpectator())) {
+            if (entity.isPassenger() || (entity instanceof PlayerEntity && entity.isSpectator())) {
                 return false;
             }
-            RiftTravelCooldown cooldown = entity.getCapability(Midnight.RIFT_TRAVEL_COOLDOWN_CAP);
-            if (cooldown != null && !cooldown.isReady()) {
-                return false;
-            }
-            return !(entity instanceof RiftEntity);
+            return entity.getCapability(Midnight.RIFT_TRAVEL_COOLDOWN_CAP).map(cooldownCap -> cooldownCap.isReady() && !(entity instanceof RiftEntity)).orElse(false);
         });
 
         Set<RiftTravelEntry> recursedEntities = this.getRecursedTravelers(entities);

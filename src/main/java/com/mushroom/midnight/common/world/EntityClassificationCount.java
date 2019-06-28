@@ -1,9 +1,7 @@
 package com.mushroom.midnight.common.world;
 
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityClassification;
-import net.minecraft.entity.EnumCreatureType;
-import net.minecraft.world.World;
+import net.minecraft.world.ServerWorld;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -23,20 +21,22 @@ public class EntityClassificationCount {
         return this.counts[ordinal];
     }
 
-    public static EntityClassificationCount count(World world) {
+    public static EntityClassificationCount count(ServerWorld world) {
         return count(world, Arrays.asList(EntityClassification.values()));
     }
 
-    public static EntityClassificationCount count(World world, Collection<EntityClassification> classifications) {
+    public static EntityClassificationCount count(ServerWorld world, Collection<EntityClassification> classifications) {
         int[] counts = new int[EntityClassification.values().length];
 
-        for (Entity entity : world.loadedEntityList) {
-            for (EntityClassification creatureType : classifications) {
-                if (entity.isCreatureType(creatureType, true)) {
-                    counts[creatureType.ordinal()] += 1;
+        world.getEntities().forEach(entity -> {
+            EntityClassification currentClassification = entity.getClassification(true);
+            for (EntityClassification entityClassification : classifications) {
+                if (currentClassification == entityClassification) {
+                    counts[entityClassification.ordinal()] += 1;
+                    break;
                 }
             }
-        }
+        });
 
         return new EntityClassificationCount(counts);
     }

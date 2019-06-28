@@ -9,12 +9,10 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.IGrowable;
 import net.minecraft.block.SoundType;
-import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.state.BlockState;
+import net.minecraft.block.material.MaterialColor;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraftforge.common.IPlantable;
@@ -23,7 +21,7 @@ import java.util.Random;
 
 public class NightstoneBlock extends Block implements IGrowable {
     public NightstoneBlock(Block.Properties properties) {
-        super(Material.ROCK, MapColor.BLUE_STAINED_HARDENED_CLAY);
+        super(Material.ROCK, MaterialColor.BLUE_TERRACOTTA);
         this.setHardness(1.5F);
         this.setResistance(10.0F);
         this.setSoundType(SoundType.STONE);
@@ -63,7 +61,7 @@ public class NightstoneBlock extends Block implements IGrowable {
                     if (isMidnight && blockpos1.getY() < MidnightChunkGenerator.MAX_CAVE_HEIGHT) {
                         CavernousBiomeStore.getBiome(worldIn, blockpos1.getX(), blockpos1.getZ()).plantFlower(worldIn, rand, blockpos1);
                     } else {
-                        worldIn.getBiome(blockpos1).plantFlower(worldIn, rand, blockpos1);
+                        worldIn.getBiome(blockpos1).plantFlower(worldIn, rand, blockpos1); // done in the block that is bonemealed
                     }
                 } else {
                     BlockState tallGrassState = MidnightBlocks.TALL_MIDNIGHT_GRASS.getDefaultState();

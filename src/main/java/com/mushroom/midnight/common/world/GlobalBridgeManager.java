@@ -1,17 +1,19 @@
 package com.mushroom.midnight.common.world;
 
 import com.mushroom.midnight.Midnight;
-import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.LogicalSide;
+import net.minecraftforge.fml.LogicalSidedProvider;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.network.FMLNetworkEvent;
+import net.minecraftforge.fml.common.gameevent.PlayerEvent;;
 
-@Mod.EventBusSubscriber(modid = Midnight.MODID)
+@Mod.EventBusSubscriber(value = Dist.CLIENT, modid = Midnight.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class GlobalBridgeManager {
     private static BridgeManager client;
 
     @SubscribeEvent
-    public static void onClientDisconnect(FMLNetworkEvent.ClientDisconnectionFromServerEvent event) {
+    public static void onClientDisconnect(PlayerEvent.PlayerLoggedOutEvent event) {
         client = null;
     }
 
@@ -20,7 +22,7 @@ public class GlobalBridgeManager {
     }
 
     public static BridgeManager getServer() {
-        return BridgeManagerServer.get(FMLCommonHandler.instance().getMinecraftServerInstance());
+        return BridgeManagerServer.get(LogicalSidedProvider.INSTANCE.get(LogicalSide.SERVER));
     }
 
     public static BridgeManager getClient() {

@@ -1,16 +1,15 @@
 package com.mushroom.midnight.common.registry;
 
 import net.minecraft.block.SoundType;
-import net.minecraft.init.SoundEvents;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import static com.mushroom.midnight.Midnight.MODID;
 
-@Mod.EventBusSubscriber(modid = MODID)
+@Mod.EventBusSubscriber(modid = MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class MidnightSounds {
     public static final SoundEvent AMBIENT = RegUtil.applyName(new SoundEvent(new ResourceLocation(MODID, "ambient")));
     public static final SoundEvent IDLE = RegUtil.applyName(new SoundEvent(new ResourceLocation(MODID, "idle")));

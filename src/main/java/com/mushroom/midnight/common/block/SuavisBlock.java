@@ -4,50 +4,44 @@ import com.mushroom.midnight.common.registry.MidnightCriterion;
 import com.mushroom.midnight.common.registry.MidnightItems;
 import com.mushroom.midnight.common.registry.MidnightItemGroups;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.IGrowable;
 import net.minecraft.block.SoundType;
-import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.properties.PropertyInteger;
-import net.minecraft.block.state.BlockFaceShape;
-import net.minecraft.block.state.BlockStateContainer;
-import net.minecraft.block.state.BlockState;
+import net.minecraft.block.material.MaterialColor;
 import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.enchantment.Enchantments;
+import net.minecraft.entity.AreaEffectCloudEntity;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityAreaEffectCloud;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.init.Blocks;
-import net.minecraft.init.Enchantments;
-import net.minecraft.init.Items;
-import net.minecraft.init.MobEffects;
-import net.minecraft.init.PotionTypes;
-import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.potion.PotionEffect;
-import net.minecraft.stats.StatList;
+import net.minecraft.item.Items;
+import net.minecraft.potion.EffectInstance;
+import net.minecraft.potion.Effects;
+import net.minecraft.state.IntegerProperty;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
-import net.minecraft.util.EnumHand;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.world.IBlockAccess;
+import net.minecraft.world.IBlockReader;
+import net.minecraft.world.IEnviromentBlockReader;
 import net.minecraft.world.World;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.ForgeHooks;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.OnlyIn;
 
 import javax.annotation.Nullable;
 import java.util.Random;
 
 @SuppressWarnings("deprecation")
 public class SuavisBlock extends Block implements IGrowable {
-    public static final PropertyInteger STAGE = PropertyInteger.create("stage", 0, 3);
+    public static final IntegerProperty STAGE = IntegerProperty.create("stage", 0, 3);
     protected static final AxisAlignedBB[] bounds = new AxisAlignedBB[] {
             new AxisAlignedBB(0d, 0d, 0d, 1d, 0.2125d, 1d),
             new AxisAlignedBB(0d, 0d, 0d, 1d, 0.4375d, 1d),
@@ -56,12 +50,12 @@ public class SuavisBlock extends Block implements IGrowable {
     };
 
     public SuavisBlock() {
-        super(Material.GOURD, MapColor.LIGHT_BLUE);
+        super(Material.GOURD, MaterialColor.LIGHT_BLUE);
         setLightLevel(0.8F);
         setCreativeTab(MidnightItemGroups.DECORATION);
         setHardness(1f);
         setSoundType(SoundType.SLIME);
-        setDefaultState(blockState.getBaseState().withProperty(STAGE, 3));
+        setDefaultState(getStateContainer().getBaseState().with(STAGE, 3));
         setTickRandomly(true);
     }
 
@@ -164,15 +158,15 @@ public class SuavisBlock extends Block implements IGrowable {
     }
 
     private static void createNauseaCloud(World world, BlockPos pos, int intensity) {
-        EntityAreaEffectCloud entity = new EntityAreaEffectCloud(world, pos.getX(), pos.getY(), pos.getZ());
+        AreaEffectCloudEntity entity = new AreaEffectCloudEntity(world, pos.getX(), pos.getY(), pos.getZ());
         entity.setRadius(1.5f + 0.5f * intensity);
         entity.setRadiusOnUse(-0.3f);
         entity.setWaitTime(10);
         entity.setRadiusPerTick(-entity.getRadius() / (float) entity.getDuration());
         entity.setPotion(PotionTypes.EMPTY);
         entity.setColor(0x355796);
-        entity.addEffect(new EffectInstance(MobEffects.NAUSEA, 20 * (intensity + 1) * 6, 0, false, true));
-        world.spawnEntity(entity);
+        entity.addEffect(new EffectInstance(Effects.NAUSEA, 20 * (intensity + 1) * 6, 0, false, true));
+        world.addEntity(entity);
     }
 
     @Override
@@ -195,14 +189,14 @@ public class SuavisBlock extends Block implements IGrowable {
 
     @Override
     @OnlyIn(Dist.CLIENT)
-    public int getPackedLightmapCoords(BlockState state, IBlockAccess source, BlockPos pos) {
+    public int getPackedLightmapCoords(BlockState state, IEnviromentBlockReader worldIn, BlockPos pos) {
         int skyLight = 15;
         int blockLight = 15;
         return skyLight << 20 | blockLight << 4;
     }
 
     @Override
-    public boolean canGrow(World world, BlockPos pos, BlockState state, boolean isClient) {
+    public boolean canGrow(IBlockReader worldIn, BlockPos pos, BlockState state, boolean isClient) {
         return state.get(STAGE) < 3;
     }
 

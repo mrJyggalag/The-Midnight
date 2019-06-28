@@ -1,14 +1,13 @@
 package com.mushroom.midnight.common.block;
 
-import net.minecraft.block.BlockSapling;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.IGrowable;
-import net.minecraft.block.state.BlockStateContainer;
-import net.minecraft.block.state.BlockState;
-import net.minecraft.init.Blocks;
+import net.minecraft.state.StateContainer;
+import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
-import net.minecraft.world.gen.feature.WorldGenerator;
-import net.minecraftforge.event.terraingen.TerrainGen;
 
 import java.util.Random;
 import java.util.function.Supplier;
@@ -18,7 +17,7 @@ public class MidnightDoubleFungiBlock extends MidnightDoublePlantBlock implement
 
     public MidnightDoubleFungiBlock(Supplier<WorldGenerator> generatorSupplier) {
         super(true);
-        this.setDefaultState(this.blockState.getBaseState().withProperty(BlockSapling.STAGE, 0));
+        this.setDefaultState(this.getStateContainer().getBaseState().with(BlockStateProperties.STAGE_0_1, 0));
         this.generatorSupplier = generatorSupplier;
     }
 
@@ -28,7 +27,7 @@ public class MidnightDoubleFungiBlock extends MidnightDoublePlantBlock implement
     }
 
     @Override
-    public boolean canGrow(World world, BlockPos pos, BlockState state, boolean isClient) {
+    public boolean canGrow(IBlockReader worldIn, BlockPos pos, BlockState state, boolean isClient) {
         return true;
     }
 
@@ -56,7 +55,7 @@ public class MidnightDoubleFungiBlock extends MidnightDoublePlantBlock implement
     }
 
     @Override
-    public BlockStateContainer createBlockState() {
-        return new BlockStateContainer(this, HALF, BlockSapling.STAGE);
+    protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
+        return builder.add(HALF).add(BlockStateProperties.STAGE_0_1);
     }
 }

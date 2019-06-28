@@ -1,13 +1,13 @@
 package com.mushroom.midnight.common.block;
 
+import net.minecraft.block.AirBlock;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockAir;
-import net.minecraft.block.state.BlockState;
+import net.minecraft.block.BlockState;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class MushroomInsideBlock extends BlockAir {
+public class MushroomInsideBlock extends AirBlock {
     public MushroomInsideBlock() {
         this.setLightLevel(1.0F);
     }
@@ -22,7 +22,7 @@ public class MushroomInsideBlock extends BlockAir {
 
     private int countHatNeighbors(World world, BlockPos pos) {
         int neighborCount = 0;
-        for (Direction facing : Direction.VALUES) {
+        for (Direction facing : Direction.values()) {
             if (world.getBlockState(pos.offset(facing)).getBlock() instanceof MidnightFungiHatBlock) {
                 neighborCount++;
             }

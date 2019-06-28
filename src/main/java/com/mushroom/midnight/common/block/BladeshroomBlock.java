@@ -6,29 +6,28 @@ import com.mushroom.midnight.common.util.MidnightDamageSource;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.IGrowable;
-import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.pathfinding.PathNodeType;
 import net.minecraft.state.EnumProperty;
+import net.minecraft.state.StateContainer;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.Direction;
-import net.minecraft.util.EnumHand;
 import net.minecraft.util.Hand;
 import net.minecraft.util.IStringSerializable;
-import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
+import net.minecraft.world.storage.loot.LootContext;
 import net.minecraftforge.items.ItemHandlerHelper;
 
 import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 import java.util.Random;
 
@@ -44,7 +43,7 @@ public class BladeshroomBlock extends MidnightPlantBlock implements IGrowable {
     public BladeshroomBlock() {
         super(false);
         this.setDefaultState(this.stateContainer.getBaseState().with(STAGE, Stage.SPORE));
-        this.setTickRandomly(true);
+        this.setTickRandomly(true); // builder
         this.setCreativeTab(null);
     }
 
@@ -74,17 +73,13 @@ public class BladeshroomBlock extends MidnightPlantBlock implements IGrowable {
     }
 
     @Override
-    public void getDrops(NonNullList<ItemStack> drops, IBlockAccess world, BlockPos pos, BlockState state, int fortune) {
+    public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder) {
+        ArrayList<ItemStack> drops = new ArrayList<>();
         if (state.get(STAGE) == Stage.CAPPED) {
             drops.add(new ItemStack(MidnightItems.BLADESHROOM_CAP));
         }
 
-        Random random = world instanceof World ? ((World) world).rand : RANDOM;
-        drops.add(new ItemStack(MidnightItems.BLADESHROOM_SPORES, this.quantityDropped(state, fortune, random)));
-    }
-
-    @Override
-    public int quantityDropped(BlockState state, int fortune, Random random) {
+        Random random = builder.getWorld().rand;
         int quantity = 0;
         if (state.get(STAGE) == Stage.CAPPED) {
             quantity += 1;
@@ -92,7 +87,8 @@ public class BladeshroomBlock extends MidnightPlantBlock implements IGrowable {
         if (random.nextInt(3) == 0) {
             quantity += 1;
         }
-        return quantity;
+        drops.add(new ItemStack(MidnightItems.BLADESHROOM_SPORES, quantity));
+        return drops;
     }
 
     @Override
@@ -128,12 +124,12 @@ public class BladeshroomBlock extends MidnightPlantBlock implements IGrowable {
     }
 
     @Override
-    protected BlockStateContainer createBlockState() {
-        return new BlockStateContainer(this, STAGE);
+    protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
+        builder.add(STAGE);
     }
 
     @Override
-    public boolean canGrow(World world, BlockPos pos, BlockState state, boolean isClient) {
+    public boolean canGrow(IBlockReader worldIn, BlockPos pos, BlockState state, boolean isClient) {
         return state.get(STAGE) != Stage.CAPPED;
     }
 
@@ -148,7 +144,7 @@ public class BladeshroomBlock extends MidnightPlantBlock implements IGrowable {
     }
 
     @Override
-    public ItemStack getPickBlock(BlockState state, RayTraceResult target, World world, BlockPos pos, PlayerEntity player) {
+    public ItemStack getPickBlock(BlockState state, RayTraceResult target, IBlockReader world, BlockPos pos, PlayerEntity player) {
         return new ItemStack(MidnightItems.BLADESHROOM_SPORES);
     }
 

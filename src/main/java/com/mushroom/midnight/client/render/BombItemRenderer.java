@@ -4,7 +4,6 @@ import com.mojang.blaze3d.platform.GlStateManager;
 import com.mushroom.midnight.client.model.BombModel;
 import com.mushroom.midnight.common.item.SporeBombItem;
 import com.mushroom.midnight.common.item.SporeBombItem.Type;
-import com.mushroom.midnight.common.registry.MidnightItems;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.client.renderer.tileentity.ItemStackTileEntityRenderer;
@@ -26,15 +25,16 @@ public class BombItemRenderer extends ItemStackTileEntityRenderer {
 
     @Override
     public void renderByItem(ItemStack stack) {
-        if (stack.getItem() == MidnightItems.SPORE_BOMB) {
+        if (stack.getItem() instanceof SporeBombItem) {
             ClientWorld world = Minecraft.getInstance().world;
-            float fuseTime = world != null ? SporeBombItem.getFuseTime(world, stack) / (float) SporeBombItem.MAX_FUSE_TIME : 1f;
+            SporeBombItem item = (SporeBombItem) stack.getItem();
+            float fuseTime = world != null ? item.getFuseTime(world, stack) / (float) item.maxFuseTime : 1f;
             // TODO fusing animation on client
             if (fuseTime < 1f) {
                 float ratio = fuseTime * 10f % 1;
                 GlStateManager.color4f(1f, 1f, 1f, ratio < 0.5f ? 0.5f : 1f);
             }
-            bindTexture(Type.fromStack(stack));
+            bindTexture(item.getBombType());
             GlStateManager.pushMatrix();
             GlStateManager.enableCull();
             GlStateManager.translatef(0.5f, 0.45f, 0.5f);

@@ -3,28 +3,32 @@ package com.mushroom.midnight.common.block;
 import com.mushroom.midnight.common.registry.MidnightBlocks;
 import com.mushroom.midnight.common.registry.MidnightItemGroups;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.SoundType;
-import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.state.BlockState;
+import net.minecraft.block.material.MaterialColor;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntitySpawnPlacementRegistry;
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IBlockAccess;
+import net.minecraft.world.IBlockReader;
+import net.minecraft.world.IEnviromentBlockReader;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.OnlyIn;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
+import javax.annotation.Nullable;
 import java.util.Random;
 
 public class BulbFungusHatBlock extends Block {
 
-    public BulbFungusHatBlock(MapColor mapColor) {
-        super(Material.WOOD, mapColor);
+    public BulbFungusHatBlock(MaterialColor matColor) { // materialColor is in the builder
+        super(Material.WOOD, matColor);
         setHardness(0.2f);
         setSoundType(SoundType.SLIME);
         setCreativeTab(MidnightItemGroups.BUILDING);
@@ -61,8 +65,8 @@ public class BulbFungusHatBlock extends Block {
     @Override
     @OnlyIn(Dist.CLIENT)
     @SuppressWarnings("deprecation")
-    public int getPackedLightmapCoords(BlockState state, IBlockAccess source, BlockPos pos) {
-        return source.getCombinedLight(pos, 13);
+    public int getPackedLightmapCoords(BlockState state, IEnviromentBlockReader worldIn, BlockPos pos) {
+        return worldIn.getCombinedLight(pos, 13);
     }
 
     @Override
@@ -72,7 +76,7 @@ public class BulbFungusHatBlock extends Block {
     }
 
     @Override
-    public boolean canCreatureSpawn(BlockState state, IBlockAccess world, BlockPos pos, MobEntity.SpawnPlacementType placementType) {
+    public boolean canCreatureSpawn(BlockState state, IBlockReader world, BlockPos pos, EntitySpawnPlacementRegistry.PlacementType type, @Nullable EntityType<?> entityType) {
         return false;
     }
 
@@ -89,20 +93,19 @@ public class BulbFungusHatBlock extends Block {
     public void onLanded(World world, Entity entity) {
         if (entity.isSneaking()) {
             super.onLanded(world, entity);
-        } else if (entity.motionY < 0d) {
-            entity.motionY = -entity.motionY;
+        } else if (entity.getMotion().y < 0d) {
+            entity.setMotion(entity.getMotion().x, -entity.getMotion().y, entity.getMotion().z);
             if (!(entity instanceof LivingEntity)) {
-                entity.motionY *= 0.8d;
+                entity.setMotion(entity.getMotion().mul(1d, 0.8d, 1d));
             }
         }
     }
 
     @Override
     public void onEntityWalk(World world, BlockPos pos, Entity entity) {
-        if (Math.abs(entity.motionY) < 0.1d && !entity.isSneaking()) {
-            double d0 = 0.4d + Math.abs(entity.motionY) * 0.2d;
-            entity.motionX *= d0;
-            entity.motionZ *= d0;
+        if (Math.abs(entity.getMotion().y) < 0.1d && !entity.isSneaking()) {
+            double d0 = 0.4d + Math.abs(entity.getMotion().y) * 0.2d;
+            entity.setMotion(entity.getMotion().mul(d0, 1d, d0));
         }
         super.onEntityWalk(world, pos, entity);
     }

@@ -3,22 +3,19 @@ package com.mushroom.midnight.common.block;
 import com.mushroom.midnight.common.registry.MidnightCriterion;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.IGrowable;
-import net.minecraft.block.properties.BooleanProperty;
-import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.entity.AreaEffectCloudEntity;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityAreaEffectCloud;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.init.PotionTypes;
+import net.minecraft.particles.ParticleTypes;
 import net.minecraft.potion.Effects;
 import net.minecraft.potion.Potions;
 import net.minecraft.state.BooleanProperty;
-import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeHooks;
 
@@ -29,7 +26,7 @@ public class VioleafBlock extends MidnightPlantBlock implements IGrowable {
 
     public VioleafBlock() {
         super(false);
-        setDefaultState(blockState.getBaseState().withProperty(IS_GROWN, true));
+        setDefaultState(getStateContainer().getBaseState().withProperty(IS_GROWN, true));
     }
 
     @Override
@@ -57,12 +54,12 @@ public class VioleafBlock extends MidnightPlantBlock implements IGrowable {
         entity.setRadiusPerTick(-entity.getRadius() / (float) entity.getDuration());
         entity.setColor(0xA041C3);
         entity.setPotion(Potions.EMPTY);
-        entity.setParticle(EnumParticleTypes.DRAGON_BREATH);
+        entity.setParticle(ParticleTypes.DRAGON_BREATH);
         world.addEntity(entity);
     }
 
     @Override
-    public boolean canGrow(World world, BlockPos pos, BlockState state, boolean isClient) {
+    public boolean canGrow(IBlockReader worldIn, BlockPos pos, BlockState state, boolean isClient) {
         return !state.get(IS_GROWN);
     }
 

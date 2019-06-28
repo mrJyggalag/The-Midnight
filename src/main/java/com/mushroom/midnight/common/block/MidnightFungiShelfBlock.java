@@ -5,20 +5,17 @@ import com.mushroom.midnight.common.util.DirectionalBounds;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.SoundType;
-import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.properties.PropertyDirection;
-import net.minecraft.block.state.BlockFaceShape;
-import net.minecraft.block.state.BlockStateContainer;
+import net.minecraft.block.material.MaterialColor;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.state.DirectionProperty;
+import net.minecraft.state.StateContainer;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Mirror;
 import net.minecraft.util.Rotation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
@@ -31,7 +28,7 @@ public class MidnightFungiShelfBlock extends Block {
     private static final AxisAlignedBB VERTICAL_BOUNDS = new AxisAlignedBB(0.0625, 0.0, 0.0625, 0.9375, 0.4, 0.9375);
 
     public MidnightFungiShelfBlock() {
-        super(Material.PLANTS, MapColor.PURPLE_STAINED_HARDENED_CLAY);
+        super(Material.PLANTS, MaterialColor.PURPLE_TERRACOTTA);
         this.setHardness(0.0F);
         this.setSoundType(SoundType.PLANT);
         this.setCreativeTab(MidnightItemGroups.DECORATION);
@@ -54,7 +51,7 @@ public class MidnightFungiShelfBlock extends Block {
 
     @Override
     public boolean canPlaceBlockAt(World world, BlockPos pos) {
-        return Arrays.stream(Direction.VALUES).anyMatch(f -> canAttachTo(world, pos, f));
+        return Arrays.stream(Direction.values()).anyMatch(f -> canAttachTo(world, pos, f));
     }
 
     private static boolean canAttachTo(World world, BlockPos pos, Direction facing) {
@@ -109,7 +106,7 @@ public class MidnightFungiShelfBlock extends Block {
         if (facing == Direction.DOWN) {
             return this.getDefaultState();
         }
-        return this.getDefaultState().withProperty(FACING, facing);
+        return this.getDefaultState().with(FACING, facing);
     }
 
     @Override
@@ -128,8 +125,8 @@ public class MidnightFungiShelfBlock extends Block {
     }
 
     @Override
-    protected BlockStateContainer createBlockState() {
-        return new BlockStateContainer(this, FACING);
+    protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
+        builder.add(FACING);
     }
 
     @Override

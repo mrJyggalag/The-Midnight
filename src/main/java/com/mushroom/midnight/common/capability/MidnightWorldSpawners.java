@@ -22,8 +22,8 @@ public interface MidnightWorldSpawners extends ICapabilityProvider {
 
     void spawnAroundPlayers();
 
-    @Nullable
     @Override
+    @Nonnull
     default <T> LazyOptional<T> getCapability(@Nonnull Capability<T> capability, @Nullable Direction facing) {
         return Midnight.WORLD_SPAWNERS_CAP.orEmpty(capability, LazyOptional.of(() -> this));
     }

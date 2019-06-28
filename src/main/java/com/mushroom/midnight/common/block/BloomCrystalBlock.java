@@ -1,6 +1,7 @@
 package com.mushroom.midnight.common.block;
 
 import com.mushroom.midnight.common.entity.creature.CrystalBugEntity;
+import com.mushroom.midnight.common.registry.MidnightEntities;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
@@ -34,9 +35,10 @@ public class BloomCrystalBlock extends CrystalBlock {
         double z = pos.getZ() + 0.5;
         float yaw = world.rand.nextFloat() * 360.0F;
 
-        Entity entity = new CrystalBugEntity(world);
-        entity.setPositionAndRotation(x, y, z, yaw, 0f);
-
-        world.addEntity(entity);
+        Entity entity = MidnightEntities.crystal_bug.create(world);
+        if (entity != null) {
+            entity.setPositionAndRotation(x, y, z, yaw, 0f);
+            world.addEntity(entity);
+        }
     }
 }

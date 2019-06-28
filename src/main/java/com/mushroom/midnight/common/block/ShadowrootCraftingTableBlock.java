@@ -4,18 +4,16 @@ import com.mushroom.midnight.common.container.ContainerShadowrootCT;
 import com.mushroom.midnight.common.registry.MidnightBlocks;
 import com.mushroom.midnight.common.registry.MidnightItemGroups;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.state.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.Container;
 import net.minecraft.util.Direction;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextComponentTranslation;
-import net.minecraft.world.IInteractionObject;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 
 public class ShadowrootCraftingTableBlock extends Block {
@@ -28,7 +26,7 @@ public class ShadowrootCraftingTableBlock extends Block {
     }
 
     @Override
-    public boolean onBlockActivated(World world, BlockPos pos, BlockState state, PlayerEntity player, EnumHand hand, Direction facing, float hitX, float hitY, float hitZ) {
+    public boolean onBlockActivated(World world, BlockPos pos, BlockState state, PlayerEntity player, Hand hand, Direction facing, float hitX, float hitY, float hitZ) {
         if (world.isRemote) {
             return true;
         } else {
@@ -59,7 +57,7 @@ public class ShadowrootCraftingTableBlock extends Block {
 
         @Override
         public ITextComponent getDisplayName() {
-            return new TextComponentTranslation(MidnightBlocks.SHADOWROOT_CRAFTING_TABLE.getTranslationKey() + ".name", new Object[0]);
+            return new TranslationTextComponent(MidnightBlocks.SHADOWROOT_CRAFTING_TABLE.getTranslationKey() + ".name", new Object[0]);
         }
 
         @Override

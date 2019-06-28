@@ -10,8 +10,8 @@ import com.mushroom.midnight.common.util.MidnightDamageSource;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.SoundType;
-import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.material.MaterialColor;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.player.PlayerEntity;
@@ -24,7 +24,6 @@ import net.minecraft.util.math.RayTraceContext;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.network.PacketDistributor;
 
 import java.util.Random;
@@ -38,7 +37,7 @@ public class RockshroomBlock extends Block {
     private static final DamageSource ROCKSHROOM_SPORE = new MidnightDamageSource("rockshroom_spore");
 
     public RockshroomBlock() {
-        super(Material.ROCK, MapColor.PINK_STAINED_HARDENED_CLAY);
+        super(Material.ROCK, MaterialColor.PINK_TERRACOTTA);
         this.setHardness(1.5F);
         this.setResistance(10.0F);
         this.setSoundType(SoundType.STONE);

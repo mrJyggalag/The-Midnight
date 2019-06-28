@@ -1,21 +1,17 @@
 package com.mushroom.midnight.common.block;
 
 import com.mushroom.midnight.common.registry.MidnightItems;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.IGrowable;
-import net.minecraft.block.state.BlockState;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IBlockAccess;
+import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
-import net.minecraft.world.gen.feature.WorldGenerator;
-import net.minecraftforge.event.terraingen.TerrainGen;
 
 import java.util.List;
 import java.util.Random;
-import java.util.function.Supplier;
 
 public class BulbFungusBlock extends MidnightPlantBlock implements IGrowable {
     private final Supplier<WorldGenerator> genSupplier;
@@ -39,7 +35,7 @@ public class BulbFungusBlock extends MidnightPlantBlock implements IGrowable {
     @SuppressWarnings("deprecation")
     protected boolean canSilkHarvest() {
         return true;
-    }
+    } // in loot table
 
     @Override
     public Item getItemDropped(BlockState state, Random rand, int fortune) {
@@ -59,7 +55,7 @@ public class BulbFungusBlock extends MidnightPlantBlock implements IGrowable {
     }
 
     @Override
-    public boolean canGrow(World world, BlockPos pos, BlockState state, boolean isClient) {
+    public boolean canGrow(IBlockReader worldIn, BlockPos pos, BlockState state, boolean isClient) {
         return true;
     }
 

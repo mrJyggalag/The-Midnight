@@ -2,7 +2,7 @@ package com.mushroom.midnight.common.world.feature;
 
 import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.common.registry.MidnightBlocks;
-import net.minecraft.block.state.BlockState;
+import net.minecraft.block.BlockState;
 import net.minecraft.util.ResourceLocation;
 
 public class DarkWillowTreeFeature extends TemplateTreeFeature {

@@ -6,8 +6,6 @@ import com.mushroom.midnight.common.network.BridgeRemovalMessage;
 import com.mushroom.midnight.common.network.BridgeStateMessage;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.world.ServerWorld;
-import net.minecraft.world.ServerWorld;
-import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.network.PacketDistributor;
 
 import java.util.ArrayList;
@@ -34,13 +32,13 @@ public class BridgeTracker {
 
         for (ServerPlayerEntity player : trackingPlayers) {
             if (!this.currentTrackingPlayers.contains(player)) {
-                Midnight.NETWORK.sendTo(new BridgeCreateMessage(this.bridge), player);
+                Midnight.CHANNEL.send(PacketDistributor.PLAYER.with(() -> player), new BridgeCreateMessage(this.bridge));
             }
         }
 
         for (ServerPlayerEntity player : this.currentTrackingPlayers) {
             if (!trackingPlayers.contains(player)) {
-                Midnight.NETWORK.sendTo(new BridgeRemovalMessage(this.bridge.getId()), player);
+                Midnight.CHANNEL.send(PacketDistributor.PLAYER.with(() -> player), new BridgeRemovalMessage(this.bridge.getId()));
             }
         }
 

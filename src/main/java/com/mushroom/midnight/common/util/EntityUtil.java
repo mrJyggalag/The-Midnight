@@ -1,12 +1,13 @@
 package com.mushroom.midnight.common.util;
 
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.monster.EntityCaveSpider;
-import net.minecraft.entity.monster.EntityMob;
-import net.minecraft.entity.monster.EntitySpider;
-import net.minecraft.entity.passive.EntityAnimal;
+import net.minecraft.entity.monster.CaveSpiderEntity;
+import net.minecraft.entity.monster.MonsterEntity;
+import net.minecraft.entity.monster.SpiderEntity;
+import net.minecraft.entity.passive.AnimalEntity;
+import net.minecraft.item.ArmorItem;
+import net.minecraft.item.IArmorMaterial;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 
 import java.util.HashMap;
@@ -16,8 +17,8 @@ public class EntityUtil {
     private static final Map<Class<? extends LivingEntity>, Stance> STANCES = new HashMap<>();
 
     public static void register() {
-        registerStance(EntitySpider.class, Stance.QUADRUPEDAL);
-        registerStance(EntityCaveSpider.class, Stance.QUADRUPEDAL);
+        registerStance(SpiderEntity.class, Stance.QUADRUPEDAL);
+        registerStance(CaveSpiderEntity.class, Stance.QUADRUPEDAL);
     }
 
     public static void registerStance(Class<? extends LivingEntity> entity, Stance stance) {
@@ -33,23 +34,23 @@ public class EntityUtil {
     }
 
     private static Stance guessStance(LivingEntity entity) {
-        if (entity instanceof EntityAnimal) {
+        if (entity instanceof AnimalEntity) {
             return Stance.QUADRUPEDAL;
-        } else if (entity instanceof EntityMob) {
+        } else if (entity instanceof MonsterEntity) {
             return Stance.BIPEDAL;
         }
-        float height = Math.max(entity.height, entity.getEyeHeight());
-        return height > entity.width ? Stance.BIPEDAL : Stance.QUADRUPEDAL;
+        float height = Math.max(entity.getHeight(), entity.getEyeHeight());
+        return height > entity.getWidth() ? Stance.BIPEDAL : Stance.QUADRUPEDAL;
     }
 
-    public static boolean isCoveredBy(LivingEntity entity, ItemArmor.ArmorMaterial material) {
+    public static boolean isCoveredBy(LivingEntity entity, IArmorMaterial material) {
         for (ItemStack armorStack : entity.getArmorInventoryList()) {
             if (armorStack.isEmpty()) {
                 return false;
             }
             Item armorItem = armorStack.getItem();
-            if (armorItem instanceof ItemArmor) {
-                if (material != ((ItemArmor) armorItem).getArmorMaterial()) {
+            if (armorItem instanceof ArmorItem) {
+                if (material != ((ArmorItem) armorItem).getArmorMaterial()) {
                     return false;
                 }
             }

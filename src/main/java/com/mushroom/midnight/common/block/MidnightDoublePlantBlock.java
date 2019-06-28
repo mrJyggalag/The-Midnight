@@ -1,27 +1,28 @@
 package com.mushroom.midnight.common.block;
 
-import net.minecraft.block.BlockDoublePlant;
-import net.minecraft.block.properties.PropertyEnum;
-import net.minecraft.block.state.BlockStateContainer;
-import net.minecraft.block.state.BlockState;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
+import net.minecraft.state.EnumProperty;
+import net.minecraft.state.StateContainer;
+import net.minecraft.state.properties.BlockStateProperties;
+import net.minecraft.state.properties.DoubleBlockHalf;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import java.util.Random;
 
 public class MidnightDoublePlantBlock extends MidnightPlantBlock {
-    protected static final PropertyEnum<BlockDoublePlant.EnumBlockHalf> HALF = BlockDoublePlant.HALF;
+    protected static final EnumProperty<DoubleBlockHalf> HALF = BlockStateProperties.DOUBLE_BLOCK_HALF;
 
     public MidnightDoublePlantBlock(PlantBehaviorType behaviorType, boolean glowing) {
         super(behaviorType, glowing);
-        setDefaultState(this.blockState.getBaseState().withProperty(HALF, BlockDoublePlant.EnumBlockHalf.LOWER));
+        setDefaultState(this.getStateContainer().getBaseState().with(HALF, DoubleBlockHalf.LOWER));
     }
 
     public MidnightDoublePlantBlock(boolean glowing) {
@@ -79,11 +80,11 @@ public class MidnightDoublePlantBlock extends MidnightPlantBlock {
     }
 
     private boolean isUpper(BlockState state) {
-        return state.get(HALF) == BlockDoublePlant.EnumBlockHalf.UPPER;
+        return state.get(HALF) == DoubleBlockHalf.UPPER;
     }
 
     private boolean isLower(BlockState state) {
-        return state.get(HALF) == BlockDoublePlant.EnumBlockHalf.LOWER;
+        return state.get(HALF) == DoubleBlockHalf.LOWER;
     }
 
     private void breakHalf(World world, BlockPos pos, int flags) {
@@ -94,14 +95,14 @@ public class MidnightDoublePlantBlock extends MidnightPlantBlock {
 
     @Override
     public void onBlockPlacedBy(World world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
-        world.setBlockState(pos.up(), this.getDefaultState().withProperty(HALF, BlockDoublePlant.EnumBlockHalf.UPPER), 2);
+        world.setBlockState(pos.up(), this.getDefaultState().with(HALF, DoubleBlockHalf.UPPER), 2);
     }
 
     @Override
     public void onBlockHarvested(World world, BlockPos pos, BlockState state, PlayerEntity player) {
         BlockPos otherPos = this.getOtherPos(state, pos);
         if (this.isUpper(state)) {
-            if (player.capabilities.isCreativeMode) {
+            if (player.abilities.isCreativeMode) {
                 this.breakHalf(world, otherPos, 3);
             } else if (world.isRemote) {
                 this.breakHalf(world, otherPos, 3);
@@ -123,18 +124,18 @@ public class MidnightDoublePlantBlock extends MidnightPlantBlock {
     @Override
     @SuppressWarnings("deprecation")
     public BlockState getStateFromMeta(int meta) {
-        BlockDoublePlant.EnumBlockHalf half = meta == 1 ? BlockDoublePlant.EnumBlockHalf.UPPER : BlockDoublePlant.EnumBlockHalf.LOWER;
-        return this.getDefaultState().withProperty(HALF, half);
+        DoubleBlockHalf half = meta == 1 ? DoubleBlockHalf.UPPER : DoubleBlockHalf.LOWER;
+        return this.getDefaultState().with(HALF, half);
     }
 
     @Override
-    public BlockStateContainer createBlockState() {
-        return new BlockStateContainer(this, HALF);
+    public void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
+        builder.add(HALF);
     }
 
     @Override
     public Item getItemDropped(BlockState state, Random rand, int fortune) {
-        if (state.get(HALF) == BlockDoublePlant.EnumBlockHalf.UPPER) {
+        if (state.get(HALF) == DoubleBlockHalf.UPPER) {
             return Items.AIR;
         }
         return super.getItemDropped(state, rand, fortune);

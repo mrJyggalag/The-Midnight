@@ -1,10 +1,12 @@
 package com.mushroom.midnight.common.block;
 
 import com.mushroom.midnight.common.registry.MidnightBlocks;
-import net.minecraft.block.BlockDoublePlant;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.IGrowable;
-import net.minecraft.block.state.BlockState;
+import net.minecraft.state.properties.BlockStateProperties;
+import net.minecraft.state.properties.DoubleBlockHalf;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 
 import java.util.Random;
@@ -15,7 +17,7 @@ public class LumenBudBlock extends MidnightPlantBlock implements IGrowable {
     }
 
     @Override
-    public boolean canGrow(World worldIn, BlockPos pos, BlockState state, boolean isClient) {
+    public boolean canGrow(IBlockReader worldIn, BlockPos pos, BlockState state, boolean isClient) {
         return true;
     }
 
@@ -27,8 +29,8 @@ public class LumenBudBlock extends MidnightPlantBlock implements IGrowable {
     @Override
     public void grow(World world, Random rand, BlockPos pos, BlockState state) {
         if (world.isAirBlock(pos.up())) {
-            world.setBlockState(pos, MidnightBlocks.DOUBLE_LUMEN_BUD.getDefaultState().withProperty(BlockDoublePlant.HALF, BlockDoublePlant.EnumBlockHalf.LOWER), 2);
-            world.setBlockState(pos.up(), MidnightBlocks.DOUBLE_LUMEN_BUD.getDefaultState().withProperty(BlockDoublePlant.HALF, BlockDoublePlant.EnumBlockHalf.UPPER), 2);
+            world.setBlockState(pos, MidnightBlocks.DOUBLE_LUMEN_BUD.getDefaultState().with(BlockStateProperties.DOUBLE_BLOCK_HALF, DoubleBlockHalf.LOWER), 2);
+            world.setBlockState(pos.up(), MidnightBlocks.DOUBLE_LUMEN_BUD.getDefaultState().with(BlockStateProperties.DOUBLE_BLOCK_HALF, DoubleBlockHalf.UPPER), 2);
         }
     }
 }

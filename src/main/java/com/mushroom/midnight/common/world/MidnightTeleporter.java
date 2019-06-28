@@ -1,7 +1,6 @@
 package com.mushroom.midnight.common.world;
 
 import com.mushroom.midnight.Midnight;
-import com.mushroom.midnight.common.capability.RiftTravelCooldown;
 import com.mushroom.midnight.common.entity.RiftEntity;
 import com.mushroom.midnight.common.entity.RiftBridge;
 import com.mushroom.midnight.common.registry.MidnightArmorMaterials;
@@ -15,7 +14,6 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.Heightmap;
-import net.minecraftforge.common.util.ITeleporter;
 
 public class MidnightTeleporter implements ITeleporter {
     public static final int COOLDOWN = 40;
@@ -38,7 +36,7 @@ public class MidnightTeleporter implements ITeleporter {
             bridge.close();
         }
 
-        RiftEntity endpointRift = bridge.computeEndpoint(world.provider.getDimensionType());
+        RiftEntity endpointRift = bridge.computeEndpoint(world.dimension.getType());
         if (endpointRift == null) {
             Midnight.LOGGER.warn("Unable to teleport entity through rift! Endpoint not present from portal {}", this.originRift);
             return;

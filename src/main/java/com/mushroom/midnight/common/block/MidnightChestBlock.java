@@ -3,24 +3,22 @@ package com.mushroom.midnight.common.block;
 import com.mushroom.midnight.common.registry.MidnightItemGroups;
 import com.mushroom.midnight.common.tile.base.TileEntityMidnightChest;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockChest;
+import net.minecraft.block.BlockRenderType;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.ChestBlock;
 import net.minecraft.block.SoundType;
-import net.minecraft.block.state.BlockState;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.inventory.InventoryLargeChest;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.world.IBlockAccess;
-import net.minecraft.world.ILockableContainer;
+import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
 
-public class MidnightChestBlock extends BlockChest {
+public class MidnightChestBlock extends ChestBlock {
     public enum ChestModel {
         SHADOWROOT("shadowroot");
         private String name;
@@ -52,7 +50,7 @@ public class MidnightChestBlock extends BlockChest {
 
     @Override
     @SuppressWarnings("deprecation")
-    public int getWeakPower(BlockState blockState, IBlockAccess blockAccess, BlockPos pos, Direction side) {
+    public int getWeakPower(BlockState blockState, IBlockReader blockAccess, BlockPos pos, Direction side) {
         if (!blockState.canProvidePower()) {
             return 0;
         } else {
@@ -157,7 +155,7 @@ public class MidnightChestBlock extends BlockChest {
 
     @Override
     @SuppressWarnings("deprecation")
-    public EnumBlockRenderType getRenderType(BlockState state) {
-        return EnumBlockRenderType.ENTITYBLOCK_ANIMATED;
+    public BlockRenderType getRenderType(BlockState state) {
+        return BlockRenderType.ENTITYBLOCK_ANIMATED;
     }
 }

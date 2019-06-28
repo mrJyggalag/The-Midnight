@@ -5,16 +5,19 @@ import com.mushroom.midnight.common.registry.MidnightItemGroups;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.SoundType;
-import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.state.BlockStateContainer;
+import net.minecraft.block.material.MaterialColor;
+import net.minecraft.entity.EntitySpawnPlacementRegistry;
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.MobEntity;
 import net.minecraft.item.Item;
 import net.minecraft.state.BooleanProperty;
+import net.minecraft.state.StateContainer;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IBlockAccess;
+import net.minecraft.world.IBlockReader;
 
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -31,14 +34,14 @@ public class MidnightFungiHatBlock extends Block {
     private final Supplier<Block> saplingSupplier;
     private final Supplier<Item> powderSupplier;
 
-    public MidnightFungiHatBlock(Supplier<Block> saplingSupplier, Supplier<Item> powderSupplier, MapColor mapColor) {
+    public MidnightFungiHatBlock(Supplier<Block> saplingSupplier, Supplier<Item> powderSupplier, MaterialColor mapColor) {
         super(Material.WOOD, mapColor);
         this.saplingSupplier = saplingSupplier;
         this.powderSupplier = powderSupplier;
         this.setHardness(0.5F);
         this.setSoundType(SoundType.WOOD);
         this.setCreativeTab(MidnightItemGroups.BUILDING);
-        this.setDefaultState(this.blockState.getBaseState()
+        this.setDefaultState(this.getStateContainer().getBaseState()
                 .withProperty(UP, false)
                 .withProperty(DOWN, false)
                 .withProperty(NORTH, false)
@@ -85,8 +88,8 @@ public class MidnightFungiHatBlock extends Block {
     }
 
     @Override
-    protected BlockStateContainer createBlockState() {
-        return new BlockStateContainer(this, UP, DOWN, NORTH, EAST, SOUTH, WEST);
+    protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
+        builder.add(UP, DOWN, NORTH, EAST, SOUTH, WEST);
     }
 
     public static List<Direction> getOuterSides(BlockState state) {
@@ -119,7 +122,7 @@ public class MidnightFungiHatBlock extends Block {
     }
 
     @Override
-    public boolean canCreatureSpawn(BlockState state, IBlockAccess world, BlockPos pos, MobEntity.SpawnPlacementType placementType) {
+    public boolean canCreatureSpawn(BlockState state, IBlockReader world, BlockPos pos, EntitySpawnPlacementRegistry.PlacementType type, @Nullable EntityType<?> entityType) {
         return false;
     }
 }

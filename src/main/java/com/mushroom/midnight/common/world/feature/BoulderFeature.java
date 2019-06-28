@@ -1,6 +1,6 @@
 package com.mushroom.midnight.common.world.feature;
 
-import net.minecraft.block.state.BlockState;
+import net.minecraft.block.BlockState;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
@@ -37,12 +37,13 @@ public abstract class BoulderFeature extends MidnightAbstractFeature {
 
         BlockPos minPos = origin.add(-radiusCeil, -radiusCeil, -radiusCeil);
         BlockPos maxPos = origin.add(radiusCeil, radiusCeil, radiusCeil);
-        double dist;
-        for (BlockPos pos : BlockPos.getAllInBox(minPos, maxPos)) {
-            if ((dist = pos.distanceSq(origin)) <= radiusSquare) {
+
+        BlockPos.getAllInBox(minPos, maxPos).forEach(pos -> {
+            double dist = pos.distanceSq(origin);
+            if (dist <= radiusSquare) {
                 setBlockAndNotifyAdequately(world, pos, getStateForPlacement(world, origin, pos, dist, radiusSquare, random));
             }
-        }
+        });
     }
 
     protected abstract BlockState getStateForPlacement(World world, BlockPos origin, BlockPos pos, double dist, float radiusSquare, Random random);

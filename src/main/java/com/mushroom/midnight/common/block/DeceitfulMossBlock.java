@@ -3,39 +3,38 @@ package com.mushroom.midnight.common.block;
 import com.mushroom.midnight.common.registry.MidnightItemGroups;
 import com.mushroom.midnight.common.util.DirectionalBounds;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockDirectional;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.SoundType;
-import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.properties.PropertyEnum;
-import net.minecraft.block.state.BlockFaceShape;
-import net.minecraft.block.state.BlockStateContainer;
-import net.minecraft.block.state.BlockState;
+import net.minecraft.block.material.MaterialColor;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.state.DirectionProperty;
+import net.minecraft.state.StateContainer;
+import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Mirror;
 import net.minecraft.util.Rotation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.OnlyIn;
+import net.minecraft.world.chunk.BlockStateContainer;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
 import javax.annotation.Nullable;
 import java.util.Arrays;
 
 public class DeceitfulMossBlock extends Block {
-    public static final PropertyEnum<Direction> FACING = BlockDirectional.FACING;
+    public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
     private static final DirectionalBounds BOUNDS = new DirectionalBounds(0.0, 0.0, 0.875, 1.0, 1.0, 1.0);
 
     public DeceitfulMossBlock() {
-        super(Material.PLANTS, MapColor.PURPLE_STAINED_HARDENED_CLAY);
+        super(Material.PLANTS, MaterialColor.PURPLE_TERRACOTTA);
         this.setHardness(0.2F);
         this.setSoundType(SoundType.PLANT);
         this.setCreativeTab(MidnightItemGroups.DECORATION);
-        this.setDefaultState(this.blockState.getBaseState().withProperty(FACING, Direction.DOWN));
+        this.setDefaultState(this.getStateContainer().getBaseState().with(FACING, Direction.DOWN));
     }
 
     @Override
@@ -66,7 +65,7 @@ public class DeceitfulMossBlock extends Block {
 
     @Override
     public boolean canPlaceBlockAt(World world, BlockPos pos) {
-        return Arrays.stream(Direction.VALUES).anyMatch(f -> canAttachTo(world, pos, f));
+        return Arrays.stream(Direction.values()).anyMatch(f -> canAttachTo(world, pos, f));
     }
 
     private static boolean canAttachTo(World world, BlockPos pos, Direction facing) {
@@ -80,7 +79,7 @@ public class DeceitfulMossBlock extends Block {
 
     @Override
     public BlockState getStateForPlacement(World world, BlockPos pos, Direction facing, float hitX, float hitY, float hitZ, int meta, LivingEntity placer) {
-        return this.getDefaultState().withProperty(FACING, canAttachTo(world, pos, facing) ? facing : Direction.DOWN);
+        return this.getDefaultState().with(FACING, canAttachTo(world, pos, facing) ? facing : Direction.DOWN);
     }
 
     @Override
@@ -102,7 +101,7 @@ public class DeceitfulMossBlock extends Block {
 
     @Override
     public BlockState getStateFromMeta(int meta) {
-        return this.getDefaultState().withProperty(FACING, Direction.byIndex(meta));
+        return this.getDefaultState().with(FACING, Direction.byIndex(meta));
     }
 
     @Override
@@ -121,8 +120,8 @@ public class DeceitfulMossBlock extends Block {
     }
 
     @Override
-    protected BlockStateContainer createBlockState() {
-        return new BlockStateContainer(this, FACING);
+    protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
+        builder.add(FACING);
     }
 
     @Override

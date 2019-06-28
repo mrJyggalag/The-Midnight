@@ -3,6 +3,7 @@ package com.mushroom.midnight.common.world;
 import com.mushroom.midnight.common.biome.config.SurfaceConfig;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.material.Material;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.chunk.ChunkPrimer;
 
 public class SurfaceCoverGenerator {
@@ -33,7 +34,8 @@ public class SurfaceCoverGenerator {
         int surfaceLayer = 0;
 
         for (int localY = this.maxY; localY >= 0; localY--) {
-            BlockState state = primer.getBlockState(localX, localY, localZ);
+            BlockPos pos = new BlockPos(localX, localY, localZ);
+            BlockState state = primer.getBlockState(pos);
             Material material = state.getMaterial();
             if (material == Material.WATER) {
                 wet = true;
@@ -59,9 +61,9 @@ public class SurfaceCoverGenerator {
 
             if (surfaceLayer >= this.minSurfaceLayer && surfaceLayer <= this.maxSurfaceLayer) {
                 if (currentDepth == 0) {
-                    primer.setBlockState(localX, localY, localZ, wet ? config.getWetState() : topBlock);
+                    primer.setBlockState(pos, wet ? config.getWetState() : topBlock, false);
                 } else {
-                    primer.setBlockState(localX, localY, localZ, wet ? config.getWetState() : fillerBlock);
+                    primer.setBlockState(pos, wet ? config.getWetState() : fillerBlock, false);
                 }
             }
         }

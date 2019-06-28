@@ -6,6 +6,7 @@ import com.mushroom.midnight.common.entity.CloudEntity;
 import com.mushroom.midnight.common.entity.projectile.SporeBombEntity;
 import com.mushroom.midnight.common.network.BombExplosionMessage;
 import com.mushroom.midnight.common.registry.MidnightEffects;
+import com.mushroom.midnight.common.registry.MidnightTags;
 import net.minecraft.block.DispenserBlock;
 import net.minecraft.dispenser.IPosition;
 import net.minecraft.dispenser.ProjectileDispenseBehavior;
@@ -30,7 +31,7 @@ import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.fml.network.PacketDistributor;
 
 public class SporeBombItem extends Item {
-    public static int MAX_FUSE_TIME = 200;
+    public int maxFuseTime = 200;
 
     public enum Type {
         NIGHTSHROOM(0x6F3FD6),
@@ -59,6 +60,10 @@ public class SporeBombItem extends Item {
         super(properties);
         this.bombType = bombType;
         DispenserBlock.registerDispenseBehavior(this, new DispenserBehavior());
+    }
+
+    public Type getBombType() {
+        return this.bombType;
     }
 
     @Override
@@ -96,12 +101,12 @@ public class SporeBombItem extends Item {
 
     private boolean updateBomb(World world, ItemStack stack, double x, double y, double z) {
         if (!world.isRemote) {
-            long fuseTime = this.getFuseTime(world, stack);
+            long fuseTime = getFuseTime(world, stack);
             if (fuseTime <= 0) {
                 this.explode(world, x, y, z);
                 stack.shrink(1);
                 return true;
-            } else if (fuseTime < MAX_FUSE_TIME) {
+            } else if (fuseTime < maxFuseTime) {
                 world.playSound(null, x, y, z, SoundEvents.BLOCK_LAVA_EXTINGUISH, SoundCategory.HOSTILE, world.rand.nextFloat(), world.rand.nextFloat());
             }
         }
@@ -116,18 +121,18 @@ public class SporeBombItem extends Item {
     }
 
     public long getFuseTime(World world, ItemStack stack) {
-        if (stack.getItem() != this || !stack.hasTag()) return MAX_FUSE_TIME;
+        if (!stack.getItem().isIn(MidnightTags.Items.spore_bombs) || !stack.hasTag()) return maxFuseTime;
 
         CompoundNBT tag = stack.getOrCreateTag();
         if (tag.contains("fuse_time", Constants.NBT.TAG_LONG)) {
             return Math.max(0, tag.getLong("fuse_time") - world.getGameTime());
         }
 
-        return MAX_FUSE_TIME;
+        return maxFuseTime;
     }
 
     public boolean checkExplode(World world, ItemStack stack) {
-        return this.getFuseTime(world, stack) <= 0;
+        return getFuseTime(world, stack) <= 0;
     }
 
     public void explode(World world, double x, double y, double z) {
@@ -200,7 +205,7 @@ public class SporeBombItem extends Item {
         CompoundNBT compound = stack.getTag();
         ItemStack newStack = stack.copy();
         if (compound == null || !compound.contains("fuse_time", Constants.NBT.TAG_LONG)) {
-            this.setFuseTime(bomb.world, newStack, MAX_FUSE_TIME);
+            this.setFuseTime(bomb.world, newStack, maxFuseTime);
         }
         bomb.setBombStack(newStack);
         return bomb;

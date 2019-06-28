@@ -24,7 +24,7 @@ import net.minecraftforge.registries.ObjectHolder;
 
 import static com.mushroom.midnight.Midnight.*;
 
-@Mod.EventBusSubscriber(modid = MODID)
+@Mod.EventBusSubscriber(modid = MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 @ObjectHolder(MODID)
 public class MidnightEntities {
     public static final EntityType<RiftEntity> rift = EntityType.Builder.<RiftEntity>create(RiftEntity::new, EntityClassification.MISC)

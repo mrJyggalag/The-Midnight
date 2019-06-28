@@ -3,6 +3,8 @@ package com.mushroom.midnight.common.block;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.IGrowable;
+import net.minecraft.state.properties.BlockStateProperties;
+import net.minecraft.state.properties.DoubleBlockHalf;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
@@ -41,8 +43,8 @@ public class MidnightFungiBlock extends MidnightPlantBlock implements IGrowable 
     @Override
     public void grow(World world, Random rand, BlockPos pos, BlockState state) {
         if (world.isAirBlock(pos.up())) {
-            world.setBlockState(pos, parentSupplier.get().getDefaultState().withProperty(BlockDoublePlant.HALF, BlockDoublePlant.EnumBlockHalf.LOWER), 2);
-            world.setBlockState(pos.up(), parentSupplier.get().getDefaultState().withProperty(BlockDoublePlant.HALF, BlockDoublePlant.EnumBlockHalf.UPPER), 2);
+            world.setBlockState(pos, parentSupplier.get().getDefaultState().with(BlockStateProperties.DOUBLE_BLOCK_HALF, DoubleBlockHalf.LOWER), 2);
+            world.setBlockState(pos.up(), parentSupplier.get().getDefaultState().with(BlockStateProperties.DOUBLE_BLOCK_HALF, DoubleBlockHalf.UPPER), 2);
         }
     }
 }

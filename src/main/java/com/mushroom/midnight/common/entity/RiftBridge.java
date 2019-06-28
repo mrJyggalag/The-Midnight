@@ -3,16 +3,17 @@ package com.mushroom.midnight.common.entity;
 import com.mushroom.midnight.common.entity.util.RiftEntityReference;
 import com.mushroom.midnight.common.entity.util.ToggleAnimation;
 import com.mushroom.midnight.common.registry.MidnightDimensions;
+import com.mushroom.midnight.common.registry.MidnightEntities;
 import com.mushroom.midnight.common.util.BitFlags;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.ServerWorld;
 import net.minecraft.world.World;
-import net.minecraft.world.ServerWorld;
 import net.minecraft.world.dimension.DimensionType;
 import net.minecraftforge.common.DimensionManager;
-import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.LogicalSide;
+import net.minecraftforge.fml.LogicalSidedProvider;
 
 import javax.annotation.Nullable;
 
@@ -66,7 +67,7 @@ public class RiftBridge {
     public boolean tickState() {
         this.tracker.update();
 
-        this.trySpawnEndpoint(DimensionType.field_223227_a_);
+        this.trySpawnEndpoint(DimensionType.OVERWORLD);
         this.trySpawnEndpoint(MidnightDimensions.MIDNIGHT);
 
         if (this.unstable.get()) {
@@ -93,7 +94,7 @@ public class RiftBridge {
     private void trySpawnEndpoint(DimensionType endpointDimension) {
         RiftEntityReference endpointReference = this.getEndpointReference(endpointDimension);
         if (!endpointReference.hasReference()) {
-            World world = DimensionManager.getWorld(endpointDimension.getId());
+            World world = DimensionManager.getWorld(LogicalSidedProvider.INSTANCE.get(LogicalSide.SERVER), endpointDimension, false, false);
             if (world != null && world.isBlockLoaded(this.attachment.getPos())) {
                 this.spawnRiftEntity(world);
             }
@@ -101,35 +102,33 @@ public class RiftBridge {
     }
 
     private void spawnRiftEntity(World world) {
-        RiftEntity rift = new RiftEntity(world);
-        rift.acceptBridge(this);
-
-        RiftAttachment surfaceAttachment = this.attachment.fixedToSurface(world);
-        surfaceAttachment.apply(rift);
-
-        // Force the chunk we're spawning in to be loaded
-        world.getChunk(rift.getPosition());
-
-        world.addEntity(rift);
+        RiftEntity rift = MidnightEntities.rift.create(world);
+        if (rift != null) {
+            rift.acceptBridge(this);
+            RiftAttachment surfaceAttachment = this.attachment.fixedToSurface(world);
+            surfaceAttachment.apply(rift);
+            // Force the chunk we're spawning in to be loaded
+            world.getChunk(rift.getPosition());
+            world.addEntity(rift);
+        }
     }
 
     public RiftEntity computeEndpoint(DimensionType endpointDimension) {
         RiftEntityReference endpointReference = this.getEndpointReference(endpointDimension);
         if (!endpointReference.hasReference()) {
-            MinecraftServer server = FMLCommonHandler.instance().getMinecraftServerInstance();
-            this.spawnRiftEntity(server.getWorld(endpointDimension.getId()));
+            MinecraftServer server = LogicalSidedProvider.INSTANCE.get(LogicalSide.SERVER);
+            this.spawnRiftEntity(server.getWorld(endpointDimension));
         }
         RiftEntity rift = endpointReference.compute();
-        // TODO fix me better, the rift can be null & can lead to an underground rift (not intended)
         if (rift == null) {
-            MinecraftServer server = FMLCommonHandler.instance().getMinecraftServerInstance();
-            this.spawnRiftEntity(server.getWorld(endpointDimension.getId()));
+            MinecraftServer server = LogicalSidedProvider.INSTANCE.get(LogicalSide.SERVER);
+            this.spawnRiftEntity(server.getWorld(endpointDimension));
         }
         return endpointReference.get();
     }
 
     public boolean isEndpointLoaded(DimensionType endpointDimension) {
-        ServerWorld world = DimensionManager.getWorld(endpointDimension.getId());
+        ServerWorld world = DimensionManager.getWorld(LogicalSidedProvider.INSTANCE.get(LogicalSide.SERVER), endpointDimension, false, false);
         return world != null && world.isBlockLoaded(this.attachment.getPos());
     }
 

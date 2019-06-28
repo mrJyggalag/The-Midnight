@@ -2,15 +2,15 @@ package com.mushroom.midnight.common.util;
 
 import com.mushroom.midnight.Midnight;
 import net.minecraftforge.event.world.WorldEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import javax.annotation.Nonnull;
 import java.util.Map;
 import java.util.WeakHashMap;
 import java.util.function.Supplier;
 
-@Mod.EventBusSubscriber(modid = Midnight.MODID)
+@Mod.EventBusSubscriber(modid = Midnight.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class SessionLocal<T> {
     private static final Map<SessionLocal<?>, Object> REGISTRY = new WeakHashMap<>();
     private static final Object PLACEHOLDER = new Object();

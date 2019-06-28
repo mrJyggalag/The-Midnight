@@ -2,21 +2,23 @@ package com.mushroom.midnight.common.world;
 
 import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.common.config.MidnightConfig;
-import com.mushroom.midnight.common.entity.RiftEntity;
 import com.mushroom.midnight.common.entity.RiftAttachment;
 import com.mushroom.midnight.common.entity.RiftBridge;
+import com.mushroom.midnight.common.entity.RiftEntity;
 import com.mushroom.midnight.common.helper.Helper;
 import com.mushroom.midnight.common.registry.MidnightDimensions;
+import com.mushroom.midnight.common.registry.MidnightEntities;
 import com.mushroom.midnight.common.util.WorldUtil;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.EnumSkyBlock;
 import net.minecraft.world.LightType;
+import net.minecraft.world.ServerWorld;
 import net.minecraft.world.World;
 import net.minecraftforge.common.DimensionManager;
-import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.LogicalSide;
+import net.minecraftforge.fml.LogicalSidedProvider;
 
 import java.util.HashSet;
 import java.util.List;
@@ -32,12 +34,12 @@ public class RiftSpawnHandler {
     private static boolean warnedOverworldUnloaded;
 
     public static void update() {
-        MinecraftServer server = FMLCommonHandler.instance().getMinecraftServerInstance();
+        MinecraftServer server = LogicalSidedProvider.INSTANCE.get(LogicalSide.SERVER);
         if (server == null) {
             return;
         }
 
-        World world = DimensionManager.getWorld(0);
+        ServerWorld world = DimensionManager.getWorld(0);
         if (world == null) {
             if (!warnedOverworldUnloaded) {
                 Midnight.LOGGER.warn("Overworld unloaded! Cannot spawn Midnight rifts");
@@ -107,13 +109,13 @@ public class RiftSpawnHandler {
         BridgeManager trackerHandler = GlobalBridgeManager.getServer();
         RiftBridge bridge = trackerHandler.createBridge(attachment);
 
-        RiftEntity rift = new RiftEntity(world);
-        rift.acceptBridge(bridge);
-        bridge.getAttachment().apply(rift);
-
-        trackerHandler.addBridge(bridge);
-
-        world.addEntity(rift);
+        RiftEntity rift = MidnightEntities.rift.create(world);
+        if (rift != null) {
+            rift.acceptBridge(bridge);
+            bridge.getAttachment().apply(rift);
+            trackerHandler.addBridge(bridge);
+            world.addEntity(rift);
+        }
     }
 
     private static boolean canRiftSpawn(World world, BlockPos pos) {

@@ -5,6 +5,7 @@ import com.mushroom.midnight.common.entity.creature.StingerEntity;
 import com.mushroom.midnight.common.registry.MidnightSounds;
 import com.mushroom.midnight.common.registry.MidnightItemGroups;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.BlockFaceShape;
@@ -18,11 +19,15 @@ import net.minecraft.init.Enchantments;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
+import net.minecraft.state.IntegerProperty;
+import net.minecraft.state.StateContainer;
 import net.minecraft.stats.StatList;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.Direction;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.Hand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
@@ -38,11 +43,11 @@ import java.util.Random;
 public abstract class PileOfEggsBlock extends Block {
     protected static final AxisAlignedBB bound_one_egg = new AxisAlignedBB(0.1875d, 0d, 0.1875d, 0.75d, 0.4375d, 0.75d);
     protected static final AxisAlignedBB bound_several_eggs = new AxisAlignedBB(0.0625d, 0d, 0.0625d, 0.9375d, 0.4375d, 0.9375d);
-    public static final PropertyInteger EGGS = PropertyInteger.create("eggs", 1, 4);
+    public static final IntegerProperty EGGS = IntegerProperty.create("eggs", 1, 4);
 
     protected PileOfEggsBlock() {
         super(Material.ROCK);
-        setDefaultState(blockState.getBaseState().withProperty(EGGS, 1));
+        setDefaultState(getStateContainer().getBaseState().with(EGGS, 1));
         setCreativeTab(MidnightItemGroups.DECORATION);
         blockSoundType = MidnightSounds.PILE_OF_EGGS;
         blockHardness = 1f;
@@ -51,7 +56,7 @@ public abstract class PileOfEggsBlock extends Block {
     protected abstract MobEntity createEntityForEgg(World world, BlockPos pos, BlockState state);
 
     @Override
-    public boolean onBlockActivated(World world, BlockPos pos, BlockState state, PlayerEntity player, EnumHand hand, Direction facing, float hitX, float hitY, float hitZ) {
+    public boolean onBlockActivated(World world, BlockPos pos, BlockState state, PlayerEntity player, Hand hand, Direction facing, float hitX, float hitY, float hitZ) {
         if (player == null) {
             return false;
         }
@@ -179,13 +184,13 @@ public abstract class PileOfEggsBlock extends Block {
     }
 
     @Override
-    protected BlockStateContainer createBlockState() {
-        return new BlockStateContainer(this, EGGS);
+    protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
+        builder.add(EGGS);
     }
 
     @Override
     public BlockState getStateFromMeta(int meta) {
-        return getDefaultState().withProperty(EGGS, (meta & 3) + 1);
+        return getDefaultState().with(EGGS, (meta & 3) + 1);
     }
 
     @Override

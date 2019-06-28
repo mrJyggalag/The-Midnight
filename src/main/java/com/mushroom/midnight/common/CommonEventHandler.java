@@ -19,6 +19,7 @@ import com.mushroom.midnight.common.registry.MidnightEffects;
 import com.mushroom.midnight.common.world.GlobalBridgeManager;
 import com.mushroom.midnight.common.world.RiftSpawnHandler;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -55,7 +56,7 @@ public class CommonEventHandler {
         event.addCapability(new ResourceLocation(Midnight.MODID, "rift_cooldown"), new RiftTravelCooldown());
         if (event.getObject() instanceof LivingEntity) {
             if (!(event.getObject() instanceof PlayerEntity)) {
-                ResourceLocation rl = EntityList.getKey(event.getObject());
+                ResourceLocation rl = EntityType.getKey(event.getObject().getType());
                 if (rl == null) {
                     return;
                 }

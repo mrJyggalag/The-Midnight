@@ -2,13 +2,12 @@ package com.mushroom.midnight.common.block;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.block.material.Material;
-import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.fluids.BlockFluidClassic;
 import net.minecraftforge.fluids.Fluid;
 
 import javax.annotation.Nullable;
@@ -50,7 +49,7 @@ public abstract class MixableFluidBlock extends BlockFluidClassic {
         double y = pos.getY();
         double z = pos.getZ();
         for (int i = 0; i < 8; ++i) {
-            world.addParticle(EnumParticleTypes.SMOKE_LARGE, x + Math.random(), y + 1.2, z + Math.random(), 0.0, 0.0, 0.0);
+            world.addParticle(ParticleTypes.LARGE_SMOKE, x + Math.random(), y + 1.2, z + Math.random(), 0.0, 0.0, 0.0);
         }
     }
 

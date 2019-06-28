@@ -9,15 +9,14 @@ import com.mushroom.midnight.common.biome.config.BiomeSpawnEntry;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.registries.ForgeRegistry;
+import net.minecraftforge.registries.ObjectHolder;
 import net.minecraftforge.registries.RegistryBuilder;
 
 import static com.mushroom.midnight.common.biome.MidnightBiomeConfigs.*;
 
-@Mod.EventBusSubscriber(modid = Midnight.MODID)
-@GameRegistry.ObjectHolder(Midnight.MODID)
+@Mod.EventBusSubscriber(modid = Midnight.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
+@ObjectHolder(Midnight.MODID)
 public class MidnightCavernousBiomes {
     private static final CavernStructureConfig CLOSED_STRUCTURE_CONFIG = new CavernStructureConfig()
             .withCavernDensity(5.0F);

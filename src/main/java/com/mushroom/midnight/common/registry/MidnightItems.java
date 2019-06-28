@@ -25,9 +25,9 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.ObjectHolder;
 
-// TODO: Tags!
+// TODO: Tags! <= one is done for bomb (midnightTags)
 @ObjectHolder(Midnight.MODID)
-@Mod.EventBusSubscriber(modid = Midnight.MODID)
+@Mod.EventBusSubscriber(modid = Midnight.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class MidnightItems {
     // TODO: Doors and seeds become ItemBlocks! (have them here, or in MidnightBlocks?)
 
