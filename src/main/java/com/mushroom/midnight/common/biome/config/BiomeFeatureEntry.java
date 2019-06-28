@@ -1,8 +1,5 @@
 package com.mushroom.midnight.common.biome.config;
 
-import com.mushroom.midnight.common.world.feature.IMidnightFeature;
-import com.mushroom.midnight.common.world.feature.config.IPlacementConfig;
-
 public class BiomeFeatureEntry {
     private final IMidnightFeature[] features;
     private final IPlacementConfig placementConfig;

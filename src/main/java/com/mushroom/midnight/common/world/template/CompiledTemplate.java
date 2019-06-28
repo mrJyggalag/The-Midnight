@@ -1,18 +1,14 @@
 package com.mushroom.midnight.common.world.template;
 
-import com.google.common.collect.ImmutableMap;
-import net.minecraft.block.Blocks;
-import net.minecraft.state.properties.StructureMode;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.world.IWorld;
 import net.minecraft.world.gen.feature.template.PlacementSettings;
 import net.minecraft.world.gen.feature.template.Template;
-import net.minecraft.world.gen.structure.template.BlockRotationProcessor;
-import net.minecraft.world.gen.structure.template.ITemplateProcessor;
 
 import javax.annotation.Nullable;
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.stream.Collectors;
@@ -24,7 +20,6 @@ public class CompiledTemplate {
     private final PlacementSettings settings;
     private final BlockPos origin;
 
-    private final ITemplateProcessor processor;
     private final TemplateDataProcessor dataProcessor;
     private final Collection<TemplatePostProcessor> postProcessors;
 
@@ -33,7 +28,6 @@ public class CompiledTemplate {
     CompiledTemplate(
             ResourceLocation templateId,
             Template template, PlacementSettings settings, BlockPos origin,
-            ITemplateProcessor processor,
             TemplateDataProcessor dataProcessor,
             Collection<TemplatePostProcessor> postProcessors
     ) {
@@ -42,27 +36,14 @@ public class CompiledTemplate {
         this.settings = settings;
         this.origin = origin;
 
-        this.processor = processor != null ? processor : new BlockRotationProcessor(origin, settings);
         this.dataProcessor = dataProcessor;
         this.postProcessors = postProcessors;
 
-        ImmutableMap.Builder<BlockPos, String> dataBuilder = ImmutableMap.builder();
-
-        for (Template.BlockInfo info : this.template.func_215381_a(origin, settings, Blocks.STRUCTURE_BLOCK)) {
-            if (info.nbt != null) {
-                StructureMode mode = StructureMode.valueOf(info.nbt.getString("mode"));
-                if (mode == StructureMode.DATA) {
-                    String metadata = info.nbt.getString("metadata");
-                    dataBuilder.put(info.pos, metadata);
-                }
-            }
-        }
-
-        this.dataBlocks = dataBuilder.build();
+        this.dataBlocks = TemplateCompiler.collectDataMarkers(origin, settings, template);
     }
 
-    public void addTo(World world, Random random, int flags) {
-        this.template.addBlocksToWorld(world, this.origin, this.processor, this.settings, flags);
+    public void addTo(IWorld world, Random random, int flags) {
+        this.template.addBlocksToWorld(world, this.origin, this.settings, flags);
 
         if (this.dataProcessor != null) {
             for (Map.Entry<BlockPos, String> entry : this.dataBlocks.entrySet()) {
@@ -71,12 +52,9 @@ public class CompiledTemplate {
         }
 
         for (TemplatePostProcessor processor : this.postProcessors) {
-            for (Template.BlockInfo info : this.template.blocks) {
-                BlockPos pos = Template.transformedBlockPos(this.settings, info.pos).add(this.origin);
-                Template.BlockInfo processedInfo = this.processor.processBlock(world, pos, info);
-                if (processedInfo != null) {
-                    processor.process(world, random, pos, processedInfo.blockState);
-                }
+            List<Template.BlockInfo> blocks = Template.func_215387_a(world, this.origin, this.settings, this.settings.func_204764_a(this.template.blocks, this.origin));
+            for (Template.BlockInfo info : blocks) {
+                processor.process(world, random, info.pos, info.state);
             }
         }
     }

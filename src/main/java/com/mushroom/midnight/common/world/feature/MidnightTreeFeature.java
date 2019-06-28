@@ -1,75 +1,47 @@
 package com.mushroom.midnight.common.world.feature;
 
+import com.mojang.datafixers.Dynamic;
 import com.mushroom.midnight.common.registry.MidnightBlocks;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockLeaves;
-import net.minecraft.block.BlockLog;
-import net.minecraft.block.state.BlockState;
-import net.minecraft.util.Direction;
+import com.mushroom.midnight.common.world.AbstractWrappedWorld;
+import net.minecraft.block.BlockState;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.world.World;
+import net.minecraft.util.math.MutableBoundingBox;
+import net.minecraft.world.IWorld;
+import net.minecraft.world.gen.ChunkGenerator;
+import net.minecraft.world.gen.GenerationSettings;
+import net.minecraft.world.gen.IWorldGenerationReader;
+import net.minecraft.world.gen.feature.AbstractTreeFeature;
+import net.minecraft.world.gen.feature.IFeatureConfig;
 import net.minecraftforge.common.IPlantable;
-import net.minecraftforge.event.terraingen.DecorateBiomeEvent;
 
 import java.util.HashSet;
+import java.util.Random;
 import java.util.Set;
-import java.util.function.IntFunction;
+import java.util.function.Function;
 
-public abstract class MidnightTreeFeature extends MidnightNaturalFeature {
-    protected final BlockState log;
-    protected final BlockState leaves;
+public abstract class MidnightTreeFeature<T extends IFeatureConfig> extends AbstractTreeFeature<T> {
+    private final ThreadLocal<T> config = new ThreadLocal<>();
 
-    protected MidnightTreeFeature(BlockState log, BlockState leaves) {
-        this.log = log;
-        if (leaves.getBlock() instanceof BlockLeaves) {
-            leaves = leaves.withProperty(BlockLeaves.CHECK_DECAY, false);
-        }
-        this.leaves = leaves;
+    protected MidnightTreeFeature(Function<Dynamic<?>, ? extends T> deserialize) {
+        super(deserialize, true);
+        this.sapling = (IPlantable) MidnightBlocks.SHADOWROOT_SAPLING; // TODO
     }
 
-    protected boolean canFit(World world, BlockPos pos, int height, IntFunction<Integer> widthSupplier) {
-        BlockPos.MutableBlockPos mutablePos = new BlockPos.MutableBlockPos(pos);
+    protected abstract boolean place(IWorld world, Random random, BlockPos origin, T config);
 
-        for (int localY = 0; localY < height; localY++) {
-            int width = widthSupplier.apply(localY);
-            for (int localZ = -width; localZ <= width; localZ++) {
-                for (int localX = -width; localX <= width; localX++) {
-                    mutablePos.setPos(pos.getX() + localX, pos.getY() + localY, pos.getZ() + localZ);
-                    if (!this.canReplace(world, mutablePos)) {
-                        return false;
-                    }
-                }
-            }
-        }
-
-        return true;
+    @Override
+    public final boolean place(IWorld world, ChunkGenerator<? extends GenerationSettings> generator, Random random, BlockPos origin, T config) {
+        // AbstractTreeFeature doesn't pass us the config...
+        this.config.set(config);
+        return super.place(world, generator, random, origin, config);
     }
 
-    protected boolean canGrow(World world, BlockPos pos) {
-        BlockPos groundPos = pos.down();
-        BlockState groundState = world.getBlockState(groundPos);
-        Block groundBlock = groundState.getBlock();
-        return groundBlock.canSustainPlant(groundState, world, groundPos, Direction.UP, (IPlantable) MidnightBlocks.SHADOWROOT_SAPLING);
-    }
-
-    protected void notifyGrowth(World world, BlockPos pos) {
-        BlockPos groundPos = pos.down();
-        BlockState groundState = world.getBlockState(groundPos);
-        Block groundBlock = groundState.getBlock();
-        groundBlock.onPlantGrow(groundState, world, groundPos, pos);
-    }
-
-    protected void placeLog(World world, BlockPos pos) {
-        this.placeState(world, pos, this.log);
-    }
-
-    protected void placeLog(World world, BlockPos pos, BlockLog.EnumAxis axis) {
-        this.placeState(world, pos, this.log.withProperty(BlockLog.LOG_AXIS, axis));
-    }
-
-    protected void placeLeaves(World world, BlockPos pos) {
-        this.placeState(world, pos, this.leaves);
+    @Override
+    protected final boolean place(Set<BlockPos> changedBlocks, IWorldGenerationReader world, Random random, BlockPos origin, MutableBoundingBox bounds) {
+        WorldWrapper wrapper = new WorldWrapper((IWorld) world, changedBlocks, bounds);
+        return this.place(wrapper, random, origin, this.config.get());
     }
 
     protected Set<BlockPos> produceBlob(BlockPos origin, double radius) {
@@ -97,8 +69,42 @@ public abstract class MidnightTreeFeature extends MidnightNaturalFeature {
         return positions;
     }
 
-    @Override
-    public DecorateBiomeEvent.Decorate.EventType getEventType() {
-        return DecorateBiomeEvent.Decorate.EventType.TREE;
+    private static class WorldWrapper extends AbstractWrappedWorld {
+        private final Set<BlockPos> logs;
+        private final MutableBoundingBox bounds;
+
+        private WorldWrapper(IWorld world, Set<BlockPos> logs, MutableBoundingBox bounds) {
+            super(world);
+            this.logs = logs;
+            this.bounds = bounds;
+        }
+
+        @Override
+        public boolean setBlockState(BlockPos pos, BlockState state, int flags) {
+            boolean set = super.setBlockState(pos, state, flags);
+            if (set && state.isIn(BlockTags.LOGS)) {
+                this.logs.add(pos);
+                this.bounds.expandTo(new MutableBoundingBox(pos, pos));
+            }
+            return set;
+        }
+
+        @Override
+        public boolean removeBlock(BlockPos pos, boolean b) {
+            if (super.removeBlock(pos, b)) {
+                this.logs.remove(pos);
+                return true;
+            }
+            return false;
+        }
+
+        @Override
+        public boolean destroyBlock(BlockPos pos, boolean b) {
+            if (super.destroyBlock(pos, b)) {
+                this.logs.remove(pos);
+                return true;
+            }
+            return false;
+        }
     }
 }

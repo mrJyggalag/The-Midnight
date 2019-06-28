@@ -18,8 +18,6 @@ import com.mushroom.midnight.common.entity.creature.RifterEntity;
 import com.mushroom.midnight.common.entity.creature.StingerEntity;
 import com.mushroom.midnight.common.registry.MidnightBlocks;
 import com.mushroom.midnight.common.world.SurfacePlacementLevel;
-import com.mushroom.midnight.common.world.feature.FeatureSorting;
-import com.mushroom.midnight.common.world.feature.IMidnightFeature;
 import com.mushroom.midnight.common.world.feature.config.DragonNestPlacementConfig;
 import com.mushroom.midnight.common.world.feature.config.ParcelPlacementConfig;
 import com.mushroom.midnight.common.world.feature.config.ScatterPlacementConfig;

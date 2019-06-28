@@ -4,9 +4,6 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMultimap;
 import com.mushroom.midnight.common.biome.MidnightBiomeDecorator;
 import com.mushroom.midnight.common.world.SurfacePlacementLevel;
-import com.mushroom.midnight.common.world.feature.FeatureSorting;
-import com.mushroom.midnight.common.world.feature.IMidnightFeature;
-import com.mushroom.midnight.common.world.feature.config.IPlacementConfig;
 import net.minecraft.world.biome.Biome;
 
 import java.util.Collection;

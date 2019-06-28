@@ -1,14 +1,16 @@
 package com.mushroom.midnight.common.world.template;
 
-import net.minecraft.server.MinecraftServer;
+import com.google.common.collect.ImmutableMap;
+import net.minecraft.block.Blocks;
+import net.minecraft.state.properties.StructureMode;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IWorld;
 import net.minecraft.world.ServerWorld;
-import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.template.PlacementSettings;
+import net.minecraft.world.gen.feature.template.StructureProcessor;
 import net.minecraft.world.gen.feature.template.Template;
 import net.minecraft.world.gen.feature.template.TemplateManager;
-import net.minecraft.world.gen.structure.template.ITemplateProcessor;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -24,7 +26,7 @@ public class TemplateCompiler {
     private String anchorKey;
 
     private final Collection<BiConsumer<PlacementSettings, Random>> settingConfigurators = new ArrayList<>();
-    private ITemplateProcessor processor;
+    private final Collection<StructureProcessor> processors = new ArrayList<>();
     private TemplateDataProcessor dataProcessor;
     private final Collection<TemplatePostProcessor> postProcessors = new ArrayList<>();
 
@@ -42,8 +44,8 @@ public class TemplateCompiler {
         return this;
     }
 
-    public TemplateCompiler withProcessor(ITemplateProcessor processor) {
-        this.processor = processor;
+    public TemplateCompiler withProcessor(RuntimeStructureProcessor.Function processor) {
+        this.processors.add(new RuntimeStructureProcessor(processor));
         return this;
     }
 
@@ -65,7 +67,7 @@ public class TemplateCompiler {
         return this;
     }
 
-    public CompiledTemplate compile(World world, Random random, BlockPos origin) {
+    public CompiledTemplate compile(IWorld world, Random random, BlockPos origin) {
         if (!(world instanceof ServerWorld)) {
             throw new IllegalArgumentException("Cannot load template on client world");
         }
@@ -77,18 +79,19 @@ public class TemplateCompiler {
         PlacementSettings settings = this.buildPlacementSettings(random);
         Template template = templateManager.getTemplate(templateId);
 
-        BlockPos anchor = this.computeAnchor(template, settings);
+        Map<BlockPos, String> dataBlocks = collectDataMarkers(origin, settings, template);
+
+        BlockPos anchor = this.computeAnchor(dataBlocks);
         BlockPos anchoredOrigin = anchor != null ? origin.subtract(anchor) : origin;
 
-        return new CompiledTemplate(templateId, template, settings, anchoredOrigin, this.processor, this.dataProcessor, this.postProcessors);
+        return new CompiledTemplate(templateId, template, settings, anchoredOrigin, this.dataProcessor, this.postProcessors);
     }
 
     @Nullable
-    private BlockPos computeAnchor(Template template, PlacementSettings placementSettings) {
+    private BlockPos computeAnchor(Map<BlockPos, String> dataBlocks) {
         if (this.anchorKey == null) {
             return null;
         }
-        Map<BlockPos, String> dataBlocks = template.getDataBlocks(BlockPos.ORIGIN, placementSettings);
         return dataBlocks.entrySet().stream()
                 .filter(e -> e.getValue().equals(this.anchorKey))
                 .map(Map.Entry::getKey)
@@ -101,6 +104,24 @@ public class TemplateCompiler {
         for (BiConsumer<PlacementSettings, Random> configurator : this.settingConfigurators) {
             configurator.accept(settings, random);
         }
+        this.processors.forEach(settings::addProcessor);
         return settings;
+    }
+
+    public static Map<BlockPos, String> collectDataMarkers(BlockPos origin, PlacementSettings settings, Template template) {
+        ImmutableMap.Builder<BlockPos, String> dataBuilder = ImmutableMap.builder();
+
+        List<Template.BlockInfo> structureBlocks = template.func_215381_a(origin, settings, Blocks.STRUCTURE_BLOCK);
+        for (Template.BlockInfo info : structureBlocks) {
+            if (info.nbt != null) {
+                StructureMode mode = StructureMode.valueOf(info.nbt.getString("mode"));
+                if (mode == StructureMode.DATA) {
+                    String metadata = info.nbt.getString("metadata");
+                    dataBuilder.put(info.pos, metadata);
+                }
+            }
+        }
+
+        return dataBuilder.build();
     }
 }

@@ -1,44 +1,40 @@
 package com.mushroom.midnight.common.world.feature;
 
-import com.mushroom.midnight.Midnight;
+import com.mojang.datafixers.Dynamic;
 import com.mushroom.midnight.common.registry.MidnightBlocks;
+import com.mushroom.midnight.common.world.feature.config.TemplateTreeConfig;
 import com.mushroom.midnight.common.world.template.ShelfAttachProcessor;
 import com.mushroom.midnight.common.world.template.TemplateCompiler;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.state.BlockState;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 
+import java.util.function.Function;
+
 public class LargeBogshroomFeature extends TemplateTreeFeature {
-    private static final ResourceLocation[] TEMPLATES = new ResourceLocation[] {
-            new ResourceLocation(Midnight.MODID, "mushroom/bogshroom")
-    };
-
-    public LargeBogshroomFeature(BlockState log, BlockState leaves) {
-        super(TEMPLATES, log, leaves);
-    }
-
-    public LargeBogshroomFeature() {
-        this(MidnightBlocks.BOGSHROOM_STEM.getDefaultState(), MidnightBlocks.BOGSHROOM_HAT.getDefaultState());
+    public LargeBogshroomFeature(Function<Dynamic<?>, ? extends TemplateTreeConfig> deserialize) {
+        super(deserialize);
     }
 
     @Override
-    protected TemplateCompiler buildCompiler(ResourceLocation[] templates) {
-        return super.buildCompiler(templates)
+    protected TemplateCompiler buildCompiler(TemplateTreeConfig config) {
+        return super.buildCompiler(config)
                 .withPostProcessor(new ShelfAttachProcessor(this::canPlaceShelf, ShelfAttachProcessor.SHELF_BLOCKS));
     }
 
     @Override
-    protected void processData(World world, BlockPos pos, String key) {
+    protected void processMarker(IWorld world, BlockPos pos, String key, TemplateTreeConfig config) {
         if (key.equals("inside")) {
-            world.setBlockState(pos, MidnightBlocks.MUSHROOM_INDist.getDefaultState(), 2 | 16);
+            this.setBlockState(world, pos, MidnightBlocks.MUSHROOM_INSIDE.getDefaultState());
         }
-        super.processData(world, pos, key);
+        super.processMarker(world, pos, key, config);
     }
 
     private boolean canPlaceShelf(World world, BlockPos pos) {
-        if (world.isOutsideBuildHeight(pos)) {
+        if (World.isOutsideBuildHeight(pos)) {
             return false;
         }
 
@@ -47,6 +43,6 @@ public class LargeBogshroomFeature extends TemplateTreeFeature {
             return false;
         }
 
-        return state.getBlock().isAir(state, world, pos) || state.getBlock().isLeaves(state, world, pos) || state.getMaterial() == Material.VINE;
+        return state.getBlock().isAir(state, world, pos) || state.isIn(BlockTags.LEAVES) || state.getMaterial() == Material.PLANTS;
     }
 }

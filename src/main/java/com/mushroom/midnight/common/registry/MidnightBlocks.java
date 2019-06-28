@@ -57,7 +57,6 @@ import com.mushroom.midnight.common.tile.base.TileEntityMidnightChest;
 import com.mushroom.midnight.common.tile.base.TileEntityMidnightFurnace;
 import com.mushroom.midnight.common.world.feature.DarkWillowTreeFeature;
 import com.mushroom.midnight.common.world.feature.LargeBogshroomFeature;
-import com.mushroom.midnight.common.world.feature.LargeBulbFungusFeature;
 import com.mushroom.midnight.common.world.feature.LargeFungiFeature;
 import com.mushroom.midnight.common.world.feature.ShadowrootTreeFeature;
 import net.minecraft.block.Block;

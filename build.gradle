@@ -1,12 +1,12 @@
 buildscript {
-    repositories {
-        maven { url = "http://files.minecraftforge.net/maven" }
-        jcenter()
-        mavenCentral()
-    }
-    dependencies {
-        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '3.+', changing: true
-    }
+  repositories {
+    maven { url = "http://files.minecraftforge.net/maven" }
+    jcenter()
+    mavenCentral()
+  }
+  dependencies {
+    classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '3.+', changing: true
+  }
 }
 
 apply plugin: 'net.minecraftforge.gradle'
@@ -20,52 +20,52 @@ sourceCompatibility = targetCompatibility = '1.8'
 def core_plugin = "com.mushroom.midnight.core.MidnightLoadingPlugin"
 
 minecraft {
-    mappings channel: 'snapshot', version: '20190627-1.14.3'
-    accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
-    runs {
-        client {
-            workingDirectory project.file('run')
-            property 'forge.logging.markers', 'REGISTRIES'
-            property 'forge.logging.console.level', 'debug'
-            mods {
-                midnight {
-                    source sourceSets.main
-                }
-            }
+  mappings channel: 'snapshot', version: '20190627-1.14.3'
+  accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
+  runs {
+    client {
+      workingDirectory project.file('run')
+      property 'forge.logging.markers', 'REGISTRIES'
+      property 'forge.logging.console.level', 'debug'
+      mods {
+        midnight {
+          source sourceSets.main
         }
-        server {
-            workingDirectory project.file('run')
-            property 'forge.logging.markers', 'REGISTRIES'
-            property 'forge.logging.console.level', 'debug'
-            mods {
-                midnight {
-                    source sourceSets.main
-                }
-            }
-        }
+      }
     }
+    server {
+      workingDirectory project.file('run')
+      property 'forge.logging.markers', 'REGISTRIES'
+      property 'forge.logging.console.level', 'debug'
+      mods {
+        midnight {
+          source sourceSets.main
+        }
+      }
+    }
+  }
 }
 
 repositories {
-    maven { url = "http://dvs1.progwml6.com/files/maven" }
+  maven { url = "http://dvs1.progwml6.com/files/maven" }
 }
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.14.3-27.0.12'
-    runtimeOnly fg.deobf("mezz.jei:jei-1.14.2:6.0.0.2")
-    compileOnly fg.deobf("mezz.jei:jei-1.14.2:6.0.0.2:api")
+  minecraft 'net.minecraftforge:forge:1.14.3-27.0.12'
+  runtimeOnly fg.deobf("mezz.jei:jei-1.14.2:6.0.0.2")
+  compileOnly fg.deobf("mezz.jei:jei-1.14.2:6.0.0.2:api")
 }
 
 jar {
-    manifest {
-        attributes([
-            "Specification-Title": "midnight",
-            "Specification-Vendor": "cryptic-mushroom",
-            "Specification-Version": "1",
-            "Implementation-Title": project.name,
-            "Implementation-Version": "${version}",
-            "Implementation-Vendor" :"cryptic-mushroom",
-            "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
-        ])
-    }
+  manifest {
+    attributes([
+        "Specification-Title"     : "midnight",
+        "Specification-Vendor"    : "cryptic-mushroom",
+        "Specification-Version"   : "1",
+        "Implementation-Title"    : project.name,
+        "Implementation-Version"  : "${version}",
+        "Implementation-Vendor"   : "cryptic-mushroom",
+        "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
+    ])
+  }
 }

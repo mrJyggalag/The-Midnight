@@ -1,56 +1,52 @@
 package com.mushroom.midnight.common.world.feature;
 
-import com.mushroom.midnight.common.registry.MidnightBlocks;
-import net.minecraft.block.BlockLog;
-import net.minecraft.block.state.BlockState;
+import com.google.common.collect.Lists;
+import com.mojang.datafixers.Dynamic;
+import com.mushroom.midnight.common.world.feature.config.LogAndLeafConfig;
+import net.minecraft.block.LogBlock;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.world.World;
+import net.minecraft.world.IWorld;
+import net.minecraft.world.gen.IWorldGenerationReader;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
-import java.util.function.IntFunction;
+import java.util.function.Function;
 
-public class ShadowrootTreeFeature extends MidnightTreeFeature {
+public class ShadowrootTreeFeature extends MidnightTreeFeature<LogAndLeafConfig> {
+    private static final Direction[] HORIZONTALS = new Direction[] { Direction.NORTH, Direction.EAST, Direction.SOUTH, Direction.WEST };
+
     private static final int BRANCH_SPACING = 3;
 
-    public ShadowrootTreeFeature(BlockState log, BlockState leaves) {
-        super(log, leaves);
-    }
-
-    public ShadowrootTreeFeature() {
-        this(MidnightBlocks.SHADOWROOT_LOG.getDefaultState(), MidnightBlocks.SHADOWROOT_LEAVES.getDefaultState());
+    public ShadowrootTreeFeature(Function<Dynamic<?>, ? extends LogAndLeafConfig> deserialize) {
+        super(deserialize);
     }
 
     @Override
-    public boolean placeFeature(World world, Random random, BlockPos origin) {
+    protected boolean place(IWorld world, Random random, BlockPos origin, LogAndLeafConfig config) {
         int height = random.nextInt(8) + 10;
 
-        IntFunction<Integer> widthSupplier = y -> 1;
-
-        if (!this.canFit(world, origin, height, widthSupplier)) {
+        if (!this.canFit(world, origin, 1, height)) {
             return false;
         }
 
-        if (this.canGrow(world, origin)) {
-            this.notifyGrowth(world, origin);
+        if (isSoil(world, origin, this.getSapling())) {
+            this.setDirtAt(world, origin.down(), origin);
 
             BlockPos.MutableBlockPos mutablePos = new BlockPos.MutableBlockPos(origin);
             for (int localY = 0; localY < height; localY++) {
                 mutablePos.setY(origin.getY() + localY);
-                this.placeLog(world, mutablePos);
+                this.setBlockState(world, mutablePos, config.log);
             }
 
-            this.generateRoots(world, random, origin);
+            this.generateRoots(world, random, origin, config);
 
             Set<Branch> branches = this.collectBranches(world, random, origin, height);
             for (Branch branch : branches) {
-                this.placeLog(world, branch.pos, branch.getAxis());
+                this.setBlockState(world, branch.pos, config.log.with(LogBlock.AXIS, branch.getAxis()));
             }
 
             Set<BlockPos> leafPositions = this.produceBlob(origin.up(height - 2), 1.5, 2.5);
@@ -61,7 +57,7 @@ public class ShadowrootTreeFeature extends MidnightTreeFeature {
             }
 
             for (BlockPos leafPos : leafPositions) {
-                this.placeLeaves(world, leafPos);
+                this.setBlockState(world, leafPos, config.leaf);
             }
 
             return true;
@@ -70,11 +66,23 @@ public class ShadowrootTreeFeature extends MidnightTreeFeature {
         return false;
     }
 
-    private void generateRoots(World world, Random random, BlockPos origin) {
+    private boolean canFit(IWorldGenerationReader world, BlockPos origin, int width, int height) {
+        BlockPos min = origin.add(-width, 0, -width);
+        BlockPos max = origin.add(width, height, width);
+
+        for (BlockPos pos : BlockPos.getAllInBoxMutable(min, max)) {
+            if (!isAirOrLeaves(world, pos)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    private void generateRoots(IWorldGenerationReader world, Random random, BlockPos origin, LogAndLeafConfig config) {
         BlockPos.MutableBlockPos mutablePos = new BlockPos.MutableBlockPos();
 
-        List<Direction> availableSides = new ArrayList<>(4);
-        Collections.addAll(availableSides, Direction.HORIZONTALS);
+        List<Direction> availableSides = Lists.newArrayList(HORIZONTALS);
 
         int count = random.nextInt(3) + 1;
         for (int i = 0; i < count; i++) {
@@ -84,7 +92,7 @@ public class ShadowrootTreeFeature extends MidnightTreeFeature {
             int height = random.nextInt(3) + 1;
             for (int localY = 0; localY < height; localY++) {
                 mutablePos.setPos(rootOrigin.getX(), rootOrigin.getY() + localY, rootOrigin.getZ());
-                this.placeLog(world, mutablePos);
+                this.setBlockState(world, mutablePos, config.log);
             }
         }
     }
@@ -101,7 +109,7 @@ public class ShadowrootTreeFeature extends MidnightTreeFeature {
         return droopedLeaves;
     }
 
-    private Set<Branch> collectBranches(World world, Random random, BlockPos origin, int height) {
+    private Set<Branch> collectBranches(IWorldGenerationReader world, Random random, BlockPos origin, int height) {
         int minBranchHeight = 3;
         int maxBranchHeight = height - 4;
         int heightRange = maxBranchHeight - minBranchHeight;
@@ -118,12 +126,12 @@ public class ShadowrootTreeFeature extends MidnightTreeFeature {
 
             Direction direction = null;
             while (direction == null || direction == lastDirection) {
-                direction = Direction.HORIZONTALS[random.nextInt(Direction.HORIZONTALS.length)];
+                direction = HORIZONTALS[random.nextInt(HORIZONTALS.length)];
             }
             lastDirection = direction;
 
             BlockPos branchPos = origin.up(y).offset(direction);
-            if (!this.canReplace(world, branchPos)) {
+            if (!isAirOrLeaves(world, branchPos)) {
                 continue;
             }
 
@@ -165,16 +173,8 @@ public class ShadowrootTreeFeature extends MidnightTreeFeature {
             this.angle = angle;
         }
 
-        public BlockLog.EnumAxis getAxis() {
-            switch (this.direction.getAxis()) {
-                case X:
-                    return BlockLog.EnumAxis.X;
-                case Z:
-                    return BlockLog.EnumAxis.Z;
-                case Y:
-                default:
-                    return BlockLog.EnumAxis.Y;
-            }
+        public Direction.Axis getAxis() {
+            return this.direction.getAxis();
         }
 
         @Override

@@ -1,58 +1,59 @@
 package com.mushroom.midnight.common.world.feature;
 
+import com.mojang.datafixers.Dynamic;
 import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.common.block.MidnightFungiHatBlock;
 import com.mushroom.midnight.common.block.MidnightFungiStemBlock;
 import com.mushroom.midnight.common.util.WorldUtil;
+import com.mushroom.midnight.common.world.feature.config.TemplateTreeConfig;
 import com.mushroom.midnight.common.world.template.CompiledTemplate;
 import com.mushroom.midnight.common.world.template.RotatedSettingConfigurator;
 import com.mushroom.midnight.common.world.template.TemplateCompiler;
+import net.minecraft.block.AirBlock;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockAir;
-import net.minecraft.block.BlockLeaves;
-import net.minecraft.block.BlockLog;
-import net.minecraft.block.state.BlockState;
-import net.minecraft.init.Blocks;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
+import net.minecraft.block.LeavesBlock;
+import net.minecraft.block.LogBlock;
+import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
-import net.minecraft.world.gen.structure.template.Template;
+import net.minecraft.world.IWorld;
+import net.minecraft.world.gen.feature.template.Template;
 
 import java.util.Collection;
 import java.util.Random;
+import java.util.function.Function;
 
-public class TemplateTreeFeature extends MidnightTreeFeature {
+public class TemplateTreeFeature extends MidnightTreeFeature<TemplateTreeConfig> {
     private static final String ANCHOR_KEY = "origin";
     private static final String TRUNK_TOP_KEY = "trunk_top";
     private static final String TRUNK_CORNER_KEY = "trunk_corner";
 
-    private final ResourceLocation[] templates;
     private TemplateCompiler templateCompiler;
 
-    public TemplateTreeFeature(ResourceLocation[] templates, BlockState log, BlockState leaves) {
-        super(log, leaves);
-        this.templates = templates;
+    public TemplateTreeFeature(Function<Dynamic<?>, ? extends TemplateTreeConfig> deserialize) {
+        super(deserialize);
     }
 
-    protected TemplateCompiler buildCompiler(ResourceLocation[] templates) {
-        return TemplateCompiler.of(templates)
+    protected TemplateCompiler buildCompiler(TemplateTreeConfig config) {
+        return TemplateCompiler.of(config.templates)
                 .withAnchor(ANCHOR_KEY)
                 .withSettingConfigurator(RotatedSettingConfigurator.INSTANCE)
-                .withProcessor(this::processState)
-                .withDataProcessor(this::processData);
+                .withProcessor((world, pos, srcInfo, info, settings) -> this.processState(pos, info, config))
+                .withDataProcessor((world, pos, key) -> this.processMarker(world, pos, key, config));
     }
 
     @Override
-    public boolean placeFeature(World world, Random rand, BlockPos origin) {
-        if (!this.canGrow(world, origin)) {
+    protected boolean place(IWorld world, Random random, BlockPos origin, TemplateTreeConfig config) {
+        if (!isSoil(world, origin, this.getSapling())) {
             return false;
         }
 
         if (this.templateCompiler == null) {
-            this.templateCompiler = this.buildCompiler(this.templates);
+            this.templateCompiler = this.buildCompiler(config);
         }
 
-        CompiledTemplate template = this.templateCompiler.compile(world, rand, origin);
+        CompiledTemplate template = this.templateCompiler.compile(world, random, origin);
 
         BlockPos trunkTop = template.lookupAny(TRUNK_TOP_KEY);
         Collection<BlockPos> trunkCorners = template.lookup(TRUNK_CORNER_KEY);
@@ -68,27 +69,27 @@ public class TemplateTreeFeature extends MidnightTreeFeature {
             return false;
         }
 
-        this.notifyGrowth(world, origin);
+        this.setDirtAt(world, origin.down(), origin);
 
-        template.addTo(world, rand, 2 | 16);
+        template.addTo(world, random, 2 | 16);
 
         return true;
     }
 
-    protected boolean canGrow(World world, BlockPos minCorner, BlockPos maxCorner) {
+    protected boolean canGrow(IWorld world, BlockPos minCorner, BlockPos maxCorner) {
         for (BlockPos pos : BlockPos.getAllInBoxMutable(minCorner, maxCorner)) {
-            if (!this.canGrow(world, pos)) {
+            if (!isSoil(world, pos, this.getSapling())) {
                 return false;
             }
         }
         return true;
     }
 
-    protected boolean canFit(World world, BlockPos trunkTop, BlockPos minCorner, BlockPos maxCorner) {
+    protected boolean canFit(IWorld world, BlockPos trunkTop, BlockPos minCorner, BlockPos maxCorner) {
         BlockPos maxFit = new BlockPos(maxCorner.getX(), trunkTop.getY(), maxCorner.getZ());
 
         for (BlockPos pos : BlockPos.getAllInBoxMutable(minCorner, maxFit)) {
-            if (!this.canReplace(world, pos)) {
+            if (!isAirOrLeaves(world, pos)) {
                 return false;
             }
         }
@@ -96,25 +97,25 @@ public class TemplateTreeFeature extends MidnightTreeFeature {
         return true;
     }
 
-    protected Template.BlockInfo processState(World world, BlockPos pos, Template.BlockInfo info) {
-        BlockState state = info.blockState;
+    protected Template.BlockInfo processState(BlockPos pos, Template.BlockInfo info, TemplateTreeConfig config) {
+        BlockState state = info.state;
         Block block = state.getBlock();
-        if (block instanceof BlockLog) {
-            BlockLog.EnumAxis axis = state.get(BlockLog.LOG_AXIS);
-            return new Template.BlockInfo(pos, this.log.withProperty(BlockLog.LOG_AXIS, axis), null);
+        if (block instanceof LogBlock) {
+            Direction.Axis axis = state.get(LogBlock.AXIS);
+            return new Template.BlockInfo(pos, config.log.with(LogBlock.AXIS, axis), null);
         } else if (block instanceof MidnightFungiStemBlock) {
-            return new Template.BlockInfo(pos, this.log, null);
-        } else if (block instanceof BlockLeaves || block instanceof MidnightFungiHatBlock) {
-            return new Template.BlockInfo(pos, this.leaves, null);
-        } else if (block == Blocks.STRUCTURE_BLOCK || block instanceof BlockAir) {
+            return new Template.BlockInfo(pos, config.log, null);
+        } else if (block instanceof LeavesBlock || block instanceof MidnightFungiHatBlock) {
+            return new Template.BlockInfo(pos, config.leaf, null);
+        } else if (block == Blocks.STRUCTURE_BLOCK || block instanceof AirBlock) {
             return null;
         }
         return info;
     }
 
-    protected void processData(World world, BlockPos pos, String key) {
+    protected void processMarker(IWorld world, BlockPos pos, String key, TemplateTreeConfig config) {
         if (key.equals(ANCHOR_KEY) || key.equals(TRUNK_TOP_KEY)) {
-            world.setBlockState(pos, this.log, 2 | 16);
+            this.setBlockState(world, pos, config.log);
         }
     }
 }

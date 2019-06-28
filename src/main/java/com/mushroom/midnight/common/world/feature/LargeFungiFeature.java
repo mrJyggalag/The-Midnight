@@ -7,8 +7,8 @@ import com.mushroom.midnight.common.block.MidnightFungiStemBlock;
 import com.mushroom.midnight.common.registry.MidnightBlocks;
 import com.mushroom.midnight.common.util.WorldUtil;
 import net.minecraft.block.Block;
-import net.minecraft.block.state.BlockState;
-import net.minecraft.init.Blocks;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Mirror;
@@ -16,8 +16,8 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraft.world.gen.structure.template.PlacementSettings;
-import net.minecraft.world.gen.structure.template.Template;
+import net.minecraft.world.gen.feature.template.PlacementSettings;
+import net.minecraft.world.gen.feature.template.Template;
 import net.minecraft.world.gen.structure.template.TemplateManager;
 import net.minecraftforge.event.terraingen.DecorateBiomeEvent;
 
@@ -143,7 +143,7 @@ public class LargeFungiFeature extends MidnightNaturalFeature {
             BlockPos offsetPos = pos.offset(attachSide);
             if (this.canReplace(world, offsetPos)) {
                 world.setBlockState(offsetPos, shelfBlock.getDefaultState()
-                        .withProperty(MidnightFungiShelfBlock.FACING, attachSide)
+                        .with(MidnightFungiShelfBlock.FACING, attachSide)
                 );
             }
         }
@@ -154,7 +154,7 @@ public class LargeFungiFeature extends MidnightNaturalFeature {
             BlockPos pos = entry.getKey();
             String tag = entry.getValue();
             if (tag.equals("inside")) {
-                world.setBlockState(pos, MidnightBlocks.MUSHROOM_INDist.getDefaultState(), 2 | 16);
+                world.setBlockState(pos, MidnightBlocks.MUSHROOM_INSIDE.getDefaultState(), 2 | 16);
             } else if (tag.equals("origin")) {
                 world.setBlockState(pos, this.stem, 2 | 16);
             }
@@ -163,7 +163,7 @@ public class LargeFungiFeature extends MidnightNaturalFeature {
 
     @Nullable
     private BlockPos computeCorrectedOrigin(BlockPos origin, Template template, PlacementSettings placementSettings) {
-        Map<BlockPos, String> dataBlocks = template.getDataBlocks(BlockPos.ORIGIN, placementSettings);
+        Map<BlockPos, String> dataBlocks = template.getDataBlocks(BlockPos.ZERO, placementSettings);
         BlockPos localOrigin = this.reverseLookup(dataBlocks, "origin");
         if (localOrigin == null) {
             return null;
@@ -188,11 +188,6 @@ public class LargeFungiFeature extends MidnightNaturalFeature {
             }
         }
         return null;
-    }
-
-    @Override
-    public DecorateBiomeEvent.Decorate.EventType getEventType() {
-        return DecorateBiomeEvent.Decorate.EventType.BIG_SHROOM;
     }
 
     private enum FungiShape {

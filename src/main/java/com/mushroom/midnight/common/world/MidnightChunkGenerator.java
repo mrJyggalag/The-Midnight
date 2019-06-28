@@ -45,7 +45,7 @@ public class MidnightChunkGenerator extends NoiseChunkGenerator<MidnightChunkGen
     public void generateBiomes(IChunk chunk) {
         super.generateBiomes(chunk);
 
-        // TODO: chunk primer doesn't store capabilities..
+        // TODO: chunk primer doesn't store capabilities.. PR forge for this support
         chunk.getCapability(Midnight.CAVERNOUS_BIOME_CAP)
                 .ifPresent(store -> {
                     store.populate(MidnightChunkGenerator.this.cavernBiomeBuffer);
