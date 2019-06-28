@@ -21,7 +21,7 @@ def core_plugin = "com.mushroom.midnight.core.MidnightLoadingPlugin"
 
 minecraft {
     mappings channel: 'snapshot', version: '20190627-1.14.3'
-    accessTransformer = file('build/resources/main/META-INF/midnight_at.cfg')
+    accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
     runs {
         client {
             workingDirectory project.file('run')
