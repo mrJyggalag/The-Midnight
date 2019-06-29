@@ -23,7 +23,7 @@ public class SpreadableSoilBlock extends SoilBlock {
     private final Supplier<Block> groundSupplier;
 
     public SpreadableSoilBlock(Properties properties, Supplier<Block> groundSupplier) {
-        super(properties, true);
+        super(properties.tickRandomly(), true);
         this.groundSupplier = groundSupplier;
     }
 

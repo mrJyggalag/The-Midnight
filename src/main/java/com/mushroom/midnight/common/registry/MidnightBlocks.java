@@ -38,7 +38,6 @@ import com.mushroom.midnight.common.block.MidnightGlassPaneBlock;
 import com.mushroom.midnight.common.block.MidnightMyceliumBlock;
 import com.mushroom.midnight.common.block.MidnightOreBlock;
 import com.mushroom.midnight.common.block.MidnightPlantBlock;
-import com.mushroom.midnight.common.block.MidnightTallGrassBlock;
 import com.mushroom.midnight.common.block.MidnightWoodPlankBlock;
 import com.mushroom.midnight.common.block.MushroomInsideBlock;
 import com.mushroom.midnight.common.block.NightstoneBlock;
@@ -109,8 +108,8 @@ public class MidnightBlocks {
     public static final Block GRASS_BLOCK = Blocks.AIR;
     public static final Block MYCELIUM = Blocks.AIR;
 
-    public static final Block TALL_MIDNIGHT_GRASS = Blocks.AIR;
-    public static final Block DOUBLE_MIDNIGHT_GRASS = Blocks.AIR;
+    public static final Block GRASS = Blocks.AIR;
+    public static final Block TALL_GRASS = Blocks.AIR;
 
     public static final Block NIGHTSHROOM = Blocks.AIR;
     public static final Block DOUBLE_NIGHTSHROOM = Blocks.AIR;
@@ -322,7 +321,6 @@ public class MidnightBlocks {
                         Block.Properties.create(Material.ORGANIC, MaterialColor.MAGENTA_TERRACOTTA)
                                 .hardnessAndResistance(0.6F)
                                 .sound(SoundType.PLANT)
-                                .tickRandomly()
                 , () -> DIRT))
                 .add("dirt", new SoilBlock(
                         Block.Properties.create(Material.EARTH, MaterialColor.BLUE_TERRACOTTA)
@@ -359,6 +357,16 @@ public class MidnightBlocks {
                 )
                 .add("nighstone_furnace", MidnightFurnaceBlock::new);
 
+        RegUtil.blocks(event.getRegistry())
+                .withProperties(() -> Block.Properties.create(Material.TALL_PLANTS)
+                        .sound(SoundType.PLANT)
+                        .hardnessAndResistance(0f)
+                        .doesNotBlockMovement()
+                )
+                .add("grass", props -> new MidnightPlantBlock(props, false, () -> TALL_GRASS))
+                .add("tall_grass", props -> new MidnightDoublePlantBlock(props, false));
+
+
         // TODO: Port all registration
 
         blocks.addAll(Lists.newArrayList(
@@ -374,8 +382,6 @@ public class MidnightBlocks {
                 RegUtil.withName(new BulbFungusStemBlock(), "bulb_fungus_stem"),
                 RegUtil.withName(new BulbFungusHatBlock(MapColor.MAGENTA), "bulb_fungus_hat"),
                 RegUtil.withName(new RockshroomBlock(), "rockshroom"),
-                RegUtil.withName(new MidnightTallGrassBlock(), "tall_midnight_grass"),
-                RegUtil.withName(new MidnightDoublePlantBlock(PlantBehaviorType.BUSH, false), "double_midnight_grass"),
                 RegUtil.withName(new MidnightFungiBlock(() -> DOUBLE_NIGHTSHROOM), "nightshroom"),
                 RegUtil.withName(new MidnightDoubleFungiBlock(() -> new LargeFungiFeature(
                         MidnightBlocks.NIGHTSHROOM_STEM.getDefaultState(),
@@ -618,7 +624,7 @@ public class MidnightBlocks {
                 SHADOWROOT_CHEST,
                 NIGHTSTONE_FURNACE,
                 COARSE_DIRT, DIRT, GRASS_BLOCK, MYCELIUM,
-                TALL_MIDNIGHT_GRASS, DOUBLE_MIDNIGHT_GRASS,
+                GRASS, TALL_GRASS,
                 NIGHTSHROOM, DOUBLE_NIGHTSHROOM, NIGHTSHROOM_SHELF,
                 DEWSHROOM, DOUBLE_DEWSHROOM, DEWSHROOM_SHELF,
                 VIRIDSHROOM, DOUBLE_VIRIDSHROOM, VIRIDSHROOM_SHELF,

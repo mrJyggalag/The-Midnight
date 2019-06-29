@@ -64,7 +64,7 @@ public class NightstoneBlock extends Block implements IGrowable {
                         worldIn.getBiome(blockpos1).plantFlower(worldIn, rand, blockpos1); // done in the block that is bonemealed
                     }
                 } else {
-                    BlockState tallGrassState = MidnightBlocks.TALL_MIDNIGHT_GRASS.getDefaultState();
+                    BlockState tallGrassState = MidnightBlocks.GRASS.getDefaultState();
                     if (GeneratablePlant.canGenerate(worldIn, blockpos1, tallGrassState)) {
                         worldIn.setBlockState(blockpos1, tallGrassState, 3);
                     }

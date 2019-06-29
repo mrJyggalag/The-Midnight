@@ -129,8 +129,8 @@ public class MidnightModelRegistry {
         blockColors.register(MidnightModelRegistry::computeFoliageColor, MidnightBlocks.SHADOWROOT_LEAVES);
         itemColors.register(MidnightModelRegistry::defaultFoliageColor, MidnightBlocks.SHADOWROOT_LEAVES);
 
-        blockColors.register(MidnightModelRegistry::computeGrassColor, MidnightBlocks.TALL_MIDNIGHT_GRASS, MidnightBlocks.DOUBLE_MIDNIGHT_GRASS);
-        itemColors.register(MidnightModelRegistry::defaultGrassColor, MidnightBlocks.TALL_MIDNIGHT_GRASS, MidnightBlocks.DOUBLE_MIDNIGHT_GRASS);
+        blockColors.register(MidnightModelRegistry::computeGrassColor, MidnightBlocks.GRASS, MidnightBlocks.TALL_GRASS);
+        itemColors.register(MidnightModelRegistry::defaultGrassColor, MidnightBlocks.GRASS, MidnightBlocks.TALL_GRASS);
     }
 
     private static int computeGrassColor(BlockState state, IEnviromentBlockReader world, BlockPos pos, int tintIndex) {

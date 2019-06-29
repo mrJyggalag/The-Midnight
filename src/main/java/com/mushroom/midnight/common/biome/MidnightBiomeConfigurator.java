@@ -121,12 +121,12 @@ public class MidnightBiomeConfigurator {
 
     public static void addGrasses(Biome biome) {
         biome.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, Biome.createDecoratedFeature(
-                Feature.GRASS, new GrassFeatureConfig(MidnightBlocks.TALL_MIDNIGHT_GRASS.getDefaultState()),
+                Feature.GRASS, new GrassFeatureConfig(MidnightBlocks.GRASS.getDefaultState()),
                 Placement.COUNT_HEIGHTMAP_DOUBLE, new FrequencyConfig(6)
         ));
 
         biome.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, Biome.createDecoratedFeature(
-                Feature.DOUBLE_PLANT, new DoublePlantConfig(MidnightBlocks.DOUBLE_MIDNIGHT_GRASS.getDefaultState()),
+                Feature.DOUBLE_PLANT, new DoublePlantConfig(MidnightBlocks.TALL_GRASS.getDefaultState()),
                 Placement.COUNT_HEIGHTMAP_32, new FrequencyConfig(3)
         ));
     }

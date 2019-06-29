@@ -64,7 +64,7 @@ public class SoilBlock extends Block implements IGrowable {
             return;
         }
         BlockPos blockpos = pos.up();
-        BlockState grassState = MidnightBlocks.TALL_MIDNIGHT_GRASS.getDefaultState();
+        BlockState grassState = MidnightBlocks.GRASS.getDefaultState();
         for (int i = 0; i < 128; ++i) {
             BlockPos blockpos1 = blockpos;
             int j = 0;
