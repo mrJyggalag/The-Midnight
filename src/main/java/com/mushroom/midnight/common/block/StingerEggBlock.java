@@ -14,7 +14,7 @@ public class StingerEggBlock extends PileOfEggsBlock {
 
     @Override
     protected MobEntity createEntityForEgg(World world, BlockPos pos, BlockState state) {
-        StingerEntity stinger = MidnightEntities.stinger.create(world);
+        StingerEntity stinger = MidnightEntities.STINGER.create(world);
         if (stinger != null) {
             stinger.setGrowingAge(-1);
         }

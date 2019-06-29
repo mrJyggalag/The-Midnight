@@ -109,7 +109,7 @@ public class RiftSpawnHandler {
         BridgeManager trackerHandler = GlobalBridgeManager.getServer();
         RiftBridge bridge = trackerHandler.createBridge(attachment);
 
-        RiftEntity rift = MidnightEntities.rift.create(world);
+        RiftEntity rift = MidnightEntities.RIFT.create(world);
         if (rift != null) {
             rift.acceptBridge(bridge);
             bridge.getAttachment().apply(rift);

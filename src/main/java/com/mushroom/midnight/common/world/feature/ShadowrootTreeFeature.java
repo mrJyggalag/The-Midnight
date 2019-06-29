@@ -2,13 +2,16 @@ package com.mushroom.midnight.common.world.feature;
 
 import com.google.common.collect.Lists;
 import com.mojang.datafixers.Dynamic;
-import com.mushroom.midnight.common.world.feature.config.LogAndLeafConfig;
+import com.mushroom.midnight.common.registry.MidnightBlocks;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.LogBlock;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.gen.IWorldGenerationReader;
+import net.minecraft.world.gen.feature.NoFeatureConfig;
+import net.minecraftforge.common.IPlantable;
 
 import java.util.HashSet;
 import java.util.List;
@@ -16,17 +19,21 @@ import java.util.Random;
 import java.util.Set;
 import java.util.function.Function;
 
-public class ShadowrootTreeFeature extends MidnightTreeFeature<LogAndLeafConfig> {
+public class ShadowrootTreeFeature extends MidnightTreeFeature {
     private static final Direction[] HORIZONTALS = new Direction[] { Direction.NORTH, Direction.EAST, Direction.SOUTH, Direction.WEST };
+
+    private static final BlockState LOG = MidnightBlocks.SHADOWROOT_LOG.getDefaultState();
+    private static final BlockState LEAVES = MidnightBlocks.SHADOWROOT_LEAVES.getDefaultState();
 
     private static final int BRANCH_SPACING = 3;
 
-    public ShadowrootTreeFeature(Function<Dynamic<?>, ? extends LogAndLeafConfig> deserialize) {
+    public ShadowrootTreeFeature(Function<Dynamic<?>, ? extends NoFeatureConfig> deserialize) {
         super(deserialize);
+        this.setSapling((IPlantable) MidnightBlocks.SHADOWROOT_SAPLING);
     }
 
     @Override
-    protected boolean place(IWorld world, Random random, BlockPos origin, LogAndLeafConfig config) {
+    protected boolean place(IWorld world, Random random, BlockPos origin) {
         int height = random.nextInt(8) + 10;
 
         if (!this.canFit(world, origin, 1, height)) {
@@ -39,14 +46,14 @@ public class ShadowrootTreeFeature extends MidnightTreeFeature<LogAndLeafConfig>
             BlockPos.MutableBlockPos mutablePos = new BlockPos.MutableBlockPos(origin);
             for (int localY = 0; localY < height; localY++) {
                 mutablePos.setY(origin.getY() + localY);
-                this.setBlockState(world, mutablePos, config.log);
+                this.setBlockState(world, mutablePos, LOG);
             }
 
-            this.generateRoots(world, random, origin, config);
+            this.generateRoots(world, random, origin);
 
             Set<Branch> branches = this.collectBranches(world, random, origin, height);
             for (Branch branch : branches) {
-                this.setBlockState(world, branch.pos, config.log.with(LogBlock.AXIS, branch.getAxis()));
+                this.setBlockState(world, branch.pos, LOG.with(LogBlock.AXIS, branch.getAxis()));
             }
 
             Set<BlockPos> leafPositions = this.produceBlob(origin.up(height - 2), 1.5, 2.5);
@@ -57,7 +64,7 @@ public class ShadowrootTreeFeature extends MidnightTreeFeature<LogAndLeafConfig>
             }
 
             for (BlockPos leafPos : leafPositions) {
-                this.setBlockState(world, leafPos, config.leaf);
+                this.setBlockState(world, leafPos, LEAVES);
             }
 
             return true;
@@ -79,7 +86,7 @@ public class ShadowrootTreeFeature extends MidnightTreeFeature<LogAndLeafConfig>
         return true;
     }
 
-    private void generateRoots(IWorldGenerationReader world, Random random, BlockPos origin, LogAndLeafConfig config) {
+    private void generateRoots(IWorldGenerationReader world, Random random, BlockPos origin) {
         BlockPos.MutableBlockPos mutablePos = new BlockPos.MutableBlockPos();
 
         List<Direction> availableSides = Lists.newArrayList(HORIZONTALS);
@@ -92,7 +99,7 @@ public class ShadowrootTreeFeature extends MidnightTreeFeature<LogAndLeafConfig>
             int height = random.nextInt(3) + 1;
             for (int localY = 0; localY < height; localY++) {
                 mutablePos.setPos(rootOrigin.getX(), rootOrigin.getY() + localY, rootOrigin.getZ());
-                this.setBlockState(world, mutablePos, config.log);
+                this.setBlockState(world, mutablePos, LOG);
             }
         }
     }

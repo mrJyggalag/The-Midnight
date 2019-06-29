@@ -27,10 +27,10 @@ public class Helper {
         return rgb;
     }
     public static boolean isGroundForBoneMeal(Block block) {
-        return block == MidnightBlocks.NIGHTSTONE || block == MidnightBlocks.MIDNIGHT_GRASS || block == MidnightBlocks.MIDNIGHT_MYCELIUM || block == Blocks.GRASS;
+        return block == MidnightBlocks.NIGHTSTONE || block == MidnightBlocks.GRASS_BLOCK || block == MidnightBlocks.MYCELIUM || block == Blocks.GRASS;
     }
 
     public static boolean isGroundForMidnightPlant(Block block) {
-        return isGroundForBoneMeal(block) || block == MidnightBlocks.MIDNIGHT_DIRT || block == MidnightBlocks.DECEITFUL_MUD || block == MidnightBlocks.DECEITFUL_PEAT || block == Blocks.FARMLAND || block == Blocks.DIRT;
+        return isGroundForBoneMeal(block) || block == MidnightBlocks.DIRT || block == MidnightBlocks.DECEITFUL_MUD || block == MidnightBlocks.DECEITFUL_PEAT || block == Blocks.FARMLAND || block == Blocks.DIRT;
     }
 }

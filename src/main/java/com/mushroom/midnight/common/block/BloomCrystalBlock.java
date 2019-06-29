@@ -35,7 +35,7 @@ public class BloomCrystalBlock extends CrystalBlock {
         double z = pos.getZ() + 0.5;
         float yaw = world.rand.nextFloat() * 360.0F;
 
-        Entity entity = MidnightEntities.crystal_bug.create(world);
+        Entity entity = MidnightEntities.CRYSTAL_BUG.create(world);
         if (entity != null) {
             entity.setPositionAndRotation(x, y, z, yaw, 0f);
             world.addEntity(entity);

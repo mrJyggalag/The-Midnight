@@ -31,11 +31,11 @@ public class SporeBombEntity extends ThrowableEntity {
     }
 
     public SporeBombEntity(World world, double x, double y, double z) {
-        super(MidnightEntities.spore_bomb, x, y, z, world);
+        super(MidnightEntities.SPORE_BOMB, x, y, z, world);
     }
 
     public SporeBombEntity(World world, LivingEntity thrower) {
-        super(MidnightEntities.spore_bomb, thrower, world);
+        super(MidnightEntities.SPORE_BOMB, thrower, world);
     }
 
     @Override

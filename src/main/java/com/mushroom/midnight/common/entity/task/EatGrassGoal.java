@@ -36,7 +36,7 @@ public class EatGrassGoal extends Goal {
                 return true;
             } else {
                 Block belowBlock = this.owner.world.getBlockState(currentPos.down()).getBlock();
-                return belowBlock == Blocks.GRASS_BLOCK || belowBlock == MidnightBlocks.MIDNIGHT_GRASS;
+                return belowBlock == Blocks.GRASS_BLOCK || belowBlock == MidnightBlocks.GRASS_BLOCK;
             }
         }
     }
@@ -71,10 +71,10 @@ public class EatGrassGoal extends Goal {
                 BlockPos belowPos = currentPos.down();
                 BlockState belowState = this.owner.world.getBlockState(belowPos);
                 Block belowBlock = belowState.getBlock();
-                if (belowBlock == Blocks.GRASS || belowBlock == MidnightBlocks.MIDNIGHT_GRASS) {
+                if (belowBlock == Blocks.GRASS || belowBlock == MidnightBlocks.GRASS_BLOCK) {
                     if (ForgeEventFactory.getMobGriefingEvent(this.owner.world, this.owner)) {
                         this.owner.world.playEvent(2001, belowPos, Block.getStateId(belowState));
-                        this.owner.world.setBlockState(belowPos, (belowBlock == Blocks.GRASS ? Blocks.DIRT : MidnightBlocks.MIDNIGHT_DIRT).getDefaultState(), 2);
+                        this.owner.world.setBlockState(belowPos, (belowBlock == Blocks.GRASS ? Blocks.DIRT : MidnightBlocks.DIRT).getDefaultState(), 2);
                     }
                     this.owner.eatGrassBonus();
                 }

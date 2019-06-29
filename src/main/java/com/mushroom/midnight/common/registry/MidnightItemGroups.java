@@ -7,7 +7,7 @@ public class MidnightItemGroups {
     public static final ItemGroup BUILDING = new ItemGroup("midnight_building") {
         @Override
         public ItemStack createIcon() {
-            return new ItemStack(MidnightBlocks.MIDNIGHT_GRASS);
+            return new ItemStack(MidnightBlocks.GRASS_BLOCK);
         }
     };
 

@@ -90,7 +90,7 @@ public class NightStagEntity extends AnimalEntity {
     @Override
     @Nullable
     public AgeableEntity createChild(AgeableEntity entity) {
-        NightStagEntity child = MidnightEntities.nightstag.create(world);
+        NightStagEntity child = MidnightEntities.NIGHTSTAG.create(world);
         if (child != null) {
             child.setGrowingAge(GROWING_TIME);
             child.setAntlerType(((NightStagEntity) entity).getAntlerType());
@@ -197,7 +197,7 @@ public class NightStagEntity extends AnimalEntity {
     @Override
     public float getBlockPathWeight(BlockPos pos) {
         Block belowBlock = world.getBlockState(pos.down()).getBlock();
-        return belowBlock == MidnightBlocks.MIDNIGHT_GRASS || belowBlock == MidnightBlocks.NIGHTSTONE ? 10f : 9f - (world.getBrightness(pos) * 10f);
+        return belowBlock == MidnightBlocks.GRASS_BLOCK || belowBlock == MidnightBlocks.NIGHTSTONE ? 10f : 9f - (world.getBrightness(pos) * 10f);
     }
 
     @Override

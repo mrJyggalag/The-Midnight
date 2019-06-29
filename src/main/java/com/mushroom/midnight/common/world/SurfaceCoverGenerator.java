@@ -1,6 +1,5 @@
 package com.mushroom.midnight.common.world;
 
-import com.mushroom.midnight.common.biome.config.SurfaceConfig;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.material.Material;
 import net.minecraft.util.math.BlockPos;

@@ -9,11 +9,9 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.MutableBoundingBox;
 import net.minecraft.world.IWorld;
-import net.minecraft.world.gen.ChunkGenerator;
-import net.minecraft.world.gen.GenerationSettings;
 import net.minecraft.world.gen.IWorldGenerationReader;
 import net.minecraft.world.gen.feature.AbstractTreeFeature;
-import net.minecraft.world.gen.feature.IFeatureConfig;
+import net.minecraft.world.gen.feature.NoFeatureConfig;
 import net.minecraftforge.common.IPlantable;
 
 import java.util.HashSet;
@@ -21,27 +19,18 @@ import java.util.Random;
 import java.util.Set;
 import java.util.function.Function;
 
-public abstract class MidnightTreeFeature<T extends IFeatureConfig> extends AbstractTreeFeature<T> {
-    private final ThreadLocal<T> config = new ThreadLocal<>();
-
-    protected MidnightTreeFeature(Function<Dynamic<?>, ? extends T> deserialize) {
+public abstract class MidnightTreeFeature extends AbstractTreeFeature<NoFeatureConfig> {
+    protected MidnightTreeFeature(Function<Dynamic<?>, ? extends NoFeatureConfig> deserialize) {
         super(deserialize, true);
-        this.sapling = (IPlantable) MidnightBlocks.SHADOWROOT_SAPLING; // TODO
+        this.sapling = (IPlantable) MidnightBlocks.SHADOWROOT_SAPLING;
     }
 
-    protected abstract boolean place(IWorld world, Random random, BlockPos origin, T config);
-
-    @Override
-    public final boolean place(IWorld world, ChunkGenerator<? extends GenerationSettings> generator, Random random, BlockPos origin, T config) {
-        // AbstractTreeFeature doesn't pass us the config...
-        this.config.set(config);
-        return super.place(world, generator, random, origin, config);
-    }
+    protected abstract boolean place(IWorld world, Random random, BlockPos origin);
 
     @Override
     protected final boolean place(Set<BlockPos> changedBlocks, IWorldGenerationReader world, Random random, BlockPos origin, MutableBoundingBox bounds) {
         WorldWrapper wrapper = new WorldWrapper((IWorld) world, changedBlocks, bounds);
-        return this.place(wrapper, random, origin, this.config.get());
+        return this.place(wrapper, random, origin);
     }
 
     protected Set<BlockPos> produceBlob(BlockPos origin, double radius) {

@@ -104,10 +104,10 @@ public class MidnightBlocks {
     public static final Block SHADOWROOT_CHEST = Blocks.AIR;
     public static final Block NIGHTSTONE_FURNACE = Blocks.AIR;
 
-    public static final Block MIDNIGHT_COARSE_DIRT = Blocks.AIR;
-    public static final Block MIDNIGHT_DIRT = Blocks.AIR;
-    public static final Block MIDNIGHT_GRASS = Blocks.AIR;
-    public static final Block MIDNIGHT_MYCELIUM = Blocks.AIR;
+    public static final Block COARSE_DIRT = Blocks.AIR;
+    public static final Block DIRT = Blocks.AIR;
+    public static final Block GRASS_BLOCK = Blocks.AIR;
+    public static final Block MYCELIUM = Blocks.AIR;
 
     public static final Block TALL_MIDNIGHT_GRASS = Blocks.AIR;
     public static final Block DOUBLE_MIDNIGHT_GRASS = Blocks.AIR;
@@ -318,23 +318,23 @@ public class MidnightBlocks {
 //        );
 
         RegUtil.blocks(event.getRegistry())
-                .add("midnight_grass", new MidnightGrassBlock(
+                .add("grass_block", new MidnightGrassBlock(
                         Block.Properties.create(Material.ORGANIC, MaterialColor.MAGENTA_TERRACOTTA)
                                 .hardnessAndResistance(0.6F)
                                 .sound(SoundType.PLANT)
                                 .tickRandomly()
                 ))
-                .add("midnight_dirt", new MidnightDirtBlock(
+                .add("dirt", new MidnightDirtBlock(
                         Block.Properties.create(Material.EARTH, MaterialColor.BLUE_TERRACOTTA)
                                 .hardnessAndResistance(0.5F)
                                 .sound(SoundType.GROUND)
                 ))
-                .add("midnight_coarse_dirt", new MidnightDirtBlock(
+                .add("coarse_dirt", new MidnightDirtBlock(
                         Block.Properties.create(Material.EARTH, MaterialColor.BLUE_TERRACOTTA)
                                 .hardnessAndResistance(0.5F)
                                 .sound(SoundType.GROUND)
                 ))
-                .add("midnight_mycelium", new MidnightMyceliumBlock(
+                .add("mycelium", new MidnightMyceliumBlock(
                         Block.Properties.create(Material.ROCK, MaterialColor.PINK)
                                 .hardnessAndResistance(1.5F, 10.0F)
                                 .sound(SoundType.STONE)
@@ -617,7 +617,7 @@ public class MidnightBlocks {
                 SHADOWROOT_CRAFTING_TABLE,
                 SHADOWROOT_CHEST,
                 NIGHTSTONE_FURNACE,
-                MIDNIGHT_COARSE_DIRT, MIDNIGHT_DIRT, MIDNIGHT_GRASS, MIDNIGHT_MYCELIUM,
+                COARSE_DIRT, DIRT, GRASS_BLOCK, MYCELIUM,
                 TALL_MIDNIGHT_GRASS, DOUBLE_MIDNIGHT_GRASS,
                 NIGHTSHROOM, DOUBLE_NIGHTSHROOM, NIGHTSHROOM_SHELF,
                 DEWSHROOM, DOUBLE_DEWSHROOM, DEWSHROOM_SHELF,

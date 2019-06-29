@@ -14,7 +14,7 @@ import net.minecraftforge.registries.ForgeRegistry;
 import net.minecraftforge.registries.ObjectHolder;
 import net.minecraftforge.registries.RegistryBuilder;
 
-import static com.mushroom.midnight.common.biome.MidnightBiomeConfigs.*;
+import static com.mushroom.midnight.common.biome.MidnightBiomeConfigurator.*;
 
 @Mod.EventBusSubscriber(modid = Midnight.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 @ObjectHolder(Midnight.MODID)

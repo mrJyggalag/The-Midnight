@@ -2,9 +2,7 @@ package com.mushroom.midnight.common.entity;
 
 import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.client.particle.RiftParticleSystem;
-import com.mushroom.midnight.common.capability.RiftTravelCooldown;
 import com.mushroom.midnight.common.config.MidnightConfig;
-import com.mushroom.midnight.common.entity.creature.HunterEntity;
 import com.mushroom.midnight.common.entity.creature.RifterEntity;
 import com.mushroom.midnight.common.helper.Helper;
 import com.mushroom.midnight.common.registry.MidnightDimensions;
@@ -72,7 +70,7 @@ public class RiftEntity extends Entity implements IEntityAdditionalSpawnData {
     }
 
     public RiftEntity(FMLPlayMessages.SpawnEntity spawnEntity, World world) {
-        this(MidnightEntities.rift, world);
+        this(MidnightEntities.RIFT, world);
     }
 
     private void initGeometry(long seed) {
@@ -153,9 +151,9 @@ public class RiftEntity extends Entity implements IEntityAdditionalSpawnData {
         MobEntity entity;
         boolean isHunter = rand.nextFloat() < 0.01f;
         if (isHunter) {
-            entity = MidnightEntities.hunter.create(this.world);
+            entity = MidnightEntities.HUNTER.create(this.world);
         } else {
-            entity = MidnightEntities.rifter.create(this.world);
+            entity = MidnightEntities.RIFTER.create(this.world);
         }
         if (entity == null) {
             return false;

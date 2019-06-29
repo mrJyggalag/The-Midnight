@@ -1,11 +1,21 @@
 package com.mushroom.midnight.common.registry;
 
 import com.mushroom.midnight.Midnight;
-import com.mushroom.midnight.common.biome.MidnightBiomeConfigs;
 import com.mushroom.midnight.common.biome.MidnightBiomeGroup;
 import com.mushroom.midnight.common.biome.config.BiomeSpawnEntry;
+import com.mushroom.midnight.common.biome.surface.BlackRidgeBiome;
+import com.mushroom.midnight.common.biome.surface.CrystalSpiresBiome;
 import com.mushroom.midnight.common.biome.surface.DeceitfulBogBiome;
-import com.mushroom.midnight.common.biome.surface.SurfaceBiome;
+import com.mushroom.midnight.common.biome.surface.FungiForestBiome;
+import com.mushroom.midnight.common.biome.surface.HillyFungiForestBiome;
+import com.mushroom.midnight.common.biome.surface.HillyVigilantForestBiome;
+import com.mushroom.midnight.common.biome.surface.NightPlainsBiome;
+import com.mushroom.midnight.common.biome.surface.ObscuredPeaksBiome;
+import com.mushroom.midnight.common.biome.surface.ObscuredPlateauBiome;
+import com.mushroom.midnight.common.biome.surface.PhantasmalValleyBiome;
+import com.mushroom.midnight.common.biome.surface.RunebushGroveBiome;
+import com.mushroom.midnight.common.biome.surface.VigilantForestBiome;
+import com.mushroom.midnight.common.biome.surface.WarpedFieldsBiome;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.Biomes;
 import net.minecraftforge.common.BiomeDictionary;
@@ -33,21 +43,20 @@ public class MidnightSurfaceBiomes {
 
     @SubscribeEvent
     public static void onRegisterBiomes(RegistryEvent.Register<Biome> event) {
-        event.getRegistry().registerAll(
-                RegUtil.applyName(new SurfaceBiome("vigilant_forest", MidnightBiomeConfigs.VIGILANT_FOREST_CONFIG)),
-                RegUtil.applyName(new SurfaceBiome("black_ridge", MidnightBiomeConfigs.BLACK_RIDGE_CONFIG)),
-                RegUtil.applyName(new DeceitfulBogBiome("deceitful_bog", MidnightBiomeConfigs.DECEITFUL_BOG_CONFIG)),
-                RegUtil.applyName(new SurfaceBiome("fungi_forest", MidnightBiomeConfigs.FUNGI_FOREST_CONFIG)),
-                RegUtil.applyName(new SurfaceBiome("obscured_peaks", MidnightBiomeConfigs.OBSCURED_PEAK_CONFIG)),
-                RegUtil.applyName(new SurfaceBiome("warped_fields", MidnightBiomeConfigs.WARPED_FIELDS_CONFIG)),
-                RegUtil.applyName(new SurfaceBiome("crystal_spires", MidnightBiomeConfigs.CRYSTAL_SPIRES_CONFIG)),
-                RegUtil.applyName(new SurfaceBiome("night_plains", MidnightBiomeConfigs.NIGHT_PLAINS_CONFIG)),
-                RegUtil.applyName(new SurfaceBiome("obscured_plateau", MidnightBiomeConfigs.OBSCURED_PLATEAU_CONFIG)),
-                RegUtil.applyName(new SurfaceBiome("phantasmal_valley", MidnightBiomeConfigs.PHANTASMAL_VALLEY_CONFIG)),
-                RegUtil.applyName(new SurfaceBiome("runebush_grove", MidnightBiomeConfigs.RUNEBUSH_GROVE_CONFIG)),
-                RegUtil.applyName(new SurfaceBiome("hilly_vigilant_forest", MidnightBiomeConfigs.HILLY_VIGILANT_FOREST_CONFIG)),
-                RegUtil.applyName(new SurfaceBiome("hilly_fungi_forest", MidnightBiomeConfigs.HILLY_FUNGI_FOREST_CONFIG))
-        );
+        RegUtil.generic(event.getRegistry())
+                .add("vigilant_forest", new VigilantForestBiome())
+                .add("black_ridge", new BlackRidgeBiome())
+                .add("deceitful_bog", new DeceitfulBogBiome())
+                .add("fungi_forest", new FungiForestBiome())
+                .add("obscured_peaks", new ObscuredPeaksBiome())
+                .add("warped_fields", new WarpedFieldsBiome())
+                .add("crystal_spires", new CrystalSpiresBiome())
+                .add("night_plains", new NightPlainsBiome())
+                .add("obscured_plateau", new ObscuredPlateauBiome())
+                .add("phantasmal_valley", new PhantasmalValleyBiome())
+                .add("runebush_grove", new RunebushGroveBiome())
+                .add("hilly_vigilant_forest", new HillyVigilantForestBiome())
+                .add("hilly_fungi_forest", new HillyFungiForestBiome());
     }
 
     public static void onInit() {

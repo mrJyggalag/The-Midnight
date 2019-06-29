@@ -62,12 +62,12 @@ public class CloudEntity extends Entity {
     }
 
     public CloudEntity(World world, double x, double y, double z) {
-        this(MidnightEntities.cloud, world);
+        this(MidnightEntities.CLOUD, world);
         setPosition(x, y, z);
     }
 
     public CloudEntity(FMLPlayMessages.SpawnEntity spawnEntity, World world) {
-        this(MidnightEntities.cloud, world);
+        this(MidnightEntities.CLOUD, world);
     }
 
     public CloudEntity setAllowTeleport() {

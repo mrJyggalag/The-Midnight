@@ -8,10 +8,10 @@ import net.minecraft.world.gen.feature.NoFeatureConfig;
 import javax.annotation.Nullable;
 import java.util.Random;
 
-public class ShadowrootTree extends Tree {
+public class DarkWillowTree extends Tree {
     @Nullable
     @Override
     protected AbstractTreeFeature<NoFeatureConfig> getTreeFeature(Random random) {
-        return MidnightFeatures.SHADOWROOT_TREE;
+        return MidnightFeatures.DARK_WILLOW_TREE;
     }
 }

@@ -1,7 +1,5 @@
 package com.mushroom.midnight.common.world;
 
-import com.mushroom.midnight.common.biome.EntitySpawnConfigured;
-import com.mushroom.midnight.common.biome.config.SpawnerConfig;
 import com.mushroom.midnight.common.config.MidnightConfig;
 import com.mushroom.midnight.common.util.WeightedPool;
 import net.minecraft.block.BlockState;
@@ -16,13 +14,11 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.Difficulty;
-import net.minecraft.world.GameRules;
 import net.minecraft.world.IWorldReader;
 import net.minecraft.world.ServerWorld;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.chunk.Chunk;
-import net.minecraft.world.spawner.WorldEntitySpawner;
 import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.eventbus.api.Event;
 

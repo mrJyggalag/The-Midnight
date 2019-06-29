@@ -1,9 +1,5 @@
 package com.mushroom.midnight.common.biome.cavern;
 
-import com.mushroom.midnight.common.biome.EntitySpawnConfigured;
-import com.mushroom.midnight.common.biome.MidnightBiomeDecorator;
-import com.mushroom.midnight.common.biome.config.SpawnerConfig;
-import com.mushroom.midnight.common.biome.config.SurfaceConfig;
 import com.mushroom.midnight.common.world.MidnightChunkGenerator;
 import com.mushroom.midnight.common.world.SurfaceCoverGenerator;
 import com.mushroom.midnight.common.world.SurfacePlacementLevel;

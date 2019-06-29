@@ -101,7 +101,7 @@ public class LargeFungiFeature extends MidnightNaturalFeature {
         // TODO: Delegate to plant
         BlockState groundState = world.getBlockState(groundPos);
         Block groundBlock = groundState.getBlock();
-        return groundBlock == MidnightBlocks.MIDNIGHT_GRASS || groundBlock == MidnightBlocks.MIDNIGHT_DIRT || groundBlock == MidnightBlocks.MIDNIGHT_MYCELIUM
+        return groundBlock == MidnightBlocks.GRASS_BLOCK || groundBlock == MidnightBlocks.DIRT || groundBlock == MidnightBlocks.MYCELIUM
                 || groundBlock == MidnightBlocks.NIGHTSTONE
                 || groundBlock == Blocks.MYCELIUM;
     }

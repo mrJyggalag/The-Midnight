@@ -35,11 +35,11 @@ public class ThrownGeodeEntity extends ThrowableEntity {
     }
 
     public ThrownGeodeEntity(World world, double x, double y, double z) {
-        super(MidnightEntities.thrown_geode, x, y, z, world);
+        super(MidnightEntities.THROWN_GEODE, x, y, z, world);
     }
 
     public ThrownGeodeEntity(World world, LivingEntity thrower) {
-        super(MidnightEntities.thrown_geode, thrower, world);
+        super(MidnightEntities.THROWN_GEODE, thrower, world);
     }
 
     @Override

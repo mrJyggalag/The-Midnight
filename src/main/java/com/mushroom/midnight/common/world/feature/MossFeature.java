@@ -1,32 +1,37 @@
 package com.mushroom.midnight.common.world.feature;
 
+import com.mojang.datafixers.Dynamic;
 import com.mushroom.midnight.common.block.DeceitfulMossBlock;
+import com.mushroom.midnight.common.registry.MidnightBlocks;
 import net.minecraft.block.BlockState;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.world.IWorld;
+import net.minecraft.world.gen.ChunkGenerator;
+import net.minecraft.world.gen.GenerationSettings;
+import net.minecraft.world.gen.feature.Feature;
+import net.minecraft.world.gen.feature.NoFeatureConfig;
 
 import java.util.Random;
+import java.util.function.Function;
 
-public class MossFeature extends MidnightAbstractFeature {
-    private final BlockState state;
+public class MossFeature extends Feature<NoFeatureConfig> {
+    private static final BlockState BLOCK = MidnightBlocks.DECEITFUL_MOSS.getDefaultState();
 
-    public MossFeature(BlockState state) {
-        this.state = state;
+    public MossFeature(Function<Dynamic<?>, ? extends NoFeatureConfig> deserialize) {
+        super(deserialize);
     }
 
     @Override
-    public boolean placeFeature(World world, Random rand, BlockPos origin) {
-        Direction facing = Direction.VALUES[rand.nextInt(Direction.VALUES.length)];
-        if (this.state.getBlock().canPlaceBlockOnSide(world, origin, facing)) {
-            this.setBlockAndNotifyAdequately(world, origin, this.state.with(DeceitfulMossBlock.FACING, facing));
+    public boolean place(IWorld world, ChunkGenerator<? extends GenerationSettings> generator, Random rand, BlockPos origin, NoFeatureConfig config) {
+        Direction direction = Direction.random(rand);
+        BlockState state = BLOCK.with(DeceitfulMossBlock.FACING, direction);
+
+        if (state.isValidPosition(world, origin)) {
+            this.setBlockState(world, origin, state);
             return true;
         }
-        return false;
-    }
 
-    @Override
-    public DecorateBiomeEvent.Decorate.EventType getEventType() {
-        return DecorateBiomeEvent.Decorate.EventType.GRASS;
+        return false;
     }
 }

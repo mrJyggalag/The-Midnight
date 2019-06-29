@@ -15,7 +15,6 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.common.ToolType;
 
 import javax.annotation.Nullable;
@@ -51,7 +50,7 @@ public class MidnightGrassBlock extends Block implements IGrowable {
 
         BlockPos abovePos = pos.up();
         if (!Helper.isMidnightDimension(world) || world.getBlockState(abovePos).getLightOpacity(world, abovePos) > 2) {
-            world.setBlockState(pos, MidnightBlocks.MIDNIGHT_DIRT.getDefaultState());
+            world.setBlockState(pos, MidnightBlocks.DIRT.getDefaultState());
             return;
         }
 
@@ -62,7 +61,7 @@ public class MidnightGrassBlock extends Block implements IGrowable {
             }
 
             BlockState surfaceState = world.getBlockState(spreadPos);
-            if (surfaceState.getBlock() == MidnightBlocks.MIDNIGHT_DIRT) {
+            if (surfaceState.getBlock() == MidnightBlocks.DIRT) {
                 BlockState coverState = world.getBlockState(spreadPos.up());
                 if (coverState.getLightOpacity(world, spreadPos.up()) <= 2) {
                     world.setBlockState(spreadPos, this.getDefaultState());
@@ -78,12 +77,12 @@ public class MidnightGrassBlock extends Block implements IGrowable {
 
     @Override
     public void onPlantGrow(BlockState state, World world, BlockPos pos, BlockPos source) {
-        world.setBlockState(pos, MidnightBlocks.MIDNIGHT_DIRT.getDefaultState(), 2);
+        world.setBlockState(pos, MidnightBlocks.DIRT.getDefaultState(), 2);
     }
 
     @Override
     public Item getItemDropped(BlockState state, Random rand, int fortune) {
-        return Item.getItemFromBlock(MidnightBlocks.MIDNIGHT_DIRT);
+        return Item.getItemFromBlock(MidnightBlocks.DIRT);
     }
 
     @Override

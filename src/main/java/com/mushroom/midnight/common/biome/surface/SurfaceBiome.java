@@ -1,117 +1,56 @@
 package com.mushroom.midnight.common.biome.surface;
 
-import com.mushroom.midnight.Midnight;
-import com.mushroom.midnight.common.biome.EntitySpawnConfigured;
-import com.mushroom.midnight.common.biome.config.SpawnerConfig;
-import com.mushroom.midnight.common.biome.config.SurfaceConfig;
-import com.mushroom.midnight.common.config.MidnightConfig;
 import com.mushroom.midnight.common.world.MidnightChunkGenerator;
-import com.mushroom.midnight.common.world.SurfaceCoverGenerator;
 import com.mushroom.midnight.common.world.SurfacePlacementLevel;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.BushBlock;
-import net.minecraft.client.resources.I18n;
-import net.minecraft.entity.EntityClassification;
-import net.minecraft.util.WeightedRandom;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
-import net.minecraft.world.chunk.ChunkPrimer;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraft.world.gen.surfacebuilders.ConfiguredSurfaceBuilder;
+import net.minecraft.world.gen.surfacebuilders.ISurfaceBuilderConfig;
+import net.minecraft.world.gen.surfacebuilders.SurfaceBuilder;
 
-import java.util.List;
+import javax.annotation.Nullable;
 import java.util.Random;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
-public class SurfaceBiome extends Biome implements EntitySpawnConfigured {
-    protected final SurfaceBiomeConfig config;
-    private final SurfaceConfig localSurfaceConfig;
+public abstract class SurfaceBiome extends Biome {
+    private final float ridgeWeight;
+    private final float densityScale;
+    private final boolean wet;
 
-    private final SurfaceCoverGenerator coverGenerator = new SurfaceCoverGenerator(0, 0);
+    private final int grassColor;
+    private final int foliageColor;
 
-    public SurfaceBiome(String name, SurfaceBiomeConfig config) {
-        super(config.buildProperties(name));
+    protected SurfaceBiome(Builder builder) {
+        super(builder);
 
-        this.config = config;
-        this.localSurfaceConfig = new SurfaceConfig(this.config.getSurfaceConfig());
+        this.ridgeWeight = builder.ridgeWeight;
+        this.densityScale = builder.densityScale;
+        this.wet = builder.wet;
 
-        this.decorator = config.getFeatureConfig().createDecorator(PlacementLevel.INSTANCE);
-
-        for (EntityClassification entityClassification : EntityClassification.values()) {
-            this.getSpawnableList(entityClassification).clear();
-        }
-
-        config.getSurfaceConfig().apply(this);
-        this.flowers.clear();
-    }
-
-    public SurfaceBiomeConfig getConfig() {
-        return this.config;
+        this.grassColor = builder.grassColor;
+        this.foliageColor = builder.foliageColor;
     }
 
     @Override
-    @OnlyIn(Dist.CLIENT)
-    public String getBiomeName() {
-        return I18n.format("biome." + Midnight.MODID + "." + super.getBiomeName() + ".name");
+    public int getGrassColor(BlockPos pos) {
+        return this.grassColor;
     }
 
     @Override
-    public void genTerrainBlocks(World world, Random rand, ChunkPrimer primer, int z, int x, double noiseVal) {
-        this.configureSurface(this.localSurfaceConfig, this.config.getSurfaceConfig(), x, z, rand);
-        int fillerDepth = (int) (noiseVal / 3.0 + 3.0 + rand.nextDouble() * 0.25);
-
-        this.coverGenerator.coverSurface(this.localSurfaceConfig, primer, x, z, fillerDepth);
+    public int getFoliageColor(BlockPos pos) {
+        return this.foliageColor;
     }
 
-    protected SurfaceConfig configureSurface(SurfaceConfig config, SurfaceConfig parent, int x, int z, Random random) {
-        return config;
+    public float getRidgeWeight() {
+        return this.ridgeWeight;
     }
 
-    @Override
-    public void addFlower(BlockState state, int weight) {
-        if (MidnightConfig.general.foreignFlowersFromBonemeal.get()) {
-            super.addFlower(state, weight);
-        }
+    public float getDensityScale() {
+        return this.densityScale;
     }
 
-    @Override
-    public int getGrassColorAtPos(BlockPos pos) {
-        return this.getModdedBiomeGrassColor(this.config.getGrassColor());
-    }
-
-    @Override
-    public int getFoliageColorAtPos(BlockPos pos) {
-        return this.getModdedBiomeFoliageColor(this.config.getFoliageColor());
-    }
-
-    public static SurfaceTerrainConfig getTerrainConfig(Biome biome) {
-        if (biome instanceof SurfaceBiome) {
-            return ((SurfaceBiome) biome).getConfig().getTerrainConfig();
-        }
-        return SurfaceTerrainConfig.DEFAULT;
-    }
-
-    @Override
-    public SpawnerConfig getSpawnerConfig() {
-        return this.config.getSpawnerConfig();
-    }
-
-    @Override
-    public void plantFlower(World world, Random rand, BlockPos pos) {
-        final List<FlowerEntry> flowerList;
-        if (MidnightConfig.general.foreignFlowersFromBonemeal.get() && !this.flowers.isEmpty()) {
-            flowerList = Stream.concat(this.flowers.stream(), this.config.getFeatureConfig().getFlowers().stream()).collect(Collectors.toList());
-        } else {
-            flowerList = this.config.getFeatureConfig().getFlowers();
-        }
-        if (!flowerList.isEmpty()) {
-            Biome.FlowerEntry flower = WeightedRandom.getRandomItem(rand, flowerList);
-            if (flower != null && flower.state != null && (!(flower.state.getBlock() instanceof BushBlock) || ((BushBlock) flower.state.getBlock()).canBlockStay(world, pos, flower.state))) {
-                world.setBlockState(pos, flower.state, 3);
-            }
-        }
+    public boolean isWet() {
+        return this.wet;
     }
 
     public static final class PlacementLevel implements SurfacePlacementLevel {
@@ -129,6 +68,113 @@ public class SurfaceBiome extends Biome implements EntitySpawnConfigured {
         public int generateUpTo(World world, Random random, int y) {
             int bound = Math.max(y - MidnightChunkGenerator.MIN_SURFACE_LEVEL, 1);
             return random.nextInt(bound) + MidnightChunkGenerator.MIN_SURFACE_LEVEL;
+        }
+    }
+
+    public static class Builder extends Biome.Builder {
+        private float ridgeWeight = 1.0F;
+        private float densityScale = 1.0F;
+        private boolean wet;
+        private int grassColor = 0xB084BC;
+        private int foliageColor = 0x8F6DBC;
+
+        public Builder() {
+            super.precipitation(RainType.NONE);
+            super.downfall(0.0F);
+            super.temperature(0.0F);
+            super.waterColor(0x361D78);
+            super.waterFogColor(0x50533);
+        }
+
+        public Builder ridgeWeight(float ridgeWeight) {
+            this.ridgeWeight = ridgeWeight;
+            return this;
+        }
+
+        public Builder densityScale(float densityScale) {
+            this.densityScale = densityScale;
+            return this;
+        }
+
+        public Builder wet() {
+            this.wet = true;
+            return this;
+        }
+
+        public Builder grassColor(int grassColor) {
+            this.grassColor = grassColor;
+            return this;
+        }
+
+        public Builder foliageColor(int foliageColor) {
+            this.foliageColor = foliageColor;
+            return this;
+        }
+
+        @Override
+        public <SC extends ISurfaceBuilderConfig> Builder surfaceBuilder(SurfaceBuilder<SC> surface, SC config) {
+            super.surfaceBuilder(surface, config);
+            return this;
+        }
+
+        @Override
+        public Builder surfaceBuilder(ConfiguredSurfaceBuilder<?> surface) {
+            super.surfaceBuilder(surface);
+            return this;
+        }
+
+        @Override
+        public Builder precipitation(RainType rainType) {
+            super.precipitation(rainType);
+            return this;
+        }
+
+        @Override
+        public Builder category(Category category) {
+            super.category(category);
+            return this;
+        }
+
+        @Override
+        public Builder depth(float depth) {
+            super.depth(depth);
+            return this;
+        }
+
+        @Override
+        public Builder scale(float scale) {
+            super.scale(scale);
+            return this;
+        }
+
+        @Override
+        public Builder temperature(float temperature) {
+            super.temperature(temperature);
+            return this;
+        }
+
+        @Override
+        public Builder downfall(float downfall) {
+            super.downfall(downfall);
+            return this;
+        }
+
+        @Override
+        public Builder waterColor(int waterColor) {
+            super.waterColor(waterColor);
+            return this;
+        }
+
+        @Override
+        public Builder waterFogColor(int waterFogColor) {
+            super.waterFogColor(waterFogColor);
+            return this;
+        }
+
+        @Override
+        public Builder parent(@Nullable String parent) {
+            super.parent(parent);
+            return this;
         }
     }
 }

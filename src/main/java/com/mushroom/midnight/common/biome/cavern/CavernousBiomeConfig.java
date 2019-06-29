@@ -1,9 +1,5 @@
 package com.mushroom.midnight.common.biome.cavern;
 
-import com.mushroom.midnight.common.biome.config.FeatureConfig;
-import com.mushroom.midnight.common.biome.config.MidnightBiomeConfig;
-import com.mushroom.midnight.common.biome.config.SpawnerConfig;
-import com.mushroom.midnight.common.biome.config.SurfaceConfig;
 import net.minecraft.world.biome.Biome;
 
 import javax.annotation.Nullable;
