@@ -8,17 +8,17 @@ import com.mushroom.midnight.common.config.MidnightConfig;
 import com.mushroom.midnight.common.world.MidnightChunkGenerator;
 import com.mushroom.midnight.common.world.SurfaceCoverGenerator;
 import com.mushroom.midnight.common.world.SurfacePlacementLevel;
-import net.minecraft.block.BlockBush;
-import net.minecraft.block.state.BlockState;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.BushBlock;
 import net.minecraft.client.resources.I18n;
-import net.minecraft.entity.EnumCreatureType;
+import net.minecraft.entity.EntityClassification;
 import net.minecraft.util.WeightedRandom;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.chunk.ChunkPrimer;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.OnlyIn;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
 import java.util.List;
 import java.util.Random;
@@ -39,8 +39,8 @@ public class SurfaceBiome extends Biome implements EntitySpawnConfigured {
 
         this.decorator = config.getFeatureConfig().createDecorator(PlacementLevel.INSTANCE);
 
-        for (EnumCreatureType creatureType : EnumCreatureType.values()) {
-            this.getSpawnableList(creatureType).clear();
+        for (EntityClassification entityClassification : EntityClassification.values()) {
+            this.getSpawnableList(entityClassification).clear();
         }
 
         config.getSurfaceConfig().apply(this);
@@ -108,7 +108,7 @@ public class SurfaceBiome extends Biome implements EntitySpawnConfigured {
         }
         if (!flowerList.isEmpty()) {
             Biome.FlowerEntry flower = WeightedRandom.getRandomItem(rand, flowerList);
-            if (flower != null && flower.state != null && (!(flower.state.getBlock() instanceof BlockBush) || ((BlockBush) flower.state.getBlock()).canBlockStay(world, pos, flower.state))) {
+            if (flower != null && flower.state != null && (!(flower.state.getBlock() instanceof BushBlock) || ((BushBlock) flower.state.getBlock()).canBlockStay(world, pos, flower.state))) {
                 world.setBlockState(pos, flower.state, 3);
             }
         }

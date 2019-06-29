@@ -54,8 +54,8 @@ public class BladeshroomBlock extends MidnightPlantBlock implements IGrowable {
     }
 
     @Override
-    protected boolean canSustainBush(BlockState state) {
-        return state.isBlockNormalCube();
+    protected boolean isValidGround(BlockState state, IBlockReader world, BlockPos pos) {
+        return state.isNormalCube(world, pos);
     }
 
     @Override
@@ -102,14 +102,14 @@ public class BladeshroomBlock extends MidnightPlantBlock implements IGrowable {
     }
 
     @Override
-    public void onEntityCollision(World world, BlockPos pos, BlockState state, Entity entity) {
+    public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
         if (state.get(STAGE) == Stage.CAPPED) {
             entity.attackEntityFrom(BLADESHROOM_DAMAGE, 1.0F);
         }
     }
 
     @Override
-    public void updateTick(World world, BlockPos pos, BlockState state, Random random) {
+    public void randomTick(BlockState state, World world, BlockPos pos, Random random) {
         if (random.nextInt(REGROW_CHANCE) == 0) {
             this.incrementStage(world, pos, state);
         }

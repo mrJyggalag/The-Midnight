@@ -52,7 +52,7 @@ public class RiftSpawnHandler {
             return;
         }
 
-        World endpointWorld = DimensionManager.getWorld(MidnightDimensions.MIDNIGHT);
+        World endpointWorld = DimensionManager.getWorld(server, MidnightDimensions.MIDNIGHT, false, false);
         if (!world.isDaytime()) {
             Random random = world.rand;
             Set<BlockPos> spawnRegions = collectPlayerRegions(world.playerEntities);
@@ -127,7 +127,7 @@ public class RiftSpawnHandler {
             return false;
         }
         AxisAlignedBB bounds = new AxisAlignedBB(pos).grow(1.0, 0.0, 1.0).expand(0.0, 1.0, 0.0);
-        if (!world.getCollisionBoxes(null, bounds).isEmpty()) {
+        if (!world.areCollisionShapesEmpty(bounds)) {
             return false;
         }
         return Helper.isMidnightDimension(world) || (!world.containsAnyLiquid(bounds) && world.getLightFor(LightType.BLOCK, pos) < 4);

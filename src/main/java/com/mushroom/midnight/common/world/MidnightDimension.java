@@ -139,7 +139,7 @@ public class MidnightDimension extends Dimension {
 
         if (this.world instanceof ServerWorld) {
             ServerWorld serverWorld = (ServerWorld) this.world;
-            ServerChunkProvider chunkProvider = serverWorld.func_72863_F();
+            ServerChunkProvider chunkProvider = serverWorld.getChunkProvider();
 
             // TODO
             chunkProvider.chunkManager.func_223491_f().forEach(chunkHolder -> {

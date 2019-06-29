@@ -72,7 +72,7 @@ public class MidnightGrassBlock extends Block implements IGrowable {
     }
 
     @Override
-    public boolean canSustainPlant(BlockState state, IBlockAccess world, BlockPos pos, Direction direction, IPlantable plantable) {
+    public boolean canSustainPlant(BlockState state, IBlockReader world, BlockPos pos, Direction facing, net.minecraftforge.common.IPlantable plantable) {
         return true;
     }
 

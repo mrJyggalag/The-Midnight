@@ -53,7 +53,7 @@ public class MidnightPlantBlock extends BushBlock implements GeneratablePlant {
 
     @Override
     protected boolean isValidGround(BlockState state, IBlockReader world, BlockPos pos) {
-        return Helper.isGroundForMidnightPlant(state.getBlock());
+            return Helper.isGroundForMidnightPlant(state.getBlock());
     }
 
     @Override

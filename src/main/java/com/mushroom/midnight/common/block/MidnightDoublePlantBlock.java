@@ -36,7 +36,7 @@ public class MidnightDoublePlantBlock extends MidnightPlantBlock {
 
     @Override
     public boolean canPlaceBlockAt(World world, BlockPos pos) {
-        return canSustainBush(world.getBlockState(pos.down())) && world.isAirBlock(pos.up()) && world.getBlockState(pos).getBlock().isReplaceable(world, pos);
+        return isValidGround(world.getBlockState(pos.down()), world, pos.down()) && world.isAirBlock(pos.up()) && world.getBlockState(pos).getBlock().isReplaceable(world, pos);
     }
 
     @Override
@@ -57,14 +57,14 @@ public class MidnightDoublePlantBlock extends MidnightPlantBlock {
     @Override
     public boolean canBlockStay(World world, BlockPos pos, BlockState state) {
         if (state.getBlock() != this) {
-            return canSustainBush(world.getBlockState(pos.down()));
+            return isValidGround(world.getBlockState(pos.down()), world, pos.down());
         }
         BlockPos otherPos = this.getOtherPos(state, pos);
         BlockState otherState = world.getBlockState(otherPos);
         if (otherState.getBlock() != this) {
             return false;
         }
-        return this.isUpper(state) || canSustainBush(world.getBlockState(pos.down()));
+        return this.isUpper(state) || isValidGround(world.getBlockState(pos.down()), world, pos.down());
     }
 
     private BlockPos getUpperPos(BlockState state, BlockPos pos) {

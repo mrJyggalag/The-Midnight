@@ -16,6 +16,8 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
@@ -121,6 +123,7 @@ public class TileEntityMidnightChest extends TileEntityLockableLoot implements I
         return true;
     }
 
+    @Override
     public void readFromNBT(CompoundNBT compound) {
         super.readFromNBT(compound);
         this.chestContents = NonNullList.withSize(this.getSizeInventory(), ItemStack.EMPTY);
@@ -134,6 +137,7 @@ public class TileEntityMidnightChest extends TileEntityLockableLoot implements I
         }
     }
 
+    @Override
     public CompoundNBT writeToNBT(CompoundNBT compound) {
         super.writeToNBT(compound);
 

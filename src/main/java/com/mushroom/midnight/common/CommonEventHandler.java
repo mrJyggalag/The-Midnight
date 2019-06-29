@@ -35,6 +35,7 @@ import net.minecraft.world.biome.Biome;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.dimension.DimensionType;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
+import net.minecraftforge.event.entity.EntityEvent;
 import net.minecraftforge.event.entity.PlaySoundAtEntityEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
@@ -101,6 +102,10 @@ public class CommonEventHandler {
         }
     }
 
+    /**
+     * {@link net.minecraft.world.GameRules#register(String, GameRules.RuleType)}
+     * {@link net.minecraft.world.GameRules#GAME_RULES}
+     */
     @SubscribeEvent
     public static void onWorldLoad(WorldEvent.Load event) {
         GameRules gameRules = event.getWorld().getGameRules();
@@ -149,7 +154,7 @@ public class CommonEventHandler {
     public static void onRifterCapture(RifterCaptureEvent event) {
         LivingEntity captured = event.getCaptured();
         if (captured instanceof PlayerEntity) {
-            ((PlayerEntity) captured).eyeHeight = captured.width / 2.0F;
+            captured.recalculateSize();
         }
     }
 
@@ -157,8 +162,17 @@ public class CommonEventHandler {
     public static void onRifterRelease(RifterReleaseEvent event) {
         LivingEntity captured = event.getCaptured();
         if (captured instanceof PlayerEntity) {
-            PlayerEntity player = (PlayerEntity) captured;
-            player.eyeHeight = player.getDefaultEyeHeight();
+            captured.recalculateSize();
+        }
+    }
+
+    @SubscribeEvent
+    public static void setEyeHeight(EntityEvent.EyeHeight event) {
+        if (event.getEntity() instanceof PlayerEntity) {
+            PlayerEntity player = (PlayerEntity) event.getEntity();
+            if (RifterCapturable.isCaptured(player)) {
+                event.setNewHeight(player.getWidth() / 2f);
+            }
         }
     }
 

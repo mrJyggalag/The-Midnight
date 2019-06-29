@@ -90,7 +90,7 @@ public class BulbFungusHatBlock extends Block {
     }
 
     @Override
-    public void onLanded(World world, Entity entity) {
+    public void onLanded(IBlockReader world, Entity entity) {
         if (entity.isSneaking()) {
             super.onLanded(world, entity);
         } else if (entity.getMotion().y < 0d) {

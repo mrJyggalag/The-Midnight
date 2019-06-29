@@ -76,7 +76,7 @@ public class UnstableBushBloomedBlock extends MidnightPlantBlock implements IGro
     }
 
     @Override
-    public int quantityDropped(BlockState state, int fortune, Random random) {
+    public int quantityDropped(BlockState state, int fortune, Random random) { // json drop or getDrops()
         return random.nextInt(3) + (state.get(HAS_FRUIT) ? 3 : 0);
     }
 

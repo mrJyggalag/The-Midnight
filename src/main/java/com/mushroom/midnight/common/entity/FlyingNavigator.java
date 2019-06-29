@@ -136,7 +136,7 @@ public class FlyingNavigator extends FlyingPathNavigator {
 
             if (displacementX * deltaX + displacementZ * deltaZ >= 0.0) {
                 Block block = this.world.getBlockState(pos).getBlock();
-                if (!block.isPassable(this.world, pos)) {
+                if (!isPassable(this.world, pos)) { //block.getMaterial(state).blocksMovement()?
                     return false;
                 }
             }

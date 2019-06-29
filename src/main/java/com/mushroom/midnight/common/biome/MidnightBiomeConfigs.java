@@ -8,22 +8,15 @@ import com.mushroom.midnight.common.biome.config.SurfaceConfig;
 import com.mushroom.midnight.common.biome.surface.SurfaceBiomeConfig;
 import com.mushroom.midnight.common.biome.surface.SurfaceTerrainConfig;
 import com.mushroom.midnight.common.block.SuavisBlock;
-import com.mushroom.midnight.common.entity.creature.CrystalBugEntity;
-import com.mushroom.midnight.common.entity.creature.DeceitfulSnapperEntity;
-import com.mushroom.midnight.common.entity.creature.HunterEntity;
-import com.mushroom.midnight.common.entity.creature.NightStagEntity;
-import com.mushroom.midnight.common.entity.creature.NovaEntity;
-import com.mushroom.midnight.common.entity.creature.SkulkEntity;
-import com.mushroom.midnight.common.entity.creature.RifterEntity;
-import com.mushroom.midnight.common.entity.creature.StingerEntity;
 import com.mushroom.midnight.common.registry.MidnightBlocks;
+import com.mushroom.midnight.common.registry.MidnightEntities;
 import com.mushroom.midnight.common.world.SurfacePlacementLevel;
 import com.mushroom.midnight.common.world.feature.config.DragonNestPlacementConfig;
 import com.mushroom.midnight.common.world.feature.config.ParcelPlacementConfig;
 import com.mushroom.midnight.common.world.feature.config.ScatterPlacementConfig;
 import com.mushroom.midnight.common.world.feature.config.SurfacePlacementConfig;
 import com.mushroom.midnight.common.world.feature.config.UndergroundPlacementConfig;
-import net.minecraft.entity.monster.EntityEnderman;
+import net.minecraft.entity.EntityType;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
@@ -187,62 +180,62 @@ public class MidnightBiomeConfigs {
             .build();
 
     public static final SpawnerConfig VEGETATED_SPAWN_CONFIG = SpawnerConfig.builder()
-            .withCreature(new Biome.SpawnListEntry(NightStagEntity.class, 100, 1, 3))
-            .withMonster(new Biome.SpawnListEntry(RifterEntity.class, 100, 1, 2))
-            .withMonster(new Biome.SpawnListEntry(EntityEnderman.class, 10, 4, 4))
+            .withCreature(new Biome.SpawnListEntry(MidnightEntities.nightstag, 100, 1, 3))
+            .withMonster(new Biome.SpawnListEntry(MidnightEntities.rifter, 100, 1, 2))
+            .withMonster(new Biome.SpawnListEntry(EntityType.ENDERMAN, 10, 4, 4))
             .build();
 
     public static final SpawnerConfig ROCKY_SPAWN_CONFIG = SpawnerConfig.builder()
-            .withCreature(new Biome.SpawnListEntry(NightStagEntity.class, 100, 1, 3))
-            .withMonster(new Biome.SpawnListEntry(RifterEntity.class, 100, 1, 2))
-            .withMonster(new Biome.SpawnListEntry(EntityEnderman.class, 10, 4, 4))
-            .withMonster(new Biome.SpawnListEntry(HunterEntity.class, 5, 1, 2))
+            .withCreature(new Biome.SpawnListEntry(MidnightEntities.nightstag, 100, 1, 3))
+            .withMonster(new Biome.SpawnListEntry(MidnightEntities.rifter, 100, 1, 2))
+            .withMonster(new Biome.SpawnListEntry(EntityType.ENDERMAN, 10, 4, 4))
+            .withMonster(new Biome.SpawnListEntry(MidnightEntities.hunter, 5, 1, 2))
             .build();
 
     public static final SpawnerConfig UNDERGROUND_SPAWN_CONFIG = SpawnerConfig.builder()
-            .withMonster(new Biome.SpawnListEntry(StingerEntity.class, 100, 2, 4))
-            .withMonster(new Biome.SpawnListEntry(EntityEnderman.class, 10, 4, 4))
+            .withMonster(new Biome.SpawnListEntry(MidnightEntities.stinger, 100, 2, 4))
+            .withMonster(new Biome.SpawnListEntry(EntityType.ENDERMAN, 10, 4, 4))
             .build();
 
     public static final SpawnerConfig CRYSTAL_SPIRES_SPAWN_CONFIG = SpawnerConfig.builder()
-            .withCreature(new Biome.SpawnListEntry(NightStagEntity.class, 100, 1, 3))
-            .withAmbientCreature(new Biome.SpawnListEntry(CrystalBugEntity.class, 100, 7, 10))
-            .withMonster(new Biome.SpawnListEntry(StingerEntity.class, 100, 1, 2))
+            .withCreature(new Biome.SpawnListEntry(MidnightEntities.nightstag, 100, 1, 3))
+            .withAmbientCreature(new Biome.SpawnListEntry(MidnightEntities.crystal_bug, 100, 7, 10))
+            .withMonster(new Biome.SpawnListEntry(MidnightEntities.stinger, 100, 1, 2))
             .build();
 
     public static final SpawnerConfig WARPED_FIELDS_SPAWN_CONFIG = SpawnerConfig.builder()
             .extendsFrom(VEGETATED_SPAWN_CONFIG)
-            .withMonster(new Biome.SpawnListEntry(HunterEntity.class, 5, 0, 2))
+            .withMonster(new Biome.SpawnListEntry(MidnightEntities.hunter, 5, 0, 2))
             .build();
 
     public static final SpawnerConfig VIGILANT_FOREST_SPAWN_CONFIG = SpawnerConfig.builder()
             .extendsFrom(VEGETATED_SPAWN_CONFIG)
-            .withCreature(new Biome.SpawnListEntry(SkulkEntity.class, 100, 1, 2))
+            .withCreature(new Biome.SpawnListEntry(MidnightEntities.skulk, 100, 1, 2))
             .build();
 
     public static final SpawnerConfig FUNGI_FOREST_SPAWN_CONFIG = SpawnerConfig.builder()
             .extendsFrom(VEGETATED_SPAWN_CONFIG)
-            .withCreature(new Biome.SpawnListEntry(SkulkEntity.class, 100, 1, 2))
+            .withCreature(new Biome.SpawnListEntry(MidnightEntities.skulk, 100, 1, 2))
             .build();
 
     public static final SpawnerConfig DECEITFUL_BOG_SPAWN_CONFIG = SpawnerConfig.builder()
             .extendsFrom(VEGETATED_SPAWN_CONFIG)
-            .withWaterCreature(new Biome.SpawnListEntry(DeceitfulSnapperEntity.class, 100, 5, 10))
+            .withWaterCreature(new Biome.SpawnListEntry(MidnightEntities.deceitful_snapper, 100, 5, 10))
             .build();
 
     public static final SpawnerConfig NIGHT_PLAINS_SPAWN_CONFIG = SpawnerConfig.builder()
             .extendsFrom(VEGETATED_SPAWN_CONFIG)
-            .withMonster(new Biome.SpawnListEntry(HunterEntity.class, 5, 1, 2))
+            .withMonster(new Biome.SpawnListEntry(MidnightEntities.hunter, 5, 1, 2))
             .build();
 
     public static final SpawnerConfig PLATEAU_SPAWN_CONFIG = SpawnerConfig.builder()
             .extendsFrom(ROCKY_SPAWN_CONFIG)
-            .withMonster(new Biome.SpawnListEntry(HunterEntity.class, 5, 0, 2))
+            .withMonster(new Biome.SpawnListEntry(MidnightEntities.hunter, 5, 0, 2))
             .build();
 
     public static final SpawnerConfig VALLEY_SPAWN_CONFIG = SpawnerConfig.builder()
             .extendsFrom(VEGETATED_SPAWN_CONFIG)
-            .withMonster(new Biome.SpawnListEntry(HunterEntity.class, 5, 1, 2))
+            .withMonster(new Biome.SpawnListEntry(MidnightEntities.hunter, 5, 1, 2))
             .build();
 
     public static final SpawnerConfig GREAT_CAVERN_SPAWN_CONFIG = SpawnerConfig.builder()
@@ -251,7 +244,7 @@ public class MidnightBiomeConfigs {
 
     public static final SpawnerConfig CRYSTAL_CAVERN_SPAWN_CONFIG = SpawnerConfig.builder()
             .extendsFrom(UNDERGROUND_SPAWN_CONFIG)
-            .withMonster(new Biome.SpawnListEntry(NovaEntity.class, 100, 1, 2))
+            .withMonster(new Biome.SpawnListEntry(MidnightEntities.nova, 100, 1, 2))
             .build();
 
     public static final SpawnerConfig FUNGAL_CAVERN_SPAWN_CONFIG = SpawnerConfig.builder()

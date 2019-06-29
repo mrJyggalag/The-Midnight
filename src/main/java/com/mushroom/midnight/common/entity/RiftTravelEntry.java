@@ -1,6 +1,5 @@
 package com.mushroom.midnight.common.entity;
 
-import com.mushroom.midnight.common.world.MidnightTeleporter;
 import net.minecraft.entity.Entity;
 import net.minecraft.world.dimension.DimensionType;
 
@@ -12,7 +11,7 @@ public class RiftTravelEntry {
     }
 
     public void travel(RiftEntity rift, DimensionType endpointDimension) {
-        this.entity.changeDimension(endpointDimension.getId(), new MidnightTeleporter(rift));
+        this.entity.changeDimension(endpointDimension);
     }
 
     public Entity getEntity() {

@@ -131,7 +131,7 @@ public abstract class PileOfEggsBlock extends Block {
             return;
         }
         creature.setPositionAndRotation(pos.getX() + world.rand.nextFloat(), pos.getY() + 0.45f, pos.getZ() + world.rand.nextFloat(), world.rand.nextFloat() * 360f, 0f);
-        world.spawnEntity(creature);
+        world.addEntity(creature);
     }
 
     @Override
@@ -141,7 +141,7 @@ public abstract class PileOfEggsBlock extends Block {
 
     @Override
     public void harvestBlock(World world, PlayerEntity player, BlockPos pos, BlockState state, @Nullable TileEntity tile, ItemStack stack) {
-        player.addStat(StatList.getBlockStats(this));
+        player.addStat(StatsList.getBlockStats(this));
         player.addExhaustion(0.005F);
         harvesters.set(player);
         breakEggs(world, pos, state);

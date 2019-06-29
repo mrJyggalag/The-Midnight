@@ -1,11 +1,10 @@
 package com.mushroom.midnight.common.world.feature;
 
 import com.mushroom.midnight.common.block.DeceitfulMossBlock;
-import net.minecraft.block.state.BlockState;
+import net.minecraft.block.BlockState;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.event.terraingen.DecorateBiomeEvent;
 
 import java.util.Random;
 

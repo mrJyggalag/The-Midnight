@@ -7,8 +7,8 @@ import com.mushroom.midnight.common.biome.config.SurfaceConfig;
 import com.mushroom.midnight.common.world.MidnightChunkGenerator;
 import com.mushroom.midnight.common.world.SurfaceCoverGenerator;
 import com.mushroom.midnight.common.world.SurfacePlacementLevel;
-import net.minecraft.block.BlockBush;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.BushBlock;
 import net.minecraft.block.material.Material;
 import net.minecraft.util.WeightedRandom;
 import net.minecraft.util.math.BlockPos;
@@ -59,7 +59,7 @@ public class CavernousBiome extends ForgeRegistryEntry<CavernousBiome> implement
     public void plantFlower(World world, Random rand, BlockPos pos) {
         if (!this.config.getFeatureConfig().getFlowers().isEmpty()) {
             Biome.FlowerEntry flower = WeightedRandom.getRandomItem(rand, this.config.getFeatureConfig().getFlowers());
-            if (flower != null && flower.state != null && (!(flower.state.getBlock() instanceof BlockBush) || ((BlockBush) flower.state.getBlock()).canBlockStay(world, pos, flower.state))) {
+            if (flower != null && flower.state != null && (!(flower.state.getBlock() instanceof BushBlock) || ((BushBlock) flower.state.getBlock()).canBlockStay(world, pos, flower.state))) {
                 world.setBlockState(pos, flower.state, 3);
             }
         }

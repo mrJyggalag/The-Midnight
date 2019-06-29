@@ -18,7 +18,7 @@ import com.mushroom.midnight.common.world.feature.ShadowrootTreeFeature;
 import com.mushroom.midnight.common.world.feature.SpikeFeature;
 import com.mushroom.midnight.common.world.template.ShelfAttachProcessor;
 import net.minecraft.block.Block;
-import net.minecraft.block.state.BlockState;
+import net.minecraft.block.BlockState;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
@@ -99,7 +99,7 @@ public class MidnightBiomeFeatures {
         @Override
         public boolean placeFeature(World world, Random rand, BlockPos origin) {
             Block block = rand.nextInt(3) != 0 ? MidnightBlocks.UNSTABLE_BUSH_BLUE_BLOOMED : (rand.nextInt(3) != 0 ? MidnightBlocks.UNSTABLE_BUSH_LIME_BLOOMED : MidnightBlocks.UNSTABLE_BUSH_GREEN_BLOOMED);
-            BlockState state = block.getDefaultState().withProperty(UnstableBushBloomedBlock.HAS_FRUIT, true);
+            BlockState state = block.getDefaultState().with(UnstableBushBloomedBlock.HAS_FRUIT, true);
             if (this.predicate.canSpawn(world, origin, state)) {
                 setBlockAndNotifyAdequately(world, origin, state);
                 return true;
@@ -199,7 +199,7 @@ public class MidnightBiomeFeatures {
                 @Override
                 public boolean placeFeature(World world, Random random, BlockPos origin) {
                     if (world.getBlockState(origin.down()).isFullBlock()) {
-                        world.setBlockState(origin, MidnightBlocks.STINGER_EGG.getDefaultState().withProperty(PileOfEggsBlock.EGGS, random.nextInt(4) + 1), 2 | 16);
+                        world.setBlockState(origin, MidnightBlocks.STINGER_EGG.getDefaultState().with(PileOfEggsBlock.EGGS, random.nextInt(4) + 1), 2 | 16);
                         return true;
                     }
                     return false;

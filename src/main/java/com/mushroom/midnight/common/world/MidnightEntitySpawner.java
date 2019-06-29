@@ -7,18 +7,26 @@ import com.mushroom.midnight.common.util.WeightedPool;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntitySpawnPlacementRegistry;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.ILivingEntityData;
 import net.minecraft.entity.MobEntity;
+import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.Difficulty;
+import net.minecraft.world.GameRules;
+import net.minecraft.world.IWorldReader;
 import net.minecraft.world.ServerWorld;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.chunk.Chunk;
+import net.minecraft.world.spawner.WorldEntitySpawner;
 import net.minecraftforge.event.ForgeEventFactory;
+import net.minecraftforge.eventbus.api.Event;
 
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -103,7 +111,7 @@ public final class MidnightEntitySpawner<T extends EntitySpawnConfigured> {
         for (ChunkPos chunkPos : shuffledChunks) {
             BlockPos pos = this.getRandomPositionInChunk(world, chunkPos.x, chunkPos.z);
             BlockState state = world.getBlockState(pos);
-            if (state.isNormalCube()) {
+            if (state.isNormalCube(world, pos)) {
                 continue;
             }
 
@@ -120,7 +128,7 @@ public final class MidnightEntitySpawner<T extends EntitySpawnConfigured> {
         for (int i = 0; i < 3; i++) {
             int range = 6;
             Biome.SpawnListEntry selectedEntry = null;
-            IMobEntityData livingData = null;
+            ILivingEntityData livingData = null;
 
             mutablePos.setPos(pos);
 
@@ -158,12 +166,12 @@ public final class MidnightEntitySpawner<T extends EntitySpawnConfigured> {
                         continue;
                     }
 
-                    if (creature.getCanSpawnHere() && creature.isNotColliding()) {
+                    if (creature.canSpawn(world, SpawnReason.NATURAL) && creature.isNotColliding(world)) {
                         if (!ForgeEventFactory.doSpecialSpawn(creature, world, spawnX, spawnY, spawnZ, null)) {
-                            livingData = creature.onInitialSpawn(world.getDifficultyForLocation(new BlockPos(creature)), livingData);
+                            livingData = creature.onInitialSpawn(world, world.getDifficultyForLocation(new BlockPos(creature)), SpawnReason.NATURAL, livingData, null);
                         }
 
-                        if (creature.isNotColliding()) {
+                        if (creature.isNotColliding(world)) {
                             spawnedEntities++;
                             world.addEntity(creature);
                         } else {
@@ -187,14 +195,15 @@ public final class MidnightEntitySpawner<T extends EntitySpawnConfigured> {
         int x = centerX;
         int z = centerZ;
 
-        IMobEntityData livingData = null;
+        ILivingEntityData livingData = null;
 
         for (int i = 0; i < groupSize; i++) {
             for (int attempt = 0; attempt < 4; attempt++) {
                 boolean spawnedEntity = false;
 
                 BlockPos pos = this.placementLevel.getSurfacePos(world, new BlockPos(x, 0, z));
-                if (this.isSpawnPositionValid(MobEntity.SpawnPlacementType.ON_GROUND, world, pos)) {
+                EntityType<?> entitytype = spawnEntry.entityType;
+                if (canCreatureTypeSpawnAtLocation(EntitySpawnPlacementRegistry.getPlacementType(entitytype), world, pos, entitytype)) {
                     MobEntity creature = this.createEntity(world, pos, spawnEntry);
                     if (ForgeEventFactory.canEntitySpawn(creature, world, x + 0.5F, pos.getY(), z + 0.5F, null) == Event.Result.DENY) {
                         creature.remove();
@@ -202,7 +211,7 @@ public final class MidnightEntitySpawner<T extends EntitySpawnConfigured> {
                     }
 
                     world.addEntity(creature);
-                    livingData = creature.onInitialSpawn(world.getDifficultyForLocation(new BlockPos(creature)), livingData);
+                    livingData = creature.onInitialSpawn(world, world.getDifficultyForLocation(new BlockPos(creature)), SpawnReason.NATURAL, livingData, null);
                     spawnedEntity = true;
                 }
 
@@ -223,7 +232,7 @@ public final class MidnightEntitySpawner<T extends EntitySpawnConfigured> {
 
     private MobEntity createEntity(World world, BlockPos pos, Biome.SpawnListEntry selectedEntry) {
         try {
-            MobEntity creature = selectedEntry.newInstance(world);
+            MobEntity creature = (MobEntity) selectedEntry.entityType.create(world);
             float yaw = world.rand.nextFloat() * 360.0F;
             creature.setLocationAndAngles(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, yaw, 0.0F);
             return creature;
@@ -232,14 +241,11 @@ public final class MidnightEntitySpawner<T extends EntitySpawnConfigured> {
         }
     }
 
-    private boolean canSpawnAt(ServerWorld world, EntityClassification classification, BlockPos pos, Biome.SpawnListEntry selectedEntry) {
-        MobEntity.SpawnPlacementType placementType = EntitySpawnPlacementRegistry.getPlacementForEntity(selectedEntry.entityClass);
-        return this.isSpawnPositionValid(placementType, world, pos);
-    }
-
+    /**
+     * {@link net.minecraft.world.chunk.ServerChunkProvider#func_217220_m()}
+     */
     private Set<ChunkPos> computeEligibleSpawnChunks(ServerWorld world) {
         this.eligibleSpawnChunks.clear();
-
         Stream<PlayerEntity> playerStream = this.getPlayerStream(world);
         playerStream.forEach(player -> {
             int playerChunkX = MathHelper.floor(player.posX) >> 4;
@@ -286,7 +292,12 @@ public final class MidnightEntitySpawner<T extends EntitySpawnConfigured> {
         return new BlockPos(x, y, z);
     }
 
-    private boolean isSpawnPositionValid(MobEntity.SpawnPlacementType placementType, World world, BlockPos pos) {
-        return world.getWorldBorder().contains(pos) && placementType.canSpawnAt(world, pos);
+    private static boolean canCreatureTypeSpawnAtLocation(EntitySpawnPlacementRegistry.PlacementType placeType, IWorldReader worldIn, BlockPos pos, @Nullable EntityType<?> entityTypeIn) {
+        if (placeType == EntitySpawnPlacementRegistry.PlacementType.NO_RESTRICTIONS) {
+            return true; // ?world.getWorldBorder().contains(pos)?
+        } else if (entityTypeIn != null && worldIn.getWorldBorder().contains(pos)) {
+            return placeType.canSpawnAt(worldIn, pos, entityTypeIn);
+        }
+        return false;
     }
 }

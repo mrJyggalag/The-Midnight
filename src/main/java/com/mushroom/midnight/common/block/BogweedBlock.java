@@ -3,6 +3,7 @@ package com.mushroom.midnight.common.block;
 import com.mushroom.midnight.common.registry.MidnightBlocks;
 import net.minecraft.block.BlockState;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 
 public class BogweedBlock extends MidnightPlantBlock {
@@ -11,13 +12,13 @@ public class BogweedBlock extends MidnightPlantBlock {
     }
 
     @Override
-    protected boolean canSustainBush(BlockState state) {
+    protected boolean isValidGround(BlockState state, IBlockReader world, BlockPos pos) {
         return state.getBlock() == MidnightBlocks.DECEITFUL_PEAT;
     }
 
     @Override
     public boolean canPlaceBlockAt(World worldIn, BlockPos pos) {
-        return canSustainBush(worldIn.getBlockState(pos.down())) && super.canPlaceBlockAt(worldIn, pos);
+        return isValidGround(worldIn.getBlockState(pos.down()), worldIn, pos) && super.canPlaceBlockAt(worldIn, pos);
     }
 
     @Override

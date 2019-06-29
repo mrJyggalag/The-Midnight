@@ -7,7 +7,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.world.IWorld;
 
 import java.util.Random;
 
@@ -37,20 +37,20 @@ public class ShelfAttachProcessor implements TemplatePostProcessor {
     }
 
     @Override
-    public void process(World world, Random random, BlockPos pos, BlockState state) {
+    public void process(IWorld world, Random random, BlockPos pos, BlockState state) {
         if (state.isSolid() && random.nextInt(this.attachChance) == 0) {
             this.attachShelf(world, random, pos);
         }
     }
 
-    protected void attachShelf(World world, Random random, BlockPos pos) {
+    protected void attachShelf(IWorld world, Random random, BlockPos pos) {
         Block shelfBlock = this.shelfBlocks[random.nextInt(this.shelfBlocks.length)];
         Direction attachSide = ATTACH_SIDES[random.nextInt(ATTACH_SIDES.length)];
 
         BlockPos offsetPos = pos.offset(attachSide);
         if (this.replaceable.test(world, offsetPos)) {
             world.setBlockState(offsetPos, shelfBlock.getDefaultState()
-                    .with(MidnightFungiShelfBlock.FACING, attachSide)
+                    .with(MidnightFungiShelfBlock.FACING, attachSide), 2 | 16
             );
         }
     }

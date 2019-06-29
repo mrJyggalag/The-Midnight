@@ -22,8 +22,8 @@ public class MidnightDoubleFungiBlock extends MidnightDoublePlantBlock implement
     }
 
     @Override
-    protected boolean canSustainBush(BlockState state) {
-        return state.isBlockNormalCube();
+    protected boolean isValidGround(BlockState state, IBlockReader world, BlockPos pos) {
+        return state.isNormalCube(world, pos);
     }
 
     @Override
@@ -50,12 +50,7 @@ public class MidnightDoubleFungiBlock extends MidnightDoublePlantBlock implement
     }
 
     @Override
-    public int damageDropped(BlockState state) {
-        return 0;
-    }
-
-    @Override
-    protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
-        return builder.add(HALF).add(BlockStateProperties.STAGE_0_1);
+    public void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
+        builder.add(HALF, BlockStateProperties.STAGE_0_1);
     }
 }

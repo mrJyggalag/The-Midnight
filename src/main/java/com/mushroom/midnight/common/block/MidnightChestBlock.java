@@ -65,8 +65,8 @@ public class MidnightChestBlock extends ChestBlock {
 
     @Override
     public void onBlockPlacedBy(World worldIn, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
-        Direction Direction = Direction.byHorizontalIndex(MathHelper.floor((double) (placer.rotationYaw * 4.0F / 360.0F) + 0.5D) & 3).getOpposite();
-        state = state.with(FACING, Direction);
+        Direction direction = Direction.byHorizontalIndex(MathHelper.floor((double) (placer.rotationYaw * 4.0F / 360.0F) + 0.5D) & 3).getOpposite();
+        state = state.with(FACING, direction);
         BlockPos blockpos = pos.north();
         BlockPos blockpos1 = pos.south();
         BlockPos blockpos2 = pos.west();
@@ -77,8 +77,8 @@ public class MidnightChestBlock extends ChestBlock {
         boolean flag3 = this == worldIn.getBlockState(blockpos3).getBlock();
         if (!flag && !flag1 && !flag2 && !flag3) {
             worldIn.setBlockState(pos, state, 3);
-        } else if (Direction.getAxis() != Direction.Axis.X || !flag && !flag1) {
-            if (Direction.getAxis() == Direction.Axis.Z && (flag2 || flag3)) {
+        } else if (direction.getAxis() != Direction.Axis.X || !flag && !flag1) {
+            if (direction.getAxis() == Direction.Axis.Z && (flag2 || flag3)) {
                 if (flag2) {
                     worldIn.setBlockState(blockpos2, state, 3);
                 } else {

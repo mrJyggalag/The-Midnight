@@ -1,7 +1,7 @@
 package com.mushroom.midnight.common.world.feature.config;
 
 import com.mushroom.midnight.common.world.SurfacePlacementLevel;
-import net.minecraft.block.state.BlockState;
+import net.minecraft.block.BlockState;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;

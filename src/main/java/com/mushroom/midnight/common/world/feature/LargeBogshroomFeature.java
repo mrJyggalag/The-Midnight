@@ -33,7 +33,7 @@ public class LargeBogshroomFeature extends TemplateTreeFeature {
         super.processMarker(world, pos, key, config);
     }
 
-    private boolean canPlaceShelf(World world, BlockPos pos) {
+    private boolean canPlaceShelf(IWorld world, BlockPos pos) {
         if (World.isOutsideBuildHeight(pos)) {
             return false;
         }

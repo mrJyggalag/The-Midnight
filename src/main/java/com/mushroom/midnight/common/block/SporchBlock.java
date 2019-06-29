@@ -29,14 +29,14 @@ public class SporchBlock extends TorchBlock {
 
     @OnlyIn(Dist.CLIENT)
     public void randomDisplayTick(BlockState state, World world, BlockPos pos, Random rand) {
-        Direction Direction = state.get(FACING);
+        Direction direction = state.get(FACING);
         double d0 = (double) pos.getX() + 0.5d;
         double d1 = (double) pos.getY() + 0.6d;
         double d2 = (double) pos.getZ() + 0.5d;
         double d3 = 0.18d;
         double d4 = 0.2d;
-        if (Direction.getAxis().isHorizontal()) {
-            Direction facing = Direction.getOpposite();
+        if (direction.getAxis().isHorizontal()) {
+            Direction facing = direction.getOpposite();
             MidnightParticles.SPORCH.spawn(world, d0 + d4 * (double) facing.getXOffset(), d1 + d3, d2 + d4 * (double) facing.getZOffset(), 0d, 0.004d, 0d, sporchType.ordinal());
         } else {
             MidnightParticles.SPORCH.spawn(world, d0, d1, d2, 0d, 0.004d, 0d, sporchType.ordinal());

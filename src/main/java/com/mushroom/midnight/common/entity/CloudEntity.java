@@ -88,7 +88,7 @@ public class CloudEntity extends Entity {
         double x = this.posX;
         double y = this.posY;
         double z = this.posZ;
-        setSize(radius * 2f, 0.5f); // builder
+        //setSize(radius * 2f, 0.5f); // size is only important on clientside for cloud
         setPosition(x, y, z);
         if (!this.world.isRemote) {
             this.dataManager.set(RADIUS, radius);

@@ -8,6 +8,7 @@ import com.mushroom.midnight.common.biome.cavern.CavernousBiomeConfig;
 import com.mushroom.midnight.common.biome.config.BiomeSpawnEntry;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.ForgeRegistry;
 import net.minecraftforge.registries.ObjectHolder;

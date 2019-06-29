@@ -26,11 +26,11 @@ public class VioleafBlock extends MidnightPlantBlock implements IGrowable {
 
     public VioleafBlock() {
         super(false);
-        setDefaultState(getStateContainer().getBaseState().withProperty(IS_GROWN, true));
+        setDefaultState(getStateContainer().getBaseState().with(IS_GROWN, true));
     }
 
     @Override
-    public void onEntityCollision(World world, BlockPos pos, BlockState state, Entity entity) {
+    public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
         if (world != null && !world.isRemote && state.get(IS_GROWN) && entity instanceof PlayerEntity && entity.ticksExisted % 20 == 0) {
             PlayerEntity player = (PlayerEntity) entity;
             if (player.isPotionActive(Effects.NAUSEA)) {
@@ -54,7 +54,7 @@ public class VioleafBlock extends MidnightPlantBlock implements IGrowable {
         entity.setRadiusPerTick(-entity.getRadius() / (float) entity.getDuration());
         entity.setColor(0xA041C3);
         entity.setPotion(Potions.EMPTY);
-        entity.setParticle(ParticleTypes.DRAGON_BREATH);
+        entity.setParticleData(ParticleTypes.DRAGON_BREATH);
         world.addEntity(entity);
     }
 
@@ -74,10 +74,10 @@ public class VioleafBlock extends MidnightPlantBlock implements IGrowable {
     }
 
     @Override
-    public void updateTick(World world, BlockPos pos, BlockState state, Random rand) {
+    public void randomTick(BlockState state, World world, BlockPos pos, Random rand) {
         if (canGrow(world, pos, state, world.isRemote) && ForgeHooks.onCropsGrowPre(world, pos, state, rand.nextInt(5) == 0)) {
             grow(world, rand, pos, state);
-            ForgeHooks.onCropsGrowPost(world, pos, state, world.getBlockState(pos));
+            ForgeHooks.onCropsGrowPost(world, pos, state);
         }
     }
 }

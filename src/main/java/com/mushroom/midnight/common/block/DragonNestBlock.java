@@ -28,7 +28,7 @@ public class DragonNestBlock extends MidnightPlantBlock {
     }
 
     @Override
-    public void onEntityCollision(World world, BlockPos pos, BlockState state, Entity entity) {
+    public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
         if (entity instanceof LivingEntity && !entity.world.isRemote && entity.ticksExisted % 20 == 0) {
             ((LivingEntity) entity).addPotionEffect(new EffectInstance(MidnightEffects.DRAGON_GUARD, 100, 0, false, true));
         }
@@ -42,7 +42,7 @@ public class DragonNestBlock extends MidnightPlantBlock {
 
     @Override
     public boolean canBlockStay(World world, BlockPos pos, BlockState state) {
-        return world.getBlockState(pos.up()).isBlockNormalCube();
+        return world.getBlockState(pos.up()).isNormalCube(world, pos);
     }
 
     @Override

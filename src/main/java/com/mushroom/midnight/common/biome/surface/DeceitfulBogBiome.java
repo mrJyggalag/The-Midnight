@@ -2,7 +2,7 @@ package com.mushroom.midnight.common.biome.surface;
 
 import com.mushroom.midnight.common.biome.config.SurfaceConfig;
 import com.mushroom.midnight.common.registry.MidnightBlocks;
-import net.minecraft.block.state.BlockState;
+import net.minecraft.block.BlockState;
 
 import java.util.Random;
 

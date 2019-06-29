@@ -18,8 +18,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.template.PlacementSettings;
 import net.minecraft.world.gen.feature.template.Template;
-import net.minecraft.world.gen.structure.template.TemplateManager;
-import net.minecraftforge.event.terraingen.DecorateBiomeEvent;
+import net.minecraft.world.gen.feature.template.TemplateManager;
 
 import javax.annotation.Nullable;
 import java.util.HashMap;
@@ -48,7 +47,7 @@ public class LargeFungiFeature extends MidnightNaturalFeature {
         FungiShape[] shapes = FungiShape.values();
         FungiShape shape = shapes[rand.nextInt(shapes.length)];
 
-        MinecraftServer server = world.getMinecraftServer();
+        MinecraftServer server = world.getServer();
         TemplateManager templateManager = world.getSaveHandler().getStructureTemplateManager();
 
         PlacementSettings placementSettings = this.buildPlacementSettings(rand);

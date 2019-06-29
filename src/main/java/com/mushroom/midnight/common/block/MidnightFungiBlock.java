@@ -21,13 +21,13 @@ public class MidnightFungiBlock extends MidnightPlantBlock implements IGrowable 
     }
 
     @Override
-    protected boolean canSustainBush(BlockState state) {
-        return state.isBlockNormalCube();
+    protected boolean isValidGround(BlockState state, IBlockReader world, BlockPos pos) {
+        return state.isNormalCube(world, pos);
     }
 
     @Override
     public boolean canPlaceBlockAt(World world, BlockPos pos) {
-        return canSustainBush(world.getBlockState(pos.down())) && world.getBlockState(pos).getBlock().isReplaceable(world, pos);
+        return isValidGround(world.getBlockState(pos.down())) && world.getBlockState(pos).getBlock().isReplaceable(world, pos);
     }
 
     @Override

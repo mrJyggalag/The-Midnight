@@ -2,8 +2,7 @@ package com.mushroom.midnight.common.world.feature;
 
 import com.mushroom.midnight.common.registry.MidnightBlocks;
 import com.mushroom.midnight.common.util.WorldUtil;
-import net.minecraft.block.BlockLog;
-import net.minecraft.block.state.BlockState;
+import net.minecraft.block.BlockState;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -38,14 +37,14 @@ public class DeadLogFeature extends MidnightNaturalFeature {
         }
 
         for (BlockPos pos : BlockPos.getAllInBoxMutable(basePos, endPos)) {
-            this.placeState(world, pos, this.log.withProperty(BlockLog.LOG_AXIS, axis));
+            this.placeState(world, pos, this.log.with(BlockLog.LOG_AXIS, axis));
         }
 
         int extrusionCount = rand.nextInt(3);
         for (int i = 0; i < extrusionCount; i++) {
             BlockPos intermediate = basePos.offset(direction, rand.nextInt(length));
             Direction side = rand.nextBoolean() ? direction.rotateY() : direction.rotateYCCW();
-            this.placeState(world, intermediate.offset(side), this.log.withProperty(BlockLog.LOG_AXIS, perpendicular));
+            this.placeState(world, intermediate.offset(side), this.log.with(BlockLog.LOG_AXIS, perpendicular));
         }
 
         return true;

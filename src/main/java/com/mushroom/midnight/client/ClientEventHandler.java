@@ -23,7 +23,6 @@ import net.minecraft.client.network.play.ClientPlayNetHandler;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.init.MobEffects;
 import net.minecraft.network.play.client.CEntityActionPacket;
 import net.minecraft.potion.Effects;
 import net.minecraft.util.ResourceLocation;
@@ -33,6 +32,7 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.border.WorldBorder;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.EntityViewRenderEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.sound.PlaySoundEvent;
@@ -40,7 +40,6 @@ import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 
 import javax.annotation.Nullable;
@@ -48,6 +47,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
+@OnlyIn(Dist.CLIENT)
 @Mod.EventBusSubscriber(modid = Midnight.MODID, value = Dist.CLIENT)
 public class ClientEventHandler {
     private static final Minecraft CLIENT = Minecraft.getInstance();
@@ -136,24 +136,24 @@ public class ClientEventHandler {
         if (FluidImmersionRenderer.immersedFluid.isOpaqueCube()) {
             return;
         }
-        LivingEntity entity = event.getEntity() instanceof LivingEntity ? (LivingEntity) event.getEntity() : null;
+        LivingEntity entity = event.getInfo().func_216773_g() instanceof LivingEntity ? (LivingEntity) event.getInfo().func_216773_g() : null;
         if (entity != null) {
             if (entity.isPotionActive(Effects.BLINDNESS)) {
                 return;
             }
             if (entity.isPotionActive(MidnightEffects.DARKNESS)) {
-                GlStateManager.setFog(GlStateManager.FogMode.EXP);
+                GlStateManager.fogMode(GlStateManager.FogMode.EXP);
                 event.setCanceled(true);
                 event.setDensity(0.15f);
                 return;
             }
         }
-        if (Helper.isMidnightDimension(event.getEntity().world)) {
-            GlStateManager.setFog(GlStateManager.FogMode.EXP);
+        if (Helper.isMidnightDimension(event.getInfo().func_216773_g().world)) {
+            GlStateManager.fogMode(GlStateManager.FogMode.EXP);
             event.setCanceled(true);
             event.setDensity(0.015f);
         } else if (entity != null && entity.isPotionActive(MidnightEffects.STUNNED)) {
-            GlStateManager.setFog(GlStateManager.FogMode.EXP);
+            GlStateManager.fogMode(GlStateManager.FogMode.EXP);
             event.setCanceled(true);
             event.setDensity(0.15f);
         }
@@ -161,8 +161,8 @@ public class ClientEventHandler {
 
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public static void onSetupFogColor(EntityViewRenderEvent.FogColors event) {
-        if (event.getEntity() instanceof LivingEntity) {
-            LivingEntity entity = (LivingEntity) event.getEntity();
+        if (event.getInfo().func_216773_g() instanceof LivingEntity) {
+            LivingEntity entity = (LivingEntity) event.getInfo().func_216773_g();
             if (entity.isPotionActive(MidnightEffects.STUNNED)) {
                 event.setRed(0.1F);
                 event.setGreen(0.1F);
@@ -199,12 +199,12 @@ public class ClientEventHandler {
 
             EntityUtil.Stance stance = EntityUtil.getStance(entity);
             if (stance == EntityUtil.Stance.QUADRUPEDAL) {
-                GlStateManager.translatef(0.0F, entity.height, 0.0F);
+                GlStateManager.translatef(0.0F, entity.getHeight(), 0.0F);
                 GlStateManager.rotatef(180.0F, 0.0F, 1.0F, 0.0F);
                 GlStateManager.rotatef(180.0F, 1.0F, 0.0F, 0.0F);
             } else {
-                GlStateManager.translatef(0.0F, entity.width / 2.0F, 0.0F);
-                GlStateManager.translatef(0.0F, 0.0F, entity.height / 2.0F);
+                GlStateManager.translatef(0.0F, entity.getWidth() / 2.0F, 0.0F);
+                GlStateManager.translatef(0.0F, 0.0F, entity.getHeight() / 2.0F);
                 GlStateManager.rotatef(-90.0F, 1.0F, 0.0F, 0.0F);
             }
         }

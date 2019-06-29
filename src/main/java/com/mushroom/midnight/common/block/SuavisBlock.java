@@ -21,7 +21,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
+import net.minecraft.potion.Potions;
 import net.minecraft.state.IntegerProperty;
+import net.minecraft.state.StateContainer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.NonNullList;
@@ -110,13 +112,13 @@ public class SuavisBlock extends Block implements IGrowable {
     }
 
     @Override
-    protected BlockStateContainer createBlockState() {
-        return new BlockStateContainer(this, STAGE);
+    protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
+        builder.add(STAGE);
     }
 
     @Override
     public BlockState getStateFromMeta(int meta) {
-        return getDefaultState().withProperty(STAGE, meta & 3);
+        return getDefaultState().with(STAGE, meta & 3);
     }
 
     @Override
@@ -130,7 +132,7 @@ public class SuavisBlock extends Block implements IGrowable {
     }
 
     @Override
-    public boolean canSilkHarvest() {
+    public boolean canSilkHarvest() { // json loot tables
         return true;
     }
 
@@ -163,7 +165,7 @@ public class SuavisBlock extends Block implements IGrowable {
         entity.setRadiusOnUse(-0.3f);
         entity.setWaitTime(10);
         entity.setRadiusPerTick(-entity.getRadius() / (float) entity.getDuration());
-        entity.setPotion(PotionTypes.EMPTY);
+        entity.setPotion(Potions.EMPTY);
         entity.setColor(0x355796);
         entity.addEffect(new EffectInstance(Effects.NAUSEA, 20 * (intensity + 1) * 6, 0, false, true));
         world.addEntity(entity);
@@ -223,7 +225,7 @@ public class SuavisBlock extends Block implements IGrowable {
     }
 
     @Override
-    public int quantityDropped(BlockState state, int fortune, Random random) {
+    public int quantityDropped(BlockState state, int fortune, Random random) { // json drop or getDrops()
         int maxSlice = state.get(STAGE) + 1;
         int minSlice = Math.min(1 + fortune, maxSlice);
         return random.nextInt(maxSlice - minSlice + 1) + minSlice;

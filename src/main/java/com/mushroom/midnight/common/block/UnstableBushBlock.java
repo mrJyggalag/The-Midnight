@@ -55,7 +55,7 @@ public class UnstableBushBlock extends MidnightPlantBlock implements IGrowable {
     @SuppressWarnings("deprecation")
     public boolean canSilkHarvest() {
         return false;
-    }
+    } // json drop
 
     @Override
     public Item getItemDropped(BlockState state, Random rand, int fortune) {
