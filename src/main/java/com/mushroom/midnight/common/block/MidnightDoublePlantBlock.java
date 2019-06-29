@@ -90,8 +90,13 @@ public class MidnightDoublePlantBlock extends MidnightPlantBlock {
     }
 
     @Override
-    protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
-        builder.add(HALF);
+    public boolean canGrow(IBlockReader worldIn, BlockPos pos, BlockState state, boolean isClient) {
+        return false;
+    }
+
+    @Override
+    public boolean canUseBonemeal(World worldIn, Random rand, BlockPos pos, BlockState state) {
+        return false;
     }
 
     @Override
@@ -107,16 +112,11 @@ public class MidnightDoublePlantBlock extends MidnightPlantBlock {
     }
 
     @Override
-    public boolean canGrow(IBlockReader worldIn, BlockPos pos, BlockState state, boolean isClient) {
-        return false;
+    public void grow(World world, Random rand, BlockPos pos, BlockState state) {
     }
 
     @Override
-    public boolean canUseBonemeal(World worldIn, Random rand, BlockPos pos, BlockState state) {
-        return false;
-    }
-
-    @Override
-    public void grow(World worldIn, Random rand, BlockPos pos, BlockState state) {
+    protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
+        builder.add(BlockStateProperties.HALF);
     }
 }

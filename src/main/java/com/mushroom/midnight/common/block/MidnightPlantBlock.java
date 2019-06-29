@@ -32,7 +32,7 @@ public class MidnightPlantBlock extends BushBlock implements IGrowable, IShearab
     private static final VoxelShape SHAPE = Block.makeCuboidShape(2d, 0d, 2d, 14d, 13d, 14d);
 
     @Nullable
-    private final Supplier<Block> growSupplier;
+    protected final Supplier<Block> growSupplier;
     private final boolean glowing;
     private boolean replacable, shearable;
 
@@ -114,19 +114,21 @@ public class MidnightPlantBlock extends BushBlock implements IGrowable, IShearab
 
     @Override
     public boolean canGrow(IBlockReader worldIn, BlockPos pos, BlockState state, boolean isClient) {
-        return true;
+        return this.growSupplier != null;
     }
 
     @Override
-    public boolean canUseBonemeal(World worldIn, Random rand, BlockPos pos, BlockState state) {
-        return true;
+    public boolean canUseBonemeal(World world, Random rand, BlockPos pos, BlockState state) {
+        return this.growSupplier != null;
     }
 
     @Override
     public void grow(World worldIn, Random rand, BlockPos pos, BlockState state) {
-        MidnightDoublePlantBlock doublePlant = (MidnightDoublePlantBlock) growSupplier.get();
-        if (doublePlant.getDefaultState().isValidPosition(worldIn, pos) && worldIn.isAirBlock(pos.up())) {
-            doublePlant.placeAt(worldIn, pos, 2);
+        if (this.growSupplier != null) {
+            MidnightDoublePlantBlock doublePlant = (MidnightDoublePlantBlock) growSupplier.get();
+            if (doublePlant.getDefaultState().isValidPosition(worldIn, pos) && worldIn.isAirBlock(pos.up())) {
+                doublePlant.placeAt(worldIn, pos, 2);
+            }
         }
     }
 }
