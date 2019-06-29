@@ -5,6 +5,7 @@ import com.mushroom.midnight.common.registry.MidnightBlocks;
 import com.mushroom.midnight.common.world.feature.config.UniformCompositionConfig;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.gen.ChunkGenerator;
@@ -23,7 +24,7 @@ public class HeapFeature extends Feature<UniformCompositionConfig> {
     public boolean place(IWorld world, ChunkGenerator<? extends GenerationSettings> generator, Random random, BlockPos origin, UniformCompositionConfig config) {
         BlockState belowState = world.getBlockState(origin.down());
         Block belowBlock = belowState.getBlock();
-        if (belowBlock.isLeaves(belowState, world, origin.down()) || belowBlock == MidnightBlocks.NIGHTSHROOM_HAT || belowBlock == MidnightBlocks.DEWSHROOM_HAT || belowBlock == MidnightBlocks.VIRIDSHROOM_HAT || belowBlock == MidnightBlocks.TRENCHSTONE) {
+        if (belowBlock.isIn(BlockTags.LEAVES) || belowBlock == MidnightBlocks.NIGHTSHROOM_HAT || belowBlock == MidnightBlocks.DEWSHROOM_HAT || belowBlock == MidnightBlocks.VIRIDSHROOM_HAT || belowBlock == MidnightBlocks.TRENCHSTONE) {
             return false;
         }
 
@@ -32,7 +33,7 @@ public class HeapFeature extends Feature<UniformCompositionConfig> {
         BlockPos max = origin.add(rangeXZ, rangeY, rangeXZ);
         BlockPos.getAllInBox(min, max).forEach(pos -> {
             if ((pos.getX() == origin.getX() && pos.getZ() == origin.getZ()) || random.nextFloat() < 0.5f) {
-                setBlockAndNotifyAdequately(world, pos, state);
+                this.setBlockState(world, pos, config.state);
             }
         });
 

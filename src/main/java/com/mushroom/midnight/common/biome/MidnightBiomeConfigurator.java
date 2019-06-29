@@ -2,12 +2,13 @@ package com.mushroom.midnight.common.biome;
 
 import com.mushroom.midnight.common.biome.cavern.CavernStructureConfig;
 import com.mushroom.midnight.common.biome.cavern.CavernousBiomeConfig;
+import com.mushroom.midnight.common.block.BladeshroomBlock;
 import com.mushroom.midnight.common.registry.MidnightBlocks;
 import com.mushroom.midnight.common.registry.MidnightEntities;
 import com.mushroom.midnight.common.registry.MidnightFeatures;
 import com.mushroom.midnight.common.world.feature.config.ScatterPlacementConfig;
 import com.mushroom.midnight.common.world.feature.config.SurfacePlacementConfig;
-import io.netty.handler.codec.memcache.binary.BinaryMemcacheClientCodec;
+import com.mushroom.midnight.common.world.feature.config.UniformCompositionConfig;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;
 import net.minecraft.world.biome.Biome;
@@ -84,6 +85,11 @@ public class MidnightBiomeConfigurator {
             .build();
 
     public static void addGlobalFeatures(Biome biome) {
+        biome.addFeature(GenerationStage.Decoration.LOCAL_MODIFICATIONS, Biome.createDecoratedFeature(
+                MidnightFeatures.HEAP, new UniformCompositionConfig(MidnightBlocks.ROCKSHROOM.getDefaultState()),
+                Placement.CHANCE_HEIGHTMAP_DOUBLE, new ChanceConfig(100)
+        ));
+
         biome.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, Biome.createDecoratedFeature(
                 Feature.BUSH, new BushConfig(MidnightBlocks.GHOST_PLANT.getDefaultState()),
                 Placement.COUNT_CHANCE_HEIGHTMAP_DOUBLE, new HeightWithChanceConfig(4, 0.3F)
@@ -94,17 +100,7 @@ public class MidnightBiomeConfigurator {
 //      .withFeature(FeatureSorting.LAST, UNDERGROUND_FEATURES, new UndergroundPlacementConfig(1, 3, 10, 50))
     }
 
-    public static void addVegetatedFeatures(Biome biome) {
-        biome.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, Biome.createDecoratedFeature(
-                Feature.GRASS, new GrassFeatureConfig(MidnightBlocks.TALL_MIDNIGHT_GRASS.getDefaultState()),
-                Placement.COUNT_HEIGHTMAP_DOUBLE, new FrequencyConfig(6)
-        ));
-
-        biome.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, Biome.createDecoratedFeature(
-                Feature.DOUBLE_PLANT, new DoublePlantConfig(MidnightBlocks.DOUBLE_MIDNIGHT_GRASS.getDefaultState()),
-                Placement.COUNT_HEIGHTMAP_32, new FrequencyConfig(3)
-        ));
-
+    public static void addLumen(Biome biome) {
         biome.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, Biome.createDecoratedFeature(
                 Feature.BUSH, new BushConfig(MidnightBlocks.LUMEN_BUD.getDefaultState()),
                 Placement.COUNT_HEIGHTMAP_DOUBLE, new FrequencyConfig(1)
@@ -114,16 +110,28 @@ public class MidnightBiomeConfigurator {
                 Feature.DOUBLE_PLANT, new DoublePlantConfig(MidnightBlocks.DOUBLE_LUMEN_BUD.getDefaultState()),
                 Placement.CHANCE_HEIGHTMAP_DOUBLE, new ChanceConfig(3)
         ));
-
-//                .withFeature(ROCKSHROOM_HEAP_FEATURE, new SurfacePlacementConfig(-99, 1))
-//                .withFeature(FUNGI_FEATURE, new ScatterPlacementConfig(1, 16))
     }
 
-    public static void addRockyFeatures(Biome biome) {
-//                .withFeature(ROCKSHROOM_HEAP_FEATURE, new SurfacePlacementConfig(-99, 1))
-//                .withFeature(LUMEN_FEATURE, new ScatterPlacementConfig(1, 16))
-//                .withFeature(DOUBLE_LUMEN_FEATURE, new ScatterPlacementConfig(1, 16))
-//                .withFeature(FUNGI_FEATURE, new ScatterPlacementConfig(1, 16))
+    public static void addSmallFungis(Biome biome) {
+        biome.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, Biome.createDecoratedFeature(
+                MidnightFeatures.FUNGI_FLOWERS, IFeatureConfig.NO_FEATURE_CONFIG,
+                Placement.COUNT_HEIGHTMAP_32, new FrequencyConfig(1)
+        ));
+    }
+
+    public static void addGrasses(Biome biome) {
+        biome.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, Biome.createDecoratedFeature(
+                Feature.GRASS, new GrassFeatureConfig(MidnightBlocks.TALL_MIDNIGHT_GRASS.getDefaultState()),
+                Placement.COUNT_HEIGHTMAP_DOUBLE, new FrequencyConfig(6)
+        ));
+
+        biome.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, Biome.createDecoratedFeature(
+                Feature.DOUBLE_PLANT, new DoublePlantConfig(MidnightBlocks.DOUBLE_MIDNIGHT_GRASS.getDefaultState()),
+                Placement.COUNT_HEIGHTMAP_32, new FrequencyConfig(3)
+        ));
+    }
+
+    public static void addBoulders(Biome biome) {
 //                .withFeature(TRENCHSTONE_BOULDER_FEATURE, new SurfacePlacementConfig(-3, 1))
     }
 
@@ -151,15 +159,22 @@ public class MidnightBiomeConfigurator {
                 Placement.CHANCE_HEIGHTMAP, new ChanceConfig(6)
         ));
 
-//        .withFeature(VIOLEAF_FEATURE, new ParcelPlacementConfig(2, 5, 0.3f))
+        biome.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, Biome.createDecoratedFeature(
+                Feature.BUSH, new BushConfig(MidnightBlocks.VIOLEAF.getDefaultState()),
+                Placement.COUNT_HEIGHTMAP_DOUBLE, new FrequencyConfig(2)
+        ));
     }
 
     public static void addFungiForestFeatures(Biome biome) {
-//       .withFeature(ROCKSHROOM_HEAP_FEATURE, new SurfacePlacementConfig(-8, 2))
 //       .withFeature(LARGE_FUNGI_FEATURES, new SurfacePlacementConfig(6))
-//       .withFeature(FUNGI_FEATURE, new ScatterPlacementConfig(6, 16))
 //       .withFeature(DOUBLE_FUNGI_FEATURE, new ScatterPlacementConfig(4, 8))
-//       .withFeature(BLADESHROOM_FEATURE, new ScatterPlacementConfig(1, 32))
+    }
+
+    public static void addBladeshrooms(Biome biome) {
+        biome.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, Biome.createDecoratedFeature(
+                Feature.BUSH, new BushConfig(MidnightBlocks.BLADESHROOM.getDefaultState().with(BladeshroomBlock.STAGE, BladeshroomBlock.Stage.CAPPED)),
+                Placement.COUNT_HEIGHTMAP_DOUBLE, new FrequencyConfig(1)
+        ));
     }
 
     public static void addStandardCreatureSpawns(Biome biome) {

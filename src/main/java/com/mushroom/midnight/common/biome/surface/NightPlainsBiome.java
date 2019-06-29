@@ -18,7 +18,6 @@ public class NightPlainsBiome extends SurfaceBiome {
                 .ridgeWeight(0.0F)
         );
 
-//        .withFeature(ROCKSHROOM_HEAP_FEATURE, new SurfacePlacementConfig(-99, 1))
 //        .withFeature(TALL_GRASS_FEATURE, new ScatterPlacementConfig(2, 32))
 //        .withFeature(FINGERED_GRASS_FEATURE, new ScatterPlacementConfig(8, 16) {
 //            @Override

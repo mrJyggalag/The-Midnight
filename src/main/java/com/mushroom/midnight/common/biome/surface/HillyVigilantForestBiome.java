@@ -13,7 +13,9 @@ public class HillyVigilantForestBiome extends SurfaceBiome {
                 .scale(0.4F)
         );
 
-        MidnightBiomeConfigurator.addVegetatedFeatures(this);
+        MidnightBiomeConfigurator.addLumen(this);
+        MidnightBiomeConfigurator.addSmallFungis(this);
+        MidnightBiomeConfigurator.addGrasses(this);
         MidnightBiomeConfigurator.addVigilantForestFeatures(this);
 
         MidnightBiomeConfigurator.addGlobalFeatures(this);

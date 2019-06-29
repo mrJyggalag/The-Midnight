@@ -17,8 +17,6 @@ public class PhantasmalValleyBiome extends SurfaceBiome {
                 .wet()
         );
 
-        // .withFeature(ROCKSHROOM_HEAP_FEATURE, new SurfacePlacementConfig(-99, 1))
-
         MidnightBiomeConfigurator.addGlobalFeatures(this);
 
         MidnightBiomeConfigurator.addStandardMonsterSpawns(this);

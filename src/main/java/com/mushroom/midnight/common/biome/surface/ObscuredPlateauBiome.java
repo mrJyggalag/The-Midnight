@@ -13,7 +13,9 @@ public class ObscuredPlateauBiome extends SurfaceBiome {
                 .scale(0.01F)
         );
 
-        MidnightBiomeConfigurator.addRockyFeatures(this);
+        MidnightBiomeConfigurator.addSmallFungis(this);
+        MidnightBiomeConfigurator.addLumen(this);
+        MidnightBiomeConfigurator.addBoulders(this);
         MidnightBiomeConfigurator.addGlobalFeatures(this);
 
         MidnightBiomeConfigurator.addStandardMonsterSpawns(this);

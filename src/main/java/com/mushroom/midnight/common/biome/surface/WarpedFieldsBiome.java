@@ -19,7 +19,9 @@ public class WarpedFieldsBiome extends SurfaceBiome {
                 .wet()
         );
 
-        MidnightBiomeConfigurator.addVegetatedFeatures(this);
+        MidnightBiomeConfigurator.addLumen(this);
+        MidnightBiomeConfigurator.addSmallFungis(this);
+        MidnightBiomeConfigurator.addGrasses(this);
 
         // .withFeature(SHADOWROOT_TREE_FEATURE, new SurfacePlacementConfig(-3, 1))
 

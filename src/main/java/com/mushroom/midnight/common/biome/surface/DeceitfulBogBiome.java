@@ -18,7 +18,6 @@ public class DeceitfulBogBiome extends SurfaceBiome {
                 .wet()
         );
 
-//        .withFeature(ROCKSHROOM_HEAP_FEATURE, new SurfacePlacementConfig(-99, 1))
 //        .withFeature(BOG_DEAD_TREE_FEATURE, new SurfacePlacementConfig(-1, 1))
 //        .withFeature(new IMidnightFeature[] {
 //                SHADOWROOT_TREE_FEATURE,

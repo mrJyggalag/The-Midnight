@@ -18,7 +18,6 @@ public class CrystalSpiresBiome extends SurfaceBiome {
                 .ridgeWeight(0.0F)
         );
 
-//      .withFeature(ROCKSHROOM_HEAP_FEATURE, new SurfacePlacementConfig(-99, 1))
 //      .withFeature(SHADOWROOT_TREE_FEATURE, new SurfacePlacementConfig(-3, 1))
 //      .withFeature(BLOOMCRYSTAL_FEATURE, new SurfacePlacementConfig(3))
 //      .withFeature(BLOOMCRYSTAL_SPIRE_FEATURE, new SurfacePlacementConfig(2, 3))

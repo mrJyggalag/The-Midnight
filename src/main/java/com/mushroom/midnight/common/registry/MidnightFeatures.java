@@ -2,12 +2,16 @@ package com.mushroom.midnight.common.registry;
 
 import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.common.world.feature.AlgaeFeature;
+import com.mushroom.midnight.common.world.feature.BogFungiFlowersFeature;
 import com.mushroom.midnight.common.world.feature.DarkWillowTreeFeature;
 import com.mushroom.midnight.common.world.feature.DeadLogFeature;
 import com.mushroom.midnight.common.world.feature.DeadTreeFeature;
+import com.mushroom.midnight.common.world.feature.FungiFlowersFeature;
+import com.mushroom.midnight.common.world.feature.HeapFeature;
 import com.mushroom.midnight.common.world.feature.LargeBogshroomFeature;
 import com.mushroom.midnight.common.world.feature.MossFeature;
 import com.mushroom.midnight.common.world.feature.ShadowrootTreeFeature;
+import com.mushroom.midnight.common.world.feature.config.UniformCompositionConfig;
 import com.mushroom.midnight.common.world.template.ShelfAttachProcessor;
 import net.minecraft.world.gen.feature.AbstractTreeFeature;
 import net.minecraft.world.gen.feature.Feature;
@@ -21,36 +25,6 @@ import net.minecraftforge.registries.ObjectHolder;
 @ObjectHolder(Midnight.MODID)
 @Mod.EventBusSubscriber(modid = Midnight.MODID)
 public class MidnightFeatures {
-//    public static final IMidnightFeature LUMEN_FEATURE = new PlantFeature(
-//            MidnightBlocks.LUMEN_BUD.getDefaultState(),
-//            GeneratablePlant::canGenerate
-//    );
-//
-//    public static final IMidnightFeature BLADESHROOM_FEATURE = new PlantFeature(
-//            MidnightBlocks.BLADESHROOM.getDefaultState().withProperty(BladeshroomBlock.STAGE, BladeshroomBlock.Stage.CAPPED),
-//            GeneratablePlant::canGenerate
-//    );
-//
-//    public static final IMidnightFeature BOGWEED_FEATURE = new PlantFeature(
-//            MidnightBlocks.BOGWEED.getDefaultState(),
-//            GeneratablePlant::canGenerate
-//    );
-//
-//    public static final IMidnightFeature GHOST_PLANT_FEATURE = new PlantFeature(
-//            MidnightBlocks.GHOST_PLANT.getDefaultState(),
-//            GeneratablePlant::canGenerate
-//    );
-//
-//    public static final IMidnightFeature FINGERED_GRASS_FEATURE = new PlantFeature(
-//            MidnightBlocks.FINGERED_GRASS.getDefaultState(),
-//            GeneratablePlant::canGenerate
-//    );
-//
-//    public static final IMidnightFeature VIOLEAF_FEATURE = new PlantFeature(
-//            MidnightBlocks.VIOLEAF.getDefaultState(),
-//            GeneratablePlant::canGenerate
-//    );
-//
 //    public static final IMidnightFeature UNSTABLE_BUSH_FEATURE = new PlantFeature(
 //            MidnightBlocks.UNSTABLE_BUSH.getDefaultState(),
 //            GeneratablePlant::canGenerate
@@ -66,32 +40,6 @@ public class MidnightFeatures {
 //            return false;
 //        }
 //    };
-//
-//    public static final IMidnightFeature RUNEBUSH_FEATURE = new PlantFeature(
-//            MidnightBlocks.RUNEBUSH.getDefaultState(),
-//            GeneratablePlant::canGenerate
-//    );
-//
-//    public static final IMidnightFeature DOUBLE_LUMEN_FEATURE = new DoublePlantFeature(
-//            MidnightBlocks.DOUBLE_LUMEN_BUD.getDefaultState(),
-//            GeneratablePlant::canGenerate
-//    );
-//
-//    public static final IMidnightFeature FUNGI_FEATURE = new FungiFeature(FungiFeature.FUNGI_STATES);
-//    public static final IMidnightFeature BOG_FUNGI_FEATURE = new FungiFeature(FungiFeature.BOG_FUNGI_STATES);
-//
-//    public static final IMidnightFeature DOUBLE_FUNGI_FEATURE = new DoubleFungiFeature(DoubleFungiFeature.FUNGI_STATES);
-//    public static final IMidnightFeature DOUBLE_BOG_FUNGI_FEATURE = new DoubleFungiFeature(DoubleFungiFeature.BOG_FUNGI_STATES);
-//
-//    public static final IMidnightFeature DRAGON_NEST_FEATURE = new PlantFeature(
-//            MidnightBlocks.DRAGON_NEST.getDefaultState(),
-//            (world, pos, state) -> MidnightBlocks.DRAGON_NEST.canPlaceBlockAt(world, pos)
-//    );
-//
-//    public static final IMidnightFeature CRYSTAL_FLOWER_FEATURE = new PlantFeature(
-//            MidnightBlocks.CRYSTAL_FLOWER.getDefaultState(),
-//            GeneratablePlant::canGenerate
-//    );
 //
 //    public static final IMidnightFeature[] LARGE_FUNGI_FEATURES = new LargeFungiFeature[] {
 //            new LargeFungiFeature(
@@ -149,8 +97,6 @@ public class MidnightFeatures {
 //        }
 //    };
 //
-//    public static final IMidnightFeature ROCKSHROOM_HEAP_FEATURE = new HeapFeature(MidnightBlocks.ROCKSHROOM.getDefaultState());
-//
 //    public static final IMidnightFeature[] UNDERGROUND_FEATURES = new IMidnightFeature[] {
 //            new PlantFeature(MidnightBlocks.TENDRILWEED.getDefaultState(), GeneratablePlant::canGenerate),
 //            FUNGI_FEATURE,
@@ -177,6 +123,11 @@ public class MidnightFeatures {
     public static final Feature<NoFeatureConfig> DECEITFUL_ALGAE = RegUtil.injected();
     public static final Feature<NoFeatureConfig> DECEITFUL_MOSS = RegUtil.injected();
 
+    public static final Feature<NoFeatureConfig> FUNGI_FLOWERS = RegUtil.injected();
+    public static final Feature<NoFeatureConfig> BOG_FUNGI_FLOWERS = RegUtil.injected();
+
+    public static final Feature<UniformCompositionConfig> HEAP = RegUtil.injected();
+
     @SubscribeEvent
     public static void registerFeatures(RegistryEvent.Register<Feature<?>> event) {
         RegUtil.generic(event.getRegistry())
@@ -188,6 +139,9 @@ public class MidnightFeatures {
                 .add("large_bogshroom", new LargeBogshroomFeature(NoFeatureConfig::deserialize))
                 .add("suavis", new ScatteredPlantFeature(NoFeatureConfig::deserialize, MidnightBlocks.SUAVIS.getDefaultState()))
                 .add("deceitful_algae", new AlgaeFeature(NoFeatureConfig::deserialize))
-                .add("deceitful_moss", new MossFeature(NoFeatureConfig::deserialize));
+                .add("deceitful_moss", new MossFeature(NoFeatureConfig::deserialize))
+                .add("fungi_flowers", new FungiFlowersFeature(NoFeatureConfig::deserialize))
+                .add("bog_fungi_flowers", new BogFungiFlowersFeature(NoFeatureConfig::deserialize))
+                .add("heap", new HeapFeature(UniformCompositionConfig::deserialize));
     }
 }

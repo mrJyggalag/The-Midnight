@@ -11,6 +11,7 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.gen.IWorldGenerationReader;
 import net.minecraft.world.gen.feature.NoFeatureConfig;
+import net.minecraftforge.client.model.ForgeBlockStateV1;
 import net.minecraftforge.common.IPlantable;
 
 import java.util.HashSet;
