@@ -22,7 +22,7 @@ import com.mushroom.midnight.common.block.MiasmaFluidBlock;
 import com.mushroom.midnight.common.block.MiasmaSurfaceBlock;
 import com.mushroom.midnight.common.block.MidnightChestBlock;
 import com.mushroom.midnight.common.block.MidnightChestBlock.ChestModel;
-import com.mushroom.midnight.common.block.MidnightDirtBlock;
+import com.mushroom.midnight.common.block.SoilBlock;
 import com.mushroom.midnight.common.block.MidnightDoubleFungiBlock;
 import com.mushroom.midnight.common.block.MidnightDoublePlantBlock;
 import com.mushroom.midnight.common.block.MidnightFenceBlock;
@@ -35,7 +35,6 @@ import com.mushroom.midnight.common.block.MidnightFurnaceBlock;
 import com.mushroom.midnight.common.block.MidnightGemBlock;
 import com.mushroom.midnight.common.block.MidnightGlassBlock;
 import com.mushroom.midnight.common.block.MidnightGlassPaneBlock;
-import com.mushroom.midnight.common.block.MidnightGrassBlock;
 import com.mushroom.midnight.common.block.MidnightMyceliumBlock;
 import com.mushroom.midnight.common.block.MidnightOreBlock;
 import com.mushroom.midnight.common.block.MidnightPlantBlock;
@@ -46,6 +45,7 @@ import com.mushroom.midnight.common.block.NightstoneBlock;
 import com.mushroom.midnight.common.block.RockshroomBlock;
 import com.mushroom.midnight.common.block.ShadowrootCraftingTableBlock;
 import com.mushroom.midnight.common.block.SporchBlock;
+import com.mushroom.midnight.common.block.SpreadableSoilBlock;
 import com.mushroom.midnight.common.block.StingerEggBlock;
 import com.mushroom.midnight.common.block.SuavisBlock;
 import com.mushroom.midnight.common.block.TendrilweedBlock;
@@ -318,27 +318,27 @@ public class MidnightBlocks {
 //        );
 
         RegUtil.blocks(event.getRegistry())
-                .add("grass_block", new MidnightGrassBlock(
+                .add("grass_block", new SpreadableSoilBlock(
                         Block.Properties.create(Material.ORGANIC, MaterialColor.MAGENTA_TERRACOTTA)
                                 .hardnessAndResistance(0.6F)
                                 .sound(SoundType.PLANT)
                                 .tickRandomly()
-                ))
-                .add("dirt", new MidnightDirtBlock(
+                , () -> DIRT))
+                .add("dirt", new SoilBlock(
                         Block.Properties.create(Material.EARTH, MaterialColor.BLUE_TERRACOTTA)
                                 .hardnessAndResistance(0.5F)
                                 .sound(SoundType.GROUND)
-                ))
-                .add("coarse_dirt", new MidnightDirtBlock(
+                , true))
+                .add("coarse_dirt", new SoilBlock(
                         Block.Properties.create(Material.EARTH, MaterialColor.BLUE_TERRACOTTA)
                                 .hardnessAndResistance(0.5F)
                                 .sound(SoundType.GROUND)
-                ))
+                , false))
                 .add("mycelium", new MidnightMyceliumBlock(
                         Block.Properties.create(Material.ROCK, MaterialColor.PINK)
                                 .hardnessAndResistance(1.5F, 10.0F)
                                 .sound(SoundType.STONE)
-                ));
+                , () -> MidnightBlocks.NIGHTSTONE));
 
         RegUtil.blocks(event.getRegistry())
                 .withProperties(() ->
@@ -416,7 +416,7 @@ public class MidnightBlocks {
                 RegUtil.withName(new DarkWaterBlock(), "dark_water"),
                 RegUtil.withName(new MushroomInsideBlock(), "mushroom_inside"),
                 RegUtil.withName(new DeceitfulMudBlock(), "deceitful_mud"),
-                RegUtil.withName(new MidnightDirtBlock(), "deceitful_peat"),
+                RegUtil.withName(new SoilBlock(), "deceitful_peat"),
                 RegUtil.withName(new DeceitfulAlgaeBlock(), "deceitful_algae"),
                 RegUtil.withName(new DeceitfulMossBlock(), "deceitful_moss"),
                 RegUtil.withName(new StingerEggBlock(), "stinger_egg"),
