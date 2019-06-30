@@ -34,7 +34,7 @@ public class MidnightFungiShelfBlock extends Block {
     private static final VoxelShape VERTICAL_BOUNDS = makeCuboidShape(0.0625, 0.0, 0.0625, 0.9375, 0.4, 0.9375);
 
     public MidnightFungiShelfBlock(Properties properties) {
-        super(properties.create(Material.PLANTS, MaterialColor.PURPLE_TERRACOTTA).hardnessAndResistance(0f).sound(SoundType.PLANT));
+        super(properties);
         //setCreativeTab(MidnightItemGroups.DECORATION);
     }
 

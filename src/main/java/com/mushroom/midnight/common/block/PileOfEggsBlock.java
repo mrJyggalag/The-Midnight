@@ -11,6 +11,7 @@ import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -136,12 +137,7 @@ public abstract class PileOfEggsBlock extends Block {
     }
 
     @Override
-    public Item getItemDropped(BlockState state, Random rand, int fortune) {
-        return Items.AIR;
-    }
-
-    @Override
-    public boolean isReplaceable(IBlockAccess world, BlockPos pos) {
+    public boolean isReplaceable(BlockState state, BlockItemUseContext useContext) {
         return false;
     }
 

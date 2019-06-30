@@ -1,9 +1,11 @@
 package com.mushroom.midnight.common.entity;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
 import net.minecraft.entity.MobEntity;
 import net.minecraft.pathfinding.FlyingPathNavigator;
 import net.minecraft.pathfinding.Path;
+import net.minecraft.pathfinding.PathType;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
@@ -135,8 +137,9 @@ public class FlyingNavigator extends FlyingPathNavigator {
             double displacementZ = pos.getZ() + 0.5 - origin.z;
 
             if (displacementX * deltaX + displacementZ * deltaZ >= 0.0) {
-                Block block = this.world.getBlockState(pos).getBlock();
-                if (!isPassable(this.world, pos)) { //block.getMaterial(state).blocksMovement()?
+                BlockState state = this.world.getBlockState(pos);
+                Block block = state.getBlock();
+                if (!block.allowsMovement(state, this.world, pos, PathType.AIR)) {
                     return false;
                 }
             }

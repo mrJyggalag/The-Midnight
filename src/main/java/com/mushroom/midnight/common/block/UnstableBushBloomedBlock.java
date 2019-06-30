@@ -9,6 +9,7 @@ import net.minecraft.block.IGrowable;
 import net.minecraft.entity.MoverType;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.StateContainer;
@@ -34,9 +35,9 @@ import java.util.function.Supplier;
 
 public class UnstableBushBloomedBlock extends MidnightPlantBlock implements IGrowable {
     public static final BooleanProperty HAS_FRUIT = BooleanProperty.create("has_fruit");
-    private final Supplier<UnstableFruitItem> fruitSupplier;
+    private final Supplier<Item> fruitSupplier;
 
-    public UnstableBushBloomedBlock(Block.Properties properties, Supplier<UnstableFruitItem> fruitSupplier) {
+    public UnstableBushBloomedBlock(Block.Properties properties, Supplier<Item> fruitSupplier) {
         super(properties, false);
         this.fruitSupplier = fruitSupplier;
         setDefaultState(this.stateContainer.getBaseState().with(HAS_FRUIT, false));
@@ -48,6 +49,7 @@ public class UnstableBushBloomedBlock extends MidnightPlantBlock implements IGro
     }
 
     @Override
+    @SuppressWarnings("deprecation")
     public boolean onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
         if (!state.get(HAS_FRUIT)) {
             return false;
@@ -79,11 +81,6 @@ public class UnstableBushBloomedBlock extends MidnightPlantBlock implements IGro
     }
 
     @Override
-    public int quantityDropped(BlockState state, int fortune, Random random) { // json drop or getDrops()
-        return random.nextInt(3) + (state.get(HAS_FRUIT) ? 3 : 0);
-    }
-
-    @Override
     public boolean canGrow(IBlockReader world, BlockPos pos, BlockState state, boolean isClient) {
         return !state.get(HAS_FRUIT);
     }
@@ -99,6 +96,7 @@ public class UnstableBushBloomedBlock extends MidnightPlantBlock implements IGro
     }
 
     @Override
+    @SuppressWarnings("deprecation")
     public void tick(BlockState state, World world, BlockPos pos, Random rand) {
         if (ForgeHooks.onCropsGrowPre(world, pos, state, rand.nextInt(10) == 0)) {
             this.grow(world, rand, pos, state);
@@ -124,4 +122,9 @@ public class UnstableBushBloomedBlock extends MidnightPlantBlock implements IGro
             MidnightParticles.UNSTABLE_BUSH.spawn(world, pos.getX() + 0.5d, pos.getY() + 0.5d, pos.getZ() + 0.5d, rand.nextFloat() * 0.1d - 0.05d, rand.nextFloat() * 0.03d, rand.nextFloat() * 0.1d - 0.05d, fruitType);
         }
     }
+
+    /*@Override
+    public int quantityDropped(BlockState state, int fortune, Random random) { // json drop or getDrops()
+        return random.nextInt(3) + (state.get(HAS_FRUIT) ? 3 : 0);
+    }*/
 }

@@ -3,9 +3,6 @@ package com.mushroom.midnight.common.block;
 import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.client.particle.MidnightParticles;
 import com.mushroom.midnight.common.network.RockshroomBrokenMessage;
-import com.mushroom.midnight.common.registry.MidnightBlocks;
-import com.mushroom.midnight.common.registry.MidnightItemGroups;
-import com.mushroom.midnight.common.registry.MidnightItems;
 import com.mushroom.midnight.common.util.MidnightDamageSource;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -16,7 +13,6 @@ import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.IFluidState;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.BlockPos;
@@ -94,7 +90,7 @@ public class RockshroomBlock extends Block {
         }
     }
 
-    @Override
+    /*@Override
     protected ItemStack getSilkTouchDrop(BlockState state) {
         return new ItemStack(MidnightBlocks.ROCKSHROOM);
     }
@@ -112,5 +108,5 @@ public class RockshroomBlock extends Block {
     @Override
     public int quantityDropped(Random random) {
         return random.nextInt(2) + 2;
-    }
+    }*/
 }

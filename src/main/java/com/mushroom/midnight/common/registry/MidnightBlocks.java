@@ -2,6 +2,7 @@ package com.mushroom.midnight.common.registry;
 
 import com.google.common.collect.Lists;
 import com.mushroom.midnight.Midnight;
+import com.mushroom.midnight.common.block.BasicBlock;
 import com.mushroom.midnight.common.block.BladeshroomBlock;
 import com.mushroom.midnight.common.block.BloomCrystalBlock;
 import com.mushroom.midnight.common.block.BogweedBlock;
@@ -54,13 +55,21 @@ import com.mushroom.midnight.common.world.feature.LargeFungiFeature;
 import com.mushroom.midnight.common.world.feature.ShadowrootTreeFeature;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
+import net.minecraft.block.FenceBlock;
+import net.minecraft.block.FenceGateBlock;
+import net.minecraft.block.LadderBlock;
 import net.minecraft.block.LogBlock;
+import net.minecraft.block.SlabBlock;
 import net.minecraft.block.SoundType;
+import net.minecraft.block.StairsBlock;
+import net.minecraft.block.TrapDoorBlock;
+import net.minecraft.block.WallBlock;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.world.gen.feature.NoFeatureConfig;
+import net.minecraftforge.common.ToolType;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -314,33 +323,39 @@ public class MidnightBlocks {
         RegUtil.blocks(event.getRegistry())
                 .add("grass_block", new SpreadableSoilBlock(
                         Block.Properties.create(Material.ORGANIC, MaterialColor.MAGENTA_TERRACOTTA)
-                                .hardnessAndResistance(0.6F)
+                                .hardnessAndResistance(0.6f)
                                 .sound(SoundType.PLANT)
                 , () -> DIRT))
                 .add("dirt", new SoilBlock(
                         Block.Properties.create(Material.EARTH, MaterialColor.BLUE_TERRACOTTA)
-                                .hardnessAndResistance(0.5F)
+                                .hardnessAndResistance(0.5f)
                                 .sound(SoundType.GROUND)
                 , true))
                 .add("coarse_dirt", new SoilBlock(
                         Block.Properties.create(Material.EARTH, MaterialColor.BLUE_TERRACOTTA)
-                                .hardnessAndResistance(0.5F)
+                                .hardnessAndResistance(0.5f)
                                 .sound(SoundType.GROUND)
                 , false))
                 .add("mycelium", new MidnightMyceliumBlock(
                         Block.Properties.create(Material.ROCK, MaterialColor.PINK)
-                                .hardnessAndResistance(1.5F, 10.0F)
+                                .hardnessAndResistance(1.5f, 10f)
                                 .sound(SoundType.STONE)
                 , () -> MidnightBlocks.NIGHTSTONE))
                 .add("nightstone", new SoilBlock(Block.Properties.create(Material.ROCK, MaterialColor.BLUE_TERRACOTTA)
                         .hardnessAndResistance(1.5f, 10f)
                         .sound(SoundType.STONE)
-                , true));
+                , true))
+                .add("deceitful_mud", new DeceitfulMudBlock())
+                .add("deceitful_peat", new SoilBlock(
+                        Block.Properties.create(Material.EARTH, MaterialColor.BLUE_TERRACOTTA)
+                                .hardnessAndResistance(0.5F)
+                                .sound(SoundType.GROUND)
+                        , true));
 
         RegUtil.blocks(event.getRegistry())
                 .withProperties(() ->
                         Block.Properties.create(Material.WOOD, MaterialColor.BLUE_TERRACOTTA)
-                                .hardnessAndResistance(2.0F)
+                                .hardnessAndResistance(2f)
                                 .sound(SoundType.WOOD)
                 )
                 .add("shadowroot_log", props -> new LogBlock(MaterialColor.BROWN, props))
@@ -389,9 +404,17 @@ public class MidnightBlocks {
                 .add("fingered_grass", FingeredGrassBlock::new)
                 .add("tendrilweed", TendrilweedBlock::new)
                 .add("violeaf", VioleafBlock::new)
-                .add("dragon_nest", DragonNestBlock::new);
-
-
+                .add("dragon_nest", DragonNestBlock::new)
+                .add("bladeshroom", BladeshroomBlock::new)
+                .add("crystal_flower", props -> new MidnightPlantBlock(props, true))
+                .add("runebush", props -> new MidnightPlantBlock(props, false))
+                .add("deceitful_algae", new DeceitfulAlgaeBlock())
+                .add("deceitful_moss", new DeceitfulMossBlock())
+                .add("crystalotus", new CrystalotusBlock())
+                .add("unstable_bush", UnstableBushBlock::new)
+                .add("unstable_bush_blue_bloomed", props -> new UnstableBushBloomedBlock(props, () -> MidnightItems.UNSTABLE_FRUIT_BLUE))
+                .add("unstable_bush_green_bloomed", props -> new UnstableBushBloomedBlock(props, () -> MidnightItems.UNSTABLE_FRUIT_GREEN))
+                .add("unstable_bush_lime_bloomed", props -> new UnstableBushBloomedBlock(props, () -> MidnightItems.UNSTABLE_FRUIT_LIME));
 
         RegUtil.blocks(event.getRegistry())
                 .withProperties(() -> Block.Properties.create(Material.WOOD)
@@ -412,171 +435,142 @@ public class MidnightBlocks {
                 .add("bogshroom_hat", new MidnightFungiHatBlock(() -> BOGSHROOM, () -> MidnightItems.BOGSHROOM_POWDER, MaterialColor.ADOBE))
                 .add("bulb_fungus_hat", new BulbFungusHatBlock());
 
+        RegUtil.blocks(event.getRegistry())
+                .withProperties(() -> Block.Properties.create(Material.PLANTS, MaterialColor.PURPLE_TERRACOTTA).hardnessAndResistance(0f).sound(SoundType.PLANT))
+                .add("bogshroom_shelf", MidnightFungiShelfBlock::new)
+                .add("nightshroom_shelf", MidnightFungiShelfBlock::new)
+                .add("dewshroom_shelf", MidnightFungiShelfBlock::new)
+                .add("viridshroom_shelf", MidnightFungiShelfBlock::new);
+
+        RegUtil.blocks(event.getRegistry())
+                .withProperties(() -> Block.Properties.create(Material.ROCK).hardnessAndResistance(1.5f, 10f))
+                .add("nightstone_bricks", BasicBlock::new)
+                .add("chiseled_nightstone_bricks", BasicBlock::new)
+                .add("rockshroom_bricks", BasicBlock::new);
+
+        RegUtil.blocks(event.getRegistry())
+                .withProperties(() -> Block.Properties.create(Material.IRON).hardnessAndResistance(3f, 0f).sound(SoundType.METAL))
+                .add("dark_pearl_block", BasicBlock::new)
+                .add("tenebrum_block", BasicBlock::new)
+                .add("nagrilite_block", BasicBlock::new)
+                .add("ebonys_block", BasicBlock::new);
+
+        RegUtil.blocks(event.getRegistry())
+                .add("rockshroom", new RockshroomBlock())
+                .add("stinger_egg", new StingerEggBlock())
+                .add("trenchstone", props -> new BasicBlock(Block.Properties.create(Material.ROCK).hardnessAndResistance(5f, 200f), ToolType.PICKAXE, 2))
+                .add("bloomcrystal", new BloomCrystalBlock(Block.Properties.create(Material.ROCK, MaterialColor.PINK).hardnessAndResistance(2.0F).sound(SoundType.GLASS).lightValue(15).tickRandomly()))
+                .add("bloomcrystal_rock", new BasicBlock(Block.Properties.create(Material.ROCK, MaterialColor.PINK).sound(SoundType.GLASS).lightValue(14).hardnessAndResistance(4f), ToolType.PICKAXE, 1))
+                .add("rouxe", new CrystalBlock(Block.Properties.create(Material.ROCK, MaterialColor.RED).hardnessAndResistance(2.0F).sound(SoundType.GLASS).lightValue(3)))
+                .add("rouxe_rock", new BasicBlock(Block.Properties.create(Material.ROCK, MaterialColor.RED).sound(SoundType.GLASS).lightValue(2).hardnessAndResistance(4f, 0f), ToolType.PICKAXE, 1).withGlow())
+                .add("miasma_surface", new MiasmaSurfaceBlock())
+                .add("dark_pearl_ore", new MidnightGemBlock(() -> MidnightItems.GEODE, 0))
+                .add("tenebrum_ore", new MidnightOreBlock(2))
+                .add("nagrilite_ore", new MidnightOreBlock(2))
+                .add("ebonys_ore", new MidnightGemBlock(() -> MidnightItems.EBONYS, 1))
+                .add("archaic_ore", new MidnightGemBlock(() -> MidnightItems.ARCHAIC_SHARD, 0))
+                .add("trenchstone_bricks", new BasicBlock(Block.Properties.create(Material.ROCK).hardnessAndResistance(1.5f, 200f), ToolType.PICKAXE, 2))
+                .add("archaic_glass", new MidnightGlassBlock())
+                .add("archaic_glass_pane", new MidnightGlassPaneBlock())
+                .add("shadowroot_crafting_table", new ShadowrootCraftingTableBlock())
+                .add("shadowroot_chest", props -> new MidnightChestBlock(props, ChestModel.SHADOWROOT));
+
+        RegUtil.blocks(event.getRegistry())
+                .withProperties(() -> Block.Properties.create(Material.WOOD, MaterialColor.ADOBE).hardnessAndResistance(2f, 5f).sound(SoundType.WOOD))
+                .add("shadowroot_planks", MidnightWoodPlankBlock::new)
+                .add("dead_wood_planks", MidnightWoodPlankBlock::new)
+                .add("dark_willow_planks", MidnightWoodPlankBlock::new)
+                .add("nightshroom_planks", MidnightWoodPlankBlock::new)
+                .add("dewshroom_planks", MidnightWoodPlankBlock::new)
+                .add("viridshroom_planks", MidnightWoodPlankBlock::new);
+
+        RegUtil.blocks(event.getRegistry())
+                .withProperties(() -> Block.Properties.create(Material.WOOD, MaterialColor.ADOBE).hardnessAndResistance(3f).sound(SoundType.WOOD))
+                .add("shadowroot_door", BasicBlock::new)
+                .add("dark_willow_door", BasicBlock::new)
+                .add("dead_wood_door", BasicBlock::new)
+                .add("nightshroom_door", BasicBlock::new)
+                .add("dewshroom_door", BasicBlock::new)
+                .add("viridshroom_door", BasicBlock::new)
+        ;
+
+        RegUtil.blocks(event.getRegistry())
+                .withProperties(() -> Block.Properties.create(Material.IRON, MaterialColor.ADOBE).hardnessAndResistance(3f).sound(SoundType.METAL))
+                .add("tenebrum_door", BasicBlock::new);
+
+        RegUtil.blocks(event.getRegistry())
+                .withProperties(() -> Block.Properties.create(Material.WOOD, MaterialColor.ADOBE).hardnessAndResistance(3.0F).sound(SoundType.WOOD))
+                .add("shadowroot_trapdoor", props -> new TrapDoorBlock(props) {})
+                .add("dark_willow_trapdoor", props -> new TrapDoorBlock(props) {})
+                .add("dead_wood_trapdoor", props -> new TrapDoorBlock(props) {})
+                .add("tenebrum_trapdoor", props -> new TrapDoorBlock(props) {})
+                .add("nightshroom_trapdoor", props -> new TrapDoorBlock(props) {})
+                .add("dewshroom_trapdoor", props -> new TrapDoorBlock(props) {})
+                .add("viridshroom_trapdoor", props -> new TrapDoorBlock(props) {});
+
+        RegUtil.blocks(event.getRegistry())
+                .add("shadowroot_slab", props -> new SlabBlock(Block.Properties.from(SHADOWROOT_PLANKS)))
+                .add("dead_wood_slab", props -> new SlabBlock(Block.Properties.from(DEAD_WOOD_PLANKS)))
+                .add("dark_willow_slab", props -> new SlabBlock(Block.Properties.from(DARK_WILLOW_PLANKS)))
+                .add("nightstone_slab", props -> new SlabBlock(Block.Properties.from(NIGHTSTONE)))
+                .add("nightstone_brick_slab", props -> new SlabBlock(Block.Properties.from(NIGHTSTONE_BRICKS)))
+                .add("trenchstone_slab", props -> new SlabBlock(Block.Properties.from(TRENCHSTONE)))
+                .add("trenchstone_brick_slab", props -> new SlabBlock(Block.Properties.from(TRENCHSTONE_BRICKS)))
+                .add("dewshroom_slab", props -> new SlabBlock(Block.Properties.from(DEWSHROOM_PLANKS)))
+                .add("viridshroom_slab", props -> new SlabBlock(Block.Properties.from(VIRIDSHROOM_PLANKS)))
+                .add("nightshroom_slab", props -> new SlabBlock(Block.Properties.from(NIGHTSHROOM_PLANKS)))
+                .add("rockshroom_bricks_slab", props -> new SlabBlock(Block.Properties.from(ROCKSHROOM_BRICKS)));
+
+        RegUtil.blocks(event.getRegistry())
+                .add("shadowroot_stairs", props -> new StairsBlock(SHADOWROOT_PLANKS.getDefaultState(), Block.Properties.from(SHADOWROOT_PLANKS)) {})
+                .add("dead_wood_stairs", props -> new StairsBlock(DEAD_WOOD_PLANKS.getDefaultState(), Block.Properties.from(DEAD_WOOD_PLANKS)) {})
+                .add("dark_willow_stairs", props -> new StairsBlock(DARK_WILLOW_PLANKS.getDefaultState(), Block.Properties.from(DARK_WILLOW_PLANKS)) {})
+                .add("nightstone_stairs", props -> new StairsBlock(NIGHTSTONE.getDefaultState(), Block.Properties.from(NIGHTSTONE)) {})
+                .add("nightstone_brick_stairs", props -> new StairsBlock(NIGHTSTONE_BRICKS.getDefaultState(), Block.Properties.from(NIGHTSTONE_BRICKS)) {})
+                .add("trenchstone_stairs", props -> new StairsBlock(TRENCHSTONE.getDefaultState(), Block.Properties.from(TRENCHSTONE)) {})
+                .add("trenchstone_brick_stairs", props -> new StairsBlock(TRENCHSTONE_BRICKS.getDefaultState(), Block.Properties.from(TRENCHSTONE_BRICKS)) {})
+                .add("dewshroom_stairs", props -> new StairsBlock(DEWSHROOM_PLANKS.getDefaultState(), Block.Properties.from(DEWSHROOM_PLANKS)) {})
+                .add("viridshroom_stairs", props -> new StairsBlock(VIRIDSHROOM_PLANKS.getDefaultState(), Block.Properties.from(TRENCHSTONE)) {})
+                .add("nightshroom_stairs", props -> new StairsBlock(NIGHTSHROOM_PLANKS.getDefaultState(), Block.Properties.from(NIGHTSHROOM_PLANKS)) {})
+                .add("rockshroom_bricks_stairs", props -> new StairsBlock(ROCKSHROOM_BRICKS.getDefaultState(), Block.Properties.from(ROCKSHROOM_BRICKS)) {});
+
+        RegUtil.blocks(event.getRegistry())
+                .withProperties(() -> Block.Properties.create(Material.WOOD, MaterialColor.ADOBE).hardnessAndResistance(2.0F, 3.0F).sound(SoundType.WOOD))
+                .add("shadowroot_fence", FenceBlock::new)
+                .add("dead_wood_fence", FenceBlock::new)
+                .add("dark_willow_fence", FenceBlock::new)
+                .add("dewshroom_fence", FenceBlock::new)
+                .add("viridshroom_fence", FenceBlock::new)
+                .add("nightshroom_fence", FenceBlock::new)
+                .add("shadowroot_fence_gate", FenceGateBlock::new)
+
+                .add("dead_wood_fence_gate", FenceGateBlock::new)
+                .add("dark_willow_fence_gate", FenceGateBlock::new)
+                .add("dewshroom_fence_gate", FenceGateBlock::new)
+                .add("viridshroom_fence_gate", FenceGateBlock::new)
+                .add("nightshroom_fence_gate", FenceGateBlock::new);
+
+        RegUtil.blocks(event.getRegistry())
+                .add("nightstone_wall", props -> new WallBlock(Block.Properties.from(NIGHTSTONE)))
+                .add("nightstone_brick_wall", props -> new WallBlock(Block.Properties.from(NIGHTSTONE_BRICKS)))
+                .add("trenchstone_wall", props -> new WallBlock(Block.Properties.from(TRENCHSTONE)))
+                .add("trenchstone_brick_wall", props -> new WallBlock(Block.Properties.from(TRENCHSTONE_BRICKS)))
+                .add("rockshroom_bricks_wall", props -> new WallBlock(Block.Properties.from(ROCKSHROOM_BRICKS)));
+
+        RegUtil.blocks(event.getRegistry())
+                .withProperties(() -> Block.Properties.create(Material.MISCELLANEOUS).hardnessAndResistance(0.4F).sound(SoundType.LADDER))
+                .add("shadowroot_ladder", props -> new LadderBlock(props) {})
+                .add("dead_wood_ladder", props -> new LadderBlock(props) {})
+                .add("dark_willow_ladder", props -> new LadderBlock(props) {})
+                .add("dewshroom_ladder", props -> new LadderBlock(props) {})
+                .add("viridshroom_ladder", props -> new LadderBlock(props) {})
+                .add("nightshroom_ladder", props -> new LadderBlock(props) {});
+
+
         // TODO: Port all registration
 
         blocks.addAll(Lists.newArrayList(
-                RegUtil.withName(new MidnightLeavesBlock(() -> SHADOWROOT_SAPLING), "shadowroot_leaves"),
-                RegUtil.withName(new MidnightLeavesBlock(() -> DARK_WILLOW_SAPLING), "dark_willow_leaves"),
-                RegUtil.withName(new RockshroomBlock(), "rockshroom"),
-                RegUtil.withName(new MidnightFungiShelfBlock(), "bogshroom_shelf"),
-                RegUtil.withName(new MidnightFungiShelfBlock(), "nightshroom_shelf"),
-                RegUtil.withName(new MidnightFungiShelfBlock(), "dewshroom_shelf"),
-                RegUtil.withName(new MidnightFungiShelfBlock(), "viridshroom_shelf"),
-                RegUtil.withName(new BladeshroomBlock(), "bladeshroom"),
-                RegUtil.withName(new MidnightPlantBlock(false), "runebush"),
-
-
-                RegUtil.withName(new MidnightPlantBlock(true), "crystal_flower"),
-                RegUtil.withName(new MidnightSaplingBlock(ShadowrootTreeFeature::new), "shadowroot_sapling"),
-                RegUtil.withName(new MidnightSaplingBlock(DarkWillowTreeFeature::new), "dark_willow_sapling"),
-                RegUtil.withName(new DarkWaterBlock(), "dark_water"),
-                RegUtil.withName(new MushroomInsideBlock(), "mushroom_inside"),
-                RegUtil.withName(new DeceitfulMudBlock(), "deceitful_mud"),
-                RegUtil.withName(new SoilBlock(), "deceitful_peat"),
-                RegUtil.withName(new DeceitfulAlgaeBlock(), "deceitful_algae"),
-                RegUtil.withName(new DeceitfulMossBlock(), "deceitful_moss"),
-                RegUtil.withName(new StingerEggBlock(), "stinger_egg"),
-                RegUtil.withName(new UnstableBushBlock(), "unstable_bush"),
-                RegUtil.withName(new UnstableBushBloomedBlock(() -> MidnightItems.UNSTABLE_FRUIT_BLUE), "unstable_bush_blue_bloomed"),
-                RegUtil.withName(new UnstableBushBloomedBlock(() -> MidnightItems.UNSTABLE_FRUIT_GREEN), "unstable_bush_green_bloomed"),
-                RegUtil.withName(new UnstableBushBloomedBlock(() -> MidnightItems.UNSTABLE_FRUIT_LIME), "unstable_bush_lime_bloomed"),
-                RegUtil.withName(new CrystalotusBlock(), "crystalotus")
-        ));
-
-        blocks.addAll(Lists.newArrayList(
-                RegUtil.withName(new BlockBasic(Material.ROCK), "trenchstone")
-                        .withHarvestLevel("pickaxe", 2)
-                        .setHardness(5.0F)
-                        .setResistance(200.0F),
-                RegUtil.withName(new BloomCrystalBlock(Block.Properties.create(Material.ROCK, MaterialColor.PINK).hardnessAndResistance(2.0F).sound(SoundType.GLASS).lightValue(15).tickRandomly()), "bloomcrystal"),
-                RegUtil.withName(new BlockBasic(Material.ROCK, MaterialColor.PINK), "bloomcrystal_rock")
-                        .withSoundType(SoundType.GLASS)
-                        .withHarvestLevel("pickaxe", 1)
-                        .setLightLevel(1.0F)
-                        .setHardness(4.0F),
-                RegUtil.withName(new CrystalBlock(Block.Properties.create(Material.ROCK, MaterialColor.RED).hardnessAndResistance(2.0F).sound(SoundType.GLASS).lightValue(3)), "rouxe"),
-                RegUtil.withName(new Block(Material.ROCK, MaterialColor.RED), "rouxe_rock")
-                        .withSoundType(SoundType.GLASS)
-                        .withHarvestLevel("pickaxe", 1)
-                        .withGlow()
-                        .setLightLevel(0.2F)
-                        .setHardness(4.0F),
-                RegUtil.withName(new MiasmaSurfaceBlock(), "miasma_surface"),
-                RegUtil.withName(new MiasmaFluidBlock(), "miasma"),
-                RegUtil.withName(new MidnightGemBlock(() -> MidnightItems.GEODE, 0), "dark_pearl_ore"),
-                RegUtil.withName(new MidnightOreBlock(2), "tenebrum_ore"),
-                RegUtil.withName(new MidnightOreBlock(2), "nagrilite_ore"),
-                RegUtil.withName(new MidnightGemBlock(() -> MidnightItems.EBONYS, 1), "ebonys_ore"),
-                RegUtil.withName(new MidnightGemBlock(() -> MidnightItems.ARCHAIC_SHARD, 0), "archaic_ore")
-        ));
-
-        blocks.addAll(Lists.newArrayList(
-                RegUtil.withName(new BlockBasic(Material.ROCK), "nightstone_bricks")
-                        .setHardness(1.5F)
-                        .setResistance(10.0F),
-                RegUtil.withName(new BlockBasic(Material.ROCK), "trenchstone_bricks")
-                        .withHarvestLevel("pickaxe", 2)
-                        .setHardness(5.0F)
-                        .setResistance(200.0F),
-                RegUtil.withName(new BlockBasic(Material.ROCK), "chiseled_nightstone_bricks")
-                        .setHardness(1.5F)
-                        .setResistance(10.0F),
-                RegUtil.withName(new BlockBasic(Material.ROCK), "rockshroom_bricks")
-                        .setHardness(1.5F)
-                        .setResistance(10.0F),
-                RegUtil.withName(new BlockBasic(Material.IRON), "dark_pearl_block")
-                        .withSoundType(SoundType.METAL)
-                        .setHardness(3.0F),
-                RegUtil.withName(new BlockBasic(Material.IRON), "tenebrum_block")
-                        .withSoundType(SoundType.METAL)
-                        .setHardness(3.0F),
-                RegUtil.withName(new BlockBasic(Material.IRON), "nagrilite_block")
-                        .withSoundType(SoundType.METAL)
-                        .setHardness(3.0F),
-                RegUtil.withName(new BlockBasic(Material.IRON), "ebonys_block")
-                        .withSoundType(SoundType.METAL)
-                        .setHardness(3.0F),
-                RegUtil.withName(new MidnightGlassBlock(), "archaic_glass"),
-                RegUtil.withName(new MidnightGlassPaneBlock(), "archaic_glass_pane"),
-                RegUtil.withName(new MidnightWoodPlankBlock(), "shadowroot_planks"),
-                RegUtil.withName(new MidnightWoodPlankBlock(), "dead_wood_planks"),
-                RegUtil.withName(new MidnightWoodPlankBlock(), "dark_willow_planks"),
-                RegUtil.withName(new MidnightWoodPlankBlock(), "nightshroom_planks"),
-                RegUtil.withName(new MidnightWoodPlankBlock(), "dewshroom_planks"),
-                RegUtil.withName(new MidnightWoodPlankBlock(), "viridshroom_planks"),
-                RegUtil.withName(new BlockMidnightDoor(() -> MidnightItems.SHADOWROOT_DOOR), "shadowroot_door"),
-                RegUtil.withName(new BlockMidnightDoor(() -> MidnightItems.DARK_WILLOW_DOOR), "dark_willow_door"),
-                RegUtil.withName(new BlockMidnightDoor(() -> MidnightItems.DEAD_WOOD_DOOR), "dead_wood_door"),
-                RegUtil.withName(new BlockMidnightDoor(true, () -> MidnightItems.TENEBRUM_DOOR), "tenebrum_door"),
-                RegUtil.withName(new BlockMidnightDoor(() -> MidnightItems.NIGHTSHROOM_DOOR), "nightshroom_door"),
-                RegUtil.withName(new BlockMidnightDoor(() -> MidnightItems.DEWSHROOM_DOOR), "dewshroom_door"),
-                RegUtil.withName(new BlockMidnightDoor(() -> MidnightItems.VIRIDSHROOM_DOOR), "viridshroom_door"),
-                RegUtil.withName(new MidnightTrapDoorBlock(), "shadowroot_trapdoor"),
-                RegUtil.withName(new MidnightTrapDoorBlock(), "dark_willow_trapdoor"),
-                RegUtil.withName(new MidnightTrapDoorBlock(), "dead_wood_trapdoor"),
-                RegUtil.withName(new MidnightTrapDoorBlock(true), "tenebrum_trapdoor"),
-                RegUtil.withName(new MidnightTrapDoorBlock(), "nightshroom_trapdoor"),
-                RegUtil.withName(new MidnightTrapDoorBlock(), "dewshroom_trapdoor"),
-                RegUtil.withName(new MidnightTrapDoorBlock(), "viridshroom_trapdoor"),
-                RegUtil.withName(new ShadowrootCraftingTableBlock(), "shadowroot_crafting_table"),
-                RegUtil.withName(new MidnightChestBlock(ChestModel.SHADOWROOT), "shadowroot_chest"),
-                RegUtil.withName(new MidnightSlabBlock(() -> SHADOWROOT_PLANKS.getDefaultState()), "shadowroot_slab"),
-                RegUtil.withName(new MidnightSlabBlock(() -> DEAD_WOOD_PLANKS.getDefaultState()), "dead_wood_slab"),
-                RegUtil.withName(new MidnightSlabBlock(() -> DARK_WILLOW_PLANKS.getDefaultState()), "dark_willow_slab"),
-                RegUtil.withName(new MidnightSlabBlock(() -> NIGHTSTONE.getDefaultState()), "nightstone_slab"),
-                RegUtil.withName(new MidnightSlabBlock(() -> NIGHTSTONE_BRICKS.getDefaultState()), "nightstone_brick_slab"),
-                RegUtil.withName(new MidnightSlabBlock(() -> TRENCHSTONE.getDefaultState()), "trenchstone_slab"),
-                RegUtil.withName(new MidnightSlabBlock(() -> TRENCHSTONE_BRICKS.getDefaultState()), "trenchstone_brick_slab"),
-                RegUtil.withName(new MidnightSlabBlock(() -> DEWSHROOM_PLANKS.getDefaultState()), "dewshroom_slab"),
-                RegUtil.withName(new MidnightSlabBlock(() -> VIRIDSHROOM_PLANKS.getDefaultState()), "viridshroom_slab"),
-                RegUtil.withName(new MidnightSlabBlock(() -> NIGHTSHROOM_PLANKS.getDefaultState()), "nightshroom_slab"),
-                RegUtil.withName(new MidnightSlabBlock(() -> ROCKSHROOM_BRICKS.getDefaultState()), "rockshroom_bricks_slab"),
-                RegUtil.withName(new MidnightDoubleSlabBlock(() -> SHADOWROOT_SLAB), "shadowroot_double_slab"),
-                RegUtil.withName(new MidnightDoubleSlabBlock(() -> DEAD_WOOD_SLAB), "dead_wood_double_slab"),
-                RegUtil.withName(new MidnightDoubleSlabBlock(() -> DARK_WILLOW_SLAB), "dark_willow_double_slab"),
-                RegUtil.withName(new MidnightDoubleSlabBlock(() -> NIGHTSTONE_SLAB), "nightstone_double_slab"),
-                RegUtil.withName(new MidnightDoubleSlabBlock(() -> NIGHTSTONE_BRICK_SLAB), "nightstone_brick_double_slab"),
-                RegUtil.withName(new MidnightDoubleSlabBlock(() -> TRENCHSTONE_SLAB), "trenchstone_double_slab"),
-                RegUtil.withName(new MidnightDoubleSlabBlock(() -> TRENCHSTONE_BRICK_SLAB), "trenchstone_brick_double_slab"),
-                RegUtil.withName(new MidnightDoubleSlabBlock(() -> DEWSHROOM_SLAB), "dewshroom_double_slab"),
-                RegUtil.withName(new MidnightDoubleSlabBlock(() -> VIRIDSHROOM_SLAB), "viridshroom_double_slab"),
-                RegUtil.withName(new MidnightDoubleSlabBlock(() -> NIGHTSHROOM_SLAB), "nightshroom_double_slab"),
-                RegUtil.withName(new MidnightDoubleSlabBlock(() -> ROCKSHROOM_BRICKS_SLAB), "rockshroom_bricks_double_slab"),
-                RegUtil.withName(new MidnightStairsBlock(() -> SHADOWROOT_PLANKS.getDefaultState()), "shadowroot_stairs"),
-                RegUtil.withName(new MidnightStairsBlock(() -> DEAD_WOOD_PLANKS.getDefaultState()), "dead_wood_stairs"),
-                RegUtil.withName(new MidnightStairsBlock(() -> DARK_WILLOW_PLANKS.getDefaultState()), "dark_willow_stairs"),
-                RegUtil.withName(new MidnightStairsBlock(() -> NIGHTSTONE.getDefaultState()), "nightstone_stairs"),
-                RegUtil.withName(new MidnightStairsBlock(() -> NIGHTSTONE_BRICKS.getDefaultState()), "nightstone_brick_stairs"),
-                RegUtil.withName(new MidnightStairsBlock(() -> TRENCHSTONE.getDefaultState()), "trenchstone_stairs"),
-                RegUtil.withName(new MidnightStairsBlock(() -> TRENCHSTONE_BRICKS.getDefaultState()), "trenchstone_brick_stairs"),
-                RegUtil.withName(new MidnightStairsBlock(() -> DEWSHROOM_PLANKS.getDefaultState()), "dewshroom_stairs"),
-                RegUtil.withName(new MidnightStairsBlock(() -> VIRIDSHROOM_PLANKS.getDefaultState()), "viridshroom_stairs"),
-                RegUtil.withName(new MidnightStairsBlock(() -> NIGHTSHROOM_PLANKS.getDefaultState()), "nightshroom_stairs"),
-                RegUtil.withName(new MidnightStairsBlock(() -> ROCKSHROOM_BRICKS.getDefaultState()), "rockshroom_bricks_stairs"),
-                RegUtil.withName(new MidnightFenceBlock(() -> SHADOWROOT_PLANKS.getDefaultState()), "shadowroot_fence"),
-                RegUtil.withName(new MidnightFenceBlock(() -> DEAD_WOOD_PLANKS.getDefaultState()), "dead_wood_fence"),
-                RegUtil.withName(new MidnightFenceBlock(() -> DARK_WILLOW_PLANKS.getDefaultState()), "dark_willow_fence"),
-                RegUtil.withName(new MidnightWallBlock(() -> NIGHTSTONE.getDefaultState()), "nightstone_wall"),
-                RegUtil.withName(new MidnightWallBlock(() -> NIGHTSTONE_BRICKS.getDefaultState()), "nightstone_brick_wall"),
-                RegUtil.withName(new MidnightWallBlock(() -> TRENCHSTONE.getDefaultState()), "trenchstone_wall"),
-                RegUtil.withName(new MidnightWallBlock(() -> TRENCHSTONE_BRICKS.getDefaultState()), "trenchstone_brick_wall"),
-                RegUtil.withName(new MidnightWallBlock(() -> ROCKSHROOM_BRICKS.getDefaultState()), "rockshroom_bricks_wall"),
-                RegUtil.withName(new MidnightFenceBlock(() -> DEWSHROOM_PLANKS.getDefaultState()), "dewshroom_fence"),
-                RegUtil.withName(new MidnightFenceBlock(() -> VIRIDSHROOM_PLANKS.getDefaultState()), "viridshroom_fence"),
-                RegUtil.withName(new MidnightFenceBlock(() -> NIGHTSHROOM_PLANKS.getDefaultState()), "nightshroom_fence"),
-                RegUtil.withName(new MidnightFenceGateBlock(() -> SHADOWROOT_PLANKS.getDefaultState()), "shadowroot_fence_gate"),
-                RegUtil.withName(new MidnightFenceGateBlock(() -> DEAD_WOOD_PLANKS.getDefaultState()), "dead_wood_fence_gate"),
-                RegUtil.withName(new MidnightFenceGateBlock(() -> DARK_WILLOW_PLANKS.getDefaultState()), "dark_willow_fence_gate"),
-                RegUtil.withName(new MidnightFenceGateBlock(() -> DEWSHROOM_PLANKS.getDefaultState()), "dewshroom_fence_gate"),
-                RegUtil.withName(new MidnightFenceGateBlock(() -> VIRIDSHROOM_PLANKS.getDefaultState()), "viridshroom_fence_gate"),
-                RegUtil.withName(new MidnightFenceGateBlock(() -> NIGHTSHROOM_PLANKS.getDefaultState()), "nightshroom_fence_gate"),
                 RegUtil.withName(new SuavisBlock(), "suavis"),
-                RegUtil.withName(new MidnightLadderBlock(), "shadowroot_ladder"),
-                RegUtil.withName(new MidnightLadderBlock(), "dead_wood_ladder"),
-                RegUtil.withName(new MidnightLadderBlock(), "dark_willow_ladder"),
-                RegUtil.withName(new MidnightLadderBlock(), "dewshroom_ladder"),
-                RegUtil.withName(new MidnightLadderBlock(), "viridshroom_ladder"),
-                RegUtil.withName(new MidnightLadderBlock(), "nightshroom_ladder"),
                 RegUtil.withName(new SporchBlock(SporchBlock.SporchType.BOGSHROOM), "bogshroom_sporch"),
                 RegUtil.withName(new SporchBlock(SporchBlock.SporchType.NIGHTSHROOM), "nightshroom_sporch"),
                 RegUtil.withName(new SporchBlock(SporchBlock.SporchType.DEWSHROOM), "dewshroom_sporch"),
@@ -603,6 +597,28 @@ public class MidnightBlocks {
                 RegUtil.withName(new MidnightPressurePlateWeightedBlock(Material.IRON, false, Material.IRON.getColor(), 2.0F), "tenebrum_pressure_plate"),
                 RegUtil.withName(new MidnightLeverBlock(), "midnight_lever")
         ));
+
+        blocks.addAll(Lists.newArrayList(
+                RegUtil.withName(new MidnightLeavesBlock(() -> SHADOWROOT_SAPLING), "shadowroot_leaves"),
+                RegUtil.withName(new MidnightLeavesBlock(() -> DARK_WILLOW_SAPLING), "dark_willow_leaves"),
+                RegUtil.withName(new MidnightSaplingBlock(ShadowrootTreeFeature::new), "shadowroot_sapling"),
+                RegUtil.withName(new MidnightSaplingBlock(DarkWillowTreeFeature::new), "dark_willow_sapling"),
+                RegUtil.withName(new DarkWaterBlock(), "dark_water"),
+                RegUtil.withName(new MushroomInsideBlock(), "mushroom_inside"),
+                RegUtil.withName(new MiasmaFluidBlock(), "miasma")
+                ));
+
+        RegUtil.withName(new MidnightDoubleSlabBlock(() -> SHADOWROOT_SLAB), "shadowroot_double_slab"),
+                RegUtil.withName(new MidnightDoubleSlabBlock(() -> DEAD_WOOD_SLAB), "dead_wood_double_slab"),
+                RegUtil.withName(new MidnightDoubleSlabBlock(() -> DARK_WILLOW_SLAB), "dark_willow_double_slab"),
+                RegUtil.withName(new MidnightDoubleSlabBlock(() -> NIGHTSTONE_SLAB), "nightstone_double_slab"),
+                RegUtil.withName(new MidnightDoubleSlabBlock(() -> NIGHTSTONE_BRICK_SLAB), "nightstone_brick_double_slab"),
+                RegUtil.withName(new MidnightDoubleSlabBlock(() -> TRENCHSTONE_SLAB), "trenchstone_double_slab"),
+                RegUtil.withName(new MidnightDoubleSlabBlock(() -> TRENCHSTONE_BRICK_SLAB), "trenchstone_brick_double_slab"),
+                RegUtil.withName(new MidnightDoubleSlabBlock(() -> DEWSHROOM_SLAB), "dewshroom_double_slab"),
+                RegUtil.withName(new MidnightDoubleSlabBlock(() -> VIRIDSHROOM_SLAB), "viridshroom_double_slab"),
+                RegUtil.withName(new MidnightDoubleSlabBlock(() -> NIGHTSHROOM_SLAB), "nightshroom_double_slab"),
+                RegUtil.withName(new MidnightDoubleSlabBlock(() -> ROCKSHROOM_BRICKS_SLAB), "rockshroom_bricks_double_slab");
 
         registerTile(TileEntityMidnightChest.class, "tile_shadowroot_chest");
         registerTile(TileEntityMidnightFurnace.class, "tile_midnight_furnace");
