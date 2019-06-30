@@ -1,6 +1,9 @@
 package com.mushroom.midnight.common.registry;
 
 import com.mushroom.midnight.Midnight;
+import com.mushroom.midnight.client.render.BombItemRenderer;
+import com.mushroom.midnight.client.render.HighnessItemRenderer;
+import com.mushroom.midnight.client.render.ShieldItemRenderer;
 import com.mushroom.midnight.common.item.BladeshroomCapItem;
 import com.mushroom.midnight.common.item.DeceitfulSnapperItem;
 import com.mushroom.midnight.common.item.DrinkableItem;
@@ -25,21 +28,10 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.ObjectHolder;
 
-// TODO: Tags! <= one is done for bomb (midnightTags)
 @ObjectHolder(Midnight.MODID)
 @Mod.EventBusSubscriber(modid = Midnight.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class MidnightItems {
-    // TODO: Doors and seeds become ItemBlocks! (have them here, or in MidnightBlocks?)
-
-    public static final Item SHADOWROOT_DOOR = Items.AIR;
-    public static final Item DARK_WILLOW_DOOR = Items.AIR;
-    public static final Item DEAD_WOOD_DOOR = Items.AIR;
-
-    public static final Item NIGHTSHROOM_DOOR = Items.AIR;
-    public static final Item DEWSHROOM_DOOR = Items.AIR;
-    public static final Item VIRIDSHROOM_DOOR = Items.AIR;
-    public static final Item TENEBRUM_DOOR = Items.AIR;
-
+    // TODO: seeds become ItemBlocks! (have them here, or in MidnightBlocks?)
     public static final Item BOGSHROOM_POWDER = Items.AIR;
     public static final Item NIGHTSHROOM_POWDER = Items.AIR;
     public static final Item DEWSHROOM_POWDER = Items.AIR;
@@ -152,12 +144,14 @@ public class MidnightItems {
 
                 .add("blue_unstable_fruit", props -> new UnstableFruitItem(UnstableFruitItem.Color.BLUE, props.food(MidnightFood.UNSTABLE_FRUIT)))
                 .add("lime_unstable_fruit", props -> new UnstableFruitItem(UnstableFruitItem.Color.LIME, props.food(MidnightFood.UNSTABLE_FRUIT)))
-                .add("green_unstable_fruit", props -> new UnstableFruitItem(UnstableFruitItem.Color.GREEN, props.food(MidnightFood.UNSTABLE_FRUIT)))
+                .add("green_unstable_fruit", props -> new UnstableFruitItem(UnstableFruitItem.Color.GREEN, props.food(MidnightFood.UNSTABLE_FRUIT)));
 
-                .add("nightshroom_spore_bomb", props -> new SporeBombItem(SporeBombItem.Type.NIGHTSHROOM, props.maxStackSize(1)))
-                .add("dewshroom_spore_bomb", props -> new SporeBombItem(SporeBombItem.Type.DEWSHROOM, props.maxStackSize(1)))
-                .add("viridshroom_spore_bomb", props -> new SporeBombItem(SporeBombItem.Type.VIRIDSHROOM, props.maxStackSize(1)))
-                .add("bogshroom_spore_bomb", props -> new SporeBombItem(SporeBombItem.Type.BOGSHROOM, props.maxStackSize(1)));
+        RegUtil.items(event.getRegistry())
+                .withProperties(() -> new Item.Properties().group(MidnightItemGroups.ITEMS).maxStackSize(1).setTEISR(() -> BombItemRenderer::new))
+                .add("nightshroom_spore_bomb", props -> new SporeBombItem(SporeBombItem.Type.NIGHTSHROOM, props))
+                .add("dewshroom_spore_bomb", props -> new SporeBombItem(SporeBombItem.Type.DEWSHROOM, props))
+                .add("viridshroom_spore_bomb", props -> new SporeBombItem(SporeBombItem.Type.VIRIDSHROOM, props))
+                .add("bogshroom_spore_bomb", props -> new SporeBombItem(SporeBombItem.Type.BOGSHROOM, props));
 
         RegUtil.items(event.getRegistry())
                 .withProperties(() -> new Item.Properties().group(MidnightItemGroups.TOOLS))
@@ -199,13 +193,13 @@ public class MidnightItems {
                 .add("tenebrum_chestplate", props -> new ArmorItem(MidnightArmorMaterials.TENEBRUM, EquipmentSlotType.CHEST, props))
                 .add("tenebrum_leggings", props -> new ArmorItem(MidnightArmorMaterials.TENEBRUM, EquipmentSlotType.LEGS, props))
                 .add("tenebrum_boots", props -> new ArmorItem(MidnightArmorMaterials.TENEBRUM, EquipmentSlotType.FEET, props))
-                .add("rockshroom_shield", props -> new MidnightShieldItem(MidnightArmorMaterials.ROCKSHROOM, props.maxDamage(336)));
+                .add("rockshroom_shield", props -> new MidnightShieldItem(MidnightArmorMaterials.ROCKSHROOM, props.maxDamage(336).setTEISR(() -> ShieldItemRenderer::new)));
 
         RegUtil.items(event.getRegistry())
                 .withProperties(Item.Properties::new)
 
                 .add("advancement_snapper", Item::new)
-                .add("advancement_highness", Item::new);
+                .add("advancement_highness", props -> new Item(props.setTEISR(() -> HighnessItemRenderer::new)));
 
         Items.COMPASS.addPropertyOverride(new ResourceLocation("angle"), new CompassRotationGetter());
     }

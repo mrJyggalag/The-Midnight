@@ -18,7 +18,6 @@ import com.mushroom.midnight.common.block.FingeredGrassBlock;
 import com.mushroom.midnight.common.block.MiasmaFluidBlock;
 import com.mushroom.midnight.common.block.MiasmaSurfaceBlock;
 import com.mushroom.midnight.common.block.MidnightChestBlock;
-import com.mushroom.midnight.common.block.MidnightChestBlock.ChestModel;
 import com.mushroom.midnight.common.block.MidnightDoublePlantBlock;
 import com.mushroom.midnight.common.block.MidnightFungiHatBlock;
 import com.mushroom.midnight.common.block.MidnightFungiShelfBlock;
@@ -364,7 +363,7 @@ public class MidnightBlocks {
                                 .lightValue(13)
                                 .tickRandomly()
                 )
-                .add("nightstone_furnace", MidnightFurnaceBlock::new);
+                .add("nightstone_furnace", props -> new MidnightFurnaceBlock(props){});
 
         RegUtil.blocks(event.getRegistry())
                 .withProperties(() -> Block.Properties.create(Material.TALL_PLANTS)
@@ -489,7 +488,7 @@ public class MidnightBlocks {
                 .add("trenchstone_bricks", new BasicBlock(Block.Properties.create(Material.ROCK).hardnessAndResistance(1.5f, 200f), ToolType.PICKAXE, 2))
                 .add("archaic_glass", new MidnightGlassBlock())
                 .add("archaic_glass_pane", new MidnightGlassPaneBlock())
-                .add("shadowroot_chest", new MidnightChestBlock(Block.Properties.from(Blocks.CHEST), ChestModel.SHADOWROOT))
+                .add("shadowroot_chest", new MidnightChestBlock(Block.Properties.from(Blocks.CHEST)){})
                 .add("bogshroom_sporch", new SporchBlock(SporchBlock.SporchType.BOGSHROOM))
                 .add("nightshroom_sporch", new SporchBlock(SporchBlock.SporchType.NIGHTSHROOM))
                 .add("dewshroom_sporch", new SporchBlock(SporchBlock.SporchType.DEWSHROOM))
@@ -510,20 +509,18 @@ public class MidnightBlocks {
                 .add("shadowroot_crafting_table", props -> new CraftingTableBlock(props){});
 
         RegUtil.blocks(event.getRegistry())
+                .withProperties(() -> Block.Properties.create(Material.IRON, MaterialColor.ADOBE).hardnessAndResistance(3f).sound(SoundType.METAL))
+                .add("tenebrum_door", BasicBlock::new);
+        
+        RegUtil.blocks(event.getRegistry())
                 .withProperties(() -> Block.Properties.create(Material.WOOD, MaterialColor.ADOBE).hardnessAndResistance(3f).sound(SoundType.WOOD))
                 .add("shadowroot_door", BasicBlock::new)
                 .add("dark_willow_door", BasicBlock::new)
                 .add("dead_wood_door", BasicBlock::new)
                 .add("nightshroom_door", BasicBlock::new)
                 .add("dewshroom_door", BasicBlock::new)
-                .add("viridshroom_door", BasicBlock::new);
+                .add("viridshroom_door", BasicBlock::new)
 
-        RegUtil.blocks(event.getRegistry())
-                .withProperties(() -> Block.Properties.create(Material.IRON, MaterialColor.ADOBE).hardnessAndResistance(3f).sound(SoundType.METAL))
-                .add("tenebrum_door", BasicBlock::new);
-
-        RegUtil.blocks(event.getRegistry())
-                .withProperties(() -> Block.Properties.create(Material.WOOD, MaterialColor.ADOBE).hardnessAndResistance(3.0F).sound(SoundType.WOOD))
                 .add("shadowroot_trapdoor", props -> new TrapDoorBlock(props) {})
                 .add("dark_willow_trapdoor", props -> new TrapDoorBlock(props) {})
                 .add("dead_wood_trapdoor", props -> new TrapDoorBlock(props) {})
@@ -597,7 +594,9 @@ public class MidnightBlocks {
                 .add("dark_willow_button", props -> new WoodButtonBlock(props) {})
                 .add("dewshroom_button", props -> new WoodButtonBlock(props) {})
                 .add("viridshroom_button", props -> new WoodButtonBlock(props) {})
-                .add("nightshroom_button", props -> new WoodButtonBlock(props) {});
+                .add("nightshroom_button", props -> new WoodButtonBlock(props) {})
+
+                .add("midnight_lever", props -> new LeverBlock(props){});
 
         RegUtil.blocks(event.getRegistry())
                 .withProperties(() -> Block.Properties.create(Material.MISCELLANEOUS).doesNotBlockMovement().hardnessAndResistance(0.5F))
@@ -621,10 +620,6 @@ public class MidnightBlocks {
                 .add("trenchstone_pressure_plate", props -> new PressurePlateBlock(PressurePlateBlock.Sensitivity.MOBS, props){}) // TODO 3.75F pressure_plate
                 .add("nagrilite_pressure_plate", props -> new WeightedPressurePlateBlock(150, props){})
                 .add("tenebrum_pressure_plate", props -> new WeightedPressurePlateBlock(150, props){});
-
-        RegUtil.blocks(event.getRegistry())
-                .withProperties(() -> Block.Properties.create(Material.MISCELLANEOUS).doesNotBlockMovement().hardnessAndResistance(0.5F).sound(SoundType.WOOD))
-                .add("midnight_lever", props -> new LeverBlock(props){});
 
         // TODO @gegy fluids
         RegUtil.withName(new DarkWaterBlock(), "dark_water");

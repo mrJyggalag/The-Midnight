@@ -13,11 +13,10 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.NoFeatureConfig;
-import net.minecraftforge.fml.common.IWorldGenerator;
 
 import java.util.function.Function;
 
-public class LargeBogshroomFeature extends TemplateTreeFeature implements IWorldGenerator {
+public class LargeBogshroomFeature extends TemplateTreeFeature {
     private static final ResourceLocation[] TEMPLATES = new ResourceLocation[] {
             new ResourceLocation(Midnight.MODID, "mushroom/bogshroom")
     };

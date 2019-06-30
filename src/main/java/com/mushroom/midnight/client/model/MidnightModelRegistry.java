@@ -2,8 +2,6 @@ package com.mushroom.midnight.client.model;
 
 import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.client.render.BladeshroomCapRenderer;
-import com.mushroom.midnight.client.render.BombItemRenderer;
-import com.mushroom.midnight.client.render.CloudRenderer;
 import com.mushroom.midnight.client.render.CrystalBugRenderer;
 import com.mushroom.midnight.client.render.DeceitfulSnapperRenderer;
 import com.mushroom.midnight.client.render.HunterRenderer;
@@ -12,12 +10,9 @@ import com.mushroom.midnight.client.render.NovaRenderer;
 import com.mushroom.midnight.client.render.PenumbrianRenderer;
 import com.mushroom.midnight.client.render.RiftRenderer;
 import com.mushroom.midnight.client.render.RifterRenderer;
-import com.mushroom.midnight.client.render.ShieldItemRenderer;
 import com.mushroom.midnight.client.render.SkulkRenderer;
 import com.mushroom.midnight.client.render.StingerRenderer;
 import com.mushroom.midnight.client.render.TreeHopperRenderer;
-import com.mushroom.midnight.common.block.MidnightChestBlock.ChestModel;
-import com.mushroom.midnight.common.entity.CloudEntity;
 import com.mushroom.midnight.common.entity.RiftEntity;
 import com.mushroom.midnight.common.entity.creature.CrystalBugEntity;
 import com.mushroom.midnight.common.entity.creature.DeceitfulSnapperEntity;
@@ -30,18 +25,12 @@ import com.mushroom.midnight.common.entity.creature.SkulkEntity;
 import com.mushroom.midnight.common.entity.creature.StingerEntity;
 import com.mushroom.midnight.common.entity.creature.TreeHopperEntity;
 import com.mushroom.midnight.common.entity.projectile.BladeshroomCapEntity;
-import com.mushroom.midnight.common.entity.projectile.SporeBombEntity;
-import com.mushroom.midnight.common.entity.projectile.ThrownGeodeEntity;
 import com.mushroom.midnight.common.helper.Helper;
 import com.mushroom.midnight.common.registry.MidnightBlocks;
-import com.mushroom.midnight.common.registry.MidnightItems;
-import com.mushroom.midnight.common.tile.base.TileEntityMidnightChest;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.color.BlockColors;
 import net.minecraft.client.renderer.color.ItemColors;
-import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IEnviromentBlockReader;
@@ -52,8 +41,6 @@ import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.Mod;
-
-import javax.annotation.Nonnull;
 
 @OnlyIn(Dist.CLIENT)
 @Mod.EventBusSubscriber(modid = Midnight.MODID, value = Dist.CLIENT)
@@ -77,7 +64,8 @@ public class MidnightModelRegistry {
         RenderingRegistry.registerEntityRenderingHandler(NightStagEntity.class, NightStagRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(DeceitfulSnapperEntity.class, DeceitfulSnapperRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(SkulkEntity.class, SkulkRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(ThrownGeodeEntity.class, manager -> new RenderSnowball<>(manager, MidnightItems.GEODE, Minecraft.getInstance().getRenderItem()));
+        // TODO RenderSnowball code
+        /*RenderingRegistry.registerEntityRenderingHandler(ThrownGeodeEntity.class, manager -> new RenderSnowball<>(manager, MidnightItems.GEODE, Minecraft.getInstance().getRenderItem()));
         RenderingRegistry.registerEntityRenderingHandler(SporeBombEntity.class, manager -> new RenderSnowball<SporeBombEntity>(manager, MidnightItems.SPORE_BOMB, Minecraft.getInstance().getRenderItem()) {
             @Override
             @Nonnull
@@ -93,30 +81,7 @@ public class MidnightModelRegistry {
             public void renderByItem(ItemStack stack) {
                 TileEntityRendererDispatcher.instance.render(shadowrootChest, 0.0, 0.0, 0.0, 0.0F, 1.0F);
             }
-        });
-        MidnightItems.ROCKSHROOM_SHIELD.setTileEntityItemStackRenderer(new ShieldItemRenderer());
-        MidnightItems.SPORE_BOMB.setTileEntityItemStackRenderer(new BombItemRenderer());
-
-        MidnightItems.ADVANCEMENT_HIGHNESS.setTileEntityItemStackRenderer(new TileEntityItemStackRenderer() {
-            private NightStagEntity entity;
-
-            @Override
-            @OnlyIn(Dist.CLIENT)
-            public void renderByItem(ItemStack stack) {
-                // TODO improve this
-                if (entity == null && Minecraft.getInstance().world != null) {
-                    entity = new NightStagEntity(Minecraft.getInstance().world);
-                }
-                if (entity != null) {
-                    try {
-                        NightStagRenderer render = new NightStagRenderer(Minecraft.getInstance().getEntityRendererManager());
-                        render.doRender(entity, 0d, 0d, 0d, 0f, 1f);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        });
+        });*/
     }
 
     public static void onInit() {
