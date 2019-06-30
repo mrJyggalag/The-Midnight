@@ -1,37 +1,11 @@
 package com.mushroom.midnight.common.tile.base;
 
-import com.mushroom.midnight.common.block.MidnightChestBlock;
-import com.mushroom.midnight.common.block.MidnightChestBlock.ChestModel;
-import net.minecraft.block.Block;
-import net.minecraft.block.ChestBlock;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.ItemStackHelper;
-import net.minecraft.inventory.container.ChestContainer;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.tileentity.LockableLootTileEntity;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Direction;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.CapabilityItemHandler;
-import net.minecraftforge.items.IItemHandler;
+import net.minecraft.tileentity.ChestTileEntity;
 
-import javax.annotation.Nullable;
+// TODO make it when able to launch midnight
+public class TileEntityMidnightChest extends ChestTileEntity { //LockableLootTileEntity implements ITickableTileEntity {
 
-public class TileEntityMidnightChest extends LockableLootTileEntity implements ITickableTileEntity {
-    private NonNullList<ItemStack> chestContents = NonNullList.withSize(27, ItemStack.EMPTY);
+    /*private NonNullList<ItemStack> chestContents = NonNullList.withSize(27, ItemStack.EMPTY);
     public boolean adjacentChestChecked;
     public TileEntityMidnightChest adjacentChestZNeg;
     public TileEntityMidnightChest adjacentChestXPos;
@@ -341,9 +315,6 @@ public class TileEntityMidnightChest extends LockableLootTileEntity implements I
         return super.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
     }
 
-    /**
-     * invalidates a tile entity
-     */
     public void invalidate() {
         super.invalidate();
         this.updateContainingBlockInfo();
@@ -373,5 +344,5 @@ public class TileEntityMidnightChest extends LockableLootTileEntity implements I
 
     protected NonNullList<ItemStack> getItems() {
         return this.chestContents;
-    }
+    }*/
 }

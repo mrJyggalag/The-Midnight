@@ -3,6 +3,7 @@ package com.mushroom.midnight.common.block;
 import net.minecraft.block.AirBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -16,7 +17,7 @@ public class MushroomInsideBlock extends AirBlock {
     public void neighborChanged(BlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos, boolean p_220069_6_) {
         int neighborCount = this.countHatNeighbors(worldIn, pos);
         if (neighborCount <= 0) {
-            worldIn.setBlockToAir(pos);
+            worldIn.setBlockState(pos, Blocks.AIR.getDefaultState(), 3);
         }
     }
 

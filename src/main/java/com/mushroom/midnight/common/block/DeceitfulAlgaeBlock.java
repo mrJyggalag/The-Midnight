@@ -18,7 +18,6 @@ public class DeceitfulAlgaeBlock extends BushBlock {
 
     public DeceitfulAlgaeBlock() {
         super(Properties.create(Material.PLANTS).hardnessAndResistance(0f).sound(SoundType.PLANT));
-        //setCreativeTab(MidnightItemGroups.DECORATION);
     }
 
     @Override

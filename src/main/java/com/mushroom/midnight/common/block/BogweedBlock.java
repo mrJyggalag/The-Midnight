@@ -17,11 +17,6 @@ public class BogweedBlock extends MidnightPlantBlock {
     }
 
     @Override
-    public boolean canPlaceBlockAt(World worldIn, BlockPos pos) {
-        return isValidGround(worldIn.getBlockState(pos.down()), worldIn, pos) && super.canPlaceBlockAt(worldIn, pos);
-    }
-
-    @Override
     public boolean canGeneratePlant(World world, BlockPos pos, BlockState state) {
         return world.getBlockState(pos.down()).getBlock() == MidnightBlocks.DECEITFUL_PEAT;
     }

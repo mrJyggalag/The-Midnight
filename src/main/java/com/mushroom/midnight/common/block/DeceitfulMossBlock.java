@@ -1,13 +1,12 @@
 package com.mushroom.midnight.common.block;
 
-import com.mushroom.midnight.common.registry.MidnightItemGroups;
 import com.mushroom.midnight.common.util.DirectionalBounds;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.state.DirectionProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
@@ -16,7 +15,6 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Mirror;
 import net.minecraft.util.Rotation;
-import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
@@ -26,11 +24,9 @@ import net.minecraft.world.IEnviromentBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
-import net.minecraft.world.chunk.BlockStateContainer;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-import javax.annotation.Nullable;
 import java.util.Arrays;
 
 public class DeceitfulMossBlock extends Block {
@@ -39,7 +35,6 @@ public class DeceitfulMossBlock extends Block {
 
     public DeceitfulMossBlock() {
         super(Properties.create(Material.PLANTS, MaterialColor.PURPLE_TERRACOTTA).hardnessAndResistance(0.2f, 0f).sound(SoundType.PLANT));
-        //setCreativeTab(MidnightItemGroups.DECORATION);
         setDefaultState(this.getStateContainer().getBaseState().with(FACING, Direction.DOWN));
     }
 
@@ -88,10 +83,10 @@ public class DeceitfulMossBlock extends Block {
     }
 
     @Override
-    public void neighborChanged(BlockState state, World world, BlockPos pos, Block block, BlockPos fromPos) {
+    public void neighborChanged(BlockState state, World world, BlockPos pos, Block blockIn, BlockPos fromPos, boolean p_220069_6_) {
         if (this.tryDrop(world, pos, state) && !canAttachTo(world, pos, state.get(FACING))) {
             this.dropBlockAsItem(world, pos, state, 0);
-            world.setBlockToAir(pos);
+            world.setBlockState(pos, Blocks.AIR.getDefaultState());
         }
     }
 
@@ -100,12 +95,12 @@ public class DeceitfulMossBlock extends Block {
             return true;
         }
         this.dropBlockAsItem(world, pos, state, 0);
-        world.setBlockToAir(pos);
+        world.setBlockState(pos, Blocks.AIR.getDefaultState());
         return false;
     }
 
     @Override
-    public BlockState withRotation(BlockState state, Rotation rot) {
+    public BlockState rotate(BlockState state, IWorld world, BlockPos pos, Rotation rot) {
         return state.with(FACING, rot.rotate(state.get(FACING)));
     }
 
@@ -120,11 +115,6 @@ public class DeceitfulMossBlock extends Block {
     }
 
     @Override
-    public BlockFaceShape getBlockFaceShape(IBlockAccess worldIn, BlockState state, BlockPos pos, Direction face) {
-        return BlockFaceShape.UNDEFINED;
-    }
-
-    @Override
     public BlockRenderLayer getRenderLayer() {
         return BlockRenderLayer.CUTOUT;
     }
@@ -135,6 +125,7 @@ public class DeceitfulMossBlock extends Block {
     }
 
     @OnlyIn(Dist.CLIENT)
+    // TODO check this it's static
     public boolean doesSideBlockRendering(BlockState state, IEnviromentBlockReader world, BlockPos pos, Direction side) {
         if (side == Direction.UP) {
             return true;

@@ -22,7 +22,6 @@ public class CrystalotusBlock extends Block  {
 
     public CrystalotusBlock() {
         super(Properties.create(Material.PLANTS).hardnessAndResistance(2f, 0f).sound(SoundType.GLASS).tickRandomly().lightValue(3));
-        //setCreativeTab(MidnightItemGroups.DECORATION);
     }
 
     @Override

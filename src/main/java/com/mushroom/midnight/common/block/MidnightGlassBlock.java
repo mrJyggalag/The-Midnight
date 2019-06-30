@@ -10,7 +10,6 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public class MidnightGlassBlock extends GlassBlock {
     public MidnightGlassBlock() {
         super(Properties.create(Material.GLASS).hardnessAndResistance(0.3f, 0f).sound(SoundType.GLASS));
-        //setCreativeTab(MidnightItemGroups.BUILDING);
     }
 
     @Override

@@ -10,7 +10,6 @@ import net.minecraft.world.IBlockReader;
 public class MidnightWoodPlankBlock extends Block {
     public MidnightWoodPlankBlock(Block.Properties properties) {
         super(properties.sound(SoundType.WOOD).hardnessAndResistance(2f, 5f));
-        //setCreativeTab(MidnightItemGroups.BUILDING);
     }
 
     @Override

@@ -1,19 +1,15 @@
 package com.mushroom.midnight.common.container;
 
-import com.mushroom.midnight.common.tile.base.TileEntityMidnightFurnace;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.init.Items;
-import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.container.FurnaceContainer;
-import net.minecraft.inventory.container.FurnaceFuelSlot;
-import net.minecraft.inventory.container.Slot;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.FurnaceRecipes;
 
+// TODO make it when able to launch midnight
 public class MidnightFurnaceContainer extends FurnaceContainer {
+    public MidnightFurnaceContainer(int p_i50082_1_, PlayerInventory p_i50082_2_) {
+        super(p_i50082_1_, p_i50082_2_);
+    }
 
-    public MidnightFurnaceContainer(PlayerInventory playerInventory, IInventory furnaceInventory) {
+    /*public MidnightFurnaceContainer(PlayerInventory playerInventory, IInventory furnaceInventory) {
         super(playerInventory, furnaceInventory);
         Slot slot = new FurnaceFuelSlot(furnaceInventory, 1, 56, 53) {
             @Override
@@ -65,5 +61,5 @@ public class MidnightFurnaceContainer extends FurnaceContainer {
             slot.onTake(player, itemstack1);
         }
         return itemstack;
-    }
+    }*/
 }

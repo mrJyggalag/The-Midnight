@@ -2,7 +2,6 @@ package com.mushroom.midnight.common.block;
 
 import com.mushroom.midnight.common.registry.MidnightCriterion;
 import com.mushroom.midnight.common.registry.MidnightItems;
-import com.mushroom.midnight.common.registry.MidnightItemGroups;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -18,9 +17,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.pathfinding.PathType;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
@@ -30,10 +27,8 @@ import net.minecraft.state.StateContainer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
-import net.minecraft.util.NonNullList;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.shapes.ISelectionContext;
@@ -62,7 +57,6 @@ public class SuavisBlock extends Block implements IGrowable {
     public SuavisBlock() {
         super(Properties.create(Material.GOURD, MaterialColor.LIGHT_BLUE).lightValue(12).hardnessAndResistance(1f, 0f).sound(SoundType.SLIME).tickRandomly());
         setDefaultState(getStateContainer().getBaseState().with(STAGE, 3));
-        //setCreativeTab(MidnightItemGroups.DECORATION);
     }
 
     @Override
@@ -91,11 +85,6 @@ public class SuavisBlock extends Block implements IGrowable {
     }
 
     @Override
-    public Item getItemDropped(BlockState state, Random rand, int fortune) {
-        return MidnightItems.RAW_SUAVIS;
-    }
-
-    @Override
     public ItemStack getPickBlock(BlockState state, RayTraceResult target, IBlockReader world, BlockPos pos, PlayerEntity player) {
         return new ItemStack(MidnightItems.RAW_SUAVIS);
     }
@@ -111,11 +100,6 @@ public class SuavisBlock extends Block implements IGrowable {
     }
 
     @Override
-    public BlockFaceShape getBlockFaceShape(IBlockAccess world, BlockState state, BlockPos pos, Direction face) {
-        return face == Direction.DOWN || state.get(STAGE) == 3 ? BlockFaceShape.SOLID : BlockFaceShape.UNDEFINED;
-    }
-
-    @Override
     protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
         builder.add(STAGE);
     }
@@ -123,11 +107,6 @@ public class SuavisBlock extends Block implements IGrowable {
     @Override
     public boolean isOpaqueCube(BlockState state) {
         return state.get(STAGE) == 3;
-    }
-
-    @Override
-    public boolean canSilkHarvest() { // json loot tables
-        return true;
     }
 
     @Override
@@ -142,17 +121,6 @@ public class SuavisBlock extends Block implements IGrowable {
         }
     }
 
-    @Override
-    public void dropBlockAsItemWithChance(World world, BlockPos pos, BlockState state, float chance, int fortune) {
-        super.dropBlockAsItemWithChance(world, pos, state, chance, fortune);
-        if (!world.isRemote) {
-            PlayerEntity player = harvesters.get();
-            if (player == null || (!player.isCreative() && EnchantmentHelper.getEnchantmentLevel(Enchantments.SILK_TOUCH, player.getHeldItemMainhand()) == 0)) {
-                createNauseaCloud(world, pos, state.get(STAGE));
-            }
-        }
-    }
-
     private static void createNauseaCloud(World world, BlockPos pos, int intensity) {
         AreaEffectCloudEntity entity = new AreaEffectCloudEntity(world, pos.getX(), pos.getY(), pos.getZ());
         entity.setRadius(1.5f + 0.5f * intensity);
@@ -163,30 +131,6 @@ public class SuavisBlock extends Block implements IGrowable {
         entity.setColor(0x355796);
         entity.addEffect(new EffectInstance(Effects.NAUSEA, 20 * (intensity + 1) * 6, 0, false, true));
         world.addEntity(entity);
-    }
-
-    @Override
-    public void getDrops(NonNullList<ItemStack> drops, IBlockAccess world, BlockPos pos, BlockState state, int fortune) {
-        boolean isSilkTouch = harvesters.get() != null && EnchantmentHelper.getEnchantmentLevel(Enchantments.SILK_TOUCH, harvesters.get().getHeldItemMainhand()) > 0;
-        int stage = state.get(STAGE);
-        if (isSilkTouch && stage == 3) {
-            drops.add(new ItemStack(this));
-            return;
-        }
-        Random rand = world instanceof World ? ((World) world).rand : RANDOM;
-        int count = isSilkTouch ? stage + 1 : quantityDropped(state, fortune, rand);
-        for (int i = 0; i < count; i++) {
-            Item item = getItemDropped(state, rand, fortune);
-            if (item != Items.AIR) {
-                drops.add(new ItemStack(item, 1, damageDropped(state)));
-            }
-        }
-    }
-
-    private int quantityDropped(BlockState state, int fortune, Random random) { // json drop or getDrops()
-        int maxSlice = state.get(STAGE) + 1;
-        int minSlice = Math.min(1 + fortune, maxSlice);
-        return random.nextInt(maxSlice - minSlice + 1) + minSlice;
     }
 
     @Override
@@ -213,7 +157,7 @@ public class SuavisBlock extends Block implements IGrowable {
     }
 
     @Override
-    public void updateTick(World world, BlockPos pos, BlockState state, Random rand) {
+    public void tick(BlockState state, World world, BlockPos pos, Random rand) {
         if (!isSideSolid(world.getBlockState(pos.down()), world, pos, Direction.UP)) {
             world.destroyBlock(pos, true);
         } else {
@@ -238,4 +182,49 @@ public class SuavisBlock extends Block implements IGrowable {
     public boolean allowsMovement(BlockState state, IBlockReader world, BlockPos pos, PathType type) {
         return world.getBlockState(pos).get(STAGE) < 2;
     }
+
+    /*@Override
+    public Item getItemDropped(BlockState state, Random rand, int fortune) {
+        return MidnightItems.RAW_SUAVIS;
+    }
+
+    @Override
+    public boolean canSilkHarvest() { // json loot tables
+        return true;
+    }
+
+    @Override
+    public void dropBlockAsItemWithChance(World world, BlockPos pos, BlockState state, float chance, int fortune) {
+        super.dropBlockAsItemWithChance(world, pos, state, chance, fortune);
+        if (!world.isRemote) {
+            PlayerEntity player = harvesters.get();
+            if (player == null || (!player.isCreative() && EnchantmentHelper.getEnchantmentLevel(Enchantments.SILK_TOUCH, player.getHeldItemMainhand()) == 0)) {
+                createNauseaCloud(world, pos, state.get(STAGE));
+            }
+        }
+    }
+
+    @Override
+    public void getDrops(NonNullList<ItemStack> drops, IBlockAccess world, BlockPos pos, BlockState state, int fortune) {
+        boolean isSilkTouch = harvesters.get() != null && EnchantmentHelper.getEnchantmentLevel(Enchantments.SILK_TOUCH, harvesters.get().getHeldItemMainhand()) > 0;
+        int stage = state.get(STAGE);
+        if (isSilkTouch && stage == 3) {
+            drops.add(new ItemStack(this));
+            return;
+        }
+        Random rand = world instanceof World ? ((World) world).rand : RANDOM;
+        int count = isSilkTouch ? stage + 1 : quantityDropped(state, fortune, rand);
+        for (int i = 0; i < count; i++) {
+            Item item = getItemDropped(state, rand, fortune);
+            if (item != Items.AIR) {
+                drops.add(new ItemStack(item, 1, damageDropped(state)));
+            }
+        }
+    }
+
+    private int quantityDropped(BlockState state, int fortune, Random random) { // json drop or getDrops()
+        int maxSlice = state.get(STAGE) + 1;
+        int minSlice = Math.min(1 + fortune, maxSlice);
+        return random.nextInt(maxSlice - minSlice + 1) + minSlice;
+    }*/
 }

@@ -1,23 +1,11 @@
 package com.mushroom.midnight.common.tile.base;
 
-import com.mushroom.midnight.common.block.MidnightFurnaceBlock;
-import com.mushroom.midnight.common.container.MidnightFurnaceContainer;
-import com.mushroom.midnight.common.registry.MidnightBlocks;
-import com.mushroom.midnight.common.registry.MidnightItems;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.FurnaceTileEntity;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
 
+// TODO make it when able to launch midnight
 public class TileEntityMidnightFurnace extends FurnaceTileEntity {
 
-    @Override
+    /*@Override
     public void read(CompoundNBT compound) {
         super.read(compound);
         this.burnTime = TileEntityMidnightFurnace.getItemBurnTime(this.items.get(1));
@@ -138,5 +126,5 @@ public class TileEntityMidnightFurnace extends FurnaceTileEntity {
                 }
             }
         }
-    }
+    }*/
 }

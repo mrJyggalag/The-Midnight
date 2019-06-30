@@ -22,7 +22,6 @@ public class SporchBlock extends TorchBlock {
     public SporchBlock(SporchType sporchType) {
         super(Block.Properties.create(Material.MISCELLANEOUS).doesNotBlockMovement().hardnessAndResistance(0f).lightValue(14).sound(SoundType.WOOD));
         this.sporchType = sporchType;
-        //setCreativeTab(MidnightItemGroups.DECORATION);
     }
 
     @OnlyIn(Dist.CLIENT)

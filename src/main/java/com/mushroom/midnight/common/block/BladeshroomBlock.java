@@ -44,7 +44,6 @@ public class BladeshroomBlock extends MidnightPlantBlock implements IGrowable {
     public BladeshroomBlock(Properties properties) {
         super(properties, false);
         this.setDefaultState(this.stateContainer.getBaseState().with(STAGE, Stage.SPORE));
-        //this.setCreativeTab(null);
     }
 
     @Nullable

@@ -1,48 +1,14 @@
 package com.mushroom.midnight.common.block;
 
-import com.mushroom.midnight.Midnight;
-import com.mushroom.midnight.client.particle.FurnaceFlameParticle;
-import com.mushroom.midnight.common.network.GuiHandler;
-import com.mushroom.midnight.common.registry.MidnightBlocks;
-import com.mushroom.midnight.common.registry.MidnightItemGroups;
-import com.mushroom.midnight.common.tile.base.TileEntityMidnightFurnace;
-import net.minecraft.block.AbstractFurnaceBlock;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockRenderType;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.material.Material;
-import net.minecraft.client.Minecraft;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.InventoryHelper;
-import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.state.DirectionProperty;
-import net.minecraft.state.StateContainer;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.stats.Stats;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.BlockRenderLayer;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Mirror;
-import net.minecraft.util.Rotation;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.IEnviromentBlockReader;
-import net.minecraft.world.World;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.client.MinecraftForgeClient;
+import net.minecraft.block.FurnaceBlock;
 
-import javax.annotation.Nullable;
-import java.util.Random;
+// TODO make it when able to launch midnight
+public class MidnightFurnaceBlock extends FurnaceBlock {
+    protected MidnightFurnaceBlock(Properties builder) {
+        super(builder);
+    }
 
-public class MidnightFurnaceBlock extends AbstractFurnaceBlock {
-    public static final DirectionProperty FACING = BlockStateProperties.FACING;
+    /*public static final DirectionProperty FACING = BlockStateProperties.FACING;
     private final boolean isBurning;
     private static boolean keepInventory;
 
@@ -242,6 +208,6 @@ public class MidnightFurnaceBlock extends AbstractFurnaceBlock {
             return source.getCombinedLight(pos, 15);
         }
         return source.getCombinedLight(pos, 0);
-    }
+    }*/
 }
 

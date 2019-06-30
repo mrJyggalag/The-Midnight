@@ -1,13 +1,9 @@
 package com.mushroom.midnight.common.block;
 
-import com.mushroom.midnight.common.registry.MidnightItemGroups;
 import com.mushroom.midnight.common.util.DirectionalBounds;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.SoundType;
-import net.minecraft.block.material.Material;
-import net.minecraft.block.material.MaterialColor;
-import net.minecraft.entity.LivingEntity;
+import net.minecraft.block.Blocks;
 import net.minecraft.state.DirectionProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.util.BlockRenderLayer;
@@ -15,16 +11,15 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Mirror;
 import net.minecraft.util.Rotation;
-import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
+import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 
-import javax.annotation.Nullable;
 import java.util.Arrays;
 
 public class MidnightFungiShelfBlock extends Block {
@@ -35,7 +30,6 @@ public class MidnightFungiShelfBlock extends Block {
 
     public MidnightFungiShelfBlock(Properties properties) {
         super(properties);
-        //setCreativeTab(MidnightItemGroups.DECORATION);
     }
 
     @Override
@@ -73,10 +67,10 @@ public class MidnightFungiShelfBlock extends Block {
     }
 
     @Override
-    public void neighborChanged(BlockState state, World world, BlockPos pos, Block block, BlockPos fromPos) {
+    public void neighborChanged(BlockState state, World world, BlockPos pos, Block blockIn, BlockPos fromPos, boolean p_220069_6_) {
         if (this.tryDrop(world, pos, state) && !canAttachTo(world, pos, state.get(FACING))) {
             this.dropBlockAsItem(world, pos, state, 0);
-            world.setBlockToAir(pos);
+            world.setBlockState(pos, Blocks.AIR.getDefaultState(), 3);
         }
     }
 
@@ -85,7 +79,7 @@ public class MidnightFungiShelfBlock extends Block {
             return true;
         }
         this.dropBlockAsItem(world, pos, state, 0);
-        world.setBlockToAir(pos);
+        world.setBlockState(pos, Blocks.AIR.getDefaultState(), 3);
         return false;
     }
 
@@ -104,27 +98,13 @@ public class MidnightFungiShelfBlock extends Block {
     }
 
     @Override
-    public BlockState getStateFromMeta(int meta) {
-        Direction facing = Direction.byIndex(meta);
-        if (facing == Direction.DOWN) {
-            return this.getDefaultState();
-        }
-        return this.getDefaultState().with(FACING, facing);
-    }
-
-    @Override
-    public int getMetaFromState(BlockState state) {
-        return state.get(FACING).getIndex();
-    }
-
-    @Override
-    public BlockState withRotation(BlockState state, Rotation rot) {
+    public BlockState rotate(BlockState state, Rotation rot) {
         return state.with(FACING, rot.rotate(state.get(FACING)));
     }
 
     @Override
-    public BlockState withMirror(BlockState state, Mirror mirror) {
-        return state.withRotation(mirror.toRotation(state.get(FACING)));
+    public BlockState mirror(BlockState state, Mirror mirror) {
+        return state.rotate(mirror.toRotation(state.get(FACING)));
     }
 
     @Override
@@ -133,17 +113,12 @@ public class MidnightFungiShelfBlock extends Block {
     }
 
     @Override
-    public BlockFaceShape getBlockFaceShape(IBlockAccess worldIn, BlockState state, BlockPos pos, Direction face) {
-        return BlockFaceShape.UNDEFINED;
-    }
-
-    @Override
     public BlockRenderLayer getRenderLayer() {
         return BlockRenderLayer.CUTOUT;
     }
 
     @Override
-    public boolean canBeReplacedByLeaves(BlockState state, IBlockAccess world, BlockPos pos) {
+    public boolean canBeReplacedByLeaves(BlockState state, IWorldReader world, BlockPos pos) {
         return true;
     }
 }

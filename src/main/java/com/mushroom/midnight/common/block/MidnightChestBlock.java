@@ -1,24 +1,14 @@
 package com.mushroom.midnight.common.block;
 
-import com.mushroom.midnight.common.tile.base.TileEntityMidnightChest;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockRenderType;
-import net.minecraft.block.BlockState;
 import net.minecraft.block.ChestBlock;
-import net.minecraft.block.SoundType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.World;
 
-import javax.annotation.Nullable;
-
+// TODO make it when able to launch midnight
 public class MidnightChestBlock extends ChestBlock {
-    public enum ChestModel {
+
+    protected MidnightChestBlock(Properties properties) {
+        super(properties);
+    }
+    /*public enum ChestModel {
         SHADOWROOT("shadowroot");
         private String name;
         ChestModel(String name) {
@@ -36,7 +26,6 @@ public class MidnightChestBlock extends ChestBlock {
     public MidnightChestBlock(Properties properties, ChestModel chestModel) {
         super(properties.hardnessAndResistance(2.5f, 0f).sound(SoundType.WOOD)); //, Type.BASIC
         this.chestModel = chestModel;
-        //setCreativeTab(MidnightItemGroups.DECORATION);
     }
 
     @Override
@@ -153,5 +142,5 @@ public class MidnightChestBlock extends ChestBlock {
     @SuppressWarnings("deprecation")
     public BlockRenderType getRenderType(BlockState state) {
         return BlockRenderType.ENTITYBLOCK_ANIMATED;
-    }
+    }*/
 }

@@ -14,12 +14,10 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.state.IntegerProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
-import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
@@ -32,9 +30,8 @@ import net.minecraftforge.event.ForgeEventFactory;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
-import java.util.Random;
 
-@SuppressWarnings({ "WeakerAccess", "deprecation" })
+@SuppressWarnings({ "WeakerAccess" })
 public abstract class PileOfEggsBlock extends Block {
     protected static final VoxelShape bound_one_egg = makeCuboidShape(0.1875d, 0d, 0.1875d, 0.75d, 0.4375d, 0.75d);
     protected static final VoxelShape bound_several_eggs = makeCuboidShape(0.0625d, 0d, 0.0625d, 0.9375d, 0.4375d, 0.9375d);
@@ -43,7 +40,6 @@ public abstract class PileOfEggsBlock extends Block {
     protected PileOfEggsBlock() {
         super(Properties.create(Material.ROCK).sound(MidnightSounds.PILE_OF_EGGS).hardnessAndResistance(-1f, 0f));
         setDefaultState(getStateContainer().getBaseState().with(EGGS, 1));
-        //setCreativeTab(MidnightItemGroups.DECORATION);
     }
 
     protected abstract MobEntity createEntityForEgg(World world, BlockPos pos, BlockState state);
@@ -159,11 +155,6 @@ public abstract class PileOfEggsBlock extends Block {
     @Override
     public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
         return (state.get(EGGS) > 1 ? bound_several_eggs : bound_one_egg);
-    }
-
-    @Override
-    public BlockFaceShape getBlockFaceShape(IBlockAccess world, BlockState state, BlockPos pos, Direction face) {
-        return BlockFaceShape.UNDEFINED;
     }
 
     @Override

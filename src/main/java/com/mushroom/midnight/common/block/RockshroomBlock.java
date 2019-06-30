@@ -34,7 +34,6 @@ public class RockshroomBlock extends Block {
 
     public RockshroomBlock() {
         super(Properties.create(Material.ROCK, MaterialColor.PINK_TERRACOTTA).hardnessAndResistance(1.5f, 10f).sound(SoundType.STONE));
-        //setCreativeTab(MidnightItemGroups.BUILDING);
     }
 
     @Override

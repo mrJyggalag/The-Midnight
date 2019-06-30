@@ -1,19 +1,24 @@
 package com.mushroom.midnight.client.gui;
 
-import com.mojang.blaze3d.platform.GlStateManager;
 import com.mushroom.midnight.common.container.MidnightFurnaceContainer;
-import com.mushroom.midnight.common.tile.base.TileEntityMidnightFurnace;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
+// TODO make it when able to launch midnight
 public class MidnightFurnaceScreen extends ContainerScreen<MidnightFurnaceContainer> {
-    private static final ResourceLocation FURNACE_GUI_TEXTURES = new ResourceLocation("textures/gui/container/furnace.png");
+    public MidnightFurnaceScreen(MidnightFurnaceContainer p_i51105_1_, PlayerInventory p_i51105_2_, ITextComponent p_i51105_3_) {
+        super(p_i51105_1_, p_i51105_2_, p_i51105_3_);
+    }
+
+    @Override
+    protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
+
+    }
+    /*private static final ResourceLocation FURNACE_GUI_TEXTURES = new ResourceLocation("textures/gui/container/furnace.png");
     private final PlayerInventory playerInventory;
     private final IInventory tileFurnace;
 
@@ -62,5 +67,5 @@ public class MidnightFurnaceScreen extends ContainerScreen<MidnightFurnaceContai
         int i = tileFurnace.getField(1);
         if (i == 0) { i = 200; }
         return tileFurnace.getField(0) * pixels / i;
-    }
+    }*/
 }

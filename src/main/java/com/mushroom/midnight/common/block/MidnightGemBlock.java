@@ -5,13 +5,9 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.item.Item;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.world.World;
 import net.minecraftforge.common.ToolType;
 
 import javax.annotation.Nullable;
-import java.util.Random;
 import java.util.function.Supplier;
 
 public class MidnightGemBlock extends Block {
@@ -22,7 +18,6 @@ public class MidnightGemBlock extends Block {
         super(Properties.create(Material.ROCK).hardnessAndResistance(3f, 5f).sound(SoundType.STONE));
         this.harvestLevel = harvestLevel;
         this.gemSupplier = gemSupplier;
-        //setCreativeTab(MidnightItemGroups.BUILDING);
     }
 
     @Override
@@ -36,7 +31,7 @@ public class MidnightGemBlock extends Block {
         return ToolType.PICKAXE;
     }
 
-    @Override
+    /*@Override
     public Item getItemDropped(BlockState state, Random rand, int fortune) {
         return this.gemSupplier.get();
     }
@@ -54,5 +49,5 @@ public class MidnightGemBlock extends Block {
     public int getExpDrop(BlockState state, IBlockAccess world, BlockPos pos, int fortune) {
         Random rand = world instanceof World ? ((World) world).rand : new Random();
         return MathHelper.getInt(rand, 3, 7);
-    }
+    }*/
 }

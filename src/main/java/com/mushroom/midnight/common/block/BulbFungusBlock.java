@@ -36,7 +36,7 @@ public class BulbFungusBlock extends MidnightPlantBlock implements IGrowable {
     public void grow(World world, Random rand, BlockPos pos, BlockState state) {
         if (!ForgeEventFactory.saplingGrowTree(world, rand, pos)) {
             Feature<?> generator = this.genSupplier.get();
-            // TODO Feature @Gegy
+            // TODO Feature @Gegy GeneratablePlant
             world.setBlockState(pos, Blocks.AIR.getDefaultState(), 4);
             if (!generator.generate(world, rand, pos)) {
                 world.setBlockState(pos, state, 4);

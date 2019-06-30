@@ -45,7 +45,7 @@ public class DoubleFungiBlock extends MidnightDoublePlantBlock {
             world.setBlockState(pos, state.cycle(BlockStateProperties.STAGE_0_1), 4);
         } else if (!ForgeEventFactory.saplingGrowTree(world, rand, pos)) {
             Feature<?> generator = this.generatorSupplier.get();
-            // TODO Feature @Gegy
+            // TODO Feature @Gegy GeneratablePlant
             world.setBlockState(pos, Blocks.AIR.getDefaultState(), 4);
             if (!generator.generate(world, rand, pos)) {
                 world.setBlockState(pos, state, 4);

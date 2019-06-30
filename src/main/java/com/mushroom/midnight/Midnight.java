@@ -21,7 +21,6 @@ import com.mushroom.midnight.common.network.BridgeCreateMessage;
 import com.mushroom.midnight.common.network.BridgeRemovalMessage;
 import com.mushroom.midnight.common.network.BridgeStateMessage;
 import com.mushroom.midnight.common.network.CaptureEntityMessage;
-import com.mushroom.midnight.common.network.GuiHandler;
 import com.mushroom.midnight.common.network.ItemActivationMessage;
 import com.mushroom.midnight.common.network.RockshroomBrokenMessage;
 import com.mushroom.midnight.common.registry.MidnightCavernousBiomes;
@@ -117,13 +116,14 @@ public class Midnight {
         LootConditionManager.registerCondition(new InBlockLootCondition.Serializer());
         LootConditionManager.registerCondition(new IsChildLootCondition.Serializer());
 
+        // TODO oreGenerator
         GameRegistry.registerWorldGenerator(new MidnightOreGenerator(), Integer.MAX_VALUE);
 
         MidnightSurfaceBiomes.onInit();
         MidnightCavernousBiomes.onInit();
         MidnightRecipes.onInit();
 
-        NetworkRegistry.INSTANCE.registerGuiHandler(instance, new GuiHandler());
+        //NetworkRegistry.INSTANCE.registerGuiHandler(instance, new GuiHandler());
     }
 
     private void setupMessages() {

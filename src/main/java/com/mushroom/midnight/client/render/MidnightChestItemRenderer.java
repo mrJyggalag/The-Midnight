@@ -1,18 +1,11 @@
 package com.mushroom.midnight.client.render;
 
-import com.mojang.blaze3d.platform.GlStateManager;
-import com.mushroom.midnight.Midnight;
-import com.mushroom.midnight.common.block.MidnightChestBlock.ChestModel;
 import com.mushroom.midnight.common.tile.base.TileEntityMidnightChest;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockChest;
-import net.minecraft.client.model.ModelChest;
-import net.minecraft.client.model.ModelLargeChest;
-import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
 
-public class MidnightChestItemRenderer extends TileEntitySpecialRenderer<TileEntityMidnightChest> {
-    private static final ResourceLocation TEXTURE_NORMAL_DOUBLE = new ResourceLocation(Midnight.MODID, "textures/entities/chest/shadowroot_chest_double.png");
+// TODO make it when able to launch midnight
+public class MidnightChestItemRenderer extends TileEntityRenderer<TileEntityMidnightChest> {
+    /*private static final ResourceLocation TEXTURE_NORMAL_DOUBLE = new ResourceLocation(Midnight.MODID, "textures/entities/chest/shadowroot_chest_double.png");
     private static final ResourceLocation TEXTURE_NORMAL = new ResourceLocation(Midnight.MODID, "textures/entities/chest/shadowroot_chest.png");
     private final ModelChest simpleChest = new ModelChest();
     private final ModelChest largeChest = new ModelLargeChest();
@@ -157,5 +150,5 @@ public class MidnightChestItemRenderer extends TileEntitySpecialRenderer<TileEnt
                 GlStateManager.matrixMode(5888);
             }
         }
-    }
+    }*/
 }

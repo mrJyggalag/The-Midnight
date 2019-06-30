@@ -47,17 +47,6 @@ public class MidnightFungiHatBlock extends Block {
     }
 
     @Override
-    public int quantityDropped(Random random) {
-        return random.nextInt(5) == 0 ? 1 : 0;
-    }
-
-    @Override
-    public Item getItemDropped(BlockState state, Random rand, int fortune) {
-        return rand.nextBoolean() ? Item.getItemFromBlock(this.saplingSupplier.get()) : powderSupplier.get();
-    }
-
-    @Override
-    @SuppressWarnings("deprecation")
     public BlockState getActualState(BlockState state, IBlockAccess world, BlockPos pos) {
         return state.with(UP, this.isInside(world, pos.up()))
                 .with(DOWN, this.isInside(world, pos.down()))
@@ -108,4 +97,14 @@ public class MidnightFungiHatBlock extends Block {
     public boolean canCreatureSpawn(BlockState state, IBlockReader world, BlockPos pos, EntitySpawnPlacementRegistry.PlacementType type, @Nullable EntityType<?> entityType) {
         return false;
     }
+
+    /*@Override
+    public int quantityDropped(Random random) {
+        return random.nextInt(5) == 0 ? 1 : 0;
+    }
+
+    @Override
+    public Item getItemDropped(BlockState state, Random rand, int fortune) {
+        return rand.nextBoolean() ? Item.getItemFromBlock(this.saplingSupplier.get()) : powderSupplier.get();
+    }*/
 }

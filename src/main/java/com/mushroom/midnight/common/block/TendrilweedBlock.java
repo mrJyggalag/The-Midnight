@@ -24,7 +24,7 @@ public class TendrilweedBlock extends MidnightPlantBlock {
         super.randomTick(state, world, pos, random);
         if (!world.isRemote && random.nextFloat() < 0.01f) {
             BlockPos placePos = pos.add(random.nextInt(5) - 2, random.nextInt(3) - 1, random.nextInt(5) - 2);
-            if (MidnightBlocks.TENDRILWEED.canPlaceBlockAt(world, placePos)) {
+            if (isValidGround(world.getBlockState(placePos), world, placePos)) {
                 int flowers = 0;
                 Iterator<BlockPos> it = BlockPos.getAllInBox(pos.add(-2, -1, -2), pos.add(2, 1, 2)).iterator();
                 while (it.hasNext()) {
@@ -45,11 +45,6 @@ public class TendrilweedBlock extends MidnightPlantBlock {
         if (entity instanceof LivingEntity && !entity.world.isRemote && entity.ticksExisted % 20 == 0) {
             ((LivingEntity) entity).addPotionEffect(new EffectInstance(MidnightEffects.POLLINATED, 200, 1, false, true));
         }
-    }
-
-    @Override
-    public boolean canPlaceBlockAt(World world, BlockPos pos) {
-        return isValidGround(world.getBlockState(pos.down()), world, pos.down()) && super.canPlaceBlockAt(world, pos);
     }
 
     @Override

@@ -18,7 +18,6 @@ public class DeceitfulMudBlock extends SoilBlock {
 
     public DeceitfulMudBlock() {
         super(Properties.create(Material.ORGANIC, MaterialColor.GRAY_TERRACOTTA).hardnessAndResistance(0.5f, 0f).sound(MidnightSounds.MUD), false);
-        //setCreativeTab(MidnightItemGroups.BUILDING);
     }
 
     @Override

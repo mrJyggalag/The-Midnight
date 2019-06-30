@@ -1,6 +1,5 @@
 package com.mushroom.midnight.common.block;
 
-import com.mushroom.midnight.common.registry.MidnightItemGroups;
 import net.minecraft.block.PaneBlock;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -11,7 +10,6 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public class MidnightGlassPaneBlock extends PaneBlock {
     public MidnightGlassPaneBlock() {
         super(Properties.create(Material.GLASS).sound(SoundType.GLASS));
-        //setCreativeTab(MidnightItemGroups.DECORATION);
     }
 
     @Override

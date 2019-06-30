@@ -1,21 +1,55 @@
 package com.mushroom.midnight.common.tile.base;
 
-import com.google.common.base.Objects;
-import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
-import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.IItemHandlerModifiable;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import java.lang.ref.WeakReference;
 
+// TODO make it when able to launch midnight
 public class MidnightVanillaDoubleChestItemHandler extends WeakReference<TileEntityMidnightChest> implements IItemHandlerModifiable {
-    public static final MidnightVanillaDoubleChestItemHandler NO_ADJACENT_CHESTS_INSTANCE = new MidnightVanillaDoubleChestItemHandler(null, null, false);
+    public MidnightVanillaDoubleChestItemHandler(TileEntityMidnightChest referent) {
+        super(referent);
+    }
+
+    @Override
+    public void setStackInSlot(int slot, @Nonnull ItemStack stack) {
+
+    }
+
+    @Override
+    public int getSlots() {
+        return 0;
+    }
+
+    @Nonnull
+    @Override
+    public ItemStack getStackInSlot(int slot) {
+        return null;
+    }
+
+    @Nonnull
+    @Override
+    public ItemStack insertItem(int slot, @Nonnull ItemStack stack, boolean simulate) {
+        return null;
+    }
+
+    @Nonnull
+    @Override
+    public ItemStack extractItem(int slot, int amount, boolean simulate) {
+        return null;
+    }
+
+    @Override
+    public int getSlotLimit(int slot) {
+        return 0;
+    }
+
+    @Override
+    public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
+        return false;
+    }
+    /*public static final MidnightVanillaDoubleChestItemHandler NO_ADJACENT_CHESTS_INSTANCE = new MidnightVanillaDoubleChestItemHandler(null, null, false);
     private final boolean mainChestIsUpper;
     private final TileEntityMidnightChest mainChest;
     private final int hashCode;
@@ -184,5 +218,5 @@ public class MidnightVanillaDoubleChestItemHandler extends WeakReference<TileEnt
         }
         TileEntityMidnightChest tileEntityChest = get();
         return tileEntityChest == null || tileEntityChest.isInvalid();
-    }
+    }*/
 }

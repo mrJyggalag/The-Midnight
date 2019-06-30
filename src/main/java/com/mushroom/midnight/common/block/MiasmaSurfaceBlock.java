@@ -15,7 +15,6 @@ import javax.annotation.Nullable;
 public class MiasmaSurfaceBlock extends MagmaBlock {
     public MiasmaSurfaceBlock() {
         super(Properties.create(Material.ROCK, MaterialColor.BLUE_TERRACOTTA).hardnessAndResistance(0.5f, 0f));
-        //setCreativeTab(MidnightItemGroups.BUILDING);
     }
 
     @Override

@@ -13,7 +13,6 @@ public class MidnightOreBlock extends Block {
     public MidnightOreBlock(int harvestLevel) {
         super(Properties.create(Material.ROCK).hardnessAndResistance(3f, 5f).sound(SoundType.STONE));
         this.harvestLevel = harvestLevel;
-        //setCreativeTab(MidnightItemGroups.BUILDING);
     }
 
     @Override
