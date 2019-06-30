@@ -633,8 +633,10 @@ public class MidnightBlocks {
 
     @SubscribeEvent
     public static void registerTileEntity(final RegistryEvent.Register<TileEntityType<?>> event) {
-        TileEntityType.Builder.create(TileEntityMidnightChest::new, SHADOWROOT_CHEST).build(null).setRegistryName(MODID, "tile_shadowroot_chest");
-        TileEntityType.Builder.create(TileEntityMidnightFurnace::new, NIGHTSTONE_FURNACE).build(null).setRegistryName(MODID, "tile_midnight_furnace");
+        event.getRegistry().registerAll(
+            TileEntityType.Builder.create(TileEntityMidnightChest::new, SHADOWROOT_CHEST).build(null).setRegistryName(MODID, "tile_shadowroot_chest"),
+            TileEntityType.Builder.create(TileEntityMidnightFurnace::new, NIGHTSTONE_FURNACE).build(null).setRegistryName(MODID, "tile_midnight_furnace")
+        );
     }
 
     @SubscribeEvent
