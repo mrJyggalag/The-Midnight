@@ -81,7 +81,7 @@ public class MidnightNoiseGenerator {
         double cavernHeight = cavernCeilingHeight - cavernFloorHeight;
 
         float heightVariation = properties.heightScale * 0.9F + 0.1F;
-        float cavernHeightVariation = properties.cavernHeightVariation * 0.9F + 0.1F;
+        float cavernHeightVariation = properties.cavernHeightScale * 0.9F + 0.1F;
 
         double perlinSurfaceNoise = (this.surfaceNoise.get(x, z) + 1.5) / 3.0;
         double perlinCeilingNoise = (this.ceilingNoise.get(x, z) + 1.5) / 3.0;
@@ -153,12 +153,11 @@ public class MidnightNoiseGenerator {
                     nDensityScale = surfaceBiome.getDensityScale();
                 }
 
-                CavernStructureConfig cavernStructureConfig = neighborCavernBiome.getConfig().getStructureConfig();
-                float nCavernFloorHeight = cavernStructureConfig.getFloorHeight();
-                float nCavernCeilingHeight = cavernStructureConfig.getCeilingHeight();
-                float nCavernDensity = cavernStructureConfig.getCavernDensity();
-                float nCavernHeightVariation = cavernStructureConfig.getHeightVariation();
-                float nCavernPillarWeight = cavernStructureConfig.getPillarWeight();
+                float nCavernFloorHeight = neighborCavernBiome.getFloorHeight();
+                float nCavernCeilingHeight = neighborCavernBiome.getCeilingHeight();
+                float nCavernDensity = neighborCavernBiome.getCavernDensity();
+                float nCavernHeightScale = neighborCavernBiome.getHeightScale();
+                float nCavernPillarWeight = neighborCavernBiome.getPillarWeight();
 
                 float biomeWeight = this.weightTable.get(neighborX, neighborZ) / (nDepth + 2.0F);
                 if (neighborBiome.getDepth() > originBiome.getDepth()) {
@@ -172,7 +171,7 @@ public class MidnightNoiseGenerator {
                 properties.cavernFloorHeight += nCavernFloorHeight * biomeWeight;
                 properties.cavernCeilingHeight += nCavernCeilingHeight * biomeWeight;
                 properties.cavernDensity += nCavernDensity * biomeWeight;
-                properties.cavernHeightVariation += nCavernHeightVariation * biomeWeight;
+                properties.cavernHeightScale += nCavernHeightScale * biomeWeight;
                 properties.pillarWeight += nCavernPillarWeight * biomeWeight;
 
                 totalWeight += biomeWeight;
@@ -210,7 +209,7 @@ public class MidnightNoiseGenerator {
         float cavernFloorHeight;
         float cavernCeilingHeight;
         float cavernDensity;
-        float cavernHeightVariation;
+        float cavernHeightScale;
         float pillarWeight;
 
         void zero() {
@@ -221,7 +220,7 @@ public class MidnightNoiseGenerator {
             this.cavernFloorHeight = 0.0F;
             this.cavernCeilingHeight = 0.0F;
             this.cavernDensity = 0.0F;
-            this.cavernHeightVariation = 0.0F;
+            this.cavernHeightScale = 0.0F;
             this.pillarWeight = 0.0F;
         }
 
@@ -233,7 +232,7 @@ public class MidnightNoiseGenerator {
             this.cavernFloorHeight /= weight;
             this.cavernCeilingHeight /= weight;
             this.cavernDensity /= weight;
-            this.cavernHeightVariation /= weight;
+            this.cavernHeightScale /= weight;
             this.pillarWeight /= weight;
         }
     }

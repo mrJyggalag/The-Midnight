@@ -32,6 +32,7 @@ public class MidnightBiomeConfigurator {
                 Placement.COUNT_CHANCE_HEIGHTMAP_DOUBLE, new HeightWithChanceConfig(4, 0.3F)
         ));
 
+        // TODO
 //      .withFeature(FeatureSorting.LAST, DRAGON_NEST_FEATURE, new DragonNestPlacementConfig(32, 32))
 //      .withFeature(FeatureSorting.LAST, UNSTABLE_BUSH_FEATURE, new ParcelPlacementConfig(6, 10, 0.2f))
 //      .withFeature(FeatureSorting.LAST, UNDERGROUND_FEATURES, new UndergroundPlacementConfig(1, 3, 10, 50))
@@ -56,6 +57,20 @@ public class MidnightBiomeConfigurator {
         ));
     }
 
+    public static void addSmallBogFungis(ConfigurableBiome biome) {
+        biome.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, Biome.createDecoratedFeature(
+                MidnightFeatures.BOG_FUNGI_FLOWERS, IFeatureConfig.NO_FEATURE_CONFIG,
+                Placement.COUNT_HEIGHTMAP_32, new FrequencyConfig(2)
+        ));
+    }
+
+    public static void addCrystalFlowers(ConfigurableBiome biome) {
+        biome.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, Biome.createDecoratedFeature(
+                Feature.BUSH, new BushConfig(MidnightBlocks.CRYSTAL_FLOWER.getDefaultState()),
+                Placement.COUNT_HEIGHTMAP_32, new FrequencyConfig(8)
+        ));
+    }
+
     public static void addGrasses(ConfigurableBiome biome) {
         biome.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, Biome.createDecoratedFeature(
                 Feature.GRASS, new GrassFeatureConfig(MidnightBlocks.GRASS.getDefaultState()),
@@ -69,26 +84,28 @@ public class MidnightBiomeConfigurator {
     }
 
     public static void addBoulders(ConfigurableBiome biome) {
-//                .withFeature(TRENCHSTONE_BOULDER_FEATURE, new SurfacePlacementConfig(-3, 1))
+        biome.addFeature(GenerationStage.Decoration.LOCAL_MODIFICATIONS, Biome.createDecoratedFeature(
+                MidnightFeatures.TRENCHSTONE_BOULDER, IFeatureConfig.NO_FEATURE_CONFIG,
+                Placement.CHANCE_HEIGHTMAP, new ChanceConfig(3)
+        ));
     }
 
-    public static void addVigilantForestFeatures(ConfigurableBiome biome) {
+    public static void addSparseShadowrootTrees(ConfigurableBiome biome) {
         biome.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, Biome.createDecoratedFeature(
                 Feature.RANDOM_BOOLEAN_SELECTOR, new TwoFeatureChoiceConfig(
                         MidnightFeatures.SHADOWROOT_TREE, IFeatureConfig.NO_FEATURE_CONFIG,
-                        MidnightFeatures.DARK_WILLOW_TREE, IFeatureConfig.NO_FEATURE_CONFIG
+                        MidnightFeatures.DEAD_TREE, IFeatureConfig.NO_FEATURE_CONFIG
                 ),
-                Placement.COUNT_HEIGHTMAP, new FrequencyConfig(8)
+                Placement.CHANCE_HEIGHTMAP, new ChanceConfig(5)
         ));
+    }
+
+    public static void addVigilantForestVegetation(ConfigurableBiome biome) {
+        addVigilantForestTreesAndLogs(biome);
 
         biome.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, Biome.createDecoratedFeature(
                 MidnightFeatures.SUAVIS, IFeatureConfig.NO_FEATURE_CONFIG,
                 Placement.CHANCE_HEIGHTMAP_DOUBLE, new ChanceConfig(32)
-        ));
-
-        biome.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, Biome.createDecoratedFeature(
-                MidnightFeatures.DEAD_LOG, IFeatureConfig.NO_FEATURE_CONFIG,
-                Placement.COUNT_HEIGHTMAP, new FrequencyConfig(6)
         ));
 
         biome.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, Biome.createDecoratedFeature(
@@ -102,7 +119,23 @@ public class MidnightBiomeConfigurator {
         ));
     }
 
+    public static void addVigilantForestTreesAndLogs(ConfigurableBiome biome) {
+        biome.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, Biome.createDecoratedFeature(
+                Feature.RANDOM_BOOLEAN_SELECTOR, new TwoFeatureChoiceConfig(
+                        MidnightFeatures.SHADOWROOT_TREE, IFeatureConfig.NO_FEATURE_CONFIG,
+                        MidnightFeatures.DARK_WILLOW_TREE, IFeatureConfig.NO_FEATURE_CONFIG
+                ),
+                Placement.COUNT_HEIGHTMAP, new FrequencyConfig(8)
+        ));
+
+        biome.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, Biome.createDecoratedFeature(
+                MidnightFeatures.DEAD_LOG, IFeatureConfig.NO_FEATURE_CONFIG,
+                Placement.COUNT_HEIGHTMAP, new FrequencyConfig(6)
+        ));
+    }
+
     public static void addFungiForestFeatures(ConfigurableBiome biome) {
+        // TODO
 //       .withFeature(LARGE_FUNGI_FEATURES, new SurfacePlacementConfig(6))
 //       .withFeature(DOUBLE_FUNGI_FEATURE, new ScatterPlacementConfig(4, 8))
     }

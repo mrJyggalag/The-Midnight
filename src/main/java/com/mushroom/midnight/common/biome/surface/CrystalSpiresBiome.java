@@ -2,9 +2,15 @@ package com.mushroom.midnight.common.biome.surface;
 
 import com.mushroom.midnight.common.biome.MidnightBiomeConfigurator;
 import com.mushroom.midnight.common.biome.MidnightSurfaceBuilders;
+import com.mushroom.midnight.common.registry.MidnightBlocks;
 import com.mushroom.midnight.common.registry.MidnightEntities;
+import com.mushroom.midnight.common.registry.MidnightFeatures;
+import com.mushroom.midnight.common.world.feature.config.CrystalClusterConfig;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.world.biome.Biome;
+import net.minecraft.world.gen.GenerationStage;
+import net.minecraft.world.gen.placement.FrequencyConfig;
+import net.minecraft.world.gen.placement.Placement;
 
 public class CrystalSpiresBiome extends SurfaceBiome {
     public CrystalSpiresBiome() {
@@ -17,13 +23,20 @@ public class CrystalSpiresBiome extends SurfaceBiome {
                 .ridgeWeight(0.0F)
         );
 
-//      .withFeature(SHADOWROOT_TREE_FEATURE, new SurfacePlacementConfig(-3, 1))
-//      .withFeature(BLOOMCRYSTAL_FEATURE, new SurfacePlacementConfig(3))
-//      .withFeature(BLOOMCRYSTAL_SPIRE_FEATURE, new SurfacePlacementConfig(2, 3))
-//      .withFeature(LUMEN_FEATURE, new ScatterPlacementConfig(1, 32))
-//      .withFeature(DOUBLE_LUMEN_FEATURE, new ScatterPlacementConfig(1, 16))
-//      .withFeature(CRYSTAL_FLOWER_FEATURE, new ScatterPlacementConfig(5, 12))
+        this.addFeature(GenerationStage.Decoration.SURFACE_STRUCTURES, createDecoratedFeature(
+                MidnightFeatures.CRYSTAL_CLUSTER, new CrystalClusterConfig(MidnightBlocks.BLOOMCRYSTAL_ROCK.getDefaultState(), MidnightBlocks.BLOOMCRYSTAL.getDefaultState()),
+                Placement.COUNT_HEIGHTMAP, new FrequencyConfig(3)
+        ));
 
+        this.addFeature(GenerationStage.Decoration.SURFACE_STRUCTURES, createDecoratedFeature(
+                MidnightFeatures.CRYSTAL_SPIRE, new CrystalClusterConfig(MidnightBlocks.BLOOMCRYSTAL_ROCK.getDefaultState(), MidnightBlocks.BLOOMCRYSTAL.getDefaultState()),
+                Placement.COUNT_HEIGHTMAP, new FrequencyConfig(2)
+        ));
+
+        MidnightBiomeConfigurator.addSparseShadowrootTrees(this);
+
+        MidnightBiomeConfigurator.addLumen(this);
+        MidnightBiomeConfigurator.addCrystalFlowers(this);
         MidnightBiomeConfigurator.addGlobalFeatures(this);
 
         this.addSpawn(EntityClassification.CREATURE, new Biome.SpawnListEntry(MidnightEntities.NIGHTSTAG, 100, 1, 3));

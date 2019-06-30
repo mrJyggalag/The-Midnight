@@ -1,7 +1,7 @@
 package com.mushroom.midnight.common.world.layer;
 
 import com.mushroom.midnight.common.biome.MidnightBiomeGroup;
-import com.mushroom.midnight.common.biome.config.BiomeSpawnEntry;
+import com.mushroom.midnight.common.biome.BiomeSpawnEntry;
 import net.minecraft.world.gen.layer.GenLayer;
 import net.minecraft.world.gen.layer.IntCache;
 

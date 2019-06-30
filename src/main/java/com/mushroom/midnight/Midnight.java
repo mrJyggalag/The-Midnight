@@ -29,6 +29,7 @@ import com.mushroom.midnight.common.registry.MidnightCavernousBiomes;
 import com.mushroom.midnight.common.registry.MidnightCriterion;
 import com.mushroom.midnight.common.registry.MidnightDimensions;
 import com.mushroom.midnight.common.registry.MidnightFluids;
+import com.mushroom.midnight.common.registry.MidnightGameRules;
 import com.mushroom.midnight.common.registry.MidnightItemGroups;
 import com.mushroom.midnight.common.registry.MidnightItems;
 import com.mushroom.midnight.common.registry.MidnightRecipes;
@@ -110,7 +111,7 @@ public class Midnight {
         CapabilityManager.INSTANCE.register(AnimationCapability.class, new NullStorage<>(), AnimationCapability::new);
         CapabilityManager.INSTANCE.register(MidnightWorldSpawners.class, new NullStorage<>(), MidnightWorldSpawners.Void::new);
 
-        Reflection.initialize(MidnightCriterion.class, MidnightItemGroups.class, MidnightDimensions.class);
+        Reflection.initialize(MidnightCriterion.class, MidnightItemGroups.class, MidnightDimensions.class, MidnightGameRules.class);
 
         EntityUtil.register();
         MidnightFluids.register();
@@ -123,8 +124,6 @@ public class Midnight {
 
         MidnightSurfaceBiomes.onInit();
         MidnightCavernousBiomes.onInit();
-        MidnightItems.onInit();
-        MidnightBlocks.onInit();
         MidnightRecipes.onInit();
 
         NetworkRegistry.INSTANCE.registerGuiHandler(instance, new GuiHandler());

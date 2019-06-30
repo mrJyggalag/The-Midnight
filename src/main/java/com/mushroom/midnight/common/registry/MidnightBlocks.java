@@ -491,8 +491,7 @@ public class MidnightBlocks {
                 .add("dead_wood_door", BasicBlock::new)
                 .add("nightshroom_door", BasicBlock::new)
                 .add("dewshroom_door", BasicBlock::new)
-                .add("viridshroom_door", BasicBlock::new)
-        ;
+                .add("viridshroom_door", BasicBlock::new);
 
         RegUtil.blocks(event.getRegistry())
                 .withProperties(() -> Block.Properties.create(Material.IRON, MaterialColor.ADOBE).hardnessAndResistance(3f).sound(SoundType.METAL))
@@ -608,16 +607,16 @@ public class MidnightBlocks {
                 RegUtil.withName(new MiasmaFluidBlock(), "miasma")
                 ));
 
-        RegUtil.withName(new MidnightDoubleSlabBlock(() -> SHADOWROOT_SLAB), "shadowroot_double_slab"),
-                RegUtil.withName(new MidnightDoubleSlabBlock(() -> DEAD_WOOD_SLAB), "dead_wood_double_slab"),
-                RegUtil.withName(new MidnightDoubleSlabBlock(() -> DARK_WILLOW_SLAB), "dark_willow_double_slab"),
-                RegUtil.withName(new MidnightDoubleSlabBlock(() -> NIGHTSTONE_SLAB), "nightstone_double_slab"),
-                RegUtil.withName(new MidnightDoubleSlabBlock(() -> NIGHTSTONE_BRICK_SLAB), "nightstone_brick_double_slab"),
-                RegUtil.withName(new MidnightDoubleSlabBlock(() -> TRENCHSTONE_SLAB), "trenchstone_double_slab"),
-                RegUtil.withName(new MidnightDoubleSlabBlock(() -> TRENCHSTONE_BRICK_SLAB), "trenchstone_brick_double_slab"),
-                RegUtil.withName(new MidnightDoubleSlabBlock(() -> DEWSHROOM_SLAB), "dewshroom_double_slab"),
-                RegUtil.withName(new MidnightDoubleSlabBlock(() -> VIRIDSHROOM_SLAB), "viridshroom_double_slab"),
-                RegUtil.withName(new MidnightDoubleSlabBlock(() -> NIGHTSHROOM_SLAB), "nightshroom_double_slab"),
+        RegUtil.withName(new MidnightDoubleSlabBlock(() -> SHADOWROOT_SLAB), "shadowroot_double_slab");
+                RegUtil.withName(new MidnightDoubleSlabBlock(() -> DEAD_WOOD_SLAB), "dead_wood_double_slab");
+                RegUtil.withName(new MidnightDoubleSlabBlock(() -> DARK_WILLOW_SLAB), "dark_willow_double_slab");
+                RegUtil.withName(new MidnightDoubleSlabBlock(() -> NIGHTSTONE_SLAB), "nightstone_double_slab");
+                RegUtil.withName(new MidnightDoubleSlabBlock(() -> NIGHTSTONE_BRICK_SLAB), "nightstone_brick_double_slab");
+                RegUtil.withName(new MidnightDoubleSlabBlock(() -> TRENCHSTONE_SLAB), "trenchstone_double_slab");
+                RegUtil.withName(new MidnightDoubleSlabBlock(() -> TRENCHSTONE_BRICK_SLAB), "trenchstone_brick_double_slab");
+                RegUtil.withName(new MidnightDoubleSlabBlock(() -> DEWSHROOM_SLAB), "dewshroom_double_slab");
+                RegUtil.withName(new MidnightDoubleSlabBlock(() -> VIRIDSHROOM_SLAB), "viridshroom_double_slab");
+                RegUtil.withName(new MidnightDoubleSlabBlock(() -> NIGHTSHROOM_SLAB), "nightshroom_double_slab");
                 RegUtil.withName(new MidnightDoubleSlabBlock(() -> ROCKSHROOM_BRICKS_SLAB), "rockshroom_bricks_double_slab");
 
         registerTile(TileEntityMidnightChest.class, "tile_shadowroot_chest");

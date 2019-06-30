@@ -3,6 +3,7 @@ package com.mushroom.midnight.common.registry;
 import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.common.world.feature.AlgaeFeature;
 import com.mushroom.midnight.common.world.feature.BogFungiFlowersFeature;
+import com.mushroom.midnight.common.world.feature.CrystalClusterFeature;
 import com.mushroom.midnight.common.world.feature.DarkWillowTreeFeature;
 import com.mushroom.midnight.common.world.feature.DeadLogFeature;
 import com.mushroom.midnight.common.world.feature.DeadTreeFeature;
@@ -10,7 +11,11 @@ import com.mushroom.midnight.common.world.feature.FungiFlowersFeature;
 import com.mushroom.midnight.common.world.feature.HeapFeature;
 import com.mushroom.midnight.common.world.feature.LargeBogshroomFeature;
 import com.mushroom.midnight.common.world.feature.MossFeature;
+import com.mushroom.midnight.common.world.feature.NightstoneBoulderFeature;
 import com.mushroom.midnight.common.world.feature.ShadowrootTreeFeature;
+import com.mushroom.midnight.common.world.feature.SpikeFeature;
+import com.mushroom.midnight.common.world.feature.TrenchstoneBoulderFeature;
+import com.mushroom.midnight.common.world.feature.config.CrystalClusterConfig;
 import com.mushroom.midnight.common.world.feature.config.UniformCompositionConfig;
 import com.mushroom.midnight.common.world.template.ShelfAttachProcessor;
 import net.minecraft.world.gen.feature.AbstractTreeFeature;
@@ -65,38 +70,6 @@ public class MidnightFeatures {
 //            GeneratablePlant::canGenerate
 //    );
 //
-//    public static final IMidnightFeature BLOOMCRYSTAL_FEATURE = new CrystalClusterFeature(3, 4,
-//            MidnightBlocks.BLOOMCRYSTAL_ROCK.getDefaultState(),
-//            MidnightBlocks.BLOOMCRYSTAL.getDefaultState()
-//    );
-//
-//    public static final IMidnightFeature BLOOMCRYSTAL_SPIRE_FEATURE = new CrystalClusterFeature(4, 13,
-//            MidnightBlocks.BLOOMCRYSTAL_ROCK.getDefaultState(),
-//            MidnightBlocks.BLOOMCRYSTAL.getDefaultState()
-//    );
-//
-//    public static final IMidnightFeature ROUXE_FEATURE = new CrystalClusterFeature(3, 4,
-//            MidnightBlocks.ROUXE_ROCK.getDefaultState(),
-//            MidnightBlocks.ROUXE.getDefaultState()
-//    );
-//
-//    public static final IMidnightFeature NIGHTSTONE_BOULDER_FEATURE = new BoulderFeature(2) {
-//        @Override
-//        protected BlockState getStateForPlacement(World world, BlockPos origin, BlockPos pos, double dist, float radiusSquare, Random random) {
-//            return MidnightBlocks.NIGHTSTONE.getDefaultState();
-//        }
-//    };
-//    public static final IMidnightFeature NIGHTSTONE_SPIKE_FEATURE = new SpikeFeature(MidnightBlocks.NIGHTSTONE.getDefaultState());
-//
-//    public static final IMidnightFeature TRENCHSTONE_BOULDER_FEATURE = new BoulderFeature(2) {
-//        private final float radiusSquareIn = radius <= 1f ? 0f : (radius - 1f) * (radius - 1f);
-//
-//        @Override
-//        protected BlockState getStateForPlacement(World world, BlockPos origin, BlockPos pos, double dist, float radiusSquare, Random random) {
-//            return dist <= radiusSquareIn && random.nextFloat() < 0.1f ? MidnightBlocks.ARCHAIC_ORE.getDefaultState() : MidnightBlocks.TRENCHSTONE.getDefaultState();
-//        }
-//    };
-//
 //    public static final IMidnightFeature[] UNDERGROUND_FEATURES = new IMidnightFeature[] {
 //            new PlantFeature(MidnightBlocks.TENDRILWEED.getDefaultState(), GeneratablePlant::canGenerate),
 //            FUNGI_FEATURE,
@@ -127,6 +100,11 @@ public class MidnightFeatures {
     public static final Feature<NoFeatureConfig> BOG_FUNGI_FLOWERS = RegUtil.injected();
 
     public static final Feature<UniformCompositionConfig> HEAP = RegUtil.injected();
+    public static final Feature<UniformCompositionConfig> SPIKE = RegUtil.injected();
+    public static final Feature<NoFeatureConfig> NIGHTSTONE_BOULDER = RegUtil.injected();
+    public static final Feature<NoFeatureConfig> TRENCHSTONE_BOULDER = RegUtil.injected();
+    public static final Feature<CrystalClusterConfig> CRYSTAL_CLUSTER = RegUtil.injected();
+    public static final Feature<CrystalClusterConfig> CRYSTAL_SPIRE = RegUtil.injected();
 
     @SubscribeEvent
     public static void registerFeatures(RegistryEvent.Register<Feature<?>> event) {
@@ -142,6 +120,11 @@ public class MidnightFeatures {
                 .add("deceitful_moss", new MossFeature(NoFeatureConfig::deserialize))
                 .add("fungi_flowers", new FungiFlowersFeature(NoFeatureConfig::deserialize))
                 .add("bog_fungi_flowers", new BogFungiFlowersFeature(NoFeatureConfig::deserialize))
-                .add("heap", new HeapFeature(UniformCompositionConfig::deserialize));
+                .add("heap", new HeapFeature(UniformCompositionConfig::deserialize))
+                .add("spike", new SpikeFeature(UniformCompositionConfig::deserialize))
+                .add("nightstone_boulder", new NightstoneBoulderFeature(NoFeatureConfig::deserialize))
+                .add("trenchstone_boulder", new TrenchstoneBoulderFeature(NoFeatureConfig::deserialize))
+                .add("crystal_cluster", new CrystalClusterFeature(CrystalClusterConfig::deserialize, 3, 4))
+                .add("crystal_spire", new CrystalClusterFeature(CrystalClusterConfig::deserialize, 4, 13));
     }
 }

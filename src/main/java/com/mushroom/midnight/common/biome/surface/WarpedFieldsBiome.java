@@ -22,7 +22,7 @@ public class WarpedFieldsBiome extends SurfaceBiome {
         MidnightBiomeConfigurator.addSmallFungis(this);
         MidnightBiomeConfigurator.addGrasses(this);
 
-        // .withFeature(SHADOWROOT_TREE_FEATURE, new SurfacePlacementConfig(-3, 1))
+        MidnightBiomeConfigurator.addSparseShadowrootTrees(this);
 
         MidnightBiomeConfigurator.addGlobalFeatures(this);
 

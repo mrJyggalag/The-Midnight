@@ -2,7 +2,7 @@ package com.mushroom.midnight.common.registry;
 
 import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.common.biome.MidnightBiomeGroup;
-import com.mushroom.midnight.common.biome.config.BiomeSpawnEntry;
+import com.mushroom.midnight.common.biome.BiomeSpawnEntry;
 import com.mushroom.midnight.common.biome.surface.BlackRidgeBiome;
 import com.mushroom.midnight.common.biome.surface.CrystalSpiresBiome;
 import com.mushroom.midnight.common.biome.surface.DeceitfulBogBiome;

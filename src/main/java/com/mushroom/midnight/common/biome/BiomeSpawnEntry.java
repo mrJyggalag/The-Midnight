@@ -1,4 +1,4 @@
-package com.mushroom.midnight.common.biome.config;
+package com.mushroom.midnight.common.biome;
 
 import com.mushroom.midnight.common.biome.cavern.CavernousBiome;
 import com.mushroom.midnight.common.registry.MidnightCavernousBiomes;

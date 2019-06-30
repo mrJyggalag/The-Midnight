@@ -7,7 +7,7 @@ import com.mushroom.midnight.common.biome.cavern.ClosedCavernBiome;
 import com.mushroom.midnight.common.biome.cavern.CrystalCavernBiome;
 import com.mushroom.midnight.common.biome.cavern.FungalCavernBiome;
 import com.mushroom.midnight.common.biome.cavern.GreatCavernBiome;
-import com.mushroom.midnight.common.biome.config.BiomeSpawnEntry;
+import com.mushroom.midnight.common.biome.BiomeSpawnEntry;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;

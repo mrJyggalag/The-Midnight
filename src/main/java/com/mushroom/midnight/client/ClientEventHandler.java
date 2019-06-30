@@ -133,7 +133,7 @@ public class ClientEventHandler {
 
     @SubscribeEvent
     public static void onSetupFogDensity(EntityViewRenderEvent.RenderFogEvent.FogDensity event) {
-        if (FluidImmersionRenderer.immersedFluid.isOpaqueCube()) {
+        if (FluidImmersionRenderer.immersedFluid.isEmpty()) {
             return;
         }
         LivingEntity entity = event.getInfo().func_216773_g() instanceof LivingEntity ? (LivingEntity) event.getInfo().func_216773_g() : null;

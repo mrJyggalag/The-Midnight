@@ -8,6 +8,7 @@ import com.mushroom.midnight.common.entity.RiftEntity;
 import com.mushroom.midnight.common.helper.Helper;
 import com.mushroom.midnight.common.registry.MidnightDimensions;
 import com.mushroom.midnight.common.registry.MidnightEntities;
+import com.mushroom.midnight.common.registry.MidnightGameRules;
 import com.mushroom.midnight.common.util.WorldUtil;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.MinecraftServer;
@@ -16,6 +17,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.LightType;
 import net.minecraft.world.ServerWorld;
 import net.minecraft.world.World;
+import net.minecraft.world.dimension.DimensionType;
 import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.fml.LogicalSidedProvider;
@@ -39,7 +41,7 @@ public class RiftSpawnHandler {
             return;
         }
 
-        ServerWorld world = DimensionManager.getWorld(0);
+        ServerWorld world = DimensionManager.getWorld(server, DimensionType.OVERWORLD, false, false);
         if (world == null) {
             if (!warnedOverworldUnloaded) {
                 Midnight.LOGGER.warn("Overworld unloaded! Cannot spawn Midnight rifts");
@@ -48,17 +50,17 @@ public class RiftSpawnHandler {
             return;
         }
 
-        if (!world.getGameRules().getBoolean("doRiftSpawning")) {
+        if (!world.getGameRules().getBoolean(MidnightGameRules.DO_RIFT_SPAWNING)) {
             return;
         }
 
         World endpointWorld = DimensionManager.getWorld(server, MidnightDimensions.MIDNIGHT, false, false);
         if (!world.isDaytime()) {
             Random random = world.rand;
-            Set<BlockPos> spawnRegions = collectPlayerRegions(world.playerEntities);
+            Set<BlockPos> spawnRegions = collectPlayerRegions(world.getPlayers());
 
             if (endpointWorld != null) {
-                spawnRegions.addAll(collectPlayerRegions(endpointWorld.playerEntities));
+                spawnRegions.addAll(collectPlayerRegions(endpointWorld.getPlayers()));
             }
 
             for (BlockPos spawnRegion : spawnRegions) {
@@ -77,7 +79,7 @@ public class RiftSpawnHandler {
         }
     }
 
-    private static Set<BlockPos> collectPlayerRegions(List<PlayerEntity> players) {
+    private static Set<BlockPos> collectPlayerRegions(List<? extends PlayerEntity> players) {
         Set<BlockPos> spawnRegions = new HashSet<>();
 
         for (PlayerEntity player : players) {

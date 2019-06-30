@@ -7,8 +7,7 @@ import net.minecraft.world.World;
 import org.lwjgl.openal.AL;
 import org.lwjgl.openal.AL10;
 import org.lwjgl.openal.AL11;
-import org.lwjgl.openal.ALC10;
-import org.lwjgl.openal.EFX10;
+import org.lwjgl.openal.EXTEfx;
 
 public class SoundReverbHandler {
     private static final Minecraft MC = Minecraft.getInstance();
@@ -33,16 +32,16 @@ public class SoundReverbHandler {
     }
 
     private static void setupEffects() {
-        available = ALC10.alcIsExtensionPresent(AL.getDevice(), EFX10.ALC_EXT_EFX_NAME);
+        available = AL.getCapabilities().ALC_EXT_EFX;
         if (!available) {
             Midnight.LOGGER.warn("Unable to setup reverb effects, AL EFX not supported!");
             return;
         }
 
-        auxEffectSlot = EFX10.alGenAuxiliaryEffectSlots();
-        EFX10.alAuxiliaryEffectSloti(auxEffectSlot, EFX10.AL_EFFECTSLOT_AUXILIARY_SEND_AUTO, AL10.AL_TRUE);
+        auxEffectSlot = EXTEfx.alGenAuxiliaryEffectSlots();
+        EXTEfx.alAuxiliaryEffectSloti(auxEffectSlot, EXTEfx.AL_EFFECTSLOT_AUXILIARY_SEND_AUTO, AL10.AL_TRUE);
 
-        reverbEffectSlot = EFX10.alGenEffects();
+        reverbEffectSlot = EXTEfx.alGenEffects();
     }
 
     private static void applyEffect(int soundId) {
@@ -52,7 +51,7 @@ public class SoundReverbHandler {
             applyDefaultEffect();
         }
 
-        AL11.alSource3i(soundId, EFX10.AL_AUXILIARY_SEND_FILTER, auxEffectSlot, 0, EFX10.AL_FILTER_NULL);
+        AL11.alSource3i(soundId, EXTEfx.AL_AUXILIARY_SEND_FILTER, auxEffectSlot, 0, EXTEfx.AL_FILTER_NULL);
     }
 
     private static void applyReverbEffect() {
@@ -62,11 +61,11 @@ public class SoundReverbHandler {
 
         reverbApplied = true;
 
-        EFX10.alEffecti(reverbEffectSlot, EFX10.AL_EFFECT_TYPE, EFX10.AL_EFFECT_EAXREVERB);
+        EXTEfx.alEffecti(reverbEffectSlot, EXTEfx.AL_EFFECT_TYPE, EXTEfx.AL_EFFECT_EAXREVERB);
 
-        EFX10.alEffectf(reverbEffectSlot, EFX10.AL_EAXREVERB_DECAY_TIME, 6.0F);
+        EXTEfx.alEffectf(reverbEffectSlot, EXTEfx.AL_EAXREVERB_DECAY_TIME, 6.0F);
 
-        EFX10.alAuxiliaryEffectSloti(auxEffectSlot, EFX10.AL_EFFECTSLOT_EFFECT, reverbEffectSlot);
+        EXTEfx.alAuxiliaryEffectSloti(auxEffectSlot, EXTEfx.AL_EFFECTSLOT_EFFECT, reverbEffectSlot);
     }
 
     private static void applyDefaultEffect() {
@@ -76,8 +75,8 @@ public class SoundReverbHandler {
 
         reverbApplied = false;
 
-        EFX10.alEffecti(reverbEffectSlot, EFX10.AL_EFFECT_TYPE, EFX10.AL_EFFECT_NULL);
-        EFX10.alAuxiliaryEffectSloti(auxEffectSlot, EFX10.AL_EFFECTSLOT_EFFECT, reverbEffectSlot);
+        EXTEfx.alEffecti(reverbEffectSlot, EXTEfx.AL_EFFECT_TYPE, EXTEfx.AL_EFFECT_NULL);
+        EXTEfx.alAuxiliaryEffectSloti(auxEffectSlot, EXTEfx.AL_EFFECTSLOT_EFFECT, reverbEffectSlot);
     }
 
     private static boolean shouldEcho(World world) {

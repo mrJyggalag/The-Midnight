@@ -1,22 +1,26 @@
 package com.mushroom.midnight.common.world.feature;
 
+import com.mojang.datafixers.Dynamic;
+import com.mushroom.midnight.common.world.feature.config.UniformCompositionConfig;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.material.Material;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.world.World;
+import net.minecraft.world.IWorld;
+import net.minecraft.world.gen.ChunkGenerator;
+import net.minecraft.world.gen.GenerationSettings;
+import net.minecraft.world.gen.feature.Feature;
 
 import java.util.Random;
+import java.util.function.Function;
 
-public class SpikeFeature extends MidnightAbstractFeature {
-    private final BlockState state;
-
-    public SpikeFeature(BlockState state) {
-        this.state = state;
+public class SpikeFeature extends Feature<UniformCompositionConfig> {
+    public SpikeFeature(Function<Dynamic<?>, ? extends UniformCompositionConfig> deserialize) {
+        super(deserialize);
     }
 
     @Override
-    public boolean placeFeature(World world, Random random, BlockPos origin) {
+    public boolean place(IWorld world, ChunkGenerator<? extends GenerationSettings> generator, Random random, BlockPos origin, UniformCompositionConfig config) {
         while (world.isAirBlock(origin) && origin.getY() > 2) {
             origin = origin.down();
         }
@@ -40,13 +44,13 @@ public class SpikeFeature extends MidnightAbstractFeature {
                         BlockPos pos = origin.add(x, y, z);
 
                         if (this.canReplace(world, pos)) {
-                            this.setBlockAndNotifyAdequately(world, pos, this.state);
+                            this.setBlockState(world, pos, config.state);
                         }
 
                         if (y != 0 && bound > 1) {
                             BlockPos inversePos = origin.add(x, -y, z);
                             if (this.canReplace(world, inversePos)) {
-                                this.setBlockAndNotifyAdequately(world, inversePos, this.state);
+                                this.setBlockState(world, inversePos, config.state);
                             }
                         }
                     }
@@ -57,8 +61,8 @@ public class SpikeFeature extends MidnightAbstractFeature {
         return true;
     }
 
-    private boolean canReplace(World world, BlockPos pos) {
+    private boolean canReplace(IWorld world, BlockPos pos) {
         BlockState state = world.getBlockState(pos);
-        return state.getBlock().isAir(state, world, pos) || state.getMaterial() == Material.GROUND || state.getMaterial() == Material.GRASS;
+        return state.getBlock().isAir(state, world, pos) || state.getMaterial() == Material.EARTH || state.getMaterial() == Material.ORGANIC;
     }
 }

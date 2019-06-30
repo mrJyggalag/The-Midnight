@@ -1,37 +1,44 @@
 package com.mushroom.midnight.common.world.feature;
 
+import com.mojang.datafixers.Dynamic;
 import net.minecraft.block.BlockState;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.world.World;
+import net.minecraft.world.IWorld;
+import net.minecraft.world.gen.ChunkGenerator;
+import net.minecraft.world.gen.GenerationSettings;
+import net.minecraft.world.gen.feature.Feature;
+import net.minecraft.world.gen.feature.NoFeatureConfig;
 
 import java.util.Random;
+import java.util.function.Function;
 
-public abstract class BoulderFeature extends MidnightAbstractFeature {
-    protected final float radius;
-
-    protected BoulderFeature(float radius) {
-        this.radius = radius;
+public abstract class BoulderFeature extends Feature<NoFeatureConfig> {
+    protected BoulderFeature(Function<Dynamic<?>, ? extends NoFeatureConfig> deserialize) {
+        super(deserialize);
     }
 
     @Override
-    public boolean placeFeature(World world, Random random, BlockPos origin) {
-        origin = origin.up(MathHelper.floor(radius / 2.0F));
+    public boolean place(IWorld world, ChunkGenerator<? extends GenerationSettings> generator, Random random, BlockPos origin, NoFeatureConfig config) {
+        float baseRadius = this.getRadius(random);
 
-        generateBlob(world, random, origin, radius);
+        origin = origin.up(MathHelper.floor(baseRadius / 2.0F));
+
+        this.generateBlob(world, random, origin, baseRadius);
         for (int i = 0; i < 2; i++) {
             int offsetX = random.nextInt(5) - 2;
             int offsetY = -random.nextInt(2);
             int offsetZ = random.nextInt(5) - 2;
             BlockPos center = origin.add(offsetX, offsetY, offsetZ);
 
-            float radius = this.radius + random.nextFloat() * 0.5F;
-            generateBlob(world, random, center, radius);
+            float radius = baseRadius + random.nextFloat() * 0.5F;
+            this.generateBlob(world, random, center, radius);
         }
+
         return true;
     }
 
-    private void generateBlob(World world, Random random, BlockPos origin, float radius) {
+    private void generateBlob(IWorld world, Random random, BlockPos origin, float radius) {
         float radiusSquare = radius * radius;
         int radiusCeil = MathHelper.ceil(radius);
 
@@ -41,10 +48,12 @@ public abstract class BoulderFeature extends MidnightAbstractFeature {
         BlockPos.getAllInBox(minPos, maxPos).forEach(pos -> {
             double dist = pos.distanceSq(origin);
             if (dist <= radiusSquare) {
-                setBlockAndNotifyAdequately(world, pos, getStateForPlacement(world, origin, pos, dist, radiusSquare, random));
+                this.setBlockState(world, pos, this.getStateForPlacement(world, origin, pos, dist, radiusSquare, random));
             }
         });
     }
 
-    protected abstract BlockState getStateForPlacement(World world, BlockPos origin, BlockPos pos, double dist, float radiusSquare, Random random);
+    protected abstract float getRadius(Random random);
+
+    protected abstract BlockState getStateForPlacement(IWorld world, BlockPos origin, BlockPos pos, double dist, float radiusSquare, Random random);
 }

@@ -1,6 +1,5 @@
 package com.mushroom.midnight.common.biome;
 
-import com.mushroom.midnight.common.biome.config.BiomeSpawnEntry;
 import com.mushroom.midnight.common.util.INumberGenerator;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;

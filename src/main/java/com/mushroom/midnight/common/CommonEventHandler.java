@@ -102,18 +102,6 @@ public class CommonEventHandler {
         }
     }
 
-    /**
-     * {@link net.minecraft.world.GameRules#register(String, GameRules.RuleType)}
-     * {@link net.minecraft.world.GameRules#GAME_RULES}
-     */
-    @SubscribeEvent
-    public static void onWorldLoad(WorldEvent.Load event) {
-        GameRules gameRules = event.getWorld().getGameRules();
-        if (!gameRules.hasRule("doRiftSpawning")) {
-            gameRules.addGameRule("doRiftSpawning", "true", GameRules.ValueType.BOOLEAN_VALUE);
-        }
-    }
-
     @SubscribeEvent
     public static void onEntityTick(LivingEvent.LivingUpdateEvent event) {
         LivingEntity entity = event.getEntityLiving();

@@ -81,6 +81,30 @@ public class CavernousBiome extends ForgeRegistryEntry<CavernousBiome> implement
         this.spawns.put(classification, entry);
     }
 
+    public float getCavernDensity() {
+        return this.cavernDensity;
+    }
+
+    public float getCaveRadiusScale() {
+        return this.caveRadiusScale;
+    }
+
+    public float getFloorHeight() {
+        return this.floorHeight;
+    }
+
+    public float getCeilingHeight() {
+        return this.ceilingHeight;
+    }
+
+    public float getHeightScale() {
+        return this.heightScale;
+    }
+
+    public float getPillarWeight() {
+        return this.pillarWeight;
+    }
+
     public static class PlacementLevel implements SurfacePlacementLevel {
         public static final SurfacePlacementLevel INSTANCE = new PlacementLevel();
 

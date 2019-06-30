@@ -1,30 +1,37 @@
 package com.mushroom.midnight.common.world.feature;
 
+import com.mojang.datafixers.Dynamic;
+import com.mushroom.midnight.common.world.feature.config.CrystalClusterConfig;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.world.World;
+import net.minecraft.world.IWorld;
+import net.minecraft.world.gen.ChunkGenerator;
+import net.minecraft.world.gen.GenerationSettings;
+import net.minecraft.world.gen.feature.Feature;
+import net.minecraftforge.common.util.Constants;
 
 import java.util.Random;
+import java.util.function.Function;
 
-public class CrystalClusterFeature extends MidnightAbstractFeature {
+public class CrystalClusterFeature extends Feature<CrystalClusterConfig> {
     private final int radius;
     private final int maxHeight;
 
-    private final BlockState rock;
-    private final BlockState crystal;
-
-    public CrystalClusterFeature(int radius, int maxHeight, BlockState rock, BlockState crystal) {
+    public CrystalClusterFeature(
+            Function<Dynamic<?>, ? extends CrystalClusterConfig> deserialize,
+            int radius,
+            int maxHeight
+    ) {
+        super(deserialize);
         this.radius = radius;
         this.maxHeight = maxHeight;
-        this.rock = rock;
-        this.crystal = crystal;
     }
 
     @Override
-    public boolean placeFeature(World world, Random rand, BlockPos origin) {
+    public boolean place(IWorld world, ChunkGenerator<? extends GenerationSettings> generator, Random rand, BlockPos origin, CrystalClusterConfig config) {
         int size = (this.radius * 2) + 1;
 
         int[] heights = new int[size * size];
@@ -40,7 +47,7 @@ public class CrystalClusterFeature extends MidnightAbstractFeature {
                 int height = heights[(localX + this.radius) + (localZ + this.radius) * size];
                 if (height > 0) {
                     mutablePos.setPos(basePos.getX() + localX, basePos.getY(), basePos.getZ() + localZ);
-                    this.generatePillar(world, rand, mutablePos, height);
+                    this.generatePillar(world, rand, mutablePos, height, config);
                 }
             }
         }
@@ -48,7 +55,7 @@ public class CrystalClusterFeature extends MidnightAbstractFeature {
         return true;
     }
 
-    private BlockPos populateHeights(World world, Random rand, BlockPos origin, int[] heights, int size) {
+    private BlockPos populateHeights(IWorld world, Random rand, BlockPos origin, int[] heights, int size) {
         BlockPos.MutableBlockPos basePos = new BlockPos.MutableBlockPos(origin);
 
         for (int localZ = -this.radius; localZ <= this.radius; localZ++) {
@@ -79,7 +86,7 @@ public class CrystalClusterFeature extends MidnightAbstractFeature {
         return basePos.toImmutable();
     }
 
-    private boolean canGenerate(World world, BlockPos origin, int[] heights, int size) {
+    private boolean canGenerate(IWorld world, BlockPos origin, int[] heights, int size) {
         BlockPos.MutableBlockPos mutablePos = new BlockPos.MutableBlockPos(origin);
         int centerHeight = heights[this.radius + this.radius * size] + 1;
         for (int localY = 0; localY < centerHeight; localY++) {
@@ -91,25 +98,25 @@ public class CrystalClusterFeature extends MidnightAbstractFeature {
         return true;
     }
 
-    private void generatePillar(World world, Random rand, BlockPos.MutableBlockPos mutablePos, int height) {
+    private void generatePillar(IWorld world, Random rand, BlockPos.MutableBlockPos mutablePos, int height, CrystalClusterConfig config) {
         int originY = mutablePos.getY();
         for (int offsetY = 0; offsetY < height; offsetY++) {
             mutablePos.setY(originY + offsetY);
-            this.trySetBlock(world, mutablePos, this.rock);
+            this.trySetBlock(world, mutablePos, config.rock);
         }
         if (rand.nextInt(2) == 0) {
             mutablePos.setY(originY + height);
-            this.trySetBlock(world, mutablePos, this.crystal);
+            this.trySetBlock(world, mutablePos, config.crystal);
         }
     }
 
-    private BlockPos findSurfaceBelow(World world, BlockPos origin, int maxSteps) {
+    private BlockPos findSurfaceBelow(IWorld world, BlockPos origin, int maxSteps) {
         BlockState currentState = world.getBlockState(origin);
         BlockPos.MutableBlockPos currentPos = new BlockPos.MutableBlockPos(origin);
         for (int i = 0; i < maxSteps; i++) {
             currentPos.move(Direction.DOWN);
             BlockState nextState = world.getBlockState(currentPos);
-            if (currentState.getBlock() == Blocks.AIR && nextState.isSideSolid(world, currentPos, Direction.UP)) {
+            if (currentState.getBlock() == Blocks.AIR && nextState.isSolid()) {
                 currentPos.move(Direction.UP);
                 return currentPos.toImmutable();
             }
@@ -118,10 +125,7 @@ public class CrystalClusterFeature extends MidnightAbstractFeature {
         return null;
     }
 
-    private void trySetBlock(World world, BlockPos pos, BlockState state) {
-        BlockState currentState = world.getBlockState(pos);
-        if (currentState.getBlock().isReplaceable(world, pos)) {
-            world.setBlockState(pos, state, 3);
-        }
+    private void trySetBlock(IWorld world, BlockPos pos, BlockState state) {
+        world.setBlockState(pos, state, Constants.BlockFlags.NOTIFY_LISTENERS | Constants.BlockFlags.NOTIFY_NEIGHBORS);
     }
 }
