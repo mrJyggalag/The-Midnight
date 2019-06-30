@@ -1,7 +1,5 @@
 package com.mushroom.midnight.common.registry;
 
-import com.google.common.collect.Lists;
-import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.common.block.BasicBlock;
 import com.mushroom.midnight.common.block.BladeshroomBlock;
 import com.mushroom.midnight.common.block.BloomCrystalBlock;
@@ -44,7 +42,6 @@ import com.mushroom.midnight.common.block.TendrilweedBlock;
 import com.mushroom.midnight.common.block.UnstableBushBlock;
 import com.mushroom.midnight.common.block.UnstableBushBloomedBlock;
 import com.mushroom.midnight.common.block.VioleafBlock;
-import com.mushroom.midnight.common.item.DeceitfulAlgaeItem;
 import com.mushroom.midnight.common.tile.base.TileEntityMidnightChest;
 import com.mushroom.midnight.common.tile.base.TileEntityMidnightFurnace;
 import com.mushroom.midnight.common.world.feature.DarkWillowTreeFeature;
@@ -74,6 +71,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
+import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.world.gen.feature.NoFeatureConfig;
 import net.minecraftforge.common.ToolType;
 import net.minecraftforge.event.RegistryEvent;
@@ -81,8 +79,10 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.ObjectHolder;
 
-@ObjectHolder(Midnight.MODID)
-@Mod.EventBusSubscriber(modid = Midnight.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
+import static com.mushroom.midnight.Midnight.MODID;
+
+@ObjectHolder(MODID)
+@Mod.EventBusSubscriber(modid = MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 @SuppressWarnings("WeakerAccess")
 public class MidnightBlocks {
 
@@ -96,6 +96,7 @@ public class MidnightBlocks {
     public static final Block DARK_WILLOW_PLANKS = Blocks.AIR;
     public static final Block NIGHTSTONE = Blocks.AIR;
     public static final Block NIGHTSTONE_BRICKS = Blocks.AIR;
+    public static final Block CHISELED_NIGHTSTONE_BRICKS = Blocks.AIR;
     public static final Block TRENCHSTONE = Blocks.AIR;
     public static final Block TRENCHSTONE_BRICKS = Blocks.AIR;
 
@@ -230,18 +231,6 @@ public class MidnightBlocks {
     public static final Block NIGHTSHROOM_SLAB = Blocks.AIR;
     public static final Block ROCKSHROOM_BRICKS_SLAB = Blocks.AIR;
 
-    public static final Block SHADOWROOT_DOUBLE_SLAB = Blocks.AIR;
-    public static final Block DEAD_WOOD_DOUBLE_SLAB = Blocks.AIR;
-    public static final Block DARK_WILLOW_DOUBLE_SLAB = Blocks.AIR;
-    public static final Block NIGHTSTONE_DOUBLE_SLAB = Blocks.AIR;
-    public static final Block NIGHTSTONE_BRICK_DOUBLE_SLAB = Blocks.AIR;
-    public static final Block TRENCHSTONE_DOUBLE_SLAB = Blocks.AIR;
-    public static final Block TRENCHSTONE_BRICK_DOUBLE_SLAB = Blocks.AIR;
-    public static final Block DEWSHROOM_DOUBLE_SLAB = Blocks.AIR;
-    public static final Block VIRIDSHROOM_DOUBLE_SLAB = Blocks.AIR;
-    public static final Block NIGHTSHROOM_DOUBLE_SLAB = Blocks.AIR;
-    public static final Block ROCKSHROOM_BRICKS_DOUBLE_SLAB = Blocks.AIR;
-
     public static final Block SHADOWROOT_STAIRS = Blocks.AIR;
     public static final Block DEAD_WOOD_STAIRS = Blocks.AIR;
     public static final Block DARK_WILLOW_STAIRS = Blocks.AIR;
@@ -375,7 +364,7 @@ public class MidnightBlocks {
                                 .lightValue(13)
                                 .tickRandomly()
                 )
-                .add("nighstone_furnace", MidnightFurnaceBlock::new);
+                .add("nightstone_furnace", MidnightFurnaceBlock::new);
 
         RegUtil.blocks(event.getRegistry())
                 .withProperties(() -> Block.Properties.create(Material.TALL_PLANTS)
@@ -577,8 +566,8 @@ public class MidnightBlocks {
                 .add("dewshroom_fence", FenceBlock::new)
                 .add("viridshroom_fence", FenceBlock::new)
                 .add("nightshroom_fence", FenceBlock::new)
-                .add("shadowroot_fence_gate", FenceGateBlock::new)
 
+                .add("shadowroot_fence_gate", FenceGateBlock::new)
                 .add("dead_wood_fence_gate", FenceGateBlock::new)
                 .add("dark_willow_fence_gate", FenceGateBlock::new)
                 .add("dewshroom_fence_gate", FenceGateBlock::new)
@@ -637,108 +626,48 @@ public class MidnightBlocks {
                 .withProperties(() -> Block.Properties.create(Material.MISCELLANEOUS).doesNotBlockMovement().hardnessAndResistance(0.5F).sound(SoundType.WOOD))
                 .add("midnight_lever", props -> new LeverBlock(props){});
 
-        // TODO fluids
-        blocks.addAll(Lists.newArrayList(
-                RegUtil.withName(new DarkWaterBlock(), "dark_water"),
-                RegUtil.withName(new MiasmaFluidBlock(), "miasma")
-        ));
+        // TODO @gegy fluids
+        RegUtil.withName(new DarkWaterBlock(), "dark_water");
+        RegUtil.withName(new MiasmaFluidBlock(), "miasma");
+    }
 
-        /*RegUtil.withName(new MidnightDoubleSlabBlock(() -> SHADOWROOT_SLAB), "shadowroot_double_slab");
-                RegUtil.withName(new MidnightDoubleSlabBlock(() -> DEAD_WOOD_SLAB), "dead_wood_double_slab");
-                RegUtil.withName(new MidnightDoubleSlabBlock(() -> DARK_WILLOW_SLAB), "dark_willow_double_slab");
-                RegUtil.withName(new MidnightDoubleSlabBlock(() -> NIGHTSTONE_SLAB), "nightstone_double_slab");
-                RegUtil.withName(new MidnightDoubleSlabBlock(() -> NIGHTSTONE_BRICK_SLAB), "nightstone_brick_double_slab");
-                RegUtil.withName(new MidnightDoubleSlabBlock(() -> TRENCHSTONE_SLAB), "trenchstone_double_slab");
-                RegUtil.withName(new MidnightDoubleSlabBlock(() -> TRENCHSTONE_BRICK_SLAB), "trenchstone_brick_double_slab");
-                RegUtil.withName(new MidnightDoubleSlabBlock(() -> DEWSHROOM_SLAB), "dewshroom_double_slab");
-                RegUtil.withName(new MidnightDoubleSlabBlock(() -> VIRIDSHROOM_SLAB), "viridshroom_double_slab");
-                RegUtil.withName(new MidnightDoubleSlabBlock(() -> NIGHTSHROOM_SLAB), "nightshroom_double_slab");
-                RegUtil.withName(new MidnightDoubleSlabBlock(() -> ROCKSHROOM_BRICKS_SLAB), "rockshroom_bricks_double_slab");*/
-
-        // TODO tileentity (probably to be disabled to be able to launch first)
-        registerTile(TileEntityMidnightChest.class, "tile_shadowroot_chest");
-        registerTile(TileEntityMidnightFurnace.class, "tile_midnight_furnace");
+    @SubscribeEvent
+    public static void registerTileEntity(final RegistryEvent.Register<TileEntityType<?>> event) {
+        TileEntityType.Builder.create(TileEntityMidnightChest::new, SHADOWROOT_CHEST).build(null).setRegistryName(MODID, "tile_shadowroot_chest");
+        TileEntityType.Builder.create(TileEntityMidnightFurnace::new, NIGHTSTONE_FURNACE).build(null).setRegistryName(MODID, "tile_midnight_furnace");
     }
 
     @SubscribeEvent
     public static void registerItems(RegistryEvent.Register<Item> event) {
-        // TODO (and tabs)
         RegUtil.items(event.getRegistry())
                 .withProperties(() -> new Item.Properties().group(MidnightItemGroups.BUILDING))
-                .add(SHADOWROOT_LOG, BlockItem::new)
-                .add(SHADOWROOT_LEAVES, BlockItem::new)
-                .add(SHADOWROOT_PLANKS, BlockItem::new)
-                .add(DEAD_WOOD_LOG, BlockItem::new);
-
-        registry.registerAll(itemBlocks(
-                SHADOWROOT_LOG, SHADOWROOT_LEAVES, SHADOWROOT_PLANKS,
-                DEAD_WOOD_LOG, DEAD_WOOD_PLANKS,
-                DARK_WILLOW_LOG, DARK_WILLOW_LEAVES, DARK_WILLOW_PLANKS,
-                NIGHTSTONE, NIGHTSTONE_BRICKS, CHISELED_NIGHTSTONE_BRICKS,
-                TRENCHSTONE, TRENCHSTONE_BRICKS,
-                DARK_PEARL_ORE, DARK_PEARL_BLOCK,
-                TENEBRUM_ORE, TENEBRUM_BLOCK,
-                NAGRILITE_ORE, NAGRILITE_BLOCK,
-                EBONYS_ORE, EBONYS_BLOCK,
-                ARCHAIC_ORE,
-                SHADOWROOT_CRAFTING_TABLE,
-                SHADOWROOT_CHEST,
-                NIGHTSTONE_FURNACE,
-                COARSE_DIRT, DIRT, GRASS_BLOCK, MYCELIUM,
-                GRASS, TALL_GRASS,
-                NIGHTSHROOM, DOUBLE_NIGHTSHROOM, NIGHTSHROOM_SHELF,
-                DEWSHROOM, DOUBLE_DEWSHROOM, DEWSHROOM_SHELF,
-                VIRIDSHROOM, DOUBLE_VIRIDSHROOM, VIRIDSHROOM_SHELF,
-                BOGSHROOM, DOUBLE_BOGSHROOM, BOGSHROOM_SHELF, BOGSHROOM_HAT, BOGSHROOM_STEM,
-                NIGHTSHROOM_STEM, NIGHTSHROOM_HAT,
-                DEWSHROOM_STEM, DEWSHROOM_HAT,
-                VIRIDSHROOM_STEM, VIRIDSHROOM_HAT,
-                BULB_FUNGUS, BULB_FUNGUS_STEM, BULB_FUNGUS_HAT,
-                NIGHTSHROOM_PLANKS, DEWSHROOM_PLANKS, VIRIDSHROOM_PLANKS,
-                ROCKSHROOM, ROCKSHROOM_BRICKS,
-                LUMEN_BUD, DOUBLE_LUMEN_BUD,
-                BOGWEED, GHOST_PLANT, FINGERED_GRASS, TENDRILWEED, RUNEBUSH, DRAGON_NEST,
-                VIOLEAF, CRYSTAL_FLOWER,
-                SHADOWROOT_SAPLING, DARK_WILLOW_SAPLING,
-                SHADOWROOT_TRAPDOOR, DARK_WILLOW_TRAPDOOR, DEAD_WOOD_TRAPDOOR, TENEBRUM_TRAPDOOR,
-                NIGHTSHROOM_TRAPDOOR, DEWSHROOM_TRAPDOOR, VIRIDSHROOM_TRAPDOOR,
-                BLOOMCRYSTAL, BLOOMCRYSTAL_ROCK,
-                ROUXE, ROUXE_ROCK,
-                ARCHAIC_GLASS, ARCHAIC_GLASS_PANE,
-                MIASMA_SURFACE, MIASMA,
-                DARK_WATER,
-                DECEITFUL_PEAT, DECEITFUL_MUD, DECEITFUL_MOSS,
-                SHADOWROOT_STAIRS, DEAD_WOOD_STAIRS, DARK_WILLOW_STAIRS,
-                NIGHTSTONE_STAIRS, NIGHTSTONE_BRICK_STAIRS,
-                TRENCHSTONE_STAIRS, TRENCHSTONE_BRICK_STAIRS,
-                DEWSHROOM_STAIRS, VIRIDSHROOM_STAIRS, NIGHTSHROOM_STAIRS, ROCKSHROOM_BRICKS_STAIRS,
-                NIGHTSTONE_WALL, NIGHTSTONE_BRICK_WALL,
-                TRENCHSTONE_WALL, TRENCHSTONE_BRICK_WALL, ROCKSHROOM_BRICKS_WALL,
-                SHADOWROOT_FENCE, DEAD_WOOD_FENCE, DARK_WILLOW_FENCE,
-                DEWSHROOM_FENCE, VIRIDSHROOM_FENCE, NIGHTSHROOM_FENCE,
-                SHADOWROOT_FENCE_GATE, DEAD_WOOD_FENCE_GATE, DARK_WILLOW_FENCE_GATE,
-                DEWSHROOM_FENCE_GATE, VIRIDSHROOM_FENCE_GATE, NIGHTSHROOM_FENCE_GATE,
-                SUAVIS, SHADOWROOT_LADDER, DEAD_WOOD_LADDER, DARK_WILLOW_LADDER,
-                DEWSHROOM_LADDER, VIRIDSHROOM_LADDER, NIGHTSHROOM_LADDER,
-                BOGSHROOM_SPORCH, NIGHTSHROOM_SPORCH, DEWSHROOM_SPORCH, VIRIDSHROOM_SPORCH,
-                STINGER_EGG, CRYSTALOTUS,
-                SHADOWROOT_BUTTON, DEAD_WOOD_BUTTON, DARK_WILLOW_BUTTON, DEWSHROOM_BUTTON, VIRIDSHROOM_BUTTON, NIGHTSHROOM_BUTTON, NIGHTSTONE_BUTTON, TRENCHSTONE_BUTTON, ROCKSHROOM_BRICKS_BUTTON,
-                SHADOWROOT_PRESSURE_PLATE, DEAD_WOOD_PRESSURE_PLATE, DARK_WILLOW_PRESSURE_PLATE, DEWSHROOM_PRESSURE_PLATE, VIRIDSHROOM_PRESSURE_PLATE, NIGHTSHROOM_PRESSURE_PLATE, NIGHTSTONE_PRESSURE_PLATE, TRENCHSTONE_PRESSURE_PLATE, ROCKSHROOM_BRICKS_PRESSURE_PLATE, NAGRILITE_PRESSURE_PLATE, TENEBRUM_PRESSURE_PLATE,
-                MIDNIGHT_LEVER
-        ));
-
-        registry.register(itemBlock(DECEITFUL_ALGAE, DeceitfulAlgaeItem::new));
-
-        registry.register(itemBlock(SHADOWROOT_SLAB, b -> new MidnightSlabItem(b, SHADOWROOT_DOUBLE_SLAB)));
-        registry.register(itemBlock(DEAD_WOOD_SLAB, b -> new MidnightSlabItem(b, DEAD_WOOD_DOUBLE_SLAB)));
-        registry.register(itemBlock(DARK_WILLOW_SLAB, b -> new MidnightSlabItem(b, DARK_WILLOW_DOUBLE_SLAB)));
-        registry.register(itemBlock(NIGHTSTONE_SLAB, b -> new MidnightSlabItem(b, NIGHTSTONE_DOUBLE_SLAB)));
-        registry.register(itemBlock(NIGHTSTONE_BRICK_SLAB, b -> new MidnightSlabItem(b, NIGHTSTONE_BRICK_DOUBLE_SLAB)));
-        registry.register(itemBlock(TRENCHSTONE_SLAB, b -> new MidnightSlabItem(b, TRENCHSTONE_DOUBLE_SLAB)));
-        registry.register(itemBlock(TRENCHSTONE_BRICK_SLAB, b -> new MidnightSlabItem(b, TRENCHSTONE_BRICK_DOUBLE_SLAB)));
-        registry.register(itemBlock(DEWSHROOM_SLAB, b -> new MidnightSlabItem(b, DEWSHROOM_DOUBLE_SLAB)));
-        registry.register(itemBlock(VIRIDSHROOM_SLAB, b -> new MidnightSlabItem(b, VIRIDSHROOM_DOUBLE_SLAB)));
-        registry.register(itemBlock(NIGHTSHROOM_SLAB, b -> new MidnightSlabItem(b, NIGHTSHROOM_DOUBLE_SLAB)));
-        registry.register(itemBlock(ROCKSHROOM_BRICKS_SLAB, b -> new MidnightSlabItem(b, ROCKSHROOM_BRICKS_DOUBLE_SLAB)));
+                .addAll(BlockItem::new,
+                        SHADOWROOT_LOG, SHADOWROOT_LEAVES, SHADOWROOT_PLANKS, DARK_WILLOW_LOG, DARK_WILLOW_LEAVES, DARK_WILLOW_PLANKS, DEAD_WOOD_LOG,
+                        DEAD_WOOD_PLANKS, DEWSHROOM_PLANKS, VIRIDSHROOM_PLANKS, NIGHTSHROOM_PLANKS,
+                        NIGHTSTONE, NIGHTSTONE_BRICKS, CHISELED_NIGHTSTONE_BRICKS, TRENCHSTONE, TRENCHSTONE_BRICKS,
+                        DARK_PEARL_ORE, DARK_PEARL_BLOCK, TENEBRUM_ORE, TENEBRUM_BLOCK, NAGRILITE_ORE, NAGRILITE_BLOCK, EBONYS_ORE, EBONYS_BLOCK, ARCHAIC_ORE,
+                        COARSE_DIRT, DIRT, GRASS_BLOCK, MYCELIUM, GRASS, TALL_GRASS,
+                        NIGHTSHROOM, DOUBLE_NIGHTSHROOM, NIGHTSHROOM_SHELF, DEWSHROOM, DOUBLE_DEWSHROOM, DEWSHROOM_SHELF, VIRIDSHROOM, DOUBLE_VIRIDSHROOM, VIRIDSHROOM_SHELF, BOGSHROOM, DOUBLE_BOGSHROOM, BOGSHROOM_SHELF,
+                        BOGSHROOM_HAT, BOGSHROOM_STEM, NIGHTSHROOM_STEM, NIGHTSHROOM_HAT, DEWSHROOM_STEM, DEWSHROOM_HAT, VIRIDSHROOM_STEM, VIRIDSHROOM_HAT, BULB_FUNGUS, BULB_FUNGUS_HAT, BULB_FUNGUS_STEM,
+                        ROCKSHROOM, ROCKSHROOM_BRICKS, BLOOMCRYSTAL, BLOOMCRYSTAL_ROCK, ROUXE, ROUXE_ROCK, ARCHAIC_GLASS, ARCHAIC_GLASS_PANE, MIASMA_SURFACE, //, MIASMA, DARK_WATER
+                        DECEITFUL_PEAT, DECEITFUL_MUD, DECEITFUL_MOSS);
+        RegUtil.items(event.getRegistry())
+                .withProperties(() -> new Item.Properties().group(MidnightItemGroups.DECORATION))
+                .addAll(BlockItem::new, SHADOWROOT_CRAFTING_TABLE, SHADOWROOT_CHEST, NIGHTSTONE_FURNACE,
+                        SHADOWROOT_SAPLING, DARK_WILLOW_SAPLING,
+                        LUMEN_BUD, DOUBLE_LUMEN_BUD, BOGWEED, GHOST_PLANT, FINGERED_GRASS, TENDRILWEED, RUNEBUSH, DRAGON_NEST, VIOLEAF, CRYSTAL_FLOWER, //, BLADESHROOM
+                        SHADOWROOT_DOOR, DEAD_WOOD_DOOR, DARK_WILLOW_DOOR, TENEBRUM_DOOR, NIGHTSHROOM_DOOR, DEWSHROOM_DOOR, VIRIDSHROOM_DOOR,
+                        SHADOWROOT_TRAPDOOR, DARK_WILLOW_TRAPDOOR, DEAD_WOOD_TRAPDOOR, TENEBRUM_TRAPDOOR, NIGHTSHROOM_TRAPDOOR, DEWSHROOM_TRAPDOOR, VIRIDSHROOM_TRAPDOOR,
+                        SHADOWROOT_STAIRS, DEAD_WOOD_STAIRS, DARK_WILLOW_STAIRS, NIGHTSTONE_STAIRS, NIGHTSTONE_BRICK_STAIRS, TRENCHSTONE_STAIRS, TRENCHSTONE_BRICK_STAIRS,
+                        DEWSHROOM_STAIRS, VIRIDSHROOM_STAIRS, NIGHTSHROOM_STAIRS, ROCKSHROOM_BRICKS_STAIRS,
+                        NIGHTSTONE_WALL, NIGHTSTONE_BRICK_WALL, TRENCHSTONE_WALL, TRENCHSTONE_BRICK_WALL, ROCKSHROOM_BRICKS_WALL,
+                        SHADOWROOT_FENCE, DEAD_WOOD_FENCE, DARK_WILLOW_FENCE, DEWSHROOM_FENCE, VIRIDSHROOM_FENCE, NIGHTSHROOM_FENCE,
+                        SHADOWROOT_FENCE_GATE, DEAD_WOOD_FENCE_GATE, DARK_WILLOW_FENCE_GATE, DEWSHROOM_FENCE_GATE, VIRIDSHROOM_FENCE_GATE, NIGHTSHROOM_FENCE_GATE,
+                        SHADOWROOT_LADDER, DEAD_WOOD_LADDER, DARK_WILLOW_LADDER, DEWSHROOM_LADDER, VIRIDSHROOM_LADDER, NIGHTSHROOM_LADDER,
+                        BOGSHROOM_SPORCH, NIGHTSHROOM_SPORCH, DEWSHROOM_SPORCH, VIRIDSHROOM_SPORCH,
+                        SUAVIS, STINGER_EGG, CRYSTALOTUS, MIDNIGHT_LEVER,
+                        SHADOWROOT_BUTTON, DEAD_WOOD_BUTTON, DARK_WILLOW_BUTTON, DEWSHROOM_BUTTON, VIRIDSHROOM_BUTTON, NIGHTSHROOM_BUTTON, NIGHTSTONE_BUTTON, TRENCHSTONE_BUTTON, ROCKSHROOM_BRICKS_BUTTON,
+                        SHADOWROOT_PRESSURE_PLATE, DEAD_WOOD_PRESSURE_PLATE, DARK_WILLOW_PRESSURE_PLATE, DEWSHROOM_PRESSURE_PLATE, VIRIDSHROOM_PRESSURE_PLATE, NIGHTSHROOM_PRESSURE_PLATE, NIGHTSTONE_PRESSURE_PLATE,
+                        TRENCHSTONE_PRESSURE_PLATE, ROCKSHROOM_BRICKS_PRESSURE_PLATE, NAGRILITE_PRESSURE_PLATE, TENEBRUM_PRESSURE_PLATE);
     }
 }

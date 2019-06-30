@@ -3,6 +3,7 @@ package com.mushroom.midnight.common.registry;
 import com.google.common.base.Preconditions;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.registries.GameData;
 import net.minecraftforge.registries.IForgeRegistry;
@@ -65,6 +66,13 @@ public class RegUtil {
 
             this.registry.register(item);
 
+            return this;
+        }
+
+        public Items addAll(BiFunction<Block, Item.Properties, Item> function, Block... blocks) {
+            for (Block block : blocks) {
+                add(block, function);
+            }
             return this;
         }
     }
