@@ -5,12 +5,11 @@ import com.mushroom.midnight.common.biome.MidnightSurfaceBuilders;
 import com.mushroom.midnight.common.registry.MidnightEntities;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.world.biome.Biome;
-import net.minecraft.world.gen.surfacebuilders.SurfaceBuilder;
 
 public class NightPlainsBiome extends SurfaceBiome {
     public NightPlainsBiome() {
-        super(new Builder()
-                .surfaceBuilder(SurfaceBuilder.DEFAULT, MidnightSurfaceBuilders.GRASS_DIRT_MUD_CONFIG)
+        super(new Properties()
+                .surfaceBuilder(MidnightSurfaceBuilders.SURFACE, MidnightSurfaceBuilders.GRASS_DIRT_MUD_CONFIG)
                 .category(Category.PLAINS)
                 .grassColor(0xBAA3C6)
                 .depth(0.12F)

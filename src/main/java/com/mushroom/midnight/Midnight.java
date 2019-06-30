@@ -36,6 +36,7 @@ import com.mushroom.midnight.common.registry.MidnightSurfaceBiomes;
 import com.mushroom.midnight.common.registry.RegUtil;
 import com.mushroom.midnight.common.util.EntityUtil;
 import com.mushroom.midnight.common.util.IProxy;
+import com.mushroom.midnight.common.world.MidnightDimension;
 import com.mushroom.midnight.common.world.generator.MidnightOreGenerator;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.util.ResourceLocation;
@@ -109,11 +110,10 @@ public class Midnight {
         CapabilityManager.INSTANCE.register(AnimationCapability.class, new NullStorage<>(), AnimationCapability::new);
         CapabilityManager.INSTANCE.register(MidnightWorldSpawners.class, new NullStorage<>(), MidnightWorldSpawners.Void::new);
 
-        Reflection.initialize(MidnightCriterion.class, MidnightItemGroups.class);
+        Reflection.initialize(MidnightCriterion.class, MidnightItemGroups.class, MidnightDimensions.class);
 
         EntityUtil.register();
         MidnightFluids.register();
-        MidnightDimensions.register();
 
         LootConditionManager.registerCondition(new InBiomeLootCondition.Serializer());
         LootConditionManager.registerCondition(new InBlockLootCondition.Serializer());

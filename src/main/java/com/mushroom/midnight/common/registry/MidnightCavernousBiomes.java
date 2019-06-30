@@ -2,9 +2,11 @@ package com.mushroom.midnight.common.registry;
 
 import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.common.biome.MidnightBiomeGroup;
-import com.mushroom.midnight.common.biome.cavern.CavernStructureConfig;
 import com.mushroom.midnight.common.biome.cavern.CavernousBiome;
-import com.mushroom.midnight.common.biome.cavern.CavernousBiomeConfig;
+import com.mushroom.midnight.common.biome.cavern.ClosedCavernBiome;
+import com.mushroom.midnight.common.biome.cavern.CrystalCavernBiome;
+import com.mushroom.midnight.common.biome.cavern.FungalCavernBiome;
+import com.mushroom.midnight.common.biome.cavern.GreatCavernBiome;
 import com.mushroom.midnight.common.biome.config.BiomeSpawnEntry;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.RegistryEvent;
@@ -14,17 +16,10 @@ import net.minecraftforge.registries.ForgeRegistry;
 import net.minecraftforge.registries.ObjectHolder;
 import net.minecraftforge.registries.RegistryBuilder;
 
-import static com.mushroom.midnight.common.biome.MidnightBiomeConfigurator.*;
-
 @Mod.EventBusSubscriber(modid = Midnight.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 @ObjectHolder(Midnight.MODID)
 public class MidnightCavernousBiomes {
-    private static final CavernStructureConfig CLOSED_STRUCTURE_CONFIG = new CavernStructureConfig()
-            .withCavernDensity(5.0F);
-
-    public static final CavernousBiome CLOSED_CAVERN = new CavernousBiome(CavernousBiomeConfig.builder()
-            .withStructure(CLOSED_STRUCTURE_CONFIG)
-            .build());
+    public static final CavernousBiome CLOSED_CAVERN = new ClosedCavernBiome();
 
     public static final CavernousBiome GREAT_CAVERN = CLOSED_CAVERN;
     public static final CavernousBiome CRYSTAL_CAVERN = CLOSED_CAVERN;
@@ -43,12 +38,11 @@ public class MidnightCavernousBiomes {
 
     @SubscribeEvent
     public static void onRegisterBiomes(RegistryEvent.Register<CavernousBiome> event) {
-        event.getRegistry().registerAll(
-                RegUtil.withName(CLOSED_CAVERN, "closed_cavern"),
-                RegUtil.withName(new CavernousBiome(GREAT_CAVERN_CONFIG), "great_cavern"),
-                RegUtil.withName(new CavernousBiome(CRYSTAL_CAVERN_CONFIG), "crystal_cavern"),
-                RegUtil.withName(new CavernousBiome(FUNGAL_CAVERN_CONFIG), "fungal_cavern")
-        );
+        RegUtil.generic(event.getRegistry())
+                .add("closed_cavern", CLOSED_CAVERN)
+                .add("great_cavern", new GreatCavernBiome())
+                .add("crystal_cavern", new CrystalCavernBiome())
+                .add("fungal_cavern", new FungalCavernBiome());
     }
 
     public static void onInit() {

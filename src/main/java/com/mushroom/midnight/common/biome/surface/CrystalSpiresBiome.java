@@ -5,12 +5,11 @@ import com.mushroom.midnight.common.biome.MidnightSurfaceBuilders;
 import com.mushroom.midnight.common.registry.MidnightEntities;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.world.biome.Biome;
-import net.minecraft.world.gen.surfacebuilders.SurfaceBuilder;
 
 public class CrystalSpiresBiome extends SurfaceBiome {
     public CrystalSpiresBiome() {
-        super(new Builder()
-                .surfaceBuilder(SurfaceBuilder.DEFAULT, MidnightSurfaceBuilders.GRASS_DIRT_MUD_CONFIG)
+        super(new Properties()
+                .surfaceBuilder(MidnightSurfaceBuilders.SURFACE, MidnightSurfaceBuilders.GRASS_DIRT_MUD_CONFIG)
                 .category(Category.PLAINS)
                 .grassColor(0xD184BC)
                 .depth(0.6F)

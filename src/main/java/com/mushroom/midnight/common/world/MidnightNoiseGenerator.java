@@ -1,6 +1,5 @@
 package com.mushroom.midnight.common.world;
 
-import com.mushroom.midnight.common.biome.cavern.CavernStructureConfig;
 import com.mushroom.midnight.common.biome.cavern.CavernousBiome;
 import com.mushroom.midnight.common.biome.surface.SurfaceBiome;
 import com.mushroom.midnight.common.util.Curve;

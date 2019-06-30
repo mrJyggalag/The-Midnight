@@ -1,64 +1,84 @@
 package com.mushroom.midnight.common.biome.cavern;
 
+import com.google.common.base.Preconditions;
+import com.google.common.collect.HashMultimap;
+import com.google.common.collect.Multimap;
+import com.mushroom.midnight.common.biome.ConfigurableBiome;
 import com.mushroom.midnight.common.world.MidnightChunkGenerator;
-import com.mushroom.midnight.common.world.SurfaceCoverGenerator;
 import com.mushroom.midnight.common.world.SurfacePlacementLevel;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.BushBlock;
 import net.minecraft.block.material.Material;
-import net.minecraft.util.WeightedRandom;
+import net.minecraft.entity.EntityClassification;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
-import net.minecraft.world.biome.Biomes;
-import net.minecraft.world.chunk.ChunkPrimer;
 import net.minecraft.world.chunk.IChunk;
+import net.minecraft.world.gen.GenerationStage;
+import net.minecraft.world.gen.carver.ConfiguredCarver;
+import net.minecraft.world.gen.carver.ICarverConfig;
+import net.minecraft.world.gen.feature.ConfiguredFeature;
+import net.minecraft.world.gen.feature.Feature;
+import net.minecraft.world.gen.feature.IFeatureConfig;
+import net.minecraft.world.gen.feature.structure.Structure;
+import net.minecraft.world.gen.surfacebuilders.ConfiguredSurfaceBuilder;
+import net.minecraft.world.gen.surfacebuilders.ISurfaceBuilderConfig;
+import net.minecraft.world.gen.surfacebuilders.SurfaceBuilder;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
-public class CavernousBiome extends ForgeRegistryEntry<CavernousBiome> implements EntitySpawnConfigured {
-    private final CavernousBiomeConfig config;
-    private final MidnightBiomeDecorator decorator;
+public class CavernousBiome extends ForgeRegistryEntry<CavernousBiome> implements ConfigurableBiome {
+    protected final ConfiguredSurfaceBuilder<?> surfaceBuilder;
+    protected final float cavernDensity;
+    protected final float floorHeight;
+    protected final float ceilingHeight;
+    protected final float heightScale;
+    protected final float caveRadiusScale;
+    protected final float pillarWeight;
 
-    private final SurfaceCoverGenerator coverGenerator = new SurfaceCoverGenerator(1, Integer.MAX_VALUE)
-            .withMaxY(MidnightChunkGenerator.MIN_SURFACE_LEVEL);
+    protected final Multimap<GenerationStage.Carving, ConfiguredCarver<?>> carvers = HashMultimap.create();
+    protected final Multimap<GenerationStage.Decoration, ConfiguredFeature<?>> features = HashMultimap.create();
+    protected final List<ConfiguredFeature<?>> flowers = new ArrayList<>();
+    protected final Map<Structure<?>, IFeatureConfig> structures = new HashMap<>();
+    protected final Multimap<EntityClassification, Biome.SpawnListEntry> spawns = HashMultimap.create();
 
-    public CavernousBiome(CavernousBiomeConfig config) {
-        this.config = config;
-        this.decorator = this.config.getFeatureConfig().createDecorator(PlacementLevel.INSTANCE);
-    }
+    public CavernousBiome(Properties properties) {
+        Preconditions.checkNotNull(properties.surfaceBuilder, "must have surfacebuilder");
 
-    public void decorate(World world, Random random, BlockPos pos) {
-        this.decorator.decorate(world, random, Biomes.DEFAULT, pos);
-    }
-
-    public void coverSurface(Random random, ChunkPrimer primer, int x, int z, double noiseVal) {
-        SurfaceConfig config = this.config.getSurfaceConfig();
-        if (config == null) {
-            return;
-        }
-
-        int fillerDepth = (int) (noiseVal / 3.0 + 3.0 + random.nextDouble() * 0.25);
-        this.coverGenerator.coverSurface(config, primer, x, z, fillerDepth);
-    }
-
-    public CavernousBiomeConfig getConfig() {
-        return this.config;
+        this.surfaceBuilder = properties.surfaceBuilder;
+        this.cavernDensity = properties.cavernDensity;
+        this.floorHeight = properties.floorHeight;
+        this.ceilingHeight = properties.ceilingHeight;
+        this.heightScale = properties.heightScale;
+        this.caveRadiusScale = properties.caveRadiusScale;
+        this.pillarWeight = properties.pillarWeight;
     }
 
     @Override
-    public SpawnerConfig getSpawnerConfig() {
-        return this.config.getSpawnerConfig();
+    public void addFeature(GenerationStage.Decoration stage, ConfiguredFeature<?> feature) {
+        if (feature.feature == Feature.DECORATED_FLOWER) {
+            this.flowers.add(feature);
+        }
+        this.features.put(stage, feature);
     }
 
-    public void plantFlower(World world, Random rand, BlockPos pos) {
-        if (!this.config.getFeatureConfig().getFlowers().isEmpty()) {
-            Biome.FlowerEntry flower = WeightedRandom.getRandomItem(rand, this.config.getFeatureConfig().getFlowers());
-            if (flower != null && flower.state != null && (!(flower.state.getBlock() instanceof BushBlock) || ((BushBlock) flower.state.getBlock()).canBlockStay(world, pos, flower.state))) {
-                world.setBlockState(pos, flower.state, 3);
-            }
-        }
+    @Override
+    public <C extends ICarverConfig> void addCarver(GenerationStage.Carving stage, ConfiguredCarver<C> carver) {
+        this.carvers.put(stage, carver);
+    }
+
+    @Override
+    public <C extends IFeatureConfig> void addStructure(Structure<C> structure, C config) {
+        this.structures.put(structure, config);
+    }
+
+    @Override
+    public void addSpawn(EntityClassification classification, Biome.SpawnListEntry entry) {
+        this.spawns.put(classification, entry);
     }
 
     public static class PlacementLevel implements SurfacePlacementLevel {
@@ -88,6 +108,54 @@ public class CavernousBiome extends ForgeRegistryEntry<CavernousBiome> implement
         @Override
         public int generateUpTo(World world, Random random, int y) {
             return random.nextInt(Math.min(y, MidnightChunkGenerator.MIN_SURFACE_LEVEL));
+        }
+    }
+
+    public static class Properties {
+        private ConfiguredSurfaceBuilder<?> surfaceBuilder;
+        private float cavernDensity = -5.0F;
+        private float floorHeight = 0.0F;
+        private float ceilingHeight = 1.0F;
+        private float heightScale = 0.1F;
+        private float caveRadiusScale = 2.2F;
+        private float pillarWeight = 1.0F;
+
+        protected Properties() {
+        }
+
+        public <SC extends ISurfaceBuilderConfig> Properties surfaceBuilder(SurfaceBuilder<SC> surface, SC config) {
+            this.surfaceBuilder = new ConfiguredSurfaceBuilder<>(surface, config);
+            return this;
+        }
+
+        public Properties cavernDensity(float density) {
+            this.cavernDensity = density;
+            return this;
+        }
+
+        public Properties floorHeight(float floorHeight) {
+            this.floorHeight = floorHeight;
+            return this;
+        }
+
+        public Properties ceilingHeight(float ceilingHeight) {
+            this.ceilingHeight = ceilingHeight;
+            return this;
+        }
+
+        public Properties heightScale(float heightScale) {
+            this.heightScale = heightScale;
+            return this;
+        }
+
+        public Properties caveRadiusScale(float caveRadiusScale) {
+            this.caveRadiusScale = caveRadiusScale;
+            return this;
+        }
+
+        public Properties pillarWeight(float pillarWeight) {
+            this.pillarWeight = pillarWeight;
+            return this;
         }
     }
 }

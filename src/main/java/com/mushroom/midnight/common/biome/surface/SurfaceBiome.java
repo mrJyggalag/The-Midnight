@@ -1,10 +1,13 @@
 package com.mushroom.midnight.common.biome.surface;
 
+import com.mushroom.midnight.common.biome.ConfigurableBiome;
 import com.mushroom.midnight.common.world.MidnightChunkGenerator;
 import com.mushroom.midnight.common.world.SurfacePlacementLevel;
+import net.minecraft.entity.EntityClassification;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
+import net.minecraft.world.gen.Heightmap;
 import net.minecraft.world.gen.surfacebuilders.ConfiguredSurfaceBuilder;
 import net.minecraft.world.gen.surfacebuilders.ISurfaceBuilderConfig;
 import net.minecraft.world.gen.surfacebuilders.SurfaceBuilder;
@@ -12,7 +15,7 @@ import net.minecraft.world.gen.surfacebuilders.SurfaceBuilder;
 import javax.annotation.Nullable;
 import java.util.Random;
 
-public abstract class SurfaceBiome extends Biome {
+public abstract class SurfaceBiome extends Biome implements ConfigurableBiome {
     private final float ridgeWeight;
     private final float densityScale;
     private final boolean wet;
@@ -20,15 +23,15 @@ public abstract class SurfaceBiome extends Biome {
     private final int grassColor;
     private final int foliageColor;
 
-    protected SurfaceBiome(Builder builder) {
-        super(builder);
+    protected SurfaceBiome(Properties properties) {
+        super(properties);
 
-        this.ridgeWeight = builder.ridgeWeight;
-        this.densityScale = builder.densityScale;
-        this.wet = builder.wet;
+        this.ridgeWeight = properties.ridgeWeight;
+        this.densityScale = properties.densityScale;
+        this.wet = properties.wet;
 
-        this.grassColor = builder.grassColor;
-        this.foliageColor = builder.foliageColor;
+        this.grassColor = properties.grassColor;
+        this.foliageColor = properties.foliageColor;
     }
 
     @Override
@@ -53,6 +56,11 @@ public abstract class SurfaceBiome extends Biome {
         return this.wet;
     }
 
+    @Override
+    public void addSpawn(EntityClassification classification, SpawnListEntry entry) {
+        super.addSpawn(classification, entry);
+    }
+
     public static final class PlacementLevel implements SurfacePlacementLevel {
         public static SurfacePlacementLevel INSTANCE = new PlacementLevel();
 
@@ -61,7 +69,7 @@ public abstract class SurfaceBiome extends Biome {
 
         @Override
         public BlockPos getSurfacePos(World world, BlockPos pos) {
-            return world.getHeight(pos);
+            return world.getHeight(Heightmap.Type.MOTION_BLOCKING, pos);
         }
 
         @Override
@@ -71,14 +79,14 @@ public abstract class SurfaceBiome extends Biome {
         }
     }
 
-    public static class Builder extends Biome.Builder {
+    public static class Properties extends Biome.Builder {
         private float ridgeWeight = 1.0F;
         private float densityScale = 1.0F;
         private boolean wet;
         private int grassColor = 0xB084BC;
         private int foliageColor = 0x8F6DBC;
 
-        public Builder() {
+        public Properties() {
             super.precipitation(RainType.NONE);
             super.downfall(0.0F);
             super.temperature(0.0F);
@@ -86,93 +94,93 @@ public abstract class SurfaceBiome extends Biome {
             super.waterFogColor(0x50533);
         }
 
-        public Builder ridgeWeight(float ridgeWeight) {
+        public Properties ridgeWeight(float ridgeWeight) {
             this.ridgeWeight = ridgeWeight;
             return this;
         }
 
-        public Builder densityScale(float densityScale) {
+        public Properties densityScale(float densityScale) {
             this.densityScale = densityScale;
             return this;
         }
 
-        public Builder wet() {
+        public Properties wet() {
             this.wet = true;
             return this;
         }
 
-        public Builder grassColor(int grassColor) {
+        public Properties grassColor(int grassColor) {
             this.grassColor = grassColor;
             return this;
         }
 
-        public Builder foliageColor(int foliageColor) {
+        public Properties foliageColor(int foliageColor) {
             this.foliageColor = foliageColor;
             return this;
         }
 
         @Override
-        public <SC extends ISurfaceBuilderConfig> Builder surfaceBuilder(SurfaceBuilder<SC> surface, SC config) {
+        public <SC extends ISurfaceBuilderConfig> Properties surfaceBuilder(SurfaceBuilder<SC> surface, SC config) {
             super.surfaceBuilder(surface, config);
             return this;
         }
 
         @Override
-        public Builder surfaceBuilder(ConfiguredSurfaceBuilder<?> surface) {
+        public Properties surfaceBuilder(ConfiguredSurfaceBuilder<?> surface) {
             super.surfaceBuilder(surface);
             return this;
         }
 
         @Override
-        public Builder precipitation(RainType rainType) {
+        public Properties precipitation(RainType rainType) {
             super.precipitation(rainType);
             return this;
         }
 
         @Override
-        public Builder category(Category category) {
+        public Properties category(Category category) {
             super.category(category);
             return this;
         }
 
         @Override
-        public Builder depth(float depth) {
+        public Properties depth(float depth) {
             super.depth(depth);
             return this;
         }
 
         @Override
-        public Builder scale(float scale) {
+        public Properties scale(float scale) {
             super.scale(scale);
             return this;
         }
 
         @Override
-        public Builder temperature(float temperature) {
+        public Properties temperature(float temperature) {
             super.temperature(temperature);
             return this;
         }
 
         @Override
-        public Builder downfall(float downfall) {
+        public Properties downfall(float downfall) {
             super.downfall(downfall);
             return this;
         }
 
         @Override
-        public Builder waterColor(int waterColor) {
+        public Properties waterColor(int waterColor) {
             super.waterColor(waterColor);
             return this;
         }
 
         @Override
-        public Builder waterFogColor(int waterFogColor) {
+        public Properties waterFogColor(int waterFogColor) {
             super.waterFogColor(waterFogColor);
             return this;
         }
 
         @Override
-        public Builder parent(@Nullable String parent) {
+        public Properties parent(@Nullable String parent) {
             super.parent(parent);
             return this;
         }

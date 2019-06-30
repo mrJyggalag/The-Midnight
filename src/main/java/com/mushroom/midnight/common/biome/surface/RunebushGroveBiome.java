@@ -2,12 +2,11 @@ package com.mushroom.midnight.common.biome.surface;
 
 import com.mushroom.midnight.common.biome.MidnightBiomeConfigurator;
 import com.mushroom.midnight.common.biome.MidnightSurfaceBuilders;
-import net.minecraft.world.gen.surfacebuilders.SurfaceBuilder;
 
 public class RunebushGroveBiome extends SurfaceBiome {
     public RunebushGroveBiome() {
-        super(new Builder()
-                .surfaceBuilder(SurfaceBuilder.DEFAULT, MidnightSurfaceBuilders.GRASS_DIRT_MUD_CONFIG)
+        super(new Properties()
+                .surfaceBuilder(MidnightSurfaceBuilders.SURFACE, MidnightSurfaceBuilders.GRASS_DIRT_MUD_CONFIG)
                 .category(Category.FOREST)
                 .grassColor(0x8C84BC)
                 .depth(0.155F)
