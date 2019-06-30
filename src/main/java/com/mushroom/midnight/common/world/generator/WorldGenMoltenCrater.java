@@ -9,6 +9,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.chunk.ChunkPrimer;
@@ -202,7 +203,7 @@ public class WorldGenMoltenCrater extends MapGenBase {
         return 0;
     }
 
-    public static boolean isCraterSource(World world, int chunkX, int chunkZ) {
+    public static boolean isCraterSource(IWorld world, int chunkX, int chunkZ) {
         RNG.setSeed(world.getSeed());
 
         long seedX = chunkX * RNG.nextLong();

@@ -15,7 +15,13 @@ public class VigilantForestBiome extends SurfaceBiome {
         MidnightBiomeConfigurator.addLumen(this);
         MidnightBiomeConfigurator.addSmallFungis(this);
         MidnightBiomeConfigurator.addGrasses(this);
-        MidnightBiomeConfigurator.addVigilantForestVegetation(this);
+
+        MidnightBiomeConfigurator.addVigilantForestTrees(this);
+        MidnightBiomeConfigurator.addDeadLogs(this);
+
+        MidnightBiomeConfigurator.addSparseSuavis(this);
+        MidnightBiomeConfigurator.addSparseDeadTrees(this);
+        MidnightBiomeConfigurator.addVioleafs(this);
 
         MidnightBiomeConfigurator.addGlobalFeatures(this);
 

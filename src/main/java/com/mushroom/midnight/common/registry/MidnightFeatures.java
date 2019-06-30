@@ -3,13 +3,19 @@ package com.mushroom.midnight.common.registry;
 import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.common.world.feature.AlgaeFeature;
 import com.mushroom.midnight.common.world.feature.BogFungiFlowersFeature;
+import com.mushroom.midnight.common.world.feature.BogweedFlowersFeature;
+import com.mushroom.midnight.common.world.feature.BulbFungiFlowersFeature;
 import com.mushroom.midnight.common.world.feature.CrystalClusterFeature;
+import com.mushroom.midnight.common.world.feature.CrystalFlowersFeature;
 import com.mushroom.midnight.common.world.feature.DarkWillowTreeFeature;
 import com.mushroom.midnight.common.world.feature.DeadLogFeature;
 import com.mushroom.midnight.common.world.feature.DeadTreeFeature;
+import com.mushroom.midnight.common.world.feature.TallBogFungiFeature;
+import com.mushroom.midnight.common.world.feature.TallFungiFeature;
 import com.mushroom.midnight.common.world.feature.FungiFlowersFeature;
 import com.mushroom.midnight.common.world.feature.HeapFeature;
 import com.mushroom.midnight.common.world.feature.LargeBogshroomFeature;
+import com.mushroom.midnight.common.world.feature.LargeBulbFungusFeature;
 import com.mushroom.midnight.common.world.feature.MossFeature;
 import com.mushroom.midnight.common.world.feature.NightstoneBoulderFeature;
 import com.mushroom.midnight.common.world.feature.ShadowrootTreeFeature;
@@ -91,6 +97,7 @@ public class MidnightFeatures {
     public static final Feature<NoFeatureConfig> BOG_DEAD_TREE = RegUtil.injected();
     public static final Feature<NoFeatureConfig> DEAD_LOG = RegUtil.injected();
     public static final Feature<NoFeatureConfig> LARGE_BOGSHROOM = RegUtil.injected();
+    public static final Feature<NoFeatureConfig> LARGE_BULB_FUNGUS = RegUtil.injected();
 
     public static final Feature<NoFeatureConfig> SUAVIS = RegUtil.injected();
     public static final Feature<NoFeatureConfig> DECEITFUL_ALGAE = RegUtil.injected();
@@ -98,6 +105,12 @@ public class MidnightFeatures {
 
     public static final Feature<NoFeatureConfig> FUNGI_FLOWERS = RegUtil.injected();
     public static final Feature<NoFeatureConfig> BOG_FUNGI_FLOWERS = RegUtil.injected();
+    public static final Feature<NoFeatureConfig> BOGWEED_FLOWERS = RegUtil.injected();
+    public static final Feature<NoFeatureConfig> CRYSTAL_FLOWERS = RegUtil.injected();
+    public static final Feature<NoFeatureConfig> BULB_FUNGI_FLOWERS = RegUtil.injected();
+
+    public static final Feature<NoFeatureConfig> TALL_FUNGI = RegUtil.injected();
+    public static final Feature<NoFeatureConfig> TALL_BOG_FUNGI = RegUtil.injected();
 
     public static final Feature<UniformCompositionConfig> HEAP = RegUtil.injected();
     public static final Feature<UniformCompositionConfig> SPIKE = RegUtil.injected();
@@ -115,11 +128,17 @@ public class MidnightFeatures {
                 .add("bog_dead_tree", new DeadTreeFeature(NoFeatureConfig::deserialize, ShelfAttachProcessor.SHELF_BLOCKS))
                 .add("dead_log", new DeadLogFeature(NoFeatureConfig::deserialize))
                 .add("large_bogshroom", new LargeBogshroomFeature(NoFeatureConfig::deserialize))
+                .add("large_bulb_fungus", new LargeBulbFungusFeature(NoFeatureConfig::deserialize))
                 .add("suavis", new ScatteredPlantFeature(NoFeatureConfig::deserialize, MidnightBlocks.SUAVIS.getDefaultState()))
                 .add("deceitful_algae", new AlgaeFeature(NoFeatureConfig::deserialize))
                 .add("deceitful_moss", new MossFeature(NoFeatureConfig::deserialize))
                 .add("fungi_flowers", new FungiFlowersFeature(NoFeatureConfig::deserialize))
                 .add("bog_fungi_flowers", new BogFungiFlowersFeature(NoFeatureConfig::deserialize))
+                .add("tall_fungi", new TallFungiFeature(NoFeatureConfig::deserialize))
+                .add("tall_bog_fungi", new TallBogFungiFeature(NoFeatureConfig::deserialize))
+                .add("bogweed_flowers", new BogweedFlowersFeature(NoFeatureConfig::deserialize))
+                .add("crystal_flowers", new CrystalFlowersFeature(NoFeatureConfig::deserialize))
+                .add("bulb_fungi_flowers", new BulbFungiFlowersFeature(NoFeatureConfig::deserialize))
                 .add("heap", new HeapFeature(UniformCompositionConfig::deserialize))
                 .add("spike", new SpikeFeature(UniformCompositionConfig::deserialize))
                 .add("nightstone_boulder", new NightstoneBoulderFeature(NoFeatureConfig::deserialize))

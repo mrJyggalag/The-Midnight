@@ -15,13 +15,11 @@ public class RunebushGroveBiome extends SurfaceBiome {
 
         MidnightBiomeConfigurator.addLumen(this);
 
-        MidnightBiomeConfigurator.addVigilantForestTreesAndLogs(this);
+        MidnightBiomeConfigurator.addVigilantForestTrees(this);
+        MidnightBiomeConfigurator.addDeadLogs(this);
 
-        // TODO
-//      .withFeature(COMMON_SUAVIS_FEATURE, new ScatterPlacementConfig(8, 8))
-//      .withFeature(RUNEBUSH_FEATURE, new ScatterPlacementConfig(16, 128))
-
-        MidnightBiomeConfigurator.addGrasses(this);
+        MidnightBiomeConfigurator.addCommonSuavis(this);
+        MidnightBiomeConfigurator.addRunebushes(this);
 
         MidnightBiomeConfigurator.addGlobalFeatures(this);
 

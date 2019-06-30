@@ -14,10 +14,10 @@ public class FungalCavernBiome extends CavernousBiome {
                 .heightScale(0.6F)
         );
 
-//      .withFeature(FUNGI_FEATURE, new ScatterPlacementConfig(6, 16))
-//      .withFeature(DOUBLE_FUNGI_FEATURE, new ScatterPlacementConfig(4, 8))
-//      .withFeature(LARGE_BULB_FUNGUS_FEATURE, new SurfacePlacementConfig(3))
-//      .withFeature(BULB_FUNGUS_FEATURE, new SurfacePlacementConfig(5, 8))
+        MidnightBiomeConfigurator.addDenseSmallFungis(this);
+        MidnightBiomeConfigurator.addTallFungis(this);
+
+        MidnightBiomeConfigurator.addBulbFungi(this);
 
         MidnightBiomeConfigurator.addUndergroundSpawns(this);
     }

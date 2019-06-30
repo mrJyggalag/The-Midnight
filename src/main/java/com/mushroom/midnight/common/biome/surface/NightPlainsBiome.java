@@ -19,21 +19,9 @@ public class NightPlainsBiome extends SurfaceBiome {
 
         MidnightBiomeConfigurator.addSparseShadowrootTrees(this);
         MidnightBiomeConfigurator.addGrasses(this);
+        MidnightBiomeConfigurator.addFingeredGrass(this);
 
-        // TODO
-//        .withFeature(FINGERED_GRASS_FEATURE, new ScatterPlacementConfig(8, 16) {
-//            @Override
-//            public void apply(World world, SurfacePlacementLevel placementLevel, Random random, BlockPos chunkOrigin, Consumer<BlockPos> generator) {
-//                if (world.rand.nextFloat() < 0.2f) {
-//                    super.apply(world, placementLevel, random, chunkOrigin, generator);
-//                }
-//            }
-//        })
-//        .withFlower(new FlowerEntry(MidnightBlocks.FINGERED_GRASS.getDefaultState(), 40))
-//        .withFeature(new IMidnightFeature[] {
-//                NIGHTSTONE_BOULDER_FEATURE,
-//                NIGHTSTONE_SPIKE_FEATURE
-//        }, new SurfacePlacementConfig(-3, 1))
+        MidnightBiomeConfigurator.addNightstoneSpikesAndBoulders(this);
 
         MidnightBiomeConfigurator.addGlobalFeatures(this);
 
