@@ -8,8 +8,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class MushroomInsideBlock extends AirBlock {
-    public MushroomInsideBlock() {
-        this.setLightLevel(1.0F);
+    public MushroomInsideBlock(Properties properties) {
+        super(properties.lightValue(14));
     }
 
     @Override

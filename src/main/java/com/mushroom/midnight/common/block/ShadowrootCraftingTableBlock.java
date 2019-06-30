@@ -20,10 +20,8 @@ import net.minecraft.world.World;
 public class ShadowrootCraftingTableBlock extends Block {
 
     public ShadowrootCraftingTableBlock() {
-        super(Material.WOOD);
-        this.setHardness(2.5F);
-        this.setSoundType(SoundType.WOOD);
-        this.setCreativeTab(MidnightItemGroups.DECORATION);
+        super(Properties.create(Material.WOOD).hardnessAndResistance(2.5f, 0f).sound(SoundType.WOOD));
+        //setCreativeTab(MidnightItemGroups.DECORATION);
     }
 
     @Override

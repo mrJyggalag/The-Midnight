@@ -34,12 +34,10 @@ public class MidnightChestBlock extends ChestBlock {
     }
     private final ChestModel chestModel;
 
-    public MidnightChestBlock(ChestModel chestModel) {
-        super(Type.BASIC);
+    public MidnightChestBlock(Properties properties, ChestModel chestModel) {
+        super(properties.hardnessAndResistance(2.5f, 0f).sound(SoundType.WOOD), Type.BASIC);
         this.chestModel = chestModel;
-        setHardness(2.5F);
-        setSoundType(SoundType.WOOD);
-        setCreativeTab(MidnightItemGroups.DECORATION);
+        //setCreativeTab(MidnightItemGroups.DECORATION);
     }
 
     @Nullable

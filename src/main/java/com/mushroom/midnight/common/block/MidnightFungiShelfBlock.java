@@ -12,10 +12,16 @@ import net.minecraft.state.DirectionProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.Direction;
+import net.minecraft.util.Hand;
 import net.minecraft.util.Mirror;
 import net.minecraft.util.Rotation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.shapes.ISelectionContext;
+import net.minecraft.util.math.shapes.VoxelShape;
+import net.minecraft.util.math.shapes.VoxelShapes;
+import net.minecraft.world.IBlockReader;
+import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
@@ -25,13 +31,11 @@ public class MidnightFungiShelfBlock extends Block {
     public static final DirectionProperty FACING = DirectionProperty.create("facing", f -> f != Direction.DOWN);
 
     private static final DirectionalBounds BOUNDS = new DirectionalBounds(0.0625, 0.3, 1.0, 0.9375, 0.7, 0.6);
-    private static final AxisAlignedBB VERTICAL_BOUNDS = new AxisAlignedBB(0.0625, 0.0, 0.0625, 0.9375, 0.4, 0.9375);
+    private static final VoxelShape VERTICAL_BOUNDS = makeCuboidShape(0.0625, 0.0, 0.0625, 0.9375, 0.4, 0.9375);
 
-    public MidnightFungiShelfBlock() {
-        super(Material.PLANTS, MaterialColor.PURPLE_TERRACOTTA);
-        this.setHardness(0.0F);
-        this.setSoundType(SoundType.PLANT);
-        this.setCreativeTab(MidnightItemGroups.DECORATION);
+    public MidnightFungiShelfBlock(Properties properties) {
+        super(properties.create(Material.PLANTS, MaterialColor.PURPLE_TERRACOTTA).hardnessAndResistance(0f).sound(SoundType.PLANT));
+        //setCreativeTab(MidnightItemGroups.DECORATION);
     }
 
     @Override
@@ -54,7 +58,7 @@ public class MidnightFungiShelfBlock extends Block {
         return Arrays.stream(Direction.values()).anyMatch(f -> canAttachTo(world, pos, f));
     }
 
-    private static boolean canAttachTo(World world, BlockPos pos, Direction facing) {
+    private static boolean canAttachTo(IWorld world, BlockPos pos, Direction facing) {
         if (facing == Direction.DOWN) {
             return false;
         }
@@ -64,8 +68,8 @@ public class MidnightFungiShelfBlock extends Block {
     }
 
     @Override
-    public BlockState getStateForPlacement(World world, BlockPos pos, Direction facing, float hitX, float hitY, float hitZ, int meta, LivingEntity placer) {
-        return this.getDefaultState().with(FACING, canAttachTo(world, pos, facing) ? facing : Direction.UP);
+    public BlockState getStateForPlacement(BlockState state, Direction facing, BlockState state2, IWorld world, BlockPos pos1, BlockPos pos2, Hand hand) {
+        return this.getDefaultState().with(FACING, canAttachTo(world, pos1, facing) ? facing : Direction.UP);
     }
 
     @Override
@@ -86,7 +90,7 @@ public class MidnightFungiShelfBlock extends Block {
     }
 
     @Override
-    public AxisAlignedBB getBoundingBox(BlockState state, IBlockAccess source, BlockPos pos) {
+    public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
         Direction facing = state.get(FACING);
         if (facing == Direction.UP) {
             return VERTICAL_BOUNDS;
@@ -94,10 +98,9 @@ public class MidnightFungiShelfBlock extends Block {
         return BOUNDS.get(facing);
     }
 
-    @Nullable
     @Override
-    public AxisAlignedBB getCollisionBoundingBox(BlockState blockState, IBlockAccess worldIn, BlockPos pos) {
-        return null;
+    public VoxelShape getCollisionShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
+        return VoxelShapes.empty();
     }
 
     @Override

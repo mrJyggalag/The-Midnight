@@ -37,11 +37,8 @@ public class RockshroomBlock extends Block {
     private static final DamageSource ROCKSHROOM_SPORE = new MidnightDamageSource("rockshroom_spore");
 
     public RockshroomBlock() {
-        super(Material.ROCK, MaterialColor.PINK_TERRACOTTA);
-        this.setHardness(1.5F);
-        this.setResistance(10.0F);
-        this.setSoundType(SoundType.STONE);
-        this.setCreativeTab(MidnightItemGroups.BUILDING);
+        super(Properties.create(Material.ROCK, MaterialColor.PINK_TERRACOTTA).hardnessAndResistance(1.5f, 10f).sound(SoundType.STONE));
+        //setCreativeTab(MidnightItemGroups.BUILDING);
     }
 
     @Override

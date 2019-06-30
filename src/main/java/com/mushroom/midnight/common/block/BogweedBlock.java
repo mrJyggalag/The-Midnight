@@ -7,8 +7,8 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 
 public class BogweedBlock extends MidnightPlantBlock {
-    public BogweedBlock() {
-        super(true);
+    public BogweedBlock(Properties properties) {
+        super(properties, true);
     }
 
     @Override

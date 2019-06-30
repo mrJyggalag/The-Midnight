@@ -1,10 +1,11 @@
 package com.mushroom.midnight.common.block;
 
 import com.mushroom.midnight.client.particle.MidnightParticles;
-import com.mushroom.midnight.common.registry.MidnightItemGroups;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.TorchBlock;
+import net.minecraft.block.material.Material;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -19,12 +20,9 @@ public class SporchBlock extends TorchBlock {
     private final SporchType sporchType;
 
     public SporchBlock(SporchType sporchType) {
-        super();
+        super(Block.Properties.create(Material.MISCELLANEOUS).doesNotBlockMovement().hardnessAndResistance(0f).lightValue(14).sound(SoundType.WOOD));
         this.sporchType = sporchType;
-        setCreativeTab(MidnightItemGroups.DECORATION);
-        setHardness(0f);
-        setLightLevel(0.9375f);
-        blockSoundType = SoundType.WOOD;
+        //setCreativeTab(MidnightItemGroups.DECORATION);
     }
 
     @OnlyIn(Dist.CLIENT)

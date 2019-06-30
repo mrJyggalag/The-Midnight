@@ -18,6 +18,7 @@ import net.minecraftforge.common.ToolType;
 
 import javax.annotation.Nullable;
 
+@SuppressWarnings("deprecation")
 public class CrystalBlock extends Block {
     private static final VoxelShape SHAPE = Block.makeCuboidShape(2.0, 0.0, 2.0, 14.0, 13.0, 14.0);
 

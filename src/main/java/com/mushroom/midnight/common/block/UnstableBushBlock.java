@@ -30,8 +30,8 @@ public class UnstableBushBlock extends MidnightPlantBlock implements IGrowable {
             new AxisAlignedBB(0d, 0d, 0d, 1d, 1d, 1d),
     };
 
-    public UnstableBushBlock() {
-        super(PlantBehaviorType.FLOWER, false);
+    public UnstableBushBlock(Properties properties) {
+        super(properties, false);
         setDefaultState(getStateContainer().getBaseState().with(STAGE, 0));
     }
 
@@ -41,18 +41,6 @@ public class UnstableBushBlock extends MidnightPlantBlock implements IGrowable {
     }
 
     @Override
-    @SuppressWarnings("deprecation")
-    public BlockState getStateFromMeta(int meta) {
-        return getDefaultState().with(STAGE, Math.min(meta, MAX_STAGE));
-    }
-
-    @Override
-    public int getMetaFromState(BlockState state) {
-        return state.get(STAGE);
-    }
-
-    @Override
-    @SuppressWarnings("deprecation")
     public boolean canSilkHarvest() {
         return false;
     } // json drop
@@ -63,17 +51,17 @@ public class UnstableBushBlock extends MidnightPlantBlock implements IGrowable {
     }
 
     @Override
-    public ItemStack getPickBlock(BlockState state, RayTraceResult target, IBlockReader world, BlockPos pos, PlayerEntity player) {
-        return new ItemStack(MidnightItems.UNSTABLE_SEEDS);
-    }
-
-    @Override
     public int quantityDropped(BlockState state, int fortune, Random random) {
         return state.get(STAGE) == 0 ? 1 : 0;
     }
 
     @Override
-    public boolean canGrow(World worldIn, BlockPos pos, BlockState state, boolean isClient) {
+    public ItemStack getPickBlock(BlockState state, RayTraceResult target, IBlockReader world, BlockPos pos, PlayerEntity player) {
+        return new ItemStack(MidnightItems.UNSTABLE_SEEDS);
+    }
+
+    @Override
+    public boolean canGrow(IBlockReader worldIn, BlockPos pos, BlockState state, boolean isClient) {
         return true;
     }
 

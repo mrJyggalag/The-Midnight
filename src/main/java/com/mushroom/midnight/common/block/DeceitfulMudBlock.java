@@ -1,30 +1,25 @@
 package com.mushroom.midnight.common.block;
 
 import com.mushroom.midnight.common.registry.MidnightSounds;
-import com.mushroom.midnight.common.registry.MidnightItemGroups;
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.Direction;
-import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.shapes.ISelectionContext;
+import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
-import net.minecraftforge.common.IPlantable;
 
 import javax.annotation.Nullable;
 
-public class DeceitfulMudBlock extends Block {
-    private static final AxisAlignedBB BOUNDS = new AxisAlignedBB(0.0, 0.0, 0.0, 1.0, 0.875, 1.0);
+public class DeceitfulMudBlock extends SoilBlock {
+    private static final VoxelShape BOUNDS = makeCuboidShape(0.0, 0.0, 0.0, 1.0, 0.875, 1.0);
 
     public DeceitfulMudBlock() {
-        super(Material.GROUND, MaterialColor.GRAY_TERRACOTTA);
-        this.setHardness(0.5F);
-        this.setSoundType(MidnightSounds.MUD);
-        this.setCreativeTab(MidnightItemGroups.BUILDING);
-        this.setHarvestLevel("shovel", 0);
+        super(Properties.create(Material.ORGANIC, MaterialColor.GRAY_TERRACOTTA).hardnessAndResistance(0.5f, 0f).sound(MidnightSounds.MUD), false);
+        //setCreativeTab(MidnightItemGroups.BUILDING);
     }
 
     @Override
@@ -34,7 +29,7 @@ public class DeceitfulMudBlock extends Block {
 
     @Override
     @Nullable
-    public AxisAlignedBB getCollisionBoundingBox(BlockState state, IBlockAccess world, BlockPos pos) {
+    public VoxelShape getCollisionShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
         return BOUNDS;
     }
 

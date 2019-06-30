@@ -24,8 +24,8 @@ import java.util.Random;
 public class VioleafBlock extends MidnightPlantBlock implements IGrowable {
     public static final BooleanProperty IS_GROWN = BooleanProperty.create("is_grown");
 
-    public VioleafBlock() {
-        super(false);
+    public VioleafBlock(Properties properties) {
+        super(properties, false);
         setDefaultState(getStateContainer().getBaseState().with(IS_GROWN, true));
     }
 

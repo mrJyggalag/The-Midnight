@@ -47,12 +47,11 @@ public class MidnightFurnaceBlock extends AbstractFurnaceBlock {
     private static boolean keepInventory;
 
     public MidnightFurnaceBlock(Properties props) {
-        super(props);
+        super(props.hardnessAndResistance(3.5f));
         this.isBurning = isBurning;
 
-        this.setHardness(3.5F);
-        this.setDefaultState(this.blockState.getBaseState().withProperty(FACING, Direction.NORTH));
-        this.setCreativeTab(MidnightItemGroups.DECORATION);
+        this.setDefaultState(this.stateContainer.getBaseState().with(FACING, Direction.NORTH));
+        //setCreativeTab(MidnightItemGroups.DECORATION);
 
         if (isBurning) {
             this.setLightLevel(0.4F);

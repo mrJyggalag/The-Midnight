@@ -30,13 +30,16 @@ import net.minecraftforge.common.ForgeHooks;
 
 import java.util.List;
 import java.util.Random;
+import java.util.function.Supplier;
 
 public class UnstableBushBloomedBlock extends MidnightPlantBlock implements IGrowable {
     public static final BooleanProperty HAS_FRUIT = BooleanProperty.create("has_fruit");
+    private final Supplier<UnstableFruitItem> fruitSupplier;
 
-    public UnstableBushBloomedBlock(Block.Properties properties) {
-        super(properties);
-        this.setDefaultState(this.stateContainer.getBaseState().with(HAS_FRUIT, false));
+    public UnstableBushBloomedBlock(Block.Properties properties, Supplier<UnstableFruitItem> fruitSupplier) {
+        super(properties, false);
+        this.fruitSupplier = fruitSupplier;
+        setDefaultState(this.stateContainer.getBaseState().with(HAS_FRUIT, false));
     }
 
     @Override

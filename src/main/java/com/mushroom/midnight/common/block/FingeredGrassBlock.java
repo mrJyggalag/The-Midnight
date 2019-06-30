@@ -10,17 +10,15 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import java.util.Random;
 
 public class FingeredGrassBlock extends MidnightPlantBlock {
-    public FingeredGrassBlock() {
-        super(false);
-        setTickRandomly(true); // builder
+    public FingeredGrassBlock(Properties properties) {
+        super(properties, false);
     }
 
-    @Override
     @OnlyIn(Dist.CLIENT)
-    public void randomTick(BlockState state, World world, BlockPos pos, Random rand) {
-        super.randomTick(state, world, pos, rand);
+    public void animateTick(BlockState state, World world, BlockPos pos, Random rand) {
+        super.animateTick(state, world, pos, rand);
         if (rand.nextInt(10) == 0) {
-            world.addParticle(ParticleTypes.MYCELIUM, (double)(pos.getX() + rand.nextFloat()), pos.getY() + 1.1D, (double)(pos.getZ() + rand.nextFloat()), 0D, 0D, 0D);
+            world.addParticle(ParticleTypes.MYCELIUM, (double) (pos.getX() + rand.nextFloat()), (double) (pos.getY() + 1.1f), (double) (pos.getZ() + rand.nextFloat()), 0d, 0d, 0d);
         }
     }
 }

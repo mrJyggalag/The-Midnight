@@ -13,10 +13,16 @@ import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.Direction;
+import net.minecraft.util.Hand;
 import net.minecraft.util.Mirror;
 import net.minecraft.util.Rotation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.shapes.ISelectionContext;
+import net.minecraft.util.math.shapes.VoxelShape;
+import net.minecraft.util.math.shapes.VoxelShapes;
+import net.minecraft.world.IBlockReader;
+import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.BlockStateContainer;
 import net.minecraftforge.api.distmarker.Dist;
@@ -30,22 +36,19 @@ public class DeceitfulMossBlock extends Block {
     private static final DirectionalBounds BOUNDS = new DirectionalBounds(0.0, 0.0, 0.875, 1.0, 1.0, 1.0);
 
     public DeceitfulMossBlock() {
-        super(Material.PLANTS, MaterialColor.PURPLE_TERRACOTTA);
-        this.setHardness(0.2F);
-        this.setSoundType(SoundType.PLANT);
-        this.setCreativeTab(MidnightItemGroups.DECORATION);
-        this.setDefaultState(this.getStateContainer().getBaseState().with(FACING, Direction.DOWN));
+        super(Properties.create(Material.PLANTS, MaterialColor.PURPLE_TERRACOTTA).hardnessAndResistance(0.2f, 0f).sound(SoundType.PLANT));
+        //setCreativeTab(MidnightItemGroups.DECORATION);
+        setDefaultState(this.getStateContainer().getBaseState().with(FACING, Direction.DOWN));
     }
 
     @Override
-    public AxisAlignedBB getBoundingBox(BlockState state, IBlockAccess source, BlockPos pos) {
+    public VoxelShape getShape(BlockState state, IBlockReader world, BlockPos pos, ISelectionContext context) {
         return BOUNDS.get(state.get(FACING));
     }
 
-    @Nullable
     @Override
-    public AxisAlignedBB getCollisionBoundingBox(BlockState blockState, IBlockAccess worldIn, BlockPos pos) {
-        return null;
+    public VoxelShape getCollisionShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
+        return VoxelShapes.empty();
     }
 
     @Override
@@ -68,7 +71,7 @@ public class DeceitfulMossBlock extends Block {
         return Arrays.stream(Direction.values()).anyMatch(f -> canAttachTo(world, pos, f));
     }
 
-    private static boolean canAttachTo(World world, BlockPos pos, Direction facing) {
+    private static boolean canAttachTo(IWorld world, BlockPos pos, Direction facing) {
         if (facing == Direction.DOWN) {
             return false;
         }
@@ -78,8 +81,8 @@ public class DeceitfulMossBlock extends Block {
     }
 
     @Override
-    public BlockState getStateForPlacement(World world, BlockPos pos, Direction facing, float hitX, float hitY, float hitZ, int meta, LivingEntity placer) {
-        return this.getDefaultState().with(FACING, canAttachTo(world, pos, facing) ? facing : Direction.DOWN);
+    public BlockState getStateForPlacement(BlockState state, Direction facing, BlockState state2, IWorld world, BlockPos pos1, BlockPos pos2, Hand hand) {
+        return this.getDefaultState().with(FACING, canAttachTo(world, pos1, facing) ? facing : Direction.DOWN);
     }
 
     @Override

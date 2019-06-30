@@ -11,6 +11,7 @@ import static com.mushroom.midnight.Midnight.MODID;
 
 public class MidnightTags {
     public static class Blocks {
+        public static final Tag<Block> fungi_stems = tag("fungi_stems");
 
         private static Tag<Block> tag(String name) {
             return new BlockTags.Wrapper(new ResourceLocation(MODID, name));

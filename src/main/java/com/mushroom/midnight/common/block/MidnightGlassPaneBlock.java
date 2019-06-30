@@ -10,9 +10,8 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class MidnightGlassPaneBlock extends PaneBlock {
     public MidnightGlassPaneBlock() {
-        super(Material.GLASS, false);
-        setSoundType(SoundType.GLASS);
-        setCreativeTab(MidnightItemGroups.DECORATION);
+        super(Properties.create(Material.GLASS).sound(SoundType.GLASS));
+        //setCreativeTab(MidnightItemGroups.DECORATION);
     }
 
     @Override

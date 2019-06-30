@@ -46,10 +46,11 @@ public class DoubleFungiBlock extends MidnightDoublePlantBlock {
             world.setBlockState(pos, state.cycle(BlockStateProperties.STAGE_0_1), 4);
         } else if (!ForgeEventFactory.saplingGrowTree(world, rand, pos)) {
             IWorldGenerator generator = this.generatorSupplier.get();
+            // TODO Feature @Gegy
             world.setBlockState(pos, Blocks.AIR.getDefaultState(), 4);
-            ChunkPos chunkPos = new ChunkPos(pos);
-            // TODO @Gegy checks this
-            generator.generate(rand, chunkPos.x, chunkPos.z, world, world.getChunkProvider().getChunkGenerator(), world.getChunkProvider());
+            if (!generator.generate(world, rand, pos)) {
+                world.setBlockState(pos, state, 4);
+            }
         }
     }
 

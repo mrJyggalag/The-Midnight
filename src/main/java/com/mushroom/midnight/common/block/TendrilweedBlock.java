@@ -10,18 +10,13 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 
+import java.util.Iterator;
 import java.util.Random;
 
 public class TendrilweedBlock extends MidnightPlantBlock {
     // TODO particle  tendril spore
-    public TendrilweedBlock() {
-        super(true);
-        setTickRandomly(true); // builder
-    }
-
-    @Override
-    public int tickRate(World world) {
-        return 10;
+    public TendrilweedBlock(Properties properties) {
+        super(properties, true);
     }
 
     @Override
@@ -31,7 +26,9 @@ public class TendrilweedBlock extends MidnightPlantBlock {
             BlockPos placePos = pos.add(random.nextInt(5) - 2, random.nextInt(3) - 1, random.nextInt(5) - 2);
             if (MidnightBlocks.TENDRILWEED.canPlaceBlockAt(world, placePos)) {
                 int flowers = 0;
-                for (BlockPos currentPos : BlockPos.getAllInBox(pos.add(-2, -1, -2), pos.add(2, 1, 2))) {
+                Iterator<BlockPos> it = BlockPos.getAllInBox(pos.add(-2, -1, -2), pos.add(2, 1, 2)).iterator();
+                while (it.hasNext()) {
+                    BlockPos currentPos = it.next();
                     if (world.getBlockState(currentPos).getBlock() == MidnightBlocks.TENDRILWEED) {
                         flowers++;
                     }

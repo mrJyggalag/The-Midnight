@@ -1,7 +1,5 @@
 package com.mushroom.midnight.common.block;
 
-import com.mushroom.midnight.common.registry.MidnightBlocks;
-import com.mushroom.midnight.common.registry.MidnightItemGroups;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.SoundType;
@@ -10,10 +8,7 @@ import net.minecraft.block.material.MaterialColor;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntitySpawnPlacementRegistry;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockReader;
@@ -23,38 +18,15 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 import javax.annotation.Nullable;
-import java.util.Random;
 
 public class BulbFungusHatBlock extends Block {
 
-    public BulbFungusHatBlock(MaterialColor matColor) { // materialColor is in the builder
-        super(Material.WOOD, matColor);
-        setHardness(0.2f);
-        setSoundType(SoundType.SLIME);
-        setCreativeTab(MidnightItemGroups.BUILDING);
-        setLightLevel(0.1f);
+    public BulbFungusHatBlock() {
+        super(Properties.create(Material.WOOD, MaterialColor.MAGENTA).hardnessAndResistance(0.2f, 0f).sound(SoundType.SLIME).lightValue(2));
+        //setCreativeTab(MidnightItemGroups.BUILDING);
     }
 
-    @Override
-    protected ItemStack getSilkTouchDrop(BlockState state) {
-        return new ItemStack(this);
-    }
-
-    @Override
-    @SuppressWarnings("deprecation")
-    protected boolean canSilkHarvest() {
-        return true;
-    }
-
-    @Override
-    public int quantityDropped(Random random) {
-        return random.nextInt(5) == 0 ? 1 : 0;
-    }
-
-    @Override
-    public Item getItemDropped(BlockState state, Random rand, int fortune) {
-        return Item.getItemFromBlock(MidnightBlocks.BULB_FUNGUS);
-    }
+    // random.nextInt(5) == 0 -> drop 1 BULB_FUNGUS (+SilkTouch)
 
     @Override
     @OnlyIn(Dist.CLIENT)
@@ -70,7 +42,6 @@ public class BulbFungusHatBlock extends Block {
     }
 
     @Override
-    @SuppressWarnings("deprecation")
     public float getAmbientOcclusionLightValue(BlockState state) {
         return 0f;
     }

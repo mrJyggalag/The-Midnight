@@ -1,6 +1,5 @@
 package com.mushroom.midnight.common.block;
 
-import com.mushroom.midnight.common.registry.MidnightItemGroups;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.SoundType;
@@ -9,21 +8,32 @@ import net.minecraft.item.Item;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
+import net.minecraftforge.common.ToolType;
 
+import javax.annotation.Nullable;
 import java.util.Random;
 import java.util.function.Supplier;
 
 public class MidnightGemBlock extends Block {
     private final Supplier<Item> gemSupplier;
+    private final int harvestLevel;
 
     public MidnightGemBlock(Supplier<Item> gemSupplier, int harvestLevel) {
-        super(Material.ROCK);
-        this.setHardness(3.0F);
-        this.setResistance(5.0F);
-        this.setSoundType(SoundType.STONE);
-        this.setCreativeTab(MidnightItemGroups.BUILDING);
-        this.setHarvestLevel("pickaxe", harvestLevel);
+        super(Properties.create(Material.ROCK).hardnessAndResistance(3f, 5f).sound(SoundType.STONE));
+        this.harvestLevel = harvestLevel;
         this.gemSupplier = gemSupplier;
+        //setCreativeTab(MidnightItemGroups.BUILDING);
+    }
+
+    @Override
+    public int getHarvestLevel(BlockState state) {
+        return this.harvestLevel;
+    }
+
+    @Nullable
+    @Override
+    public ToolType getHarvestTool(BlockState state) {
+        return ToolType.PICKAXE;
     }
 
     @Override

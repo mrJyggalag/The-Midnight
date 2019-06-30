@@ -9,6 +9,9 @@ import net.minecraft.potion.EffectInstance;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.shapes.ISelectionContext;
+import net.minecraft.util.math.shapes.VoxelShape;
+import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -16,14 +19,14 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import java.util.Random;
 
 public class DragonNestBlock extends MidnightPlantBlock {
-    private static final AxisAlignedBB BOUNDS = new AxisAlignedBB(0.2, 0.2, 0.2, 0.8, 1.0, 0.8);
+    private static final VoxelShape BOUNDS = makeCuboidShape(0.2, 0.2, 0.2, 0.8, 1.0, 0.8);
 
-    public DragonNestBlock() {
-        super(true);
+    public DragonNestBlock(Properties properties) {
+        super(properties, true);
     }
 
     @Override
-    public AxisAlignedBB getBoundingBox(BlockState state, IBlockAccess source, BlockPos pos) {
+    public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
         return BOUNDS;
     }
 
@@ -37,18 +40,17 @@ public class DragonNestBlock extends MidnightPlantBlock {
     @Override
     public boolean canPlaceBlockAt(World world, BlockPos pos) {
         BlockState state = world.getBlockState(pos);
-        return canBlockStay(world, pos, state) && state.getBlock().isReplaceable(world, pos);
+        return isValidGround(state, world, pos) && state.getBlock().isReplaceable(world, pos);
     }
 
     @Override
-    public boolean canBlockStay(World world, BlockPos pos, BlockState state) {
+    public boolean isValidGround(BlockState state, IBlockReader world, BlockPos pos) {
         return world.getBlockState(pos.up()).isNormalCube(world, pos);
     }
 
-    @Override
     @OnlyIn(Dist.CLIENT)
-    public void randomTick(BlockState state, World world, BlockPos pos, Random rand) {
-        super.randomTick(state, world, pos, rand);
+    public void animateTick(BlockState state, World world, BlockPos pos, Random rand) {
+        super.animateTick(state, world, pos, rand);
         if (rand.nextBoolean()) {
             Vec3d offset = getOffset(state, world, pos);
             double distX = rand.nextFloat() * 0.6 - 0.3d;

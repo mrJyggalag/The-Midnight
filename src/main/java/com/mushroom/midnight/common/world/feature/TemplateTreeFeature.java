@@ -3,7 +3,7 @@ package com.mushroom.midnight.common.world.feature;
 import com.mojang.datafixers.Dynamic;
 import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.common.block.MidnightFungiHatBlock;
-import com.mushroom.midnight.common.block.MidnightFungiStemBlock;
+import com.mushroom.midnight.common.registry.MidnightTags;
 import com.mushroom.midnight.common.util.WorldUtil;
 import com.mushroom.midnight.common.world.template.CompiledTemplate;
 import com.mushroom.midnight.common.world.template.RotatedSettingConfigurator;
@@ -117,7 +117,7 @@ public abstract class TemplateTreeFeature extends MidnightTreeFeature {
         if (block instanceof LogBlock) {
             Direction.Axis axis = state.get(LogBlock.AXIS);
             return new Template.BlockInfo(pos, this.log.with(LogBlock.AXIS, axis), null);
-        } else if (block instanceof MidnightFungiStemBlock) {
+        } else if (block.isIn(MidnightTags.Blocks.fungi_stems)) {
             return new Template.BlockInfo(pos, this.log, null);
         } else if (block instanceof LeavesBlock || block instanceof MidnightFungiHatBlock) {
             return new Template.BlockInfo(pos, this.leaf, null);

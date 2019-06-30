@@ -3,8 +3,8 @@ package com.mushroom.midnight.common.world.feature;
 import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.common.block.MidnightFungiHatBlock;
 import com.mushroom.midnight.common.block.MidnightFungiShelfBlock;
-import com.mushroom.midnight.common.block.MidnightFungiStemBlock;
 import com.mushroom.midnight.common.registry.MidnightBlocks;
+import com.mushroom.midnight.common.registry.MidnightTags;
 import com.mushroom.midnight.common.util.WorldUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -108,8 +108,8 @@ public class LargeFungiFeature extends IWorldGenerator { // fix me
     }
 
     private Template.BlockInfo processState(World world, BlockPos pos, Template.BlockInfo info) {
-        BlockState state = info.blockState;
-        if (state.getBlock() instanceof MidnightFungiStemBlock) {
+        BlockState state = info.state;
+        if (state.getBlock().isIn(MidnightTags.Blocks.fungi_stems)) {
             return new Template.BlockInfo(pos, this.stem, null);
         } else if (state.getBlock() instanceof MidnightFungiHatBlock) {
             return new Template.BlockInfo(pos, this.hat, null);

@@ -7,29 +7,24 @@ import com.mushroom.midnight.common.block.BloomCrystalBlock;
 import com.mushroom.midnight.common.block.BogweedBlock;
 import com.mushroom.midnight.common.block.BulbFungusBlock;
 import com.mushroom.midnight.common.block.BulbFungusHatBlock;
-import com.mushroom.midnight.common.block.BulbFungusStemBlock;
 import com.mushroom.midnight.common.block.CrystalBlock;
 import com.mushroom.midnight.common.block.CrystalotusBlock;
 import com.mushroom.midnight.common.block.DarkWaterBlock;
 import com.mushroom.midnight.common.block.DeceitfulAlgaeBlock;
 import com.mushroom.midnight.common.block.DeceitfulMossBlock;
 import com.mushroom.midnight.common.block.DeceitfulMudBlock;
+import com.mushroom.midnight.common.block.DoubleFungiBlock;
 import com.mushroom.midnight.common.block.DragonNestBlock;
 import com.mushroom.midnight.common.block.FingeredGrassBlock;
-import com.mushroom.midnight.common.block.GhostPlantBlock;
-import com.mushroom.midnight.common.block.LumenBudBlock;
 import com.mushroom.midnight.common.block.MiasmaFluidBlock;
 import com.mushroom.midnight.common.block.MiasmaSurfaceBlock;
 import com.mushroom.midnight.common.block.MidnightChestBlock;
 import com.mushroom.midnight.common.block.MidnightChestBlock.ChestModel;
-import com.mushroom.midnight.common.block.SoilBlock;
-import com.mushroom.midnight.common.block.DoubleFungiBlock;
 import com.mushroom.midnight.common.block.MidnightDoublePlantBlock;
 import com.mushroom.midnight.common.block.MidnightFenceBlock;
 import com.mushroom.midnight.common.block.MidnightFenceGateBlock;
 import com.mushroom.midnight.common.block.MidnightFungiHatBlock;
 import com.mushroom.midnight.common.block.MidnightFungiShelfBlock;
-import com.mushroom.midnight.common.block.MidnightFungiStemBlock;
 import com.mushroom.midnight.common.block.MidnightFurnaceBlock;
 import com.mushroom.midnight.common.block.MidnightGemBlock;
 import com.mushroom.midnight.common.block.MidnightGlassBlock;
@@ -39,9 +34,9 @@ import com.mushroom.midnight.common.block.MidnightOreBlock;
 import com.mushroom.midnight.common.block.MidnightPlantBlock;
 import com.mushroom.midnight.common.block.MidnightWoodPlankBlock;
 import com.mushroom.midnight.common.block.MushroomInsideBlock;
-import com.mushroom.midnight.common.block.NightstoneBlock;
 import com.mushroom.midnight.common.block.RockshroomBlock;
 import com.mushroom.midnight.common.block.ShadowrootCraftingTableBlock;
+import com.mushroom.midnight.common.block.SoilBlock;
 import com.mushroom.midnight.common.block.SporchBlock;
 import com.mushroom.midnight.common.block.SpreadableSoilBlock;
 import com.mushroom.midnight.common.block.StingerEggBlock;
@@ -65,6 +60,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
+import net.minecraft.world.gen.feature.NoFeatureConfig;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -335,7 +331,11 @@ public class MidnightBlocks {
                         Block.Properties.create(Material.ROCK, MaterialColor.PINK)
                                 .hardnessAndResistance(1.5F, 10.0F)
                                 .sound(SoundType.STONE)
-                , () -> MidnightBlocks.NIGHTSTONE));
+                , () -> MidnightBlocks.NIGHTSTONE))
+                .add("nightstone", new SoilBlock(Block.Properties.create(Material.ROCK, MaterialColor.BLUE_TERRACOTTA)
+                        .hardnessAndResistance(1.5f, 10f)
+                        .sound(SoundType.STONE)
+                , true));
 
         RegUtil.blocks(event.getRegistry())
                 .withProperties(() ->
@@ -379,41 +379,53 @@ public class MidnightBlocks {
                 .add("double_viridshroom", props -> new DoubleFungiBlock(props, () -> new LargeFungiFeature(
                         MidnightBlocks.VIRIDSHROOM_STEM.getDefaultState(),
                         MidnightBlocks.VIRIDSHROOM_HAT.getDefaultState()
-                )));
+                )))
+                .add("double_bogshroom", props -> new DoubleFungiBlock(props, () -> new LargeBogshroomFeature(NoFeatureConfig::deserialize))) // TODO gen
+                .add("lumen_bud", props -> new MidnightPlantBlock(props, true, () -> DOUBLE_LUMEN_BUD))
+                .add("double_lumen_bud", props -> new MidnightDoublePlantBlock(props, true))
+                .add("bulb_fungus", props -> new BulbFungusBlock(props, () -> new LargeBulbFungusFeature()))
+                .add("bogweed", BogweedBlock::new)
+                .add("ghost_plant", props -> new MidnightPlantBlock(props, true))
+                .add("fingered_grass", FingeredGrassBlock::new)
+                .add("tendrilweed", TendrilweedBlock::new)
+                .add("violeaf", VioleafBlock::new)
+                .add("dragon_nest", DragonNestBlock::new);
 
+
+
+        RegUtil.blocks(event.getRegistry())
+                .withProperties(() -> Block.Properties.create(Material.WOOD)
+                        .sound(SoundType.WOOD)
+                        .hardnessAndResistance(2f, 0f)
+                )
+                .add("nightshroom_stem", Block::new)
+                .add("dewshroom_stem", Block::new)
+                .add("viridshroom_stem", Block::new)
+                .add("bogshroom_stem", Block::new);
+
+        RegUtil.blocks(event.getRegistry())
+                // TODO bulb fungus stem drops 4 BULB_FUNGUS_HAND, can silk touch & sheared
+                .add("bulb_fungus_stem", props -> new LogBlock(MaterialColor.BROWN, props.hardnessAndResistance(0.5f, 0f)))
+                .add("nightshroom_hat", new MidnightFungiHatBlock(() -> NIGHTSHROOM, () -> MidnightItems.NIGHTSHROOM_POWDER, MaterialColor.CYAN))
+                .add("dewshroom_hat", new MidnightFungiHatBlock(() -> DEWSHROOM, () -> MidnightItems.DEWSHROOM_POWDER, MaterialColor.PURPLE))
+                .add("viridshroom_hat", new MidnightFungiHatBlock(() -> VIRIDSHROOM, () -> MidnightItems.VIRIDSHROOM_POWDER, MaterialColor.EMERALD))
+                .add("bogshroom_hat", new MidnightFungiHatBlock(() -> BOGSHROOM, () -> MidnightItems.BOGSHROOM_POWDER, MaterialColor.ADOBE))
+                .add("bulb_fungus_hat", new BulbFungusHatBlock());
 
         // TODO: Port all registration
 
         blocks.addAll(Lists.newArrayList(
                 RegUtil.withName(new MidnightLeavesBlock(() -> SHADOWROOT_SAPLING), "shadowroot_leaves"),
                 RegUtil.withName(new MidnightLeavesBlock(() -> DARK_WILLOW_SAPLING), "dark_willow_leaves"),
-                RegUtil.withName(new MidnightFungiStemBlock(), "nightshroom_stem"),
-                RegUtil.withName(new MidnightFungiHatBlock(() -> NIGHTSHROOM, () -> MidnightItems.NIGHTSHROOM_POWDER, MaterialColor.CYAN), "nightshroom_hat"),
-                RegUtil.withName(new MidnightFungiStemBlock(), "dewshroom_stem"),
-                RegUtil.withName(new MidnightFungiHatBlock(() -> DEWSHROOM, () -> MidnightItems.DEWSHROOM_POWDER, MaterialColor.PURPLE), "dewshroom_hat"),
-                RegUtil.withName(new MidnightFungiStemBlock(), "viridshroom_stem"),
-                RegUtil.withName(new MidnightFungiHatBlock(() -> VIRIDSHROOM, () -> MidnightItems.VIRIDSHROOM_POWDER, MaterialColor.EMERALD), "viridshroom_hat"),
-                RegUtil.withName(new BulbFungusStemBlock(), "bulb_fungus_stem"),
-                RegUtil.withName(new BulbFungusHatBlock(MapColor.MAGENTA), "bulb_fungus_hat"),
                 RegUtil.withName(new RockshroomBlock(), "rockshroom"),
-                RegUtil.withName(new DoubleFungiBlock(LargeBogshroomFeature::new), "double_bogshroom"),
                 RegUtil.withName(new MidnightFungiShelfBlock(), "bogshroom_shelf"),
-                RegUtil.withName(new MidnightFungiStemBlock(), "bogshroom_stem"),
-                RegUtil.withName(new MidnightFungiHatBlock(() -> BOGSHROOM, () -> MidnightItems.BOGSHROOM_POWDER, MaterialColor.ADOBE), "bogshroom_hat"),
-                RegUtil.withName(new BulbFungusBlock(LargeBulbFungusFeature::new), "bulb_fungus"),
                 RegUtil.withName(new MidnightFungiShelfBlock(), "nightshroom_shelf"),
                 RegUtil.withName(new MidnightFungiShelfBlock(), "dewshroom_shelf"),
                 RegUtil.withName(new MidnightFungiShelfBlock(), "viridshroom_shelf"),
-                RegUtil.withName(new LumenBudBlock(), "lumen_bud"),
-                RegUtil.withName(new MidnightDoublePlantBlock(true), "double_lumen_bud"),
                 RegUtil.withName(new BladeshroomBlock(), "bladeshroom"),
-                RegUtil.withName(new BogweedBlock(), "bogweed"),
-                RegUtil.withName(new GhostPlantBlock(), "ghost_plant"),
-                RegUtil.withName(new FingeredGrassBlock(), "fingered_grass"),
-                RegUtil.withName(new TendrilweedBlock(), "tendrilweed"),
                 RegUtil.withName(new MidnightPlantBlock(false), "runebush"),
-                RegUtil.withName(new DragonNestBlock(), "dragon_nest"),
-                RegUtil.withName(new VioleafBlock(), "violeaf"),
+
+
                 RegUtil.withName(new MidnightPlantBlock(true), "crystal_flower"),
                 RegUtil.withName(new MidnightSaplingBlock(ShadowrootTreeFeature::new), "shadowroot_sapling"),
                 RegUtil.withName(new MidnightSaplingBlock(DarkWillowTreeFeature::new), "dark_willow_sapling"),
@@ -432,7 +444,6 @@ public class MidnightBlocks {
         ));
 
         blocks.addAll(Lists.newArrayList(
-                RegUtil.withName(new NightstoneBlock(), "nightstone"), // BLUE_STAINED_HARDENED_CLAY
                 RegUtil.withName(new BlockBasic(Material.ROCK), "trenchstone")
                         .withHarvestLevel("pickaxe", 2)
                         .setHardness(5.0F)

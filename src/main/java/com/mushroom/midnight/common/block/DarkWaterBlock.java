@@ -16,7 +16,7 @@ import javax.annotation.Nullable;
 public class DarkWaterBlock extends MixableFluidBlock {
     public DarkWaterBlock() {
         super(MidnightFluids.DARK_WATER, Material.WATER);
-        this.setLightOpacity(3);
+        setLightOpacity(3);
     }
 
     @Override
@@ -36,7 +36,6 @@ public class DarkWaterBlock extends MixableFluidBlock {
     }
 
     @Override
-    @SuppressWarnings("deprecation")
     public MaterialColor getMapColor(BlockState state, IBlockAccess world, BlockPos pos) {
         return MaterialColor.BLUE;
     }

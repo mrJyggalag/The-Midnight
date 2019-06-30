@@ -3,35 +3,29 @@ package com.mushroom.midnight.common.block;
 import com.google.common.collect.Lists;
 import com.mushroom.midnight.common.entity.creature.StingerEntity;
 import com.mushroom.midnight.common.registry.MidnightSounds;
-import com.mushroom.midnight.common.registry.MidnightItemGroups;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.properties.PropertyInteger;
-import net.minecraft.block.state.BlockFaceShape;
-import net.minecraft.block.state.BlockStateContainer;
-import net.minecraft.block.state.BlockState;
 import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.init.Enchantments;
-import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.state.IntegerProperty;
 import net.minecraft.state.StateContainer;
-import net.minecraft.stats.StatList;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.Direction;
-import net.minecraft.util.EnumHand;
 import net.minecraft.util.Hand;
 import net.minecraft.util.SoundCategory;
-import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IBlockAccess;
+import net.minecraft.util.math.BlockRayTraceResult;
+import net.minecraft.util.math.shapes.ISelectionContext;
+import net.minecraft.util.math.shapes.VoxelShape;
+import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraftforge.event.ForgeEventFactory;
 
@@ -41,22 +35,20 @@ import java.util.Random;
 
 @SuppressWarnings({ "WeakerAccess", "deprecation" })
 public abstract class PileOfEggsBlock extends Block {
-    protected static final AxisAlignedBB bound_one_egg = new AxisAlignedBB(0.1875d, 0d, 0.1875d, 0.75d, 0.4375d, 0.75d);
-    protected static final AxisAlignedBB bound_several_eggs = new AxisAlignedBB(0.0625d, 0d, 0.0625d, 0.9375d, 0.4375d, 0.9375d);
+    protected static final VoxelShape bound_one_egg = makeCuboidShape(0.1875d, 0d, 0.1875d, 0.75d, 0.4375d, 0.75d);
+    protected static final VoxelShape bound_several_eggs = makeCuboidShape(0.0625d, 0d, 0.0625d, 0.9375d, 0.4375d, 0.9375d);
     public static final IntegerProperty EGGS = IntegerProperty.create("eggs", 1, 4);
 
     protected PileOfEggsBlock() {
-        super(Material.ROCK);
+        super(Properties.create(Material.ROCK).sound(MidnightSounds.PILE_OF_EGGS).hardnessAndResistance(-1f, 0f));
         setDefaultState(getStateContainer().getBaseState().with(EGGS, 1));
-        setCreativeTab(MidnightItemGroups.DECORATION);
-        blockSoundType = MidnightSounds.PILE_OF_EGGS;
-        blockHardness = 1f;
+        //setCreativeTab(MidnightItemGroups.DECORATION);
     }
 
     protected abstract MobEntity createEntityForEgg(World world, BlockPos pos, BlockState state);
 
     @Override
-    public boolean onBlockActivated(World world, BlockPos pos, BlockState state, PlayerEntity player, Hand hand, Direction facing, float hitX, float hitY, float hitZ) {
+    public boolean onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
         if (player == null) {
             return false;
         }
@@ -69,7 +61,7 @@ public abstract class PileOfEggsBlock extends Block {
                         stack.shrink(1);
                     }
                     world.setBlockState(pos, state.with(EGGS, state.get(EGGS) + 1));
-                    world.playSound(null, pos, blockSoundType.getPlaceSound(), SoundCategory.BLOCKS, (blockSoundType.getVolume() + 1f) / 2f, blockSoundType.getPitch() * 0.8f);
+                    world.playSound(null, pos, this.soundType.getPlaceSound(), SoundCategory.BLOCKS, (this.soundType.getVolume() + 1f) / 2f, this.soundType.getPitch() * 0.8f);
                 }
             }
             return true;
@@ -135,11 +127,6 @@ public abstract class PileOfEggsBlock extends Block {
     }
 
     @Override
-    protected boolean canSilkHarvest() {
-        return false;
-    }
-
-    @Override
     public void harvestBlock(World world, PlayerEntity player, BlockPos pos, BlockState state, @Nullable TileEntity tile, ItemStack stack) {
         player.addStat(StatsList.getBlockStats(this));
         player.addExhaustion(0.005F);
@@ -169,12 +156,12 @@ public abstract class PileOfEggsBlock extends Block {
     }
 
     @Override
-    public AxisAlignedBB getCollisionBoundingBox(BlockState state, IBlockAccess world, BlockPos pos) {
-        return getBoundingBox(state, world, pos);
+    public VoxelShape getCollisionShape(BlockState state, IBlockReader world, BlockPos pos, ISelectionContext context) {
+        return getShape(state, world, pos, context);
     }
 
     @Override
-    public AxisAlignedBB getBoundingBox(BlockState state, IBlockAccess world, BlockPos pos) {
+    public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
         return (state.get(EGGS) > 1 ? bound_several_eggs : bound_one_egg);
     }
 
@@ -186,16 +173,6 @@ public abstract class PileOfEggsBlock extends Block {
     @Override
     protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
         builder.add(EGGS);
-    }
-
-    @Override
-    public BlockState getStateFromMeta(int meta) {
-        return getDefaultState().with(EGGS, (meta & 3) + 1);
-    }
-
-    @Override
-    public int getMetaFromState(BlockState state) {
-        return state.get(EGGS) - 1;
     }
 
     @Override

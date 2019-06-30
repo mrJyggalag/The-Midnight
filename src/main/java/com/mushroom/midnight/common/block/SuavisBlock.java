@@ -5,6 +5,7 @@ import com.mushroom.midnight.common.registry.MidnightItems;
 import com.mushroom.midnight.common.registry.MidnightItemGroups;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.block.IGrowable;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -16,9 +17,11 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.pathfinding.PathType;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraft.potion.Potions;
@@ -26,13 +29,18 @@ import net.minecraft.state.IntegerProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
+import net.minecraft.util.Hand;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.SoundCategory;
+import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.math.shapes.ISelectionContext;
+import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IEnviromentBlockReader;
+import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -44,25 +52,21 @@ import java.util.Random;
 @SuppressWarnings("deprecation")
 public class SuavisBlock extends Block implements IGrowable {
     public static final IntegerProperty STAGE = IntegerProperty.create("stage", 0, 3);
-    protected static final AxisAlignedBB[] bounds = new AxisAlignedBB[] {
-            new AxisAlignedBB(0d, 0d, 0d, 1d, 0.2125d, 1d),
-            new AxisAlignedBB(0d, 0d, 0d, 1d, 0.4375d, 1d),
-            new AxisAlignedBB(0d, 0d, 0d, 1d, 0.8125d, 1d),
-            new AxisAlignedBB(0d, 0d, 0d, 1d, 1d, 1d),
+    protected static final VoxelShape[] bounds = new VoxelShape[] {
+            makeCuboidShape(0d, 0d, 0d, 1d, 0.2125d, 1d),
+            makeCuboidShape(0d, 0d, 0d, 1d, 0.4375d, 1d),
+            makeCuboidShape(0d, 0d, 0d, 1d, 0.8125d, 1d),
+            makeCuboidShape(0d, 0d, 0d, 1d, 1d, 1d),
     };
 
     public SuavisBlock() {
-        super(Material.GOURD, MaterialColor.LIGHT_BLUE);
-        setLightLevel(0.8F);
-        setCreativeTab(MidnightItemGroups.DECORATION);
-        setHardness(1f);
-        setSoundType(SoundType.SLIME);
+        super(Properties.create(Material.GOURD, MaterialColor.LIGHT_BLUE).lightValue(12).hardnessAndResistance(1f, 0f).sound(SoundType.SLIME).tickRandomly());
         setDefaultState(getStateContainer().getBaseState().with(STAGE, 3));
-        setTickRandomly(true);
+        //setCreativeTab(MidnightItemGroups.DECORATION);
     }
 
     @Override
-    public BlockState getStateForPlacement(World world, BlockPos pos, Direction facing, float hitX, float hitY, float hitZ, int meta, LivingEntity placer, EnumHand hand) {
+    public BlockState getStateForPlacement(BlockState state, Direction facing, BlockState state2, IWorld world, BlockPos pos1, BlockPos pos2, Hand hand) {
         return getDefaultState();
     }
 
@@ -71,7 +75,7 @@ public class SuavisBlock extends Block implements IGrowable {
         super.onFallenUpon(world, pos, entity, fallDistance);
         if (!world.isRemote && fallDistance > 0.8f && entity instanceof LivingEntity) {
             BlockState state = world.getBlockState(pos);
-            world.playSound(null, pos, SoundEvents.BLOCK_SLIME_BREAK, SoundCategory.BLOCKS, 0.7F, 0.9F + world.rand.nextFloat() * 0.2F);
+            world.playSound(null, pos, SoundEvents.BLOCK_SLIME_BLOCK_BREAK, SoundCategory.BLOCKS, 0.7F, 0.9F + world.rand.nextFloat() * 0.2F);
             boolean isFirstStage = state.get(STAGE) == 0;
             if (!isFirstStage && world.rand.nextInt(100) == 0) {
                 world.destroyBlock(pos, true);
@@ -92,12 +96,12 @@ public class SuavisBlock extends Block implements IGrowable {
     }
 
     @Override
-    public ItemStack getPickBlock(BlockState state, RayTraceResult target, World world, BlockPos pos, PlayerEntity player) {
+    public ItemStack getPickBlock(BlockState state, RayTraceResult target, IBlockReader world, BlockPos pos, PlayerEntity player) {
         return new ItemStack(MidnightItems.RAW_SUAVIS);
     }
 
     @Override
-    public boolean isReplaceable(IBlockAccess world, BlockPos pos) {
+    public boolean isReplaceable(BlockState state, BlockItemUseContext useContext) {
         return false;
     }
 
@@ -114,16 +118,6 @@ public class SuavisBlock extends Block implements IGrowable {
     @Override
     protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
         builder.add(STAGE);
-    }
-
-    @Override
-    public BlockState getStateFromMeta(int meta) {
-        return getDefaultState().with(STAGE, meta & 3);
-    }
-
-    @Override
-    public int getMetaFromState(BlockState state) {
-        return state.get(STAGE);
     }
 
     @Override
@@ -189,6 +183,12 @@ public class SuavisBlock extends Block implements IGrowable {
         }
     }
 
+    private int quantityDropped(BlockState state, int fortune, Random random) { // json drop or getDrops()
+        int maxSlice = state.get(STAGE) + 1;
+        int minSlice = Math.min(1 + fortune, maxSlice);
+        return random.nextInt(maxSlice - minSlice + 1) + minSlice;
+    }
+
     @Override
     @OnlyIn(Dist.CLIENT)
     public int getPackedLightmapCoords(BlockState state, IEnviromentBlockReader worldIn, BlockPos pos) {
@@ -225,24 +225,17 @@ public class SuavisBlock extends Block implements IGrowable {
     }
 
     @Override
-    public int quantityDropped(BlockState state, int fortune, Random random) { // json drop or getDrops()
-        int maxSlice = state.get(STAGE) + 1;
-        int minSlice = Math.min(1 + fortune, maxSlice);
-        return random.nextInt(maxSlice - minSlice + 1) + minSlice;
+    public VoxelShape getCollisionShape(BlockState state, IBlockReader world, BlockPos pos, ISelectionContext context) {
+        return getShape(state, world, pos, context);
     }
 
     @Override
-    public AxisAlignedBB getCollisionBoundingBox(BlockState state, IBlockAccess world, BlockPos pos) {
-        return getBoundingBox(state, world, pos);
-    }
-
-    @Override
-    public AxisAlignedBB getBoundingBox(BlockState state, IBlockAccess world, BlockPos pos) {
+    public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
         return bounds[state.get(STAGE)];
     }
 
     @Override
-    public boolean isPassable(IBlockAccess world, BlockPos pos) {
-        return world.getBlockState(pos).getValue(STAGE) < 2;
+    public boolean allowsMovement(BlockState state, IBlockReader world, BlockPos pos, PathType type) {
+        return world.getBlockState(pos).get(STAGE) < 2;
     }
 }

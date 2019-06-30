@@ -1,6 +1,5 @@
 package com.mushroom.midnight.common.block;
 
-import com.mushroom.midnight.common.registry.MidnightItemGroups;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.FenceBlock;
 import net.minecraft.block.SoundType;
@@ -13,6 +12,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IEnviromentBlockReader;
+import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -24,10 +24,10 @@ import java.util.function.Supplier;
 public class MidnightFenceBlock extends FenceBlock {
     private final Supplier<BlockState> parentSupplier;
 
-    public MidnightFenceBlock(Supplier<BlockState> parentSupplier) {
-        super(Material.WOOD, MaterialColor.WOOD);
+    public MidnightFenceBlock(Properties properties, Supplier<BlockState> parentSupplier) {
+        super(properties);
         this.parentSupplier = parentSupplier;
-        this.setCreativeTab(MidnightItemGroups.DECORATION);
+        //setCreativeTab(MidnightItemGroups.DECORATION);
     }
 
     @Override
@@ -36,18 +36,18 @@ public class MidnightFenceBlock extends FenceBlock {
     }
 
     @Override
-    public float getBlockHardness(BlockState state, World world, BlockPos pos) {
+    public float getBlockHardness(BlockState blockState, IBlockReader world, BlockPos pos) {
         return this.parentSupplier.get().getBlockHardness(world, pos);
     }
 
     @Override
-    public float getExplosionResistance(World world, BlockPos pos, @Nullable Entity exploder, Explosion explosion) {
+    public float getExplosionResistance(BlockState state, IWorldReader world, BlockPos pos, @Nullable Entity exploder, Explosion explosion) {
         BlockState parentState = this.parentSupplier.get();
-        return parentState.getBlock().getExplosionResistance(world, pos, exploder, explosion);
+        return parentState.getBlock().getExplosionResistance(state, world, pos, exploder, explosion);
     }
 
     @Override
-    public SoundType getSoundType(BlockState state, World world, BlockPos pos, @Nullable Entity entity) {
+    public SoundType getSoundType(BlockState state, IWorldReader world, BlockPos pos, @Nullable Entity entity) {
         BlockState parentState = this.parentSupplier.get();
         return parentState.getBlock().getSoundType(parentState, world, pos, entity);
     }

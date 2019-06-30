@@ -1,7 +1,6 @@
 package com.mushroom.midnight.common.block;
 
 import com.mushroom.midnight.common.registry.MidnightBlocks;
-import com.mushroom.midnight.common.registry.MidnightItemGroups;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.SoundType;
@@ -9,7 +8,6 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
 import net.minecraft.entity.EntitySpawnPlacementRegistry;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.MobEntity;
 import net.minecraft.item.Item;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.StateContainer;
@@ -34,20 +32,17 @@ public class MidnightFungiHatBlock extends Block {
     private final Supplier<Block> saplingSupplier;
     private final Supplier<Item> powderSupplier;
 
-    public MidnightFungiHatBlock(Supplier<Block> saplingSupplier, Supplier<Item> powderSupplier, MaterialColor mapColor) {
-        super(Material.WOOD, mapColor);
+    public MidnightFungiHatBlock(Supplier<Block> saplingSupplier, Supplier<Item> powderSupplier, MaterialColor materialColor) {
+        super(Block.Properties.create(Material.WOOD, materialColor).sound(SoundType.WOOD).hardnessAndResistance(0.5f, 0f));
         this.saplingSupplier = saplingSupplier;
         this.powderSupplier = powderSupplier;
-        this.setHardness(0.5F);
-        this.setSoundType(SoundType.WOOD);
-        this.setCreativeTab(MidnightItemGroups.BUILDING);
         this.setDefaultState(this.getStateContainer().getBaseState()
-                .withProperty(UP, false)
-                .withProperty(DOWN, false)
-                .withProperty(NORTH, false)
-                .withProperty(EAST, false)
-                .withProperty(SOUTH, false)
-                .withProperty(WEST, false)
+                .with(UP, false)
+                .with(DOWN, false)
+                .with(NORTH, false)
+                .with(EAST, false)
+                .with(SOUTH, false)
+                .with(WEST, false)
         );
     }
 
@@ -65,26 +60,15 @@ public class MidnightFungiHatBlock extends Block {
     @SuppressWarnings("deprecation")
     public BlockState getActualState(BlockState state, IBlockAccess world, BlockPos pos) {
         return state.with(UP, this.isInside(world, pos.up()))
-                .withProperty(DOWN, this.isInside(world, pos.down()))
-                .withProperty(NORTH, this.isInside(world, pos.north()))
-                .withProperty(EAST, this.isInside(world, pos.east()))
-                .withProperty(SOUTH, this.isInside(world, pos.south()))
-                .withProperty(WEST, this.isInside(world, pos.west()));
+                .with(DOWN, this.isInside(world, pos.down()))
+                .with(NORTH, this.isInside(world, pos.north()))
+                .with(EAST, this.isInside(world, pos.east()))
+                .with(SOUTH, this.isInside(world, pos.south()))
+                .with(WEST, this.isInside(world, pos.west()));
     }
 
     private boolean isInside(IBlockAccess world, BlockPos pos) {
         return world.getBlockState(pos).getBlock() == MidnightBlocks.MUSHROOM_INSIDE;
-    }
-
-    @Override
-    @SuppressWarnings("deprecation")
-    public BlockState getStateFromMeta(int meta) {
-        return this.getDefaultState();
-    }
-
-    @Override
-    public int getMetaFromState(BlockState state) {
-        return 0;
     }
 
     @Override
@@ -116,7 +100,6 @@ public class MidnightFungiHatBlock extends Block {
     }
 
     @Override
-    @SuppressWarnings("deprecation")
     public float getAmbientOcclusionLightValue(BlockState state) {
         return 0.8F;
     }
