@@ -19,7 +19,6 @@ import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.template.PlacementSettings;
 import net.minecraft.world.gen.feature.template.Template;
 import net.minecraft.world.gen.feature.template.TemplateManager;
-import net.minecraftforge.fml.common.IWorldGenerator;
 
 import javax.annotation.Nullable;
 import java.util.HashMap;
@@ -27,7 +26,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
-public class LargeFungiFeature extends IWorldGenerator { // fix me
+public class LargeFungiFeature extends MidnightNaturalFeature { // TODO fix me Feature<?>
     private static final Block[] SHELF_BLOCKS = new Block[] { MidnightBlocks.NIGHTSHROOM_SHELF, MidnightBlocks.DEWSHROOM_SHELF, MidnightBlocks.VIRIDSHROOM_SHELF };
     private static final int SHELF_ATTACH_CHANCE = 6;
 

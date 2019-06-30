@@ -22,7 +22,9 @@ import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.world.IBlockReader;
+import net.minecraft.world.IEnviromentBlockReader;
 import net.minecraft.world.IWorld;
+import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.BlockStateContainer;
 import net.minecraftforge.api.distmarker.Dist;
@@ -103,23 +105,13 @@ public class DeceitfulMossBlock extends Block {
     }
 
     @Override
-    public BlockState getStateFromMeta(int meta) {
-        return this.getDefaultState().with(FACING, Direction.byIndex(meta));
-    }
-
-    @Override
-    public int getMetaFromState(BlockState state) {
-        return state.get(FACING).getIndex();
-    }
-
-    @Override
     public BlockState withRotation(BlockState state, Rotation rot) {
         return state.with(FACING, rot.rotate(state.get(FACING)));
     }
 
     @Override
-    public BlockState withMirror(BlockState state, Mirror mirrorIn) {
-        return state.withRotation(mirrorIn.toRotation(state.get(FACING)));
+    public BlockState mirror(BlockState state, Mirror mirrorIn) {
+        return state.rotate(mirrorIn.toRotation(state.get(FACING)));
     }
 
     @Override
@@ -138,12 +130,12 @@ public class DeceitfulMossBlock extends Block {
     }
 
     @Override
-    public boolean canBeReplacedByLeaves(BlockState state, IBlockAccess world, BlockPos pos) {
+    public boolean canBeReplacedByLeaves(BlockState state, IWorldReader world, BlockPos pos) {
         return true;
     }
 
     @OnlyIn(Dist.CLIENT)
-    public boolean shouldSideBeRendered(BlockState state, IBlockAccess world, BlockPos pos, Direction side) {
+    public boolean doesSideBlockRendering(BlockState state, IEnviromentBlockReader world, BlockPos pos, Direction side) {
         if (side == Direction.UP) {
             return true;
         }

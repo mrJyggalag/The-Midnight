@@ -1,6 +1,5 @@
 package com.mushroom.midnight.common.block;
 
-import com.mushroom.midnight.common.registry.MidnightItemGroups;
 import com.mushroom.midnight.common.tile.base.TileEntityMidnightChest;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockRenderType;
@@ -35,19 +34,18 @@ public class MidnightChestBlock extends ChestBlock {
     private final ChestModel chestModel;
 
     public MidnightChestBlock(Properties properties, ChestModel chestModel) {
-        super(properties.hardnessAndResistance(2.5f, 0f).sound(SoundType.WOOD), Type.BASIC);
+        super(properties.hardnessAndResistance(2.5f, 0f).sound(SoundType.WOOD)); //, Type.BASIC
         this.chestModel = chestModel;
         //setCreativeTab(MidnightItemGroups.DECORATION);
     }
 
-    @Nullable
     @Override
-    public TileEntity createTileEntity(World world, BlockState state) {
+    @Nullable
+    public TileEntity createNewTileEntity(IBlockReader world) {
         return new TileEntityMidnightChest(chestModel);
     }
 
     @Override
-    @SuppressWarnings("deprecation")
     public int getWeakPower(BlockState blockState, IBlockReader blockAccess, BlockPos pos, Direction side) {
         if (!blockState.canProvidePower()) {
             return 0;
@@ -102,8 +100,8 @@ public class MidnightChestBlock extends ChestBlock {
     }
 
     @Override
-    public void neighborChanged(BlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos) {
-        super.neighborChanged(state, worldIn, pos, blockIn, fromPos);
+    public void neighborChanged(BlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos, boolean p_220069_6_) {
+        super.neighborChanged(state, worldIn, pos, blockIn, fromPos, p_220069_6_);
         TileEntity tileentity = worldIn.getTileEntity(pos);
         if (tileentity instanceof TileEntityMidnightChest) {
             tileentity.updateContainingBlockInfo();

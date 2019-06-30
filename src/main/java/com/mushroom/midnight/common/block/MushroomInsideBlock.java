@@ -13,10 +13,10 @@ public class MushroomInsideBlock extends AirBlock {
     }
 
     @Override
-    public void neighborChanged(BlockState state, World world, BlockPos pos, Block block, BlockPos fromPos) {
-        int neighborCount = this.countHatNeighbors(world, pos);
+    public void neighborChanged(BlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos, boolean p_220069_6_) {
+        int neighborCount = this.countHatNeighbors(worldIn, pos);
         if (neighborCount <= 0) {
-            world.setBlockToAir(pos);
+            worldIn.setBlockToAir(pos);
         }
     }
 

@@ -3,28 +3,34 @@ package com.mushroom.midnight.common.tile.base;
 import com.mushroom.midnight.common.block.MidnightChestBlock;
 import com.mushroom.midnight.common.block.MidnightChestBlock.ChestModel;
 import net.minecraft.block.Block;
-import net.minecraft.client.renderer.texture.ITickable;
+import net.minecraft.block.ChestBlock;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ItemStackHelper;
+import net.minecraft.inventory.container.ChestContainer;
+import net.minecraft.inventory.container.Container;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.tileentity.ITickableTileEntity;
+import net.minecraft.tileentity.LockableLootTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.SoundCategory;
+import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
 import javax.annotation.Nullable;
 
-public class TileEntityMidnightChest extends TileEntityLockableLoot implements ITickable {
+public class TileEntityMidnightChest extends LockableLootTileEntity implements ITickableTileEntity {
     private NonNullList<ItemStack> chestContents = NonNullList.withSize(27, ItemStack.EMPTY);
     public boolean adjacentChestChecked;
     public TileEntityMidnightChest adjacentChestZNeg;
@@ -35,7 +41,7 @@ public class TileEntityMidnightChest extends TileEntityLockableLoot implements I
     public float prevLidAngle;
     public int numPlayersUsing;
     private int ticksSinceSync;
-    private BlockChest.Type cachedChestType;
+    private ChestBlock.Type cachedChestType;
     private final ChestModel chestModel;
 
     public TileEntityMidnightChest() {
@@ -46,7 +52,7 @@ public class TileEntityMidnightChest extends TileEntityLockableLoot implements I
         this.chestModel = chestModel;
     }
 
-    public TileEntityMidnightChest(BlockChest.Type typeIn) {
+    public TileEntityMidnightChest(ChestBlock.Type typeIn) {
         this.cachedChestType = typeIn;
         this.chestModel = ChestModel.getDefault();
     }
@@ -72,7 +78,7 @@ public class TileEntityMidnightChest extends TileEntityLockableLoot implements I
     protected boolean isChestAt(BlockPos posIn) {
         if (this.world != null) {
             Block block = this.world.getBlockState(posIn).getBlock();
-            if (block instanceof MidnightChestBlock && ((BlockChest) block).chestType == getChestType()) {
+            if (block instanceof MidnightChestBlock && ((ChestBlock) block).chestType == getChestType()) {
                 TileEntity tile = this.world.getTileEntity(posIn);
                 if (tile instanceof TileEntityMidnightChest) {
                     return isSameChest(((TileEntityMidnightChest) tile).getChestModel());
@@ -124,22 +130,22 @@ public class TileEntityMidnightChest extends TileEntityLockableLoot implements I
     }
 
     @Override
-    public void readFromNBT(CompoundNBT compound) {
-        super.readFromNBT(compound);
+    public void read(CompoundNBT compound) {
+        super.read(compound);
         this.chestContents = NonNullList.withSize(this.getSizeInventory(), ItemStack.EMPTY);
 
         if (!this.checkLootAndRead(compound)) {
             ItemStackHelper.loadAllItems(compound, this.chestContents);
         }
 
-        if (compound.hasKey("CustomName", 8)) {
+        if (compound.contains("CustomName", 8)) {
             this.customName = compound.getString("CustomName");
         }
     }
 
     @Override
-    public CompoundNBT writeToNBT(CompoundNBT compound) {
-        super.writeToNBT(compound);
+    public CompoundNBT write(CompoundNBT compound) {
+        super.write(compound);
 
         if (!this.checkLootAndWrite(compound)) {
             ItemStackHelper.saveAllItems(compound, this.chestContents);
@@ -198,7 +204,8 @@ public class TileEntityMidnightChest extends TileEntityLockableLoot implements I
         }
     }
 
-    public void update() {
+    @Override
+    public void tick() {
         this.checkForAdjacentChests();
         int i = this.pos.getX();
         int j = this.pos.getY();
@@ -210,8 +217,8 @@ public class TileEntityMidnightChest extends TileEntityLockableLoot implements I
             float f = 5.0F;
 
             for (PlayerEntity PlayerEntity : this.world.getEntitiesWithinAABB(PlayerEntity.class, new AxisAlignedBB((double) ((float) i - 5.0F), (double) ((float) j - 5.0F), (double) ((float) k - 5.0F), (double) ((float) (i + 1) + 5.0F), (double) ((float) (j + 1) + 5.0F), (double) ((float) (k + 1) + 5.0F)))) {
-                if (PlayerEntity.openContainer instanceof ContainerChest) {
-                    IInventory iinventory = ((ContainerChest) PlayerEntity.openContainer).getLowerChestInventory();
+                if (PlayerEntity.openContainer instanceof ChestContainer) {
+                    IInventory iinventory = ((ChestContainer) PlayerEntity.openContainer).getLowerChestInventory();
 
                     if (iinventory == this || iinventory instanceof InventoryLargeChest && ((InventoryLargeChest) iinventory).isPartOfLargeChest(this)) {
                         ++this.numPlayersUsing;
@@ -274,6 +281,7 @@ public class TileEntityMidnightChest extends TileEntityLockableLoot implements I
         }
     }
 
+    @Override
     public boolean receiveClientEvent(int id, int type) {
         if (id == 1) {
             this.numPlayersUsing = type;
@@ -283,6 +291,7 @@ public class TileEntityMidnightChest extends TileEntityLockableLoot implements I
         }
     }
 
+    @Override
     public void openInventory(PlayerEntity player) {
         if (!player.isSpectator()) {
             if (this.numPlayersUsing < 0) {
@@ -293,14 +302,15 @@ public class TileEntityMidnightChest extends TileEntityLockableLoot implements I
             this.world.addBlockEvent(this.pos, this.getBlockType(), 1, this.numPlayersUsing);
             this.world.notifyNeighborsOfStateChange(this.pos, this.getBlockType(), false);
 
-            if (this.getChestType() == BlockChest.Type.TRAP) {
+            if (this.getChestType() == ChestBlock.Type.TRAP) {
                 this.world.notifyNeighborsOfStateChange(this.pos.down(), this.getBlockType(), false);
             }
         }
     }
 
+    @Override
     public void closeInventory(PlayerEntity player) {
-        if (!player.isSpectator() && this.getBlockType() instanceof BlockChest) {
+        if (!player.isSpectator() && this.getBlockType() instanceof ChestBlock) {
             --this.numPlayersUsing;
             this.world.addBlockEvent(this.pos, this.getBlockType(), 1, this.numPlayersUsing);
             this.world.notifyNeighborsOfStateChange(this.pos, this.getBlockType(), false);
@@ -313,10 +323,9 @@ public class TileEntityMidnightChest extends TileEntityLockableLoot implements I
 
     public MidnightVanillaDoubleChestItemHandler doubleChestHandler;
 
-    @SuppressWarnings("unchecked")
     @Override
     @Nullable
-    public <T> T getCapability(Capability<T> capability, @Nullable Direction facing) {
+    public <T> LazyOptional<T> getCapability(Capability<T> capability, @Nullable Direction facing) {
         if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
             if (doubleChestHandler == null || doubleChestHandler.needsRefresh()) {
                 doubleChestHandler = MidnightVanillaDoubleChestItemHandler.get(this);
@@ -341,13 +350,13 @@ public class TileEntityMidnightChest extends TileEntityLockableLoot implements I
         this.checkForAdjacentChests();
     }
 
-    public BlockChest.Type getChestType() {
+    public ChestBlock.Type getChestType() {
         if (this.cachedChestType == null) {
-            if (this.world == null || !(this.getBlockType() instanceof BlockChest)) {
-                return BlockChest.Type.BASIC;
+            if (this.world == null || !(this.getBlockType() instanceof ChestBlock)) {
+                return ChestBlock.Type.BASIC;
             }
 
-            this.cachedChestType = ((BlockChest) this.getBlockType()).chestType;
+            this.cachedChestType = ((ChestBlock) this.getBlockType()).chestType;
         }
 
         return this.cachedChestType;
@@ -359,7 +368,7 @@ public class TileEntityMidnightChest extends TileEntityLockableLoot implements I
 
     public Container createContainer(PlayerInventory playerInventory, PlayerEntity playerIn) {
         this.fillWithLoot(playerIn);
-        return new ContainerChest(playerInventory, this, playerIn);
+        return new ChestBlock(playerInventory, this, playerIn);
     }
 
     protected NonNullList<ItemStack> getItems() {

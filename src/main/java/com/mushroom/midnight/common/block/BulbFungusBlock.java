@@ -6,16 +6,16 @@ import net.minecraft.block.IGrowable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
+import net.minecraft.world.gen.feature.Feature;
 import net.minecraftforge.event.ForgeEventFactory;
-import net.minecraftforge.fml.common.IWorldGenerator;
 
 import java.util.Random;
 import java.util.function.Supplier;
 
 public class BulbFungusBlock extends MidnightPlantBlock implements IGrowable {
-    private final Supplier<IWorldGenerator> genSupplier;
+    private final Supplier<Feature<?>> genSupplier;
 
-    public BulbFungusBlock(Properties properties, Supplier<IWorldGenerator> genSupplier) {
+    public BulbFungusBlock(Properties properties, Supplier<Feature<?>> genSupplier) {
         super(properties, true);
         this.genSupplier = genSupplier;
     }
@@ -35,7 +35,7 @@ public class BulbFungusBlock extends MidnightPlantBlock implements IGrowable {
     @Override
     public void grow(World world, Random rand, BlockPos pos, BlockState state) {
         if (!ForgeEventFactory.saplingGrowTree(world, rand, pos)) {
-            IWorldGenerator generator = this.genSupplier.get();
+            Feature<?> generator = this.genSupplier.get();
             // TODO Feature @Gegy
             world.setBlockState(pos, Blocks.AIR.getDefaultState(), 4);
             if (!generator.generate(world, rand, pos)) {
