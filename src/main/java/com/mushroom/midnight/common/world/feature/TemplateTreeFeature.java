@@ -54,7 +54,7 @@ public abstract class TemplateTreeFeature extends MidnightTreeFeature {
                 .withAnchor(ANCHOR_KEY)
                 .withSettingConfigurator(RotatedSettingConfigurator.INSTANCE)
                 .withProcessor(this::processState)
-                .withDataProcessor(this::processMarker);
+                .withMarkerProcessor(this::processMarker);
     }
 
     @Override

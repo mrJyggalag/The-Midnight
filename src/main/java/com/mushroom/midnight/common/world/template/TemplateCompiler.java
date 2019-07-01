@@ -27,7 +27,7 @@ public class TemplateCompiler {
 
     private final Collection<BiConsumer<PlacementSettings, Random>> settingConfigurators = new ArrayList<>();
     private final Collection<StructureProcessor> processors = new ArrayList<>();
-    private TemplateDataProcessor dataProcessor;
+    private TemplateMarkerProcessor markerProcessor;
     private final Collection<TemplatePostProcessor> postProcessors = new ArrayList<>();
 
     public static TemplateCompiler of(ResourceLocation... templates) {
@@ -49,8 +49,8 @@ public class TemplateCompiler {
         return this;
     }
 
-    public TemplateCompiler withDataProcessor(TemplateDataProcessor processor) {
-        this.dataProcessor = processor;
+    public TemplateCompiler withMarkerProcessor(TemplateMarkerProcessor processor) {
+        this.markerProcessor = processor;
         return this;
     }
 
@@ -84,7 +84,7 @@ public class TemplateCompiler {
         BlockPos anchor = this.computeAnchor(dataBlocks);
         BlockPos anchoredOrigin = anchor != null ? origin.subtract(anchor) : origin;
 
-        return new CompiledTemplate(templateId, template, settings, anchoredOrigin, this.dataProcessor, this.postProcessors);
+        return new CompiledTemplate(templateId, template, settings, anchoredOrigin, this.markerProcessor, this.postProcessors);
     }
 
     @Nullable

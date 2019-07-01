@@ -14,6 +14,7 @@ import com.mushroom.midnight.common.world.feature.FungiFlowersFeature;
 import com.mushroom.midnight.common.world.feature.HeapFeature;
 import com.mushroom.midnight.common.world.feature.LargeBogshroomFeature;
 import com.mushroom.midnight.common.world.feature.LargeBulbFungusFeature;
+import com.mushroom.midnight.common.world.feature.LargeFungiFeature;
 import com.mushroom.midnight.common.world.feature.MidnightOreFeature;
 import com.mushroom.midnight.common.world.feature.MossFeature;
 import com.mushroom.midnight.common.world.feature.NightstoneBoulderFeature;
@@ -99,8 +100,11 @@ public class MidnightFeatures {
     public static final Feature<NoFeatureConfig> DEAD_TREE = RegUtil.injected();
     public static final Feature<NoFeatureConfig> BOG_DEAD_TREE = RegUtil.injected();
     public static final Feature<NoFeatureConfig> DEAD_LOG = RegUtil.injected();
-    public static final Feature<NoFeatureConfig> LARGE_BOGSHROOM = RegUtil.injected();
-    public static final Feature<NoFeatureConfig> LARGE_BULB_FUNGUS = RegUtil.injected();
+    public static final AbstractTreeFeature<NoFeatureConfig> LARGE_BOGSHROOM = RegUtil.injected();
+    public static final AbstractTreeFeature<NoFeatureConfig> LARGE_BULB_FUNGUS = RegUtil.injected();
+    public static final AbstractTreeFeature<NoFeatureConfig> LARGE_NIGHTSHROOM = RegUtil.injected();
+    public static final AbstractTreeFeature<NoFeatureConfig> LARGE_DEWSHROOM = RegUtil.injected();
+    public static final AbstractTreeFeature<NoFeatureConfig> LARGE_VIRIDSHROOM = RegUtil.injected();
 
     public static final Feature<NoFeatureConfig> SUAVIS = RegUtil.injected();
     public static final Feature<NoFeatureConfig> DECEITFUL_ALGAE = RegUtil.injected();
@@ -134,6 +138,9 @@ public class MidnightFeatures {
                 .add("dead_log", new DeadLogFeature(NoFeatureConfig::deserialize))
                 .add("large_bogshroom", new LargeBogshroomFeature(NoFeatureConfig::deserialize))
                 .add("large_bulb_fungus", new LargeBulbFungusFeature(NoFeatureConfig::deserialize))
+                .add("large_nightshroom", new LargeFungiFeature(NoFeatureConfig::deserialize, MidnightBlocks.NIGHTSHROOM_STEM.getDefaultState(), MidnightBlocks.NIGHTSHROOM_HAT.getDefaultState()))
+                .add("large_dewshroom", new LargeFungiFeature(NoFeatureConfig::deserialize, MidnightBlocks.DEWSHROOM_STEM.getDefaultState(), MidnightBlocks.DEWSHROOM_HAT.getDefaultState()))
+                .add("large_viridshroom", new LargeFungiFeature(NoFeatureConfig::deserialize, MidnightBlocks.VIRIDSHROOM_STEM.getDefaultState(), MidnightBlocks.VIRIDSHROOM_HAT.getDefaultState()))
                 .add("suavis", new ScatteredPlantFeature(NoFeatureConfig::deserialize, MidnightBlocks.SUAVIS.getDefaultState()))
                 .add("deceitful_algae", new AlgaeFeature(NoFeatureConfig::deserialize))
                 .add("deceitful_moss", new MossFeature(NoFeatureConfig::deserialize))

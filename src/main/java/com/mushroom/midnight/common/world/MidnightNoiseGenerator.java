@@ -24,9 +24,6 @@ public class MidnightNoiseGenerator {
     public static final int NOISE_WIDTH = 16 / HORIZONTAL_GRANULARITY;
     public static final int NOISE_HEIGHT = 256 / VERTICAL_GRANULARITY;
 
-    private static final int BUFFER_WIDTH = NOISE_WIDTH + 1;
-    private static final int BUFFER_HEIGHT = NOISE_HEIGHT + 1;
-
     private static final int BIOME_WEIGHT_RADIUS = 2;
 
     private final OctaveNoiseSampler worldNoise;

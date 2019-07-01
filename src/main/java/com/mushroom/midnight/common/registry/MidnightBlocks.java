@@ -43,9 +43,6 @@ import com.mushroom.midnight.common.block.VioleafBlock;
 import com.mushroom.midnight.common.item.DeceitfulAlgaeItem;
 import com.mushroom.midnight.common.tile.base.TileEntityMidnightChest;
 import com.mushroom.midnight.common.tile.base.TileEntityMidnightFurnace;
-import com.mushroom.midnight.common.world.feature.LargeBogshroomFeature;
-import com.mushroom.midnight.common.world.feature.LargeBulbFungusFeature;
-import com.mushroom.midnight.common.world.feature.LargeFungiFeature;
 import com.mushroom.midnight.common.world.tree.DarkWillowTree;
 import com.mushroom.midnight.common.world.tree.ShadowrootTree;
 import net.minecraft.block.Block;
@@ -71,7 +68,6 @@ import net.minecraft.block.material.MaterialColor;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.world.gen.feature.NoFeatureConfig;
 import net.minecraftforge.common.ToolType;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -378,22 +374,13 @@ public class MidnightBlocks {
                 .add("viridshroom", props -> new MidnightPlantBlock(props, true, () -> DOUBLE_VIRIDSHROOM))
                 .add("bogshroom", props -> new MidnightPlantBlock(props, true, () -> DOUBLE_BOGSHROOM))
                 // TODO @Gegy Feature
-                .add("double_nightshroom", props -> new DoubleFungiBlock(props, () -> new LargeFungiFeature(
-                        MidnightBlocks.NIGHTSHROOM_STEM.getDefaultState(),
-                        MidnightBlocks.NIGHTSHROOM_HAT.getDefaultState()
-                )))
-                .add("double_dewshroom", props -> new DoubleFungiBlock(props, () -> new LargeFungiFeature(
-                        MidnightBlocks.DEWSHROOM_STEM.getDefaultState(),
-                        MidnightBlocks.DEWSHROOM_HAT.getDefaultState()
-                )))
-                .add("double_viridshroom", props -> new DoubleFungiBlock(props, () -> new LargeFungiFeature(
-                        MidnightBlocks.VIRIDSHROOM_STEM.getDefaultState(),
-                        MidnightBlocks.VIRIDSHROOM_HAT.getDefaultState()
-                )))
-                .add("double_bogshroom", props -> new DoubleFungiBlock(props, () -> new LargeBogshroomFeature(NoFeatureConfig::deserialize))) // TODO gen
+                .add("double_nightshroom", props -> new DoubleFungiBlock(props, () -> MidnightFeatures.LARGE_NIGHTSHROOM))
+                .add("double_dewshroom", props -> new DoubleFungiBlock(props, () -> MidnightFeatures.LARGE_DEWSHROOM))
+                .add("double_viridshroom", props -> new DoubleFungiBlock(props, () -> MidnightFeatures.LARGE_VIRIDSHROOM))
+                .add("double_bogshroom", props -> new DoubleFungiBlock(props, () -> MidnightFeatures.LARGE_BOGSHROOM))
                 .add("lumen_bud", props -> new MidnightPlantBlock(props, true, () -> DOUBLE_LUMEN_BUD))
                 .add("double_lumen_bud", props -> new MidnightDoublePlantBlock(props, true))
-                .add("bulb_fungus", props -> new BulbFungusBlock(props, () -> new LargeBulbFungusFeature(NoFeatureConfig::deserialize)))
+                .add("bulb_fungus", props -> new BulbFungusBlock(props, () -> MidnightFeatures.LARGE_BULB_FUNGUS))
                 .add("bogweed", BogweedBlock::new)
                 .add("ghost_plant", props -> new MidnightPlantBlock(props, true))
                 .add("fingered_grass", FingeredGrassBlock::new)

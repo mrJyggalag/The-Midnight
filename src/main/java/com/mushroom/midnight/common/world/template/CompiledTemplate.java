@@ -20,15 +20,15 @@ public class CompiledTemplate {
     private final PlacementSettings settings;
     private final BlockPos origin;
 
-    private final TemplateDataProcessor dataProcessor;
+    private final TemplateMarkerProcessor markerProcessor;
     private final Collection<TemplatePostProcessor> postProcessors;
 
-    private final Map<BlockPos, String> dataBlocks;
+    private final Map<BlockPos, String> markerBlocks;
 
     CompiledTemplate(
             ResourceLocation templateId,
             Template template, PlacementSettings settings, BlockPos origin,
-            TemplateDataProcessor dataProcessor,
+            TemplateMarkerProcessor markerProcessor,
             Collection<TemplatePostProcessor> postProcessors
     ) {
         this.templateId = templateId;
@@ -36,18 +36,18 @@ public class CompiledTemplate {
         this.settings = settings;
         this.origin = origin;
 
-        this.dataProcessor = dataProcessor;
+        this.markerProcessor = markerProcessor;
         this.postProcessors = postProcessors;
 
-        this.dataBlocks = TemplateCompiler.collectDataMarkers(origin, settings, template);
+        this.markerBlocks = TemplateCompiler.collectDataMarkers(origin, settings, template);
     }
 
     public void addTo(IWorld world, Random random, int flags) {
         this.template.addBlocksToWorld(world, this.origin, this.settings, flags);
 
-        if (this.dataProcessor != null) {
-            for (Map.Entry<BlockPos, String> entry : this.dataBlocks.entrySet()) {
-                this.dataProcessor.process(world, entry.getKey(), entry.getValue());
+        if (this.markerProcessor != null) {
+            for (Map.Entry<BlockPos, String> entry : this.markerBlocks.entrySet()) {
+                this.markerProcessor.process(world, entry.getKey(), entry.getValue());
             }
         }
 
@@ -69,7 +69,7 @@ public class CompiledTemplate {
     }
 
     public Stream<BlockPos> lookupStream(String key) {
-        return this.dataBlocks.entrySet().stream()
+        return this.markerBlocks.entrySet().stream()
                 .filter(e -> e.getValue().equals(key))
                 .map(Map.Entry::getKey);
     }
