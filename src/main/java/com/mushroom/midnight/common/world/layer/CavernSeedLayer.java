@@ -1,38 +1,24 @@
 package com.mushroom.midnight.common.world.layer;
 
-import com.mushroom.midnight.common.biome.MidnightBiomeGroup;
 import com.mushroom.midnight.common.biome.BiomeSpawnEntry;
+import com.mushroom.midnight.common.biome.MidnightBiomeGroup;
 import com.mushroom.midnight.common.registry.MidnightCavernousBiomes;
-import net.minecraft.world.gen.layer.GenLayer;
-import net.minecraft.world.gen.layer.IntCache;
+import net.minecraft.world.gen.INoiseRandom;
+import net.minecraft.world.gen.layer.traits.IAreaTransformer0;
 
-public class CavernSeedLayer extends GenLayer {
+public class CavernSeedLayer implements IAreaTransformer0 {
     private final MidnightBiomeGroup group;
     private final int closedCavernId;
 
-    public CavernSeedLayer(long seed, MidnightBiomeGroup group) {
-        super(seed);
+    public CavernSeedLayer(MidnightBiomeGroup group) {
         this.group = group;
         this.closedCavernId = MidnightCavernousBiomes.getId(MidnightCavernousBiomes.CLOSED_CAVERN);
     }
 
     @Override
-    public int[] getInts(int originX, int originY, int width, int height) {
-        int[] result = IntCache.getIntCache(width * height);
-
-        for (int localY = 0; localY < height; localY++) {
-            for (int localX = 0; localX < width; localX++) {
-                result[localX + localY * width] = this.selectBiome(localX + originX, localY + originY);
-            }
-        }
-
-        return result;
-    }
-
-    private int selectBiome(int globalX, int globalY) {
-        this.initChunkSeed(globalX, globalY);
-        if (this.nextInt(2) == 0) {
-            BiomeSpawnEntry entry = this.group.getGlobalPool().selectEntry(this::nextInt);
+    public int apply(INoiseRandom random, int x, int y) {
+        if (random.random(2) == 0) {
+            BiomeSpawnEntry entry = this.group.getGlobalPool().selectEntry(random::random);
             if (entry != null) {
                 return entry.getBiomeId();
             }

@@ -1,12 +1,8 @@
 package com.mushroom.midnight.common.world;
 
 import com.mushroom.midnight.Midnight;
-import com.mushroom.midnight.common.biome.BiomeLayerSampler;
-import com.mushroom.midnight.common.biome.MidnightBiomeLayer;
-import com.mushroom.midnight.common.biome.cavern.CavernousBiome;
 import com.mushroom.midnight.common.capability.MidnightWorldSpawners;
 import com.mushroom.midnight.common.registry.MidnightBlocks;
-import com.mushroom.midnight.common.registry.MidnightCavernousBiomes;
 import net.minecraft.util.SharedSeedRandom;
 import net.minecraft.world.GameRules;
 import net.minecraft.world.ServerWorld;
@@ -21,8 +17,6 @@ import static com.mushroom.midnight.common.world.MidnightNoiseGenerator.HORIZONT
 import static com.mushroom.midnight.common.world.MidnightNoiseGenerator.VERTICAL_GRANULARITY;
 
 public class MidnightChunkGenerator extends NoiseChunkGenerator<MidnightChunkGenerator.Config> {
-    private static final BiomeLayerSampler<CavernousBiome> DEFAULT_CAVERN_SAMPLER = new BiomeLayerSampler.Constant<>(MidnightCavernousBiomes.CLOSED_CAVERN);
-
     public static final int SURFACE_LEVEL = 78;
 
     public static final int MIN_CAVE_HEIGHT = 20;
@@ -39,18 +33,8 @@ public class MidnightChunkGenerator extends NoiseChunkGenerator<MidnightChunkGen
         this.noiseGenerator = new MidnightNoiseGenerator(this.randomSeed);
     }
 
-    // TODO: Cover cavernous biomes
-
-    @Override
-    public void generateBiomes(IChunk chunk) {
-        super.generateBiomes(chunk);
-
-        // TODO: chunk primer doesn't store capabilities.. PR forge for this support
-        chunk.getCapability(Midnight.CAVERNOUS_BIOME_CAP)
-                .ifPresent(store -> {
-                    store.populate(MidnightChunkGenerator.this.cavernBiomeBuffer);
-                });
-    }
+    // TODO: Cover and generate features for cavernous biomes
+    // TODO: generate cavern biomes whenever we need, we can't store them atm
 
     @Override
     public void spawnMobs(WorldGenRegion region) {
@@ -95,13 +79,6 @@ public class MidnightChunkGenerator extends NoiseChunkGenerator<MidnightChunkGen
     @Override
     public int getSeaLevel() {
         return SURFACE_LEVEL + 2;
-    }
-
-    private BiomeLayerSampler<CavernousBiome> getCavernousBiomeSampler() {
-        return this.world.getCapability(Midnight.MULTI_LAYER_BIOME_SAMPLER_CAP, null).map(multiLayerSampler -> {
-            BiomeLayerSampler<CavernousBiome> layer = multiLayerSampler.getLayer(MidnightBiomeLayer.UNDERGROUND);
-            return layer != null ? layer : DEFAULT_CAVERN_SAMPLER;
-        }).orElse(DEFAULT_CAVERN_SAMPLER);
     }
 
     public static class Config extends GenerationSettings {

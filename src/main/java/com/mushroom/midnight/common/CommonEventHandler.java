@@ -1,11 +1,9 @@
 package com.mushroom.midnight.common;
 
 import com.mushroom.midnight.Midnight;
-import com.mushroom.midnight.common.biome.BiomeLayerSampler;
-import com.mushroom.midnight.common.biome.MidnightBiomeLayer;
+import com.mushroom.midnight.common.biome.BiomeProcedureBuilder;
 import com.mushroom.midnight.common.capability.CavernousBiomeStore;
 import com.mushroom.midnight.common.capability.MidnightWorldSpawners;
-import com.mushroom.midnight.common.capability.MultiLayerBiomeSampler;
 import com.mushroom.midnight.common.capability.RiftTravelCooldown;
 import com.mushroom.midnight.common.capability.RifterCapturable;
 import com.mushroom.midnight.common.config.MidnightConfig;
@@ -28,19 +26,19 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.GameRules;
 import net.minecraft.world.ServerWorld;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.dimension.DimensionType;
+import net.minecraft.world.gen.area.IAreaFactory;
+import net.minecraft.world.gen.area.LazyArea;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.entity.EntityEvent;
 import net.minecraftforge.event.entity.PlaySoundAtEntityEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.PlayerSleepInBedEvent;
-import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
@@ -87,11 +85,13 @@ public class CommonEventHandler {
         if (Helper.isMidnightDimension(world)) {
             MultiLayerBiomeSampler sampler = new MultiLayerBiomeSampler();
 
-            GenLayer surfaceProcedure = MidnightBiomeLayer.SURFACE.buildProcedure();
-            GenLayer undergroundProcedure = MidnightBiomeLayer.UNDERGROUND.buildProcedure();
+            long worldSeed = world.getSeed();
 
-            sampler.put(MidnightBiomeLayer.SURFACE, BiomeLayerSampler.fromGenLayer(world, surfaceProcedure, Biome::getBiomeForId, false));
-            sampler.put(MidnightBiomeLayer.UNDERGROUND, BiomeLayerSampler.fromGenLayer(world, undergroundProcedure, MidnightCavernousBiomes::fromId, true));
+            IAreaFactory<LazyArea> surfaceProcedure = BiomeProcedureBuilder.SURFACE.buildProcedure(worldSeed);
+            IAreaFactory<LazyArea> undergroundProcedure = BiomeProcedureBuilder.UNDERGROUND.buildProcedure(worldSeed * 31);
+
+            sampler.put(BiomeProcedureBuilder.SURFACE, BiomeLayerSampler.fromGenLayer(world, surfaceProcedure, Biome::getBiomeForId, false));
+            sampler.put(BiomeProcedureBuilder.UNDERGROUND, BiomeLayerSampler.fromGenLayer(world, undergroundProcedure, MidnightCavernousBiomes::byId, true));
 
             event.addCapability(new ResourceLocation(Midnight.MODID, "biome_sampler"), sampler);
 

@@ -1,10 +1,8 @@
 package com.mushroom.midnight.common.world.generator;
 
 import com.mushroom.midnight.Midnight;
-import com.mushroom.midnight.common.biome.BiomeLayerSampler;
-import com.mushroom.midnight.common.biome.MidnightBiomeLayer;
+import com.mushroom.midnight.common.biome.BiomeProcedureBuilder;
 import com.mushroom.midnight.common.biome.cavern.CavernousBiome;
-import com.mushroom.midnight.common.capability.MultiLayerBiomeSampler;
 import com.mushroom.midnight.common.registry.MidnightBlocks;
 import net.minecraft.block.material.Material;
 import net.minecraft.util.math.BlockPos;
@@ -15,7 +13,7 @@ import net.minecraft.world.chunk.ChunkPrimer;
 
 import java.util.Arrays;
 
-public class WorldGenMidnightCaves extends MapGenCaves {
+public class MidnightCaveCarver extends MapGenCaves {
     @Override
     protected void recursiveGenerate(World world, int chunkX, int chunkZ, int originalX, int originalZ, ChunkPrimer primer) {
         int nodeCount = this.rand.nextInt(this.rand.nextInt(this.rand.nextInt(15) + 1) + 1);
@@ -88,7 +86,7 @@ public class WorldGenMidnightCaves extends MapGenCaves {
     private float getRadiusScale(int x, int z) {
         MultiLayerBiomeSampler multiLayerSampler = this.world.getCapability(Midnight.MULTI_LAYER_BIOME_SAMPLER_CAP, null);
         if (multiLayerSampler != null) {
-            BiomeLayerSampler<CavernousBiome> undergroundLayer = multiLayerSampler.getLayer(MidnightBiomeLayer.UNDERGROUND);
+            BiomeLayerSampler<CavernousBiome> undergroundLayer = multiLayerSampler.getLayer(BiomeProcedureBuilder.UNDERGROUND);
 
             if (undergroundLayer != null) {
                 float current = getRadiusScale(undergroundLayer.sample(x, z));

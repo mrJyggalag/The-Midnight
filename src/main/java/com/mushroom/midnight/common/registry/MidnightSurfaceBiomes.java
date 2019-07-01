@@ -22,7 +22,11 @@ import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.ObjectHolder;
+
+import java.util.Map;
+import java.util.stream.Stream;
 
 @Mod.EventBusSubscriber(modid = Midnight.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 @ObjectHolder(Midnight.MODID)
@@ -94,5 +98,11 @@ public class MidnightSurfaceBiomes {
                 new BiomeSpawnEntry.Basic(HILLY_FUNGI_FOREST, 5)
                         .canReplace(FUNGI_FOREST)
         );
+    }
+
+    public static Stream<Biome> allBiomes() {
+        return ForgeRegistries.BIOMES.getEntries().stream()
+                .filter(entry -> entry.getKey().getNamespace().equals(Midnight.MODID))
+                .map(Map.Entry::getValue);
     }
 }

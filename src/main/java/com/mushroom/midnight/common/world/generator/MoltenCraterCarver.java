@@ -14,12 +14,14 @@ import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.chunk.ChunkPrimer;
 import net.minecraft.world.gen.MapGenBase;
+import net.minecraft.world.gen.carver.WorldCarver;
+import net.minecraft.world.gen.feature.ProbabilityConfig;
 
 import javax.annotation.Nullable;
 import java.util.Arrays;
 import java.util.Random;
 
-public class WorldGenMoltenCrater extends MapGenBase {
+public class MoltenCraterCarver extends WorldCarver<ProbabilityConfig> {
     private static final Random RNG = new Random(0);
 
     private static final int SPAWN_CHANCE = 350;
@@ -42,7 +44,7 @@ public class WorldGenMoltenCrater extends MapGenBase {
     private final INoiseSampler noiseSampler;
     private final double[] noiseBuffer = new double[16 * 16 * 256];
 
-    public WorldGenMoltenCrater(Random random, PartialChunkGenerator generator) {
+    public MoltenCraterCarver(Random random, PartialChunkGenerator generator) {
         this.generator = generator;
         this.range = MathHelper.ceil((MAX_RADIUS + EDGE_DEPTH) / 16.0);
 

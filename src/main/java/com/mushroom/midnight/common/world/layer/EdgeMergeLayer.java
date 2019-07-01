@@ -1,40 +1,29 @@
 package com.mushroom.midnight.common.world.layer;
 
-import net.minecraft.world.gen.layer.GenLayer;
-import net.minecraft.world.gen.layer.IntCache;
+import net.minecraft.world.gen.INoiseRandom;
+import net.minecraft.world.gen.area.IArea;
+import net.minecraft.world.gen.layer.traits.IAreaTransformer2;
+import net.minecraft.world.gen.layer.traits.IDimOffset0Transformer;
 
-public class EdgeMergeLayer extends GenLayer {
-    private final int target;
+import java.util.function.IntPredicate;
+
+public class EdgeMergeLayer implements IAreaTransformer2, IDimOffset0Transformer {
+    private final IntPredicate target;
     private final int replacement;
 
-    private final GenLayer edgeParent;
-
-    public EdgeMergeLayer(long seed, GenLayer parent, GenLayer edgeParent, int target, int replacement) {
-        super(seed);
-        this.parent = parent;
-        this.edgeParent = edgeParent;
+    public EdgeMergeLayer(IntPredicate target, int replacement) {
         this.target = target;
         this.replacement = replacement;
     }
 
     @Override
-    public int[] getInts(int originX, int originY, int width, int height) {
-        int[] result = IntCache.getIntCache(width * height);
-        int[] parent = this.parent.getInts(originX, originY, width, height);
-        int[] ridge = this.edgeParent.getInts(originX, originY, width, height);
-
-        for (int localY = 0; localY < height; localY++) {
-            for (int localX = 0; localX < width; localX++) {
-                int index = localX + localY * width;
-                int parentValue = parent[index];
-                if (ridge[index] == 1 && parentValue == this.target) {
-                    result[index] = this.replacement;
-                } else {
-                    result[index] = parentValue;
-                }
-            }
+    public int apply(INoiseRandom random, IArea mainSampler, IArea edgeSampler, int x, int y) {
+        int main = mainSampler.getValue(this.func_215721_a(x), this.func_215722_b(y));
+        int edge = edgeSampler.getValue(this.func_215721_a(x), this.func_215722_b(y));
+        if (edge == 1 && this.target.test(main)) {
+            return this.replacement;
         }
 
-        return result;
+        return main;
     }
 }

@@ -1,6 +1,8 @@
 package com.mushroom.midnight.common.world;
 
-import com.mushroom.midnight.common.biome.MidnightBiomeLayer;
+import com.mushroom.midnight.common.biome.BiomeLayer;
+import com.mushroom.midnight.common.biome.BiomeProcedure;
+import com.mushroom.midnight.common.biome.BiomeProcedureBuilder;
 import com.mushroom.midnight.common.config.MidnightConfig;
 import com.mushroom.midnight.common.registry.MidnightDimensions;
 import net.minecraft.client.Minecraft;
@@ -19,6 +21,7 @@ import net.minecraft.world.dimension.Dimension;
 import net.minecraft.world.dimension.DimensionType;
 import net.minecraft.world.gen.ChunkGenerator;
 import net.minecraft.world.gen.Heightmap;
+import net.minecraft.world.gen.area.LazyArea;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -35,8 +38,10 @@ public class MidnightDimension extends Dimension {
 
     @Override
     public ChunkGenerator<?> createChunkGenerator() {
-        BiomeProvider biomeProvider = new MidnightBiomeProvider(this.world, MidnightBiomeLayer.SURFACE);
-        return new MidnightChunkGenerator(this.world, biomeProvider, MidnightChunkGenerator.Config.createDefault());
+        BiomeProcedure<LazyArea> biomeProcedure = BiomeProcedureBuilder.Surface.INSTANCE.buildProcedure(world.getSeed());
+        BiomeProvider biomeProvider = new MidnightBiomeProvider(BiomeLayer.SURFACE, biomeProcedure);
+
+        return new MidnightChunkGenerator(this.world, biomeProvider, cavernBiomeLayer, cavernBiomeProcedure, MidnightChunkGenerator.Config.createDefault());
     }
 
     @Nullable

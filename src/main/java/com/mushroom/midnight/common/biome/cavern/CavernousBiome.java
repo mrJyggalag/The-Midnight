@@ -105,6 +105,7 @@ public class CavernousBiome extends ForgeRegistryEntry<CavernousBiome> implement
         return this.pillarWeight;
     }
 
+    // TODO: Integrate into decoration
     public static class PlacementLevel implements SurfacePlacementLevel {
         public static final SurfacePlacementLevel INSTANCE = new PlacementLevel();
 

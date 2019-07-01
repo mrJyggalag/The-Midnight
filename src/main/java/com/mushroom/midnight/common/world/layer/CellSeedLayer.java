@@ -1,23 +1,13 @@
 package com.mushroom.midnight.common.world.layer;
 
-import net.minecraft.world.gen.layer.GenLayer;
-import net.minecraft.world.gen.layer.IntCache;
+import net.minecraft.world.gen.INoiseRandom;
+import net.minecraft.world.gen.layer.traits.IAreaTransformer0;
 
-public class CellSeedLayer extends GenLayer {
-    public CellSeedLayer(long seed) {
-        super(seed);
-    }
+public enum CellSeedLayer implements IAreaTransformer0 {
+    INSTANCE;
 
     @Override
-    public int[] getInts(int originX, int originY, int width, int height) {
-        int[] result = IntCache.getIntCache(width * height);
-        for (int localY = 0; localY < height; localY++) {
-            for (int localX = 0; localX < width; localX++) {
-                this.initChunkSeed(originX + localX, originY + localY);
-                result[localX + localY * width] = this.nextInt(50);
-            }
-        }
-
-        return result;
+    public int apply(INoiseRandom random, int x, int y) {
+        return random.random(50);
     }
 }

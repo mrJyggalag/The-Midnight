@@ -67,7 +67,7 @@ public class MidnightCavernousBiomes {
         return registry.getID(biome);
     }
 
-    public static CavernousBiome fromId(int id) {
+    public static CavernousBiome byId(int id) {
         return registry.getValue(id);
     }
 }

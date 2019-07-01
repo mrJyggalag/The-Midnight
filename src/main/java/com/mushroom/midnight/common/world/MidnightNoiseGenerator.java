@@ -62,6 +62,7 @@ public class MidnightNoiseGenerator {
         this.weightTable = new BiomeWeightTable(BIOME_WEIGHT_RADIUS);
     }
 
+    // TODO: Don't pass array but rather a sampler type
     public void populateColumnNoise(double[] noise, int x, int z, Biome[] biomeBuffer, CavernousBiome[] cavernousBiomeBuffer) {
         GenerationContext context = new GenerationContext(biomeBuffer, cavernousBiomeBuffer);
         BiomeProperties properties = this.computeBiomeProperties(context, x, z);
