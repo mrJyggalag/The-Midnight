@@ -5,6 +5,7 @@ import com.mushroom.midnight.common.registry.MidnightBlocks;
 import net.minecraft.block.pattern.BlockMatcher;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraft.world.biome.DefaultBiomeFeatures;
 import net.minecraft.world.chunk.AbstractChunkProvider;
 import net.minecraft.world.gen.ChunkGenerator;
 import net.minecraftforge.fml.common.IWorldGenerator;
@@ -16,6 +17,10 @@ public class MidnightOreGenerator implements IWorldGenerator {
 
     private static final BlockMatcher NIGHTSTONE_MATCHER = BlockMatcher.forBlock(MidnightBlocks.NIGHTSTONE);
 
+    /**
+     *  TODO gen ores
+        {@link DefaultBiomeFeatures#addOres(net.minecraft.world.biome.Biome)}
+     */
     private static final WorldGenerator DARK_PEARL_GENERATOR = new WorldGenMinable(MidnightBlocks.DARK_PEARL_ORE.getDefaultState(), 14, NIGHTSTONE_MATCHER);
     private static final WorldGenerator TENEBRUM_GENERATOR = new WorldGenMinable(MidnightBlocks.TENEBRUM_ORE.getDefaultState(), 4, NIGHTSTONE_MATCHER);
     private static final WorldGenerator NAGRILITE_GENERATOR = new WorldGenMinable(MidnightBlocks.NAGRILITE_ORE.getDefaultState(), 4, NIGHTSTONE_MATCHER);
