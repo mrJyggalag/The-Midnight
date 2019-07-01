@@ -12,11 +12,11 @@ import net.minecraftforge.registries.ObjectHolder;
 @ObjectHolder(Midnight.MODID)
 @Mod.EventBusSubscriber(modid = Midnight.MODID)
 public class MidnightCarvers {
-    public static final WorldCarver<ProbabilityConfig> CAVE = RegUtil.injected();
+    public static final WorldCarver<ProbabilityConfig> WIDE_CAVE = RegUtil.injected();
 
     @SubscribeEvent
     public static void registerCarvers(RegistryEvent.Register<WorldCarver<?>> event) {
         RegUtil.generic(event.getRegistry())
-                .add("cave", new MidnightCaveCarver(ProbabilityConfig::deserialize, 0.5f)); // TODO scale me
+                .add("wide_cave", new MidnightCaveCarver(ProbabilityConfig::deserialize, 5.0F));
     }
 }

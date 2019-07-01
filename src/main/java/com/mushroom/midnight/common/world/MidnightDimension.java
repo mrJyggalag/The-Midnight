@@ -1,8 +1,8 @@
 package com.mushroom.midnight.common.world;
 
-import com.mushroom.midnight.common.biome.BiomeLayer;
-import com.mushroom.midnight.common.biome.BiomeProcedure;
-import com.mushroom.midnight.common.biome.BiomeProcedureBuilder;
+import com.mushroom.midnight.common.biome.BiomeLayerType;
+import com.mushroom.midnight.common.biome.BiomeLayers;
+import com.mushroom.midnight.common.biome.cavern.CavernousBiome;
 import com.mushroom.midnight.common.config.MidnightConfig;
 import com.mushroom.midnight.common.registry.MidnightDimensions;
 import net.minecraft.client.Minecraft;
@@ -13,6 +13,7 @@ import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.ServerWorld;
 import net.minecraft.world.World;
+import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.provider.BiomeProvider;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.ChunkHolder;
@@ -21,7 +22,6 @@ import net.minecraft.world.dimension.Dimension;
 import net.minecraft.world.dimension.DimensionType;
 import net.minecraft.world.gen.ChunkGenerator;
 import net.minecraft.world.gen.Heightmap;
-import net.minecraft.world.gen.area.LazyArea;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -38,15 +38,17 @@ public class MidnightDimension extends Dimension {
 
     @Override
     public ChunkGenerator<?> createChunkGenerator() {
-        BiomeProcedure<LazyArea> biomeProcedure = BiomeProcedureBuilder.Surface.INSTANCE.buildProcedure(world.getSeed());
-        BiomeProvider biomeProvider = new MidnightBiomeProvider(BiomeLayer.SURFACE, biomeProcedure);
+        long seed = this.world.getSeed();
 
-        return new MidnightChunkGenerator(this.world, biomeProvider, cavernBiomeLayer, cavernBiomeProcedure, MidnightChunkGenerator.Config.createDefault());
+        BiomeLayers<Biome> surfaceLayers = BiomeLayerType.SURFACE.make(seed);
+        BiomeLayers<CavernousBiome> undergroundLayers = BiomeLayerType.UNDERGROUND.make(seed);
+
+        return new MidnightChunkGenerator(this.world, surfaceLayers, undergroundLayers, MidnightChunkGenerator.Config.createDefault());
     }
 
     @Nullable
     @Override
-    public BlockPos findSpawn(ChunkPos chunkPosIn, boolean checkValid) {
+    public BlockPos findSpawn(ChunkPos chunk, boolean checkValid) {
         return null;
     }
 

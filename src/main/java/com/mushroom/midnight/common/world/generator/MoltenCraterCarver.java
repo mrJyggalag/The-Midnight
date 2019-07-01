@@ -3,25 +3,15 @@ package com.mushroom.midnight.common.world.generator;
 import com.mushroom.midnight.common.biome.surface.SurfaceBiome;
 import com.mushroom.midnight.common.registry.MidnightBlocks;
 import com.mushroom.midnight.common.world.MidnightChunkGenerator;
-import com.mushroom.midnight.common.world.noise.INoiseSampler;
-import com.mushroom.midnight.common.world.noise.PerlinNoiseSampler;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.IWorld;
-import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
-import net.minecraft.world.chunk.ChunkPrimer;
-import net.minecraft.world.gen.Heightmap;
-import net.minecraft.world.gen.carver.WorldCarver;
-import net.minecraft.world.gen.feature.ProbabilityConfig;
 
-import javax.annotation.Nullable;
-import java.util.Arrays;
 import java.util.Random;
 
-public class MoltenCraterCarver extends MidnightCarver<ProbabilityConfig> {
+public class MoltenCraterCarver {
     private static final Random RNG = new Random(0);
 
     private static final int SPAWN_CHANCE = 350;
@@ -39,7 +29,7 @@ public class MoltenCraterCarver extends MidnightCarver<ProbabilityConfig> {
     private static final BlockState MIASMA_STATE = MidnightBlocks.MIASMA.getDefaultState();
     private static final BlockState SURFACE_STATE = MidnightBlocks.TRENCHSTONE.getDefaultState();
 
-    private final PartialChunkGenerator generator;
+    /*private final PartialChunkGenerator generator;
 
     private final INoiseSampler noiseSampler;
     private final double[] noiseBuffer = new double[16 * 16 * 256];
@@ -164,7 +154,7 @@ public class MoltenCraterCarver extends MidnightCarver<ProbabilityConfig> {
                     int localZ = z & 15;
 
                     int localY = primer.getTopBlockY(Heightmap.Type.MOTION_BLOCKING, localX, localZ);
-                    mutablePos.setPos(localX, localY,localZ);
+                    mutablePos.setPos(localX, localY, localZ);
 
                     if (primer.getBlockState(mutablePos) == SURFACE_STATE) {
                         BlockState state = this.selectSurfaceState();
@@ -193,7 +183,7 @@ public class MoltenCraterCarver extends MidnightCarver<ProbabilityConfig> {
         int deltaY = Math.min(pos.getY() - centerY, 0) * SCALE_Y;
         int deltaZ = pos.getZ() - centerZ;
         return deltaX * deltaX + deltaY * deltaY + deltaZ * deltaZ;
-    }
+    }*/
 
     public static boolean isCraterSource(IWorld world, int chunkX, int chunkZ) {
         RNG.setSeed(world.getSeed());
@@ -208,12 +198,15 @@ public class MoltenCraterCarver extends MidnightCarver<ProbabilityConfig> {
 
         int centerX = (chunkX << 4) + RNG.nextInt(16);
         int centerZ = (chunkZ << 4) + RNG.nextInt(16);
-        Biome biome = world.getBiomeProvider().getBiome(new BlockPos(centerX, 0, centerZ));
+        Biome biome = world.getBiome(new BlockPos(centerX, 0, centerZ));
 
         return !isBiomeInvalid(biome);
     }
 
     private static boolean isBiomeInvalid(Biome biome) {
-        return SurfaceBiome.getTerrainConfig(biome).isWet();
+        if (biome instanceof SurfaceBiome) {
+            return ((SurfaceBiome) biome).isWet();
+        }
+        return true;
     }
 }

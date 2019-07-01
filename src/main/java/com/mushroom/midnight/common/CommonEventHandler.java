@@ -1,7 +1,7 @@
 package com.mushroom.midnight.common;
 
 import com.mushroom.midnight.Midnight;
-import com.mushroom.midnight.common.biome.BiomeProcedureBuilder;
+import com.mushroom.midnight.common.biome.BiomeLayerType;
 import com.mushroom.midnight.common.capability.CavernousBiomeStore;
 import com.mushroom.midnight.common.capability.MidnightWorldSpawners;
 import com.mushroom.midnight.common.capability.RiftTravelCooldown;
@@ -21,7 +21,6 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.fluid.Fluid;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -88,11 +87,11 @@ public class CommonEventHandler {
 
             long worldSeed = world.getSeed();
 
-            IAreaFactory<LazyArea> surfaceProcedure = BiomeProcedureBuilder.SURFACE.buildProcedure(worldSeed);
-            IAreaFactory<LazyArea> undergroundProcedure = BiomeProcedureBuilder.UNDERGROUND.buildProcedure(worldSeed * 31);
+            IAreaFactory<LazyArea> surfaceProcedure = BiomeLayerType.SURFACE.buildProcedure(worldSeed);
+            IAreaFactory<LazyArea> undergroundProcedure = BiomeLayerType.UNDERGROUND.buildProcedure(worldSeed * 31);
 
-            sampler.put(BiomeProcedureBuilder.SURFACE, BiomeLayerSampler.fromGenLayer(world, surfaceProcedure, Biome::getBiomeForId, false));
-            sampler.put(BiomeProcedureBuilder.UNDERGROUND, BiomeLayerSampler.fromGenLayer(world, undergroundProcedure, MidnightCavernousBiomes::byId, true));
+            sampler.put(BiomeLayerType.SURFACE, BiomeLayerSampler.fromGenLayer(world, surfaceProcedure, Biome::getBiomeForId, false));
+            sampler.put(BiomeLayerType.UNDERGROUND, BiomeLayerSampler.fromGenLayer(world, undergroundProcedure, MidnightCavernousBiomes::byId, true));
 
             event.addCapability(new ResourceLocation(Midnight.MODID, "biome_sampler"), sampler);
 

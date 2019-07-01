@@ -3,8 +3,8 @@ package com.mushroom.midnight.common.entity.util;
 import com.mushroom.midnight.Midnight;
 import net.minecraft.entity.Entity;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.world.ServerWorld;
 import net.minecraft.world.World;
-import net.minecraftforge.common.util.Constants;
 
 import javax.annotation.Nullable;
 import java.lang.ref.WeakReference;
@@ -32,6 +32,8 @@ public class EntityReference<T extends Entity> {
     }
 
     public Optional<T> deref(boolean forceLoad) {
+        if (!(this.world instanceof ServerWorld)) throw new IllegalStateException("Cannot dereference entity reference on client");
+
         if (this.entityId == null) {
             return Optional.empty();
         }
@@ -48,10 +50,10 @@ public class EntityReference<T extends Entity> {
 
         long totalWorldTime = this.world.getGameTime();
         if (forceLoad || totalWorldTime - this.lastLookupTime > 20) {
-            Optional<Entity> entity = this.world.loadedEntityList.stream()
-                    .filter(e -> e.getUniqueID().equals(this.entityId))
-                    .findFirst();
-            entity.ifPresent(this::updateCachedEntity);
+            Entity entity = ((ServerWorld) this.world).getEntityByUuid(this.entityId);
+            if (entity != null) {
+                this.updateCachedEntity(entity);
+            }
             this.lastLookupTime = totalWorldTime;
         }
 

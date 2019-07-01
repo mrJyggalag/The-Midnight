@@ -1,13 +1,11 @@
 package com.mushroom.midnight.common.world;
 
-import com.mushroom.midnight.common.biome.BiomeLayer;
-import com.mushroom.midnight.common.biome.BiomeProcedure;
+import com.mushroom.midnight.common.biome.BiomeLayers;
 import com.mushroom.midnight.common.registry.MidnightSurfaceBiomes;
 import net.minecraft.block.BlockState;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.provider.BiomeProvider;
-import net.minecraft.world.gen.area.LazyArea;
 import net.minecraft.world.gen.feature.structure.Structure;
 
 import javax.annotation.Nullable;
@@ -18,27 +16,25 @@ import java.util.Random;
 import java.util.Set;
 
 public class MidnightBiomeProvider extends BiomeProvider {
-    private final BiomeLayer<Biome> layer;
-    private final BiomeProcedure<LazyArea> procedure;
+    private final BiomeLayers<Biome> layers;
 
-    public MidnightBiomeProvider(BiomeLayer<Biome> layer, BiomeProcedure<LazyArea> procedure) {
-        this.layer = layer;
-        this.procedure = procedure;
+    public MidnightBiomeProvider(BiomeLayers<Biome> layers) {
+        this.layers = layers;
     }
 
     @Override
     public Biome getBiome(int x, int y) {
-        return this.layer.sample(this.procedure.getBlock(), x, y);
+        return this.layers.block.sample(x, y);
     }
 
     @Override
     public Biome func_222366_b(int x, int y) {
-        return this.layer.sample(this.procedure.getNoise(), x, y);
+        return this.layers.noise.sample(x, y);
     }
 
     @Override
     public Biome[] getBiomes(int x, int y, int width, int height, boolean p_201537_5_) {
-        return this.layer.sample(this.procedure.getBlock(), x, y, width, height);
+        return this.layers.block.sample(x, y, width, height);
     }
 
     @Override
@@ -51,7 +47,7 @@ public class MidnightBiomeProvider extends BiomeProvider {
         int height = maxY - minY + 1;
 
         Set<Biome> biomes = new HashSet<>();
-        Collections.addAll(biomes, this.layer.sample(this.procedure.getNoise(), minX, minY, width, height));
+        Collections.addAll(biomes, this.layers.noise.sample(minX, minY, width, height));
         return biomes;
     }
 
@@ -65,7 +61,7 @@ public class MidnightBiomeProvider extends BiomeProvider {
         int width = maxX - minX + 1;
         int height = maxY - minY + 1;
 
-        Biome[] biomes = this.layer.sample(this.procedure.getNoise(), minX, minY, width, height);
+        Biome[] biomes = this.layers.noise.sample(minX, minY, width, height);
         BlockPos result = null;
         int count = 0;
 

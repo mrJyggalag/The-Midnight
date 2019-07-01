@@ -1,5 +1,6 @@
 package com.mushroom.midnight.common.world;
 
+import com.mushroom.midnight.common.biome.BiomeLayers;
 import com.mushroom.midnight.common.biome.cavern.CavernousBiome;
 import com.mushroom.midnight.common.biome.surface.SurfaceBiome;
 import com.mushroom.midnight.common.util.Curve;
@@ -27,9 +28,6 @@ public class MidnightNoiseGenerator {
     private static final int BUFFER_HEIGHT = NOISE_HEIGHT + 1;
 
     private static final int BIOME_WEIGHT_RADIUS = 2;
-
-    public static final int BIOME_NOISE_OFFSET = BIOME_WEIGHT_RADIUS;
-    public static final int BIOME_NOISE_SIZE = BUFFER_WIDTH + BIOME_WEIGHT_RADIUS * 2;
 
     private final OctaveNoiseSampler worldNoise;
     private final OctaveNoiseSampler surfaceNoise;
@@ -62,10 +60,8 @@ public class MidnightNoiseGenerator {
         this.weightTable = new BiomeWeightTable(BIOME_WEIGHT_RADIUS);
     }
 
-    // TODO: Don't pass array but rather a sampler type
-    public void populateColumnNoise(double[] noise, int x, int z, Biome[] biomeBuffer, CavernousBiome[] cavernousBiomeBuffer) {
-        GenerationContext context = new GenerationContext(biomeBuffer, cavernousBiomeBuffer);
-        BiomeProperties properties = this.computeBiomeProperties(context, x, z);
+    public void populateColumnNoise(double[] noise, int x, int z, BiomeLayers<Biome> surfaceLayers, BiomeLayers<CavernousBiome> undergroundLayers) {
+        BiomeProperties properties = this.computeBiomeProperties(surfaceLayers, undergroundLayers, x, z);
 
         float heightOrigin = (float) SURFACE_LEVEL / VERTICAL_GRANULARITY;
         float maxHeight = 256.0F / VERTICAL_GRANULARITY;
@@ -130,17 +126,17 @@ public class MidnightNoiseGenerator {
         }
     }
 
-    private BiomeProperties computeBiomeProperties(GenerationContext context, int localX, int localZ) {
+    private BiomeProperties computeBiomeProperties(BiomeLayers<Biome> surfaceLayers, BiomeLayers<CavernousBiome> undergroundLayers, int x, int z) {
         BiomeProperties properties = BIOME_PROPERTIES;
         properties.zero();
 
         float totalWeight = 0.0F;
 
-        Biome originBiome = context.sampleNoiseBiome(localX, localZ);
+        Biome originBiome = surfaceLayers.noise.sample(x, z);
         for (int neighborZ = -BIOME_WEIGHT_RADIUS; neighborZ <= BIOME_WEIGHT_RADIUS; neighborZ++) {
             for (int neighborX = -BIOME_WEIGHT_RADIUS; neighborX <= BIOME_WEIGHT_RADIUS; neighborX++) {
-                Biome neighborBiome = context.sampleNoiseBiome(localX + neighborX, localZ + neighborZ);
-                CavernousBiome neighborCavernBiome = context.sampleNoiseCavernBiome(localX + neighborX, localZ + neighborZ);
+                Biome neighborBiome = surfaceLayers.noise.sample(x + neighborX, z + neighborZ);
+                CavernousBiome neighborCavernBiome = undergroundLayers.noise.sample(x + neighborX, z + neighborZ);
 
                 float nDepth = neighborBiome.getDepth();
                 float nScale = neighborBiome.getScale();
@@ -182,24 +178,6 @@ public class MidnightNoiseGenerator {
         properties.normalize(totalWeight);
 
         return properties;
-    }
-
-    private static class GenerationContext {
-        private final Biome[] biomeBuffer;
-        private final CavernousBiome[] cavernousBiomeBuffer;
-
-        private GenerationContext(Biome[] biomeBuffer, CavernousBiome[] cavernousBiomeBuffer) {
-            this.biomeBuffer = biomeBuffer;
-            this.cavernousBiomeBuffer = cavernousBiomeBuffer;
-        }
-
-        Biome sampleNoiseBiome(int x, int z) {
-            return this.biomeBuffer[(x + BIOME_NOISE_OFFSET) + (z + BIOME_NOISE_OFFSET) * BIOME_NOISE_SIZE];
-        }
-
-        CavernousBiome sampleNoiseCavernBiome(int x, int z) {
-            return this.cavernousBiomeBuffer[(x + BIOME_NOISE_OFFSET) + (z + BIOME_NOISE_OFFSET) * BIOME_NOISE_SIZE];
-        }
     }
 
     private static class BiomeProperties {

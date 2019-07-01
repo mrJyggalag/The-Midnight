@@ -1,12 +1,15 @@
 package com.mushroom.midnight.common.world;
 
 import com.mushroom.midnight.Midnight;
+import com.mushroom.midnight.common.biome.BiomeLayers;
+import com.mushroom.midnight.common.biome.cavern.CavernousBiome;
 import com.mushroom.midnight.common.capability.MidnightWorldSpawners;
 import com.mushroom.midnight.common.registry.MidnightBlocks;
 import net.minecraft.util.SharedSeedRandom;
 import net.minecraft.world.GameRules;
 import net.minecraft.world.ServerWorld;
 import net.minecraft.world.World;
+import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.provider.BiomeProvider;
 import net.minecraft.world.gen.GenerationSettings;
 import net.minecraft.world.gen.NoiseChunkGenerator;
@@ -28,14 +31,20 @@ public class MidnightChunkGenerator extends NoiseChunkGenerator<MidnightChunkGen
     private final World world;
     private final MidnightNoiseGenerator noiseGenerator;
 
-    public MidnightChunkGenerator(World world, BiomeProvider biomeProvider, Config config) {
-        super(world, biomeProvider, HORIZONTAL_GRANULARITY, VERTICAL_GRANULARITY, 256, config, true);
+    private final BiomeLayers<Biome> surfaceLayers;
+    private final BiomeLayers<CavernousBiome> undergroundLayers;
+
+    public MidnightChunkGenerator(World world, BiomeLayers<Biome> surfaceLayers, BiomeLayers<CavernousBiome> undergroundLayers, Config config) {
+        super(world, new MidnightBiomeProvider(surfaceLayers), HORIZONTAL_GRANULARITY, VERTICAL_GRANULARITY, 256, config, true);
+
         this.world = world;
         this.noiseGenerator = new MidnightNoiseGenerator(this.randomSeed);
+
+        this.surfaceLayers = surfaceLayers;
+        this.undergroundLayers = undergroundLayers;
     }
 
     // TODO: Cover and generate features for cavernous biomes
-    // TODO: generate cavern biomes whenever we need, we can't store them atm
 
     @Override
     public void spawnMobs(WorldGenRegion region) {
@@ -59,7 +68,7 @@ public class MidnightChunkGenerator extends NoiseChunkGenerator<MidnightChunkGen
 
     @Override
     protected void func_222548_a(double[] noise, int x, int z) {
-        this.noiseGenerator.populateColumnNoise(noise, x, z);
+        this.noiseGenerator.populateColumnNoise(noise, x, z, this.surfaceLayers, this.undergroundLayers);
     }
 
     @Override
