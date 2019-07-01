@@ -1,9 +1,9 @@
 package com.mushroom.midnight.client.render;
 
+import com.mojang.blaze3d.platform.GLX;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mushroom.midnight.common.helper.Helper;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.entity.IEntityRenderer;
 import net.minecraft.client.renderer.entity.layers.LayerRenderer;
 import net.minecraft.client.renderer.entity.model.EntityModel;
@@ -42,7 +42,7 @@ public class EmissiveLayerRenderer<T extends LivingEntity, M extends EntityModel
         GlStateManager.enableBlend();
 
         int brightness = this.brightnessFunction.apply(entity, partialTicks);
-        OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, brightness, brightness);
+        GLX.glMultiTexCoord2f(GLX.GL_TEXTURE1, brightness, brightness);
         float[] rgbF = Helper.getRGBColorF(colorFunction.getColor(entity, partialTicks));
         GlStateManager.color4f(rgbF[0], rgbF[1], rgbF[2], 1f);
         GlStateManager.disableLighting();
@@ -50,7 +50,11 @@ public class EmissiveLayerRenderer<T extends LivingEntity, M extends EntityModel
         this.getEntityModel().render(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale);
 
         GlStateManager.enableLighting();
-        OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, OpenGlHelper.lastBrightnessX, OpenGlHelper.lastBrightnessY);
+        int i = entity.getBrightnessForRender();
+        int j = i % 65536;
+        int k = i / 65536;
+        GLX.glMultiTexCoord2f(GLX.GL_TEXTURE1, (float)j, (float)k);
+        func_215334_a(entity);
 
         GlStateManager.disableBlend();
     }

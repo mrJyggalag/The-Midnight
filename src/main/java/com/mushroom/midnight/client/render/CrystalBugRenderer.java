@@ -1,5 +1,6 @@
 package com.mushroom.midnight.client.render;
 
+import com.mojang.blaze3d.platform.GLX;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.client.model.CrystalBugModel;
@@ -42,7 +43,8 @@ public class CrystalBugRenderer extends LivingRenderer<CrystalBugEntity, Crystal
     }
 
     @Override
-    public void setLightmap(CrystalBugEntity entity) {
-        OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 240f, 240f);
+    //setLightmap
+    public void func_217758_e(CrystalBugEntity entity) {
+        GLX.glMultiTexCoord2f(GLX.GL_TEXTURE1, 240f, 240f);
     }
 }
