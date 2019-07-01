@@ -1,7 +1,6 @@
 package com.mushroom.midnight.common.entity.projectile;
 
 import com.mushroom.midnight.common.item.SporeBombItem;
-import com.mushroom.midnight.common.item.SporeBombItem.Type;
 import com.mushroom.midnight.common.registry.MidnightEntities;
 import com.mushroom.midnight.common.registry.MidnightItems;
 import net.minecraft.block.BlockState;
@@ -15,13 +14,12 @@ import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.BlockRayTraceResult;
+import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.Constants;
-
-import javax.annotation.Nullable;
 
 public class SporeBombEntity extends ThrowableEntity {
     private static final DataParameter<ItemStack> BOMB_STACK = EntityDataManager.createKey(SporeBombEntity.class, DataSerializers.ITEMSTACK);
@@ -77,22 +75,24 @@ public class SporeBombEntity extends ThrowableEntity {
             if (isInWater()) {
                 entityDropItem(new ItemStack(MidnightItems.DARK_PEARL), 0.1f);
                 remove();
-            } else if (SporeBombItem.checkExplode(this.world, getBombStack())) {
-                SporeBombItem.explode(Type.fromStack(getBombStack()), this.world, this.posX, this.posY, this.posZ);
-                remove();
+            } else {
+                SporeBombItem bomb = (SporeBombItem) getBombStack().getItem();
+                if (bomb.checkExplode(this.world, getBombStack())) {
+                    bomb.explode(this.world, this.posX, this.posY, this.posZ);
+                    remove();
+                }
             }
         }
     }
 
     @Override
     protected void onImpact(RayTraceResult result) {
-        if (result.entityHit != null) {
-            DamageSource source = DamageSource.causeThrownDamage(this, getThrower());
-            result.entityHit.attackEntityFrom(source, 1f);
+        if (result.getType() == RayTraceResult.Type.ENTITY) {
+            ((EntityRayTraceResult)result).getEntity().attackEntityFrom(DamageSource.causeThrownDamage(this, this.getThrower()), 1f);
         }
         if (!world.isRemote) {
-            if (canBreakOn(result.getBlockPos())) {
-                SporeBombItem.explode(Type.fromStack(getBombStack()), this.world, this.posX, this.posY, this.posZ);
+            if (canBreakOn(result)) {
+                ((SporeBombItem) getBombStack().getItem()).explode(this.world, this.posX, this.posY, this.posZ);
             } else {
                 entityDropItem(getBombStack().copy(), 0.01f);
             }
@@ -100,12 +100,11 @@ public class SporeBombEntity extends ThrowableEntity {
         }
     }
 
-    private boolean canBreakOn(@Nullable BlockPos impactedPos) {
-        if (impactedPos == null) {
+    private boolean canBreakOn(RayTraceResult result) {
+        if (result.getType() != RayTraceResult.Type.BLOCK) {
             return false;
         }
-
-        BlockState impactedState = this.world.getBlockState(impactedPos);
+        BlockState impactedState = this.world.getBlockState(((BlockRayTraceResult)result).getPos());
         return impactedState.getMaterial() == Material.ROCK || impactedState.getMaterial() == Material.IRON;
     }
 }

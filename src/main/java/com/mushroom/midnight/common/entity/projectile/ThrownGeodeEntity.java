@@ -16,11 +16,14 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.particles.ItemParticleData;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.BlockRayTraceResult;
+import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.ServerWorld;
 import net.minecraft.world.World;
 import net.minecraft.world.storage.loot.LootContext;
+import net.minecraft.world.storage.loot.LootParameterSets;
+import net.minecraft.world.storage.loot.LootParameters;
 import net.minecraft.world.storage.loot.LootTable;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -74,13 +77,12 @@ public class ThrownGeodeEntity extends ThrowableEntity {
 
     @Override
     protected void onImpact(RayTraceResult result) {
-        if (result.entityHit != null) {
-            DamageSource source = DamageSource.causeThrownDamage(this, this.getThrower());
-            result.entityHit.attackEntityFrom(source, 1f);
+        if (result.getType() == RayTraceResult.Type.ENTITY) {
+            ((EntityRayTraceResult)result).getEntity().attackEntityFrom(DamageSource.causeThrownDamage(this, this.getThrower()), 1f);
         }
 
         if (!this.world.isRemote) {
-            if (canBreakOn(result.getBlockPos())) {
+            if (canBreakOn(result)) {
                 ServerPlayerEntity player = this.owner instanceof ServerPlayerEntity ? (ServerPlayerEntity) this.owner : null;
                 if (player != null) {
                     MidnightCriterion.THROWN_GEODE.trigger(player);
@@ -96,19 +98,22 @@ public class ThrownGeodeEntity extends ThrowableEntity {
         }
     }
 
-    private boolean canBreakOn(@Nullable BlockPos impactedPos) {
-        BlockState impactedState;
-        return impactedPos != null && ((impactedState = this.world.getBlockState(impactedPos)).getMaterial() == Material.ROCK || impactedState.getMaterial() == Material.IRON);
+    private boolean canBreakOn(RayTraceResult result) {
+        if (result.getType() != RayTraceResult.Type.BLOCK) {
+            return false;
+        }
+        BlockState impactedState = this.world.getBlockState(((BlockRayTraceResult)result).getPos());
+        return impactedState.getMaterial() == Material.ROCK || impactedState.getMaterial() == Material.IRON;
     }
 
     private void dropLootWhenBroken(@Nullable ServerPlayerEntity player) {
-        LootContext.Builder builder = new LootContext.Builder((ServerWorld) this.world).withLootedEntity(this).withDamageSource(DamageSource.GENERIC);
+        LootContext.Builder builder = new LootContext.Builder((ServerWorld) this.world).withParameter(LootParameters.THIS_ENTITY, this).withParameter(LootParameters.DAMAGE_SOURCE, DamageSource.GENERIC);
         if (player != null) {
-            builder = builder.withPlayer(player).withLuck(player.getLuck());
+            builder = builder.withParameter(LootParameters.LAST_DAMAGE_PLAYER, player).withLuck(player.getLuck());
         }
 
         LootTable loottable = this.world.getServer().getLootTableManager().getLootTableFromLocation(MidnightLootTables.LOOT_TABLE_THROWN_GEODE);
-        for (ItemStack itemstack : loottable.generateLootForPools(this.rand, builder.build())) {
+        for (ItemStack itemstack : loottable.generate(builder.build(LootParameterSets.ENTITY))) {
             this.entityDropItem(itemstack, 0.1f);
         }
     }
