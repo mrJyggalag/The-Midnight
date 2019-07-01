@@ -43,7 +43,6 @@ import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -80,9 +79,6 @@ public class Midnight {
     @CapabilityInject(CavernousBiomeStore.class)
     public static final Capability<CavernousBiomeStore> CAVERNOUS_BIOME_CAP = RegUtil.injected();
 
-    @CapabilityInject(MultiLayerBiomeSampler.class)
-    public static final Capability<MultiLayerBiomeSampler> MULTI_LAYER_BIOME_SAMPLER_CAP = RegUtil.injected();
-
     @CapabilityInject(AnimationCapability.class)
     public static final Capability<AnimationCapability> ANIMATION_CAP = RegUtil.injected();
 
@@ -101,7 +97,6 @@ public class Midnight {
         CapabilityManager.INSTANCE.register(RiftTravelCooldown.class, new NullStorage<>(), RiftTravelCooldown::new);
         CapabilityManager.INSTANCE.register(RifterCapturable.class, new NullStorage<>(), RifterCapturable::new);
         CapabilityManager.INSTANCE.register(CavernousBiomeStore.class, new DelegatedStorage<>(), CavernousBiomeStore::new);
-        CapabilityManager.INSTANCE.register(MultiLayerBiomeSampler.class, new NullStorage<>(), MultiLayerBiomeSampler::new);
         CapabilityManager.INSTANCE.register(AnimationCapability.class, new NullStorage<>(), AnimationCapability::new);
         CapabilityManager.INSTANCE.register(MidnightWorldSpawners.class, new NullStorage<>(), MidnightWorldSpawners.Void::new);
 
@@ -113,9 +108,6 @@ public class Midnight {
         LootConditionManager.registerCondition(new InBiomeLootCondition.Serializer());
         LootConditionManager.registerCondition(new InBlockLootCondition.Serializer());
         LootConditionManager.registerCondition(new IsChildLootCondition.Serializer());
-
-        // TODO oreGenerator
-        GameRegistry.registerWorldGenerator(new MidnightOreGenerator(), Integer.MAX_VALUE);
 
         MidnightSurfaceBiomes.onInit();
         MidnightCavernousBiomes.onInit();

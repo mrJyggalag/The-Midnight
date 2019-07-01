@@ -19,6 +19,7 @@ import com.mushroom.midnight.common.item.tool.MidnightShovelItem;
 import com.mushroom.midnight.common.util.CompassRotationGetter;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ArmorItem;
+import net.minecraft.item.BucketItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
 import net.minecraft.item.SwordItem;
@@ -107,6 +108,9 @@ public class MidnightItems {
     public static final Item TENEBRUM_BOOTS = Items.AIR;
     public static final Item ROCKSHROOM_SHIELD = Items.AIR;
 
+    public static final Item DARK_WATER_BUCKET = Items.AIR;
+    public static final Item MIASMA_BUCKET = Items.AIR;
+
     public static final Item ADVANCEMENT_SNAPPER = Items.AIR;
     public static final Item ADVANCEMENT_HIGHNESS = Items.AIR;
 
@@ -194,6 +198,11 @@ public class MidnightItems {
                 .add("tenebrum_leggings", props -> new ArmorItem(MidnightArmorMaterials.TENEBRUM, EquipmentSlotType.LEGS, props))
                 .add("tenebrum_boots", props -> new ArmorItem(MidnightArmorMaterials.TENEBRUM, EquipmentSlotType.FEET, props))
                 .add("rockshroom_shield", props -> new MidnightShieldItem(MidnightArmorMaterials.ROCKSHROOM, props.maxDamage(336).setTEISR(() -> ShieldItemRenderer::new)));
+
+        RegUtil.items(event.getRegistry())
+                .withProperties(() -> new Item.Properties().containerItem(Items.BUCKET).maxStackSize(1).group(MidnightItemGroups.ITEMS))
+                .add("dark_water_bucket", props -> new BucketItem(MidnightFluids.DARK_WATER, props))
+                .add("miasma_bucket", props -> new BucketItem(MidnightFluids.MIASMA, props));
 
         RegUtil.items(event.getRegistry())
                 .withProperties(Item.Properties::new)

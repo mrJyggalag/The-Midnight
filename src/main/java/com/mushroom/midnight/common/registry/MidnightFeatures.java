@@ -38,6 +38,7 @@ import net.minecraftforge.registries.ObjectHolder;
 @ObjectHolder(Midnight.MODID)
 @Mod.EventBusSubscriber(modid = Midnight.MODID)
 public class MidnightFeatures {
+    // TODO
 //    public static final IMidnightFeature UNSTABLE_BUSH_FEATURE = new PlantFeature(
 //            MidnightBlocks.UNSTABLE_BUSH.getDefaultState(),
 //            GeneratablePlant::canGenerate

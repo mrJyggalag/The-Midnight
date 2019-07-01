@@ -1,7 +1,7 @@
 package com.mushroom.midnight.common.world.feature;
 
 import com.mojang.datafixers.Dynamic;
-import com.mushroom.midnight.common.registry.MidnightBlocks;
+import com.mushroom.midnight.common.registry.MidnightTags;
 import com.mushroom.midnight.common.world.feature.config.MidnightOreConfig;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -15,7 +15,6 @@ import java.util.BitSet;
 import java.util.Random;
 import java.util.function.Function;
 
-// TODO: Clean this code more and use a tag for replacable
 public class MidnightOreFeature extends Feature<MidnightOreConfig> {
     public MidnightOreFeature(Function<Dynamic<?>, ? extends MidnightOreConfig> deserialize) {
         super(deserialize);
@@ -131,7 +130,7 @@ public class MidnightOreFeature extends Feature<MidnightOreConfig> {
                                     if (!mask.get(maskIndex)) {
                                         mask.set(maskIndex);
                                         pos.setPos(bx, by, bz);
-                                        if (world.getBlockState(pos).getBlock() == MidnightBlocks.NIGHTSTONE) {
+                                        if (world.getBlockState(pos).isIn(MidnightTags.Blocks.CAN_HOLD_ORES)) {
                                             world.setBlockState(pos, config.state, 2);
                                             placedBlocks++;
                                         }

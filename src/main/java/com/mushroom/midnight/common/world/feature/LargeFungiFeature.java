@@ -108,7 +108,7 @@ public class LargeFungiFeature extends MidnightNaturalFeature { // TODO fix me F
 
     private Template.BlockInfo processState(World world, BlockPos pos, Template.BlockInfo info) {
         BlockState state = info.state;
-        if (state.getBlock().isIn(MidnightTags.Blocks.fungi_stems)) {
+        if (state.getBlock().isIn(MidnightTags.Blocks.FUNGI_STEMS)) {
             return new Template.BlockInfo(pos, this.stem, null);
         } else if (state.getBlock() instanceof MidnightFungiHatBlock) {
             return new Template.BlockInfo(pos, this.hat, null);

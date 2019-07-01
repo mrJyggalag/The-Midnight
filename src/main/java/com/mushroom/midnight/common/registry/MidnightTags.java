@@ -1,8 +1,10 @@
 package com.mushroom.midnight.common.registry;
 
 import net.minecraft.block.Block;
+import net.minecraft.fluid.Fluid;
 import net.minecraft.item.Item;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.FluidTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.Tag;
 import net.minecraft.util.ResourceLocation;
@@ -11,7 +13,8 @@ import static com.mushroom.midnight.Midnight.MODID;
 
 public class MidnightTags {
     public static class Blocks {
-        public static final Tag<Block> fungi_stems = tag("fungi_stems");
+        public static final Tag<Block> CAN_HOLD_ORES = tag("can_hold_ores");
+        public static final Tag<Block> FUNGI_STEMS = tag("fungi_stems");
 
         private static Tag<Block> tag(String name) {
             return new BlockTags.Wrapper(new ResourceLocation(MODID, name));
@@ -19,10 +22,19 @@ public class MidnightTags {
     }
 
     public static class Items {
-        public static final Tag<Item> spore_bombs = tag("spore_bombs");
+        public static final Tag<Item> SPORE_BOMBS = tag("spore_bombs");
 
         private static Tag<Item> tag(String name) {
             return new ItemTags.Wrapper(new ResourceLocation(MODID, name));
+        }
+    }
+
+    public static class Fluids {
+        public static final Tag<Fluid> MIASMA = tag("miasma");
+        public static final Tag<Fluid> DARK_WATER = tag("dark_water");
+
+        private static Tag<Fluid> tag(String name) {
+            return new FluidTags.Wrapper(new ResourceLocation(MODID, name));
         }
     }
 }

@@ -121,7 +121,7 @@ public class SporeBombItem extends Item {
     }
 
     public long getFuseTime(World world, ItemStack stack) {
-        if (!stack.getItem().isIn(MidnightTags.Items.spore_bombs) || !stack.hasTag()) return maxFuseTime;
+        if (!stack.getItem().isIn(MidnightTags.Items.SPORE_BOMBS) || !stack.hasTag()) return maxFuseTime;
 
         CompoundNBT tag = stack.getOrCreateTag();
         if (tag.contains("fuse_time", Constants.NBT.TAG_LONG)) {

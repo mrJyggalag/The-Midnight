@@ -19,6 +19,7 @@ import com.mushroom.midnight.common.block.MiasmaFluidBlock;
 import com.mushroom.midnight.common.block.MiasmaSurfaceBlock;
 import com.mushroom.midnight.common.block.MidnightChestBlock;
 import com.mushroom.midnight.common.block.MidnightDoublePlantBlock;
+import com.mushroom.midnight.common.block.MidnightFluidBlock;
 import com.mushroom.midnight.common.block.MidnightFungiHatBlock;
 import com.mushroom.midnight.common.block.MidnightFungiShelfBlock;
 import com.mushroom.midnight.common.block.MidnightFurnaceBlock;
@@ -49,11 +50,14 @@ import com.mushroom.midnight.common.world.feature.LargeBogshroomFeature;
 import com.mushroom.midnight.common.world.feature.LargeBulbFungusFeature;
 import com.mushroom.midnight.common.world.feature.LargeFungiFeature;
 import com.mushroom.midnight.common.world.feature.ShadowrootTreeFeature;
+import com.mushroom.midnight.common.world.tree.DarkWillowTree;
+import com.mushroom.midnight.common.world.tree.ShadowrootTree;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.CraftingTableBlock;
 import net.minecraft.block.FenceBlock;
 import net.minecraft.block.FenceGateBlock;
+import net.minecraft.block.FlowingFluidBlock;
 import net.minecraft.block.LadderBlock;
 import net.minecraft.block.LeavesBlock;
 import net.minecraft.block.LeverBlock;
@@ -69,6 +73,7 @@ import net.minecraft.block.WeightedPressurePlateBlock;
 import net.minecraft.block.WoodButtonBlock;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
+import net.minecraft.fluid.Fluids;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.tileentity.TileEntityType;
@@ -440,8 +445,8 @@ public class MidnightBlocks {
                         .sound(SoundType.PLANT)
                 )
                 // TODO @Gegy sapling/tree
-                .add("shadowroot_sapling", props -> new MidnightSaplingBlock(new ShadowrootTreeFeature(NoFeatureConfig::deserialize){}, props))
-                .add("dark_willow_sapling", props -> new MidnightSaplingBlock(new DarkWillowTreeFeature(NoFeatureConfig::deserialize){}, props));
+                .add("shadowroot_sapling", props -> new MidnightSaplingBlock(new ShadowrootTree(), props))
+                .add("dark_willow_sapling", props -> new MidnightSaplingBlock(new DarkWillowTree(), props));
 
         RegUtil.blocks(event.getRegistry())
                 // TODO bulb fungus stem drops 4 BULB_FUNGUS_HAND, can silk touch & sheared
@@ -622,9 +627,17 @@ public class MidnightBlocks {
                 .add("nagrilite_pressure_plate", props -> new WeightedPressurePlateBlock(150, props){})
                 .add("tenebrum_pressure_plate", props -> new WeightedPressurePlateBlock(150, props){});
 
-        // TODO @gegy fluids
-        RegUtil.withName(new DarkWaterBlock(), "dark_water");
-        RegUtil.withName(new MiasmaFluidBlock(), "miasma");
+        RegUtil.blocks(event.getRegistry())
+                .add("dark_water", new MidnightFluidBlock(MidnightFluids.DARK_WATER, Block.Properties.create(Material.WATER)
+                        .doesNotBlockMovement()
+                        .hardnessAndResistance(100.0F)
+                        .lootFrom(Blocks.AIR))
+                )
+                .add("miasma", new MidnightFluidBlock(MidnightFluids.MIASMA, Block.Properties.create(Material.LAVA)
+                        .doesNotBlockMovement()
+                        .hardnessAndResistance(100.0F)
+                        .lootFrom(Blocks.AIR))
+                );
     }
 
     @SubscribeEvent
