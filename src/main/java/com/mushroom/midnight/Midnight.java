@@ -25,10 +25,8 @@ import com.mushroom.midnight.common.network.RockshroomBrokenMessage;
 import com.mushroom.midnight.common.registry.MidnightCavernousBiomes;
 import com.mushroom.midnight.common.registry.MidnightCriterion;
 import com.mushroom.midnight.common.registry.MidnightDimensions;
-import com.mushroom.midnight.common.registry.MidnightFluids;
 import com.mushroom.midnight.common.registry.MidnightGameRules;
 import com.mushroom.midnight.common.registry.MidnightItemGroups;
-import com.mushroom.midnight.common.registry.MidnightRecipes;
 import com.mushroom.midnight.common.registry.MidnightSurfaceBiomes;
 import com.mushroom.midnight.common.registry.RegUtil;
 import com.mushroom.midnight.common.util.EntityUtil;
@@ -103,7 +101,6 @@ public class Midnight {
         Reflection.initialize(MidnightCriterion.class, MidnightItemGroups.class, MidnightDimensions.class, MidnightGameRules.class);
 
         EntityUtil.register();
-        MidnightFluids.register();
 
         LootConditionManager.registerCondition(new InBiomeLootCondition.Serializer());
         LootConditionManager.registerCondition(new InBlockLootCondition.Serializer());
@@ -111,7 +108,6 @@ public class Midnight {
 
         MidnightSurfaceBiomes.onInit();
         MidnightCavernousBiomes.onInit();
-        MidnightRecipes.onInit();
 
         //NetworkRegistry.INSTANCE.registerGuiHandler(instance, new GuiHandler());
     }

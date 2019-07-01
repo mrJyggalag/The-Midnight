@@ -2,9 +2,6 @@ package com.mushroom.midnight.client;
 
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mushroom.midnight.Midnight;
-import com.mushroom.midnight.common.block.DarkWaterBlock;
-import com.mushroom.midnight.common.block.MiasmaFluidBlock;
-import net.minecraft.block.Blocks;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ActiveRenderInfo;
 import net.minecraft.client.renderer.BufferBuilder;

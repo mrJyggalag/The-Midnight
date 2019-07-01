@@ -11,10 +11,14 @@ import net.minecraft.fluid.IFluidState;
 import net.minecraft.fluid.WaterFluid;
 import net.minecraft.item.Item;
 import net.minecraft.state.StateContainer;
+import net.minecraft.tags.FluidTags;
+import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.common.util.Constants;
 
 import java.util.Random;
 
@@ -47,6 +51,24 @@ public abstract class DarkWaterFluid extends WaterFluid {
     @Override
     public boolean isEquivalentTo(Fluid fluid) {
         return fluid.isIn(MidnightTags.Fluids.DARK_WATER);
+    }
+
+    @Override
+    protected void flowInto(IWorld world, BlockPos intoPos, BlockState intoBlock, Direction direction, IFluidState state) {
+        if (direction == Direction.DOWN) {
+            IFluidState intoFluid = world.getFluidState(intoPos);
+            if (intoFluid.isTagged(FluidTags.LAVA) || intoFluid.isTagged(MidnightTags.Fluids.MIASMA)) {
+                this.mixInto(world, intoPos, MidnightBlocks.TRENCHSTONE.getDefaultState());
+                return;
+            }
+        }
+
+        super.flowInto(world, intoPos, intoBlock, direction, state);
+    }
+
+    private void mixInto(IWorld world, BlockPos pos, BlockState state) {
+        world.setBlockState(pos, state, Constants.BlockFlags.NOTIFY_NEIGHBORS | Constants.BlockFlags.NOTIFY_LISTENERS);
+        world.playEvent(1501, pos, 0);
     }
 
     public static class Flowing extends DarkWaterFluid {
