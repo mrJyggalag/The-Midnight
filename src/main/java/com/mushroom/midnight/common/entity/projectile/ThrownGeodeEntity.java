@@ -109,7 +109,7 @@ public class ThrownGeodeEntity extends ThrowableEntity {
     private void dropLootWhenBroken(@Nullable ServerPlayerEntity player) {
         LootContext.Builder builder = new LootContext.Builder((ServerWorld) this.world).withParameter(LootParameters.THIS_ENTITY, this).withParameter(LootParameters.DAMAGE_SOURCE, DamageSource.GENERIC);
         if (player != null) {
-            builder = builder.withParameter(LootParameters.LAST_DAMAGE_PLAYER, player).withLuck(player.getLuck());
+            builder = builder.withParameter(LootParameters.KILLER_ENTITY, player).withLuck(player.getLuck());
         }
 
         LootTable loottable = this.world.getServer().getLootTableManager().getLootTableFromLocation(MidnightLootTables.LOOT_TABLE_THROWN_GEODE);
