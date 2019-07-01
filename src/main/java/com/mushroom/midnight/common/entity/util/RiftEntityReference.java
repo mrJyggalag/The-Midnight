@@ -8,6 +8,8 @@ import net.minecraft.world.ServerWorld;
 import net.minecraft.world.ServerWorld;
 import net.minecraft.world.dimension.DimensionType;
 import net.minecraftforge.common.DimensionManager;
+import net.minecraftforge.fml.LogicalSide;
+import net.minecraftforge.fml.LogicalSidedProvider;
 
 import javax.annotation.Nullable;
 import java.lang.ref.WeakReference;
@@ -29,7 +31,7 @@ public class RiftEntityReference {
     @Nullable
     public RiftEntity compute() {
         RiftEntity cached = this.get();
-        ServerWorld world = DimensionManager.getWorld(this.dimension);
+        ServerWorld world = DimensionManager.getWorld(LogicalSidedProvider.INSTANCE.get(LogicalSide.SERVER), this.dimension, false, false);
 
         if (world != null && cached == null) {
             Optional<Entity> entity = world.getEntities()
@@ -59,7 +61,7 @@ public class RiftEntityReference {
 
     private boolean isInvalid(RiftEntity rift) {
         if (!rift.world.isRemote) {
-            return DimensionManager.getWorld(rift.world.dimension.getType()) == null;
+            return DimensionManager.getWorld(LogicalSidedProvider.INSTANCE.get(LogicalSide.SERVER), rift.world.dimension.getType(), false, false) == null;
         }
         return false;
     }

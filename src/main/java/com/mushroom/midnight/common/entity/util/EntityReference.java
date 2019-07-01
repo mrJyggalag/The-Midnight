@@ -46,7 +46,7 @@ public class EntityReference<T extends Entity> {
             return Optional.of(cached);
         }
 
-        long totalWorldTime = this.world.getTotalWorldTime();
+        long totalWorldTime = this.world.getGameTime();
         if (forceLoad || totalWorldTime - this.lastLookupTime > 20) {
             Optional<Entity> entity = this.world.loadedEntityList.stream()
                     .filter(e -> e.getUniqueID().equals(this.entityId))
@@ -79,14 +79,14 @@ public class EntityReference<T extends Entity> {
 
     public CompoundNBT serialize(CompoundNBT compound) {
         if (this.entityId != null) {
-            compound.putString("uuid", this.entityId.toString());
+            compound.putUniqueId("uuid", this.entityId);
         }
         return compound;
     }
 
     public void deserialize(CompoundNBT compound) {
-        if (compound.hasKey("uuid", Constants.NBT.TAG_STRING)) {
-            this.entityId = UUID.fromString(compound.getString("uuid"));
+        if (compound.hasUniqueId("uuid")) {
+            this.entityId = compound.getUniqueId("uuid");
         } else {
             this.entityId = null;
         }

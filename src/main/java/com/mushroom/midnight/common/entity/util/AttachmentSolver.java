@@ -2,6 +2,7 @@ package com.mushroom.midnight.common.entity.util;
 
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MoverType;
+import net.minecraft.util.math.Vec3d;
 
 import javax.vecmath.Vector3d;
 
@@ -23,7 +24,7 @@ public class AttachmentSolver {
         double deltaX = globalX - entity.posX;
         double deltaY = globalY - entity.posY;
         double deltaZ = globalZ - entity.posZ;
-        entity.move(MoverType.SELF, deltaX, deltaY, deltaZ);
+        entity.move(MoverType.SELF, new Vec3d(deltaX, deltaY, deltaZ));
 
         entity.onGround = true;
         entity.fallDistance = 0.0F;

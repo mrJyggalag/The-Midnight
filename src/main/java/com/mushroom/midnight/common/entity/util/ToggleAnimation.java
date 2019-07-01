@@ -48,8 +48,8 @@ public class ToggleAnimation {
 
     public CompoundNBT serialize(CompoundNBT compound) {
         compound.putBoolean("state", this.state);
-        compound.setShort("timer", (short) this.timer);
-        compound.setByte("rate", (byte) this.rate);
+        compound.putShort("timer", (short) this.timer);
+        compound.putByte("rate", (byte) this.rate);
         return compound;
     }
 

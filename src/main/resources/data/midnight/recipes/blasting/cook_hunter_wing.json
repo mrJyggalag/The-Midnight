@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:blasting",
+  "ingredient": {
+    "item": "midnight:hunter_wing"
+  },
+  "result": "midnight:cook_hunter_wing",
+  "experience": 0.35,
+  "cookingtime": 100
+}
