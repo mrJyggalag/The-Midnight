@@ -2,6 +2,7 @@ package com.mushroom.midnight.common.registry;
 
 import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.common.fluid.DarkWaterFluid;
+import com.mushroom.midnight.common.fluid.MiasmaFluid;
 import net.minecraft.fluid.FlowingFluid;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.fluid.Fluids;
@@ -22,6 +23,8 @@ public class MidnightFluids {
     public static void registerFluids(RegistryEvent.Register<Fluid> event) {
         RegUtil.generic(event.getRegistry())
                 .add("dark_water", new DarkWaterFluid.Source())
-                .add("flowing_dark_water", new DarkWaterFluid.Flowing());
+                .add("flowing_dark_water", new DarkWaterFluid.Flowing())
+                .add("miasma", new MiasmaFluid.Source())
+                .add("flowing_miasma", new MiasmaFluid.Flowing());
     }
 }
