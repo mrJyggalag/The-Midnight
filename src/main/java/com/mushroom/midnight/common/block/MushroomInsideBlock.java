@@ -14,6 +14,7 @@ public class MushroomInsideBlock extends AirBlock {
     }
 
     @Override
+    @SuppressWarnings("deprecation")
     public void neighborChanged(BlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos, boolean p_220069_6_) {
         int neighborCount = this.countHatNeighbors(worldIn, pos);
         if (neighborCount <= 0) {

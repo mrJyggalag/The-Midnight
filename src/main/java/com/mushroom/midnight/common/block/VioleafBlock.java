@@ -21,8 +21,9 @@ import net.minecraftforge.common.ForgeHooks;
 
 import java.util.Random;
 
+@SuppressWarnings("deprecation")
 public class VioleafBlock extends MidnightPlantBlock implements IGrowable {
-    public static final BooleanProperty IS_GROWN = BooleanProperty.create("is_grown");
+    private static final BooleanProperty IS_GROWN = BooleanProperty.create("is_grown");
 
     public VioleafBlock(Properties properties) {
         super(properties, false);

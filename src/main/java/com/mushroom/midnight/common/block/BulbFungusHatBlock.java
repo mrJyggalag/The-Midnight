@@ -19,11 +19,11 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 import javax.annotation.Nullable;
 
+@SuppressWarnings("deprecation")
 public class BulbFungusHatBlock extends Block {
 
     public BulbFungusHatBlock() {
         super(Properties.create(Material.WOOD, MaterialColor.MAGENTA).hardnessAndResistance(0.2f, 0f).sound(SoundType.SLIME).lightValue(2));
-        //setCreativeTab(MidnightItemGroups.BUILDING);
     }
 
     // random.nextInt(5) == 0 -> drop 1 BULB_FUNGUS (+SilkTouch)
@@ -36,13 +36,13 @@ public class BulbFungusHatBlock extends Block {
 
     @Override
     @OnlyIn(Dist.CLIENT)
-    @SuppressWarnings("deprecation")
     public int getPackedLightmapCoords(BlockState state, IEnviromentBlockReader worldIn, BlockPos pos) {
         return worldIn.getCombinedLight(pos, 13);
     }
 
     @Override
-    public float getAmbientOcclusionLightValue(BlockState state) {
+    //getAmbientOcclusionLightValue
+    public float func_220080_a(BlockState state, IBlockReader worldIn, BlockPos pos) {
         return 0f;
     }
 

@@ -13,6 +13,7 @@ import net.minecraft.world.World;
 import java.util.Iterator;
 import java.util.Random;
 
+@SuppressWarnings("deprecation")
 public class TendrilweedBlock extends MidnightPlantBlock {
     // TODO particle  tendril spore
     public TendrilweedBlock(Properties properties) {

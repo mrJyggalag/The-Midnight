@@ -32,6 +32,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Random;
 
+@SuppressWarnings("deprecation")
 public class BladeshroomBlock extends MidnightPlantBlock implements IGrowable {
     public static final EnumProperty<Stage> STAGE = EnumProperty.create("stage", Stage.class);
     private static final int REGROW_CHANCE = 10;

@@ -18,6 +18,7 @@ public class BloomCrystalBlock extends CrystalBlock {
     }
 
     @Override
+    @SuppressWarnings("deprecation")
     public void tick(BlockState state, World world, BlockPos pos, Random random) {
         super.tick(state, world, pos, random);
 

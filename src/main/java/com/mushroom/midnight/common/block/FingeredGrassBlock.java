@@ -14,6 +14,7 @@ public class FingeredGrassBlock extends MidnightPlantBlock {
         super(properties, false);
     }
 
+    @Override
     @OnlyIn(Dist.CLIENT)
     public void animateTick(BlockState state, World world, BlockPos pos, Random rand) {
         super.animateTick(state, world, pos, rand);

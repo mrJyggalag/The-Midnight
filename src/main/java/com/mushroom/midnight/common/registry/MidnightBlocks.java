@@ -41,6 +41,7 @@ import com.mushroom.midnight.common.block.TendrilweedBlock;
 import com.mushroom.midnight.common.block.UnstableBushBlock;
 import com.mushroom.midnight.common.block.UnstableBushBloomedBlock;
 import com.mushroom.midnight.common.block.VioleafBlock;
+import com.mushroom.midnight.common.item.DeceitfulAlgaeItem;
 import com.mushroom.midnight.common.tile.base.TileEntityMidnightChest;
 import com.mushroom.midnight.common.tile.base.TileEntityMidnightFurnace;
 import com.mushroom.midnight.common.world.feature.DarkWillowTreeFeature;
@@ -511,7 +512,7 @@ public class MidnightBlocks {
         RegUtil.blocks(event.getRegistry())
                 .withProperties(() -> Block.Properties.create(Material.IRON, MaterialColor.ADOBE).hardnessAndResistance(3f).sound(SoundType.METAL))
                 .add("tenebrum_door", BasicBlock::new);
-        
+
         RegUtil.blocks(event.getRegistry())
                 .withProperties(() -> Block.Properties.create(Material.WOOD, MaterialColor.ADOBE).hardnessAndResistance(3f).sound(SoundType.WOOD))
                 .add("shadowroot_door", BasicBlock::new)
@@ -667,6 +668,7 @@ public class MidnightBlocks {
                         SHADOWROOT_PRESSURE_PLATE, DEAD_WOOD_PRESSURE_PLATE, DARK_WILLOW_PRESSURE_PLATE, DEWSHROOM_PRESSURE_PLATE, VIRIDSHROOM_PRESSURE_PLATE, NIGHTSHROOM_PRESSURE_PLATE, NIGHTSTONE_PRESSURE_PLATE,
                         TRENCHSTONE_PRESSURE_PLATE, ROCKSHROOM_BRICKS_PRESSURE_PLATE, NAGRILITE_PRESSURE_PLATE, TENEBRUM_PRESSURE_PLATE,
                         SHADOWROOT_SLAB, DEAD_WOOD_SLAB, DARK_WILLOW_SLAB, NIGHTSTONE_SLAB, NIGHTSTONE_BRICK_SLAB, TRENCHSTONE_SLAB, TRENCHSTONE_BRICK_SLAB, DEWSHROOM_SLAB, VIRIDSHROOM_SLAB, NIGHTSHROOM_SLAB, ROCKSHROOM_BRICKS_SLAB,
-                        DECEITFUL_ALGAE); //, MUSHROOM_INSIDE, UNSTABLE_BUSH, UNSTABLE_BUSH_BLUE_BLOOMED, UNSTABLE_BUSH_GREEN_BLOOMED, UNSTABLE_BUSH_LIME_BLOOMED
+                ) //, MUSHROOM_INSIDE, UNSTABLE_BUSH, UNSTABLE_BUSH_BLUE_BLOOMED, UNSTABLE_BUSH_GREEN_BLOOMED, UNSTABLE_BUSH_LIME_BLOOMED
+                .add(DeceitfulAlgaeItem::new, DECEITFUL_ALGAE);
     }
 }

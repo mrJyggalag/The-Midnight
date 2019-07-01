@@ -47,6 +47,7 @@ public class DragonNestBlock extends MidnightPlantBlock {
         return world.getBlockState(pos.up()).isNormalCube(world, pos);
     }
 
+    @Override
     @OnlyIn(Dist.CLIENT)
     public void animateTick(BlockState state, World world, BlockPos pos, Random rand) {
         super.animateTick(state, world, pos, rand);

@@ -19,6 +19,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Random;
 
+@SuppressWarnings("deprecation")
 public class SoilBlock extends Block implements IGrowable {
     private final boolean applyBonemeal;
 

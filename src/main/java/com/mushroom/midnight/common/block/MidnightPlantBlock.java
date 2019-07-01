@@ -28,6 +28,7 @@ import java.util.function.Supplier;
 
 // TODO: Shearability in loot table
 // TODO: subclass overriding isReplaceable
+@SuppressWarnings("deprecation")
 public class MidnightPlantBlock extends BushBlock implements IGrowable, IShearable, GeneratablePlant {
     private static final VoxelShape SHAPE = Block.makeCuboidShape(2d, 0d, 2d, 14d, 13d, 14d);
 
@@ -89,7 +90,6 @@ public class MidnightPlantBlock extends BushBlock implements IGrowable, IShearab
 
     @Override
     @OnlyIn(Dist.CLIENT)
-    @SuppressWarnings("deprecation")
     public int getPackedLightmapCoords(BlockState state, IEnviromentBlockReader source, BlockPos pos) {
         if (!glowing) {
             return super.getPackedLightmapCoords(state, source, pos);

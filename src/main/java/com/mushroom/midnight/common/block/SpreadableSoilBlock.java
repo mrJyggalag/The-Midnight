@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.function.Supplier;
 
+@SuppressWarnings("deprecation")
 public class SpreadableSoilBlock extends SoilBlock {
     private final Supplier<Block> groundSupplier;
 
@@ -34,7 +35,6 @@ public class SpreadableSoilBlock extends SoilBlock {
     }
 
     @Override
-    @SuppressWarnings("deprecation")
     public void tick(BlockState state, World world, BlockPos pos, Random rand) {
         if (world.isRemote || !world.isAreaLoaded(pos, 3)) {
             return;
@@ -66,7 +66,6 @@ public class SpreadableSoilBlock extends SoilBlock {
     }
 
     @Override
-    @SuppressWarnings("deprecation")
     public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder) {
         // TODO make in json (grass block drop dirt)
         ArrayList<ItemStack> drops = new ArrayList<>();

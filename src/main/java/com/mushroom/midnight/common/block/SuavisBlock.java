@@ -95,18 +95,13 @@ public class SuavisBlock extends Block implements IGrowable {
     }
 
     @Override
-    public boolean isFullCube(BlockState state) {
-        return state.get(STAGE) == 3;
+    public boolean propagatesSkylightDown(BlockState state, IBlockReader reader, BlockPos pos) {
+        return state.get(STAGE) < 3;
     }
 
     @Override
     protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
         builder.add(STAGE);
-    }
-
-    @Override
-    public boolean isOpaqueCube(BlockState state) {
-        return state.get(STAGE) == 3;
     }
 
     @Override

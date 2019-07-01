@@ -49,13 +49,8 @@ public class DeceitfulMossBlock extends Block {
     }
 
     @Override
-    public boolean isOpaqueCube(BlockState state) {
-        return false;
-    }
-
-    @Override
-    public boolean isFullCube(BlockState state) {
-        return false;
+    public boolean propagatesSkylightDown(BlockState state, IBlockReader world, BlockPos pos) {
+        return true;
     }
 
     @Override

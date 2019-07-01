@@ -33,6 +33,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.function.Supplier;
 
+@SuppressWarnings("deprecation")
 public class UnstableBushBloomedBlock extends MidnightPlantBlock implements IGrowable {
     public static final BooleanProperty HAS_FRUIT = BooleanProperty.create("has_fruit");
     private final Supplier<Item> fruitSupplier;
@@ -49,7 +50,6 @@ public class UnstableBushBloomedBlock extends MidnightPlantBlock implements IGro
     }
 
     @Override
-    @SuppressWarnings("deprecation")
     public boolean onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
         if (!state.get(HAS_FRUIT)) {
             return false;
@@ -96,7 +96,6 @@ public class UnstableBushBloomedBlock extends MidnightPlantBlock implements IGro
     }
 
     @Override
-    @SuppressWarnings("deprecation")
     public void tick(BlockState state, World world, BlockPos pos, Random rand) {
         if (ForgeHooks.onCropsGrowPre(world, pos, state, rand.nextInt(10) == 0)) {
             this.grow(world, rand, pos, state);

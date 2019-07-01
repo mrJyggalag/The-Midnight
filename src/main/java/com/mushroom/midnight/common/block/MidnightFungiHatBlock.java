@@ -14,11 +14,11 @@ import net.minecraft.state.StateContainer;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockReader;
+import net.minecraft.world.IWorldReader;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 import java.util.function.Supplier;
 
 public class MidnightFungiHatBlock extends Block {
@@ -47,7 +47,7 @@ public class MidnightFungiHatBlock extends Block {
     }
 
     @Override
-    public BlockState getActualState(BlockState state, IBlockAccess world, BlockPos pos) {
+    public BlockState getActualState(BlockState state, IWorldReader world, BlockPos pos) {
         return state.with(UP, this.isInside(world, pos.up()))
                 .with(DOWN, this.isInside(world, pos.down()))
                 .with(NORTH, this.isInside(world, pos.north()))
@@ -56,7 +56,7 @@ public class MidnightFungiHatBlock extends Block {
                 .with(WEST, this.isInside(world, pos.west()));
     }
 
-    private boolean isInside(IBlockAccess world, BlockPos pos) {
+    private boolean isInside(IWorldReader world, BlockPos pos) {
         return world.getBlockState(pos).getBlock() == MidnightBlocks.MUSHROOM_INSIDE;
     }
 
@@ -89,8 +89,9 @@ public class MidnightFungiHatBlock extends Block {
     }
 
     @Override
-    public float getAmbientOcclusionLightValue(BlockState state) {
-        return 0.8F;
+    //getAmbientOcclusionLightValue
+    public float func_220080_a(BlockState state, IBlockReader worldIn, BlockPos pos) {
+        return 0.8f;
     }
 
     @Override

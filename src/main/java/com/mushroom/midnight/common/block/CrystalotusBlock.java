@@ -13,7 +13,6 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.ToolType;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 public class CrystalotusBlock extends Block  {
@@ -53,12 +52,7 @@ public class CrystalotusBlock extends Block  {
     }
 
     @Override
-    public boolean isFullCube(@Nonnull BlockState state) {
-        return false;
-    }
-
-    @Override
-    public boolean isOpaqueCube(@Nonnull BlockState state) {
-        return false;
+    public boolean propagatesSkylightDown(BlockState state, IBlockReader reader, BlockPos pos) {
+        return true;
     }
 }

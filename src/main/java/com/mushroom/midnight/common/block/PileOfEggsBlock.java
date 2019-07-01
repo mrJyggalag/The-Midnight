@@ -31,7 +31,7 @@ import net.minecraftforge.event.ForgeEventFactory;
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 
-@SuppressWarnings({ "WeakerAccess" })
+@SuppressWarnings({ "WeakerAccess", "deprecation" })
 public abstract class PileOfEggsBlock extends Block {
     protected static final VoxelShape bound_one_egg = makeCuboidShape(0.1875d, 0d, 0.1875d, 0.75d, 0.4375d, 0.75d);
     protected static final VoxelShape bound_several_eggs = makeCuboidShape(0.0625d, 0d, 0.0625d, 0.9375d, 0.4375d, 0.9375d);
@@ -143,11 +143,6 @@ public abstract class PileOfEggsBlock extends Block {
     }
 
     @Override
-    public boolean isFullCube(BlockState state) {
-        return false;
-    }
-
-    @Override
     public VoxelShape getCollisionShape(BlockState state, IBlockReader world, BlockPos pos, ISelectionContext context) {
         return getShape(state, world, pos, context);
     }
@@ -163,7 +158,7 @@ public abstract class PileOfEggsBlock extends Block {
     }
 
     @Override
-    public boolean isOpaqueCube(BlockState state) {
-        return false;
+    public boolean propagatesSkylightDown(BlockState state, IBlockReader reader, BlockPos pos) {
+        return true;
     }
 }

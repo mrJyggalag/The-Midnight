@@ -24,8 +24,9 @@ public class SporchBlock extends TorchBlock {
         this.sporchType = sporchType;
     }
 
+    @Override
     @OnlyIn(Dist.CLIENT)
-    public void randomDisplayTick(BlockState state, World world, BlockPos pos, Random rand) {
+    public void randomTick(BlockState state, World world, BlockPos pos, Random random) {
         Direction direction = state.get(FACING);
         double d0 = (double) pos.getX() + 0.5d;
         double d1 = (double) pos.getY() + 0.6d;

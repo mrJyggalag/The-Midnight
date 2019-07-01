@@ -11,8 +11,7 @@ import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 
-import javax.annotation.Nullable;
-
+@SuppressWarnings("deprecation")
 public class DeceitfulMudBlock extends SoilBlock {
     private static final VoxelShape BOUNDS = makeCuboidShape(0.0, 0.0, 0.0, 1.0, 0.875, 1.0);
 
@@ -21,7 +20,6 @@ public class DeceitfulMudBlock extends SoilBlock {
     }
 
     @Override
-    @Nullable
     public VoxelShape getCollisionShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
         return BOUNDS;
     }

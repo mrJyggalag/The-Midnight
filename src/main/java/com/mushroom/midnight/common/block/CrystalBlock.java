@@ -43,7 +43,7 @@ public class CrystalBlock extends Block {
     }
 
     @Override
-    public boolean propagatesSkylightDown(BlockState state, IBlockReader world, BlockPos p_200pos23_3_) {
+    public boolean propagatesSkylightDown(BlockState state, IBlockReader world, BlockPos pos) {
         return true;
     }
 
