@@ -37,12 +37,6 @@ public class DragonNestBlock extends MidnightPlantBlock {
     }
 
     @Override
-    public boolean canPlaceBlockAt(World world, BlockPos pos) {
-        BlockState state = world.getBlockState(pos);
-        return isValidGround(state, world, pos) && state.getBlock().isReplaceable(world, pos);
-    }
-
-    @Override
     public boolean isValidGround(BlockState state, IBlockReader world, BlockPos pos) {
         return world.getBlockState(pos.up()).isNormalCube(world, pos);
     }

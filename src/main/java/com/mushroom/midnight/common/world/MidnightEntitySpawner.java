@@ -1,5 +1,6 @@
 package com.mushroom.midnight.common.world;
 
+import com.mushroom.midnight.common.biome.ConfigurableBiome;
 import com.mushroom.midnight.common.config.MidnightConfig;
 import com.mushroom.midnight.common.util.WeightedPool;
 import net.minecraft.block.BlockState;
@@ -37,7 +38,7 @@ import java.util.stream.Stream;
 
 import static com.mushroom.midnight.Midnight.MIDNIGHT_MOB;
 
-public final class MidnightEntitySpawner<T extends EntitySpawnConfigured> {
+public final class MidnightEntitySpawner<T extends ConfigurableBiome> {
     private static final int MOB_COUNT_DIV = (int) Math.pow(17d, 2d);
     private static final int CHUNK_RANGE = 8;
 
@@ -69,7 +70,7 @@ public final class MidnightEntitySpawner<T extends EntitySpawnConfigured> {
             int actualCreatureCount = entityCount.getCount(classification);
             int maxCreatureCount = classification.getMaxNumberOfCreature() * spawnChunks.size() / MOB_COUNT_DIV;
             if (actualCreatureCount <= maxCreatureCount) {
-                this.spawnEntitiesOfClassification(world, spawnChunks, classification);
+                //this.spawnEntitiesOfClassification(world, spawnChunks, classification);
             }
         }
     }
@@ -84,7 +85,8 @@ public final class MidnightEntitySpawner<T extends EntitySpawnConfigured> {
         BlockPos centerPos = new BlockPos(globalX + 16, 0, globalZ + 16);
         T biome = this.biomeFunction.apply(centerPos);
 
-        SpawnerConfig spawnerConfig = biome.getSpawnerConfig();
+        // TODO Spawner
+        /*SpawnerConfig spawnerConfig = biome.getSpawnerConfig();
         if (spawnerConfig.isEmpty()) {
             return;
         }
@@ -97,7 +99,7 @@ public final class MidnightEntitySpawner<T extends EntitySpawnConfigured> {
             }
 
             this.spawnGroupInChunk(world, originX, originZ, random, entry);
-        }
+        }*/
     }
 
     private void spawnEntitiesOfClassification(ServerWorld world, Set<ChunkPos> spawnChunks, EntityClassification classification) {
@@ -117,7 +119,7 @@ public final class MidnightEntitySpawner<T extends EntitySpawnConfigured> {
     }
 
     private void spawnEntitiesAround(ServerWorld world, BlockPos pos, EntityClassification classification) {
-        BlockPos.MutableBlockPos mutablePos = new BlockPos.MutableBlockPos();
+        /*BlockPos.MutableBlockPos mutablePos = new BlockPos.MutableBlockPos();
 
         int spawnedEntities = 0;
 
@@ -180,7 +182,7 @@ public final class MidnightEntitySpawner<T extends EntitySpawnConfigured> {
                     }
                 }
             }
-        }
+        }*/
     }
 
     private void spawnGroupInChunk(World world, int originX, int originZ, Random random, Biome.SpawnListEntry spawnEntry) {
@@ -237,13 +239,9 @@ public final class MidnightEntitySpawner<T extends EntitySpawnConfigured> {
         }
     }
 
-    /**
-     * {@link net.minecraft.world.chunk.ServerChunkProvider#func_217220_m()}
-     */
     private Set<ChunkPos> computeEligibleSpawnChunks(ServerWorld world) {
         this.eligibleSpawnChunks.clear();
-        Stream<PlayerEntity> playerStream = this.getPlayerStream(world);
-        playerStream.forEach(player -> {
+        /*getPlayerStream(world).forEach(player -> {
             int playerChunkX = MathHelper.floor(player.posX) >> 4;
             int playerChunkZ = MathHelper.floor(player.posZ) >> 4;
             for (int z = -CHUNK_RANGE; z <= CHUNK_RANGE; z++) {
@@ -258,7 +256,7 @@ public final class MidnightEntitySpawner<T extends EntitySpawnConfigured> {
                     }
                 }
             }
-        });
+        });*/
 
         return this.eligibleSpawnChunks;
     }

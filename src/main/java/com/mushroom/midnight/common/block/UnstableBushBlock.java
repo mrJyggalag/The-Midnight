@@ -1,5 +1,6 @@
 package com.mushroom.midnight.common.block;
 
+import com.mushroom.midnight.common.helper.Helper;
 import com.mushroom.midnight.common.registry.MidnightBlocks;
 import com.mushroom.midnight.common.registry.MidnightItems;
 import net.minecraft.block.Block;
@@ -68,13 +69,13 @@ public class UnstableBushBlock extends MidnightPlantBlock implements IGrowable {
 
     @Override
     public void tick(BlockState state, World world, BlockPos pos, Random rand) {
-        if (!canBlockStay(world, pos, state)) {
-            dropBlockAsItem(world, pos, state, 0);
+        if (!isValidPosition(state, world, pos)) {
+            Helper.spawnItemStack(world, pos, state.getBlock());
             world.setBlockState(pos, Blocks.AIR.getDefaultState(), 3);
         } else {
             if (ForgeHooks.onCropsGrowPre(world, pos, state, rand.nextInt(10) == 0)) {
                 grow(world, rand, pos, state);
-                ForgeHooks.onCropsGrowPost(world, pos, state, world.getBlockState(pos));
+                ForgeHooks.onCropsGrowPost(world, pos, state);
             }
         }
     }

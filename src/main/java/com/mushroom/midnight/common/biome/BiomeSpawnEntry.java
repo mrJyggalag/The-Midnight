@@ -24,7 +24,7 @@ public interface BiomeSpawnEntry {
         private final int weight;
 
         public Basic(Biome biome, int weight) {
-            this.biomeId = SessionLocal.register(() -> Biome.getIdForBiome(biome));
+            this.biomeId = SessionLocal.register(() -> Biome.getIdForBiome(biome)); // TODO @gegy
             this.weight = weight;
         }
 

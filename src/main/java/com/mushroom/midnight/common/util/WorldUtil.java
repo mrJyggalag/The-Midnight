@@ -13,6 +13,7 @@ public class WorldUtil {
     public static BlockPos findSurface(World world, BlockPos pos, int maxSteps) {
         BlockPos.MutableBlockPos mutablePos = new BlockPos.MutableBlockPos(pos);
         int steps = 0;
+        // TODO check this side solid
         while (!world.isSideSolid(mutablePos, Direction.UP)) {
             mutablePos.move(Direction.DOWN);
             if (steps++ > maxSteps) {

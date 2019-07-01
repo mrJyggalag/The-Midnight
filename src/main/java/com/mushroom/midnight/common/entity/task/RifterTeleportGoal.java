@@ -48,7 +48,7 @@ public class RifterTeleportGoal extends Goal {
         if (target != null) {
             this.owner.rotationYaw = attackTarget.rotationYaw;
             this.owner.setPositionAndUpdate(target.getX() + 0.5, target.getY(), target.getZ() + 0.5);
-            this.owner.playLivingSound();
+            this.owner.playAmbientSound();
 
             this.owner.getNavigator().clearPath();
         }
@@ -73,7 +73,7 @@ public class RifterTeleportGoal extends Goal {
     }
 
     private boolean isTargetValid(BlockPos target) {
-        if (this.owner.world.collidesWithAnyBlock(this.getEntityBoundAt(this.owner, target))) {
+        if (this.owner.world.checkBlockCollision(this.getEntityBoundAt(this.owner, target))) {
             return false;
         }
         return this.owner.getNavigator().getPathToPos(target) != null;

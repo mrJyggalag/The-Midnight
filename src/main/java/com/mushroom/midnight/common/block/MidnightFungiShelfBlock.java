@@ -1,5 +1,6 @@
 package com.mushroom.midnight.common.block;
 
+import com.mushroom.midnight.common.helper.Helper;
 import com.mushroom.midnight.common.util.DirectionalBounds;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -37,7 +38,8 @@ public class MidnightFungiShelfBlock extends Block {
         return true;
     }
 
-    @Override
+    // TODO shelf
+    /*@Override
     public boolean canPlaceBlockOnSide(World world, BlockPos pos, Direction side) {
         return canAttachTo(world, pos, side);
     }
@@ -64,7 +66,7 @@ public class MidnightFungiShelfBlock extends Block {
     @Override
     public void neighborChanged(BlockState state, World world, BlockPos pos, Block blockIn, BlockPos fromPos, boolean p_220069_6_) {
         if (this.tryDrop(world, pos, state) && !canAttachTo(world, pos, state.get(FACING))) {
-            this.dropBlockAsItem(world, pos, state, 0);
+            Helper.spawnItemStack(world, pos, this);
             world.setBlockState(pos, Blocks.AIR.getDefaultState(), 3);
         }
     }
@@ -73,10 +75,10 @@ public class MidnightFungiShelfBlock extends Block {
         if (this.canPlaceBlockAt(world, pos)) {
             return true;
         }
-        this.dropBlockAsItem(world, pos, state, 0);
+        Helper.spawnItemStack(world, pos, this);
         world.setBlockState(pos, Blocks.AIR.getDefaultState(), 3);
         return false;
-    }
+    }*/
 
     @Override
     public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {

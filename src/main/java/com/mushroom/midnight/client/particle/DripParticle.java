@@ -3,6 +3,7 @@ package com.mushroom.midnight.client.particle;
 import net.minecraft.client.particle.IParticleFactory;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.particles.IParticleData;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -10,12 +11,12 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import javax.annotation.Nullable;
 
 @OnlyIn(Dist.CLIENT)
-public class DripParticle extends Particle {
+public class DripParticle extends MidnightParticle {
     private int bobTimer;
 
     public DripParticle(World world, double x, double y, double z, float r, float g, float b) {
         super(world, x, y, z, 0d, 0d, 0d);
-        setParticleTextureIndex(113);
+        //setParticleTextureIndex(113);
         this.particleRed = r;
         this.particleGreen = g;
         this.particleBlue = b;
@@ -54,6 +55,11 @@ public class DripParticle extends Particle {
     @Override
     public int getBrightnessForRender(float partialTick) {
         return bobTimer <= 0 ? 0xe000e0 : 0xe000e0 - (0x010001 * bobTimer);
+    }
+
+    @Override
+    ResourceLocation getTexture() {
+        return null; // TODO fix me later
     }
 
     @OnlyIn(Dist.CLIENT)

@@ -38,7 +38,7 @@ public class SporeBombEntity extends ThrowableEntity {
 
     @Override
     protected void registerData() {
-        this.dataManager.register(BOMB_STACK, new ItemStack(MidnightItems.SPORE_BOMB));
+        this.dataManager.register(BOMB_STACK, new ItemStack(MidnightItems.NIGHTSHROOM_SPORE_BOMB));
     }
 
     @Override

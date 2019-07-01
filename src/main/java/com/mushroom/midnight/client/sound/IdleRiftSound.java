@@ -18,7 +18,7 @@ public class IdleRiftSound extends TickableSound {
     @Override
     public void tick() {
         if (!this.rift.isAlive()) {
-            this.field_217862_m = true;
+            this.donePlaying = true;
             return;
         }
 

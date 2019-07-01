@@ -5,6 +5,10 @@ import com.mushroom.midnight.common.registry.MidnightDimensions;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.item.ItemEntity;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.FakePlayer;
 
@@ -32,5 +36,25 @@ public class Helper {
 
     public static boolean isGroundForMidnightPlant(Block block) {
         return isGroundForBoneMeal(block) || block == MidnightBlocks.DIRT || block == MidnightBlocks.DECEITFUL_MUD || block == MidnightBlocks.DECEITFUL_PEAT || block == Blocks.FARMLAND || block == Blocks.DIRT;
+    }
+
+    public static void spawnItemStack(World world, BlockPos pos, Block block) {
+        spawnItemStack(world, pos, block.asItem());
+    }
+
+    public static void spawnItemStack(World world, BlockPos pos, Item item) {
+        spawnItemStack(world, pos.getX() + 0.5d, pos.getY(), pos.getZ() + 0.5d, item);
+    }
+
+    public static void spawnItemStack(World world, double x, double y, double z, Item item) {
+        spawnItemStack(world, x, y, z, new ItemStack(item, 1));
+    }
+
+    public static void spawnItemStack(World world, BlockPos pos, ItemStack stack) {
+        spawnItemStack(world, pos.getX() + 0.5d, pos.getY(), pos.getZ() + 0.5d, stack);
+    }
+
+    public static void spawnItemStack(World world, double x, double y, double z, ItemStack stack) {
+        world.addEntity(new ItemEntity(world, x, y, z, stack));
     }
 }

@@ -3,7 +3,6 @@ package com.mushroom.midnight.common.block;
 import com.mushroom.midnight.common.util.DirectionalBounds;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
@@ -12,7 +11,6 @@ import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.Direction;
-import net.minecraft.util.Hand;
 import net.minecraft.util.Mirror;
 import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
@@ -23,11 +21,8 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IEnviromentBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.IWorldReader;
-import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-
-import java.util.Arrays;
 
 public class DeceitfulMossBlock extends Block {
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
@@ -53,7 +48,8 @@ public class DeceitfulMossBlock extends Block {
         return true;
     }
 
-    @Override
+    // TODO after able to load
+    /*@Override
     public boolean canPlaceBlockOnSide(World world, BlockPos pos, Direction side) {
         return canAttachTo(world, pos, side);
     }
@@ -80,7 +76,7 @@ public class DeceitfulMossBlock extends Block {
     @Override
     public void neighborChanged(BlockState state, World world, BlockPos pos, Block blockIn, BlockPos fromPos, boolean p_220069_6_) {
         if (this.tryDrop(world, pos, state) && !canAttachTo(world, pos, state.get(FACING))) {
-            this.dropBlockAsItem(world, pos, state, 0);
+            Helper.spawnItemStack(world, pos, state.getBlock());
             world.setBlockState(pos, Blocks.AIR.getDefaultState());
         }
     }
@@ -89,10 +85,10 @@ public class DeceitfulMossBlock extends Block {
         if (this.canPlaceBlockAt(world, pos)) {
             return true;
         }
-        this.dropBlockAsItem(world, pos, state, 0);
+        Helper.spawnItemStack(world, pos, state.getBlock());
         world.setBlockState(pos, Blocks.AIR.getDefaultState());
         return false;
-    }
+    }*/
 
     @Override
     public BlockState rotate(BlockState state, IWorld world, BlockPos pos, Rotation rot) {

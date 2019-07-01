@@ -16,6 +16,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.state.IntegerProperty;
 import net.minecraft.state.StateContainer;
+import net.minecraft.stats.Stats;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.Hand;
@@ -101,6 +102,8 @@ public abstract class PileOfEggsBlock extends Block {
             world.setBlockState(pos, state.with(EGGS, --eggs), 2);
             world.playEvent(2001, pos, getStateId(state));
         }
+        // TODO check this
+        /*
         if (harvesters.get() != null) {
             ItemStack stack = harvesters.get().getHeldItemMainhand();
             int fortune = EnchantmentHelper.getEnchantmentLevel(Enchantments.FORTUNE, stack);
@@ -110,7 +113,7 @@ public abstract class PileOfEggsBlock extends Block {
                 drops.forEach(c -> spawnAsEntity(world, pos, c));
                 return;
             }
-        }
+        }*/
 
         MobEntity creature;
         try {
@@ -125,11 +128,11 @@ public abstract class PileOfEggsBlock extends Block {
 
     @Override
     public void harvestBlock(World world, PlayerEntity player, BlockPos pos, BlockState state, @Nullable TileEntity tile, ItemStack stack) {
-        player.addStat(StatsList.getBlockStats(this));
+        player.addStat(Stats.BLOCK_MINED.get(this));
         player.addExhaustion(0.005F);
-        harvesters.set(player);
+        //harvesters.set(player);
         breakEggs(world, pos, state);
-        harvesters.set(null);
+        //harvesters.set(null);
     }
 
     @Override

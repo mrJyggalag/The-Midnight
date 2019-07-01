@@ -14,7 +14,6 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.ServerWorld;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
-import net.minecraft.world.biome.provider.BiomeProvider;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.ChunkHolder;
 import net.minecraft.world.chunk.ServerChunkProvider;
@@ -149,7 +148,7 @@ public class MidnightDimension extends Dimension {
             ServerChunkProvider chunkProvider = serverWorld.getChunkProvider();
 
             // TODO
-            chunkProvider.chunkManager.func_223491_f().forEach(chunkHolder -> {
+            /*chunkProvider.chunkManager.func_223491_f().forEach(chunkHolder -> {
                 chunkHolder.func_219297_b().getNow(ChunkHolder.UNLOADED_CHUNK).left().ifPresent(chunk -> {
                     Random rand = this.world.rand;
 
@@ -167,7 +166,7 @@ public class MidnightDimension extends Dimension {
                         }
                     }
                 });
-            });
+            });*/
         }
     }
 

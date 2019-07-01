@@ -8,11 +8,10 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.SoundType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.Effects;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.SoundCategory;
@@ -40,12 +39,14 @@ public class RawSuavisItem extends Item {
         Direction face = context.getFace();
         ItemStack heldItem = context.getItem();
 
-        Block block = world.getBlockState(pos).getBlock();
-        if (!block.isReplaceable(world, pos)) {
+        BlockState state = world.getBlockState(pos);
+        Block block = state.getBlock();
+        BlockItemUseContext blockContext = new BlockItemUseContext(context);
+        if (!block.isReplaceable(state, blockContext)) {
             pos = pos.offset(face);
         }
 
-        if (!heldItem.isEmpty() && player.canPlayerEdit(pos, face, heldItem) && world.mayPlace(MidnightBlocks.SUAVIS, pos, false, face, null)) {
+        if (!heldItem.isEmpty() && player.canPlayerEdit(pos, face, heldItem) && MidnightBlocks.SUAVIS.getDefaultState().isValidPosition(world, pos)) {
             BlockState suavisState = MidnightBlocks.SUAVIS.getDefaultState().with(SuavisBlock.STAGE, 0);
             if (placeSuavisAt(heldItem, player, world, pos, suavisState)) {
                 SoundType soundtype = suavisState.getBlock().getSoundType(suavisState, world, pos, player);

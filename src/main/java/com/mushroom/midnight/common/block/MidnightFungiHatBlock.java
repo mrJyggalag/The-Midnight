@@ -46,7 +46,8 @@ public class MidnightFungiHatBlock extends Block {
         );
     }
 
-    @Override
+    // TODO hatblock
+    /*@Override
     public BlockState getActualState(BlockState state, IWorldReader world, BlockPos pos) {
         return state.with(UP, this.isInside(world, pos.up()))
                 .with(DOWN, this.isInside(world, pos.down()))
@@ -54,7 +55,7 @@ public class MidnightFungiHatBlock extends Block {
                 .with(EAST, this.isInside(world, pos.east()))
                 .with(SOUTH, this.isInside(world, pos.south()))
                 .with(WEST, this.isInside(world, pos.west()));
-    }
+    }*/
 
     private boolean isInside(IWorldReader world, BlockPos pos) {
         return world.getBlockState(pos).getBlock() == MidnightBlocks.MUSHROOM_INSIDE;

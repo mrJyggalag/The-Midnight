@@ -1,14 +1,6 @@
 package com.mushroom.midnight.common.world.feature.config;
 
-import com.mushroom.midnight.common.world.SurfacePlacementLevel;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
-
-import java.util.Random;
-import java.util.function.Consumer;
-
-public class UndergroundPlacementConfig implements IPlacementConfig {
+public class UndergroundPlacementConfig {/*implements IPlacementConfig {
     private final int minCount, maxCount, minHeight, maxHeight;
 
     public UndergroundPlacementConfig(int minCount, int maxCount, int minHeight, int maxHeight) {
@@ -54,5 +46,5 @@ public class UndergroundPlacementConfig implements IPlacementConfig {
                 }
             }
         }
-    }
+    }*/
 }

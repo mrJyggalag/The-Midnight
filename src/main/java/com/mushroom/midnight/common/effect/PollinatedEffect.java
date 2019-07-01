@@ -7,9 +7,13 @@ import net.minecraft.potion.EffectType;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
+import net.minecraft.world.gen.feature.ConfiguredFeature;
+import net.minecraft.world.gen.feature.DecoratedFeatureConfig;
+import net.minecraft.world.gen.feature.FlowersFeature;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.Collection;
+import java.util.List;
 
 public class PollinatedEffect extends GenericEffect {
     public PollinatedEffect() {
@@ -23,11 +27,18 @@ public class PollinatedEffect extends GenericEffect {
         if (!world.isRemote) {
             BlockPos pos = entity.getPosition().add(world.rand.nextInt(3) - 1, world.rand.nextInt(3) - 1, world.rand.nextInt(3) - 1);
             BlockState state = world.getBlockState(pos);
-            if (state.getBlock().isReplaceable(world, pos) && Helper.isGroundForBoneMeal(world.getBlockState(pos.down()).getBlock())) {
+            if (state.getBlock().getMaterial(state).isReplaceable() && Helper.isGroundForBoneMeal(world.getBlockState(pos.down()).getBlock())) {
                 final Collection<Biome> biomes = ForgeRegistries.BIOMES.getValues();
                 biomes.stream().skip((int) (biomes.size() * Math.random())).findFirst().ifPresent(b -> {
-                    b.plantFlower(world, world.rand, pos);
-                    world.playEvent(2005, pos, 0);
+
+                    List<ConfiguredFeature<?>> list = world.getBiome(pos).getFlowers();
+                    if (!list.isEmpty()) {
+                        BlockState plantState = ((FlowersFeature) ((DecoratedFeatureConfig) (list.get(0)).config).feature.feature).getRandomFlower(entity.getRNG(), pos);
+                        world.playEvent(2005, pos, 0);
+                        if (plantState.isValidPosition(world, pos)) {
+                            world.setBlockState(pos, plantState, 3);
+                        }
+                    }
                 });
             }
         }

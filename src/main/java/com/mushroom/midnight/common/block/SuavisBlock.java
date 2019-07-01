@@ -1,5 +1,6 @@
 package com.mushroom.midnight.common.block;
 
+import com.mushroom.midnight.common.helper.Helper;
 import com.mushroom.midnight.common.registry.MidnightCriterion;
 import com.mushroom.midnight.common.registry.MidnightItems;
 import net.minecraft.block.Block;
@@ -24,6 +25,7 @@ import net.minecraft.potion.Effects;
 import net.minecraft.potion.Potions;
 import net.minecraft.state.IntegerProperty;
 import net.minecraft.state.StateContainer;
+import net.minecraft.stats.Stats;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
@@ -106,11 +108,12 @@ public class SuavisBlock extends Block implements IGrowable {
 
     @Override
     public void harvestBlock(World world, PlayerEntity player, BlockPos pos, BlockState state, @Nullable TileEntity te, ItemStack stack) {
-        player.addStat(StatList.getBlockStats(this));
+        player.addStat(Stats.BLOCK_MINED.get(this));
         player.addExhaustion(0.005F);
-        harvesters.set(player);
-        dropBlockAsItem(world, pos, state, EnchantmentHelper.getEnchantmentLevel(Enchantments.FORTUNE, stack));
-        harvesters.set(null);
+        //harvesters.set(player);
+        Helper.spawnItemStack(world, pos, state.getBlock()); //dropBlockAsItem(world, pos, state, EnchantmentHelper.getEnchantmentLevel(Enchantments.FORTUNE, stack));
+
+        //harvesters.set(null);
         if (!world.isRemote && !player.isCreative() && player instanceof ServerPlayerEntity) {
             MidnightCriterion.HARVESTED_SUAVIS.trigger((ServerPlayerEntity) player);
         }
@@ -153,14 +156,15 @@ public class SuavisBlock extends Block implements IGrowable {
 
     @Override
     public void tick(BlockState state, World world, BlockPos pos, Random rand) {
-        if (!isSideSolid(world.getBlockState(pos.down()), world, pos, Direction.UP)) {
+        // TODO check isSideSolid
+        /*if (!isSideSolid(world.getBlockState(pos.down()), world, pos, Direction.UP)) {
             world.destroyBlock(pos, true);
-        } else {
+        } else {*/
             if (state.get(STAGE) < 3 && ForgeHooks.onCropsGrowPre(world, pos, state, rand.nextInt(5) == 0)) {
                 grow(world, rand, pos, state);
-                ForgeHooks.onCropsGrowPost(world, pos, state, world.getBlockState(pos));
+                ForgeHooks.onCropsGrowPost(world, pos, state);
             }
-        }
+        //}
     }
 
     @Override

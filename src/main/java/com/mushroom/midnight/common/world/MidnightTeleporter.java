@@ -1,22 +1,7 @@
 package com.mushroom.midnight.common.world;
 
-import com.mushroom.midnight.Midnight;
-import com.mushroom.midnight.common.entity.RiftEntity;
-import com.mushroom.midnight.common.entity.RiftBridge;
-import com.mushroom.midnight.common.registry.MidnightArmorMaterials;
-import com.mushroom.midnight.common.util.EntityUtil;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Vec3d;
-import net.minecraft.world.World;
-import net.minecraft.world.gen.Heightmap;
-
-public class MidnightTeleporter implements ITeleporter {
-    public static final int COOLDOWN = 40;
+public class MidnightTeleporter {//implements ITeleporter {
+    /*public static final int COOLDOWN = 40;
 
     private final RiftEntity originRift;
 
@@ -86,5 +71,5 @@ public class MidnightTeleporter implements ITeleporter {
                 pos.x - halfWidth, pos.y, pos.z - halfWidth,
                 pos.x + halfWidth, pos.y + entity.getHeight(), pos.z + halfWidth
         );
-    }
+    }*/
 }

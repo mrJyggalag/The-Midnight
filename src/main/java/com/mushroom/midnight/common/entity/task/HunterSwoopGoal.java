@@ -7,6 +7,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.pathfinding.Path;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 
 import javax.annotation.Nullable;
 
@@ -122,7 +123,8 @@ public class HunterSwoopGoal extends Goal {
     }
 
     private boolean canAttack(LivingEntity target) {
-        double distanceSq = target.getDistanceSq(this.owner.getPosition().down(ATTACK_OFFSET_Y));
+        BlockPos pos = this.owner.getPosition().down(ATTACK_OFFSET_Y);
+        double distanceSq = target.getDistanceSq(new Vec3d(pos.getX(), pos.getY(), pos.getZ()));
         double attackReach = this.getAttackReach(target);
         return distanceSq < attackReach * attackReach;
     }

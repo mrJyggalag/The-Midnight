@@ -2,6 +2,7 @@ package com.mushroom.midnight.client;
 
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mushroom.midnight.Midnight;
+import com.mushroom.midnight.common.helper.Helper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ActiveRenderInfo;
 import net.minecraft.client.renderer.BufferBuilder;
@@ -9,8 +10,11 @@ import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.fluid.IFluidState;
+import net.minecraft.fluid.LavaFluid;
+import net.minecraft.fluid.WaterFluid;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.EntityViewRenderEvent;
 import net.minecraftforge.client.event.RenderBlockOverlayEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -19,6 +23,7 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 import org.lwjgl.opengl.GL11;
 
 @Mod.EventBusSubscriber(modid = Midnight.MODID, value = Dist.CLIENT)
+@OnlyIn(Dist.CLIENT)
 public class FluidImmersionRenderer {
     private static final Minecraft CLIENT = Minecraft.getInstance();
     private static final ResourceLocation DARK_WATER_OVERLAY = new ResourceLocation(Midnight.MODID, "textures/effects/dark_water_overlay.png");
@@ -35,7 +40,7 @@ public class FluidImmersionRenderer {
 
     @SubscribeEvent
     public static void onSetupFogDensity(EntityViewRenderEvent.RenderFogEvent.FogDensity event) {
-        if (immersedFluid.getFluid() instanceof MiasmaFluid) {
+        if (Helper.isMidnightDimension(Minecraft.getInstance().world) && immersedFluid.getFluid() instanceof LavaFluid) { //MiasmaFluid
             GlStateManager.fogMode(GlStateManager.FogMode.EXP);
             event.setDensity(2.0F);
             event.setCanceled(true);
@@ -44,7 +49,7 @@ public class FluidImmersionRenderer {
 
     @SubscribeEvent
     public static void onRenderBlockOverlay(RenderBlockOverlayEvent event) {
-        if (immersedFluid.getFluid() instanceof DarkWaterFluid) {
+        if (Helper.isMidnightDimension(Minecraft.getInstance().world) && immersedFluid.getFluid() instanceof WaterFluid) { //DarkWaterFluid
             renderOverlay(DARK_WATER_OVERLAY);
             event.setCanceled(true);
         }

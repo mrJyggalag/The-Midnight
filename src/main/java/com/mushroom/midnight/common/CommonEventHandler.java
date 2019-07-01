@@ -83,7 +83,8 @@ public class CommonEventHandler {
         World world = event.getObject();
 
         if (Helper.isMidnightDimension(world)) {
-            MultiLayerBiomeSampler sampler = new MultiLayerBiomeSampler();
+            // TODO @gegy can be suppressed?
+            /*MultiLayerBiomeSampler sampler = new MultiLayerBiomeSampler();
 
             long worldSeed = world.getSeed();
 
@@ -93,7 +94,7 @@ public class CommonEventHandler {
             sampler.put(BiomeLayerType.SURFACE, BiomeLayerSampler.fromGenLayer(world, surfaceProcedure, Biome::getBiomeForId, false));
             sampler.put(BiomeLayerType.UNDERGROUND, BiomeLayerSampler.fromGenLayer(world, undergroundProcedure, MidnightCavernousBiomes::byId, true));
 
-            event.addCapability(new ResourceLocation(Midnight.MODID, "biome_sampler"), sampler);
+            event.addCapability(new ResourceLocation(Midnight.MODID, "biome_sampler"), sampler);*/
 
             if (!world.isRemote && world instanceof ServerWorld) {
                 MidnightWorldSpawners spawners = new MidnightWorldSpawners.SurfaceAndCave((ServerWorld) world);

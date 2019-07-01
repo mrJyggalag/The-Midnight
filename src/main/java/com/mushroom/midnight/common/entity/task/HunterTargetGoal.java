@@ -26,6 +26,7 @@ public class HunterTargetGoal<T extends LivingEntity> extends NearestAttackableT
 
     @Override
     protected AxisAlignedBB getTargetableArea(double targetDistance) {
+        // TODO @gegy check this
         BlockPos surface = this.field_75299_d.world.getHeight(this.field_75299_d.getPosition());
         return new AxisAlignedBB(surface).grow(targetDistance, 6.0, targetDistance);
     }
