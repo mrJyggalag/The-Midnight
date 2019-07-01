@@ -45,8 +45,7 @@ public class SearchForBlockGoal extends Goal {
 
     private boolean searchForDestination() {
         BlockPos currentPos = this.owner.getPosition();
-        Iterable<BlockPos> positions = BlockPos.getAllInBox(currentPos.add(-this.searchDist, -1, -this.searchDist), currentPos.add(this.searchDist, 1, this.searchDist));
-        for (BlockPos pos : positions) {
+        for (BlockPos pos : BlockPos.getAllInBoxMutable(currentPos.add(-this.searchDist, -1, -this.searchDist), currentPos.add(this.searchDist, 1, this.searchDist))) {
             if (this.owner.world.isBlockLoaded(pos) && this.blockPredicate.test(this.owner.world.getBlockState(pos))) {
                 this.destinationBlock = pos;
                 return true;

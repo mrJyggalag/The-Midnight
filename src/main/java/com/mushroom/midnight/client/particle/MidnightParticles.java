@@ -3,6 +3,7 @@ package com.mushroom.midnight.client.particle;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.IParticleFactory;
 import net.minecraft.client.particle.Particle;
+import net.minecraft.particles.BasicParticleType;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
@@ -18,9 +19,10 @@ public enum MidnightParticles {
 
     @OnlyIn(Dist.CLIENT)
     @Nullable
-    public Particle create(World world, double x, double y, double z, double velocityX, double velocityY, double velocityZ, int... parameters) {
+    @SuppressWarnings("unchecked")
+    public Particle create(World world, double x, double y, double z, double velocityX, double velocityY, double velocityZ) {
         IParticleFactory factory = getFactory();
-        return factory == null ? null : factory.createParticle(-1, world, x, y, z, velocityX, velocityY, velocityZ, parameters);
+        return factory == null ? null : factory.makeParticle(new BasicParticleType(false), world, x, y, z, velocityX, velocityY, velocityZ);
     }
 
     @OnlyIn(Dist.CLIENT)
@@ -49,7 +51,7 @@ public enum MidnightParticles {
 
     public void spawn(World world, double x, double y, double z, double velocityX, double velocityY, double velocityZ, int... parameters) {
         if (world.isRemote) {
-            Particle particle = create(world, x, y, z, velocityX, velocityY, velocityZ, parameters);
+            Particle particle = create(world, x, y, z, velocityX, velocityY, velocityZ);
             if (particle != null) {
                 spawn(particle);
             }

@@ -3,6 +3,7 @@ package com.mushroom.midnight.client.particle;
 import com.mushroom.midnight.common.helper.Helper;
 import net.minecraft.client.particle.IParticleFactory;
 import net.minecraft.client.particle.Particle;
+import net.minecraft.particles.IParticleData;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
@@ -67,10 +68,11 @@ public class FadingSporeParticle extends MidnightParticle {
 
     @OnlyIn(Dist.CLIENT)
     public static class Factory implements IParticleFactory {
-        @Override
         @Nullable
-        public Particle createParticle(int particleID, World world, double x, double y, double z, double motionX, double motionY, double motionZ, int... params) {
-            return new FadingSporeParticle(world, x, y, z, motionX, motionY, motionZ, params.length > 0 ? params[0] : 0xffffff);
+        @Override
+        public Particle makeParticle(IParticleData type, World world, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
+            // TODO params , params.length > 0 ? params[0] : 0xffffff
+            return new FadingSporeParticle(world, x, y, z, xSpeed, ySpeed, zSpeed, 0xffffff);
         }
     }
 }

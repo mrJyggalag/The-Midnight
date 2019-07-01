@@ -2,10 +2,13 @@ package com.mushroom.midnight.client.particle;
 
 import net.minecraft.client.particle.IParticleFactory;
 import net.minecraft.client.particle.Particle;
+import net.minecraft.particles.IParticleData;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+
+import javax.annotation.Nullable;
 
 @OnlyIn(Dist.CLIENT)
 public class AmbientSporeParticle extends MidnightParticle {
@@ -67,9 +70,10 @@ public class AmbientSporeParticle extends MidnightParticle {
 
     @OnlyIn(Dist.CLIENT)
     public static class Factory implements IParticleFactory {
+        @Nullable
         @Override
-        public Particle createParticle(int particleID, World world, double x, double y, double z, double velocityX, double velocityY, double velocityZ, int... parameters) {
-            return new AmbientSporeParticle(world, x, y, z, velocityX, velocityY, velocityZ);
+        public Particle makeParticle(IParticleData type, World world, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
+            return new AmbientSporeParticle(world, x, y, z, xSpeed, ySpeed, zSpeed);
         }
     }
 }

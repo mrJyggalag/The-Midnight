@@ -2,10 +2,13 @@ package com.mushroom.midnight.client.particle;
 
 import net.minecraft.client.particle.IParticleFactory;
 import net.minecraft.client.particle.Particle;
+import net.minecraft.particles.IParticleData;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+
+import javax.annotation.Nullable;
 
 @OnlyIn(Dist.CLIENT)
 public class UnstableBushParticle extends MidnightParticle {
@@ -44,9 +47,11 @@ public class UnstableBushParticle extends MidnightParticle {
 
     @OnlyIn(Dist.CLIENT)
     public static class Factory implements IParticleFactory {
+        @Nullable
         @Override
-        public Particle createParticle(int particleID, World world, double posX, double posY, double posZ, double velocityX, double velocityY, double velocityZ, int... params) {
-            return new UnstableBushParticle(world, posX, posY, posZ, velocityX, velocityY, velocityZ, params.length > 0 ? params[0] : world.rand.nextInt(3));
+        public Particle makeParticle(IParticleData type, World world, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
+            // TODO params , params.length > 0 ? params[0] : world.rand.nextInt(3)
+            return new UnstableBushParticle(world, x, y, z, xSpeed, ySpeed, zSpeed, world.rand.nextInt(3));
         }
     }
 }

@@ -1,10 +1,15 @@
 package com.mushroom.midnight.client.particle;
 
+import net.minecraft.client.particle.IParticleFactory;
+import net.minecraft.client.particle.Particle;
+import net.minecraft.particles.IParticleData;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+
+import javax.annotation.Nullable;
 
 @OnlyIn(Dist.CLIENT)
 public class FurnaceFlameParticle extends MidnightParticle {
@@ -65,5 +70,14 @@ public class FurnaceFlameParticle extends MidnightParticle {
     @Override
     ResourceLocation getTexture() {
         return MidnightParticleSprites.FURNACE_FLAME;
+    }
+
+    @OnlyIn(Dist.CLIENT)
+    public static class Factory implements IParticleFactory {
+        @Nullable
+        @Override
+        public Particle makeParticle(IParticleData type, World world, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
+            return new FurnaceFlameParticle(world, x, y, z, xSpeed, ySpeed, zSpeed);
+        }
     }
 }

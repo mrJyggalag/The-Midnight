@@ -17,6 +17,6 @@ public class MidnightCarvers {
     @SubscribeEvent
     public static void registerCarvers(RegistryEvent.Register<WorldCarver<?>> event) {
         RegUtil.generic(event.getRegistry())
-                .add("cave", new MidnightCaveCarver(ProbabilityConfig::deserialize));
+                .add("cave", new MidnightCaveCarver(ProbabilityConfig::deserialize, 0.5f)); // TODO scale me
     }
 }

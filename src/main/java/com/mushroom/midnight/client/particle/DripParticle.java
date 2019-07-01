@@ -2,6 +2,7 @@ package com.mushroom.midnight.client.particle;
 
 import net.minecraft.client.particle.IParticleFactory;
 import net.minecraft.client.particle.Particle;
+import net.minecraft.particles.IParticleData;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -20,8 +21,8 @@ public class DripParticle extends Particle {
         this.particleBlue = b;
         setSize(0.01f, 0.01f);
         this.particleGravity = 0.06f;
-        this.particleMaxAge = (int) (64d / (Math.random() * 0.8d + 0.2d));
-        this.bobTimer = this.particleMaxAge * 3 / 4;
+        this.maxAge = (int) (64d / (Math.random() * 0.8d + 0.2d));
+        this.bobTimer = this.maxAge * 3 / 4;
         this.motionX = this.motionY = this.motionZ = 0d;
     }
 
@@ -40,7 +41,7 @@ public class DripParticle extends Particle {
         motionX *= 0.9800000190734863d;
         motionY *= 0.9800000190734863d;
         motionZ *= 0.9800000190734863d;
-        if (particleMaxAge-- <= 0) {
+        if (maxAge-- <= 0) {
             setExpired();
         }
         if (onGround) {
@@ -59,8 +60,9 @@ public class DripParticle extends Particle {
     public static class Factory implements IParticleFactory {
         @Nullable
         @Override
-        public Particle createParticle(int particleID, World world, double x, double y, double z, double motionX, double motionY, double motionZ, int... params) {
-            return new DripParticle(world, x, y, z, params.length > 0 ? params[0] / 255f : 0f, params.length > 1 ? params[1] / 255f : 0f, params.length > 2 ? params[2] / 255f : 0f);
+        //TODO params params.length > 0 ? params[0] / 255f : 0f, params.length > 1 ? params[1] / 255f : 0f, params.length > 2 ? params[2] / 255f : 0f
+        public Particle makeParticle(IParticleData type, World world, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
+            return new DripParticle(world, x, y, z, 0xff, 0xff, 0xff);
         }
     }
 }

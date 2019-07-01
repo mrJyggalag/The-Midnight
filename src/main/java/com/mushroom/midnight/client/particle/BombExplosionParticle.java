@@ -1,16 +1,19 @@
 package com.mushroom.midnight.client.particle;
 
+import com.mojang.blaze3d.platform.GlStateManager;
 import com.mushroom.midnight.common.helper.Helper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.IParticleFactory;
 import net.minecraft.client.particle.Particle;
+import net.minecraft.client.renderer.ActiveRenderInfo;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.client.renderer.vertex.VertexFormat;
-import net.minecraft.entity.Entity;
+
+import net.minecraft.particles.IParticleData;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
@@ -21,30 +24,29 @@ import javax.annotation.Nullable;
 import static com.mushroom.midnight.Midnight.MODID;
 
 @OnlyIn(Dist.CLIENT)
-public class BombExplosionParticle extends Particle {
+public class BombExplosionParticle extends MidnightParticle {
     private static final ResourceLocation EXPLOSION_TEXTURE = new ResourceLocation(MODID, "textures/particles/bomb_explosion.png");
     private static final VertexFormat VERTEX_FORMAT = (new VertexFormat()).addElement(DefaultVertexFormats.POSITION_3F).addElement(DefaultVertexFormats.TEX_2F).addElement(DefaultVertexFormats.COLOR_4UB).addElement(DefaultVertexFormats.TEX_2S).addElement(DefaultVertexFormats.NORMAL_3B).addElement(DefaultVertexFormats.PADDING_1B);
     private int life;
     private final int lifeTime;
-
-    private final TextureManager textureManager;
     private final float size;
 
-    protected BombExplosionParticle(TextureManager textureManager, World world, double x, double y, double z, double scale, double unused1, double unused2, int color) {
+    protected BombExplosionParticle(World world, double x, double y, double z, double scale, int color) {
         super(world, x, y, z, 0d, 0d, 0d);
-        this.textureManager = textureManager;
         this.lifeTime = 6 + this.rand.nextInt(4);
         //float f = this.rand.nextFloat() * 0.6f + 0.4f;
         float[] rgbF = Helper.getRGBColorF(color);
-        setRBGColorF(rgbF[0], rgbF[1], rgbF[2]);
+        setColor(rgbF[0], rgbF[1], rgbF[2]);
         this.size = 1f - (float) scale * 0.5f;
     }
 
     @Override
-    public void renderParticle(BufferBuilder buffer, Entity entity, float partialTicks, float rotationX, float rotationZ, float rotationYZ, float rotationXY, float rotationXZ) {
+    public void renderParticle(BufferBuilder buffer, ActiveRenderInfo activeInfo, float partialTicks, float rotationX, float rotationZ, float rotationYZ, float rotationXY, float rotationXZ) {
         int i = (int) (((float) this.life + partialTicks) * 15f / (float) this.lifeTime);
         if (i <= 15) {
-            this.textureManager.bindTexture(EXPLOSION_TEXTURE);
+            TextureManager textureManager = Minecraft.getInstance().textureManager;
+            beginRender(buffer, textureManager);
+
             double minU = (i % 4) / 4d;
             double maxU = minU + 0.24975d;
             double minV = (float)(i / 4) / 4d;
@@ -55,7 +57,7 @@ public class BombExplosionParticle extends Particle {
             double x = this.prevPosX + (this.posX - this.prevPosX) * partialTicks - interpPosX;
             double y = this.prevPosY + (this.posY - this.prevPosY) * partialTicks - interpPosY;
             double z = this.prevPosZ + (this.posZ - this.prevPosZ) * partialTicks - interpPosZ;
-            GlStateManager.color(1f, 1f, 1f, 1f);
+            GlStateManager.color4f(1f, 1f, 1f, 1f);
             GlStateManager.disableLighting();
             RenderHelper.disableStandardItemLighting();
             buffer.begin(7, VERTEX_FORMAT);
@@ -69,6 +71,8 @@ public class BombExplosionParticle extends Particle {
                     .tex(minU, maxV).color(this.particleRed, this.particleGreen, this.particleBlue, 1f).lightmap(skyLight, blockLight).normal(0f, 1f, 0f).endVertex();
             Tessellator.getInstance().draw();
             GlStateManager.enableLighting();
+
+            finishRender(Tessellator.getInstance());
         }
     }
 
@@ -89,16 +93,17 @@ public class BombExplosionParticle extends Particle {
     }
 
     @Override
-    public int getFXLayer() {
-        return 3;
+    ResourceLocation getTexture() {
+        return MidnightParticleSprites.BOMB_EXPLOSION;
     }
 
     @OnlyIn(Dist.CLIENT)
     public static class Factory implements IParticleFactory {
-        @Override
         @Nullable
-        public Particle createParticle(int particleID, World world, double x, double y, double z, double scale, double unused1, double unused2, int... params) {
-            return new BombExplosionParticle(Minecraft.getInstance().getTextureManager(), world, x, y, z, scale, 0d, 0d, params.length > 0 ? params[0] : 0xffffff);
+        @Override
+        public Particle makeParticle(IParticleData type, World world, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
+            // TODO params scale, params.length > 0 ? params[0] : 0xffffff
+            return new BombExplosionParticle(world, x, y, z, 1f, 0xffffff);
         }
     }
 }

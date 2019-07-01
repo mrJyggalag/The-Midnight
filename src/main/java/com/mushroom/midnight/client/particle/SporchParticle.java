@@ -1,25 +1,26 @@
 package com.mushroom.midnight.client.particle;
 
-import com.mushroom.midnight.client.particle.MidnightParticleSprites.SpriteTypes;
 import com.mushroom.midnight.common.block.SporchBlock.SporchType;
 import net.minecraft.client.particle.IParticleFactory;
 import net.minecraft.client.particle.Particle;
+import net.minecraft.client.renderer.ActiveRenderInfo;
 import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.entity.Entity;
+import net.minecraft.particles.IParticleData;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-import java.util.ArrayList;
-import java.util.List;
+import javax.annotation.Nullable;
 
 @OnlyIn(Dist.CLIENT)
-public class SporchParticle extends Particle {
+public class SporchParticle extends MidnightParticle {
     private final float flameScale;
-    private final List<TextureAtlasSprite> sprites = new ArrayList<>();
+    //private final List<ResourceLocation> sprites = new ArrayList<>();
     private final int MAX_FRAME_ID = 2;
+    private final SporchType sporchType;
     private int currentFrame = 0;
     private boolean directionRight = true;
     private int lastTick = 0;
@@ -36,19 +37,22 @@ public class SporchParticle extends Particle {
         this.particleRed = 1f;
         this.particleGreen = 1f;
         this.particleBlue = 1f;
-        this.particleMaxAge = (int) (8d / (Math.random() * 0.8d + 0.2d)) + 4;
-        initTextures(SporchType.values()[Math.min(sporchType, SporchType.values().length)]);
-        setParticleTexture(sprites.get(0));
+        this.maxAge = (int) (8d / (Math.random() * 0.8d + 0.2d)) + 4;
+        this.sporchType = SporchType.values()[sporchType];
+        //initTextures(SporchType.values()[Math.min(sporchType, SporchType.values().length)]);
+        //setParticleTexture(sprites.get(0));
     }
 
+    @Override
     public void move(double x, double y, double z) {
         setBoundingBox(this.getBoundingBox().offset(x, y, z));
         resetPositionToBB();
     }
 
-    public void renderParticle(BufferBuilder buffer, Entity entity, float partialTicks, float rotationX, float rotationZ, float rotationYZ, float rotationXY, float rotationXZ) {
+    @Override
+    public void renderParticle(BufferBuilder buffer, ActiveRenderInfo activeInfo, float partialTicks, float rotationX, float rotationZ, float rotationYZ, float rotationXY, float rotationXZ) {
+        Entity entity = activeInfo.func_216773_g();
         if (entity.ticksExisted >= this.lastTick + 5) {
-            setParticleTexture(sprites.get(currentFrame));
             if (this.currentFrame == MAX_FRAME_ID) {
                 this.directionRight = false;
             } else if (currentFrame == 0) {
@@ -57,13 +61,14 @@ public class SporchParticle extends Particle {
             this.currentFrame = this.currentFrame + (directionRight ? 1 : -1);
             this.lastTick = entity.ticksExisted;
         }
-        float f = ((float) this.particleAge + partialTicks) / (float) this.particleMaxAge;
+        float f = ((float) this.age + partialTicks) / (float) this.maxAge;
         this.particleScale = this.flameScale * (1f - f * f * 0.5f);
-        super.renderParticle(buffer, entity, partialTicks, rotationX, rotationZ, rotationYZ, rotationXY, rotationXZ);
+        super.renderParticle(buffer, activeInfo, partialTicks, rotationX, rotationZ, rotationYZ, rotationXY, rotationXZ);
     }
 
+    @Override
     public int getBrightnessForRender(float partialTick) {
-        float f = ((float) this.particleAge + partialTick) / (float) this.particleMaxAge;
+        float f = ((float) this.age + partialTick) / (float) this.maxAge;
         f = MathHelper.clamp(f, 0f, 1f);
         int i = super.getBrightnessForRender(partialTick);
         int j = i & 255;
@@ -75,41 +80,18 @@ public class SporchParticle extends Particle {
         return j | k << 16;
     }
 
-    private void initTextures(SporchType sporchType) {
-        switch (sporchType) {
-            case BOGSHROOM:
-                sprites.add(MidnightParticleSprites.getSprite(SpriteTypes.SPORCH_BOGSHROOM_1));
-                sprites.add(MidnightParticleSprites.getSprite(SpriteTypes.SPORCH_BOGSHROOM_2));
-                sprites.add(MidnightParticleSprites.getSprite(SpriteTypes.SPORCH_BOGSHROOM_3));
-                break;
-            case DEWSHROOM:
-                sprites.add(MidnightParticleSprites.getSprite(SpriteTypes.SPORCH_DEWSHROOM_1));
-                sprites.add(MidnightParticleSprites.getSprite(SpriteTypes.SPORCH_DEWSHROOM_2));
-                sprites.add(MidnightParticleSprites.getSprite(SpriteTypes.SPORCH_DEWSHROOM_3));
-                break;
-            case NIGHTSHROOM:
-                sprites.add(MidnightParticleSprites.getSprite(SpriteTypes.SPORCH_NIGHTSHROOM_1));
-                sprites.add(MidnightParticleSprites.getSprite(SpriteTypes.SPORCH_NIGHTSHROOM_2));
-                sprites.add(MidnightParticleSprites.getSprite(SpriteTypes.SPORCH_NIGHTSHROOM_3));
-                break;
-            case VIRIDSHROOM: default:
-                sprites.add(MidnightParticleSprites.getSprite(SpriteTypes.SPORCH_VIRIDSHROOM_1));
-                sprites.add(MidnightParticleSprites.getSprite(SpriteTypes.SPORCH_VIRIDSHROOM_2));
-                sprites.add(MidnightParticleSprites.getSprite(SpriteTypes.SPORCH_VIRIDSHROOM_3));
-                break;
-        }
-    }
-
     @Override
-    public int getFXLayer() {
-        return 1;
+    ResourceLocation getTexture() {
+        return MidnightParticleSprites.SPORCHES.get(sporchType).get(currentFrame);
     }
 
     @OnlyIn(Dist.CLIENT)
     public static class Factory implements IParticleFactory {
+        @Nullable
         @Override
-        public Particle createParticle(int particleID, World world, double posX, double posY, double posZ, double motionX, double motionY, double motionZ, int... params) {
-            return new SporchParticle(world, posX, posY, posZ, motionX, motionY, motionZ, params.length > 0 ? params[0] : world.rand.nextInt(SporchType.values().length));
+        public Particle makeParticle(IParticleData type, World world, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
+            // TODO prams , params.length > 0 ? params[0] : world.rand.nextInt(SporchType.values().length)
+            return new SporchParticle(world, x, y, z, xSpeed, ySpeed, zSpeed, world.rand.nextInt(SporchType.values().length));
         }
     }
 }

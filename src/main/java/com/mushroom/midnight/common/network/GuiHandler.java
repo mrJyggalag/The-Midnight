@@ -1,19 +1,6 @@
 package com.mushroom.midnight.common.network;
 
-import com.mushroom.midnight.client.gui.MidnightFurnaceScreen;
-import com.mushroom.midnight.common.container.MidnightFurnaceContainer;
-import com.mushroom.midnight.common.tile.base.TileEntityMidnightFurnace;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
-import net.minecraftforge.fml.common.network.IGuiHandler;
-
-import javax.annotation.Nullable;
-
-import static com.mushroom.midnight.Midnight.LOGGER;
-
-public class GuiHandler implements IGuiHandler {
+public class GuiHandler {/*implements IGuiHandler {
     public static final int MIDNIGHT_FURNACE = 0;
 
     @Nullable
@@ -46,5 +33,5 @@ public class GuiHandler implements IGuiHandler {
                 LOGGER.warn("Invalid gui id, received : " + ID);
         }
         return null;
-    }
+    }*/
 }
