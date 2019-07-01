@@ -1,6 +1,10 @@
 package com.mushroom.midnight.common.biome.cavern;
 
 import com.mushroom.midnight.common.biome.MidnightSurfaceBuilders;
+import com.mushroom.midnight.common.registry.MidnightCarvers;
+import net.minecraft.world.biome.Biome;
+import net.minecraft.world.gen.GenerationStage;
+import net.minecraft.world.gen.feature.ProbabilityConfig;
 
 public class ClosedCavernBiome extends CavernousBiome {
     public ClosedCavernBiome() {
@@ -8,5 +12,9 @@ public class ClosedCavernBiome extends CavernousBiome {
                 .surfaceBuilder(MidnightSurfaceBuilders.CAVERN, MidnightSurfaceBuilders.NIGHTSTONE_CONFIG)
                 .cavernDensity(5.0F)
         );
+
+        this.addCarver(GenerationStage.Carving.AIR, Biome.createCarver(
+                MidnightCarvers.CAVE, new ProbabilityConfig(1.0F / 7.0F)
+        ));
     }
 }

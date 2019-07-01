@@ -37,7 +37,6 @@ public class CavernousBiome extends ForgeRegistryEntry<CavernousBiome> implement
     protected final float floorHeight;
     protected final float ceilingHeight;
     protected final float heightScale;
-    protected final float caveRadiusScale;
     protected final float pillarWeight;
 
     protected final Multimap<GenerationStage.Carving, ConfiguredCarver<?>> carvers = HashMultimap.create();
@@ -54,7 +53,6 @@ public class CavernousBiome extends ForgeRegistryEntry<CavernousBiome> implement
         this.floorHeight = properties.floorHeight;
         this.ceilingHeight = properties.ceilingHeight;
         this.heightScale = properties.heightScale;
-        this.caveRadiusScale = properties.caveRadiusScale;
         this.pillarWeight = properties.pillarWeight;
     }
 
@@ -83,10 +81,6 @@ public class CavernousBiome extends ForgeRegistryEntry<CavernousBiome> implement
 
     public float getCavernDensity() {
         return this.cavernDensity;
-    }
-
-    public float getCaveRadiusScale() {
-        return this.caveRadiusScale;
     }
 
     public float getFloorHeight() {
@@ -142,7 +136,6 @@ public class CavernousBiome extends ForgeRegistryEntry<CavernousBiome> implement
         private float floorHeight = 0.0F;
         private float ceilingHeight = 1.0F;
         private float heightScale = 0.1F;
-        private float caveRadiusScale = 2.2F;
         private float pillarWeight = 1.0F;
 
         protected Properties() {
@@ -170,11 +163,6 @@ public class CavernousBiome extends ForgeRegistryEntry<CavernousBiome> implement
 
         public Properties heightScale(float heightScale) {
             this.heightScale = heightScale;
-            return this;
-        }
-
-        public Properties caveRadiusScale(float caveRadiusScale) {
-            this.caveRadiusScale = caveRadiusScale;
             return this;
         }
 

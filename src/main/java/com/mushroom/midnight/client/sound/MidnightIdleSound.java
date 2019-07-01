@@ -5,13 +5,13 @@ import com.mushroom.midnight.common.helper.Helper;
 import com.mushroom.midnight.common.registry.MidnightSounds;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.ITickableSound;
-import net.minecraft.client.audio.PositionedSound;
+import net.minecraft.client.audio.LocatableSound;
 import net.minecraft.util.SoundCategory;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.OnlyIn;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
-public class MidnightIdleSound extends PositionedSound implements ITickableSound {
+public class MidnightIdleSound extends LocatableSound implements ITickableSound {
     private static final Minecraft MC = Minecraft.getInstance();
 
     public MidnightIdleSound() {
@@ -26,7 +26,7 @@ public class MidnightIdleSound extends PositionedSound implements ITickableSound
     }
 
     @Override
-    public void update() {
+    public void tick() {
         this.volume = Math.max(1.0F - IdleSoundController.CAVE_ANIMATION.getScale(), 0.01F);
     }
 }

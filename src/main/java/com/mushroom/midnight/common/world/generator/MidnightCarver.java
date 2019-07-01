@@ -2,31 +2,21 @@ package com.mushroom.midnight.common.world.generator;
 
 import com.mojang.datafixers.Dynamic;
 import com.mushroom.midnight.common.registry.MidnightBlocks;
-import com.mushroom.midnight.common.world.MidnightChunkGenerator;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.material.Material;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.chunk.IChunk;
-import net.minecraft.world.gen.carver.CaveWorldCarver;
-import net.minecraft.world.gen.feature.ProbabilityConfig;
+import net.minecraft.world.gen.carver.ICarverConfig;
+import net.minecraft.world.gen.carver.WorldCarver;
 
 import java.util.BitSet;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Function;
 
-public class MidnightCaveCarver extends CaveWorldCarver {
-    private final float radiusScale;
-
-    public MidnightCaveCarver(Function<Dynamic<?>, ? extends ProbabilityConfig> deserialize, float radiusScale) {
-        super(deserialize, 256);
-        this.radiusScale = radiusScale;
-    }
-
-    @Override
-    protected int func_222726_b(Random random) {
-        return random.nextInt(random.nextInt(MidnightChunkGenerator.SEA_LEVEL) + 8);
+public abstract class MidnightCarver<C extends ICarverConfig> extends WorldCarver<C> {
+    protected MidnightCarver(Function<Dynamic<?>, ? extends C> deserialize, int maxHeight) {
+        super(deserialize, maxHeight);
     }
 
     @Override
@@ -52,19 +42,5 @@ public class MidnightCaveCarver extends CaveWorldCarver {
         }
 
         return true;
-    }
-
-    @Override
-    protected boolean func_222707_a(BlockState state, BlockState aboveState) {
-        Material material = state.getMaterial();
-        Material aboveMaterial = aboveState.getMaterial();
-        return (material == Material.ROCK || material == Material.EARTH || material == Material.ORGANIC)
-                && material != Material.WATER && material != Material.LAVA
-                && aboveMaterial != Material.WATER && aboveMaterial != Material.LAVA;
-    }
-
-    @Override
-    protected float func_222722_a(Random random) {
-        return super.func_222722_a(random) * this.radiusScale;
     }
 }

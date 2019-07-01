@@ -18,6 +18,8 @@ public class WarpedFieldsBiome extends SurfaceBiome {
                 .wet()
         );
 
+        MidnightBiomeConfigurator.addGlobalOres(this);
+
         MidnightBiomeConfigurator.addLumen(this);
         MidnightBiomeConfigurator.addSmallFungis(this);
         MidnightBiomeConfigurator.addGrasses(this);

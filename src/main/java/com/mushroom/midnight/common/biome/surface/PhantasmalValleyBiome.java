@@ -16,6 +16,7 @@ public class PhantasmalValleyBiome extends SurfaceBiome {
                 .wet()
         );
 
+        MidnightBiomeConfigurator.addGlobalOres(this);
         MidnightBiomeConfigurator.addGlobalFeatures(this);
 
         MidnightBiomeConfigurator.addStandardMonsterSpawns(this);

@@ -12,6 +12,8 @@ public class ObscuredPeaksBiome extends SurfaceBiome {
                 .scale(0.5F)
         );
 
+        MidnightBiomeConfigurator.addGlobalOres(this);
+
         MidnightBiomeConfigurator.addSmallFungis(this);
         MidnightBiomeConfigurator.addLumen(this);
         MidnightBiomeConfigurator.addTrenchstoneBoulders(this);

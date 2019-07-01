@@ -18,6 +18,8 @@ public class DeceitfulBogBiome extends SurfaceBiome {
                 .wet()
         );
 
+        MidnightBiomeConfigurator.addGlobalOres(this);
+
         MidnightBiomeConfigurator.addLargeBogshrooms(this);
 
         MidnightBiomeConfigurator.addBogDeadTrees(this);

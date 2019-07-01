@@ -10,7 +10,6 @@ public class CrystalCavernBiome extends CavernousBiome {
     public CrystalCavernBiome() {
         super(new Properties()
                 .surfaceBuilder(MidnightSurfaceBuilders.CAVERN, MidnightSurfaceBuilders.NIGHTSTONE_CONFIG)
-                .caveRadiusScale(0.0F)
                 .heightScale(0.4F)
                 .cavernDensity(5.0F)
         );

@@ -13,7 +13,7 @@ import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.chunk.ChunkPrimer;
-import net.minecraft.world.gen.MapGenBase;
+import net.minecraft.world.gen.Heightmap;
 import net.minecraft.world.gen.carver.WorldCarver;
 import net.minecraft.world.gen.feature.ProbabilityConfig;
 
@@ -21,7 +21,7 @@ import javax.annotation.Nullable;
 import java.util.Arrays;
 import java.util.Random;
 
-public class MoltenCraterCarver extends WorldCarver<ProbabilityConfig> {
+public class MoltenCraterCarver extends MidnightCarver<ProbabilityConfig> {
     private static final Random RNG = new Random(0);
 
     private static final int SPAWN_CHANCE = 350;
@@ -151,6 +151,8 @@ public class MoltenCraterCarver extends WorldCarver<ProbabilityConfig> {
     private void decorateSurface(int centerX, int centerZ, int edgeRadius, BlockPos minPos, BlockPos maxPos, ChunkPrimer primer) {
         int edgeRadiusSquared = edgeRadius * edgeRadius;
 
+        BlockPos.MutableBlockPos mutablePos = new BlockPos.MutableBlockPos();
+
         for (int z = minPos.getZ(); z <= maxPos.getZ(); z++) {
             for (int x = minPos.getX(); x <= maxPos.getX(); x++) {
                 int deltaX = x - centerX;
@@ -160,11 +162,14 @@ public class MoltenCraterCarver extends WorldCarver<ProbabilityConfig> {
                 if (distanceSquared <= edgeRadiusSquared) {
                     int localX = x & 15;
                     int localZ = z & 15;
-                    int localY = findSurfaceFixed(primer, localX, localZ);
-                    if (primer.getBlockState(localX, localY, localZ) == SURFACE_STATE) {
+
+                    int localY = primer.getTopBlockY(Heightmap.Type.MOTION_BLOCKING, localX, localZ);
+                    mutablePos.setPos(localX, localY,localZ);
+
+                    if (primer.getBlockState(mutablePos) == SURFACE_STATE) {
                         BlockState state = this.selectSurfaceState();
                         if (state != null) {
-                            primer.setBlockState(localX, localY, localZ, state);
+                            primer.setBlockState(mutablePos, state);
                         }
                     }
                 }
@@ -188,21 +193,6 @@ public class MoltenCraterCarver extends WorldCarver<ProbabilityConfig> {
         int deltaY = Math.min(pos.getY() - centerY, 0) * SCALE_Y;
         int deltaZ = pos.getZ() - centerZ;
         return deltaX * deltaX + deltaY * deltaY + deltaZ * deltaZ;
-    }
-
-    private static int findSurfaceFixed(ChunkPrimer primer, int x, int z) {
-        if (x != 15 && z != 15) {
-            return primer.findGroundBlockIdx(x, z) - 1;
-        }
-
-        for (int y = 255; y >= 0; y--) {
-            BlockState state = primer.getBlockState(x, y, z);
-            if (state != AIR_STATE) {
-                return y;
-            }
-        }
-
-        return 0;
     }
 
     public static boolean isCraterSource(IWorld world, int chunkX, int chunkZ) {

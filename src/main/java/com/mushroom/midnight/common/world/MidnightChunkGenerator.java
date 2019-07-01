@@ -8,7 +8,6 @@ import net.minecraft.world.GameRules;
 import net.minecraft.world.ServerWorld;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.provider.BiomeProvider;
-import net.minecraft.world.chunk.IChunk;
 import net.minecraft.world.gen.GenerationSettings;
 import net.minecraft.world.gen.NoiseChunkGenerator;
 import net.minecraft.world.gen.WorldGenRegion;
@@ -23,6 +22,8 @@ public class MidnightChunkGenerator extends NoiseChunkGenerator<MidnightChunkGen
     public static final int MAX_CAVE_HEIGHT = 46;
 
     public static final int MIN_SURFACE_LEVEL = MAX_CAVE_HEIGHT + 12;
+
+    public static final int SEA_LEVEL = SURFACE_LEVEL + 2;
 
     private final World world;
     private final MidnightNoiseGenerator noiseGenerator;
@@ -78,7 +79,7 @@ public class MidnightChunkGenerator extends NoiseChunkGenerator<MidnightChunkGen
 
     @Override
     public int getSeaLevel() {
-        return SURFACE_LEVEL + 2;
+        return SEA_LEVEL;
     }
 
     public static class Config extends GenerationSettings {

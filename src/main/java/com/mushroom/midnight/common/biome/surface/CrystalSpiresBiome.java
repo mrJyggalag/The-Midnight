@@ -17,6 +17,8 @@ public class CrystalSpiresBiome extends SurfaceBiome {
                 .ridgeWeight(0.0F)
         );
 
+        MidnightBiomeConfigurator.addGlobalOres(this);
+
         MidnightBiomeConfigurator.addCrystalClusters(this);
         MidnightBiomeConfigurator.addSparseShadowrootTrees(this);
 

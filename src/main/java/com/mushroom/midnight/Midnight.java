@@ -33,7 +33,6 @@ import com.mushroom.midnight.common.registry.MidnightSurfaceBiomes;
 import com.mushroom.midnight.common.registry.RegUtil;
 import com.mushroom.midnight.common.util.EntityUtil;
 import com.mushroom.midnight.common.util.IProxy;
-import com.mushroom.midnight.common.world.generator.MidnightOreGenerator;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.storage.loot.conditions.LootConditionManager;

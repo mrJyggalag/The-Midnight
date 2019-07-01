@@ -6,6 +6,7 @@ import com.mushroom.midnight.common.registry.MidnightEntities;
 import com.mushroom.midnight.common.registry.MidnightFeatures;
 import com.mushroom.midnight.common.registry.MidnightPlacements;
 import com.mushroom.midnight.common.world.feature.config.CrystalClusterConfig;
+import com.mushroom.midnight.common.world.feature.config.MidnightOreConfig;
 import com.mushroom.midnight.common.world.feature.config.UniformCompositionConfig;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;
@@ -18,12 +19,35 @@ import net.minecraft.world.gen.feature.GrassFeatureConfig;
 import net.minecraft.world.gen.feature.IFeatureConfig;
 import net.minecraft.world.gen.feature.TwoFeatureChoiceConfig;
 import net.minecraft.world.gen.placement.ChanceConfig;
+import net.minecraft.world.gen.placement.CountRangeConfig;
 import net.minecraft.world.gen.placement.FrequencyConfig;
 import net.minecraft.world.gen.placement.HeightWithChanceConfig;
 import net.minecraft.world.gen.placement.IPlacementConfig;
 import net.minecraft.world.gen.placement.Placement;
 
 public class MidnightBiomeConfigurator {
+    public static void addGlobalOres(ConfigurableBiome biome) {
+        biome.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, Biome.createDecoratedFeature(
+                MidnightFeatures.ORE, new MidnightOreConfig(MidnightBlocks.DARK_PEARL_ORE.getDefaultState(), 14),
+                Placement.COUNT_RANGE, new CountRangeConfig(8, 0, 0, 56)
+        ));
+
+        biome.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, Biome.createDecoratedFeature(
+                MidnightFeatures.ORE, new MidnightOreConfig(MidnightBlocks.TENEBRUM_ORE.getDefaultState(), 4),
+                Placement.COUNT_RANGE, new CountRangeConfig(6, 0, 0, 56)
+        ));
+
+        biome.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, Biome.createDecoratedFeature(
+                MidnightFeatures.ORE, new MidnightOreConfig(MidnightBlocks.NAGRILITE_ORE.getDefaultState(), 4),
+                Placement.COUNT_RANGE, new CountRangeConfig(4, 0, 0, 24)
+        ));
+
+        biome.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, Biome.createDecoratedFeature(
+                MidnightFeatures.ORE, new MidnightOreConfig(MidnightBlocks.EBONYS_ORE.getDefaultState(), 6),
+                Placement.COUNT_RANGE, new CountRangeConfig(4, 0, 0, 24)
+        ));
+    }
+
     public static void addGlobalFeatures(ConfigurableBiome biome) {
         biome.addFeature(GenerationStage.Decoration.LOCAL_MODIFICATIONS, Biome.createDecoratedFeature(
                 MidnightFeatures.HEAP, new UniformCompositionConfig(MidnightBlocks.ROCKSHROOM.getDefaultState()),

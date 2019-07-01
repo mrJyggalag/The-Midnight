@@ -10,18 +10,20 @@ import com.mushroom.midnight.common.world.feature.CrystalFlowersFeature;
 import com.mushroom.midnight.common.world.feature.DarkWillowTreeFeature;
 import com.mushroom.midnight.common.world.feature.DeadLogFeature;
 import com.mushroom.midnight.common.world.feature.DeadTreeFeature;
-import com.mushroom.midnight.common.world.feature.TallBogFungiFeature;
-import com.mushroom.midnight.common.world.feature.TallFungiFeature;
 import com.mushroom.midnight.common.world.feature.FungiFlowersFeature;
 import com.mushroom.midnight.common.world.feature.HeapFeature;
 import com.mushroom.midnight.common.world.feature.LargeBogshroomFeature;
 import com.mushroom.midnight.common.world.feature.LargeBulbFungusFeature;
+import com.mushroom.midnight.common.world.feature.MidnightOreFeature;
 import com.mushroom.midnight.common.world.feature.MossFeature;
 import com.mushroom.midnight.common.world.feature.NightstoneBoulderFeature;
 import com.mushroom.midnight.common.world.feature.ShadowrootTreeFeature;
 import com.mushroom.midnight.common.world.feature.SpikeFeature;
+import com.mushroom.midnight.common.world.feature.TallBogFungiFeature;
+import com.mushroom.midnight.common.world.feature.TallFungiFeature;
 import com.mushroom.midnight.common.world.feature.TrenchstoneBoulderFeature;
 import com.mushroom.midnight.common.world.feature.config.CrystalClusterConfig;
+import com.mushroom.midnight.common.world.feature.config.MidnightOreConfig;
 import com.mushroom.midnight.common.world.feature.config.UniformCompositionConfig;
 import com.mushroom.midnight.common.world.template.ShelfAttachProcessor;
 import net.minecraft.world.gen.feature.AbstractTreeFeature;
@@ -119,6 +121,8 @@ public class MidnightFeatures {
     public static final Feature<CrystalClusterConfig> CRYSTAL_CLUSTER = RegUtil.injected();
     public static final Feature<CrystalClusterConfig> CRYSTAL_SPIRE = RegUtil.injected();
 
+    public static final Feature<MidnightOreConfig> ORE = RegUtil.injected();
+
     @SubscribeEvent
     public static void registerFeatures(RegistryEvent.Register<Feature<?>> event) {
         RegUtil.generic(event.getRegistry())
@@ -144,6 +148,7 @@ public class MidnightFeatures {
                 .add("nightstone_boulder", new NightstoneBoulderFeature(NoFeatureConfig::deserialize))
                 .add("trenchstone_boulder", new TrenchstoneBoulderFeature(NoFeatureConfig::deserialize))
                 .add("crystal_cluster", new CrystalClusterFeature(CrystalClusterConfig::deserialize, 3, 4))
-                .add("crystal_spire", new CrystalClusterFeature(CrystalClusterConfig::deserialize, 4, 13));
+                .add("crystal_spire", new CrystalClusterFeature(CrystalClusterConfig::deserialize, 4, 13))
+                .add("ore", new MidnightOreFeature(MidnightOreConfig::deserialize));
     }
 }
