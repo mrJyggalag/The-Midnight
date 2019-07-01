@@ -82,8 +82,8 @@ public class MidnightSounds {
                 makeSoundEvent("nova_idle"),
                 eggCracked
         );
-        MUD = new SoundType(1f, 1f, MidnightSounds.MUD_DIG, MidnightSounds.MUD_STEP, MidnightSounds.MUD_DIG, MidnightSounds.MUD_DIG, MidnightSounds.MUD_STEP);
-        PILE_OF_EGGS = new SoundType(1f, 1f, MidnightSounds.EGG_CRACKED, SoundEvents.BLOCK_STONE_STEP, SoundEvents.BLOCK_STONE_PLACE, SoundEvents.BLOCK_STONE_HIT, SoundEvents.BLOCK_STONE_FALL);
+        MUD = new SoundType(1f, 1f, mudDig, mudStep, mudDig, mudDig, mudStep);
+        PILE_OF_EGGS = new SoundType(1f, 1f, eggCracked, SoundEvents.BLOCK_STONE_STEP, SoundEvents.BLOCK_STONE_PLACE, SoundEvents.BLOCK_STONE_HIT, SoundEvents.BLOCK_STONE_FALL);
     }
 
     private static SoundEvent makeSoundEvent(String name) {
