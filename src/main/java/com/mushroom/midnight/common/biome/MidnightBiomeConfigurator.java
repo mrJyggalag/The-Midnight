@@ -17,6 +17,7 @@ import net.minecraft.world.gen.feature.DoublePlantConfig;
 import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.feature.GrassFeatureConfig;
 import net.minecraft.world.gen.feature.IFeatureConfig;
+import net.minecraft.world.gen.feature.SingleRandomFeature;
 import net.minecraft.world.gen.feature.TwoFeatureChoiceConfig;
 import net.minecraft.world.gen.placement.ChanceConfig;
 import net.minecraft.world.gen.placement.CountRangeConfig;
@@ -284,8 +285,13 @@ public class MidnightBiomeConfigurator {
     }
 
     public static void addLargeFungis(ConfigurableBiome biome) {
-        // TODO
-//       .withFeature(LARGE_FUNGI_FEATURES, new SurfacePlacementConfig(6))
+        biome.add(GenerationStage.Decoration.VEGETAL_DECORATION, Biome.createDecoratedFeature(
+                Feature.SIMPLE_RANDOM_SELECTOR, new SingleRandomFeature(
+                        new Feature[] { MidnightFeatures.LARGE_NIGHTSHROOM, MidnightFeatures.LARGE_DEWSHROOM, MidnightFeatures.LARGE_VIRIDSHROOM },
+                        new IFeatureConfig[] { IFeatureConfig.NO_FEATURE_CONFIG, IFeatureConfig.NO_FEATURE_CONFIG, IFeatureConfig.NO_FEATURE_CONFIG }
+                ),
+                Placement.COUNT_HEIGHTMAP, new FrequencyConfig(6)
+        ));
     }
 
     public static void addBladeshrooms(ConfigurableBiome biome) {
