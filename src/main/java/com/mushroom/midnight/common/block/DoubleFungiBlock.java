@@ -3,6 +3,7 @@ package com.mushroom.midnight.common.block;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.state.IntegerProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.util.math.BlockPos;
@@ -16,6 +17,7 @@ import java.util.Random;
 import java.util.function.Supplier;
 
 public class DoubleFungiBlock extends MidnightDoublePlantBlock {
+    protected static final IntegerProperty STAGE = BlockStateProperties.STAGE_0_1;
     private final Supplier<Feature<?>> generatorSupplier;
 
     public DoubleFungiBlock(Properties properties, @Nullable Supplier<Feature<?>> generatorSupplier) {
@@ -47,9 +49,9 @@ public class DoubleFungiBlock extends MidnightDoublePlantBlock {
             Feature<?> generator = this.generatorSupplier.get();
             // TODO Feature @Gegy GeneratablePlant
             world.setBlockState(pos, Blocks.AIR.getDefaultState(), 4);
-            if (!generator.generate(world, rand, pos)) {
+            /*if (!generator.generate(world, rand, pos)) {
                 world.setBlockState(pos, state, 4);
-            }
+            }*/
         }
     }
 

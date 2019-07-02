@@ -117,6 +117,6 @@ public class MidnightDoublePlantBlock extends MidnightPlantBlock {
 
     @Override
     protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
-        builder.add(BlockStateProperties.HALF);
+        builder.add(HALF);
     }
 }

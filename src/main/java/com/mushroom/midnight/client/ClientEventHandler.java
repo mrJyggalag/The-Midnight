@@ -63,9 +63,19 @@ public class ClientEventHandler {
     private static long lastAmbientSoundTime;
 
     private static ISound playingMusic;
+    public static float flicker;
+    public static float prevFlicker;
 
     @SubscribeEvent
     public static void onClientTick(TickEvent.ClientTickEvent event) {
+        if (event.phase == TickEvent.Phase.START) {
+            prevFlicker = flicker;
+
+            double targetFlicker = Math.random();
+            targetFlicker *= targetFlicker;
+
+            flicker += (targetFlicker - flicker) * 0.5;
+        }
         if (!CLIENT.isGamePaused()) {
             ClientPlayerEntity player = CLIENT.player;
             if (player == null) {

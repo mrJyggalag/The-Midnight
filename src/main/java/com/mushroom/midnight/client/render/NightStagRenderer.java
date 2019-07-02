@@ -2,6 +2,7 @@ package com.mushroom.midnight.client.render;
 
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mushroom.midnight.Midnight;
+import com.mushroom.midnight.client.ClientEventHandler;
 import com.mushroom.midnight.client.model.NightStagModel;
 import com.mushroom.midnight.common.entity.creature.NightStagEntity;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
@@ -9,13 +10,11 @@ import net.minecraft.client.renderer.entity.LivingRenderer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.gameevent.TickEvent;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
 import javax.annotation.Nullable;
 
-@Mod.EventBusSubscriber(modid = Midnight.MODID, value = Dist.CLIENT)
+@OnlyIn(Dist.CLIENT)
 public class NightStagRenderer extends LivingRenderer<NightStagEntity, NightStagModel> {
     private static final ResourceLocation TEXTURE = new ResourceLocation(Midnight.MODID, "textures/entities/nightstag.png");
     private static final ResourceLocation EMISSIVE_TEXTURE = new ResourceLocation(Midnight.MODID, "textures/entities/nightstag_emissive.png");
@@ -26,24 +25,9 @@ public class NightStagRenderer extends LivingRenderer<NightStagEntity, NightStag
     private static final int PULSE_BRIGHT_LOW = 200;
     private static final int PULSE_BRIGHT_UP = 240;
 
-    private static float flicker;
-    private static float prevFlicker;
-
     public NightStagRenderer(EntityRendererManager manager) {
         super(manager, new NightStagModel(), 0.0F);
         this.addLayer(new EmissiveLayerRenderer<>(this, EMISSIVE_TEXTURE, NightStagRenderer::computeBrightness, NightStagRenderer::computeColor));
-    }
-
-    @SubscribeEvent
-    public static void onClientTick(TickEvent.ClientTickEvent event) {
-        if (event.phase == TickEvent.Phase.START) {
-            prevFlicker = flicker;
-
-            double targetFlicker = Math.random();
-            targetFlicker *= targetFlicker;
-
-            flicker += (targetFlicker - flicker) * 0.5;
-        }
     }
 
     private static int computeColor(NightStagEntity entity, float partialTicks) {
@@ -84,7 +68,7 @@ public class NightStagRenderer extends LivingRenderer<NightStagEntity, NightStag
     }
 
     private static float computeFlicker(double totalTicks, float partialTicks) {
-        float lerpedFlicker = prevFlicker + (flicker - prevFlicker) * partialTicks;
+        float lerpedFlicker = ClientEventHandler.prevFlicker + (ClientEventHandler.flicker - ClientEventHandler.prevFlicker) * partialTicks;
         float pulse = (float) (Math.sin(totalTicks * 0.2) + 1.0) * 0.4F;
         return MathHelper.clamp(lerpedFlicker + pulse, 0.0F, 1.0F);
     }
