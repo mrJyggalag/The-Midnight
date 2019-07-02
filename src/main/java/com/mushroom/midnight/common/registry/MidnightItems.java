@@ -53,18 +53,18 @@ public class MidnightItems {
     public static final Item BLADESHROOM_SPORES = Items.AIR;
 
     public static final Item RAW_SUAVIS = Items.AIR;
-    public static final Item COOK_SUAVIS = Items.AIR;
+    public static final Item COOKED_SUAVIS = Items.AIR;
     public static final Item DECEITFUL_SNAPPER = Items.AIR;
     public static final Item RAW_STAG_FLANK = Items.AIR;
-    public static final Item COOK_STAG_FLANK = Items.AIR;
-    public static final Item COOK_STINGER_EGG = Items.AIR;
+    public static final Item COOKED_STAG_FLANK = Items.AIR;
+    public static final Item COOKED_STINGER_EGG = Items.AIR;
     public static final Item HUNTER_WING = Items.AIR;
-    public static final Item COOK_HUNTER_WING = Items.AIR;
+    public static final Item COOKED_HUNTER_WING = Items.AIR;
     public static final Item BULB_FUNGUS_HAND = Items.AIR;
     public static final Item UNSTABLE_SEEDS = Items.AIR;
-    public static final Item UNSTABLE_FRUIT_BLUE = Items.AIR;
-    public static final Item UNSTABLE_FRUIT_LIME = Items.AIR;
-    public static final Item UNSTABLE_FRUIT_GREEN = Items.AIR;
+    public static final Item BLUE_UNSTABLE_FRUIT = Items.AIR;
+    public static final Item LIME_UNSTABLE_FRUIT = Items.AIR;
+    public static final Item GREEN_UNSTABLE_FRUIT = Items.AIR;
 
     public static final Item NIGHTSHROOM_SPORE_BOMB = Items.AIR;
     public static final Item DEWSHROOM_SPORE_BOMB = Items.AIR;

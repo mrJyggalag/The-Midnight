@@ -399,9 +399,9 @@ public class MidnightBlocks {
                 .add("deceitful_moss", new DeceitfulMossBlock())
                 .add("crystalotus", new CrystalotusBlock())
                 .add("unstable_bush", UnstableBushBlock::new)
-                .add("unstable_bush_blue_bloomed", props -> new UnstableBushBloomedBlock(props, () -> MidnightItems.UNSTABLE_FRUIT_BLUE))
-                .add("unstable_bush_green_bloomed", props -> new UnstableBushBloomedBlock(props, () -> MidnightItems.UNSTABLE_FRUIT_GREEN))
-                .add("unstable_bush_lime_bloomed", props -> new UnstableBushBloomedBlock(props, () -> MidnightItems.UNSTABLE_FRUIT_LIME));
+                .add("unstable_bush_blue_bloomed", props -> new UnstableBushBloomedBlock(props, () -> MidnightItems.BLUE_UNSTABLE_FRUIT))
+                .add("unstable_bush_green_bloomed", props -> new UnstableBushBloomedBlock(props, () -> MidnightItems.GREEN_UNSTABLE_FRUIT))
+                .add("unstable_bush_lime_bloomed", props -> new UnstableBushBloomedBlock(props, () -> MidnightItems.LIME_UNSTABLE_FRUIT));
 
         RegUtil.blocks(event.getRegistry())
                 .withProperties(() -> Block.Properties.create(Material.WOOD)

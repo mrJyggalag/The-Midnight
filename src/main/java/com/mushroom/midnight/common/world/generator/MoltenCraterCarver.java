@@ -186,6 +186,9 @@ public class MoltenCraterCarver {
     }*/
 
     public static boolean isCraterSource(IWorld world, int chunkX, int chunkZ) {
+        // TODO
+        if (true) return false;
+
         RNG.setSeed(world.getSeed());
 
         long seedX = chunkX * RNG.nextLong();

@@ -1,13 +1,5 @@
 {
-  "forge_marker": 1,
-  "defaults": {
-    "model": "leaves",
-    "textures": {
-      "all": "midnight:blocks/dark_willow_leaves"
-    }
-  },
   "variants": {
-    "normal": [{}],
-    "inventory": [{}]
+    "": {"model": "midnight:block/dark_willow_leaves"}
   }
 }

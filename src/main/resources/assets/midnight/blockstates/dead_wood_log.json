@@ -1,23 +1,5 @@
 {
-  "forge_marker": 1,
-  "defaults": {
-    "model": "cube_column",
-    "textures": {
-      "end": "midnight:blocks/dead_wood_log_top",
-      "side": "midnight:blocks/dead_wood_log"
-    }
-  },
   "variants": {
-    "normal": [{}],
-    "inventory": [{}],
-    "axis": {
-      "x": {"x": 90, "y": 90},
-      "y": {},
-      "z": {"x": 90},
-      "none": {
-        "model": "cube_all",
-        "textures": {"all": "midnight:blocks/dead_wood_log"}
-      }
-    }
+    "": {"model": "midnight:block/dead_wood_log"}
   }
 }

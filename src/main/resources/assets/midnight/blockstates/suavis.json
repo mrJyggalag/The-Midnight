@@ -33,7 +33,6 @@
       {"model": "cube_column", "y": 180},
       {"model": "cube_column", "y": 270}
     ],
-    "normal": [{}],
-    "inventory": [{}]
+    "": [{}]
   }
 }
