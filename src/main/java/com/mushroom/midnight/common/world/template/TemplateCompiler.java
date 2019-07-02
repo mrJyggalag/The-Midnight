@@ -7,6 +7,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.ServerWorld;
+import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.template.PlacementSettings;
 import net.minecraft.world.gen.feature.template.StructureProcessor;
 import net.minecraft.world.gen.feature.template.Template;
@@ -68,18 +69,19 @@ public class TemplateCompiler {
     }
 
     public CompiledTemplate compile(IWorld world, Random random, BlockPos origin) {
-        if (!(world instanceof ServerWorld)) {
-            throw new IllegalArgumentException("Cannot load template on client world");
+        World rootWorld = world.getWorld();
+        if (!(rootWorld instanceof ServerWorld)) {
+            throw new IllegalArgumentException("Cannot load template on " + rootWorld);
         }
 
         ResourceLocation templateId = this.templates.get(random.nextInt(this.templates.size()));
 
-        TemplateManager templateManager = ((ServerWorld) world).getStructureTemplateManager();
+        TemplateManager templateManager = ((ServerWorld) rootWorld).getStructureTemplateManager();
 
         PlacementSettings settings = this.buildPlacementSettings(random);
         Template template = templateManager.getTemplate(templateId);
 
-        Map<BlockPos, String> dataBlocks = collectDataMarkers(origin, settings, template);
+        Map<BlockPos, String> dataBlocks = collectDataMarkers(BlockPos.ZERO, settings, template);
 
         BlockPos anchor = this.computeAnchor(dataBlocks);
         BlockPos anchoredOrigin = anchor != null ? origin.subtract(anchor) : origin;

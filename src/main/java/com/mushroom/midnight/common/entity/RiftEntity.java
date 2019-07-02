@@ -225,7 +225,6 @@ public class RiftEntity extends Entity implements IEntityAdditionalSpawnData {
 
     private void teleportEntities() {
         AxisAlignedBB bounds = this.getBoundingBox().grow(-0.4, 0.0, -0.4);
-        DimensionType endpointDimension = this.getEndpointDimension();
         List<Entity> entities = this.world.getEntitiesInAABBexcluding(this, bounds, entity -> {
             if (entity.isPassenger() || (entity instanceof PlayerEntity && entity.isSpectator())) {
                 return false;

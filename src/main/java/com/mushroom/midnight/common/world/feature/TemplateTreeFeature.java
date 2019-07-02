@@ -59,7 +59,7 @@ public abstract class TemplateTreeFeature extends MidnightTreeFeature {
 
     @Override
     protected boolean place(IWorld world, Random random, BlockPos origin) {
-        if (!isSoil(world, origin, this.getSapling())) {
+        if (!isSoil(world, origin.down(), this.getSapling())) {
             return false;
         }
 
@@ -92,7 +92,7 @@ public abstract class TemplateTreeFeature extends MidnightTreeFeature {
 
     protected boolean canGrow(IWorld world, BlockPos minCorner, BlockPos maxCorner) {
         for (BlockPos pos : BlockPos.getAllInBoxMutable(minCorner, maxCorner)) {
-            if (!isSoil(world, pos, this.getSapling())) {
+            if (!isSoil(world, pos.down(), this.getSapling())) {
                 return false;
             }
         }

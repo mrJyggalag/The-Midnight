@@ -11,7 +11,6 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.gen.IWorldGenerationReader;
 import net.minecraft.world.gen.feature.NoFeatureConfig;
-import net.minecraftforge.client.model.ForgeBlockStateV1;
 import net.minecraftforge.common.IPlantable;
 
 import java.util.HashSet;
@@ -41,7 +40,7 @@ public class ShadowrootTreeFeature extends MidnightTreeFeature {
             return false;
         }
 
-        if (isSoil(world, origin, this.getSapling())) {
+        if (isSoil(world, origin.down(), this.getSapling())) {
             this.setDirtAt(world, origin.down(), origin);
 
             BlockPos.MutableBlockPos mutablePos = new BlockPos.MutableBlockPos(origin);
