@@ -28,7 +28,7 @@ uniform float Time;
 
 uniform sampler2D NoiseSampler;
 
-uniform int FogMode;
+uniform float FogMode;
 
 varying vec4 worldPoint;
 varying vec2 unprojectedPoint;
@@ -130,11 +130,12 @@ float computeNoiseAddition(vec2 point) {
 }
 
 float computeFogIntensity(vec3 point) {
-    if (FogMode == GL_LINEAR) {
+    int fogMode = int(FogMode);
+    if (fogMode == GL_LINEAR) {
         return clamp((length(point) - gl_Fog.start) * gl_Fog.scale, 0.0, 1.0);
-    } else if (FogMode == GL_EXP) {
+    } else if (fogMode == GL_EXP) {
         return 1.0 - clamp(exp(-gl_Fog.density * length(point)), 0.0, 1.0);
-    } else if (FogMode == GL_EXP2) {
+    } else if (fogMode == GL_EXP2) {
         return 1.0 - clamp(exp(-pow(gl_Fog.density * length(point), 2.0)), 0.0, 1.0);
     }
     return 0.0;

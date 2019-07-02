@@ -65,7 +65,7 @@ public class WorldShader implements ISelectiveResourceReloadListener {
     public ShaderHandle use(Consumer<ShaderHandle> setup) {
         ShaderHandle handle = this.makeHandle();
         setup.accept(handle);
-        handle.getUniform("FogMode").set(GL11.glGetInteger(GL11.GL_FOG_MODE), 0, 0, 0);
+        handle.getUniform("FogMode").set(GL11.glGetInteger(GL11.GL_FOG_MODE));
 
         handle.use();
 

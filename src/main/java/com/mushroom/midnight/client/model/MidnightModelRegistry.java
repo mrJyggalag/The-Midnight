@@ -1,6 +1,5 @@
 package com.mushroom.midnight.client.model;
 
-import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.client.render.BladeshroomCapRenderer;
 import com.mushroom.midnight.client.render.CrystalBugRenderer;
 import com.mushroom.midnight.client.render.DeceitfulSnapperRenderer;
@@ -38,20 +37,16 @@ import net.minecraft.world.biome.BiomeColors;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.ModelRegistryEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
-import net.minecraftforge.fml.common.Mod;
 
 @OnlyIn(Dist.CLIENT)
-@Mod.EventBusSubscriber(modid = Midnight.MODID, value = Dist.CLIENT)
 public class MidnightModelRegistry {
     private static final Minecraft MC = Minecraft.getInstance();
 
     private static final int DEFAULT_GRASS_COLOR = 0xBF8ECC;
     private static final int DEFAULT_FOLIAGE_COLOR = 0x8F6DBC;
 
-    @SubscribeEvent
-    public static void onRegisterModels(ModelRegistryEvent event) {
+    public static void registerModels(ModelRegistryEvent event) {
         RenderingRegistry.registerEntityRenderingHandler(RiftEntity.class, RiftRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(RifterEntity.class, RifterRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(HunterEntity.class, HunterRenderer::new);
@@ -82,9 +77,7 @@ public class MidnightModelRegistry {
                 TileEntityRendererDispatcher.instance.render(shadowrootChest, 0.0, 0.0, 0.0, 0.0F, 1.0F);
             }
         });*/
-    }
 
-    public static void onInit() {
         BlockColors blockColors = MC.getBlockColors();
         ItemColors itemColors = MC.getItemColors();
 

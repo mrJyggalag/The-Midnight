@@ -2,6 +2,7 @@ package com.mushroom.midnight;
 
 import com.google.common.reflect.Reflection;
 import com.mushroom.midnight.client.ClientProxy;
+import com.mushroom.midnight.client.model.MidnightModelRegistry;
 import com.mushroom.midnight.common.ServerProxy;
 import com.mushroom.midnight.common.capability.AnimationCapability;
 import com.mushroom.midnight.common.capability.CavernousBiomeStore;
@@ -34,9 +35,11 @@ import com.mushroom.midnight.common.util.IProxy;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.storage.loot.conditions.LootConditionManager;
+import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.common.capabilities.CapabilityManager;
+import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.ModLoadingContext;
@@ -86,8 +89,14 @@ public class Midnight {
     public Midnight() {
         ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, MidnightConfig.CLIENT_SPEC);
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, MidnightConfig.GENERAL_SPEC);
+
         setupMessages();
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
+
+        IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
+
+        bus.addListener(this::setup);
+        bus.addListener(this::registerModels);
+
         FluidRegistry.enableUniversalBucket();
     }
 
@@ -152,5 +161,9 @@ public class Midnight {
                 .encoder(BombExplosionMessage::serialize).decoder(BombExplosionMessage::deserialize)
                 .consumer(BombExplosionMessage::handle)
                 .add();
+    }
+
+    private void registerModels(ModelRegistryEvent event) {
+        MidnightModelRegistry.registerModels(event);
     }
 }
