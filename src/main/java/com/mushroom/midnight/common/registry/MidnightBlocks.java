@@ -492,14 +492,14 @@ public class MidnightBlocks {
 
         RegUtil.blocks(event.getRegistry())
                 .withProperties(() -> Block.Properties.from(Blocks.TORCH))
-                .add("bogshroom_sporch", new SporchBlock(SporchBlock.SporchType.BOGSHROOM))
-                .add("nightshroom_sporch", new SporchBlock(SporchBlock.SporchType.NIGHTSHROOM))
-                .add("dewshroom_sporch", new SporchBlock(SporchBlock.SporchType.DEWSHROOM))
-                .add("viridshroom_sporch", new SporchBlock(SporchBlock.SporchType.VIRIDSHROOM))
-                .add("bogshroom_wall_sporch", new WallSporchBlock(SporchBlock.SporchType.BOGSHROOM))
-                .add("nightshroom_wall_sporch", new WallSporchBlock(SporchBlock.SporchType.NIGHTSHROOM))
-                .add("dewshroom_wall_sporch", new WallSporchBlock(SporchBlock.SporchType.DEWSHROOM))
-                .add("viridshroom_wall_sporch", new WallSporchBlock(SporchBlock.SporchType.VIRIDSHROOM));
+                .add("bogshroom_sporch", props -> new SporchBlock(SporchBlock.SporchType.BOGSHROOM, props))
+                .add("nightshroom_sporch", props -> new SporchBlock(SporchBlock.SporchType.NIGHTSHROOM, props))
+                .add("dewshroom_sporch", props -> new SporchBlock(SporchBlock.SporchType.DEWSHROOM, props))
+                .add("viridshroom_sporch", props -> new SporchBlock(SporchBlock.SporchType.VIRIDSHROOM, props))
+                .add("bogshroom_wall_sporch", props -> new WallSporchBlock(SporchBlock.SporchType.BOGSHROOM, props.lootFrom(BOGSHROOM_SPORCH)))
+                .add("nightshroom_wall_sporch", props -> new WallSporchBlock(SporchBlock.SporchType.NIGHTSHROOM, props.lootFrom(NIGHTSHROOM_SPORCH)))
+                .add("dewshroom_wall_sporch", props -> new WallSporchBlock(SporchBlock.SporchType.DEWSHROOM, props.lootFrom(DEWSHROOM_SPORCH)))
+                .add("viridshroom_wall_sporch", props -> new WallSporchBlock(SporchBlock.SporchType.VIRIDSHROOM, props.lootFrom(VIRIDSHROOM_SPORCH)));
 
         RegUtil.blocks(event.getRegistry())
                 .withProperties(() -> Block.Properties.create(Material.WOOD, MaterialColor.ADOBE).hardnessAndResistance(2f, 5f).sound(SoundType.WOOD))

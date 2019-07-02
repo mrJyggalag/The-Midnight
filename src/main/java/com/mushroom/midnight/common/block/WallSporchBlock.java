@@ -32,8 +32,8 @@ public class WallSporchBlock extends SporchBlock {
     private static final Map<Direction, VoxelShape> SHAPES = Maps.newEnumMap(ImmutableMap.of(Direction.NORTH, Block.makeCuboidShape(5.5d, 3d, 11d, 10.5d, 13d, 16d), Direction.SOUTH, Block.makeCuboidShape(5.5d, 3d, 0d, 10.5d, 13d, 5d), Direction.WEST, Block.makeCuboidShape(11d, 3d, 5.5d, 16d, 13d, 10.5d), Direction.EAST, Block.makeCuboidShape(0d, 3d, 5.5d, 5d, 13d, 10.5d)));
     private SporchType sporchType;
 
-    public WallSporchBlock(SporchType sporchType) {
-        super(sporchType);
+    public WallSporchBlock(SporchType sporchType, Properties properties) {
+        super(sporchType, properties);
         this.sporchType = sporchType;
         setDefaultState(this.stateContainer.getBaseState().with(HORIZONTAL_FACING, Direction.NORTH));
     }
