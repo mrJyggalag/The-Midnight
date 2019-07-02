@@ -18,7 +18,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import java.util.Random;
 
 public class DragonNestBlock extends MidnightPlantBlock {
-    private static final VoxelShape BOUNDS = makeCuboidShape(0.2, 0.2, 0.2, 0.8, 1.0, 0.8);
+    private static final VoxelShape BOUNDS = makeCuboidShape(3.0, 3.0, 3.0, 13.0, 16.0, 13.0);
 
     public DragonNestBlock(Properties properties) {
         super(properties, true);

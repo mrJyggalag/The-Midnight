@@ -13,7 +13,7 @@ import net.minecraft.world.World;
 
 @SuppressWarnings("deprecation")
 public class DeceitfulMudBlock extends SoilBlock {
-    private static final VoxelShape BOUNDS = makeCuboidShape(0.0, 0.0, 0.0, 1.0, 0.875, 1.0);
+    private static final VoxelShape COLLISION_SHAPE = makeCuboidShape(0.0, 0.0, 0.0, 16.0, 14.0, 16.0);
 
     public DeceitfulMudBlock() {
         super(Properties.create(Material.ORGANIC, MaterialColor.GRAY_TERRACOTTA).hardnessAndResistance(0.5f, 0f).sound(MidnightSounds.MUD), false);
@@ -21,7 +21,12 @@ public class DeceitfulMudBlock extends SoilBlock {
 
     @Override
     public VoxelShape getCollisionShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
-        return BOUNDS;
+        return COLLISION_SHAPE;
+    }
+
+    @Override
+    public boolean isNormalCube(BlockState state, IBlockReader world, BlockPos pos) {
+        return true;
     }
 
     @Override

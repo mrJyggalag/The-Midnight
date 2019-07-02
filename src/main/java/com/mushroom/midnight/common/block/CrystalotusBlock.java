@@ -17,7 +17,7 @@ import javax.annotation.Nullable;
 
 public class CrystalotusBlock extends Block  {
 
-    private static final VoxelShape BOUNDS = makeCuboidShape(0.1, 0.0, 0.1, 0.9, 0.8, 0.9);
+    private static final VoxelShape BOUNDS = makeCuboidShape(1.0, 0.0, 1.0, 15.0, 12.0, 15.0);
 
     public CrystalotusBlock() {
         super(Properties.create(Material.PLANTS).hardnessAndResistance(2f, 0f).sound(SoundType.GLASS).tickRandomly().lightValue(3));

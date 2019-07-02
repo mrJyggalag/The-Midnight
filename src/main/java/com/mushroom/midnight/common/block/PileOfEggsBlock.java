@@ -29,8 +29,8 @@ import javax.annotation.Nullable;
 
 @SuppressWarnings({ "WeakerAccess", "deprecation" })
 public abstract class PileOfEggsBlock extends Block {
-    protected static final VoxelShape bound_one_egg = makeCuboidShape(0.1875d, 0d, 0.1875d, 0.75d, 0.4375d, 0.75d);
-    protected static final VoxelShape bound_several_eggs = makeCuboidShape(0.0625d, 0d, 0.0625d, 0.9375d, 0.4375d, 0.9375d);
+    protected static final VoxelShape bound_one_egg = makeCuboidShape(3.0, 0.0, 3.0, 13.0, 7.0, 13.0);
+    protected static final VoxelShape bound_several_eggs = makeCuboidShape(1.0, 0.0, 1.0, 15.0, 7.0, 15.0);
     public static final IntegerProperty EGGS = IntegerProperty.create("eggs", 1, 4);
 
     protected PileOfEggsBlock() {

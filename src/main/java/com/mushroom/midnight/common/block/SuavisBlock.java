@@ -48,10 +48,10 @@ import java.util.Random;
 public class SuavisBlock extends Block implements IGrowable {
     public static final IntegerProperty STAGE = IntegerProperty.create("stage", 0, 3);
     protected static final VoxelShape[] bounds = new VoxelShape[] {
-            makeCuboidShape(0d, 0d, 0d, 1d, 0.2125d, 1d),
-            makeCuboidShape(0d, 0d, 0d, 1d, 0.4375d, 1d),
-            makeCuboidShape(0d, 0d, 0d, 1d, 0.8125d, 1d),
-            makeCuboidShape(0d, 0d, 0d, 1d, 1d, 1d),
+            makeCuboidShape(0.0, 0.0, 0.0, 16.0, 3.0, 16.0),
+            makeCuboidShape(0.0, 0.0, 0.0, 16.0, 7.0, 16.0),
+            makeCuboidShape(0.0, 0.0, 0.0, 16.0, 13.0, 16.0),
+            makeCuboidShape(0.0, 0.0, 0.0, 16.0, 16.0, 16.0),
     };
 
     public SuavisBlock() {

@@ -37,8 +37,8 @@ public class BladeshroomBlock extends MidnightPlantBlock implements IGrowable {
     public static final EnumProperty<Stage> STAGE = EnumProperty.create("stage", Stage.class);
     private static final int REGROW_CHANCE = 10;
 
-    private static final VoxelShape BOUNDS = makeCuboidShape(0.0625, 0.0, 0.0625, 0.9375, 0.5625, 0.9375);
-    private static final VoxelShape STEM_BOUNDS = makeCuboidShape(0.25, 0.0, 0.25, 0.75, 0.5, 0.75);
+    private static final VoxelShape BOUNDS = makeCuboidShape(1.0, 0.0, 1.0, 15.0, 9.0, 15.0);
+    private static final VoxelShape STEM_BOUNDS = makeCuboidShape(4.0, 0.0, 4.0, 12.0, 8.0, 12.0);
 
     private static final DamageSource BLADESHROOM_DAMAGE = new MidnightDamageSource("bladeshroom").setDamageBypassesArmor().setDamageIsAbsolute();
 
