@@ -1,23 +1,21 @@
 package com.mushroom.midnight.common.block;
 
 import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
 import net.minecraft.block.IGrowable;
+import net.minecraft.block.trees.Tree;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
-import net.minecraft.world.gen.feature.Feature;
 import net.minecraftforge.event.ForgeEventFactory;
 
 import java.util.Random;
-import java.util.function.Supplier;
 
 public class BulbFungusBlock extends MidnightPlantBlock implements IGrowable {
-    private final Supplier<Feature<?>> genSupplier;
+    private final Tree tree;
 
-    public BulbFungusBlock(Properties properties, Supplier<Feature<?>> genSupplier) {
+    public BulbFungusBlock(Properties properties, Tree tree) {
         super(properties, true);
-        this.genSupplier = genSupplier;
+        this.tree = tree;
     }
 
     // quantityDropped 1 BULB_FUNGUS_HAND (+ SilkTouch + Shearable)
@@ -35,12 +33,7 @@ public class BulbFungusBlock extends MidnightPlantBlock implements IGrowable {
     @Override
     public void grow(World world, Random rand, BlockPos pos, BlockState state) {
         if (!ForgeEventFactory.saplingGrowTree(world, rand, pos)) {
-            Feature<?> generator = this.genSupplier.get();
-            // TODO Feature @Gegy GeneratablePlant
-            world.setBlockState(pos, Blocks.AIR.getDefaultState(), 4);
-            if (!generator.generate(world, rand, pos)) {
-                world.setBlockState(pos, state, 4);
-            }
+            this.tree.spawn(world, pos, state, rand);
         }
     }
 }

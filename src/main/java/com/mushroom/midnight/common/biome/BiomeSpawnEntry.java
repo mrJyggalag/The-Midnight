@@ -5,6 +5,7 @@ import com.mushroom.midnight.common.registry.MidnightCavernousBiomes;
 import com.mushroom.midnight.common.util.SessionLocal;
 import it.unimi.dsi.fastutil.ints.IntOpenHashSet;
 import it.unimi.dsi.fastutil.ints.IntSet;
+import net.minecraft.util.registry.Registry;
 import net.minecraft.world.biome.Biome;
 
 import java.util.function.IntPredicate;
@@ -24,7 +25,7 @@ public interface BiomeSpawnEntry {
         private final int weight;
 
         public Basic(Biome biome, int weight) {
-            this.biomeId = SessionLocal.register(() -> Biome.getIdForBiome(biome)); // TODO @gegy
+            this.biomeId = SessionLocal.register(() -> Registry.BIOME.getId(biome));
             this.weight = weight;
         }
 
@@ -42,7 +43,7 @@ public interface BiomeSpawnEntry {
             SessionLocal<IntSet> biomeIds = SessionLocal.register(() -> {
                 IntSet ids = new IntOpenHashSet();
                 for (Biome biome : biomes) {
-                    ids.add(Biome.getIdForBiome(biome));
+                    ids.add(Registry.BIOME.getId(biome));
                 }
                 return ids;
             });

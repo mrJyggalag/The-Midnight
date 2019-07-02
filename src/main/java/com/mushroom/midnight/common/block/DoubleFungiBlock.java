@@ -2,28 +2,26 @@ package com.mushroom.midnight.common.block;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
+import net.minecraft.block.trees.Tree;
 import net.minecraft.state.IntegerProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
-import net.minecraft.world.gen.feature.Feature;
 import net.minecraftforge.event.ForgeEventFactory;
 
 import javax.annotation.Nullable;
 import java.util.Random;
-import java.util.function.Supplier;
 
 public class DoubleFungiBlock extends MidnightDoublePlantBlock {
     protected static final IntegerProperty STAGE = BlockStateProperties.STAGE_0_1;
-    private final Supplier<Feature<?>> generatorSupplier;
+    private final Tree tree;
 
-    public DoubleFungiBlock(Properties properties, @Nullable Supplier<Feature<?>> generatorSupplier) {
+    public DoubleFungiBlock(Properties properties, @Nullable Tree tree) {
         super(properties, true);
         this.setDefaultState(this.getStateContainer().getBaseState().with(BlockStateProperties.STAGE_0_1, 0));
-        this.generatorSupplier = generatorSupplier;
+        this.tree = tree;
     }
 
     @Override
@@ -38,28 +36,23 @@ public class DoubleFungiBlock extends MidnightDoublePlantBlock {
 
     @Override
     public boolean canUseBonemeal(World world, Random rand, BlockPos pos, BlockState state) {
-        return this.generatorSupplier != null && world.rand.nextFloat() < 0.75F;
+        return this.tree != null && world.rand.nextFloat() < 0.75F;
     }
 
     @Override
     public void grow(World world, Random rand, BlockPos pos, BlockState state) {
-        if (state.get(BlockStateProperties.STAGE_0_1) == 0) {
-            world.setBlockState(pos, state.cycle(BlockStateProperties.STAGE_0_1), 4);
+        if (state.get(STAGE) == 0) {
+            world.setBlockState(pos, state.cycle(STAGE), 4);
         } else if (!ForgeEventFactory.saplingGrowTree(world, rand, pos)) {
-            Feature<?> generator = this.generatorSupplier.get();
-            // TODO Feature @Gegy GeneratablePlant
-            world.setBlockState(pos, Blocks.AIR.getDefaultState(), 4);
-            /*if (!generator.generate(world, rand, pos)) {
-                world.setBlockState(pos, state, 4);
-            }*/
+            this.tree.spawn(world, pos, state, rand);
         }
     }
 
     @Override
     protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
         super.fillStateContainer(builder);
-        if (this.generatorSupplier != null) {
-            builder.add(BlockStateProperties.STAGE_0_1);
+        if (this.tree != null) {
+            builder.add(STAGE);
         }
     }
 }

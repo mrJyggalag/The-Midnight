@@ -10,7 +10,6 @@ import net.minecraft.world.GameRules;
 import net.minecraft.world.ServerWorld;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
-import net.minecraft.world.biome.provider.BiomeProvider;
 import net.minecraft.world.gen.GenerationSettings;
 import net.minecraft.world.gen.NoiseChunkGenerator;
 import net.minecraft.world.gen.WorldGenRegion;
@@ -54,9 +53,10 @@ public class MidnightChunkGenerator extends NoiseChunkGenerator<MidnightChunkGen
         SharedSeedRandom random = new SharedSeedRandom();
         random.setDecorationSeed(region.getSeed(), chunkX << 4, chunkZ << 4);
 
-        if (this.world.getGameRules().getBoolean(GameRules.DO_MOB_SPAWNING)) {
-            this.world.getCapability(Midnight.WORLD_SPAWNERS_CAP).ifPresent(MidnightWorldSpawners::populateChunk);
-        }
+        // TODO: Worldgen spawning
+//        if (this.world.getGameRules().getBoolean(GameRules.DO_MOB_SPAWNING)) {
+//            this.world.getCapability(Midnight.WORLD_SPAWNERS_CAP).ifPresent(MidnightWorldSpawners::populateChunk);
+//        }
     }
 
     @Override

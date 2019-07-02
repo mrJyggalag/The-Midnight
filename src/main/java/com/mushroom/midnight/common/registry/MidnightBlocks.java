@@ -43,8 +43,13 @@ import com.mushroom.midnight.common.block.VioleafBlock;
 import com.mushroom.midnight.common.item.DeceitfulAlgaeItem;
 import com.mushroom.midnight.common.tile.base.TileEntityMidnightChest;
 import com.mushroom.midnight.common.tile.base.TileEntityMidnightFurnace;
+import com.mushroom.midnight.common.world.tree.BogshroomTree;
+import com.mushroom.midnight.common.world.tree.BulbFungusTree;
 import com.mushroom.midnight.common.world.tree.DarkWillowTree;
+import com.mushroom.midnight.common.world.tree.DewshroomTree;
+import com.mushroom.midnight.common.world.tree.NightshroomTree;
 import com.mushroom.midnight.common.world.tree.ShadowrootTree;
+import com.mushroom.midnight.common.world.tree.ViridshroomTree;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.CraftingTableBlock;
@@ -373,14 +378,14 @@ public class MidnightBlocks {
                 .add("dewshroom", props -> new MidnightPlantBlock(props, true, () -> DOUBLE_DEWSHROOM))
                 .add("viridshroom", props -> new MidnightPlantBlock(props, true, () -> DOUBLE_VIRIDSHROOM))
                 .add("bogshroom", props -> new MidnightPlantBlock(props, true, () -> DOUBLE_BOGSHROOM))
-                // TODO @Gegy Feature
-                .add("double_nightshroom", props -> new DoubleFungiBlock(props, () -> MidnightFeatures.LARGE_NIGHTSHROOM))
-                .add("double_dewshroom", props -> new DoubleFungiBlock(props, () -> MidnightFeatures.LARGE_DEWSHROOM))
-                .add("double_viridshroom", props -> new DoubleFungiBlock(props, () -> MidnightFeatures.LARGE_VIRIDSHROOM))
-                .add("double_bogshroom", props -> new DoubleFungiBlock(props, () -> MidnightFeatures.LARGE_BOGSHROOM))
+
+                .add("double_nightshroom", props -> new DoubleFungiBlock(props, new NightshroomTree()))
+                .add("double_dewshroom", props -> new DoubleFungiBlock(props, new DewshroomTree()))
+                .add("double_viridshroom", props -> new DoubleFungiBlock(props, new ViridshroomTree()))
+                .add("double_bogshroom", props -> new DoubleFungiBlock(props, new BogshroomTree()))
                 .add("lumen_bud", props -> new MidnightPlantBlock(props, true, () -> DOUBLE_LUMEN_BUD))
                 .add("double_lumen_bud", props -> new MidnightDoublePlantBlock(props, true))
-                .add("bulb_fungus", props -> new BulbFungusBlock(props, () -> MidnightFeatures.LARGE_BULB_FUNGUS))
+                .add("bulb_fungus", props -> new BulbFungusBlock(props, new BulbFungusTree()))
                 .add("bogweed", BogweedBlock::new)
                 .add("ghost_plant", props -> new MidnightPlantBlock(props, true))
                 .add("fingered_grass", FingeredGrassBlock::new)

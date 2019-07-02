@@ -2,7 +2,8 @@ package com.mushroom.midnight.client;
 
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mushroom.midnight.Midnight;
-import com.mushroom.midnight.common.helper.Helper;
+import com.mushroom.midnight.common.fluid.DarkWaterFluid;
+import com.mushroom.midnight.common.fluid.MiasmaFluid;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ActiveRenderInfo;
 import net.minecraft.client.renderer.BufferBuilder;
@@ -10,8 +11,6 @@ import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.fluid.IFluidState;
-import net.minecraft.fluid.LavaFluid;
-import net.minecraft.fluid.WaterFluid;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -40,7 +39,7 @@ public class FluidImmersionRenderer {
 
     @SubscribeEvent
     public static void onSetupFogDensity(EntityViewRenderEvent.RenderFogEvent.FogDensity event) {
-        if (Helper.isMidnightDimension(Minecraft.getInstance().world) && immersedFluid.getFluid() instanceof LavaFluid) { //MiasmaFluid
+        if (immersedFluid.getFluid() instanceof MiasmaFluid) {
             GlStateManager.fogMode(GlStateManager.FogMode.EXP);
             event.setDensity(2.0F);
             event.setCanceled(true);
@@ -49,7 +48,7 @@ public class FluidImmersionRenderer {
 
     @SubscribeEvent
     public static void onRenderBlockOverlay(RenderBlockOverlayEvent event) {
-        if (Helper.isMidnightDimension(Minecraft.getInstance().world) && immersedFluid.getFluid() instanceof WaterFluid) { //DarkWaterFluid
+        if (immersedFluid.getFluid() instanceof DarkWaterFluid) {
             renderOverlay(DARK_WATER_OVERLAY);
             event.setCanceled(true);
         }

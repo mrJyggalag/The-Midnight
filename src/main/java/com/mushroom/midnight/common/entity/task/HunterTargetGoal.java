@@ -6,6 +6,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.gen.Heightmap;
 
 import javax.annotation.Nullable;
 
@@ -26,8 +27,7 @@ public class HunterTargetGoal<T extends LivingEntity> extends NearestAttackableT
 
     @Override
     protected AxisAlignedBB getTargetableArea(double targetDistance) {
-        // TODO @gegy check this
-        BlockPos surface = this.field_75299_d.world.getHeight(this.field_75299_d.getPosition());
+        BlockPos surface = this.field_75299_d.world.getHeight(Heightmap.Type.MOTION_BLOCKING, this.field_75299_d.getPosition());
         return new AxisAlignedBB(surface).grow(targetDistance, 6.0, targetDistance);
     }
 }

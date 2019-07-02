@@ -6,6 +6,8 @@ import com.mushroom.midnight.common.network.BridgeRemovalMessage;
 import com.mushroom.midnight.common.network.BridgeStateMessage;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.world.ServerWorld;
+import net.minecraft.world.chunk.ChunkManager;
+import net.minecraft.world.chunk.ServerChunkProvider;
 import net.minecraftforge.fml.network.PacketDistributor;
 
 import java.util.ArrayList;
@@ -73,11 +75,9 @@ public class BridgeTracker {
             return;
         }
         ServerWorld world = (ServerWorld) target.world;
-        // TODO  @gegy
-        trackingPlayers.addAll(world.getEntityTracker().getTrackingPlayers(target).stream()
-                .filter(o -> o instanceof ServerPlayerEntity)
-                .map(o -> (ServerPlayerEntity) o)
-                .collect(Collectors.toList())
-        );
+        ChunkManager.EntityTracker tracker = world.getChunkProvider().chunkManager.entities.get(target.getEntityId());
+        if (tracker != null) {
+            trackingPlayers.addAll(tracker.field_219406_f);
+        }
     }
 }

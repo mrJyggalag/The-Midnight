@@ -1,7 +1,6 @@
 package com.mushroom.midnight.common;
 
 import com.mushroom.midnight.Midnight;
-import com.mushroom.midnight.common.biome.BiomeLayerType;
 import com.mushroom.midnight.common.capability.CavernousBiomeStore;
 import com.mushroom.midnight.common.capability.MidnightWorldSpawners;
 import com.mushroom.midnight.common.capability.RiftTravelCooldown;
@@ -11,7 +10,6 @@ import com.mushroom.midnight.common.entity.RiftEntity;
 import com.mushroom.midnight.common.event.RifterCaptureEvent;
 import com.mushroom.midnight.common.event.RifterReleaseEvent;
 import com.mushroom.midnight.common.helper.Helper;
-import com.mushroom.midnight.common.registry.MidnightCavernousBiomes;
 import com.mushroom.midnight.common.registry.MidnightDimensions;
 import com.mushroom.midnight.common.registry.MidnightEffects;
 import com.mushroom.midnight.common.world.GlobalBridgeManager;
@@ -28,11 +26,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.ServerWorld;
 import net.minecraft.world.World;
-import net.minecraft.world.biome.Biome;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.dimension.DimensionType;
-import net.minecraft.world.gen.area.IAreaFactory;
-import net.minecraft.world.gen.area.LazyArea;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.entity.EntityEvent;
 import net.minecraftforge.event.entity.PlaySoundAtEntityEvent;
@@ -83,19 +78,6 @@ public class CommonEventHandler {
         World world = event.getObject();
 
         if (Helper.isMidnightDimension(world)) {
-            // TODO @gegy can be suppressed?
-            /*MultiLayerBiomeSampler sampler = new MultiLayerBiomeSampler();
-
-            long worldSeed = world.getSeed();
-
-            IAreaFactory<LazyArea> surfaceProcedure = BiomeLayerType.SURFACE.buildProcedure(worldSeed);
-            IAreaFactory<LazyArea> undergroundProcedure = BiomeLayerType.UNDERGROUND.buildProcedure(worldSeed * 31);
-
-            sampler.put(BiomeLayerType.SURFACE, BiomeLayerSampler.fromGenLayer(world, surfaceProcedure, Biome::getBiomeForId, false));
-            sampler.put(BiomeLayerType.UNDERGROUND, BiomeLayerSampler.fromGenLayer(world, undergroundProcedure, MidnightCavernousBiomes::byId, true));
-
-            event.addCapability(new ResourceLocation(Midnight.MODID, "biome_sampler"), sampler);*/
-
             if (!world.isRemote && world instanceof ServerWorld) {
                 MidnightWorldSpawners spawners = new MidnightWorldSpawners.SurfaceAndCave((ServerWorld) world);
                 event.addCapability(new ResourceLocation(Midnight.MODID, "world_spawners"), spawners);
