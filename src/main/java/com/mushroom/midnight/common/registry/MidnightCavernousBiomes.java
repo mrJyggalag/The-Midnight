@@ -1,13 +1,13 @@
 package com.mushroom.midnight.common.registry;
 
 import com.mushroom.midnight.Midnight;
+import com.mushroom.midnight.common.biome.BiomeSpawnEntry;
 import com.mushroom.midnight.common.biome.MidnightBiomeGroup;
 import com.mushroom.midnight.common.biome.cavern.CavernousBiome;
 import com.mushroom.midnight.common.biome.cavern.ClosedCavernBiome;
 import com.mushroom.midnight.common.biome.cavern.CrystalCavernBiome;
 import com.mushroom.midnight.common.biome.cavern.FungalCavernBiome;
 import com.mushroom.midnight.common.biome.cavern.GreatCavernBiome;
-import com.mushroom.midnight.common.biome.BiomeSpawnEntry;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -19,11 +19,10 @@ import net.minecraftforge.registries.RegistryBuilder;
 @Mod.EventBusSubscriber(modid = Midnight.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 @ObjectHolder(Midnight.MODID)
 public class MidnightCavernousBiomes {
-    public static final CavernousBiome CLOSED_CAVERN = new ClosedCavernBiome();
-
-    public static final CavernousBiome GREAT_CAVERN = CLOSED_CAVERN;
-    public static final CavernousBiome CRYSTAL_CAVERN = CLOSED_CAVERN;
-    public static final CavernousBiome FUNGAL_CAVERN = CLOSED_CAVERN;
+    public static final CavernousBiome CLOSED_CAVERN = RegUtil.injected();
+    public static final CavernousBiome GREAT_CAVERN = RegUtil.injected();
+    public static final CavernousBiome CRYSTAL_CAVERN = RegUtil.injected();
+    public static final CavernousBiome FUNGAL_CAVERN = RegUtil.injected();
 
     private static ForgeRegistry<CavernousBiome> registry;
 
@@ -39,7 +38,7 @@ public class MidnightCavernousBiomes {
     @SubscribeEvent
     public static void onRegisterBiomes(RegistryEvent.Register<CavernousBiome> event) {
         RegUtil.generic(event.getRegistry())
-                .add("closed_cavern", CLOSED_CAVERN)
+                .add("closed_cavern", new ClosedCavernBiome())
                 .add("great_cavern", new GreatCavernBiome())
                 .add("crystal_cavern", new CrystalCavernBiome())
                 .add("fungal_cavern", new FungalCavernBiome());
