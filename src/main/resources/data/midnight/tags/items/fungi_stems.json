@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "midnight:nightshroom_stem",
+    "midnight:dewshroom_stem",
+	"midnight:viridshroom_stem",
+    "midnight:bogshroom_stem"
+  ]
+}

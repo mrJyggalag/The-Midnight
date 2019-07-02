@@ -15,6 +15,7 @@ public class MidnightTags {
     public static class Blocks {
         public static final Tag<Block> CAN_HOLD_ORES = tag("can_hold_ores");
         public static final Tag<Block> FUNGI_STEMS = tag("fungi_stems");
+        public static final Tag<Block> LOGS = tag("logs");
 
         private static Tag<Block> tag(String name) {
             return new BlockTags.Wrapper(new ResourceLocation(MODID, name));
@@ -23,6 +24,8 @@ public class MidnightTags {
 
     public static class Items {
         public static final Tag<Item> SPORE_BOMBS = tag("spore_bombs");
+        public static final Tag<Item> FUNGI_STEMS = tag("fungi_stems");
+        public static final Tag<Item> LOGS = tag("logs");
 
         private static Tag<Item> tag(String name) {
             return new ItemTags.Wrapper(new ResourceLocation(MODID, name));
