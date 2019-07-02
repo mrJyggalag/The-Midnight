@@ -444,7 +444,7 @@ public class MidnightBlocks {
                 .add("bulb_fungus_hat", new BulbFungusHatBlock());
 
         RegUtil.blocks(event.getRegistry())
-                .withProperties(() -> Block.Properties.create(Material.PLANTS, MaterialColor.PURPLE_TERRACOTTA).hardnessAndResistance(0f).sound(SoundType.PLANT))
+                .withProperties(() -> Block.Properties.create(Material.PLANTS, MaterialColor.PURPLE_TERRACOTTA).hardnessAndResistance(0f).doesNotBlockMovement().sound(SoundType.PLANT))
                 .add("bogshroom_shelf", MidnightFungiShelfBlock::new)
                 .add("nightshroom_shelf", MidnightFungiShelfBlock::new)
                 .add("dewshroom_shelf", MidnightFungiShelfBlock::new)

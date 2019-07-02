@@ -10,8 +10,6 @@ import net.minecraft.block.IGrowable;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.AreaEffectCloudEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
@@ -165,11 +163,6 @@ public class SuavisBlock extends Block implements IGrowable {
                 ForgeHooks.onCropsGrowPost(world, pos, state);
             }
         //}
-    }
-
-    @Override
-    public VoxelShape getCollisionShape(BlockState state, IBlockReader world, BlockPos pos, ISelectionContext context) {
-        return getShape(state, world, pos, context);
     }
 
     @Override

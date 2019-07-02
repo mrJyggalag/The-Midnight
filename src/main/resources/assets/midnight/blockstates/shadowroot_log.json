@@ -1,5 +1,7 @@
 {
   "variants": {
-    "": {"model": "midnight:block/shadowroot_log"}
+    "axis=y": {"model": "midnight:block/shadowroot_log"},
+    "axis=z": {"model": "midnight:block/shadowroot_log", "x": 90},
+    "axis=x": {"model": "midnight:block/shadowroot_log", "x": 90, "y": 90}
   }
 }
