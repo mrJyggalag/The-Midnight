@@ -111,16 +111,16 @@ public abstract class TemplateTreeFeature extends MidnightTreeFeature {
         return true;
     }
 
-    private Template.BlockInfo processState(IWorldReader world, BlockPos pos, Template.BlockInfo srcInfo, Template.BlockInfo info, PlacementSettings settings) {
+    private Template.BlockInfo processState(IWorldReader world, BlockPos origin, Template.BlockInfo srcInfo, Template.BlockInfo info, PlacementSettings settings) {
         BlockState state = info.state;
         Block block = state.getBlock();
         if (block instanceof LogBlock) {
             Direction.Axis axis = state.get(LogBlock.AXIS);
-            return new Template.BlockInfo(pos, this.log.with(LogBlock.AXIS, axis), null);
+            return new Template.BlockInfo(info.pos, this.log.with(LogBlock.AXIS, axis), null);
         } else if (block.isIn(MidnightTags.Blocks.FUNGI_STEMS)) {
-            return new Template.BlockInfo(pos, this.log, null);
+            return new Template.BlockInfo(info.pos, this.log, null);
         } else if (block instanceof LeavesBlock || block instanceof MidnightFungiHatBlock) {
-            return new Template.BlockInfo(pos, this.leaf, null);
+            return new Template.BlockInfo(info.pos, this.leaf, null);
         } else if (block == Blocks.STRUCTURE_BLOCK || block instanceof AirBlock) {
             return null;
         }

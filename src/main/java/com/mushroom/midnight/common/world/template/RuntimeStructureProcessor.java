@@ -20,8 +20,8 @@ public final class RuntimeStructureProcessor extends StructureProcessor {
 
     @Nullable
     @Override
-    public Template.BlockInfo process(IWorldReader world, BlockPos pos, Template.BlockInfo srcInfo, Template.BlockInfo info, PlacementSettings settings) {
-        return this.function.process(world, pos, srcInfo, info, settings);
+    public Template.BlockInfo process(IWorldReader world, BlockPos origin, Template.BlockInfo srcInfo, Template.BlockInfo info, PlacementSettings settings) {
+        return this.function.process(world, origin, srcInfo, info, settings);
     }
 
     @Override
@@ -30,11 +30,11 @@ public final class RuntimeStructureProcessor extends StructureProcessor {
     }
 
     @Override
-    protected <T> Dynamic<T> serialize0(DynamicOps<T> dynamicOps) {
+    protected <T> Dynamic<T> serialize0(DynamicOps<T> ops) {
         throw new UnsupportedOperationException();
     }
 
     public interface Function {
-        Template.BlockInfo process(IWorldReader world, BlockPos pos, Template.BlockInfo srcInfo, Template.BlockInfo info, PlacementSettings settings);
+        Template.BlockInfo process(IWorldReader world, BlockPos origin, Template.BlockInfo srcInfo, Template.BlockInfo info, PlacementSettings settings);
     }
 }
