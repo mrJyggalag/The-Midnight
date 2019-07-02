@@ -31,9 +31,12 @@ abstract class MidnightParticle extends TexturedParticle implements IParticleRen
     public void renderParticle(BufferBuilder buffer, ActiveRenderInfo entityIn, float partialTicks, float rotationX, float rotationZ, float rotationYZ, float rotationXY, float rotationXZ) {
         TextureManager textureManager = Minecraft.getInstance().textureManager;
         beginRender(buffer, textureManager);
+        onPreRender(buffer, entityIn, partialTicks, rotationX, rotationZ, rotationYZ, rotationXY, rotationXZ);
         super.renderParticle(buffer, entityIn, partialTicks, rotationX, rotationZ, rotationYZ, rotationXY, rotationXZ);
         finishRender(Tessellator.getInstance());
     }
+
+    protected void onPreRender(BufferBuilder buffer, ActiveRenderInfo activeInfo, float partialTicks, float rotationX, float rotationZ, float rotationYZ, float rotationXY, float rotationXZ) {}
 
     @Override
     protected float getMinU() {

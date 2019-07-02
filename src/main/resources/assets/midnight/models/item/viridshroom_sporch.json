@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "midnight:blocks/sporch_viridshroom"
+    "layer0": "midnight:blocks/viridshroom_sporch"
   }
 }

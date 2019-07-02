@@ -40,6 +40,7 @@ import com.mushroom.midnight.common.block.TendrilweedBlock;
 import com.mushroom.midnight.common.block.UnstableBushBlock;
 import com.mushroom.midnight.common.block.UnstableBushBloomedBlock;
 import com.mushroom.midnight.common.block.VioleafBlock;
+import com.mushroom.midnight.common.block.WallSporchBlock;
 import com.mushroom.midnight.common.item.DeceitfulAlgaeItem;
 import com.mushroom.midnight.common.tile.base.TileEntityMidnightChest;
 import com.mushroom.midnight.common.tile.base.TileEntityMidnightFurnace;
@@ -72,6 +73,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
+import net.minecraft.item.WallOrFloorItem;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraftforge.common.ToolType;
 import net.minecraftforge.event.RegistryEvent;
@@ -282,6 +284,11 @@ public class MidnightBlocks {
     public static final Block DEWSHROOM_SPORCH = Blocks.AIR;
     public static final Block VIRIDSHROOM_SPORCH = Blocks.AIR;
 
+    public static final Block BOGSHROOM_WALL_SPORCH = Blocks.AIR;
+    public static final Block NIGHTSHROOM_WALL_SPORCH = Blocks.AIR;
+    public static final Block DEWSHROOM_WALL_SPORCH = Blocks.AIR;
+    public static final Block VIRIDSHROOM_WALL_SPORCH = Blocks.AIR;
+
     public static final Block CRYSTALOTUS = Blocks.AIR;
 
     public static final Block SHADOWROOT_BUTTON = Blocks.AIR;
@@ -481,11 +488,18 @@ public class MidnightBlocks {
                 .add("archaic_glass", new MidnightGlassBlock())
                 .add("archaic_glass_pane", new MidnightGlassPaneBlock())
                 .add("shadowroot_chest", new MidnightChestBlock(Block.Properties.from(Blocks.CHEST)){})
+                .add("suavis", new SuavisBlock());
+
+        RegUtil.blocks(event.getRegistry())
+                .withProperties(() -> Block.Properties.from(Blocks.TORCH))
                 .add("bogshroom_sporch", new SporchBlock(SporchBlock.SporchType.BOGSHROOM))
                 .add("nightshroom_sporch", new SporchBlock(SporchBlock.SporchType.NIGHTSHROOM))
                 .add("dewshroom_sporch", new SporchBlock(SporchBlock.SporchType.DEWSHROOM))
                 .add("viridshroom_sporch", new SporchBlock(SporchBlock.SporchType.VIRIDSHROOM))
-                .add("suavis", new SuavisBlock());
+                .add("bogshroom_wall_sporch", new WallSporchBlock(SporchBlock.SporchType.BOGSHROOM))
+                .add("nightshroom_wall_sporch", new WallSporchBlock(SporchBlock.SporchType.NIGHTSHROOM))
+                .add("dewshroom_wall_sporch", new WallSporchBlock(SporchBlock.SporchType.DEWSHROOM))
+                .add("viridshroom_wall_sporch", new WallSporchBlock(SporchBlock.SporchType.VIRIDSHROOM));
 
         RegUtil.blocks(event.getRegistry())
                 .withProperties(() -> Block.Properties.create(Material.WOOD, MaterialColor.ADOBE).hardnessAndResistance(2f, 5f).sound(SoundType.WOOD))
@@ -661,13 +675,17 @@ public class MidnightBlocks {
                         SHADOWROOT_FENCE, DEAD_WOOD_FENCE, DARK_WILLOW_FENCE, DEWSHROOM_FENCE, VIRIDSHROOM_FENCE, NIGHTSHROOM_FENCE,
                         SHADOWROOT_FENCE_GATE, DEAD_WOOD_FENCE_GATE, DARK_WILLOW_FENCE_GATE, DEWSHROOM_FENCE_GATE, VIRIDSHROOM_FENCE_GATE, NIGHTSHROOM_FENCE_GATE,
                         SHADOWROOT_LADDER, DEAD_WOOD_LADDER, DARK_WILLOW_LADDER, DEWSHROOM_LADDER, VIRIDSHROOM_LADDER, NIGHTSHROOM_LADDER,
-                        BOGSHROOM_SPORCH, NIGHTSHROOM_SPORCH, DEWSHROOM_SPORCH, VIRIDSHROOM_SPORCH,
+                        //BOGSHROOM_SPORCH, NIGHTSHROOM_SPORCH, DEWSHROOM_SPORCH, VIRIDSHROOM_SPORCH,
                         SUAVIS, STINGER_EGG, CRYSTALOTUS, MIDNIGHT_LEVER,
                         SHADOWROOT_BUTTON, DEAD_WOOD_BUTTON, DARK_WILLOW_BUTTON, DEWSHROOM_BUTTON, VIRIDSHROOM_BUTTON, NIGHTSHROOM_BUTTON, NIGHTSTONE_BUTTON, TRENCHSTONE_BUTTON, ROCKSHROOM_BRICKS_BUTTON,
                         SHADOWROOT_PRESSURE_PLATE, DEAD_WOOD_PRESSURE_PLATE, DARK_WILLOW_PRESSURE_PLATE, DEWSHROOM_PRESSURE_PLATE, VIRIDSHROOM_PRESSURE_PLATE, NIGHTSHROOM_PRESSURE_PLATE, NIGHTSTONE_PRESSURE_PLATE,
                         TRENCHSTONE_PRESSURE_PLATE, ROCKSHROOM_BRICKS_PRESSURE_PLATE, NAGRILITE_PRESSURE_PLATE, TENEBRUM_PRESSURE_PLATE,
                         SHADOWROOT_SLAB, DEAD_WOOD_SLAB, DARK_WILLOW_SLAB, NIGHTSTONE_SLAB, NIGHTSTONE_BRICK_SLAB, TRENCHSTONE_SLAB, TRENCHSTONE_BRICK_SLAB, DEWSHROOM_SLAB, VIRIDSHROOM_SLAB, NIGHTSHROOM_SLAB, ROCKSHROOM_BRICKS_SLAB
                 ) //, MUSHROOM_INSIDE, UNSTABLE_BUSH, UNSTABLE_BUSH_BLUE_BLOOMED, UNSTABLE_BUSH_GREEN_BLOOMED, UNSTABLE_BUSH_LIME_BLOOMED
-                .add(DECEITFUL_ALGAE, DeceitfulAlgaeItem::new);
+                .add(DECEITFUL_ALGAE, DeceitfulAlgaeItem::new)
+                .add(NIGHTSHROOM_SPORCH, (block, props) -> new WallOrFloorItem(NIGHTSHROOM_SPORCH, NIGHTSHROOM_WALL_SPORCH, props))
+                .add(DEWSHROOM_SPORCH, (block, props) -> new WallOrFloorItem(DEWSHROOM_SPORCH, DEWSHROOM_WALL_SPORCH, props))
+                .add(BOGSHROOM_SPORCH, (block, props) -> new WallOrFloorItem(BOGSHROOM_SPORCH, BOGSHROOM_WALL_SPORCH, props))
+                .add(VIRIDSHROOM_SPORCH, (block, props) -> new WallOrFloorItem(VIRIDSHROOM_SPORCH, VIRIDSHROOM_WALL_SPORCH, props));
     }
 }

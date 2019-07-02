@@ -16,9 +16,9 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import javax.annotation.Nullable;
 
 @OnlyIn(Dist.CLIENT)
+@SuppressWarnings("FieldCanBeLocal")
 public class SporchParticle extends MidnightParticle {
     private final float flameScale;
-    //private final List<ResourceLocation> sprites = new ArrayList<>();
     private final int MAX_FRAME_ID = 2;
     private final SporchType sporchType;
     private int currentFrame = 0;
@@ -33,14 +33,12 @@ public class SporchParticle extends MidnightParticle {
         this.posX += (double) ((this.rand.nextFloat() - this.rand.nextFloat()) * 0.05f);
         this.posY += (double) ((this.rand.nextFloat() - this.rand.nextFloat()) * 0.05f);
         this.posZ += (double) ((this.rand.nextFloat() - this.rand.nextFloat()) * 0.05f);
-        this.flameScale = this.particleScale = 1.3f;
+        this.flameScale = this.particleScale = 0.2f;
         this.particleRed = 1f;
         this.particleGreen = 1f;
         this.particleBlue = 1f;
         this.maxAge = (int) (8d / (Math.random() * 0.8d + 0.2d)) + 4;
         this.sporchType = SporchType.values()[sporchType];
-        //initTextures(SporchType.values()[Math.min(sporchType, SporchType.values().length)]);
-        //setParticleTexture(sprites.get(0));
     }
 
     @Override
@@ -50,7 +48,7 @@ public class SporchParticle extends MidnightParticle {
     }
 
     @Override
-    public void renderParticle(BufferBuilder buffer, ActiveRenderInfo activeInfo, float partialTicks, float rotationX, float rotationZ, float rotationYZ, float rotationXY, float rotationXZ) {
+    public void onPreRender(BufferBuilder buffer, ActiveRenderInfo activeInfo, float partialTicks, float rotationX, float rotationZ, float rotationYZ, float rotationXY, float rotationXZ) {
         Entity entity = activeInfo.getRenderViewEntity();
         if (entity.ticksExisted >= this.lastTick + 5) {
             if (this.currentFrame == MAX_FRAME_ID) {
@@ -63,7 +61,6 @@ public class SporchParticle extends MidnightParticle {
         }
         float f = ((float) this.age + partialTicks) / (float) this.maxAge;
         this.particleScale = this.flameScale * (1f - f * f * 0.5f);
-        super.renderParticle(buffer, activeInfo, partialTicks, rotationX, rotationZ, rotationYZ, rotationXY, rotationXZ);
     }
 
     @Override

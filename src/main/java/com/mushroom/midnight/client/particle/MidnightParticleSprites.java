@@ -56,7 +56,7 @@ public class MidnightParticleSprites {
         for (SporchBlock.SporchType sporchType : SporchBlock.SporchType.values()) {
             ImmutableList.Builder<ResourceLocation> builder = ImmutableList.builder();
             for (int i = 1 ; i <= 3 ; i++) {
-                builder.add(new ResourceLocation(MODID, "textures/particles/sporch_" + sporchType.name().toLowerCase() + "_" + i));
+                builder.add(new ResourceLocation(MODID, "textures/particles/sporch_" + sporchType.name().toLowerCase() + "_" + i + ".png"));
             }
             SPORCHES.put(sporchType, builder.build());
         }
