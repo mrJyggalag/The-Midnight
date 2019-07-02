@@ -3,7 +3,7 @@
   "ingredient": {
     "item": "midnight:stinger_egg"
   },
-  "result": "midnight:cook_stinger_egg",
+  "result": "midnight:cooked_stinger_egg",
   "experience": 0.35,
   "cookingtime": 200
 }

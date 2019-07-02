@@ -10,7 +10,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.ObjectHolder;
 
 @ObjectHolder(Midnight.MODID)
-@Mod.EventBusSubscriber(modid = Midnight.MODID)
+@Mod.EventBusSubscriber(modid = Midnight.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class MidnightCarvers {
     public static final WorldCarver<ProbabilityConfig> WIDE_CAVE = RegUtil.injected();
 

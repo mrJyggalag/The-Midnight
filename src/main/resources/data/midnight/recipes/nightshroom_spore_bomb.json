@@ -11,7 +11,6 @@
     "1": {"item": "midnight:dark_pearl"}
   },
   "result": {
-    "item": "midnight:spore_bomb",
-    "data": 0
+    "item": "midnight:nightshroom_spore_bomb"
   }
 }

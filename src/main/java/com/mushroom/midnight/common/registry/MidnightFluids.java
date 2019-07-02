@@ -12,7 +12,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.ObjectHolder;
 
 @ObjectHolder(Midnight.MODID)
-@Mod.EventBusSubscriber(modid = Midnight.MODID)
+@Mod.EventBusSubscriber(modid = Midnight.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class MidnightFluids {
     public static final FlowingFluid DARK_WATER = Fluids.WATER;
     public static final FlowingFluid MIASMA = Fluids.LAVA;

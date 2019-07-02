@@ -15,7 +15,7 @@ import net.minecraftforge.fml.common.Mod;
 import javax.annotation.Nonnull;
 import java.util.function.BiFunction;
 
-@Mod.EventBusSubscriber(modid = Midnight.MODID)
+@Mod.EventBusSubscriber(modid = Midnight.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class MidnightDimensions {
     private static DimensionType midnightDimension;
 
