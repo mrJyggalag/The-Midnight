@@ -163,7 +163,7 @@ public class CommonEventHandler {
 
     @SubscribeEvent
     public static void onPlaySound(PlaySoundAtEntityEvent event) {
-        if (TICKING_DIMENSION.get() == MidnightDimensions.MIDNIGHT) {
+        if (TICKING_DIMENSION.get() == MidnightDimensions.midnight()) {
             event.setVolume(event.getVolume() * SOUND_TRAVEL_DISTANCE_MULTIPLIER);
         }
     }

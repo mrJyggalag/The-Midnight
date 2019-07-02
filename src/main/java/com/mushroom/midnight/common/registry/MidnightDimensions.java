@@ -1,57 +1,42 @@
 package com.mushroom.midnight.common.registry;
 
+import com.google.common.base.Preconditions;
 import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.common.world.MidnightDimension;
-import io.netty.buffer.Unpooled;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraft.world.dimension.Dimension;
 import net.minecraft.world.dimension.DimensionType;
 import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.common.ModDimension;
+import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
 
+import javax.annotation.Nonnull;
 import java.util.function.BiFunction;
 
+@Mod.EventBusSubscriber(modid = Midnight.MODID)
 public class MidnightDimensions {
-    public static final DimensionType MIDNIGHT = new Builder()
-            .withName(new ResourceLocation(Midnight.MODID, "midnight"))
-            .withFactory(MidnightDimension::new)
-            .register();
+    private static DimensionType midnightDimension;
 
-    private static class Builder {
-        private ResourceLocation name;
-        private BiFunction<World, DimensionType, ? extends Dimension> factory;
-        private PacketBuffer data = new PacketBuffer(Unpooled.buffer(0));
-        private boolean hasSkylight;
+    @SubscribeEvent
+    public static void registerModDimensions(RegistryEvent.Register<ModDimension> event) {
+        ModDimension midnight = new ModDimension() {
+            @Override
+            public BiFunction<World, DimensionType, ? extends Dimension> getFactory() {
+                return MidnightDimension::new;
+            }
+        };
 
-        public Builder withName(ResourceLocation name) {
-            this.name = name;
-            return this;
-        }
+        RegUtil.generic(event.getRegistry())
+                .add("midnight", midnight);
 
-        public Builder withFactory(BiFunction<World, DimensionType, ? extends Dimension> factory) {
-            this.factory = factory;
-            return this;
-        }
+        midnightDimension = DimensionManager.registerDimension(midnight.getRegistryName(), midnight, null, false);
+    }
 
-        public Builder withData(PacketBuffer data) {
-            this.data = data;
-            return this;
-        }
-
-        public Builder withSkylight() {
-            this.hasSkylight = true;
-            return this;
-        }
-
-        public DimensionType register() {
-            return DimensionManager.registerDimension(this.name, new ModDimension() {
-                @Override
-                public BiFunction<World, DimensionType, ? extends Dimension> getFactory() {
-                    return Builder.this.factory;
-                }
-            }, this.data, this.hasSkylight);
-        }
+    @Nonnull
+    public static DimensionType midnight() {
+        Preconditions.checkNotNull(midnightDimension, "dimension not yet initialized");
+        return midnightDimension;
     }
 }

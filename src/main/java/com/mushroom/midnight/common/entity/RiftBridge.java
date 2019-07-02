@@ -68,7 +68,7 @@ public class RiftBridge {
         this.tracker.update();
 
         this.trySpawnEndpoint(DimensionType.OVERWORLD);
-        this.trySpawnEndpoint(MidnightDimensions.MIDNIGHT);
+        this.trySpawnEndpoint(MidnightDimensions.midnight());
 
         if (this.unstable.get()) {
             if (this.unstable.getTimer() >= RiftEntity.UNSTABLE_TIME && this.open.get()) {
@@ -205,7 +205,7 @@ public class RiftBridge {
     }
 
     private RiftEntityReference getEndpointReference(DimensionType endpointDimension) {
-        return endpointDimension == MidnightDimensions.MIDNIGHT ? this.target : this.source;
+        return endpointDimension == MidnightDimensions.midnight() ? this.target : this.source;
     }
 
     public void close() {

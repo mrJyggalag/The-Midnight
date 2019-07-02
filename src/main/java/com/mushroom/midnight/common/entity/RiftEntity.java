@@ -327,7 +327,7 @@ public class RiftEntity extends Entity implements IEntityAdditionalSpawnData {
         if (Helper.isMidnightDimension(this.world)) {
             return DimensionType.OVERWORLD;
         } else {
-            return MidnightDimensions.MIDNIGHT;
+            return MidnightDimensions.midnight();
         }
     }
 

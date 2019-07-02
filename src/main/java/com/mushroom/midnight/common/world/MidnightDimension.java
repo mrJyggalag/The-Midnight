@@ -6,7 +6,6 @@ import com.mushroom.midnight.common.biome.cavern.CavernousBiome;
 import com.mushroom.midnight.common.config.MidnightConfig;
 import com.mushroom.midnight.common.registry.MidnightDimensions;
 import net.minecraft.client.Minecraft;
-import net.minecraft.entity.effect.LightningBoltEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
@@ -15,17 +14,14 @@ import net.minecraft.world.ServerWorld;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.chunk.Chunk;
-import net.minecraft.world.chunk.ChunkHolder;
 import net.minecraft.world.chunk.ServerChunkProvider;
 import net.minecraft.world.dimension.Dimension;
 import net.minecraft.world.dimension.DimensionType;
 import net.minecraft.world.gen.ChunkGenerator;
-import net.minecraft.world.gen.Heightmap;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 import javax.annotation.Nullable;
-import java.util.Random;
 
 public class MidnightDimension extends Dimension {
     private static final Vec3d FOG_COLOR = new Vec3d(0.085, 0.04, 0.1225);
@@ -64,7 +60,7 @@ public class MidnightDimension extends Dimension {
 
     @Override
     public DimensionType getType() {
-        return MidnightDimensions.MIDNIGHT;
+        return MidnightDimensions.midnight();
     }
 
     @Override

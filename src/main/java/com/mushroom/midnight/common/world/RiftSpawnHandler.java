@@ -54,7 +54,7 @@ public class RiftSpawnHandler {
             return;
         }
 
-        World endpointWorld = DimensionManager.getWorld(server, MidnightDimensions.MIDNIGHT, false, false);
+        World endpointWorld = DimensionManager.getWorld(server, MidnightDimensions.midnight(), false, false);
         if (!world.isDaytime()) {
             Random random = world.rand;
             Set<BlockPos> spawnRegions = collectPlayerRegions(world.getPlayers());

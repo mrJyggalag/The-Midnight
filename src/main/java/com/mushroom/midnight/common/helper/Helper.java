@@ -16,7 +16,7 @@ import javax.annotation.Nullable;
 
 public class Helper {
     public static boolean isMidnightDimension(@Nullable World world) {
-        return world != null && world.dimension.getType() == MidnightDimensions.MIDNIGHT;
+        return world != null && world.dimension.getType() == MidnightDimensions.midnight();
     }
 
     public static boolean isNotFakePlayer(@Nullable Entity entity) {

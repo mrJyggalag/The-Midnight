@@ -30,7 +30,7 @@ public class DeceitfulMossBlock extends Block {
 
     public DeceitfulMossBlock() {
         super(Properties.create(Material.PLANTS, MaterialColor.PURPLE_TERRACOTTA).hardnessAndResistance(0.2f, 0f).sound(SoundType.PLANT));
-        setDefaultState(this.getStateContainer().getBaseState().with(FACING, Direction.DOWN));
+        setDefaultState(stateContainer.getBaseState().with(FACING, Direction.NORTH));
     }
 
     @Override
@@ -103,6 +103,7 @@ public class DeceitfulMossBlock extends Block {
     @Override
     protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
         builder.add(FACING);
+        super.fillStateContainer(builder);
     }
 
     @Override

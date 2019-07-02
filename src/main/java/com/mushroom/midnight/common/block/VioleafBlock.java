@@ -1,6 +1,7 @@
 package com.mushroom.midnight.common.block;
 
 import com.mushroom.midnight.common.registry.MidnightCriterion;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.IGrowable;
 import net.minecraft.entity.AreaEffectCloudEntity;
@@ -11,6 +12,7 @@ import net.minecraft.particles.ParticleTypes;
 import net.minecraft.potion.Effects;
 import net.minecraft.potion.Potions;
 import net.minecraft.state.BooleanProperty;
+import net.minecraft.state.StateContainer;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
@@ -27,7 +29,13 @@ public class VioleafBlock extends MidnightPlantBlock implements IGrowable {
 
     public VioleafBlock(Properties properties) {
         super(properties, false);
-        setDefaultState(getStateContainer().getBaseState().with(IS_GROWN, true));
+        setDefaultState(stateContainer.getBaseState().with(IS_GROWN, true));
+    }
+
+    @Override
+    protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
+        builder.add(IS_GROWN);
+        super.fillStateContainer(builder);
     }
 
     @Override
