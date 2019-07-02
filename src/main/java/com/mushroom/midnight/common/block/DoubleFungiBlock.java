@@ -20,8 +20,8 @@ public class DoubleFungiBlock extends MidnightDoublePlantBlock {
 
     public DoubleFungiBlock(Properties properties, @Nullable Tree tree) {
         super(properties, true);
-        this.setDefaultState(this.getStateContainer().getBaseState().with(BlockStateProperties.STAGE_0_1, 0));
         this.tree = tree;
+        this.setDefaultState(this.stateContainer.getBaseState().with(STAGE, 0));
     }
 
     @Override
@@ -51,8 +51,6 @@ public class DoubleFungiBlock extends MidnightDoublePlantBlock {
     @Override
     protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
         super.fillStateContainer(builder);
-        if (this.tree != null) {
-            builder.add(STAGE);
-        }
+        builder.add(STAGE);
     }
 }
