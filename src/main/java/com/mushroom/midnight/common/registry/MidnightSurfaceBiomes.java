@@ -1,8 +1,8 @@
 package com.mushroom.midnight.common.registry;
 
 import com.mushroom.midnight.Midnight;
-import com.mushroom.midnight.common.biome.MidnightBiomeGroup;
 import com.mushroom.midnight.common.biome.BiomeSpawnEntry;
+import com.mushroom.midnight.common.biome.MidnightBiomeGroup;
 import com.mushroom.midnight.common.biome.surface.BlackRidgeBiome;
 import com.mushroom.midnight.common.biome.surface.CrystalSpiresBiome;
 import com.mushroom.midnight.common.biome.surface.DeceitfulBogBiome;
@@ -47,6 +47,11 @@ public class MidnightSurfaceBiomes {
 
     @SubscribeEvent
     public static void onRegisterBiomes(RegistryEvent.Register<Biome> event) {
+        // TODO: Thank you Forge, very cool
+        MidnightPlacements.registerPlacements(ForgeRegistries.DECORATORS);
+        MidnightFeatures.registerFeatures(ForgeRegistries.FEATURES);
+        MidnightCarvers.registerCarvers(ForgeRegistries.WORLD_CARVERS);
+
         RegUtil.generic(event.getRegistry())
                 .add("vigilant_forest", new VigilantForestBiome())
                 .add("black_ridge", new BlackRidgeBiome())

@@ -230,7 +230,7 @@ public class RiftEntity extends Entity implements IEntityAdditionalSpawnData {
             if (entity.isPassenger() || (entity instanceof PlayerEntity && entity.isSpectator())) {
                 return false;
             }
-            return entity.getCapability(Midnight.RIFT_TRAVEL_COOLDOWN_CAP).map(cooldownCap -> cooldownCap.isReady() && !(entity instanceof RiftEntity)).orElse(false);
+            return entity.getCapability(Midnight.RIFT_TRAVELLER_CAP).map(cooldownCap -> cooldownCap.isReady() && !(entity instanceof RiftEntity)).orElse(false);
         });
 
         Set<RiftTravelEntry> recursedEntities = this.getRecursedTravelers(entities);
@@ -243,7 +243,7 @@ public class RiftEntity extends Entity implements IEntityAdditionalSpawnData {
             entity.detach();
 
             if (this.shouldTravelThroughRift(entity)) {
-                entry.travel(this, endpointDimension);
+                entry.travel(this);
             } else {
                 entity.remove();
             }

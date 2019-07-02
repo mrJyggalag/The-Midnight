@@ -30,6 +30,7 @@ public class Helper {
         rgb[2] = (color & 255) / 255f;
         return rgb;
     }
+
     public static boolean isGroundForBoneMeal(Block block) {
         return block == MidnightBlocks.NIGHTSTONE || block == MidnightBlocks.GRASS_BLOCK || block == MidnightBlocks.MYCELIUM || block == Blocks.GRASS;
     }

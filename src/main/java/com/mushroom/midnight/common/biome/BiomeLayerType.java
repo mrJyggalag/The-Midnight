@@ -26,28 +26,30 @@ import java.util.function.IntFunction;
 import java.util.function.LongFunction;
 
 public final class BiomeLayerType<T> {
-    public static final BiomeLayerType<Biome> SURFACE = BiomeLayerType.create(BiomeLayerType::buildSurface, Registry.BIOME::getByValue);
-    public static final BiomeLayerType<CavernousBiome> UNDERGROUND = BiomeLayerType.create(BiomeLayerType::buildUnderground, MidnightCavernousBiomes::byId);
+    public static final BiomeLayerType<Biome> SURFACE = BiomeLayerType.create(Biome.class, BiomeLayerType::buildSurface, Registry.BIOME::getByValue);
+    public static final BiomeLayerType<CavernousBiome> UNDERGROUND = BiomeLayerType.create(CavernousBiome.class, BiomeLayerType::buildUnderground, MidnightCavernousBiomes::byId);
 
     private static final int MAX_CACHE_SIZE = 25;
 
+    private final Class<T> type;
     private final ProcedureFactory procedureFactory;
     private final IntFunction<T> function;
 
-    private BiomeLayerType(ProcedureFactory procedureFactory, IntFunction<T> function) {
+    private BiomeLayerType(Class<T> type, ProcedureFactory procedureFactory, IntFunction<T> function) {
+        this.type = type;
         this.procedureFactory = procedureFactory;
         this.function = function;
     }
 
-    public static <T> BiomeLayerType<T> create(ProcedureFactory procedureFactory, IntFunction<T> function) {
-        return new BiomeLayerType<>(procedureFactory, function);
+    public static <T> BiomeLayerType<T> create(Class<T> type, ProcedureFactory procedureFactory, IntFunction<T> function) {
+        return new BiomeLayerType<>(type, procedureFactory, function);
     }
 
     public BiomeLayers<T> make(long worldSeed) {
         BiomeProcedure<LazyArea> procedure = this.procedureFactory.create(value -> new LazyAreaLayerContext(MAX_CACHE_SIZE, worldSeed, value));
         return new BiomeLayers<>(
-                new BiomeLayer<>(procedure.noise, this.function),
-                new BiomeLayer<>(procedure.block, this.function)
+                new BiomeLayer<>(this.type, procedure.noise, this.function),
+                new BiomeLayer<>(this.type, procedure.block, this.function)
         );
     }
 

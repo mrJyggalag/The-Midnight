@@ -22,7 +22,7 @@ import java.util.function.Function;
 public abstract class MidnightTreeFeature extends AbstractTreeFeature<NoFeatureConfig> {
     protected MidnightTreeFeature(Function<Dynamic<?>, ? extends NoFeatureConfig> deserialize) {
         super(deserialize, true);
-        this.sapling = (IPlantable) MidnightBlocks.SHADOWROOT_SAPLING;
+        this.setSapling((IPlantable) MidnightBlocks.SHADOWROOT_SAPLING);
     }
 
     protected abstract boolean place(IWorld world, Random random, BlockPos origin);

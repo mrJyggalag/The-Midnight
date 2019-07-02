@@ -76,7 +76,7 @@ public class MidnightBiomeConfigurator {
         ));
 
         biome.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, Biome.createDecoratedFeature(
-                Feature.DOUBLE_PLANT, new DoublePlantConfig(MidnightBlocks.DOUBLE_LUMEN_BUD.getDefaultState()),
+                MidnightFeatures.DOUBLE_PLANT, new DoublePlantConfig(MidnightBlocks.DOUBLE_LUMEN_BUD.getDefaultState()),
                 Placement.CHANCE_HEIGHTMAP_DOUBLE, new ChanceConfig(3)
         ));
     }
@@ -161,7 +161,7 @@ public class MidnightBiomeConfigurator {
         ));
 
         biome.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, Biome.createDecoratedFeature(
-                Feature.DOUBLE_PLANT, new DoublePlantConfig(MidnightBlocks.TALL_GRASS.getDefaultState()),
+                MidnightFeatures.DOUBLE_PLANT, new DoublePlantConfig(MidnightBlocks.TALL_GRASS.getDefaultState()),
                 Placement.COUNT_HEIGHTMAP_32, new FrequencyConfig(3)
         ));
     }

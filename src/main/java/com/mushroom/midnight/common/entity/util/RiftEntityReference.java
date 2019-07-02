@@ -5,7 +5,6 @@ import net.minecraft.entity.Entity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.ServerWorld;
-import net.minecraft.world.ServerWorld;
 import net.minecraft.world.dimension.DimensionType;
 import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.fml.LogicalSide;
@@ -73,7 +72,7 @@ public class RiftEntityReference {
     public CompoundNBT serialize(CompoundNBT compound) {
         if (this.entityId != null) {
             compound.putUniqueId("id", this.entityId);
-            compound.putString("dimension", this.dimension.getRegistryName().toString());
+            compound.putString("dimension", DimensionType.getKey(this.dimension).toString());
         }
         return compound;
     }

@@ -15,6 +15,7 @@ import com.mushroom.midnight.common.world.feature.HeapFeature;
 import com.mushroom.midnight.common.world.feature.LargeBogshroomFeature;
 import com.mushroom.midnight.common.world.feature.LargeBulbFungusFeature;
 import com.mushroom.midnight.common.world.feature.LargeFungiFeature;
+import com.mushroom.midnight.common.world.feature.MidnightDoublePlantFeature;
 import com.mushroom.midnight.common.world.feature.MidnightOreFeature;
 import com.mushroom.midnight.common.world.feature.MossFeature;
 import com.mushroom.midnight.common.world.feature.NightstoneBoulderFeature;
@@ -28,16 +29,16 @@ import com.mushroom.midnight.common.world.feature.config.MidnightOreConfig;
 import com.mushroom.midnight.common.world.feature.config.UniformCompositionConfig;
 import com.mushroom.midnight.common.world.template.ShelfAttachProcessor;
 import net.minecraft.world.gen.feature.AbstractTreeFeature;
+import net.minecraft.world.gen.feature.DoublePlantConfig;
 import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.feature.NoFeatureConfig;
 import net.minecraft.world.gen.feature.ScatteredPlantFeature;
-import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.registries.IForgeRegistry;
 import net.minecraftforge.registries.ObjectHolder;
 
+// TODO: Register from correct event when Forge is fixed
 @ObjectHolder(Midnight.MODID)
-@Mod.EventBusSubscriber(modid = Midnight.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class MidnightFeatures {
     // TODO
 //    public static final IMidnightFeature UNSTABLE_BUSH_FEATURE = new PlantFeature(
@@ -95,68 +96,70 @@ public class MidnightFeatures {
 //            }
 //    };
 
-    public static final AbstractTreeFeature<NoFeatureConfig> SHADOWROOT_TREE = RegUtil.injected();
-    public static final AbstractTreeFeature<NoFeatureConfig> DARK_WILLOW_TREE = RegUtil.injected();
-    public static final Feature<NoFeatureConfig> DEAD_TREE = RegUtil.injected();
-    public static final Feature<NoFeatureConfig> BOG_DEAD_TREE = RegUtil.injected();
-    public static final Feature<NoFeatureConfig> DEAD_LOG = RegUtil.injected();
-    public static final AbstractTreeFeature<NoFeatureConfig> LARGE_BOGSHROOM = RegUtil.injected();
-    public static final AbstractTreeFeature<NoFeatureConfig> LARGE_BULB_FUNGUS = RegUtil.injected();
-    public static final AbstractTreeFeature<NoFeatureConfig> LARGE_NIGHTSHROOM = RegUtil.injected();
-    public static final AbstractTreeFeature<NoFeatureConfig> LARGE_DEWSHROOM = RegUtil.injected();
-    public static final AbstractTreeFeature<NoFeatureConfig> LARGE_VIRIDSHROOM = RegUtil.injected();
+    public static final AbstractTreeFeature<NoFeatureConfig> SHADOWROOT_TREE = new ShadowrootTreeFeature(NoFeatureConfig::deserialize);
+    public static final AbstractTreeFeature<NoFeatureConfig> DARK_WILLOW_TREE = new DarkWillowTreeFeature(NoFeatureConfig::deserialize);
+    public static final Feature<NoFeatureConfig> DEAD_TREE = new DeadTreeFeature(NoFeatureConfig::deserialize, ShelfAttachProcessor.FOREST_SHELF_BLOCKS);
+    public static final Feature<NoFeatureConfig> BOG_DEAD_TREE = new DeadTreeFeature(NoFeatureConfig::deserialize, ShelfAttachProcessor.SHELF_BLOCKS);
+    public static final Feature<NoFeatureConfig> DEAD_LOG = new DeadLogFeature(NoFeatureConfig::deserialize);
+    public static final AbstractTreeFeature<NoFeatureConfig> LARGE_BOGSHROOM = new LargeBogshroomFeature(NoFeatureConfig::deserialize);
+    public static final AbstractTreeFeature<NoFeatureConfig> LARGE_BULB_FUNGUS = new LargeBulbFungusFeature(NoFeatureConfig::deserialize);
+    public static final AbstractTreeFeature<NoFeatureConfig> LARGE_NIGHTSHROOM = new LargeFungiFeature(NoFeatureConfig::deserialize, MidnightBlocks.NIGHTSHROOM_STEM.getDefaultState(), MidnightBlocks.NIGHTSHROOM_HAT.getDefaultState());
+    public static final AbstractTreeFeature<NoFeatureConfig> LARGE_DEWSHROOM = new LargeFungiFeature(NoFeatureConfig::deserialize, MidnightBlocks.DEWSHROOM_STEM.getDefaultState(), MidnightBlocks.DEWSHROOM_HAT.getDefaultState());
+    public static final AbstractTreeFeature<NoFeatureConfig> LARGE_VIRIDSHROOM = new LargeFungiFeature(NoFeatureConfig::deserialize, MidnightBlocks.VIRIDSHROOM_STEM.getDefaultState(), MidnightBlocks.VIRIDSHROOM_HAT.getDefaultState());
 
-    public static final Feature<NoFeatureConfig> SUAVIS = RegUtil.injected();
-    public static final Feature<NoFeatureConfig> DECEITFUL_ALGAE = RegUtil.injected();
-    public static final Feature<NoFeatureConfig> DECEITFUL_MOSS = RegUtil.injected();
+    public static final Feature<NoFeatureConfig> SUAVIS = new ScatteredPlantFeature(NoFeatureConfig::deserialize, MidnightBlocks.SUAVIS.getDefaultState());
+    public static final Feature<NoFeatureConfig> DECEITFUL_ALGAE = new AlgaeFeature(NoFeatureConfig::deserialize);
+    public static final Feature<NoFeatureConfig> DECEITFUL_MOSS = new MossFeature(NoFeatureConfig::deserialize);
 
-    public static final Feature<NoFeatureConfig> FUNGI_FLOWERS = RegUtil.injected();
-    public static final Feature<NoFeatureConfig> BOG_FUNGI_FLOWERS = RegUtil.injected();
-    public static final Feature<NoFeatureConfig> BOGWEED_FLOWERS = RegUtil.injected();
-    public static final Feature<NoFeatureConfig> CRYSTAL_FLOWERS = RegUtil.injected();
-    public static final Feature<NoFeatureConfig> BULB_FUNGI_FLOWERS = RegUtil.injected();
+    public static final Feature<DoublePlantConfig> DOUBLE_PLANT = new MidnightDoublePlantFeature(DoublePlantConfig::deserialize);
+    public static final Feature<NoFeatureConfig> FUNGI_FLOWERS = new FungiFlowersFeature(NoFeatureConfig::deserialize);
+    public static final Feature<NoFeatureConfig> BOG_FUNGI_FLOWERS = new BogFungiFlowersFeature(NoFeatureConfig::deserialize);
+    public static final Feature<NoFeatureConfig> BOGWEED_FLOWERS = new BogweedFlowersFeature(NoFeatureConfig::deserialize);
+    public static final Feature<NoFeatureConfig> CRYSTAL_FLOWERS = new CrystalFlowersFeature(NoFeatureConfig::deserialize);
+    public static final Feature<NoFeatureConfig> BULB_FUNGI_FLOWERS = new BulbFungiFlowersFeature(NoFeatureConfig::deserialize);
 
-    public static final Feature<NoFeatureConfig> TALL_FUNGI = RegUtil.injected();
-    public static final Feature<NoFeatureConfig> TALL_BOG_FUNGI = RegUtil.injected();
+    public static final Feature<NoFeatureConfig> TALL_FUNGI = new TallFungiFeature(NoFeatureConfig::deserialize);
+    public static final Feature<NoFeatureConfig> TALL_BOG_FUNGI = new TallBogFungiFeature(NoFeatureConfig::deserialize);
 
-    public static final Feature<UniformCompositionConfig> HEAP = RegUtil.injected();
-    public static final Feature<UniformCompositionConfig> SPIKE = RegUtil.injected();
-    public static final Feature<NoFeatureConfig> NIGHTSTONE_BOULDER = RegUtil.injected();
-    public static final Feature<NoFeatureConfig> TRENCHSTONE_BOULDER = RegUtil.injected();
-    public static final Feature<CrystalClusterConfig> CRYSTAL_CLUSTER = RegUtil.injected();
-    public static final Feature<CrystalClusterConfig> CRYSTAL_SPIRE = RegUtil.injected();
+    public static final Feature<UniformCompositionConfig> HEAP = new HeapFeature(UniformCompositionConfig::deserialize);
+    public static final Feature<UniformCompositionConfig> SPIKE = new SpikeFeature(UniformCompositionConfig::deserialize);
+    public static final Feature<NoFeatureConfig> NIGHTSTONE_BOULDER = new NightstoneBoulderFeature(NoFeatureConfig::deserialize);
+    public static final Feature<NoFeatureConfig> TRENCHSTONE_BOULDER = new TrenchstoneBoulderFeature(NoFeatureConfig::deserialize);
+    public static final Feature<CrystalClusterConfig> CRYSTAL_CLUSTER = new CrystalClusterFeature(CrystalClusterConfig::deserialize, 3, 4);
+    public static final Feature<CrystalClusterConfig> CRYSTAL_SPIRE = new CrystalClusterFeature(CrystalClusterConfig::deserialize, 4, 13);
 
-    public static final Feature<MidnightOreConfig> ORE = RegUtil.injected();
+    public static final Feature<MidnightOreConfig> ORE = new MidnightOreFeature(MidnightOreConfig::deserialize);
 
     @SubscribeEvent
-    public static void registerFeatures(RegistryEvent.Register<Feature<?>> event) {
-        RegUtil.generic(event.getRegistry())
-                .add("shadowroot_tree", new ShadowrootTreeFeature(NoFeatureConfig::deserialize))
-                .add("dark_willow_tree", new DarkWillowTreeFeature(NoFeatureConfig::deserialize))
-                .add("dead_tree", new DeadTreeFeature(NoFeatureConfig::deserialize, ShelfAttachProcessor.FOREST_SHELF_BLOCKS))
-                .add("bog_dead_tree", new DeadTreeFeature(NoFeatureConfig::deserialize, ShelfAttachProcessor.SHELF_BLOCKS))
-                .add("dead_log", new DeadLogFeature(NoFeatureConfig::deserialize))
-                .add("large_bogshroom", new LargeBogshroomFeature(NoFeatureConfig::deserialize))
-                .add("large_bulb_fungus", new LargeBulbFungusFeature(NoFeatureConfig::deserialize))
-                .add("large_nightshroom", new LargeFungiFeature(NoFeatureConfig::deserialize, MidnightBlocks.NIGHTSHROOM_STEM.getDefaultState(), MidnightBlocks.NIGHTSHROOM_HAT.getDefaultState()))
-                .add("large_dewshroom", new LargeFungiFeature(NoFeatureConfig::deserialize, MidnightBlocks.DEWSHROOM_STEM.getDefaultState(), MidnightBlocks.DEWSHROOM_HAT.getDefaultState()))
-                .add("large_viridshroom", new LargeFungiFeature(NoFeatureConfig::deserialize, MidnightBlocks.VIRIDSHROOM_STEM.getDefaultState(), MidnightBlocks.VIRIDSHROOM_HAT.getDefaultState()))
-                .add("suavis", new ScatteredPlantFeature(NoFeatureConfig::deserialize, MidnightBlocks.SUAVIS.getDefaultState()))
-                .add("deceitful_algae", new AlgaeFeature(NoFeatureConfig::deserialize))
-                .add("deceitful_moss", new MossFeature(NoFeatureConfig::deserialize))
-                .add("fungi_flowers", new FungiFlowersFeature(NoFeatureConfig::deserialize))
-                .add("bog_fungi_flowers", new BogFungiFlowersFeature(NoFeatureConfig::deserialize))
-                .add("tall_fungi", new TallFungiFeature(NoFeatureConfig::deserialize))
-                .add("tall_bog_fungi", new TallBogFungiFeature(NoFeatureConfig::deserialize))
-                .add("bogweed_flowers", new BogweedFlowersFeature(NoFeatureConfig::deserialize))
-                .add("crystal_flowers", new CrystalFlowersFeature(NoFeatureConfig::deserialize))
-                .add("bulb_fungi_flowers", new BulbFungiFlowersFeature(NoFeatureConfig::deserialize))
-                .add("heap", new HeapFeature(UniformCompositionConfig::deserialize))
-                .add("spike", new SpikeFeature(UniformCompositionConfig::deserialize))
-                .add("nightstone_boulder", new NightstoneBoulderFeature(NoFeatureConfig::deserialize))
-                .add("trenchstone_boulder", new TrenchstoneBoulderFeature(NoFeatureConfig::deserialize))
-                .add("crystal_cluster", new CrystalClusterFeature(CrystalClusterConfig::deserialize, 3, 4))
-                .add("crystal_spire", new CrystalClusterFeature(CrystalClusterConfig::deserialize, 4, 13))
-                .add("ore", new MidnightOreFeature(MidnightOreConfig::deserialize));
+    public static void registerFeatures(IForgeRegistry<Feature<?>> event) {
+        RegUtil.generic(event)
+                .add("shadowroot_tree", SHADOWROOT_TREE)
+                .add("dark_willow_tree", DARK_WILLOW_TREE)
+                .add("dead_tree", DEAD_TREE)
+                .add("bog_dead_tree", BOG_DEAD_TREE)
+                .add("dead_log", DEAD_LOG)
+                .add("large_bogshroom", LARGE_BOGSHROOM)
+                .add("large_bulb_fungus", LARGE_BULB_FUNGUS)
+                .add("large_nightshroom", LARGE_NIGHTSHROOM)
+                .add("large_dewshroom", LARGE_DEWSHROOM)
+                .add("large_viridshroom", LARGE_VIRIDSHROOM)
+                .add("suavis", SUAVIS)
+                .add("deceitful_algae", DECEITFUL_ALGAE)
+                .add("deceitful_moss", DECEITFUL_MOSS)
+                .add("double_plant", DOUBLE_PLANT)
+                .add("fungi_flowers", FUNGI_FLOWERS)
+                .add("bog_fungi_flowers", BOG_FUNGI_FLOWERS)
+                .add("tall_fungi", TALL_FUNGI)
+                .add("tall_bog_fungi", TALL_BOG_FUNGI)
+                .add("bogweed_flowers", BOGWEED_FLOWERS)
+                .add("crystal_flowers", CRYSTAL_FLOWERS)
+                .add("bulb_fungi_flowers", BULB_FUNGI_FLOWERS)
+                .add("heap", HEAP)
+                .add("spike", SPIKE)
+                .add("nightstone_boulder", NIGHTSTONE_BOULDER)
+                .add("trenchstone_boulder", TRENCHSTONE_BOULDER)
+                .add("crystal_cluster", CRYSTAL_CLUSTER)
+                .add("crystal_spire", CRYSTAL_SPIRE)
+                .add("ore", ORE);
     }
 }

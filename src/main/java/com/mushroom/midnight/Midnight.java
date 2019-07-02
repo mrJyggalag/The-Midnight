@@ -9,7 +9,7 @@ import com.mushroom.midnight.common.capability.CavernousBiomeStore;
 import com.mushroom.midnight.common.capability.DelegatedStorage;
 import com.mushroom.midnight.common.capability.MidnightWorldSpawners;
 import com.mushroom.midnight.common.capability.NullStorage;
-import com.mushroom.midnight.common.capability.RiftTravelCooldown;
+import com.mushroom.midnight.common.capability.RiftTraveller;
 import com.mushroom.midnight.common.capability.RifterCapturable;
 import com.mushroom.midnight.common.config.MidnightConfig;
 import com.mushroom.midnight.common.loot.InBiomeLootCondition;
@@ -25,7 +25,6 @@ import com.mushroom.midnight.common.network.ItemActivationMessage;
 import com.mushroom.midnight.common.network.RockshroomBrokenMessage;
 import com.mushroom.midnight.common.registry.MidnightCavernousBiomes;
 import com.mushroom.midnight.common.registry.MidnightCriterion;
-import com.mushroom.midnight.common.registry.MidnightDimensions;
 import com.mushroom.midnight.common.registry.MidnightGameRules;
 import com.mushroom.midnight.common.registry.MidnightItemGroups;
 import com.mushroom.midnight.common.registry.MidnightSurfaceBiomes;
@@ -71,8 +70,8 @@ public class Midnight {
     public static final EntityClassification MIDNIGHT_MOB = EntityClassification.create("midnight_mob", "midnight_mob", 20, false, false);
     public static final EntityClassification MIDNIGHT_AMBIENT = EntityClassification.create("midnight_ambient", "midnight_ambient", 30, true, false);
 
-    @CapabilityInject(RiftTravelCooldown.class)
-    public static final Capability<RiftTravelCooldown> RIFT_TRAVEL_COOLDOWN_CAP = RegUtil.injected();
+    @CapabilityInject(RiftTraveller.class)
+    public static final Capability<RiftTraveller> RIFT_TRAVELLER_CAP = RegUtil.injected();
 
     @CapabilityInject(RifterCapturable.class)
     public static final Capability<RifterCapturable> RIFTER_CAPTURABLE_CAP = RegUtil.injected();
@@ -101,13 +100,13 @@ public class Midnight {
     }
 
     private void setup(FMLCommonSetupEvent event) {
-        CapabilityManager.INSTANCE.register(RiftTravelCooldown.class, new NullStorage<>(), RiftTravelCooldown::new);
+        CapabilityManager.INSTANCE.register(RiftTraveller.class, new NullStorage<>(), RiftTraveller::new);
         CapabilityManager.INSTANCE.register(RifterCapturable.class, new NullStorage<>(), RifterCapturable::new);
         CapabilityManager.INSTANCE.register(CavernousBiomeStore.class, new DelegatedStorage<>(), CavernousBiomeStore::new);
         CapabilityManager.INSTANCE.register(AnimationCapability.class, new NullStorage<>(), AnimationCapability::new);
         CapabilityManager.INSTANCE.register(MidnightWorldSpawners.class, new NullStorage<>(), MidnightWorldSpawners.Void::new);
 
-        Reflection.initialize(MidnightCriterion.class, MidnightItemGroups.class, MidnightDimensions.class, MidnightGameRules.class);
+        Reflection.initialize(MidnightCriterion.class, MidnightItemGroups.class, MidnightGameRules.class);
 
         EntityUtil.register();
 

@@ -1,7 +1,7 @@
 package com.mushroom.midnight.common.entity;
 
+import com.mushroom.midnight.Midnight;
 import net.minecraft.entity.Entity;
-import net.minecraft.world.dimension.DimensionType;
 
 public class RiftTravelEntry {
     protected final Entity entity;
@@ -10,8 +10,8 @@ public class RiftTravelEntry {
         this.entity = entity;
     }
 
-    public void travel(RiftEntity rift, DimensionType endpointDimension) {
-        this.entity.changeDimension(endpointDimension);
+    public void travel(RiftEntity rift) {
+        this.entity.getCapability(Midnight.RIFT_TRAVELLER_CAP).ifPresent(traveller -> traveller.enterRift(rift));
     }
 
     public Entity getEntity() {

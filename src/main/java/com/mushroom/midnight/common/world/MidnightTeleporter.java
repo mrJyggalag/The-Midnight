@@ -1,49 +1,86 @@
 package com.mushroom.midnight.common.world;
 
-public class MidnightTeleporter {//implements ITeleporter {
-    /*public static final int COOLDOWN = 40;
+import com.mushroom.midnight.Midnight;
+import com.mushroom.midnight.common.entity.RiftBridge;
+import com.mushroom.midnight.common.entity.RiftEntity;
+import com.mushroom.midnight.common.registry.MidnightArmorMaterials;
+import com.mushroom.midnight.common.util.EntityUtil;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.ServerWorld;
+import net.minecraft.world.gen.Heightmap;
 
-    private final RiftEntity originRift;
+public class MidnightTeleporter {
+    public static final int COOLDOWN = 40;
 
-    public MidnightTeleporter(RiftEntity originRift) {
-        this.originRift = originRift;
+    private final ServerWorld world;
+
+    public MidnightTeleporter(ServerWorld world) {
+        this.world = world;
     }
 
-    @Override
-    public void placeEntity(World world, Entity entity, float yaw) {
-        RiftBridge bridge = this.originRift.getBridge();
+    public void teleport(Entity entity, RiftEntity originRift) {
+        RiftBridge bridge = originRift.getBridge();
         if (bridge == null) {
-            Midnight.LOGGER.warn("Unable to teleport entity through rift! Bridge not present on portal {}", this.originRift);
+            Midnight.LOGGER.warn("Unable to teleport entity through rift! Bridge not present on portal {}", originRift);
             return;
         }
 
-        if (entity instanceof PlayerEntity && !EntityUtil.isCoveredBy((LivingEntity) entity, MidnightArmorMaterials.TENEBRUM)) {
+        if (entity instanceof PlayerEntity && !EntityUtil.isCoveredBy((PlayerEntity) entity, MidnightArmorMaterials.TENEBRUM)) {
             bridge.close();
         }
 
-        RiftEntity endpointRift = bridge.computeEndpoint(world.dimension.getType());
+        RiftEntity endpointRift = bridge.computeEndpoint(this.world.dimension.getType());
         if (endpointRift == null) {
-            Midnight.LOGGER.warn("Unable to teleport entity through rift! Endpoint not present from portal {}", this.originRift);
+            Midnight.LOGGER.warn("Unable to teleport entity through rift! Endpoint not present from portal {}", originRift);
             return;
         }
 
-        Vec3d placementPos = this.findPlacementPos(world, entity, endpointRift);
+        Vec3d placementPos = this.findPlacementPos(entity, endpointRift);
 
-        entity.posX = placementPos.x + 0.5;
-        entity.posY = placementPos.y + 0.5;
-        entity.posZ = placementPos.z + 0.5;
-        entity.fallDistance = 0.0F;
+        ServerWorld endpointWorld = (ServerWorld) endpointRift.world;
 
-        entity.getCapability(Midnight.RIFT_TRAVEL_COOLDOWN_CAP, null).ifPresent(capability -> capability.setCooldown(COOLDOWN));
+        Entity teleportedEntity = this.teleportEntity(entity, endpointWorld, placementPos);
+
+        teleportedEntity.fallDistance = 0.0F;
+        teleportedEntity.getCapability(Midnight.RIFT_TRAVELLER_CAP).ifPresent(traveller -> traveller.setCooldown(COOLDOWN));
     }
 
-    private Vec3d findPlacementPos(World world, Entity entity, RiftEntity endpointRift) {
+    private Entity teleportEntity(Entity entity, ServerWorld endpointWorld, Vec3d endpoint) {
+        if (entity instanceof ServerPlayerEntity) {
+            ServerPlayerEntity player = (ServerPlayerEntity) entity;
+            player.teleport(endpointWorld, endpoint.x, endpoint.y, endpoint.z, entity.rotationYaw, entity.rotationPitch);
+            return player;
+        }
+
+        entity.detach();
+        entity.dimension = endpointWorld.dimension.getType();
+
+        Entity teleportedEntity = entity.getType().create(endpointWorld);
+        if (teleportedEntity == null) {
+            return entity;
+        }
+
+        teleportedEntity.copyDataFromOld(entity);
+        teleportedEntity.setLocationAndAngles(endpoint.x, endpoint.y, endpoint.z, entity.rotationYaw, entity.rotationPitch);
+        teleportedEntity.setRotationYawHead(entity.rotationYaw);
+        endpointWorld.func_217460_e(teleportedEntity);
+
+        return teleportedEntity;
+    }
+
+    private Vec3d findPlacementPos(Entity entity, RiftEntity endpointRift) {
         float angle = (float) Math.toRadians(entity.rotationYaw);
         float displacementX = -MathHelper.sin(angle) * endpointRift.getWidth() / 2.0F;
         float displacementZ = MathHelper.cos(angle) * endpointRift.getWidth() / 2.0F;
 
         Vec3d placementPos = new Vec3d(endpointRift.posX + displacementX, endpointRift.posY + 0.5, endpointRift.posZ + displacementZ);
-        if (!world.checkBlockCollision(this.getEntityBoundAt(entity, placementPos))) {
+        if (!this.world.checkBlockCollision(this.getEntityBoundAt(entity, placementPos))) {
             return placementPos;
         }
 
@@ -56,13 +93,13 @@ public class MidnightTeleporter {//implements ITeleporter {
             if (entityBound.intersects(endpointRift.getBoundingBox())) {
                 continue;
             }
-            if (!world.checkBlockCollision(entityBound)) {
+            if (!this.world.checkBlockCollision(entityBound)) {
                 return originPos;
             }
         }
 
-        BlockPos surface = world.getHeight(Heightmap.Type.MOTION_BLOCKING, placementBlockPos);
-        return new Vec3d(placementPos.x, surface.getY(), placementPos.z);
+        BlockPos surface = this.world.getHeight(Heightmap.Type.MOTION_BLOCKING, placementBlockPos);
+        return new Vec3d(placementPos.x + 0.5, surface.getY() + 0.5, placementPos.z + 0.5);
     }
 
     private AxisAlignedBB getEntityBoundAt(Entity entity, Vec3d pos) {
@@ -71,5 +108,5 @@ public class MidnightTeleporter {//implements ITeleporter {
                 pos.x - halfWidth, pos.y, pos.z - halfWidth,
                 pos.x + halfWidth, pos.y + entity.getHeight(), pos.z + halfWidth
         );
-    }*/
+    }
 }

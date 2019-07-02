@@ -3,7 +3,7 @@ package com.mushroom.midnight.common;
 import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.common.capability.CavernousBiomeStore;
 import com.mushroom.midnight.common.capability.MidnightWorldSpawners;
-import com.mushroom.midnight.common.capability.RiftTravelCooldown;
+import com.mushroom.midnight.common.capability.RiftTraveller;
 import com.mushroom.midnight.common.capability.RifterCapturable;
 import com.mushroom.midnight.common.config.MidnightConfig;
 import com.mushroom.midnight.common.entity.RiftEntity;
@@ -47,8 +47,9 @@ public class CommonEventHandler {
 
     @SubscribeEvent
     public static void onAttachEntityCapabilities(AttachCapabilitiesEvent<Entity> event) {
-        event.addCapability(new ResourceLocation(Midnight.MODID, "rift_cooldown"), new RiftTravelCooldown());
         if (event.getObject() instanceof LivingEntity) {
+            event.addCapability(new ResourceLocation(Midnight.MODID, "rift_traveller"), new RiftTraveller());
+
             if (!(event.getObject() instanceof PlayerEntity)) {
                 ResourceLocation rl = EntityType.getKey(event.getObject().getType());
                 if (rl == null) {
@@ -88,7 +89,7 @@ public class CommonEventHandler {
     @SubscribeEvent
     public static void onEntityTick(LivingEvent.LivingUpdateEvent event) {
         LivingEntity entity = event.getEntityLiving();
-        entity.getCapability(Midnight.RIFT_TRAVEL_COOLDOWN_CAP, null).ifPresent(cooldownCap -> cooldownCap.update(entity));
+        entity.getCapability(Midnight.RIFT_TRAVELLER_CAP).ifPresent(traveller -> traveller.update(entity));
     }
 
     @SubscribeEvent
