@@ -6,7 +6,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "minecraft:shadowroot_log"
+          "name": "midnight:shadowroot_log"
         }
       ],
       "conditions": [

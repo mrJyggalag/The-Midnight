@@ -6,7 +6,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "minecraft:dark_willow_log"
+          "name": "midnight:dark_willow_log"
         }
       ],
       "conditions": [
