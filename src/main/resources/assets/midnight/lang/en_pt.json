@@ -44,7 +44,7 @@
 
   "block.midnight.shadowroot_chest": "Coffer o' Shadaroot",
   "block.midnight.shadowroot_crafting_table": "Craftin' Table o' Shadaroot",
-  "block.midnight.midnight_furnace": "Oven o' Midnight",
+  "block.midnight.nightstone_furnace": "Oven o' Midnight",
 
   "block.midnight.tall_midnight_grass": "Midnight Weed",
   "block.midnight.double_midnight_grass": "Towerin' Midnight Weed",
@@ -171,7 +171,7 @@
   "item.midnight.ebonys": "Depressin' Shiny",
 
   "item.midnight.raw_suavis": "Glowin' Gourd Piece",
-  "item.midnight.cook_suavis": "Fried Glowin' Gourd",
+  "item.midnight.cooked_suavis": "Fried Glowin' Gourd",
 
   "item.midnight.bladeshroom_cap": "Tossin' Hat",
   "item.midnight.bladeshroom_spores": "Tossin' Hat Shroom Seeds",

@@ -24,7 +24,7 @@
                   }
                 }
               ],
-              "name": "midnight:midnight_mycelium"
+              "name": "midnight:grass_block"
             },
             {
               "type": "minecraft:item",
@@ -33,7 +33,7 @@
                   "condition": "minecraft:survives_explosion"
                 }
               ],
-              "name": "midnight:nightstone"
+              "name": "midnight:dirt"
             }
           ]
         }

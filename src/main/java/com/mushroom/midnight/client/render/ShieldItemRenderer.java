@@ -11,7 +11,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
 public class ShieldItemRenderer extends ItemStackTileEntityRenderer {
-    private final static ResourceLocation TEXTURE = new ResourceLocation("textures/blocks/hardened_clay_stained_purple.png");
+    private final static ResourceLocation TEXTURE = new ResourceLocation("textures/block/purple_terracotta.png");
     private final ShieldModel shieldModel = new ShieldModel(); // TODO model rockshroom
 
     @Override

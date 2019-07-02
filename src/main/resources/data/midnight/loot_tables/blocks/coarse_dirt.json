@@ -6,7 +6,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "midnight:midnight_dirt"
+          "name": "midnight:coarse_dirt"
         }
       ],
       "conditions": [
