@@ -144,7 +144,7 @@ public class MidnightItems {
                 .add("cooked_stinger_egg", props -> new DrinkableItem(props.food(MidnightFood.COOKED_STINGER_EGG)))
                 .add("hunter_wing", props -> new Item(props.food(MidnightFood.HUNTER_WING)))
                 .add("cooked_hunter_wing", props -> new Item(props.food(MidnightFood.COOKED_HUNTER_WING)))
-                .add("bulb_fungus_head", props -> new Item(props.food(MidnightFood.BULB_FUNGUS_HEAD)))
+                .add("bulb_fungus_hand", props -> new Item(props.food(MidnightFood.BULB_FUNGUS_HAND)))
 
                 .add("blue_unstable_fruit", props -> new UnstableFruitItem(UnstableFruitItem.Color.BLUE, props.food(MidnightFood.UNSTABLE_FRUIT)))
                 .add("lime_unstable_fruit", props -> new UnstableFruitItem(UnstableFruitItem.Color.LIME, props.food(MidnightFood.UNSTABLE_FRUIT)))
