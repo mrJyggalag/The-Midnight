@@ -7,7 +7,13 @@ import net.minecraft.entity.EntityClassification;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
+import net.minecraft.world.gen.GenerationStage;
 import net.minecraft.world.gen.Heightmap;
+import net.minecraft.world.gen.carver.ConfiguredCarver;
+import net.minecraft.world.gen.carver.ICarverConfig;
+import net.minecraft.world.gen.feature.ConfiguredFeature;
+import net.minecraft.world.gen.feature.IFeatureConfig;
+import net.minecraft.world.gen.feature.structure.Structure;
 import net.minecraft.world.gen.surfacebuilders.ConfiguredSurfaceBuilder;
 import net.minecraft.world.gen.surfacebuilders.ISurfaceBuilderConfig;
 import net.minecraft.world.gen.surfacebuilders.SurfaceBuilder;
@@ -57,7 +63,22 @@ public abstract class SurfaceBiome extends Biome implements ConfigurableBiome {
     }
 
     @Override
-    public void addSpawn(EntityClassification classification, SpawnListEntry entry) {
+    public void add(GenerationStage.Decoration stage, ConfiguredFeature<?> feature) {
+        super.addFeature(stage, feature);
+    }
+
+    @Override
+    public <C extends ICarverConfig> void add(GenerationStage.Carving stage, ConfiguredCarver<C> carver) {
+        super.addCarver(stage, carver);
+    }
+
+    @Override
+    public <C extends IFeatureConfig> void add(Structure<C> structure, C config) {
+        super.addStructure(structure, config);
+    }
+
+    @Override
+    public void add(EntityClassification classification, SpawnListEntry entry) {
         super.addSpawn(classification, entry);
     }
 

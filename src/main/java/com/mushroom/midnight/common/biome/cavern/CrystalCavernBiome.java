@@ -17,6 +17,6 @@ public class CrystalCavernBiome extends CavernousBiome {
         MidnightBiomeConfigurator.addRouxeClusters(this);
         MidnightBiomeConfigurator.addUndergroundSpawns(this);
 
-        this.addSpawn(EntityClassification.MONSTER, new Biome.SpawnListEntry(MidnightEntities.NOVA, 100, 1, 2));
+        this.add(EntityClassification.MONSTER, new Biome.SpawnListEntry(MidnightEntities.NOVA, 100, 1, 2));
     }
 }

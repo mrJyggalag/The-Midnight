@@ -31,6 +31,6 @@ public class WarpedFieldsBiome extends SurfaceBiome {
         MidnightBiomeConfigurator.addStandardCreatureSpawns(this);
         MidnightBiomeConfigurator.addStandardMonsterSpawns(this);
 
-        this.addSpawn(EntityClassification.MONSTER, new Biome.SpawnListEntry(MidnightEntities.HUNTER, 5, 0, 2));
+        this.add(EntityClassification.MONSTER, new Biome.SpawnListEntry(MidnightEntities.HUNTER, 5, 0, 2));
     }
 }

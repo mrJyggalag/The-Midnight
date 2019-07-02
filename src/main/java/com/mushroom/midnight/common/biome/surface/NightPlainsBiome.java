@@ -30,6 +30,6 @@ public class NightPlainsBiome extends SurfaceBiome {
         MidnightBiomeConfigurator.addStandardMonsterSpawns(this);
         MidnightBiomeConfigurator.addStandardCreatureSpawns(this);
 
-        this.addSpawn(EntityClassification.MONSTER, new Biome.SpawnListEntry(MidnightEntities.HUNTER, 5, 1, 2));
+        this.add(EntityClassification.MONSTER, new Biome.SpawnListEntry(MidnightEntities.HUNTER, 5, 1, 2));
     }
 }

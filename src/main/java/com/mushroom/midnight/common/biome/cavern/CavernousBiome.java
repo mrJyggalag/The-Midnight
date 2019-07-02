@@ -57,7 +57,7 @@ public class CavernousBiome extends ForgeRegistryEntry<CavernousBiome> implement
     }
 
     @Override
-    public void addFeature(GenerationStage.Decoration stage, ConfiguredFeature<?> feature) {
+    public void add(GenerationStage.Decoration stage, ConfiguredFeature<?> feature) {
         if (feature.feature == Feature.DECORATED_FLOWER) {
             this.flowers.add(feature);
         }
@@ -65,17 +65,17 @@ public class CavernousBiome extends ForgeRegistryEntry<CavernousBiome> implement
     }
 
     @Override
-    public <C extends ICarverConfig> void addCarver(GenerationStage.Carving stage, ConfiguredCarver<C> carver) {
+    public <C extends ICarverConfig> void add(GenerationStage.Carving stage, ConfiguredCarver<C> carver) {
         this.carvers.put(stage, carver);
     }
 
     @Override
-    public <C extends IFeatureConfig> void addStructure(Structure<C> structure, C config) {
+    public <C extends IFeatureConfig> void add(Structure<C> structure, C config) {
         this.structures.put(structure, config);
     }
 
     @Override
-    public void addSpawn(EntityClassification classification, Biome.SpawnListEntry entry) {
+    public void add(EntityClassification classification, Biome.SpawnListEntry entry) {
         this.spawns.put(classification, entry);
     }
 

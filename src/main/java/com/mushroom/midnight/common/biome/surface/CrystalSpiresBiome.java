@@ -26,7 +26,7 @@ public class CrystalSpiresBiome extends SurfaceBiome {
         MidnightBiomeConfigurator.addLumen(this);
         MidnightBiomeConfigurator.addGlobalFeatures(this);
 
-        this.addSpawn(EntityClassification.CREATURE, new Biome.SpawnListEntry(MidnightEntities.NIGHTSTAG, 100, 1, 3));
-        this.addSpawn(EntityClassification.AMBIENT, new Biome.SpawnListEntry(MidnightEntities.CRYSTAL_BUG, 100, 7, 10));
+        this.add(EntityClassification.CREATURE, new Biome.SpawnListEntry(MidnightEntities.NIGHTSTAG, 100, 1, 3));
+        this.add(EntityClassification.AMBIENT, new Biome.SpawnListEntry(MidnightEntities.CRYSTAL_BUG, 100, 7, 10));
     }
 }

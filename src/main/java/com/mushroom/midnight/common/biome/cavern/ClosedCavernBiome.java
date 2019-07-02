@@ -13,7 +13,7 @@ public class ClosedCavernBiome extends CavernousBiome {
                 .cavernDensity(5.0F)
         );
 
-        this.addCarver(GenerationStage.Carving.AIR, Biome.createCarver(
+        this.add(GenerationStage.Carving.AIR, Biome.createCarver(
                 MidnightCarvers.WIDE_CAVE, new ProbabilityConfig(1.0F / 7.0F)
         ));
     }

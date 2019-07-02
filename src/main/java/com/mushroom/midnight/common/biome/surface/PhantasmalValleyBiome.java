@@ -22,6 +22,6 @@ public class PhantasmalValleyBiome extends SurfaceBiome {
         MidnightBiomeConfigurator.addStandardMonsterSpawns(this);
         MidnightBiomeConfigurator.addStandardCreatureSpawns(this);
 
-        this.addSpawn(EntityClassification.MONSTER, new SpawnListEntry(MidnightEntities.HUNTER, 5, 1, 2));
+        this.add(EntityClassification.MONSTER, new SpawnListEntry(MidnightEntities.HUNTER, 5, 1, 2));
     }
 }

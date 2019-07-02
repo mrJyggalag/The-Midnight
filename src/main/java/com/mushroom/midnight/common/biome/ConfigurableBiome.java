@@ -10,11 +10,11 @@ import net.minecraft.world.gen.feature.IFeatureConfig;
 import net.minecraft.world.gen.feature.structure.Structure;
 
 public interface ConfigurableBiome {
-    void addFeature(GenerationStage.Decoration stage, ConfiguredFeature<?> feature);
+    void add(GenerationStage.Decoration stage, ConfiguredFeature<?> feature);
 
-    <C extends ICarverConfig> void addCarver(GenerationStage.Carving stage, ConfiguredCarver<C> carver);
+    <C extends ICarverConfig> void add(GenerationStage.Carving stage, ConfiguredCarver<C> carver);
 
-    <C extends IFeatureConfig> void addStructure(Structure<C> structureIn, C config);
+    <C extends IFeatureConfig> void add(Structure<C> structure, C config);
 
-    void addSpawn(EntityClassification classification, Biome.SpawnListEntry entry);
+    void add(EntityClassification classification, Biome.SpawnListEntry entry);
 }

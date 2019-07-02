@@ -18,7 +18,7 @@ public class FungalCavernBiome extends CavernousBiome {
                 .heightScale(0.6F)
         );
 
-        this.addCarver(GenerationStage.Carving.AIR, Biome.createCarver(
+        this.add(GenerationStage.Carving.AIR, Biome.createCarver(
                 MidnightCarvers.WIDE_CAVE, new ProbabilityConfig(1.0F / 7.0F)
         ));
 
