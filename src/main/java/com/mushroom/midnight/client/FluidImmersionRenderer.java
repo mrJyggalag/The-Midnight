@@ -33,7 +33,7 @@ public class FluidImmersionRenderer {
     public static void onRenderTick(TickEvent.RenderTickEvent event) {
         if (event.phase == TickEvent.Phase.START && CLIENT.player != null) {
             ActiveRenderInfo activeRenderInfo = CLIENT.gameRenderer.getActiveRenderInfo();
-            immersedFluid = activeRenderInfo.func_216771_k();
+            immersedFluid = activeRenderInfo.getFluidState();
         }
     }
 

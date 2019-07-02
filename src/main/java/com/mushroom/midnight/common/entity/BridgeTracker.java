@@ -7,14 +7,12 @@ import com.mushroom.midnight.common.network.BridgeStateMessage;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.world.ServerWorld;
 import net.minecraft.world.chunk.ChunkManager;
-import net.minecraft.world.chunk.ServerChunkProvider;
 import net.minecraftforge.fml.network.PacketDistributor;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 public class BridgeTracker {
     private final RiftBridge bridge;
@@ -77,7 +75,7 @@ public class BridgeTracker {
         ServerWorld world = (ServerWorld) target.world;
         ChunkManager.EntityTracker tracker = world.getChunkProvider().chunkManager.entities.get(target.getEntityId());
         if (tracker != null) {
-            trackingPlayers.addAll(tracker.field_219406_f);
+            trackingPlayers.addAll(tracker.trackingPlayers);
         }
     }
 }

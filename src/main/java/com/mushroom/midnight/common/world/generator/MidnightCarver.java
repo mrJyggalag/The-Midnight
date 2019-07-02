@@ -20,7 +20,7 @@ public abstract class MidnightCarver<C extends ICarverConfig> extends WorldCarve
     }
 
     @Override
-    protected boolean func_222703_a(IChunk chunk, BitSet carvingMask, Random random, BlockPos.MutableBlockPos posHere, BlockPos.MutableBlockPos posAbove, BlockPos.MutableBlockPos posBelow, int p_222703_7_, int p_222703_8_, int p_222703_9_, int globalX, int globalZ, int x, int y, int z, AtomicBoolean foundSurface) {
+    protected boolean carveBlock(IChunk chunk, BitSet carvingMask, Random random, BlockPos.MutableBlockPos posHere, BlockPos.MutableBlockPos posAbove, BlockPos.MutableBlockPos posBelow, int p_222703_7_, int p_222703_8_, int p_222703_9_, int globalX, int globalZ, int x, int y, int z, AtomicBoolean foundSurface) {
         int index = x | z << 4 | y << 8;
         if (carvingMask.get(index)) {
             return false;
@@ -31,7 +31,7 @@ public abstract class MidnightCarver<C extends ICarverConfig> extends WorldCarve
 
         BlockState state = chunk.getBlockState(posHere);
         BlockState stateAbove = chunk.getBlockState(posAbove.setPos(posHere).move(Direction.UP));
-        if (!this.func_222707_a(state, stateAbove)) {
+        if (!this.canCarveBlock(state, stateAbove)) {
             return false;
         }
 

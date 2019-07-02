@@ -98,7 +98,7 @@ public class RiftParticle extends MidnightParticle {
     }
 
     private boolean shouldExpire() {
-        if (this.particleSystem.getEntity().removed) {
+        if (!this.particleSystem.getEntity().isAlive()) {
             return true;
         }
         if (this.returning) {

@@ -25,12 +25,12 @@ public class MidnightCaveCarver extends CaveWorldCarver {
     }
 
     @Override
-    protected int func_222726_b(Random random) {
+    protected int generateCaveStartY(Random random) {
         return random.nextInt(random.nextInt(MidnightChunkGenerator.SEA_LEVEL) + 8);
     }
 
     @Override
-    protected boolean func_222703_a(IChunk chunk, BitSet carvingMask, Random random, BlockPos.MutableBlockPos posHere, BlockPos.MutableBlockPos posAbove, BlockPos.MutableBlockPos posBelow, int p_222703_7_, int p_222703_8_, int p_222703_9_, int globalX, int globalZ, int x, int y, int z, AtomicBoolean foundSurface) {
+    protected boolean carveBlock(IChunk chunk, BitSet carvingMask, Random random, BlockPos.MutableBlockPos posHere, BlockPos.MutableBlockPos posAbove, BlockPos.MutableBlockPos posBelow, int p_222703_7_, int p_222703_8_, int p_222703_9_, int globalX, int globalZ, int x, int y, int z, AtomicBoolean foundSurface) {
         int index = x | z << 4 | y << 8;
         if (carvingMask.get(index)) {
             return false;
@@ -41,7 +41,7 @@ public class MidnightCaveCarver extends CaveWorldCarver {
 
         BlockState state = chunk.getBlockState(posHere);
         BlockState stateAbove = chunk.getBlockState(posAbove.setPos(posHere).move(Direction.UP));
-        if (!this.func_222707_a(state, stateAbove)) {
+        if (!this.canCarveBlock(state, stateAbove)) {
             return false;
         }
 
@@ -55,7 +55,7 @@ public class MidnightCaveCarver extends CaveWorldCarver {
     }
 
     @Override
-    protected boolean func_222707_a(BlockState state, BlockState aboveState) {
+    protected boolean canCarveBlock(BlockState state, BlockState aboveState) {
         Material material = state.getMaterial();
         Material aboveMaterial = aboveState.getMaterial();
         return (material == Material.ROCK || material == Material.EARTH || material == Material.ORGANIC)
@@ -64,7 +64,7 @@ public class MidnightCaveCarver extends CaveWorldCarver {
     }
 
     @Override
-    protected float func_222722_a(Random random) {
-        return super.func_222722_a(random) * this.radiusScale;
+    protected float generateCaveRadius(Random random) {
+        return super.generateCaveRadius(random) * this.radiusScale;
     }
 }

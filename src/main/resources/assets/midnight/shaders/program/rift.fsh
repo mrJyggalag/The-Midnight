@@ -130,7 +130,7 @@ float computeNoiseAddition(vec2 point) {
 }
 
 float computeFogIntensity(vec3 point) {
-    int fogMode = int(FogMode);
+    highp int fogMode = int(FogMode);
     if (fogMode == GL_LINEAR) {
         return clamp((length(point) - gl_Fog.start) * gl_Fog.scale, 0.0, 1.0);
     } else if (fogMode == GL_EXP) {

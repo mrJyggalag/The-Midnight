@@ -146,7 +146,7 @@ public class ClientEventHandler {
         if (FluidImmersionRenderer.immersedFluid.isEmpty()) {
             return;
         }
-        LivingEntity entity = event.getInfo().func_216773_g() instanceof LivingEntity ? (LivingEntity) event.getInfo().func_216773_g() : null;
+        LivingEntity entity = event.getInfo().getRenderViewEntity() instanceof LivingEntity ? (LivingEntity) event.getInfo().getRenderViewEntity() : null;
         if (entity != null) {
             if (entity.isPotionActive(Effects.BLINDNESS)) {
                 return;
@@ -158,7 +158,7 @@ public class ClientEventHandler {
                 return;
             }
         }
-        if (Helper.isMidnightDimension(event.getInfo().func_216773_g().world)) {
+        if (Helper.isMidnightDimension(event.getInfo().getRenderViewEntity().world)) {
             GlStateManager.fogMode(GlStateManager.FogMode.EXP);
             event.setCanceled(true);
             event.setDensity(0.015f);
@@ -171,8 +171,8 @@ public class ClientEventHandler {
 
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public static void onSetupFogColor(EntityViewRenderEvent.FogColors event) {
-        if (event.getInfo().func_216773_g() instanceof LivingEntity) {
-            LivingEntity entity = (LivingEntity) event.getInfo().func_216773_g();
+        if (event.getInfo().getRenderViewEntity() instanceof LivingEntity) {
+            LivingEntity entity = (LivingEntity) event.getInfo().getRenderViewEntity();
             if (entity.isPotionActive(MidnightEffects.STUNNED)) {
                 event.setRed(0.1F);
                 event.setGreen(0.1F);

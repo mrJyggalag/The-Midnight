@@ -36,22 +36,22 @@ abstract class MidnightParticle extends TexturedParticle implements IParticleRen
     }
 
     @Override
-    protected float func_217563_c() {
+    protected float getMinU() {
         return 0f;
     }
 
     @Override
-    protected float func_217564_d() {
+    protected float getMaxU() {
         return 1f;
     }
 
     @Override
-    protected float func_217562_e() {
+    protected float getMinV() {
         return 0f;
     }
 
     @Override
-    protected float func_217560_f() {
+    protected float getMaxV() {
         return 1f;
     }
 

@@ -51,7 +51,7 @@ public class SporchParticle extends MidnightParticle {
 
     @Override
     public void renderParticle(BufferBuilder buffer, ActiveRenderInfo activeInfo, float partialTicks, float rotationX, float rotationZ, float rotationYZ, float rotationXY, float rotationXZ) {
-        Entity entity = activeInfo.func_216773_g();
+        Entity entity = activeInfo.getRenderViewEntity();
         if (entity.ticksExisted >= this.lastTick + 5) {
             if (this.currentFrame == MAX_FRAME_ID) {
                 this.directionRight = false;
