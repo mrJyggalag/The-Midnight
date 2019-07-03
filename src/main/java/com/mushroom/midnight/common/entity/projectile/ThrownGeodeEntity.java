@@ -10,10 +10,12 @@ import com.mushroom.midnight.common.registry.MidnightSounds;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.IRendersAsItem;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.entity.projectile.ThrowableEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.network.IPacket;
 import net.minecraft.particles.ItemParticleData;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.DamageSource;
@@ -28,13 +30,15 @@ import net.minecraft.world.storage.loot.LootParameters;
 import net.minecraft.world.storage.loot.LootTable;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.fml.network.FMLPlayMessages;
+import net.minecraftforge.fml.network.NetworkHooks;
 
 import javax.annotation.Nullable;
 
-public class ThrownGeodeEntity extends ThrowableEntity {
+public class ThrownGeodeEntity extends ThrowableEntity implements IRendersAsItem {
     private static final byte POPPED_STATE_ID = 3;
 
-    public ThrownGeodeEntity(EntityType<? extends ThrowableEntity> entityType, World world) {
+    public ThrownGeodeEntity(EntityType<? extends ThrownGeodeEntity> entityType, World world) {
         super(entityType, world);
     }
 
@@ -44,6 +48,10 @@ public class ThrownGeodeEntity extends ThrowableEntity {
 
     public ThrownGeodeEntity(World world, LivingEntity thrower) {
         super(MidnightEntities.THROWN_GEODE, thrower, world);
+    }
+
+    public ThrownGeodeEntity(FMLPlayMessages.SpawnEntity spawnEntity, World world) {
+        this(MidnightEntities.THROWN_GEODE, world);
     }
 
     @Override
@@ -108,7 +116,9 @@ public class ThrownGeodeEntity extends ThrowableEntity {
     }
 
     private void dropLootWhenBroken(@Nullable ServerPlayerEntity player) {
-        LootContext.Builder builder = new LootContext.Builder((ServerWorld) this.world).withParameter(LootParameters.THIS_ENTITY, this).withParameter(LootParameters.DAMAGE_SOURCE, DamageSource.GENERIC);
+        LootContext.Builder builder = new LootContext.Builder((ServerWorld) this.world)
+                .withParameter(LootParameters.THIS_ENTITY, this)
+                .withParameter(LootParameters.DAMAGE_SOURCE, DamageSource.GENERIC).withParameter(LootParameters.POSITION, getPosition());
         if (player != null) {
             builder = builder.withParameter(LootParameters.KILLER_ENTITY, player).withLuck(player.getLuck());
         }
@@ -117,5 +127,15 @@ public class ThrownGeodeEntity extends ThrowableEntity {
         for (ItemStack itemstack : loottable.generate(builder.build(LootParameterSets.ENTITY))) {
             this.entityDropItem(itemstack, 0.1f);
         }
+    }
+
+    @Override
+    public ItemStack getItem() {
+        return new ItemStack(MidnightItems.GEODE);
+    }
+
+    @Override
+    public IPacket<?> createSpawnPacket() {
+        return NetworkHooks.getEntitySpawningPacket(this);
     }
 }

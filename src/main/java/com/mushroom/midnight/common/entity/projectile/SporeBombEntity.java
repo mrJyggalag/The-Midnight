@@ -6,10 +6,12 @@ import com.mushroom.midnight.common.registry.MidnightItems;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.IRendersAsItem;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.projectile.ThrowableEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.network.IPacket;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
@@ -20,8 +22,10 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.Constants;
+import net.minecraftforge.fml.network.FMLPlayMessages;
+import net.minecraftforge.fml.network.NetworkHooks;
 
-public class SporeBombEntity extends ThrowableEntity {
+public class SporeBombEntity extends ThrowableEntity implements IRendersAsItem {
     private static final DataParameter<ItemStack> BOMB_STACK = EntityDataManager.createKey(SporeBombEntity.class, DataSerializers.ITEMSTACK);
 
     public SporeBombEntity(EntityType<? extends ThrowableEntity> entityType, World world) {
@@ -34,6 +38,10 @@ public class SporeBombEntity extends ThrowableEntity {
 
     public SporeBombEntity(World world, LivingEntity thrower) {
         super(MidnightEntities.SPORE_BOMB, thrower, world);
+    }
+
+    public SporeBombEntity(FMLPlayMessages.SpawnEntity spawnEntity, World world) {
+        this(MidnightEntities.SPORE_BOMB, world);
     }
 
     @Override
@@ -106,5 +114,15 @@ public class SporeBombEntity extends ThrowableEntity {
         }
         BlockState impactedState = this.world.getBlockState(((BlockRayTraceResult)result).getPos());
         return impactedState.getMaterial() == Material.ROCK || impactedState.getMaterial() == Material.IRON;
+    }
+
+    @Override
+    public ItemStack getItem() {
+        return getBombStack();
+    }
+
+    @Override
+    public IPacket<?> createSpawnPacket() {
+        return NetworkHooks.getEntitySpawningPacket(this);
     }
 }

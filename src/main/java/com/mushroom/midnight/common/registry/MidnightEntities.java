@@ -39,7 +39,7 @@ public class MidnightEntities {
             .setTrackingRange(80)
             .setUpdateInterval(3)
             .setShouldReceiveVelocityUpdates(true)
-            .size(0.6f, 1.8f) // .egg(0x384740, 0x5E8C6C)
+            .size(0.6f, 1.8f) // .egg(0x384740, 0x5E8C6C) // TODO eggItem in item registration
             .build(MODID + ":rifter");
     public static final EntityType<HunterEntity> HUNTER = EntityType.Builder.create(HunterEntity::new, MIDNIGHT_MOB)
             .setTrackingRange(80)
@@ -105,16 +105,19 @@ public class MidnightEntities {
             .setTrackingRange(64)
             .setUpdateInterval(10)
             .setShouldReceiveVelocityUpdates(true)
+            .setCustomClientFactory(ThrownGeodeEntity::new)
             .build(MODID + ":thrown_geode");
     public static final EntityType<SporeBombEntity> SPORE_BOMB = EntityType.Builder.<SporeBombEntity>create(SporeBombEntity::new, EntityClassification.MISC)
             .setTrackingRange(64)
             .setUpdateInterval(10)
             .setShouldReceiveVelocityUpdates(true)
+            .setCustomClientFactory(SporeBombEntity::new)
             .build(MODID + ":spore_bomb");
     public static final EntityType<CloudEntity> CLOUD = EntityType.Builder.<CloudEntity>create(CloudEntity::new, EntityClassification.MISC)
             .setTrackingRange(160)
             .setUpdateInterval(Integer.MAX_VALUE)
             .setShouldReceiveVelocityUpdates(true)
+            .setCustomClientFactory(CloudEntity::new)
             .immuneToFire()
             .build(MODID + ":cloud");
 

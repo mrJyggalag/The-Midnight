@@ -1,6 +1,7 @@
 package com.mushroom.midnight.client.model;
 
 import com.mushroom.midnight.client.render.BladeshroomCapRenderer;
+import com.mushroom.midnight.client.render.CloudRenderer;
 import com.mushroom.midnight.client.render.CrystalBugRenderer;
 import com.mushroom.midnight.client.render.DeceitfulSnapperRenderer;
 import com.mushroom.midnight.client.render.HunterRenderer;
@@ -12,6 +13,7 @@ import com.mushroom.midnight.client.render.RifterRenderer;
 import com.mushroom.midnight.client.render.SkulkRenderer;
 import com.mushroom.midnight.client.render.StingerRenderer;
 import com.mushroom.midnight.client.render.TreeHopperRenderer;
+import com.mushroom.midnight.common.entity.CloudEntity;
 import com.mushroom.midnight.common.entity.RiftEntity;
 import com.mushroom.midnight.common.entity.creature.CrystalBugEntity;
 import com.mushroom.midnight.common.entity.creature.DeceitfulSnapperEntity;
@@ -24,12 +26,15 @@ import com.mushroom.midnight.common.entity.creature.SkulkEntity;
 import com.mushroom.midnight.common.entity.creature.StingerEntity;
 import com.mushroom.midnight.common.entity.creature.TreeHopperEntity;
 import com.mushroom.midnight.common.entity.projectile.BladeshroomCapEntity;
+import com.mushroom.midnight.common.entity.projectile.SporeBombEntity;
+import com.mushroom.midnight.common.entity.projectile.ThrownGeodeEntity;
 import com.mushroom.midnight.common.helper.Helper;
 import com.mushroom.midnight.common.registry.MidnightBlocks;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.color.BlockColors;
 import net.minecraft.client.renderer.color.ItemColors;
+import net.minecraft.client.renderer.entity.SpriteRenderer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IEnviromentBlockReader;
@@ -59,18 +64,11 @@ public class MidnightModelRegistry {
         RenderingRegistry.registerEntityRenderingHandler(NightStagEntity.class, NightStagRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(DeceitfulSnapperEntity.class, DeceitfulSnapperRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(SkulkEntity.class, SkulkRenderer::new);
-        // TODO RenderSnowball code
-        /*RenderingRegistry.registerEntityRenderingHandler(ThrownGeodeEntity.class, manager -> new RenderSnowball<>(manager, MidnightItems.GEODE, Minecraft.getInstance().getRenderItem()));
-        RenderingRegistry.registerEntityRenderingHandler(SporeBombEntity.class, manager -> new RenderSnowball<SporeBombEntity>(manager, MidnightItems.SPORE_BOMB, Minecraft.getInstance().getRenderItem()) {
-            @Override
-            @Nonnull
-            public ItemStack getStackToRender(SporeBombEntity entity) {
-                return entity.getBombStack();
-            }
-        });
+        RenderingRegistry.registerEntityRenderingHandler(ThrownGeodeEntity.class, manager -> new SpriteRenderer(MC.getRenderManager(), MC.getItemRenderer()));
+        RenderingRegistry.registerEntityRenderingHandler(SporeBombEntity.class, manager -> new SpriteRenderer(MC.getRenderManager(), MC.getItemRenderer()));
         RenderingRegistry.registerEntityRenderingHandler(CloudEntity.class, CloudRenderer::new);
 
-        TileEntityMidnightChest shadowrootChest = new TileEntityMidnightChest(ChestModel.SHADOWROOT);
+        /*TileEntityMidnightChest shadowrootChest = new TileEntityMidnightChest(ChestModel.SHADOWROOT);
         Item.getItemFromBlock(MidnightBlocks.SHADOWROOT_CHEST).setTileEntityItemStackRenderer(new TileEntityItemStackRenderer() {
             @Override
             public void renderByItem(ItemStack stack) {

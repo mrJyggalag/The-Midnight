@@ -2,14 +2,12 @@ package com.mushroom.midnight.client.particle;
 
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mushroom.midnight.common.helper.Helper;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.IParticleFactory;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.renderer.ActiveRenderInfo;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.client.renderer.vertex.VertexFormat;
 
@@ -44,9 +42,6 @@ public class BombExplosionParticle extends MidnightParticle {
     public void renderParticle(BufferBuilder buffer, ActiveRenderInfo activeInfo, float partialTicks, float rotationX, float rotationZ, float rotationYZ, float rotationXY, float rotationXZ) {
         int i = (int) (((float) this.life + partialTicks) * 15f / (float) this.lifeTime);
         if (i <= 15) {
-            TextureManager textureManager = Minecraft.getInstance().textureManager;
-            beginRender(buffer, textureManager);
-
             double minU = (i % 4) / 4d;
             double maxU = minU + 0.24975d;
             double minV = (float)(i / 4) / 4d;
@@ -70,9 +65,7 @@ public class BombExplosionParticle extends MidnightParticle {
             buffer.pos(x + rotationX * scale - rotationXY * scale, y - rotationZ * scale, z + rotationYZ * scale - rotationXZ * scale)
                     .tex(minU, maxV).color(this.particleRed, this.particleGreen, this.particleBlue, 1f).lightmap(skyLight, blockLight).normal(0f, 1f, 0f).endVertex();
             Tessellator.getInstance().draw();
-            GlStateManager.enableLighting();
-
-            finishRender(Tessellator.getInstance());
+            //GlStateManager.enableLighting();
         }
     }
 

@@ -45,11 +45,11 @@ public class FadingSporeParticle extends MidnightParticle {
             this.motionZ *= 0.9d;
             float ratio = this.age / (float) this.maxAge;
             if (ratio <= 0.25f) {
-                this.particleScale = this.scaleMax * ratio * 4f;
+                this.particleScale = this.scaleMax * ratio * 0.2f;
             } else {
                 float ratio2 = ratio / 0.75f;
                 this.particleAlpha = ratio2;
-                this.particleScale = this.scaleMax * (1f - ratio2);
+                this.particleScale = this.scaleMax * (1f - ratio2) * 0.05f;
             }
         }
     }
