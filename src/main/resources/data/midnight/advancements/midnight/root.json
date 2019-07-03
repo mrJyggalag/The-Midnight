@@ -1,7 +1,7 @@
 {
   "display": {
     "icon": {
-      "item": "midnight:midnight_grass"
+      "item": "midnight:grass_block"
     },
     "title": {
       "translate": "advancement.midnight.title"

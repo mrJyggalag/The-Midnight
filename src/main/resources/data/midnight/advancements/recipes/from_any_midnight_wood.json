@@ -10,8 +10,7 @@
 			"trigger": "minecraft:inventory_changed",
 			"conditions": {
 				"items": [{
-					"type": "forge:ore_dict",
-					"ore": "plankWoodMidnight"
+					"tag": "midnight:unstable_fruits"
 				}]
 			}
 		}

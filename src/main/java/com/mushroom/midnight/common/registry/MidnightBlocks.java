@@ -317,11 +317,6 @@ public class MidnightBlocks {
 
     @SubscribeEvent
     public static void registerBlocks(RegistryEvent.Register<Block> event) {
-//        event.getRegistry().registerAll(
-//                RegUtil.withName(new MidnightSeedItem(() -> MidnightBlocks.BLADESHROOM.getDefaultState()), "bladeshroom_spores"), // TODO
-//                RegUtil.withName(new MidnightSeedItem(() -> MidnightBlocks.UNSTABLE_BUSH.getDefaultState()), "unstable_seeds"), // TODO
-//        );
-
         RegUtil.blocks(event.getRegistry())
                 .add("grass_block", new SpreadableSoilBlock(
                         Block.Properties.create(Material.ORGANIC, MaterialColor.MAGENTA_TERRACOTTA)
@@ -686,5 +681,10 @@ public class MidnightBlocks {
                 .add(DEWSHROOM_SPORCH, (block, props) -> new WallOrFloorItem(DEWSHROOM_SPORCH, DEWSHROOM_WALL_SPORCH, props))
                 .add(BOGSHROOM_SPORCH, (block, props) -> new WallOrFloorItem(BOGSHROOM_SPORCH, BOGSHROOM_WALL_SPORCH, props))
                 .add(VIRIDSHROOM_SPORCH, (block, props) -> new WallOrFloorItem(VIRIDSHROOM_SPORCH, VIRIDSHROOM_WALL_SPORCH, props));
+
+        // TODO bladeshroom spores & unstable seeds
+        RegUtil.items(event.getRegistry()).withProperties(() -> new Item.Properties().group(MidnightItemGroups.DECORATION))
+                .add("bladeshroom_spores", Item::new) //MidnightSeedItem
+                .add("unstable_seeds", Item::new); //MidnightSeedItem
     }
 }

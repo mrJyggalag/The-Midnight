@@ -1,7 +1,7 @@
 {
   "display": {
     "icon": {
-      "item": "midnight:tall_midnight_grass"
+      "item": "midnight:grass"
     },
     "title": {
       "translate": "advancement.surface_biomes.title"

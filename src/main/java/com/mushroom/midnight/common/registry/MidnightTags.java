@@ -24,6 +24,8 @@ public class MidnightTags {
 
     public static class Items {
         public static final Tag<Item> SPORE_BOMBS = tag("spore_bombs");
+        public static final Tag<Item> UNSTABLE_FRUITS = tag("unstable_fruits");
+        public static final Tag<Item> MIDNIGHT_PLANKS = tag("midnight_planks");
         public static final Tag<Item> FUNGI_STEMS = tag("fungi_stems");
         public static final Tag<Item> LOGS = tag("logs");
 

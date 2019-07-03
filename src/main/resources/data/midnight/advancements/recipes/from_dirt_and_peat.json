@@ -2,7 +2,7 @@
 	"parent": "midnight:recipes/root",
 	"rewards": {
 		"recipes": [ 
-			"midnight:midnight_coarse_dirt"
+			"midnight:coarse_dirt"
 		]
 	},
 	"criteria": {
@@ -10,7 +10,7 @@
 			"trigger": "minecraft:inventory_changed",
 			"conditions": {
 				"items": [{
-					"item": "midnight:midnight_dirt"
+					"item": "midnight:dirt"
 				}]
 			}
 		},

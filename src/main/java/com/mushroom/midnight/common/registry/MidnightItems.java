@@ -32,7 +32,6 @@ import net.minecraftforge.registries.ObjectHolder;
 @ObjectHolder(Midnight.MODID)
 @Mod.EventBusSubscriber(modid = Midnight.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class MidnightItems {
-    // TODO: seeds become ItemBlocks! (have them here, or in MidnightBlocks?)
     public static final Item BOGSHROOM_POWDER = Items.AIR;
     public static final Item NIGHTSHROOM_POWDER = Items.AIR;
     public static final Item DEWSHROOM_POWDER = Items.AIR;

@@ -11,8 +11,7 @@
       "conditions": {
         "items": [
           {
-            "type": "forge:ore_dict",
-            "ore": "unstableFruit"
+            "tag": "midnight:unstable_fruits"
           }
         ]
       }
