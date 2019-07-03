@@ -6,8 +6,8 @@
   "_comment": "Blocks",
 
   "block.midnight.nightstone": "Nachtstein",
-  "block.midnight.midnight_grass": "Mitternachtsgras",
-  "block.midnight.midnight_dirt": "Mitternachtserde",
+  "block.midnight.grass_block": "Mitternachtsgras",
+  "block.midnight.dirt": "Mitternachtserde",
 
   "block.midnight.trenchstone": "Tiefstein",
 
@@ -41,8 +41,8 @@
   "block.midnight.shadowroot_crafting_table": "Schattenwurzelwerkbank",
   "block.midnight.nightstone_furnace": "Mitternachtsofen",
 
-  "block.midnight.tall_midnight_grass": "Hohes Mitternachtsgras",
-  "block.midnight.double_midnight_grass": "Doppeltes Mitternachtsgras",
+  "block.midnight.grass": "Hohes Mitternachtsgras",
+  "block.midnight.tall_grass": "Doppeltes Mitternachtsgras",
 
   "block.midnight.lumen_bud": "Lumenknospe",
   "block.midnight.double_lumen_bud": "Doppelte Lumenknospe",

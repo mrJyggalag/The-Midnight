@@ -10,10 +10,10 @@
   "_comment": "Blocks",
 
   "block.midnight.nightstone": "Nightstone",
-  "block.midnight.midnight_grass": "Midnight Grass",
-  "block.midnight.midnight_coarse_dirt": "Midnight Coarse Dirt",
-  "block.midnight.midnight_dirt": "Midnight Dirt",
-  "block.midnight.midnight_mycelium": "Midnight Mycelium",
+  "block.midnight.grass_block": "Midnight Grass",
+  "block.midnight.coarse_dirt": "Midnight Coarse Dirt",
+  "block.midnight.dirt": "Midnight Dirt",
+  "block.midnight.mycelium": "Midnight Mycelium",
 
   "block.midnight.trenchstone": "Trenchstone",
   "block.midnight.trenchstone_bricks": "Trenchstone Bricks",
@@ -51,8 +51,8 @@
   "block.midnight.shadowroot_crafting_table": "Shadowroot Crafting Table",
   "block.midnight.nightstone_furnace": "Nightstone Furnace",
 
-  "block.midnight.tall_midnight_grass": "Tall Midnight Grass",
-  "block.midnight.double_midnight_grass": "Double Tall Midnight Grass",
+  "block.midnight.grass": "Tall Midnight Grass",
+  "block.midnight.tall_grass": "Double Tall Midnight Grass",
 
   "block.midnight.lumen_bud": "Lumen Bud",
   "block.midnight.double_lumen_bud": "Tall Lumen Bud",
@@ -329,6 +329,8 @@
 
   "fluid.midnight.miasma": "Miasma",
   "fluid.midnight.dark_water": "Dark Water",
+  "item.midnight.miasma_bucket": "Miasma Bucket",
+  "item.midnight.dark_water_bucket": "Dark Water Bucket",
 
   "_comment": "Entities",
 
