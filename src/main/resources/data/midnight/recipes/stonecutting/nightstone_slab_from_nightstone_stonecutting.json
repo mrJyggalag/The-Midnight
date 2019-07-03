@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "midnight:nightstone"
+  },
+  "result": "minecraft:nightstone_slab",
+  "count": 2
+}
