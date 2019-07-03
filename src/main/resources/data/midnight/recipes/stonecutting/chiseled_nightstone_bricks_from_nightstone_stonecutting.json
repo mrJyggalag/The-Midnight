@@ -3,6 +3,6 @@
   "ingredient": {
     "item": "midnight:nightstone"
   },
-  "result": "minecraft:chiseled_nightstone_bricks",
+  "result": "midnight:chiseled_nightstone_bricks",
   "count": 1
 }

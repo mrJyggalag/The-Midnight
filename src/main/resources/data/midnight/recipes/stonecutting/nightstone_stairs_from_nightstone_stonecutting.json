@@ -3,6 +3,6 @@
   "ingredient": {
     "item": "midnight:nightstone"
   },
-  "result": "minecraft:nightstone_stairs",
+  "result": "midnight:nightstone_stairs",
   "count": 1
 }

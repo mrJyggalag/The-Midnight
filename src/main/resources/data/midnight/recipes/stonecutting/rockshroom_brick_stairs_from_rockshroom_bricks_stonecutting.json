@@ -3,6 +3,6 @@
   "ingredient": {
     "item": "midnight:rockshroom_bricks"
   },
-  "result": "minecraft:rockshroom_brick_stairs",
+  "result": "midnight:rockshroom_brick_stairs",
   "count": 1
 }

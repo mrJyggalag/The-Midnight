@@ -3,6 +3,6 @@
   "ingredient": {
     "item": "midnight:trenchstone"
   },
-  "result": "minecraft:trenchstone_bricks",
+  "result": "midnight:trenchstone_bricks",
   "count": 1
 }
