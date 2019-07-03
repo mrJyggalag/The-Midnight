@@ -1,7 +1,11 @@
 {
+  "parent": "block/block",
   "ambientocclusion": false,
   "textures": {
-    "particle": "#side"
+	"bottom": "midnight:blocks/nightstone",
+	"top": "midnight:blocks/mycelium_top",
+	"side": "midnight:blocks/mycelium_side",
+    "particle": "midnight:blocks/mycelium_side"
   },
   "elements": [
     {

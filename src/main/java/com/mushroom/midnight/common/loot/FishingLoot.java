@@ -1,5 +1,6 @@
 package com.mushroom.midnight.common.loot;
 
+import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.common.helper.Helper;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.storage.loot.LootPool;
@@ -16,22 +17,23 @@ import java.util.List;
 
 import static com.mushroom.midnight.Midnight.MODID;
 
-@Mod.EventBusSubscriber(modid = MODID)
+@Mod.EventBusSubscriber(modid = MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class FishingLoot {
     private static ResourceLocation MIDNIGHT_FISHING = new ResourceLocation(MODID, "fishing");
 
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public static void onLootTableLoad(LootTableLoadEvent event) {
-        if (event.getName() == MIDNIGHT_FISHING) {
-            LootTable vanillaTable = event.getLootTableManager().getLootTableFromLocation(LootTables.GAMEPLAY_FISHING_JUNK);
-            if (vanillaTable != LootTable.EMPTY_LOOT_TABLE) {
-                ObfuscationReflectionHelper.setPrivateValue(LootTable.class, vanillaTable, false, "isFrozen");
-                addConditionToAllMainPools(vanillaTable, context -> !Helper.isMidnightDimension(context.getWorld()));
-                LootPool midnightPool = event.getTable().getPool("midnight_fishing");
-                vanillaTable.addPool(midnightPool);
+        if (event.getName().equals(LootTables.GAMEPLAY_FISHING)) {
+            addConditionToAllMainPools(event.getTable(), context -> !Helper.isMidnightDimension(context.getWorld()));
+            LootTable midnightFishing = event.getLootTableManager().getLootTableFromLocation(MIDNIGHT_FISHING);
+            if (midnightFishing == LootTable.EMPTY_LOOT_TABLE) { // TODO fix me, i'm not loaded
+                Midnight.LOGGER.warn("The loottable for midnight fishing is absent");
+            } else {
+                LootPool midnightPool = midnightFishing.getPool("midnight_fishing");
+                event.getTable().addPool(midnightPool);
                 addConditionToPool(context -> Helper.isMidnightDimension(context.getWorld()), midnightPool);
-                ObfuscationReflectionHelper.setPrivateValue(LootTable.class, vanillaTable, true, "isFrozen");
             }
+
         }
     }
 

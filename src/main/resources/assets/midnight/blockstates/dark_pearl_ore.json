@@ -1,16 +1,5 @@
 {
-  "forge_marker": 1,
-  "defaults": {
-    "textures": {
-      "all": "midnight:blocks/dark_pearl_ore"
-    }
-  },
   "variants": {
-    "normal": {
-      "model": "cube_all"
-    },
-    "inventory": {
-      "model": "cube_all"
-    }
+    "": [{"model": "midnight:block/dark_pearl_ore"}]
   }
 }

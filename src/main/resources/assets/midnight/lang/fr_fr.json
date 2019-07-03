@@ -10,10 +10,10 @@
   "_comment": "Blocks",
 
   "block.midnight.nightstone": "Pierre de Nuit",
-  "block.midnight.grass_block": "Herbe de Minuit",
-  "block.midnight.coarse_dirt": "Terre Stérile de Minuit",
-  "block.midnight.dirt": "Terre de Minuit",
-  "block.midnight.mycelium": "Mycélium de Minuit",
+  "block.midnight.midnight_grass": "Herbe de Minuit",
+  "block.midnight.midnight_coarse_dirt": "Terre Stérile de Minuit",
+  "block.midnight.midnight_dirt": "Terre de Minuit",
+  "block.midnight.midnight_mycelium": "Mycélium de Minuit",
 
   "block.midnight.trenchstone": "Pierre de Tranchée",
   "block.midnight.trenchstone_bricks": "Briques de Tranchée",
@@ -51,8 +51,8 @@
   "block.midnight.shadowroot_crafting_table": "Établi en Ombreracine",
   "block.midnight.nightstone_furnace": "Fourneau en Pierre de Nuit",
 
-  "block.midnight.grass": "Hautes Herbes de Minuit",
-  "block.midnight.tall_grass": "Très Hautes Herbes de Minuit",
+  "block.midnight.tall_midnight_grass": "Hautes Herbes de Minuit",
+  "block.midnight.double_midnight_grass": "Très Hautes Herbes de Minuit",
 
   "block.midnight.lumen_bud": "Bourgeon de Lumen",
   "block.midnight.double_lumen_bud": "Grand Bourgeon de Lumen",

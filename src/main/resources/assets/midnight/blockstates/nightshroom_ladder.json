@@ -1,19 +1,14 @@
 {
   "forge_marker": 1,
   "defaults": {
-    "model": "midnight:ladder",
-    "textures": {
-      "texture": "midnight:blocks/nightshroom_ladder"
-    }
+    "model": "midnight:nightshroom_ladder"
   },
   "variants": {
-    "normal": [{}],
     "facing": {
       "north": {},
       "east": {"y": 90},
       "south": {"y": 180},
       "west": {"y": 270}
-    },
-    "inventory": [{"model":"builtin/generated","textures":{"layer0":"midnight:blocks/nightshroom_ladder"},"transform":"forge:default-item"}]
+	}
   }
 }

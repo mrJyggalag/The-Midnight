@@ -1,6 +1,10 @@
 {
   "parent": "block/block",
   "ambientocclusion": false,
+  "textures": {
+	"top": "midnight:blocks/mycelium_top_glow",
+	"side": "midnight:blocks/mycelium_side_glow"
+  },
   "elements": [
     {
       "from": [0, 0, 0],

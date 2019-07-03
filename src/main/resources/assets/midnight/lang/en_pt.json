@@ -10,8 +10,8 @@
   "_comment": "Blocks",
 
   "block.midnight.nightstone": "Blind Rock",
-  "block.midnight.grass_block": "Midnight Chunk o' Grass",
-  "block.midnight.dirt": "Midnight Filth",
+  "block.midnight.midnight_grass": "Midnight Chunk o' Grass",
+  "block.midnight.midnight_dirt": "Midnight Filth",
 
   "block.midnight.trenchstone": "Stone o' Davy Jones",
   "block.midnight.trenchstone_bricks": "Bricks o' Stone o' Davy Jones",
@@ -46,8 +46,8 @@
   "block.midnight.shadowroot_crafting_table": "Craftin' Table o' Shadaroot",
   "block.midnight.nightstone_furnace": "Oven o' Midnight",
 
-  "block.midnight.grass": "Midnight Weed",
-  "block.midnight.tall_grass": "Towerin' Midnight Weed",
+  "block.midnight.tall_midnight_grass": "Midnight Weed",
+  "block.midnight.double_midnight_grass": "Towerin' Midnight Weed",
 
   "block.midnight.lumen_bud": "Lumen Bud",
   "block.midnight.double_lumen_bud": "Double Lumen Bud",
