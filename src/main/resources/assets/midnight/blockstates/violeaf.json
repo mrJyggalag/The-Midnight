@@ -23,30 +23,17 @@
     ],
     "is_grown=true": [
       {
-        "textures": {
-          "leaf": "midnight:blocks/violeaf"
-        },
         "y": 0
       },
       {
-        "textures": {
-          "leaf": "midnight:blocks/violeaf"
-        },
         "y": 90
       },
       {
-        "textures": {
-          "leaf": "midnight:blocks/violeaf"
-        },
         "y": 180
       },
       {
-        "textures": {
-          "leaf": "midnight:blocks/violeaf"
-        },
         "y": 270
       }
-    ],
-    "normal": [{}]
+    ]
   }
 }
