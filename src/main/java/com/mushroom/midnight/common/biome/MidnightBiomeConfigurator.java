@@ -185,7 +185,7 @@ public class MidnightBiomeConfigurator {
         biome.add(GenerationStage.Decoration.LOCAL_MODIFICATIONS, Biome.createDecoratedFeature(
                 Feature.RANDOM_BOOLEAN_SELECTOR, new TwoFeatureChoiceConfig(
                         MidnightFeatures.NIGHTSTONE_BOULDER, IFeatureConfig.NO_FEATURE_CONFIG,
-                        MidnightFeatures.SPIKE, new UniformCompositionConfig(MidnightBlocks.NIGHTSHROOM.getDefaultState())
+                        MidnightFeatures.SPIKE, new UniformCompositionConfig(MidnightBlocks.NIGHTSTONE.getDefaultState())
                 ),
                 Placement.CHANCE_HEIGHTMAP, new ChanceConfig(4)
         ));
