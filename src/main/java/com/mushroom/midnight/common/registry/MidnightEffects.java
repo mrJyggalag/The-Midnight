@@ -1,7 +1,13 @@
 package com.mushroom.midnight.common.registry;
 
 import com.mushroom.midnight.Midnight;
+import com.mushroom.midnight.common.effect.ConfusionEffect;
+import com.mushroom.midnight.common.effect.DarknessEffect;
+import com.mushroom.midnight.common.effect.DragonGuardEffect;
+import com.mushroom.midnight.common.effect.PollinatedEffect;
 import com.mushroom.midnight.common.effect.StunnedEffect;
+import com.mushroom.midnight.common.effect.TormentedEffect;
+import com.mushroom.midnight.common.effect.UnstableFallEffect;
 import net.minecraft.potion.Effect;
 import net.minecraft.potion.Effects;
 import net.minecraftforge.event.RegistryEvent;
@@ -23,12 +29,12 @@ public class MidnightEffects {
     @SubscribeEvent
     public static void onRegisterEffects(RegistryEvent.Register<Effect> event) {
         RegUtil.generic(event.getRegistry())
-                .add("stunned", new StunnedEffect().withIcon("stunned"))
-                .add("pollinated", new StunnedEffect().withIcon("pollinated"))
-                .add("dragon_guard", new StunnedEffect().withIcon("dragons_guard"))
-                .add("darkness", new StunnedEffect().withIcon("darkness"))
-                .add("tormented", new StunnedEffect().withIcon("tormented"))
-                .add("unstable_fall", new StunnedEffect().withIcon("unstable"))
-                .add("confusion", new StunnedEffect().withIcon("confusion"));
+                .add("stunned", new StunnedEffect())
+                .add("pollinated", new PollinatedEffect())
+                .add("dragon_guard", new DragonGuardEffect())
+                .add("darkness", new DarknessEffect())
+                .add("tormented", new TormentedEffect())
+                .add("unstable_fall", new UnstableFallEffect())
+                .add("confusion", new ConfusionEffect());
     }
 }
