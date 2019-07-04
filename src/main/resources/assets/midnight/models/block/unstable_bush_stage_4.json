@@ -1,0 +1,6 @@
+{
+  "parent": "block/crop",
+  "textures": {
+    "crop": "midnight:blocks/unstable_bush_stage_4"
+  }
+}

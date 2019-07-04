@@ -1,6 +1,6 @@
 package com.mushroom.midnight.common.block;
 
-import com.mushroom.midnight.common.helper.Helper;
+import com.mushroom.midnight.common.registry.MidnightTags;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.BushBlock;
@@ -65,7 +65,7 @@ public class MidnightPlantBlock extends BushBlock implements IGrowable, IShearab
 
     @Override
     protected boolean isValidGround(BlockState state, IBlockReader world, BlockPos pos) {
-            return Helper.isGroundForMidnightPlant(state.getBlock());
+            return state.getBlock().isIn(MidnightTags.Blocks.PLANTABLE_GROUNDS);
     }
 
     @Override

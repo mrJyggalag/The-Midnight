@@ -1,9 +1,7 @@
 package com.mushroom.midnight.common.helper;
 
-import com.mushroom.midnight.common.registry.MidnightBlocks;
 import com.mushroom.midnight.common.registry.MidnightDimensions;
 import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.item.Item;
@@ -29,14 +27,6 @@ public class Helper {
         rgb[1] = ((color >> 8) & 255) / 255f;
         rgb[2] = (color & 255) / 255f;
         return rgb;
-    }
-
-    public static boolean isGroundForBoneMeal(Block block) {
-        return block == MidnightBlocks.NIGHTSTONE || block == MidnightBlocks.GRASS_BLOCK || block == MidnightBlocks.MYCELIUM || block == Blocks.GRASS;
-    }
-
-    public static boolean isGroundForMidnightPlant(Block block) {
-        return isGroundForBoneMeal(block) || block == MidnightBlocks.DIRT || block == MidnightBlocks.DECEITFUL_MUD || block == MidnightBlocks.DECEITFUL_PEAT || block == Blocks.FARMLAND || block == Blocks.DIRT;
     }
 
     public static void spawnItemStack(World world, BlockPos pos, Block block) {

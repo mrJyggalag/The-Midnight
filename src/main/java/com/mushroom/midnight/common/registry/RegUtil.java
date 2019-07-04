@@ -3,7 +3,6 @@ package com.mushroom.midnight.common.registry;
 import com.google.common.base.Preconditions;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.registries.GameData;
 import net.minecraftforge.registries.IForgeRegistry;
@@ -13,6 +12,8 @@ import javax.annotation.Nonnull;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.Supplier;
+
+import static com.mushroom.midnight.Midnight.MODID;
 
 public class RegUtil {
     @Nonnull
@@ -73,6 +74,11 @@ public class RegUtil {
             for (Block block : blocks) {
                 add(block, function);
             }
+            return this;
+        }
+
+        public Items add(String customName, Block block, BiFunction<Block, Item.Properties, Item> function) {
+            this.registry.register(function.apply(block, this.propertiesSupplier.get()).setRegistryName(MODID, customName));
             return this;
         }
     }

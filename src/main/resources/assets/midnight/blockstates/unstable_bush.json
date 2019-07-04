@@ -1,35 +1,29 @@
 {
   "forge_marker": 1,
   "variants": {
-    "normal": [{}],
     "stage=0": [
       {
-        "model": "crop",
-        "textures": {"crop": "midnight:blocks/unstable_seeds"}
+        "model": "midnight:unstable_bush_stage_0"
       }
     ],
     "stage=1": [
       {
-        "model": "cross",
-        "textures": {"cross": "midnight:blocks/unstable_bush_stage_0"}
+        "model": "midnight:unstable_bush_stage_1"
       }
     ],
     "stage=2": [
       {
-        "model": "cross",
-        "textures": {"cross": "midnight:blocks/unstable_bush_stage_1"}
+        "model": "midnight:unstable_bush_stage_2"
       }
     ],
     "stage=3": [
       {
-        "model": "cross",
-        "textures": {"cross": "midnight:blocks/unstable_bush_stage_2"}
+        "model": "midnight:unstable_bush_stage_3"
       }
     ],
     "stage=4": [
       {
-        "model": "cross",
-        "textures": {"cross": "midnight:blocks/unstable_bush_stage_3"}
+        "model": "midnight:unstable_bush_stage_4"
       }
     ]
   }

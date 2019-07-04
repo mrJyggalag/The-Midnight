@@ -1,7 +1,7 @@
 package com.mushroom.midnight.common.block;
 
-import com.mushroom.midnight.common.helper.Helper;
 import com.mushroom.midnight.common.registry.MidnightBlocks;
+import com.mushroom.midnight.common.registry.MidnightTags;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.IGrowable;
@@ -97,7 +97,7 @@ public class SoilBlock extends Block implements IGrowable {
                     break;
                 }
                 blockpos1 = blockpos1.add(rand.nextInt(3) - 1, (rand.nextInt(3) - 1) * rand.nextInt(3) / 2, rand.nextInt(3) - 1);
-                if (!Helper.isGroundForBoneMeal(world.getBlockState(blockpos1.down()).getBlock()) || isOpaque(world.getBlockState(blockpos1).getCollisionShape(world, blockpos1))) {
+                if (!world.getBlockState(blockpos1.down()).getBlock().isIn(MidnightTags.Blocks.BONEMEAL_GROUNDS) || isOpaque(world.getBlockState(blockpos1).getCollisionShape(world, blockpos1))) {
                     break;
                 }
                 ++j;

@@ -19,6 +19,7 @@ import com.mushroom.midnight.common.item.tool.MidnightShovelItem;
 import com.mushroom.midnight.common.util.CompassRotationGetter;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ArmorItem;
+import net.minecraft.item.BlockNamedItem;
 import net.minecraft.item.BucketItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
@@ -208,6 +209,10 @@ public class MidnightItems {
 
                 .add("advancement_snapper", Item::new)
                 .add("advancement_highness", props -> new Item(props.setTEISR(() -> HighnessItemRenderer::new)));
+
+        RegUtil.items(event.getRegistry()).withProperties(() -> new Item.Properties().group(MidnightItemGroups.DECORATION))
+                .add("bladeshroom_spores", MidnightBlocks.BLADESHROOM, BlockNamedItem::new)
+                .add("unstable_seeds", MidnightBlocks.UNSTABLE_BUSH, BlockNamedItem::new);
 
         Items.COMPASS.addPropertyOverride(new ResourceLocation("angle"), new CompassRotationGetter());
     }

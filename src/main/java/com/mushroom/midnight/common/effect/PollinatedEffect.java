@@ -1,6 +1,6 @@
 package com.mushroom.midnight.common.effect;
 
-import com.mushroom.midnight.common.helper.Helper;
+import com.mushroom.midnight.common.registry.MidnightTags;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.potion.EffectType;
@@ -27,7 +27,7 @@ public class PollinatedEffect extends GenericEffect {
         if (!world.isRemote) {
             BlockPos pos = entity.getPosition().add(world.rand.nextInt(3) - 1, world.rand.nextInt(3) - 1, world.rand.nextInt(3) - 1);
             BlockState state = world.getBlockState(pos);
-            if (state.getBlock().getMaterial(state).isReplaceable() && Helper.isGroundForBoneMeal(world.getBlockState(pos.down()).getBlock())) {
+            if (state.getBlock().getMaterial(state).isReplaceable() && world.getBlockState(pos.down()).getBlock().isIn(MidnightTags.Blocks.BONEMEAL_GROUNDS)) {
                 final Collection<Biome> biomes = ForgeRegistries.BIOMES.getValues();
                 biomes.stream().skip((int) (biomes.size() * Math.random())).findFirst().ifPresent(b -> {
 
