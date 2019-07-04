@@ -1,13 +1,5 @@
 {
-  "forge_marker": 1,
-  "defaults": {
-    "model": "cube_all",
-    "textures": {
-      "all": "midnight:blocks/archaic_glass"
-    }
-  },
   "variants": {
-    "normal": [{}],
-    "inventory": [{}]
+    "": {"model": "midnight:block/archaic_glass"}
   }
 }

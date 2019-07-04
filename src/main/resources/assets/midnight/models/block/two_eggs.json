@@ -1,5 +1,9 @@
 {
   "parent": "block/block",
+  "textures": {
+    "all": "midnight:blocks/stinger_egg",
+    "particle": "midnight:blocks/stinger_egg"
+  },
   "elements": [
     {
       "from": [5, 0, 3],

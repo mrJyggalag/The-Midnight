@@ -110,6 +110,8 @@ public class MidnightItems {
     public static final Item TENEBRUM_BOOTS = Items.AIR;
     public static final Item ROCKSHROOM_SHIELD = Items.AIR;
 
+    public static final Item DECEITFUL_SNAPPER_BUCKET = Items.AIR;
+
     public static final Item DARK_WATER_BUCKET = Items.AIR;
     public static final Item MIASMA_BUCKET = Items.AIR;
 

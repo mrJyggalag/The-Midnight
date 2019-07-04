@@ -1,5 +1,5 @@
 {
-  "parent": "block/cube_all_no_shade",
+  "parent": "midnight:block/cube_all_no_shade",
   "textures": {
     "all": "midnight:blocks/bloomcrystal_rock"
   }
