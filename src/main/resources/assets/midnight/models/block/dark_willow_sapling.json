@@ -1,0 +1,6 @@
+{
+  "parent": "block/cross",
+  "textures": {
+    "cross": "midnight:blocks/dark_willow_sapling"
+  }
+}
