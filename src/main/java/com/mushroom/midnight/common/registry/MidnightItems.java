@@ -17,10 +17,12 @@ import com.mushroom.midnight.common.item.tool.MidnightPickaxeItem;
 import com.mushroom.midnight.common.item.tool.MidnightShieldItem;
 import com.mushroom.midnight.common.item.tool.MidnightShovelItem;
 import com.mushroom.midnight.common.util.CompassRotationGetter;
+import net.minecraft.entity.EntityType;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ArmorItem;
 import net.minecraft.item.BlockNamedItem;
 import net.minecraft.item.BucketItem;
+import net.minecraft.item.FishBucketItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
 import net.minecraft.item.SwordItem;
@@ -148,7 +150,9 @@ public class MidnightItems {
 
                 .add("blue_unstable_fruit", props -> new UnstableFruitItem(UnstableFruitItem.Color.BLUE, props.food(MidnightFood.UNSTABLE_FRUIT)))
                 .add("lime_unstable_fruit", props -> new UnstableFruitItem(UnstableFruitItem.Color.LIME, props.food(MidnightFood.UNSTABLE_FRUIT)))
-                .add("green_unstable_fruit", props -> new UnstableFruitItem(UnstableFruitItem.Color.GREEN, props.food(MidnightFood.UNSTABLE_FRUIT)));
+                .add("green_unstable_fruit", props -> new UnstableFruitItem(UnstableFruitItem.Color.GREEN, props.food(MidnightFood.UNSTABLE_FRUIT)))
+
+                .add("deceitful_snapper_bucket", props -> new FishBucketItem(MidnightEntities.DECEITFUL_SNAPPER, MidnightFluids.DARK_WATER, props.maxStackSize(1)));
 
         RegUtil.items(event.getRegistry())
                 .withProperties(() -> new Item.Properties().group(MidnightItemGroups.ITEMS).maxStackSize(1).setTEISR(() -> BombItemRenderer::new))

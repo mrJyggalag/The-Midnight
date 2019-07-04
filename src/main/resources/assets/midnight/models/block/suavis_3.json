@@ -1,0 +1,8 @@
+{
+	"parent": "block/cube_column",
+	"textures": {
+      "end": "midnight:blocks/suavis_top",
+      "side": "midnight:blocks/suavis_side",
+      "particle": "midnight:blocks/suavis_slice"
+    }
+}

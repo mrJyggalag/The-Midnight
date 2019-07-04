@@ -1,38 +1,29 @@
 {
   "forge_marker": 1,
-  "defaults": {
-    "model": "cube_column",
-    "textures": {
-      "end": "midnight:blocks/suavis_top",
-      "side": "midnight:blocks/suavis_side",
-      "particle": "midnight:blocks/suavis_slice"
-    }
-  },
   "variants": {
     "stage=0": [
-      {"model": "midnight:suavis_slice"},
-      {"model": "midnight:suavis_slice", "y": 90},
-      {"model": "midnight:suavis_slice", "y": 180},
-      {"model": "midnight:suavis_slice", "y": 270}
+      {"model": "midnight:suavis_0"},
+      {"model": "midnight:suavis_0", "y": 90},
+      {"model": "midnight:suavis_0", "y": 180},
+      {"model": "midnight:suavis_0", "y": 270}
     ],
     "stage=1": [
-      {"model": "midnight:suavis_slice_2"},
-      {"model": "midnight:suavis_slice_2", "y": 90},
-      {"model": "midnight:suavis_slice_2", "y": 180},
-      {"model": "midnight:suavis_slice_2", "y": 270}
+      {"model": "midnight:suavis_1"},
+      {"model": "midnight:suavis_1", "y": 90},
+      {"model": "midnight:suavis_1", "y": 180},
+      {"model": "midnight:suavis_1", "y": 270}
     ],
     "stage=2": [
-      {"model": "midnight:suavis_slice_3"},
-      {"model": "midnight:suavis_slice_3", "y": 90},
-      {"model": "midnight:suavis_slice_3", "y": 180},
-      {"model": "midnight:suavis_slice_3", "y": 270}
+      {"model": "midnight:suavis_2"},
+      {"model": "midnight:suavis_2", "y": 90},
+      {"model": "midnight:suavis_2", "y": 180},
+      {"model": "midnight:suavis_2", "y": 270}
     ],
     "stage=3": [
-      {"model": "cube_column"},
-      {"model": "cube_column", "y": 90},
-      {"model": "cube_column", "y": 180},
-      {"model": "cube_column", "y": 270}
-    ],
-    "": [{}]
+      {"model": "midnight:suavis_3"},
+      {"model": "midnight:suavis_3", "y": 90},
+      {"model": "midnight:suavis_3", "y": 180},
+      {"model": "midnight:suavis_3", "y": 270}
+    ]
   }
 }

@@ -22,7 +22,7 @@ public class UnstableBushParticle extends MidnightParticle {
         this.motionY = motionY;
         this.motionZ = motionZ;
         this.particleAlpha = 1f;
-        particleScale = 1f;
+        particleScale = 0.1f;
         this.maxAge = 60;
         this.canCollide = false;
     }
