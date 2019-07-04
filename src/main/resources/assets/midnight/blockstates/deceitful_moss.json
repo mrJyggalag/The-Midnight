@@ -1,10 +1,7 @@
 {
   "forge_marker": 1,
   "defaults": {
-    "model": "midnight:moss",
-    "textures": {
-      "moss": "midnight:blocks/deceitful_moss"
-    }
+    "model": "midnight:moss"
   },
   "variants": {
     "facing": {

@@ -1,18 +1,23 @@
 package com.mushroom.midnight.common.entity.creature;
 
+import com.mushroom.midnight.common.registry.MidnightItems;
 import com.mushroom.midnight.common.registry.MidnightLootTables;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.passive.WaterMobEntity;
+import net.minecraft.entity.passive.fish.AbstractFishEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.pathfinding.PathNavigator;
 import net.minecraft.pathfinding.SwimmerPathNavigator;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.SoundEvent;
+import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
-public class DeceitfulSnapperEntity extends WaterMobEntity {
+public class DeceitfulSnapperEntity extends AbstractFishEntity {
     private BlockPos spawnPosition;
 
     public DeceitfulSnapperEntity(EntityType<? extends DeceitfulSnapperEntity> entityType, World world) {
@@ -22,6 +27,16 @@ public class DeceitfulSnapperEntity extends WaterMobEntity {
     @Override
     protected PathNavigator createNavigator(World world) {
         return new SwimmerPathNavigator(this, world);
+    }
+
+    @Override
+    protected ItemStack getFishBucket() {
+        return new ItemStack(MidnightItems.DECEITFUL_SNAPPER_BUCKET);
+    }
+
+    @Override
+    protected SoundEvent getFlopSound() {
+        return SoundEvents.ENTITY_TROPICAL_FISH_FLOP;
     }
 
     @Override

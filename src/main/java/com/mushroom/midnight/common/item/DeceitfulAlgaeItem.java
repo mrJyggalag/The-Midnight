@@ -1,7 +1,9 @@
 package com.mushroom.midnight.common.item;
 
+import com.mushroom.midnight.common.registry.MidnightBlocks;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.block.Block;
+import net.minecraft.block.Blocks;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.fluid.IFluidState;
@@ -54,6 +56,14 @@ public class DeceitfulAlgaeItem extends BlockItem {
             IFluidState fluidState = world.getFluidState(pos);
 
             if (fluidState.getFluid().isIn(FluidTags.WATER) && world.isAirBlock(placePos)) {
+                // special case for handling block placement with water lilies
+                net.minecraftforge.common.util.BlockSnapshot blocksnapshot = net.minecraftforge.common.util.BlockSnapshot.getBlockSnapshot(world, placePos);
+                world.setBlockState(placePos, MidnightBlocks.DECEITFUL_ALGAE.getDefaultState(), 11);
+                if (net.minecraftforge.event.ForgeEventFactory.onBlockPlace(player, blocksnapshot, net.minecraft.util.Direction.UP)) {
+                    blocksnapshot.restore(true, false);
+                    return new ActionResult<ItemStack>(ActionResultType.FAIL, heldItem);
+                }
+
                 if (player instanceof ServerPlayerEntity) {
                     CriteriaTriggers.PLACED_BLOCK.trigger((ServerPlayerEntity) player, placePos, heldItem);
                 }

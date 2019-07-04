@@ -1,13 +1,10 @@
 {
-  "forge_marker": 1,
-  "defaults": {
-    "model": "waterlily",
-    "textures": {
-      "particle": "midnight:blocks/deceitful_algae",
-      "texture": "midnight:blocks/deceitful_algae"
+    "variants": {
+        "": [
+            { "model": "midnight:block/deceitful_algae" },
+            { "model": "midnight:block/deceitful_algae", "y": 90 },
+            { "model": "midnight:block/deceitful_algae", "y": 180 },
+            { "model": "midnight:block/deceitful_algae", "y": 270 }
+        ]
     }
-  },
-  "variants": {
-    "normal": [{}, {"y": 90}, {"y": 180}, {"y": 270}]
-  }
 }
