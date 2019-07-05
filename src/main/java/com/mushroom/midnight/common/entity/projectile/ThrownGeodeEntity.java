@@ -35,6 +35,10 @@ import net.minecraftforge.fml.network.NetworkHooks;
 
 import javax.annotation.Nullable;
 
+@OnlyIn(
+        value = Dist.CLIENT,
+        _interface = IRendersAsItem.class
+)
 public class ThrownGeodeEntity extends ThrowableEntity implements IRendersAsItem {
     private static final byte POPPED_STATE_ID = 3;
 

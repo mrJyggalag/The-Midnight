@@ -21,10 +21,16 @@ import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.fml.network.FMLPlayMessages;
 import net.minecraftforge.fml.network.NetworkHooks;
 
+@OnlyIn(
+        value = Dist.CLIENT,
+        _interface = IRendersAsItem.class
+)
 public class SporeBombEntity extends ThrowableEntity implements IRendersAsItem {
     private static final DataParameter<ItemStack> BOMB_STACK = EntityDataManager.createKey(SporeBombEntity.class, DataSerializers.ITEMSTACK);
 
