@@ -1,14 +1,7 @@
 {
-  "forge_marker": 1,
-  "defaults": {
-    "model": "midnight:block/bulb_fungus_stem"
-  },
   "variants": {
-    "axis": {
-      "x": {"x": 90, "y": 90},
-      "y": {},
-      "z": {"x": 90}
-    },
-    "": [{}]
+    "axis=y": {"model": "midnight:block/bulb_fungus_stem"},
+    "axis=z": {"model": "midnight:block/bulb_fungus_stem", "x": 90},
+    "axis=x": {"model": "midnight:block/bulb_fungus_stem", "x": 90, "y": 90}
   }
 }
