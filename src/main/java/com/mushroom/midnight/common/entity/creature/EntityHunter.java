@@ -1,5 +1,8 @@
 package com.mushroom.midnight.common.entity.creature;
 
+import javax.annotation.Nullable;
+import javax.vecmath.Point3f;
+
 import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.common.capability.AnimationCapability;
 import com.mushroom.midnight.common.entity.NavigatorFlying;
@@ -10,7 +13,9 @@ import com.mushroom.midnight.common.entity.task.EntityTaskHunterTrack;
 import com.mushroom.midnight.common.entity.util.ChainSolver;
 import com.mushroom.midnight.common.registry.ModEffects;
 import com.mushroom.midnight.common.registry.ModLootTables;
+import com.mushroom.midnight.common.registry.ModSounds;
 import com.mushroom.midnight.common.util.MeanValueRecorder;
+
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
@@ -23,19 +28,18 @@ import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.passive.EntityFlying;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.MobEffects;
 import net.minecraft.pathfinding.PathNavigate;
 import net.minecraft.potion.PotionEffect;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
-
-import javax.annotation.Nullable;
-import javax.vecmath.Point3f;
 
 public class EntityHunter extends EntityMob implements EntityFlying {
     private final AnimationCapability animCap = new AnimationCapability();
@@ -45,7 +49,7 @@ public class EntityHunter extends EntityMob implements EntityFlying {
     public float roll;
     public float prevRoll;
 
-    public int swoopCooldown;
+    public int swoopCooldown, flapTime;
 
     private final MeanValueRecorder deltaYaw = new MeanValueRecorder(20);
     private final ChainSolver<EntityHunter> chainSolver = new ChainSolver<>(
@@ -166,6 +170,13 @@ public class EntityHunter extends EntityMob implements EntityFlying {
 
         this.limbSwingAmount += (moveAmount - this.limbSwingAmount) * 0.4F;
         this.limbSwing += this.limbSwingAmount;
+        
+        ++flapTime;
+
+		if (flapTime >= 15 && moveAmount >= 0.4F) {
+			this.world.playSound(null, this.posX, this.posY, this.posZ, ModSounds.HUNTER_FLYING, SoundCategory.HOSTILE, 0.15F, MathHelper.clamp(this.rand.nextFloat(), 0.7f, 1.0f) + MathHelper.clamp(this.rand.nextFloat(), 0f, 0.3f));
+			flapTime = 0;
+        }
     }
 
     @Override
@@ -269,6 +280,16 @@ public class EntityHunter extends EntityMob implements EntityFlying {
                 }
             }
         }
+    }
+
+    @Override
+    protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
+        return ModSounds.HUNTER_HURT;
+    }
+
+    @Override
+    protected SoundEvent getDeathSound() {
+        return ModSounds.HUNTER_DEATH;
     }
 
     @Override

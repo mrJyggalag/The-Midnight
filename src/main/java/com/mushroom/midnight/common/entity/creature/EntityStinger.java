@@ -5,6 +5,8 @@ import com.mushroom.midnight.common.capability.AnimationCapability;
 import com.mushroom.midnight.common.entity.navigation.CustomPathNavigateGround;
 import com.mushroom.midnight.common.entity.task.EntityTaskNeutral;
 import com.mushroom.midnight.common.registry.ModLootTables;
+import com.mushroom.midnight.common.registry.ModSounds;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
@@ -109,17 +111,17 @@ public class EntityStinger extends EntityGrowable implements IMob {
 
     @Override
     protected SoundEvent getAmbientSound() {
-        return SoundEvents.ENTITY_SPIDER_AMBIENT;
+        return ModSounds.STINGER_IDLE;
     }
 
     @Override
     protected SoundEvent getHurtSound(DamageSource damageSource) {
-        return SoundEvents.ENTITY_SPIDER_HURT;
+        return ModSounds.STINGER_HURT;
     }
 
     @Override
     protected SoundEvent getDeathSound() {
-        return SoundEvents.ENTITY_SPIDER_DEATH;
+        return ModSounds.STINGER_DEATH;
     }
 
     @Override

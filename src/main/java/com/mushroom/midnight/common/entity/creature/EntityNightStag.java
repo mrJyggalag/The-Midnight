@@ -1,5 +1,12 @@
 package com.mushroom.midnight.common.entity.creature;
 
+import static com.mushroom.midnight.common.registry.ModLootTables.LOOT_TABLE_NIGHTSTAG;
+
+import java.util.UUID;
+import java.util.function.Predicate;
+
+import javax.annotation.Nullable;
+
 import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.common.block.BlockUnstableBush;
 import com.mushroom.midnight.common.block.BlockUnstableBushBloomed;
@@ -17,6 +24,7 @@ import com.mushroom.midnight.common.registry.ModCriterion;
 import com.mushroom.midnight.common.registry.ModEffects;
 import com.mushroom.midnight.common.registry.ModSounds;
 import com.mushroom.midnight.common.registry.ModSurfaceBiomes;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
@@ -41,7 +49,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Items;
 import net.minecraft.init.MobEffects;
-import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.datasync.DataParameter;
@@ -60,12 +67,6 @@ import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.Constants;
-
-import javax.annotation.Nullable;
-import java.util.UUID;
-import java.util.function.Predicate;
-
-import static com.mushroom.midnight.common.registry.ModLootTables.LOOT_TABLE_NIGHTSTAG;
 
 public class EntityNightStag extends EntityAnimal {
     private static final DataParameter<Integer> ANTLER_TYPE = EntityDataManager.createKey(EntityNightStag.class, DataSerializers.VARINT);
@@ -183,7 +184,7 @@ public class EntityNightStag extends EntityAnimal {
 
     @Override
     protected void playStepSound(BlockPos pos, Block blockIn) {
-        playSound(SoundEvents.ENTITY_LLAMA_STEP, 0.15f, 1f);
+        playSound(ModSounds.NIGHTSTAG_STEP, 0.15f, 1f);
     }
 
     @Override

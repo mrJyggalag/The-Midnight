@@ -35,6 +35,7 @@ public class ModSounds {
     public static final SoundEvent NIGHTSTAG_AMBIENT = RegUtil.applyName(new SoundEvent(new ResourceLocation(MODID, "nightstag_ambient")));
     public static final SoundEvent NIGHTSTAG_HURT = RegUtil.applyName(new SoundEvent(new ResourceLocation(MODID, "nightstag_hurt")));
     public static final SoundEvent NIGHTSTAG_DEATH = RegUtil.applyName(new SoundEvent(new ResourceLocation(MODID, "nightstag_death")));
+    public static final SoundEvent NIGHTSTAG_STEP = RegUtil.applyName(new SoundEvent(new ResourceLocation(MODID, "nightstag_step")));
 
     public static final SoundEvent CRYSTAL_BUG_FLYING = RegUtil.applyName(new SoundEvent(new ResourceLocation(MODID, "crystal_bug_flying")));
     public static final SoundEvent CRYSTAL_BUG_HURT = RegUtil.applyName(new SoundEvent(new ResourceLocation(MODID, "crystal_bug_hurt")));
@@ -43,7 +44,22 @@ public class ModSounds {
     public static final SoundEvent NOVA_DEATH = RegUtil.applyName(new SoundEvent(new ResourceLocation(MODID, "nova_death")));
     public static final SoundEvent NOVA_HURT = RegUtil.applyName(new SoundEvent(new ResourceLocation(MODID, "nova_hurt")));
     public static final SoundEvent NOVA_IDLE = RegUtil.applyName(new SoundEvent(new ResourceLocation(MODID, "nova_idle")));
+    
+    public static final SoundEvent STINGER_DEATH = RegUtil.applyName(new SoundEvent(new ResourceLocation(MODID, "stinger_death")));
+    public static final SoundEvent STINGER_HURT = RegUtil.applyName(new SoundEvent(new ResourceLocation(MODID, "stinger_hurt")));
+    public static final SoundEvent STINGER_IDLE = RegUtil.applyName(new SoundEvent(new ResourceLocation(MODID, "stinger_ambient")));
 
+    public static final SoundEvent SKULK_DEATH = RegUtil.applyName(new SoundEvent(new ResourceLocation(MODID, "skulk_death")));
+    public static final SoundEvent SKULK_HURT = RegUtil.applyName(new SoundEvent(new ResourceLocation(MODID, "skulk_hurt")));
+    
+    public static final SoundEvent SNAPPER_DEATH = RegUtil.applyName(new SoundEvent(new ResourceLocation(MODID, "snapper_death")));
+    public static final SoundEvent SNAPPER_HURT = RegUtil.applyName(new SoundEvent(new ResourceLocation(MODID, "snapper_hurt")));
+    
+    public static final SoundEvent HUNTER_DEATH = RegUtil.applyName(new SoundEvent(new ResourceLocation(MODID, "hunter_death")));
+    public static final SoundEvent HUNTER_HURT = RegUtil.applyName(new SoundEvent(new ResourceLocation(MODID, "hunter_hurt")));
+    public static final SoundEvent HUNTER_IDLE = RegUtil.applyName(new SoundEvent(new ResourceLocation(MODID, "hunter_idle")));
+    public static final SoundEvent HUNTER_FLYING = RegUtil.applyName(new SoundEvent(new ResourceLocation(MODID, "hunter_flying")));
+    
     public static final SoundEvent EGG_CRACKED = RegUtil.applyName(new SoundEvent(new ResourceLocation(MODID, "egg_cracked")));
 
     public static final SoundType MUD = new SoundType(1.0F, 1.0F, ModSounds.MUD_DIG, ModSounds.MUD_STEP, ModSounds.MUD_DIG, ModSounds.MUD_DIG, ModSounds.MUD_STEP);
@@ -69,6 +85,10 @@ public class ModSounds {
                 NIGHTSTAG_AMBIENT, NIGHTSTAG_HURT, NIGHTSTAG_DEATH,
                 CRYSTAL_BUG_FLYING, CRYSTAL_BUG_HURT, CRYSTAL_BUG_DEATH,
                 NOVA_DEATH, NOVA_HURT, NOVA_IDLE,
+                STINGER_DEATH, STINGER_HURT, STINGER_IDLE,
+                SKULK_DEATH, SKULK_HURT,
+                SNAPPER_DEATH, SNAPPER_HURT,
+                HUNTER_DEATH, HUNTER_HURT, HUNTER_IDLE, HUNTER_FLYING,
                 EGG_CRACKED
         );
     }
