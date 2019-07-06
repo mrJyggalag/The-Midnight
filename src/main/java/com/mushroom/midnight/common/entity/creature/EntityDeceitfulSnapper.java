@@ -1,11 +1,15 @@
 package com.mushroom.midnight.common.entity.creature;
 
 import com.mushroom.midnight.common.registry.ModLootTables;
+import com.mushroom.midnight.common.registry.ModSounds;
+
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.passive.EntityWaterMob;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.pathfinding.PathNavigateSwimmer;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
@@ -65,5 +69,15 @@ public class EntityDeceitfulSnapper extends EntityWaterMob {
     @Nullable
     protected ResourceLocation getLootTable() {
         return ModLootTables.LOOT_TABLE_DECEITFUL_SNAPPER;
+    }
+    
+    @Override
+    protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
+        return ModSounds.SNAPPER_HURT;
+    }
+
+    @Override
+    protected SoundEvent getDeathSound() {
+        return ModSounds.SNAPPER_DEATH;
     }
 }

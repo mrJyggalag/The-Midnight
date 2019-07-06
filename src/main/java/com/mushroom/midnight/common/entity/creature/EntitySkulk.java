@@ -3,6 +3,8 @@ package com.mushroom.midnight.common.entity.creature;
 import com.mushroom.midnight.common.entity.navigation.CustomPathNavigateGround;
 import com.mushroom.midnight.common.entity.task.EntityTaskNeutral;
 import com.mushroom.midnight.common.registry.ModLootTables;
+import com.mushroom.midnight.common.registry.ModSounds;
+
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityAgeable;
@@ -25,6 +27,7 @@ import net.minecraft.pathfinding.PathNavigate;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.World;
@@ -187,6 +190,16 @@ public class EntitySkulk extends EntityAnimal {
     @Override
     protected int getExperiencePoints(EntityPlayer player) {
         return 1 + this.world.rand.nextInt(3);
+    }
+    
+    @Override
+    protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
+        return ModSounds.SKULK_HURT;
+    }
+
+    @Override
+    protected SoundEvent getDeathSound() {
+        return ModSounds.SKULK_DEATH;
     }
 
     @Override
