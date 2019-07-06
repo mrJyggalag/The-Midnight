@@ -259,7 +259,7 @@ public class NightStagEntity extends AnimalEntity {
         this.goalSelector.addGoal(6, new WaterAvoidingRandomWalkingGoal(this, 0.7d, 0.005f));
         this.goalSelector.addGoal(7, new CurtseyGoal(this, PlayerEntity.class, 12f, 0.02f));
         this.goalSelector.addGoal(8, new LookRandomlyGoal(this));
-        this.targetSelector.addGoal(1, new NeutralGoal(this, new HurtByTargetGoal(this), false));
+        this.targetSelector.addGoal(1, new NeutralGoal(this, new HurtByTargetGoal(this).setCallsForHelp(NightStagEntity.class), false));
     }
 
     @Override

@@ -17,14 +17,15 @@ import com.mushroom.midnight.common.item.tool.MidnightPickaxeItem;
 import com.mushroom.midnight.common.item.tool.MidnightShieldItem;
 import com.mushroom.midnight.common.item.tool.MidnightShovelItem;
 import com.mushroom.midnight.common.util.CompassRotationGetter;
-import net.minecraft.entity.EntityType;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ArmorItem;
 import net.minecraft.item.BlockNamedItem;
 import net.minecraft.item.BucketItem;
 import net.minecraft.item.FishBucketItem;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemGroup;
 import net.minecraft.item.Items;
+import net.minecraft.item.SpawnEggItem;
 import net.minecraft.item.SwordItem;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.RegistryEvent;
@@ -219,6 +220,18 @@ public class MidnightItems {
         RegUtil.items(event.getRegistry()).withProperties(() -> new Item.Properties().group(MidnightItemGroups.DECORATION))
                 .add("bladeshroom_spores", MidnightBlocks.BLADESHROOM, BlockNamedItem::new)
                 .add("unstable_seeds", MidnightBlocks.UNSTABLE_BUSH, BlockNamedItem::new);
+
+        RegUtil.items(event.getRegistry()).withProperties(() -> new Item.Properties().group(ItemGroup.MISC))
+                .add("rifter_spawn_egg", props -> new SpawnEggItem(MidnightEntities.RIFTER, 0x384740, 0x5E8C6C, props))
+                .add("hunter_spawn_egg", props -> new SpawnEggItem(MidnightEntities.HUNTER, 0x2C3964, 0x19203A, props))
+                .add("nova_spawn_egg", props -> new SpawnEggItem(MidnightEntities.NOVA, 0x932C3B, 0x47415E, props))
+                .add("crystal_bug_spawn_egg", props -> new SpawnEggItem(MidnightEntities.CRYSTAL_BUG, 0x4B2277, 0xAF27E0, props))
+                .add("penumbrian_spawn_egg", props -> new SpawnEggItem(MidnightEntities.PENUMBRIAN, 0x8CDCC9, 0x456B6F, props))
+                .add("tree_hopper_spawn_egg", props -> new SpawnEggItem(MidnightEntities.TREE_HOPPER, 0x6E5A84, 0x303847, props))
+                .add("stinger_spawn_egg", props -> new SpawnEggItem(MidnightEntities.STINGER, 0x291E23, 0x4D6A43, props))
+                .add("nightstag_spawn_egg", props -> new SpawnEggItem(MidnightEntities.NIGHTSTAG, 0x946CC2, 0x221F1D, props))
+                .add("deceitful_snapper_spawn_egg", props -> new SpawnEggItem(MidnightEntities.DECEITFUL_SNAPPER, 0x45404E, 0x906F99, props))
+                .add("skulk_spawn_egg", props -> new SpawnEggItem(MidnightEntities.SKULK, 0x4B5065, 0x4E268A, props));
 
         Items.COMPASS.addPropertyOverride(new ResourceLocation("angle"), new CompassRotationGetter());
     }
