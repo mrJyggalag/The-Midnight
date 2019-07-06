@@ -57,7 +57,6 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
-import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.IWorld;
@@ -191,7 +190,7 @@ public class NightStagEntity extends AnimalEntity {
 
     @Override
     protected void playStepSound(BlockPos pos, BlockState stateIn) {
-        playSound(SoundEvents.ENTITY_LLAMA_STEP, 0.15f, 1f);
+        playSound(MidnightSounds.NIGHTSTAG_STEP, 0.15f, 1f);
     }
 
     @Override

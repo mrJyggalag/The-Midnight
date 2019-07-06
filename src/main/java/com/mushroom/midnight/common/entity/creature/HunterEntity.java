@@ -10,6 +10,7 @@ import com.mushroom.midnight.common.entity.task.HunterTrackGoal;
 import com.mushroom.midnight.common.entity.util.ChainSolver;
 import com.mushroom.midnight.common.registry.MidnightEffects;
 import com.mushroom.midnight.common.registry.MidnightLootTables;
+import com.mushroom.midnight.common.registry.MidnightSounds;
 import com.mushroom.midnight.common.util.MeanValueRecorder;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
@@ -27,8 +28,11 @@ import net.minecraft.entity.passive.IFlyingAnimal;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.pathfinding.PathNavigator;
 import net.minecraft.potion.EffectInstance;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
@@ -49,7 +53,7 @@ public class HunterEntity extends MonsterEntity implements IFlyingAnimal {
     public float roll;
     public float prevRoll;
 
-    public int swoopCooldown;
+    public int swoopCooldown, flapTime;
 
     private final MeanValueRecorder deltaYaw = new MeanValueRecorder(20);
     private final ChainSolver<HunterEntity> chainSolver = new ChainSolver<>(
@@ -162,6 +166,12 @@ public class HunterEntity extends MonsterEntity implements IFlyingAnimal {
 
         this.limbSwingAmount += (moveAmount - this.limbSwingAmount) * 0.4F;
         this.limbSwing += this.limbSwingAmount;
+
+        ++this.flapTime;
+        if (this.flapTime >= 15 && moveAmount >= 0.4F) {
+            this.world.playSound(null, this.posX, this.posY, this.posZ, MidnightSounds.HUNTER_FLYING, SoundCategory.HOSTILE, 0.15F, MathHelper.clamp(this.rand.nextFloat(), 0.7f, 1.0f) + MathHelper.clamp(this.rand.nextFloat(), 0f, 0.3f));
+            this.flapTime = 0;
+        }
     }
 
     @Override
@@ -265,6 +275,16 @@ public class HunterEntity extends MonsterEntity implements IFlyingAnimal {
                 }
             }
         }
+    }
+
+    @Override
+    protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
+        return MidnightSounds.HUNTER_HURT;
+    }
+
+    @Override
+    protected SoundEvent getDeathSound() {
+        return MidnightSounds.HUNTER_DEATH;
     }
 
     @Override

@@ -2,6 +2,7 @@ package com.mushroom.midnight.common.entity.creature;
 
 import com.mushroom.midnight.common.entity.task.NeutralGoal;
 import com.mushroom.midnight.common.registry.MidnightLootTables;
+import com.mushroom.midnight.common.registry.MidnightSounds;
 import net.minecraft.entity.AgeableEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntitySize;
@@ -28,6 +29,7 @@ import net.minecraft.pathfinding.PathNavigator;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.SoundEvent;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
@@ -188,6 +190,16 @@ public class SkulkEntity extends AnimalEntity {
     @Override
     protected int getExperiencePoints(PlayerEntity player) {
         return 1 + this.world.rand.nextInt(3);
+    }
+
+    @Override
+    protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
+        return MidnightSounds.SKULK_HURT;
+    }
+
+    @Override
+    protected SoundEvent getDeathSound() {
+        return MidnightSounds.SKULK_DEATH;
     }
 
     @Override

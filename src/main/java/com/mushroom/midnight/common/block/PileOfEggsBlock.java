@@ -4,6 +4,7 @@ import com.mushroom.midnight.common.entity.creature.StingerEntity;
 import com.mushroom.midnight.common.registry.MidnightSounds;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.MobEntity;
@@ -18,6 +19,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.Hand;
 import net.minecraft.util.SoundCategory;
+import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.shapes.ISelectionContext;
@@ -29,12 +31,13 @@ import javax.annotation.Nullable;
 
 @SuppressWarnings({ "WeakerAccess", "deprecation" })
 public abstract class PileOfEggsBlock extends Block {
+    public static final SoundType PILE_OF_EGGS = new SoundType(1.0F, 1.0F, MidnightSounds.EGG_CRACKED, SoundEvents.BLOCK_STONE_STEP, SoundEvents.BLOCK_STONE_PLACE, SoundEvents.BLOCK_STONE_HIT, SoundEvents.BLOCK_STONE_FALL);
     protected static final VoxelShape bound_one_egg = makeCuboidShape(3.0, 0.0, 3.0, 13.0, 7.0, 13.0);
     protected static final VoxelShape bound_several_eggs = makeCuboidShape(1.0, 0.0, 1.0, 15.0, 7.0, 15.0);
     public static final IntegerProperty EGGS = IntegerProperty.create("eggs", 1, 4);
 
     protected PileOfEggsBlock() {
-        super(Properties.create(Material.ROCK).sound(MidnightSounds.PILE_OF_EGGS).hardnessAndResistance(-1f, 0f));
+        super(Properties.create(Material.ROCK).sound(PILE_OF_EGGS).hardnessAndResistance(-1f, 0f));
         setDefaultState(getStateContainer().getBaseState().with(EGGS, 1));
     }
 
@@ -89,7 +92,7 @@ public abstract class PileOfEggsBlock extends Block {
 
     protected void breakEggs(World world, BlockPos pos, BlockState state) {
         if (world.isRemote) { return; }
-        world.playSound(null, pos, MidnightSounds.PILE_OF_EGGS.getBreakSound(), SoundCategory.BLOCKS, 0.7F, 0.9F + world.rand.nextFloat() * 0.2F);
+        world.playSound(null, pos, PILE_OF_EGGS.getBreakSound(), SoundCategory.BLOCKS, 0.7F, 0.9F + world.rand.nextFloat() * 0.2F);
         int eggs = state.get(EGGS);
         if (eggs <= 1) {
             world.destroyBlock(pos, false);

@@ -2,14 +2,15 @@ package com.mushroom.midnight.common.entity.creature;
 
 import com.mushroom.midnight.common.registry.MidnightItems;
 import com.mushroom.midnight.common.registry.MidnightLootTables;
+import com.mushroom.midnight.common.registry.MidnightSounds;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.passive.WaterMobEntity;
 import net.minecraft.entity.passive.fish.AbstractFishEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.pathfinding.PathNavigator;
 import net.minecraft.pathfinding.SwimmerPathNavigator;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.SoundEvents;
@@ -79,5 +80,15 @@ public class DeceitfulSnapperEntity extends AbstractFishEntity {
     @Override
     protected ResourceLocation getLootTable() {
         return MidnightLootTables.LOOT_TABLE_DECEITFUL_SNAPPER;
+    }
+
+    @Override
+    protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
+        return MidnightSounds.SNAPPER_HURT;
+    }
+
+    @Override
+    protected SoundEvent getDeathSound() {
+        return MidnightSounds.SNAPPER_DEATH;
     }
 }
