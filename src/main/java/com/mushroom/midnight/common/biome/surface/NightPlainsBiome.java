@@ -1,10 +1,9 @@
 package com.mushroom.midnight.common.biome.surface;
 
+import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.common.biome.MidnightBiomeConfigurator;
 import com.mushroom.midnight.common.biome.MidnightSurfaceBuilders;
 import com.mushroom.midnight.common.registry.MidnightEntities;
-import net.minecraft.entity.EntityClassification;
-import net.minecraft.world.biome.Biome;
 
 public class NightPlainsBiome extends SurfaceBiome {
     public NightPlainsBiome() {
@@ -30,6 +29,6 @@ public class NightPlainsBiome extends SurfaceBiome {
         MidnightBiomeConfigurator.addStandardMonsterSpawns(this);
         MidnightBiomeConfigurator.addStandardCreatureSpawns(this);
 
-        this.add(EntityClassification.MONSTER, new Biome.SpawnListEntry(MidnightEntities.HUNTER, 5, 1, 2));
+        add(Midnight.MIDNIGHT_MOB, new SpawnListEntry(MidnightEntities.HUNTER, 5, 1, 2));
     }
 }

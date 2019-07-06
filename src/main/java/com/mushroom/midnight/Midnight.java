@@ -67,7 +67,7 @@ public class Midnight {
             .simpleChannel();
 
     // TODO not sure why there're 2 strings param here (they can be replaced with normal entityClassification and directly set their number max in the mob spawner)
-    public static final EntityClassification MIDNIGHT_MOB = EntityClassification.create("midnight_mob", "midnight_mob", 20, false, false);
+    public static final EntityClassification MIDNIGHT_MOB = EntityClassification.create("midnight_mob", "midnight_mob", 10, false, false);
     public static final EntityClassification MIDNIGHT_AMBIENT = EntityClassification.create("midnight_ambient", "midnight_ambient", 30, true, false);
 
     @CapabilityInject(RiftTraveller.class)

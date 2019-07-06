@@ -1,9 +1,7 @@
 package com.mushroom.midnight.common.world;
 
-import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.common.biome.BiomeLayers;
 import com.mushroom.midnight.common.biome.cavern.CavernousBiome;
-import com.mushroom.midnight.common.capability.MidnightWorldSpawners;
 import com.mushroom.midnight.common.registry.MidnightBlocks;
 import net.minecraft.util.SharedSeedRandom;
 import net.minecraft.world.GameRules;
@@ -60,9 +58,9 @@ public class MidnightChunkGenerator extends NoiseChunkGenerator<MidnightChunkGen
     }
 
     @Override
-    public void spawnMobs(ServerWorld world, boolean p_203222_2_, boolean p_203222_3_) {
+    public void spawnMobs(ServerWorld world, boolean spawnHostileMobs, boolean spawnPeacefulMobs) {
         if (this.world.getGameRules().getBoolean(GameRules.DO_MOB_SPAWNING)) {
-            this.world.getCapability(Midnight.WORLD_SPAWNERS_CAP).ifPresent(MidnightWorldSpawners::spawnAroundPlayers);
+            //this.world.getCapability(Midnight.WORLD_SPAWNERS_CAP).ifPresent(MidnightWorldSpawners::spawnAroundPlayers);
         }
     }
 

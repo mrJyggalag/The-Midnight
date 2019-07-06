@@ -1,9 +1,9 @@
 package com.mushroom.midnight.common.biome.surface;
 
+import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.common.biome.MidnightBiomeConfigurator;
 import com.mushroom.midnight.common.biome.MidnightSurfaceBuilders;
 import com.mushroom.midnight.common.registry.MidnightEntities;
-import net.minecraft.entity.EntityClassification;
 import net.minecraft.world.biome.Biome;
 
 public class WarpedFieldsBiome extends SurfaceBiome {
@@ -31,6 +31,6 @@ public class WarpedFieldsBiome extends SurfaceBiome {
         MidnightBiomeConfigurator.addStandardCreatureSpawns(this);
         MidnightBiomeConfigurator.addStandardMonsterSpawns(this);
 
-        this.add(EntityClassification.MONSTER, new Biome.SpawnListEntry(MidnightEntities.HUNTER, 5, 0, 2));
+        this.add(Midnight.MIDNIGHT_MOB, new Biome.SpawnListEntry(MidnightEntities.HUNTER, 5, 0, 2));
     }
 }

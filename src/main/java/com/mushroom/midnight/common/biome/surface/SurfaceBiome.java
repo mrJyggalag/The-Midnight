@@ -79,7 +79,7 @@ public abstract class SurfaceBiome extends Biome implements ConfigurableBiome {
 
     @Override
     public void add(EntityClassification classification, SpawnListEntry entry) {
-//        super.addSpawn(classification, entry);
+        super.addSpawn(classification, entry);
     }
 
     public static final class PlacementLevel implements SurfacePlacementLevel {

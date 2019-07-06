@@ -1,5 +1,6 @@
 package com.mushroom.midnight.common.biome.surface;
 
+import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.common.biome.MidnightBiomeConfigurator;
 import com.mushroom.midnight.common.biome.MidnightSurfaceBuilders;
 import com.mushroom.midnight.common.registry.MidnightEntities;
@@ -27,6 +28,6 @@ public class CrystalSpiresBiome extends SurfaceBiome {
         MidnightBiomeConfigurator.addGlobalFeatures(this);
 
         this.add(EntityClassification.CREATURE, new Biome.SpawnListEntry(MidnightEntities.NIGHTSTAG, 100, 1, 3));
-        this.add(EntityClassification.AMBIENT, new Biome.SpawnListEntry(MidnightEntities.CRYSTAL_BUG, 100, 7, 10));
+        this.add(Midnight.MIDNIGHT_AMBIENT, new Biome.SpawnListEntry(MidnightEntities.CRYSTAL_BUG, 100, 7, 10));
     }
 }

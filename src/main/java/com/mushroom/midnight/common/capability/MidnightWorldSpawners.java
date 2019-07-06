@@ -64,14 +64,14 @@ public interface MidnightWorldSpawners extends ICapabilityProvider {
 
         @Override
         public void populateChunk(int chunkX, int chunkZ, Random random) {
-            this.biomeEntitySpawner.populateChunk(this.world, chunkX, chunkZ, random);
-            this.cavernEntitySpawner.populateChunk(this.world, chunkX, chunkZ, random);
+            //this.biomeEntitySpawner.populateChunk(this.world, chunkX, chunkZ, random);
+            //this.cavernEntitySpawner.populateChunk(this.world, chunkX, chunkZ, random);
         }
 
         @Override
         public void spawnAroundPlayers() {
-            this.biomeEntitySpawner.spawnAroundPlayers(this.world);
-            this.cavernEntitySpawner.spawnAroundPlayers(this.world);
+            //this.biomeEntitySpawner.spawnAroundPlayers(this.world);
+            //this.cavernEntitySpawner.spawnAroundPlayers(this.world);
         }
     }
 }

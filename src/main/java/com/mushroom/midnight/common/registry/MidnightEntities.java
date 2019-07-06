@@ -16,11 +16,23 @@ import com.mushroom.midnight.common.entity.projectile.BladeshroomCapEntity;
 import com.mushroom.midnight.common.entity.projectile.SporeBombEntity;
 import com.mushroom.midnight.common.entity.projectile.ThrownGeodeEntity;
 import net.minecraft.entity.EntityClassification;
+import net.minecraft.entity.EntitySpawnPlacementRegistry;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.MobEntity;
+import net.minecraft.entity.SpawnReason;
+import net.minecraft.entity.monster.MonsterEntity;
+import net.minecraft.entity.passive.fish.AbstractFishEntity;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.Difficulty;
+import net.minecraft.world.IWorld;
+import net.minecraft.world.LightType;
+import net.minecraft.world.gen.Heightmap;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.ObjectHolder;
+
+import java.util.Random;
 
 import static com.mushroom.midnight.Midnight.*;
 
@@ -89,7 +101,7 @@ public class MidnightEntities {
             .setShouldReceiveVelocityUpdates(true)
             .size(0.9f, 1.87f) // .egg(0x946CC2, 0x221F1D)
             .build(MODID + ":nightstag");
-    public static final EntityType<DeceitfulSnapperEntity> DECEITFUL_SNAPPER = EntityType.Builder.create(DeceitfulSnapperEntity::new, MIDNIGHT_MOB)
+    public static final EntityType<DeceitfulSnapperEntity> DECEITFUL_SNAPPER = EntityType.Builder.create(DeceitfulSnapperEntity::new, EntityClassification.WATER_CREATURE)
             .setTrackingRange(80)
             .setUpdateInterval(3)
             .setShouldReceiveVelocityUpdates(true)
@@ -154,10 +166,38 @@ public class MidnightEntities {
         CLOUD.setRegistryName(MODID, "cloud");
         event.getRegistry().register(CLOUD);
 
-        // TODO check placement logic for spawn
-        //EntitySpawnPlacementRegistry.setPlacementType(HunterEntity.class, MobEntity.SpawnPlacementType.IN_AIR);
-        //EntitySpawnPlacementRegistry.setPlacementType(CrystalBugEntity.class, MobEntity.SpawnPlacementType.IN_AIR);
-        //EntitySpawnPlacementRegistry.setPlacementType(NovaEntity.class, MobEntity.SpawnPlacementType.IN_AIR);
-        //EntitySpawnPlacementRegistry.setPlacementType(DeceitfulSnapperEntity.class, MobEntity.SpawnPlacementType.IN_WATER);
+        EntitySpawnPlacementRegistry.register(HUNTER, EntitySpawnPlacementRegistry.PlacementType.NO_RESTRICTIONS, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, MidnightEntities::monsterCondition);
+        EntitySpawnPlacementRegistry.register(CRYSTAL_BUG, EntitySpawnPlacementRegistry.PlacementType.NO_RESTRICTIONS, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, MidnightEntities::mobCondition);
+        EntitySpawnPlacementRegistry.register(NOVA, EntitySpawnPlacementRegistry.PlacementType.NO_RESTRICTIONS, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, MidnightEntities::monsterCondition);
+        EntitySpawnPlacementRegistry.register(DECEITFUL_SNAPPER, EntitySpawnPlacementRegistry.PlacementType.IN_WATER, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, MidnightEntities::fishCondition);
+
+        EntitySpawnPlacementRegistry.register(RIFTER, EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, MidnightEntities::monsterCondition);
+
+        EntitySpawnPlacementRegistry.register(STINGER, EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, MidnightEntities::mobCondition);
+        EntitySpawnPlacementRegistry.register(SKULK, EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, MidnightEntities::mobCondition);
+        EntitySpawnPlacementRegistry.register(NIGHTSTAG, EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, MidnightEntities::mobCondition);
+    }
+
+    private static boolean fishCondition(EntityType<? extends AbstractFishEntity> entityType, IWorld world, SpawnReason spawnReason, BlockPos pos, Random random) {
+        return world.getBlockState(pos).getBlock() == MidnightBlocks.DARK_WATER && world.getBlockState(pos.up()).getBlock() == MidnightBlocks.DARK_WATER;
+    }
+
+    private static boolean monsterCondition(EntityType<? extends MonsterEntity> entityType, IWorld world, SpawnReason spawnReason, BlockPos pos, Random random) {
+        return world.getDifficulty() != Difficulty.PEACEFUL && mobCondition(entityType, world, spawnReason, pos, random); // && lightCondition(world, pos, random)
+    }
+
+    private static boolean mobCondition(EntityType<? extends MobEntity> entityType, IWorld world, SpawnReason spawnReason, BlockPos pos, Random random) {
+        BlockPos blockpos = pos.down();
+        return spawnReason == SpawnReason.SPAWNER || world.getWorld().getBlockState(blockpos).canEntitySpawn(world, blockpos, entityType);
+    }
+
+    // unused
+    private static boolean lightCondition(IWorld world, BlockPos pos, Random random) {
+        if (world.getLightFor(LightType.SKY, pos) > random.nextInt(32)) {
+            return false;
+        } else {
+            int i = world.getWorld().isThundering() ? world.getNeighborAwareLightSubtracted(pos, 10) : world.getLight(pos);
+            return i <= random.nextInt(8);
+        }
     }
 }

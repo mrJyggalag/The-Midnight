@@ -1,5 +1,6 @@
 package com.mushroom.midnight.common.biome;
 
+import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.common.block.BladeshroomBlock;
 import com.mushroom.midnight.common.registry.MidnightBlocks;
 import com.mushroom.midnight.common.registry.MidnightEntities;
@@ -340,6 +341,6 @@ public class MidnightBiomeConfigurator {
     }
 
     private static void addMonster(ConfigurableBiome biome, EntityType<?> type, int weight, int minGroupSize, int maxGroupSize) {
-        biome.add(EntityClassification.MONSTER, new Biome.SpawnListEntry(type, weight, minGroupSize, maxGroupSize));
+        biome.add(Midnight.MIDNIGHT_MOB, new Biome.SpawnListEntry(type, weight, minGroupSize, maxGroupSize));
     }
 }
