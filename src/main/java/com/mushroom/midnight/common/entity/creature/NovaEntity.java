@@ -60,7 +60,7 @@ public class NovaEntity extends MonsterEntity implements IFlyingAnimal {
 
     @Override
     protected float getStandingEyeHeight(Pose pose, EntitySize size) {
-        return super.getEyeHeight(pose, size) * 0.5f;
+        return super.getStandingEyeHeight(pose, size) * 0.5f;
     }
 
     @Override
