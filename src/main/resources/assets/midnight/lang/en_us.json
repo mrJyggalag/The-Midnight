@@ -281,6 +281,21 @@
 
   "item.midnight.bladeshroom_cap": "Bladeshroom Cap",
   "item.midnight.bladeshroom_spores": "Bladeshroom Spores",
+  
+  "item.midnight.deceitful_snapper_bucket": "Deceitful Snapper Bucket",
+  
+  "_comment": "Spawn Eggs",
+  
+  "item.midnight.rifter_spawn_egg": "Rifter Spawn Egg",
+  "item.midnight.hunter_spawn_egg": "Hunter Spawn Egg",
+  "item.midnight.nova_spawn_egg": "Nova Egg",
+  "item.midnight.crystal_bug_spawn_egg": "Crystal Bug Spawn Egg",
+  "item.midnight.penumbrian_spawn_egg": "Penumbrian Spawn Egg",
+  "item.midnight.tree_hopper_spawn_egg": "Treehopper Spawn Egg",
+  "item.midnight.stinger_spawn_egg": "Stinger Spawn Egg",
+  "item.midnight.nightstag_spawn_egg": "Nightstag Spawn Egg",
+  "item.midnight.deceitful_snapper_spawn_egg": "Deceitful Snapper Spawn Egg",
+  "item.midnight.skulk_spawn_egg": "Skulk Spawn Egg", 
 
   "_comment": "Tools, Weapons and Armors",
 
@@ -324,9 +339,7 @@
   "item.midnight.tenebrum_chestplate": "Tenebrum Chestplate",
   "item.midnight.tenebrum_leggings": "Tenebrum Leggings",
   "item.midnight.tenebrum_boots": "Tenebrum Boots",
-
-  "item.midnight.deceitful_snapper_bucket": "Deceitful Snapper Bucket",
-
+  
   "_comment": "Fluids",
 
   "fluid.midnight.miasma": "Miasma",
