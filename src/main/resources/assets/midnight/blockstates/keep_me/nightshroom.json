@@ -1,0 +1,27 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "forge:multi-layer",
+    "transform": "forge:default-block",
+    "custom": {
+      "base": "midnight:nightshroom#base",
+      "Cutout": "midnight:nightshroom#base",
+      "Translucent": "midnight:nightshroom#glow"
+    }
+  },
+  "variants": {
+    "normal": [{}],
+    "base": [
+      {
+        "model": "cross",
+        "textures": {"cross": "midnight:blocks/nightshroom"}
+      }
+    ],
+    "glow": [
+      {
+        "model": "cross",
+        "textures": {"cross": "midnight:blocks/nightshroom_glow"}
+      }
+    ]
+  }
+}

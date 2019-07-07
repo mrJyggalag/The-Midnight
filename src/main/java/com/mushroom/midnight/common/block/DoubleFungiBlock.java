@@ -6,6 +6,7 @@ import net.minecraft.block.trees.Tree;
 import net.minecraft.state.IntegerProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
+import net.minecraft.state.properties.DoubleBlockHalf;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
@@ -21,7 +22,7 @@ public class DoubleFungiBlock extends MidnightDoublePlantBlock {
     public DoubleFungiBlock(Properties properties, @Nullable Tree tree) {
         super(properties, true);
         this.tree = tree;
-        this.setDefaultState(this.stateContainer.getBaseState().with(STAGE, 0));
+        this.setDefaultState(this.stateContainer.getBaseState().with(STAGE, 0).with(HALF, DoubleBlockHalf.LOWER));
     }
 
     @Override
