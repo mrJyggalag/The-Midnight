@@ -1,40 +1,40 @@
 {
-  "forge_marker": 1,
-  "defaults": {
-    "textures": {
-      "all": "midnight:blocks/viridshroom_hat_outside",
-      "outer": "midnight:blocks/viridshroom_hat_outside",
-      "inner": "midnight:blocks/viridshroom_hat_inside"
+  "multipart": [
+    { "when": { "up": "true" },
+      "apply": { "model": "midnight:block/viridshroom_mushroom_inner", "x": 90 }
     },
-    "uvlock": true
-  },
-  "variants": {
-    "normal": [{}],
-    "up": {
-      "true": {"submodel": "midnight:mushroom_inner", "x": 90},
-      "false": {"submodel": "midnight:mushroom_outer", "x": 90}
+    { "when": { "up": "false" },
+      "apply": { "model": "midnight:block/viridshroom_mushroom_outer", "x": 90 }
     },
-    "down": {
-      "true": {"submodel": "midnight:mushroom_inner", "x": 270},
-      "false": {"submodel": "midnight:mushroom_outer", "x": 270}
+    { "when": { "down": "true" },
+      "apply": { "model": "midnight:block/viridshroom_mushroom_inner", "x": 270 }
     },
-    "south": {
-      "true": {"submodel": "midnight:mushroom_inner"},
-      "false": {"submodel": "midnight:mushroom_outer"}
+    { "when": { "down": "false" },
+      "apply": { "model": "midnight:block/viridshroom_mushroom_outer", "x": 270 }
     },
-    "west": {
-      "true": {"submodel": "midnight:mushroom_inner", "y": 90},
-      "false": {"submodel": "midnight:mushroom_outer", "y": 90}
+    { "when": { "south": "true" },
+      "apply": { "model": "midnight:block/viridshroom_mushroom_inner" }
     },
-    "north": {
-      "true": {"submodel": "midnight:mushroom_inner", "y": 180},
-      "false": {"submodel": "midnight:mushroom_outer", "y": 180}
+    { "when": { "south": "false" },
+      "apply": { "model": "midnight:block/viridshroom_mushroom_outer" }
     },
-    "east": {
-      "true": {"submodel": "midnight:mushroom_inner", "y": 270},
-      "false": {"submodel": "midnight:mushroom_outer", "y": 270}
+    { "when": { "west": "true" },
+      "apply": { "model": "midnight:block/viridshroom_mushroom_inner", "y": 90 }
     },
-    "inventory": {"model": "cube_all"}
-  }
+    { "when": { "west": "false" },
+      "apply": { "model": "midnight:block/viridshroom_mushroom_outer", "y": 90 }
+    },
+    { "when": { "north": "true" },
+      "apply": { "model": "midnight:block/viridshroom_mushroom_inner", "y": 180 }
+    },
+    { "when": { "north": "false" },
+      "apply": { "model": "midnight:block/viridshroom_mushroom_outer", "y": 180 }
+    },
+    { "when": { "east": "true" },
+      "apply": { "model": "midnight:block/viridshroom_mushroom_inner", "y": 270 }
+    },
+    { "when": { "east": "false" },
+      "apply": { "model": "midnight:block/viridshroom_mushroom_outer", "y": 270 }
+    }
+  ]
 }
-
