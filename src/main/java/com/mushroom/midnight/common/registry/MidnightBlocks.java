@@ -14,6 +14,7 @@ import com.mushroom.midnight.common.block.DeceitfulMudBlock;
 import com.mushroom.midnight.common.block.DoubleFungiBlock;
 import com.mushroom.midnight.common.block.DragonNestBlock;
 import com.mushroom.midnight.common.block.FingeredGrassBlock;
+import com.mushroom.midnight.common.block.FungiBlock;
 import com.mushroom.midnight.common.block.MiasmaSurfaceBlock;
 import com.mushroom.midnight.common.block.MidnightChestBlock;
 import com.mushroom.midnight.common.block.MidnightDoublePlantBlock;
@@ -377,10 +378,10 @@ public class MidnightBlocks {
                 )
                 .add("grass", props -> new MidnightPlantBlock(props, false, () -> TALL_GRASS))
                 .add("tall_grass", props -> new MidnightDoublePlantBlock(props, false))
-                .add("nightshroom", props -> new MidnightPlantBlock(props, true, () -> DOUBLE_NIGHTSHROOM))
-                .add("dewshroom", props -> new MidnightPlantBlock(props, true, () -> DOUBLE_DEWSHROOM))
-                .add("viridshroom", props -> new MidnightPlantBlock(props, true, () -> DOUBLE_VIRIDSHROOM))
-                .add("bogshroom", props -> new MidnightPlantBlock(props, true, () -> DOUBLE_BOGSHROOM))
+                .add("nightshroom", props -> new FungiBlock(props, true, () -> DOUBLE_NIGHTSHROOM))
+                .add("dewshroom", props -> new FungiBlock(props, true, () -> DOUBLE_DEWSHROOM))
+                .add("viridshroom", props -> new FungiBlock(props, true, () -> DOUBLE_VIRIDSHROOM))
+                .add("bogshroom", props -> new FungiBlock(props, true, () -> DOUBLE_BOGSHROOM))
 
                 .add("double_nightshroom", props -> new DoubleFungiBlock(props, new NightshroomTree()))
                 .add("double_dewshroom", props -> new DoubleFungiBlock(props, new DewshroomTree()))
