@@ -1,6 +1,6 @@
 {
-  "parent": "block/crop",
+  "parent": "block/cross",
   "textures": {
-    "crop": "midnight:blocks/unstable_bush_stage_4"
+    "cross": "midnight:blocks/unstable_bush_stage_4"
   }
 }
