@@ -11,6 +11,7 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
+import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -38,14 +39,19 @@ public class DragonNestBlock extends MidnightPlantBlock {
 
     @Override
     public boolean isValidGround(BlockState state, IBlockReader world, BlockPos pos) {
-        return world.getBlockState(pos.up()).isNormalCube(world, pos);
+        return state.isNormalCube(world, pos);
+    }
+
+    @Override
+    public boolean isValidPosition(BlockState state, IWorldReader world, BlockPos pos) {
+        return isValidGround(world.getBlockState(pos.up()), world, pos.up());
     }
 
     @Override
     @OnlyIn(Dist.CLIENT)
     public void animateTick(BlockState state, World world, BlockPos pos, Random rand) {
         super.animateTick(state, world, pos, rand);
-        if (rand.nextBoolean()) {
+        if (rand.nextFloat() < 0.2f) {
             Vec3d offset = getOffset(state, world, pos);
             double distX = rand.nextFloat() * 0.6 - 0.3d;
             double posX = pos.getX() + 0.5d + offset.x + distX;

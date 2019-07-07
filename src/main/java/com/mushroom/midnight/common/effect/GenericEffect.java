@@ -2,7 +2,6 @@ package com.mushroom.midnight.common.effect;
 
 import net.minecraft.potion.Effect;
 import net.minecraft.potion.EffectType;
-import net.minecraft.util.ResourceLocation;
 
 public class GenericEffect extends Effect {
 

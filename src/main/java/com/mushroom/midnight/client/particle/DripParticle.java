@@ -16,15 +16,15 @@ public class DripParticle extends MidnightParticle {
 
     public DripParticle(World world, double x, double y, double z, float r, float g, float b) {
         super(world, x, y, z, 0d, 0d, 0d);
-        //setParticleTextureIndex(113);
         this.particleRed = r;
         this.particleGreen = g;
         this.particleBlue = b;
         setSize(0.01f, 0.01f);
-        this.particleGravity = 0.06f;
+        this.particleGravity = 0.04f;
         this.maxAge = (int) (64d / (Math.random() * 0.8d + 0.2d));
         this.bobTimer = this.maxAge * 3 / 4;
         this.motionX = this.motionY = this.motionZ = 0d;
+        this.particleScale *= 2f;
     }
 
     @Override
@@ -59,7 +59,7 @@ public class DripParticle extends MidnightParticle {
 
     @Override
     ResourceLocation getTexture() {
-        return null; // TODO fix me later
+        return MidnightParticleSprites.DRAGON_NEST;
     }
 
     @OnlyIn(Dist.CLIENT)
@@ -68,7 +68,7 @@ public class DripParticle extends MidnightParticle {
         @Override
         //TODO params params.length > 0 ? params[0] / 255f : 0f, params.length > 1 ? params[1] / 255f : 0f, params.length > 2 ? params[2] / 255f : 0f
         public Particle makeParticle(IParticleData type, World world, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
-            return new DripParticle(world, x, y, z, 0xff, 0xff, 0xff);
+            return new DripParticle(world, x, y, z, 1f, 0.5f, 0.5f);
         }
     }
 }

@@ -49,6 +49,7 @@ public class MidnightParticleSprites {
     public static final ResourceLocation LIME_UNSTABLE_BUSH = new ResourceLocation(MODID, "textures/particles/lime_unstable_bush.png");
     public static final ResourceLocation GREEN_UNSTABLE_BUSH = new ResourceLocation(MODID, "textures/particles/green_unstable_bush.png");
     public static final ResourceLocation BOMB_EXPLOSION = new ResourceLocation(MODID, "textures/particles/bomb_explosion.png");
+    public static final ResourceLocation DRAGON_NEST = new ResourceLocation(MODID, "textures/particles/dragons_nest_drip.png");
 
     public static final EnumMap<SporchBlock.SporchType, List<ResourceLocation>> SPORCHES = new EnumMap<>(SporchBlock.SporchType.class);
 
