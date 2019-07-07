@@ -1,0 +1,28 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "forge:multi-layer",
+    "transform": "forge:default-block",
+    "custom": {
+      "base": "midnight:bulb_fungus#base",
+      "Cutout": "midnight:bulb_fungus#base",
+      "Translucent": "midnight:bulb_fungus#glow"
+    }
+  },
+  "variants": {
+    "normal": [{}],
+	"inventory": [{"model":"builtin/generated","textures":{"layer0":"midnight:blocks/bulb_fungus"},"transform":"forge:default-item"}],
+    "base": [
+      {
+        "model": "cross",
+        "textures": {"cross": "midnight:blocks/bulb_fungus"}
+      }
+    ],
+    "glow": [
+      {
+        "model": "cross",
+        "textures": {"cross": "midnight:blocks/bulb_fungus_glow"}
+      }
+    ]
+  }
+}

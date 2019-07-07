@@ -1,0 +1,28 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "forge:multi-layer",
+    "transform": "forge:default-block",
+    "custom": {
+      "base": "midnight:crystal_flower#base",
+      "Cutout": "midnight:crystal_flower#base",
+      "Translucent": "midnight:crystal_flower#glow"
+    }
+  },
+  "variants": {
+    "normal": [{}],
+	"inventory": [{"model":"builtin/generated","textures":{"layer0":"midnight:blocks/crystal_flower"},"transform":"forge:default-item"}],
+    "base": [
+      {
+        "model": "cross",
+        "textures": {"cross": "midnight:blocks/crystal_flower"}
+      }
+    ],
+    "glow": [
+      {
+        "model": "cross",
+        "textures": {"cross": "midnight:blocks/crystal_flower_glow"}
+      }
+    ]
+  }
+}
