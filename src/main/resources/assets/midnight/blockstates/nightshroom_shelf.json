@@ -1,23 +1,9 @@
 {
-  "forge_marker": 1,
-  "defaults": {
-    "model": "midnight:shelf",
-    "textures": {
-      "shelf": "midnight:blocks/nightshroom_shelf"
-    }
-  },
   "variants": {
-    "facing": {
-      "north": {},
-      "east": {"y": 90},
-      "south": {"y": 180},
-      "west": {"y": 270},
-      "up": {
-        "model": "midnight:fan",
-        "textures": {
-          "fan": "midnight:blocks/nightshroom_shelf"
-        }
-      }
-    }
+    "facing=north": {"model": "midnight:block/nightshroom_shelf"},
+    "facing=east": {"model": "midnight:block/nightshroom_shelf", "y": 90},
+    "facing=south": {"model": "midnight:block/nightshroom_shelf", "y": 180},
+    "facing=west": {"model": "midnight:block/nightshroom_shelf", "y": 270},
+    "facing=up": {"model": "midnight:block/nightshroom_fan"}
   }
 }

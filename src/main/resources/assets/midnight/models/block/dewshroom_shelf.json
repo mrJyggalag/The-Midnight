@@ -1,0 +1,6 @@
+{
+  "parent": "midnight:block/shelf",
+  "textures": {
+    "shelf": "midnight:blocks/dewshroom_shelf"
+  }
+}
