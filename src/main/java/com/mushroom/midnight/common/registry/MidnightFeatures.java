@@ -77,7 +77,7 @@ public class MidnightFeatures {
 //    public static final IMidnightFeature LARGE_BULB_FUNGUS_FEATURE = new LargeBulbFungusFeature();
 //
 //    public static final IMidnightFeature BULB_FUNGUS_FEATURE = new PlantFeature(
-//            MidnightBlocks.BULB_FUNGUS.getDefaultState(),
+//            MidnightBlocks.GLOB_FUNGUS.getDefaultState(),
 //            GeneratablePlant::canGenerate
 //    );
 //

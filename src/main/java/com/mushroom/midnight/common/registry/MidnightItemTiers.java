@@ -24,13 +24,13 @@ public class MidnightItemTiers {
             .withRepairMaterial(Ingredient.fromItems(MidnightBlocks.NIGHTSTONE))
             .build();
 
-    public static final IItemTier EBONYS = new Builder()
+    public static final IItemTier EBONITE = new Builder()
             .withHarvestLevel(2)
             .withMaxUses(350)
             .withEfficiency(6.0F)
             .withAttackDamage(2.0F)
             .withEnchantability(8)
-            .withRepairMaterial(Ingredient.fromItems(MidnightItems.EBONYS))
+            .withRepairMaterial(Ingredient.fromItems(MidnightItems.EBONITE))
             .build();
 
     public static final IItemTier NAGRILITE = new Builder()

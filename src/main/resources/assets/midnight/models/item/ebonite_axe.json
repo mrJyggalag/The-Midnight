@@ -1,6 +1,6 @@
 {
   "parent": "item/handheld",
   "textures": {
-    "layer0": "midnight:items/ebonys_shovel"
+    "layer0": "midnight:items/ebonite_axe"
   }
 }

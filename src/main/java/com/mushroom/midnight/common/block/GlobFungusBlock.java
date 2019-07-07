@@ -10,15 +10,15 @@ import net.minecraftforge.event.ForgeEventFactory;
 
 import java.util.Random;
 
-public class BulbFungusBlock extends MidnightPlantBlock implements IGrowable {
+public class GlobFungusBlock extends MidnightPlantBlock implements IGrowable {
     private final Tree tree;
 
-    public BulbFungusBlock(Properties properties, Tree tree) {
+    public GlobFungusBlock(Properties properties, Tree tree) {
         super(properties, true);
         this.tree = tree;
     }
 
-    // quantityDropped 1 BULB_FUNGUS_HAND (+ SilkTouch + Shearable)
+    // quantityDropped 1 GLOB_FUNGUS_HAND (+ SilkTouch + Shearable)
 
     @Override
     public boolean canGrow(IBlockReader worldIn, BlockPos pos, BlockState state, boolean isClient) {

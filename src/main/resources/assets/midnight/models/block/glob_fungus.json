@@ -1,6 +1,6 @@
 {
   "parent": "block/cross",
   "textures": {
-    "cross": "midnight:blocks/bulb_fungus"
+    "cross": "midnight:blocks/glob_fungus"
   }
 }

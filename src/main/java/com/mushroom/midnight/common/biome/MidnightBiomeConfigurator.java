@@ -45,7 +45,7 @@ public class MidnightBiomeConfigurator {
         ));
 
         biome.add(GenerationStage.Decoration.UNDERGROUND_ORES, Biome.createDecoratedFeature(
-                MidnightFeatures.ORE, new MidnightOreConfig(MidnightBlocks.EBONYS_ORE.getDefaultState(), 6),
+                MidnightFeatures.ORE, new MidnightOreConfig(MidnightBlocks.EBONITE_ORE.getDefaultState(), 6),
                 Placement.COUNT_RANGE, new CountRangeConfig(4, 0, 0, 24)
         ));
     }

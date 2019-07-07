@@ -16,11 +16,11 @@ public class LargeBulbFungusFeature extends TemplateTreeFeature {
             new ResourceLocation(Midnight.MODID, "mushroom/bulbfungus_2")
     };
 
-    private static final BlockState LOG = MidnightBlocks.BULB_FUNGUS_STEM.getDefaultState();
-    private static final BlockState LEAVES = MidnightBlocks.BULB_FUNGUS_HAT.getDefaultState();
+    private static final BlockState LOG = MidnightBlocks.GLOB_FUNGUS_STEM.getDefaultState();
+    private static final BlockState LEAVES = MidnightBlocks.GLOB_FUNGUS_HAT.getDefaultState();
 
     public LargeBulbFungusFeature(Function<Dynamic<?>, ? extends NoFeatureConfig> deserialize) {
         super(deserialize, TEMPLATES, LOG, LEAVES);
-        this.setSapling((IPlantable) MidnightBlocks.BULB_FUNGUS);
+        this.setSapling((IPlantable) MidnightBlocks.GLOB_FUNGUS);
     }
 }

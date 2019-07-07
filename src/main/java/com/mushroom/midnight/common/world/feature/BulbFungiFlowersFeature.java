@@ -17,6 +17,6 @@ public class BulbFungiFlowersFeature extends FlowersFeature {
 
     @Override
     public BlockState getRandomFlower(Random random, BlockPos pos) {
-        return MidnightBlocks.BULB_FUNGUS.getDefaultState();
+        return MidnightBlocks.GLOB_FUNGUS.getDefaultState();
     }
 }

@@ -35,8 +35,8 @@
   "block.midnight.dark_pearl_ore": "Dark Pearl Ore",
   "block.midnight.dark_pearl_block": "Dark Pearl Block",
 
-  "block.midnight.ebonys_ore": "Ebonite Ore",
-  "block.midnight.ebonys_block": "Ebonite Block",
+  "block.midnight.ebonite_ore": "Ebonite Ore",
+  "block.midnight.ebonite_block": "Ebonite Block",
 
   "block.midnight.archaic_ore": "Archaic Ore",
 
@@ -100,9 +100,9 @@
   "block.midnight.bogshroom_hat": "Bogshroom Cap",
   "block.midnight.bogshroom_shelf": "Bogshroom Shelf",
 
-  "block.midnight.bulb_fungus": "Glob Fungus",
-  "block.midnight.bulb_fungus_stem": "Glob Fungus Stem",
-  "block.midnight.bulb_fungus_hat": "Glob Fungus Cap",
+  "block.midnight.glob_fungus": "Glob Fungus",
+  "block.midnight.glob_fungus_stem": "Glob Fungus Stem",
+  "block.midnight.glob_fungus_hat": "Glob Fungus Cap",
 
   "block.midnight.bladeshroom": "Bladeshroom",
 
@@ -156,8 +156,8 @@
   "block.midnight.viridshroom_double_slab": "Viridshroom Double Slab",
   "block.midnight.nightshroom_slab": "Nightshroom Slab",
   "block.midnight.nightshroom_double_slab": "Nightshroom Double Slab",
-  "block.midnight.rockshroom_bricks_slab": "Rockshroom Brick Slab",
-  "block.midnight.rockshroom_bricks_double_slab": "Rockshroom Brick Double Slab",
+  "block.midnight.rockshroom_brick_slab": "Rockshroom Brick Slab",
+  "block.midnight.rockshroom_brick_double_slab": "Rockshroom Brick Double Slab",
 
   "block.midnight.shadowroot_stairs": "Shadowroot Stairs",
   "block.midnight.dead_wood_stairs": "Dead Wood Stairs",
@@ -169,7 +169,7 @@
   "block.midnight.dewshroom_stairs": "Dewshroom Stairs",
   "block.midnight.viridshroom_stairs": "Viridshroom Stairs",
   "block.midnight.nightshroom_stairs": "Nightshroom Stairs",
-  "block.midnight.rockshroom_bricks_stairs": "Rockshroom Brick Stairs",
+  "block.midnight.rockshroom_brick_stairs": "Rockshroom Brick Stairs",
 
   "block.midnight.shadowroot_fence": "Shadowroot Fence",
   "block.midnight.dead_wood_fence": "Dead Wood Fence",
@@ -182,7 +182,7 @@
   "block.midnight.nightstone_brick_wall": "Nightstone Brick Wall",
   "block.midnight.trenchstone_wall": "Trenchstone Wall",
   "block.midnight.trenchstone_brick_wall": "Trenchstone Brick Wall",
-  "block.midnight.rockshroom_bricks_wall": "Rockshroom Brick Wall",
+  "block.midnight.rockshroom_brick_wall": "Rockshroom Brick Wall",
 
   "block.midnight.shadowroot_fence_gate": "Shadowroot Fence Gate",
   "block.midnight.dead_wood_fence_gate": "Dead Wood Fence Gate",
@@ -217,7 +217,7 @@
   "block.midnight.nightshroom_button": "Nightshroom Button",
   "block.midnight.nightstone_button": "Nightstone Button",
   "block.midnight.trenchstone_button": "Trenchstone Button",
-  "block.midnight.rockshroom_bricks_button": "Rockshroom Bricks Button",
+  "block.midnight.rockshroom_brick_button": "Rockshroom Bricks Button",
 
   "block.midnight.shadowroot_pressure_plate": "Shadowroot Pressure Plate",
   "block.midnight.dead_wood_pressure_plate": "Dead Wood Pressure Plate",
@@ -227,7 +227,7 @@
   "block.midnight.nightshroom_pressure_plate": "Nightshroom Pressure Plate",
   "block.midnight.nightstone_pressure_plate": "Nightstone Pressure Plate",
   "block.midnight.trenchstone_pressure_plate": "Trenchstone Pressure Plate",
-  "block.midnight.rockshroom_bricks_pressure_plate": "Rockshroom Bricks Pressure Plate",
+  "block.midnight.rockshroom_brick_pressure_plate": "Rockshroom Bricks Pressure Plate",
   "block.midnight.nagrilite_pressure_plate": "Nagrilite Pressure Plate",
   "block.midnight.tenebrum_pressure_plate": "Tenebrum Pressure Plate",
 
@@ -257,7 +257,7 @@
   "item.midnight.tenebrum_nugget": "Tenebrum Nugget",
   "item.midnight.nagrilite_ingot": "Nagrilite Ingot",
   "item.midnight.nagrilite_nugget": "Nagrilite Nugget",
-  "item.midnight.ebonys": "Ebonite",
+  "item.midnight.ebonite": "Ebonite",
   "item.midnight.archaic_shard": "Archaic Shard",
 
   "item.midnight.raw_suavis": "Raw Suavis Slice",
@@ -268,7 +268,7 @@
   "item.midnight.cooked_stinger_egg": "Cooked Stinger Egg",
   "item.midnight.hunter_wing": "Hunter Wing",
   "item.midnight.cooked_hunter_wing": "Cooked Hunter Wing",
-  "item.midnight.bulb_fungus_hand": "Glob Fungus Hand",
+  "item.midnight.glob_fungus_hand": "Glob Fungus Hand",
   "item.midnight.unstable_seeds": "Unstable Seeds",
   "item.midnight.blue_unstable_fruit": "Blue Unstable Fruit",
   "item.midnight.lime_unstable_fruit": "Lime Unstable Fruit",
@@ -302,31 +302,31 @@
   "item.midnight.shadowroot_pickaxe": "Shadowroot Pickaxe",
   "item.midnight.tenebrum_pickaxe": "Tenebrum Pickaxe",
   "item.midnight.nagrilite_pickaxe": "Nagrilite Pickaxe",
-  "item.midnight.ebonys_pickaxe": "Ebonite Pickaxe",
+  "item.midnight.ebonite_pickaxe": "Ebonite Pickaxe",
   "item.midnight.nightstone_pickaxe": "Nightstone Pickaxe",
 
   "item.midnight.shadowroot_shovel": "Shadowroot Shovel",
   "item.midnight.tenebrum_shovel": "Tenebrum Shovel",
   "item.midnight.nagrilite_shovel": "Nagrilite Shovel",
-  "item.midnight.ebonys_shovel": "Ebonite Shovel",
+  "item.midnight.ebonite_shovel": "Ebonite Shovel",
   "item.midnight.nightstone_shovel": "Nightstone Shovel",
 
   "item.midnight.shadowroot_axe": "Shadowroot Axe",
   "item.midnight.tenebrum_axe": "Tenebrum Axe",
   "item.midnight.nagrilite_axe": "Nagrilite Axe",
-  "item.midnight.ebonys_axe": "Ebonite Axe",
+  "item.midnight.ebonite_axe": "Ebonite Axe",
   "item.midnight.nightstone_axe": "Nightstone Axe",
 
   "item.midnight.shadowroot_hoe": "Shadowroot Hoe",
   "item.midnight.tenebrum_hoe": "Tenebrum Hoe",
   "item.midnight.nagrilite_hoe": "Nagrilite Hoe",
-  "item.midnight.ebonys_hoe": "Ebonite Hoe",
+  "item.midnight.ebonite_hoe": "Ebonite Hoe",
   "item.midnight.nightstone_hoe": "Nightstone Hoe",
 
   "item.midnight.shadowroot_sword": "Shadowroot Sword",
   "item.midnight.tenebrum_sword": "Tenebrum Sword",
   "item.midnight.nagrilite_sword": "Nagrilite Sword",
-  "item.midnight.ebonys_sword": "Ebonite Sword",
+  "item.midnight.ebonite_sword": "Ebonite Sword",
   "item.midnight.nightstone_sword": "Nightstone Sword",
 
   "item.midnight.rockshroom_helmet": "Rockshroom Helmet",

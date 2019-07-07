@@ -4,8 +4,8 @@ import com.mushroom.midnight.common.block.BasicBlock;
 import com.mushroom.midnight.common.block.BladeshroomBlock;
 import com.mushroom.midnight.common.block.BloomCrystalBlock;
 import com.mushroom.midnight.common.block.BogweedBlock;
-import com.mushroom.midnight.common.block.BulbFungusBlock;
-import com.mushroom.midnight.common.block.BulbFungusHatBlock;
+import com.mushroom.midnight.common.block.GlobFungusBlock;
+import com.mushroom.midnight.common.block.GlobFungusHatBlock;
 import com.mushroom.midnight.common.block.CrystalBlock;
 import com.mushroom.midnight.common.block.CrystalotusBlock;
 import com.mushroom.midnight.common.block.DeceitfulAlgaeBlock;
@@ -46,7 +46,7 @@ import com.mushroom.midnight.common.item.DeceitfulAlgaeItem;
 import com.mushroom.midnight.common.tile.base.TileEntityMidnightChest;
 import com.mushroom.midnight.common.tile.base.TileEntityMidnightFurnace;
 import com.mushroom.midnight.common.world.tree.BogshroomTree;
-import com.mushroom.midnight.common.world.tree.BulbFungusTree;
+import com.mushroom.midnight.common.world.tree.GlobFungusTree;
 import com.mushroom.midnight.common.world.tree.DarkWillowTree;
 import com.mushroom.midnight.common.world.tree.DewshroomTree;
 import com.mushroom.midnight.common.world.tree.NightshroomTree;
@@ -73,7 +73,6 @@ import net.minecraft.block.WoodButtonBlock;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
 import net.minecraft.item.BlockItem;
-import net.minecraft.item.BlockNamedItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.WallOrFloorItem;
 import net.minecraft.tileentity.TileEntityType;
@@ -110,8 +109,8 @@ public class MidnightBlocks {
     public static final Block TENEBRUM_BLOCK = Blocks.AIR;
     public static final Block NAGRILITE_ORE = Blocks.AIR;
     public static final Block NAGRILITE_BLOCK = Blocks.AIR;
-    public static final Block EBONYS_ORE = Blocks.AIR;
-    public static final Block EBONYS_BLOCK = Blocks.AIR;
+    public static final Block EBONITE_ORE = Blocks.AIR;
+    public static final Block EBONITE_BLOCK = Blocks.AIR;
     public static final Block ARCHAIC_ORE = Blocks.AIR;
 
     public static final Block SHADOWROOT_CRAFTING_TABLE = Blocks.AIR;
@@ -159,9 +158,9 @@ public class MidnightBlocks {
     public static final Block BOGSHROOM_STEM = Blocks.AIR;
     public static final Block BOGSHROOM_HAT = Blocks.AIR;
 
-    public static final Block BULB_FUNGUS = Blocks.AIR;
-    public static final Block BULB_FUNGUS_STEM = Blocks.AIR;
-    public static final Block BULB_FUNGUS_HAT = Blocks.AIR;
+    public static final Block GLOB_FUNGUS = Blocks.AIR;
+    public static final Block GLOB_FUNGUS_STEM = Blocks.AIR;
+    public static final Block GLOB_FUNGUS_HAT = Blocks.AIR;
 
     public static final Block ROCKSHROOM = Blocks.AIR;
     public static final Block ROCKSHROOM_BRICKS = Blocks.AIR;
@@ -233,7 +232,7 @@ public class MidnightBlocks {
     public static final Block DEWSHROOM_SLAB = Blocks.AIR;
     public static final Block VIRIDSHROOM_SLAB = Blocks.AIR;
     public static final Block NIGHTSHROOM_SLAB = Blocks.AIR;
-    public static final Block ROCKSHROOM_BRICKS_SLAB = Blocks.AIR;
+    public static final Block ROCKSHROOM_BRICK_SLAB = Blocks.AIR;
 
     public static final Block SHADOWROOT_STAIRS = Blocks.AIR;
     public static final Block DEAD_WOOD_STAIRS = Blocks.AIR;
@@ -245,7 +244,7 @@ public class MidnightBlocks {
     public static final Block DEWSHROOM_STAIRS = Blocks.AIR;
     public static final Block VIRIDSHROOM_STAIRS = Blocks.AIR;
     public static final Block NIGHTSHROOM_STAIRS = Blocks.AIR;
-    public static final Block ROCKSHROOM_BRICKS_STAIRS = Blocks.AIR;
+    public static final Block ROCKSHROOM_BRICK_STAIRS = Blocks.AIR;
 
     public static final Block SHADOWROOT_FENCE = Blocks.AIR;
     public static final Block DEAD_WOOD_FENCE = Blocks.AIR;
@@ -254,7 +253,7 @@ public class MidnightBlocks {
     public static final Block NIGHTSTONE_BRICK_WALL = Blocks.AIR;
     public static final Block TRENCHSTONE_WALL = Blocks.AIR;
     public static final Block TRENCHSTONE_BRICK_WALL = Blocks.AIR;
-    public static final Block ROCKSHROOM_BRICKS_WALL = Blocks.AIR;
+    public static final Block ROCKSHROOM_BRICK_WALL = Blocks.AIR;
     public static final Block DEWSHROOM_FENCE = Blocks.AIR;
     public static final Block VIRIDSHROOM_FENCE = Blocks.AIR;
     public static final Block NIGHTSHROOM_FENCE = Blocks.AIR;
@@ -301,7 +300,7 @@ public class MidnightBlocks {
     public static final Block NIGHTSHROOM_BUTTON = Blocks.AIR;
     public static final Block NIGHTSTONE_BUTTON = Blocks.AIR;
     public static final Block TRENCHSTONE_BUTTON = Blocks.AIR;
-    public static final Block ROCKSHROOM_BRICKS_BUTTON = Blocks.AIR;
+    public static final Block ROCKSHROOM_BRICK_BUTTON = Blocks.AIR;
 
     public static final Block SHADOWROOT_PRESSURE_PLATE = Blocks.AIR;
     public static final Block DEAD_WOOD_PRESSURE_PLATE = Blocks.AIR;
@@ -311,7 +310,7 @@ public class MidnightBlocks {
     public static final Block NIGHTSHROOM_PRESSURE_PLATE = Blocks.AIR;
     public static final Block NIGHTSTONE_PRESSURE_PLATE = Blocks.AIR;
     public static final Block TRENCHSTONE_PRESSURE_PLATE = Blocks.AIR;
-    public static final Block ROCKSHROOM_BRICKS_PRESSURE_PLATE = Blocks.AIR;
+    public static final Block ROCKSHROOM_BRICK_PRESSURE_PLATE = Blocks.AIR;
     public static final Block NAGRILITE_PRESSURE_PLATE = Blocks.AIR;
     public static final Block TENEBRUM_PRESSURE_PLATE = Blocks.AIR;
 
@@ -389,7 +388,7 @@ public class MidnightBlocks {
                 .add("double_bogshroom", props -> new DoubleFungiBlock(props, new BogshroomTree()))
                 .add("lumen_bud", props -> new MidnightPlantBlock(props, true, () -> DOUBLE_LUMEN_BUD))
                 .add("double_lumen_bud", props -> new MidnightDoublePlantBlock(props, true))
-                .add("bulb_fungus", props -> new BulbFungusBlock(props, new BulbFungusTree()))
+                .add("glob_fungus", props -> new GlobFungusBlock(props, new GlobFungusTree()))
                 .add("bogweed", BogweedBlock::new)
                 .add("ghost_plant", props -> new MidnightPlantBlock(props, true))
                 .add("fingered_grass", FingeredGrassBlock::new)
@@ -416,8 +415,8 @@ public class MidnightBlocks {
                 .add("dewshroom_stem", Block::new)
                 .add("viridshroom_stem", Block::new)
                 .add("bogshroom_stem", Block::new)
-                // TODO bulb fungus stem drops 4 BULB_FUNGUS_HAND, can silk touch & sheared
-                .add("bulb_fungus_stem", props -> new LogBlock(MaterialColor.BROWN, props.hardnessAndResistance(0.5f, 0f)))
+                // TODO glob fungus stem drops 4 GLOB_FUNGUS_HAND, can silk touch & sheared
+                .add("glob_fungus_stem", props -> new LogBlock(MaterialColor.BROWN, props.hardnessAndResistance(0.5f, 0f)))
                 .add("mushroom_inside", MushroomInsideBlock::new);
 
         RegUtil.blocks(event.getRegistry())
@@ -445,7 +444,7 @@ public class MidnightBlocks {
                 .add("dewshroom_hat", new MidnightFungiHatBlock(() -> DEWSHROOM, () -> MidnightItems.DEWSHROOM_POWDER, MaterialColor.PURPLE))
                 .add("viridshroom_hat", new MidnightFungiHatBlock(() -> VIRIDSHROOM, () -> MidnightItems.VIRIDSHROOM_POWDER, MaterialColor.EMERALD))
                 .add("bogshroom_hat", new MidnightFungiHatBlock(() -> BOGSHROOM, () -> MidnightItems.BOGSHROOM_POWDER, MaterialColor.ADOBE))
-                .add("bulb_fungus_hat", new BulbFungusHatBlock());
+                .add("glob_fungus_hat", new GlobFungusHatBlock());
 
         RegUtil.blocks(event.getRegistry())
                 .withProperties(() -> Block.Properties.create(Material.PLANTS, MaterialColor.PURPLE_TERRACOTTA).hardnessAndResistance(0f).doesNotBlockMovement().sound(SoundType.PLANT))
@@ -465,7 +464,7 @@ public class MidnightBlocks {
                 .add("dark_pearl_block", BasicBlock::new)
                 .add("tenebrum_block", BasicBlock::new)
                 .add("nagrilite_block", BasicBlock::new)
-                .add("ebonys_block", BasicBlock::new);
+                .add("ebonite_block", BasicBlock::new);
 
         RegUtil.blocks(event.getRegistry())
                 .add("rockshroom", new RockshroomBlock())
@@ -479,7 +478,7 @@ public class MidnightBlocks {
                 .add("dark_pearl_ore", new MidnightGemBlock(() -> MidnightItems.GEODE, 0))
                 .add("tenebrum_ore", new MidnightOreBlock(2))
                 .add("nagrilite_ore", new MidnightOreBlock(2))
-                .add("ebonys_ore", new MidnightGemBlock(() -> MidnightItems.EBONYS, 1))
+                .add("ebonite_ore", new MidnightGemBlock(() -> MidnightItems.EBONITE, 1))
                 .add("archaic_ore", new MidnightGemBlock(() -> MidnightItems.ARCHAIC_SHARD, 0))
                 .add("trenchstone_bricks", new BasicBlock(Block.Properties.create(Material.ROCK).hardnessAndResistance(1.5f, 200f), ToolType.PICKAXE, 2))
                 .add("archaic_glass", new MidnightGlassBlock())
@@ -543,7 +542,7 @@ public class MidnightBlocks {
                 .add("dewshroom_slab", new SlabBlock(Block.Properties.from(DEWSHROOM_PLANKS)))
                 .add("viridshroom_slab", new SlabBlock(Block.Properties.from(VIRIDSHROOM_PLANKS)))
                 .add("nightshroom_slab", new SlabBlock(Block.Properties.from(NIGHTSHROOM_PLANKS)))
-                .add("rockshroom_bricks_slab", new SlabBlock(Block.Properties.from(ROCKSHROOM_BRICKS)));
+                .add("rockshroom_brick_slab", new SlabBlock(Block.Properties.from(ROCKSHROOM_BRICKS)));
 
         RegUtil.blocks(event.getRegistry())
                 .add("shadowroot_stairs", new StairsBlock(SHADOWROOT_PLANKS.getDefaultState(), Block.Properties.from(SHADOWROOT_PLANKS)) {})
@@ -556,7 +555,7 @@ public class MidnightBlocks {
                 .add("dewshroom_stairs", new StairsBlock(DEWSHROOM_PLANKS.getDefaultState(), Block.Properties.from(DEWSHROOM_PLANKS)) {})
                 .add("viridshroom_stairs", new StairsBlock(VIRIDSHROOM_PLANKS.getDefaultState(), Block.Properties.from(TRENCHSTONE)) {})
                 .add("nightshroom_stairs", new StairsBlock(NIGHTSHROOM_PLANKS.getDefaultState(), Block.Properties.from(NIGHTSHROOM_PLANKS)) {})
-                .add("rockshroom_bricks_stairs", new StairsBlock(ROCKSHROOM_BRICKS.getDefaultState(), Block.Properties.from(ROCKSHROOM_BRICKS)) {});
+                .add("rockshroom_brick_stairs", new StairsBlock(ROCKSHROOM_BRICKS.getDefaultState(), Block.Properties.from(ROCKSHROOM_BRICKS)) {});
 
         RegUtil.blocks(event.getRegistry())
                 .withProperties(() -> Block.Properties.create(Material.WOOD, MaterialColor.ADOBE).hardnessAndResistance(2.0F, 3.0F).sound(SoundType.WOOD))
@@ -579,7 +578,7 @@ public class MidnightBlocks {
                 .add("nightstone_brick_wall", new WallBlock(Block.Properties.from(NIGHTSTONE_BRICKS)))
                 .add("trenchstone_wall", new WallBlock(Block.Properties.from(TRENCHSTONE)))
                 .add("trenchstone_brick_wall", new WallBlock(Block.Properties.from(TRENCHSTONE_BRICKS)))
-                .add("rockshroom_bricks_wall", new WallBlock(Block.Properties.from(ROCKSHROOM_BRICKS)));
+                .add("rockshroom_brick_wall", new WallBlock(Block.Properties.from(ROCKSHROOM_BRICKS)));
 
         RegUtil.blocks(event.getRegistry())
                 .withProperties(() -> Block.Properties.create(Material.MISCELLANEOUS).hardnessAndResistance(0.4F).sound(SoundType.LADDER))
@@ -604,7 +603,7 @@ public class MidnightBlocks {
         RegUtil.blocks(event.getRegistry())
                 .withProperties(() -> Block.Properties.create(Material.MISCELLANEOUS).doesNotBlockMovement().hardnessAndResistance(0.5F))
                 .add("nightstone_button", props -> new StoneButtonBlock(props) {}) //1.0F
-                .add("rockshroom_bricks_button", props -> new StoneButtonBlock(props) {}) //1.0F
+                .add("rockshroom_brick_button", props -> new StoneButtonBlock(props) {}) //1.0F
                 .add("trenchstone_button", props -> new StoneButtonBlock(props) {}); // TODO 3.75F button
 
         RegUtil.blocks(event.getRegistry())
@@ -619,7 +618,7 @@ public class MidnightBlocks {
         RegUtil.blocks(event.getRegistry())
                 .withProperties(() -> Block.Properties.create(Material.IRON).doesNotBlockMovement().hardnessAndResistance(0.5F).sound(SoundType.WOOD))
                 .add("nightstone_pressure_plate", props -> new PressurePlateBlock(PressurePlateBlock.Sensitivity.MOBS, props){})
-                .add("rockshroom_bricks_pressure_plate", props -> new PressurePlateBlock(PressurePlateBlock.Sensitivity.MOBS, props){})
+                .add("rockshroom_brick_pressure_plate", props -> new PressurePlateBlock(PressurePlateBlock.Sensitivity.MOBS, props){})
                 .add("trenchstone_pressure_plate", props -> new PressurePlateBlock(PressurePlateBlock.Sensitivity.MOBS, props){}) // TODO 3.75F pressure_plate
                 .add("nagrilite_pressure_plate", props -> new WeightedPressurePlateBlock(150, props){})
                 .add("tenebrum_pressure_plate", props -> new WeightedPressurePlateBlock(150, props){});
@@ -653,10 +652,10 @@ public class MidnightBlocks {
                         SHADOWROOT_LOG, SHADOWROOT_LEAVES, SHADOWROOT_PLANKS, DARK_WILLOW_LOG, DARK_WILLOW_LEAVES, DARK_WILLOW_PLANKS, DEAD_WOOD_LOG,
                         DEAD_WOOD_PLANKS, DEWSHROOM_PLANKS, VIRIDSHROOM_PLANKS, NIGHTSHROOM_PLANKS,
                         NIGHTSTONE, NIGHTSTONE_BRICKS, CHISELED_NIGHTSTONE_BRICKS, TRENCHSTONE, TRENCHSTONE_BRICKS,
-                        DARK_PEARL_ORE, DARK_PEARL_BLOCK, TENEBRUM_ORE, TENEBRUM_BLOCK, NAGRILITE_ORE, NAGRILITE_BLOCK, EBONYS_ORE, EBONYS_BLOCK, ARCHAIC_ORE,
+                        DARK_PEARL_ORE, DARK_PEARL_BLOCK, TENEBRUM_ORE, TENEBRUM_BLOCK, NAGRILITE_ORE, NAGRILITE_BLOCK, EBONITE_ORE, EBONITE_BLOCK, ARCHAIC_ORE,
                         COARSE_DIRT, DIRT, GRASS_BLOCK, MYCELIUM, GRASS, TALL_GRASS,
                         NIGHTSHROOM, DOUBLE_NIGHTSHROOM, NIGHTSHROOM_SHELF, DEWSHROOM, DOUBLE_DEWSHROOM, DEWSHROOM_SHELF, VIRIDSHROOM, DOUBLE_VIRIDSHROOM, VIRIDSHROOM_SHELF, BOGSHROOM, DOUBLE_BOGSHROOM, BOGSHROOM_SHELF,
-                        BOGSHROOM_HAT, BOGSHROOM_STEM, NIGHTSHROOM_STEM, NIGHTSHROOM_HAT, DEWSHROOM_STEM, DEWSHROOM_HAT, VIRIDSHROOM_STEM, VIRIDSHROOM_HAT, BULB_FUNGUS, BULB_FUNGUS_HAT, BULB_FUNGUS_STEM,
+                        BOGSHROOM_HAT, BOGSHROOM_STEM, NIGHTSHROOM_STEM, NIGHTSHROOM_HAT, DEWSHROOM_STEM, DEWSHROOM_HAT, VIRIDSHROOM_STEM, VIRIDSHROOM_HAT, GLOB_FUNGUS, GLOB_FUNGUS_HAT, GLOB_FUNGUS_STEM,
                         ROCKSHROOM, ROCKSHROOM_BRICKS, BLOOMCRYSTAL, BLOOMCRYSTAL_ROCK, ROUXE, ROUXE_ROCK, ARCHAIC_GLASS, ARCHAIC_GLASS_PANE, MIASMA_SURFACE, //, MIASMA, DARK_WATER
                         DECEITFUL_PEAT, DECEITFUL_MUD, DECEITFUL_MOSS);
         RegUtil.items(event.getRegistry())
@@ -667,16 +666,16 @@ public class MidnightBlocks {
                         SHADOWROOT_DOOR, DEAD_WOOD_DOOR, DARK_WILLOW_DOOR, TENEBRUM_DOOR, NIGHTSHROOM_DOOR, DEWSHROOM_DOOR, VIRIDSHROOM_DOOR,
                         SHADOWROOT_TRAPDOOR, DARK_WILLOW_TRAPDOOR, DEAD_WOOD_TRAPDOOR, TENEBRUM_TRAPDOOR, NIGHTSHROOM_TRAPDOOR, DEWSHROOM_TRAPDOOR, VIRIDSHROOM_TRAPDOOR,
                         SHADOWROOT_STAIRS, DEAD_WOOD_STAIRS, DARK_WILLOW_STAIRS, NIGHTSTONE_STAIRS, NIGHTSTONE_BRICK_STAIRS, TRENCHSTONE_STAIRS, TRENCHSTONE_BRICK_STAIRS,
-                        DEWSHROOM_STAIRS, VIRIDSHROOM_STAIRS, NIGHTSHROOM_STAIRS, ROCKSHROOM_BRICKS_STAIRS,
-                        NIGHTSTONE_WALL, NIGHTSTONE_BRICK_WALL, TRENCHSTONE_WALL, TRENCHSTONE_BRICK_WALL, ROCKSHROOM_BRICKS_WALL,
+                        DEWSHROOM_STAIRS, VIRIDSHROOM_STAIRS, NIGHTSHROOM_STAIRS, ROCKSHROOM_BRICK_STAIRS,
+                        NIGHTSTONE_WALL, NIGHTSTONE_BRICK_WALL, TRENCHSTONE_WALL, TRENCHSTONE_BRICK_WALL, ROCKSHROOM_BRICK_WALL,
                         SHADOWROOT_FENCE, DEAD_WOOD_FENCE, DARK_WILLOW_FENCE, DEWSHROOM_FENCE, VIRIDSHROOM_FENCE, NIGHTSHROOM_FENCE,
                         SHADOWROOT_FENCE_GATE, DEAD_WOOD_FENCE_GATE, DARK_WILLOW_FENCE_GATE, DEWSHROOM_FENCE_GATE, VIRIDSHROOM_FENCE_GATE, NIGHTSHROOM_FENCE_GATE,
                         SHADOWROOT_LADDER, DEAD_WOOD_LADDER, DARK_WILLOW_LADDER, DEWSHROOM_LADDER, VIRIDSHROOM_LADDER, NIGHTSHROOM_LADDER,
                         SUAVIS, STINGER_EGG, CRYSTALOTUS, MIDNIGHT_LEVER,
-                        SHADOWROOT_BUTTON, DEAD_WOOD_BUTTON, DARK_WILLOW_BUTTON, DEWSHROOM_BUTTON, VIRIDSHROOM_BUTTON, NIGHTSHROOM_BUTTON, NIGHTSTONE_BUTTON, TRENCHSTONE_BUTTON, ROCKSHROOM_BRICKS_BUTTON,
+                        SHADOWROOT_BUTTON, DEAD_WOOD_BUTTON, DARK_WILLOW_BUTTON, DEWSHROOM_BUTTON, VIRIDSHROOM_BUTTON, NIGHTSHROOM_BUTTON, NIGHTSTONE_BUTTON, TRENCHSTONE_BUTTON, ROCKSHROOM_BRICK_BUTTON,
                         SHADOWROOT_PRESSURE_PLATE, DEAD_WOOD_PRESSURE_PLATE, DARK_WILLOW_PRESSURE_PLATE, DEWSHROOM_PRESSURE_PLATE, VIRIDSHROOM_PRESSURE_PLATE, NIGHTSHROOM_PRESSURE_PLATE, NIGHTSTONE_PRESSURE_PLATE,
-                        TRENCHSTONE_PRESSURE_PLATE, ROCKSHROOM_BRICKS_PRESSURE_PLATE, NAGRILITE_PRESSURE_PLATE, TENEBRUM_PRESSURE_PLATE,
-                        SHADOWROOT_SLAB, DEAD_WOOD_SLAB, DARK_WILLOW_SLAB, NIGHTSTONE_SLAB, NIGHTSTONE_BRICK_SLAB, TRENCHSTONE_SLAB, TRENCHSTONE_BRICK_SLAB, DEWSHROOM_SLAB, VIRIDSHROOM_SLAB, NIGHTSHROOM_SLAB, ROCKSHROOM_BRICKS_SLAB
+                        TRENCHSTONE_PRESSURE_PLATE, ROCKSHROOM_BRICK_PRESSURE_PLATE, NAGRILITE_PRESSURE_PLATE, TENEBRUM_PRESSURE_PLATE,
+                        SHADOWROOT_SLAB, DEAD_WOOD_SLAB, DARK_WILLOW_SLAB, NIGHTSTONE_SLAB, NIGHTSTONE_BRICK_SLAB, TRENCHSTONE_SLAB, TRENCHSTONE_BRICK_SLAB, DEWSHROOM_SLAB, VIRIDSHROOM_SLAB, NIGHTSHROOM_SLAB, ROCKSHROOM_BRICK_SLAB
                 ) //, MUSHROOM_INSIDE, UNSTABLE_BUSH, UNSTABLE_BUSH_BLUE_BLOOMED, UNSTABLE_BUSH_GREEN_BLOOMED, UNSTABLE_BUSH_LIME_BLOOMED, BLADESHROOM,
                 .add(DECEITFUL_ALGAE, DeceitfulAlgaeItem::new)
                 .add(NIGHTSHROOM_SPORCH, (block, props) -> new WallOrFloorItem(NIGHTSHROOM_SPORCH, NIGHTSHROOM_WALL_SPORCH, props))

@@ -1,7 +1,0 @@
-{
-  "variants": {
-    "axis=y": {"model": "midnight:block/bulb_fungus_stem"},
-    "axis=z": {"model": "midnight:block/bulb_fungus_stem", "x": 90},
-    "axis=x": {"model": "midnight:block/bulb_fungus_stem", "x": 90, "y": 90}
-  }
-}

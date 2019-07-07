@@ -48,7 +48,7 @@ public class MidnightFood {
             .saturation(1.4F)
             .build();
 
-    public static final Food BULB_FUNGUS_HAND = new Food.Builder()
+    public static final Food GLOB_FUNGUS_HAND = new Food.Builder()
             .hunger(1)
             .saturation(0.3F)
             .build();

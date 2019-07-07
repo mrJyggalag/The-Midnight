@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:block/cube_all",
   "textures": {
-    "all": "midnight:blocks/ebonys_block"
+    "all": "midnight:blocks/ebonite_ore"
   }
 }

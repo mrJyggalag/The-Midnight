@@ -33,8 +33,8 @@
   "block.midnight.dark_pearl_ore": "Orrre o' Black Pearl",
   "block.midnight.dark_pearl_block": "Chunk o' Black Pearl",
 
-  "block.midnight.ebonys_ore": "Orrre o' Depressin' Shiny",
-  "block.midnight.ebonys_block": "Chunk o' Depressin' Shiny",
+  "block.midnight.ebonite_ore": "Orrre o' Depressin' Shiny",
+  "block.midnight.ebonite_block": "Chunk o' Depressin' Shiny",
 
   "block.midnight.nagrilite_ore": "Orrre o' Kraken's Steel",
   "block.midnight.nagrilite_block": "Chunk o' Kraken's Steel",
@@ -168,7 +168,7 @@
   "item.midnight.tenebrum_nugget": "Doubloon o' Seaweed Platin'",
   "item.midnight.nagrilite_ingot": "Bullion o' Kraken's Steel",
   "item.midnight.nagrilite_nugget": "Doubloon o' Kraken's Steel",
-  "item.midnight.ebonys": "Depressin' Shiny",
+  "item.midnight.ebonite": "Depressin' Shiny",
 
   "item.midnight.raw_suavis": "Glowin' Gourd Piece",
   "item.midnight.cooked_suavis": "Fried Glowin' Gourd",
@@ -181,31 +181,31 @@
   "item.midnight.shadowroot_pickaxe": "Pickaxe o' Shadaroot",
   "item.midnight.tenebrum_pickaxe": "Pickaxe o' Seaweed Platin'",
   "item.midnight.nagrilite_pickaxe": "Pickaxe o' Kraken's Steel",
-  "item.midnight.ebonys_pickaxe": "Pickaxe o' Depressin' Shiny",
+  "item.midnight.ebonite_pickaxe": "Pickaxe o' Depressin' Shiny",
   "item.midnight.nightstone_pickaxe": "Pickaxe o' Blind Rock",
 
   "item.midnight.shadowroot_shovel": "Spade o' Shadaroot",
   "item.midnight.tenebrum_shovel": "Spade o' Seaweed Platin'",
   "item.midnight.nagrilite_shovel": "Spade o' Kraken's Steel",
-  "item.midnight.ebonys_shovel": "Spade o' Depressin' Shiny",
+  "item.midnight.ebonite_shovel": "Spade o' Depressin' Shiny",
   "item.midnight.nightstone_shovel": "Spade o' Blind Rock",
 
   "item.midnight.shadowroot_axe": "Hatchet o' Shadaroot",
   "item.midnight.tenebrum_axe": "Hatchet o' Seaweed Platin'",
   "item.midnight.nagrilite_axe": "Hatchet o' Kraken's Steel",
-  "item.midnight.ebonys_axe": "Hatchet o' Depressin' Shiny",
+  "item.midnight.ebonite_axe": "Hatchet o' Depressin' Shiny",
   "item.midnight.nightstone_axe": "Hatchet o' Blind Rock",
 
   "item.midnight.shadowroot_hoe": "Farmin' Stick o' Shadaroot",
   "item.midnight.tenebrum_hoe": "Farmin' Stick o' Seaweed Platin'",
   "item.midnight.nagrilite_hoe": "Farmin' Stick o' Kraken's Steel",
-  "item.midnight.ebonys_hoe": "Farmin' Stick o' Depressin' Shiny",
+  "item.midnight.ebonite_hoe": "Farmin' Stick o' Depressin' Shiny",
   "item.midnight.nightstone_hoe": "Farmin' Stick o' Blind Rock",
 
   "item.midnight.shadowroot_sword": "Cutlass o' Shadaroot",
   "item.midnight.tenebrum_sword": "Cutlass o' Seaweed Platin'",
   "item.midnight.nagrilite_sword": "Cutlass o' Kraken's Steel",
-  "item.midnight.ebonys_sword": "Cutlass o' Depressin' Shiny",
+  "item.midnight.ebonite_sword": "Cutlass o' Depressin' Shiny",
   "item.midnight.nightstone_sword": "Cutlass o' Blind Rock",
 
   "item.midnight.rockshroom_helmet": "Helmet o' Rockshroom",

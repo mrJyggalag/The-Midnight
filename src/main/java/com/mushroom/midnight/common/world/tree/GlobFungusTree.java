@@ -8,7 +8,7 @@ import net.minecraft.world.gen.feature.NoFeatureConfig;
 import javax.annotation.Nullable;
 import java.util.Random;
 
-public class BulbFungusTree extends Tree {
+public class GlobFungusTree extends Tree {
     @Nullable
     @Override
     protected AbstractTreeFeature<NoFeatureConfig> getTreeFeature(Random random) {

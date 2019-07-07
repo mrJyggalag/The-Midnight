@@ -49,7 +49,7 @@ public class MidnightItems {
     public static final Item TENEBRUM_NUGGET = Items.AIR;
     public static final Item NAGRILITE_INGOT = Items.AIR;
     public static final Item NAGRILITE_NUGGET = Items.AIR;
-    public static final Item EBONYS = Items.AIR;
+    public static final Item EBONITE = Items.AIR;
     public static final Item ARCHAIC_SHARD = Items.AIR;
 
     public static final Item BLADESHROOM_CAP = Items.AIR;
@@ -63,7 +63,7 @@ public class MidnightItems {
     public static final Item COOKED_STINGER_EGG = Items.AIR;
     public static final Item HUNTER_WING = Items.AIR;
     public static final Item COOKED_HUNTER_WING = Items.AIR;
-    public static final Item BULB_FUNGUS_HAND = Items.AIR;
+    public static final Item GLOB_FUNGUS_HAND = Items.AIR;
     public static final Item UNSTABLE_SEEDS = Items.AIR;
     public static final Item BLUE_UNSTABLE_FRUIT = Items.AIR;
     public static final Item LIME_UNSTABLE_FRUIT = Items.AIR;
@@ -76,28 +76,28 @@ public class MidnightItems {
 
     public static final Item SHADOWROOT_PICKAXE = Items.AIR;
     public static final Item NIGHTSTONE_PICKAXE = Items.AIR;
-    public static final Item EBONYS_PICKAXE = Items.AIR;
+    public static final Item EBONITE_PICKAXE = Items.AIR;
     public static final Item NAGRILITE_PICKAXE = Items.AIR;
     public static final Item TENEBRUM_PICKAXE = Items.AIR;
     public static final Item SHADOWROOT_SHOVEL = Items.AIR;
     public static final Item NIGHTSTONE_SHOVEL = Items.AIR;
-    public static final Item EBONYS_SHOVEL = Items.AIR;
+    public static final Item EBONITE_SHOVEL = Items.AIR;
     public static final Item NAGRILITE_SHOVEL = Items.AIR;
     public static final Item TENEBRUM_SHOVEL = Items.AIR;
     public static final Item SHADOWROOT_AXE = Items.AIR;
     public static final Item NIGHTSTONE_AXE = Items.AIR;
-    public static final Item EBONYS_AXE = Items.AIR;
+    public static final Item EBONITE_AXE = Items.AIR;
     public static final Item NAGRILITE_AXE = Items.AIR;
     public static final Item TENEBRUM_AXE = Items.AIR;
     public static final Item SHADOWROOT_HOE = Items.AIR;
     public static final Item NIGHTSTONE_HOE = Items.AIR;
-    public static final Item EBONYS_HOE = Items.AIR;
+    public static final Item EBONITE_HOE = Items.AIR;
     public static final Item NAGRILITE_HOE = Items.AIR;
     public static final Item TENEBRUM_HOE = Items.AIR;
 
     public static final Item SHADOWROOT_SWORD = Items.AIR;
     public static final Item NIGHTSTONE_SWORD = Items.AIR;
-    public static final Item EBONYS_SWORD = Items.AIR;
+    public static final Item EBONITE_SWORD = Items.AIR;
     public static final Item NAGRILITE_SWORD = Items.AIR;
     public static final Item TENEBRUM_SWORD = Items.AIR;
 
@@ -137,7 +137,7 @@ public class MidnightItems {
                 .add("tenebrum_nugget", Item::new)
                 .add("nagrilite_ingot", Item::new)
                 .add("nagrilite_nugget", Item::new)
-                .add("ebonys", Item::new)
+                .add("ebonite", Item::new)
                 .add("archaic_shard", Item::new)
 
                 .add("bladeshroom_cap", BladeshroomCapItem::new)
@@ -149,7 +149,7 @@ public class MidnightItems {
                 .add("cooked_stinger_egg", props -> new DrinkableItem(props.food(MidnightFood.COOKED_STINGER_EGG)))
                 .add("hunter_wing", props -> new Item(props.food(MidnightFood.HUNTER_WING)))
                 .add("cooked_hunter_wing", props -> new Item(props.food(MidnightFood.COOKED_HUNTER_WING)))
-                .add("bulb_fungus_hand", props -> new Item(props.food(MidnightFood.BULB_FUNGUS_HAND)))
+                .add("glob_fungus_hand", props -> new Item(props.food(MidnightFood.GLOB_FUNGUS_HAND)))
 
                 .add("blue_unstable_fruit", props -> new UnstableFruitItem(UnstableFruitItem.Color.BLUE, props.food(MidnightFood.UNSTABLE_FRUIT)))
                 .add("lime_unstable_fruit", props -> new UnstableFruitItem(UnstableFruitItem.Color.LIME, props.food(MidnightFood.UNSTABLE_FRUIT)))
@@ -175,10 +175,10 @@ public class MidnightItems {
                 .add("nightstone_axe", props -> new MidnightAxeItem(MidnightItemTiers.NIGHTSTONE, props))
                 .add("nightstone_shovel", props -> new MidnightShovelItem(MidnightItemTiers.NIGHTSTONE, props))
                 .add("nightstone_hoe", props -> new MidnightHoeItem(MidnightItemTiers.NIGHTSTONE, props))
-                .add("ebonys_pickaxe", props -> new MidnightPickaxeItem(MidnightItemTiers.EBONYS, props))
-                .add("ebonys_axe", props -> new MidnightAxeItem(MidnightItemTiers.EBONYS, props))
-                .add("ebonys_shovel", props -> new MidnightShovelItem(MidnightItemTiers.EBONYS, props))
-                .add("ebonys_hoe", props -> new MidnightHoeItem(MidnightItemTiers.EBONYS, props))
+                .add("ebonite_pickaxe", props -> new MidnightPickaxeItem(MidnightItemTiers.EBONITE, props))
+                .add("ebonite_axe", props -> new MidnightAxeItem(MidnightItemTiers.EBONITE, props))
+                .add("ebonite_shovel", props -> new MidnightShovelItem(MidnightItemTiers.EBONITE, props))
+                .add("ebonite_hoe", props -> new MidnightHoeItem(MidnightItemTiers.EBONITE, props))
                 .add("nagrilite_pickaxe", props -> new MidnightPickaxeItem(MidnightItemTiers.NAGRILITE, props))
                 .add("nagrilite_axe", props -> new MidnightAxeItem(MidnightItemTiers.NAGRILITE, props))
                 .add("nagrilite_shovel", props -> new MidnightShovelItem(MidnightItemTiers.NAGRILITE, props))
@@ -193,7 +193,7 @@ public class MidnightItems {
 
                 .add("shadowroot_sword", props -> new SwordItem(MidnightItemTiers.SHADOWROOT, 3, -2.4F, props))
                 .add("nightstone_sword", props -> new SwordItem(MidnightItemTiers.NIGHTSTONE, 3, -2.4F, props))
-                .add("ebonys_sword", props -> new SwordItem(MidnightItemTiers.EBONYS, 3, -2.4F, props))
+                .add("ebonite_sword", props -> new SwordItem(MidnightItemTiers.EBONITE, 3, -2.4F, props))
                 .add("nagrilite_sword", props -> new SwordItem(MidnightItemTiers.NAGRILITE, 3, -2.4F, props))
                 .add("tenebrum_sword", props -> new SwordItem(MidnightItemTiers.TENEBRUM, 3, -2.4F, props))
                 .add("rockshroom_helmet", props -> new ArmorItem(MidnightArmorMaterials.ROCKSHROOM, EquipmentSlotType.HEAD, props))

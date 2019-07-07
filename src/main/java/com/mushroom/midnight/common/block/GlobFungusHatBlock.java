@@ -20,13 +20,13 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import javax.annotation.Nullable;
 
 @SuppressWarnings("deprecation")
-public class BulbFungusHatBlock extends Block {
+public class GlobFungusHatBlock extends Block {
 
-    public BulbFungusHatBlock() {
+    public GlobFungusHatBlock() {
         super(Properties.create(Material.WOOD, MaterialColor.MAGENTA).hardnessAndResistance(0.2f, 0f).sound(SoundType.SLIME).lightValue(2));
     }
 
-    // random.nextInt(5) == 0 -> drop 1 BULB_FUNGUS (+SilkTouch)
+    // random.nextInt(5) == 0 -> drop 1 GLOB_FUNGUS (+SilkTouch)
 
     @Override
     @OnlyIn(Dist.CLIENT)

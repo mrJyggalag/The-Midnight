@@ -1,7 +1,0 @@
-{
-  "parent": "block/cube_column",
-  "textures": {
-    "end": "midnight:blocks/bulb_fungus_stem_top",
-      "side": "midnight:blocks/bulb_fungus_stem_side"
-  }
-}

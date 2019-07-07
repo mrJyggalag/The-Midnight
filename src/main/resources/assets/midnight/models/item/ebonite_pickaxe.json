@@ -1,6 +1,6 @@
 {
   "parent": "item/handheld",
   "textures": {
-    "layer0": "midnight:items/ebonys_sword"
+    "layer0": "midnight:items/ebonite_pickaxe"
   }
 }

@@ -35,8 +35,8 @@
   "block.midnight.dark_pearl_ore": "Minerai de Perle Noire",
   "block.midnight.dark_pearl_block": "Bloc de Perle Noire",
 
-  "block.midnight.ebonys_ore": "Minerai d'Ébène",
-  "block.midnight.ebonys_block": "Bloc d'Ébène",
+  "block.midnight.ebonite_ore": "Minerai d'Ébène",
+  "block.midnight.ebonite_block": "Bloc d'Ébène",
 
   "block.midnight.archaic_ore": "Minerai Archaïque",
 
@@ -100,9 +100,9 @@
   "block.midnight.bogshroom_hat": "Chapeau de ChampiTourbe",
   "block.midnight.bogshroom_shelf": "Étagères en ChampiTourbe",
 
-  "block.midnight.bulb_fungus": "Fongus Gluant",
-  "block.midnight.bulb_fungus_stem": "Tronc de Fongus Gluant",
-  "block.midnight.bulb_fungus_cap": "Chapeau de Fongus Gluant",
+  "block.midnight.glob_fungus": "Fongus Gluant",
+  "block.midnight.glob_fungus_stem": "Tronc de Fongus Gluant",
+  "block.midnight.glob_fungus_cap": "Chapeau de Fongus Gluant",
 
   "block.midnight.bladeshroom": "ChampiLame",
 
@@ -156,8 +156,8 @@
   "block.midnight.viridshroom_double_slab": "Double Dalle en ChampiViride",
   "block.midnight.nightshroom_slab": "Dalle en ChampiNuit",
   "block.midnight.nightshroom_double_slab": "Double Dalle en ChampiNuit",
-  "block.midnight.rockshroom_bricks_slab": "Dalle en Briques de ChampiRoche",
-  "block.midnight.rockshroom_bricks_double_slab": "Double Dalle en Briques de ChampiRoche",
+  "block.midnight.rockshroom_brick_slab": "Dalle en Briques de ChampiRoche",
+  "block.midnight.rockshroom_brick_double_slab": "Double Dalle en Briques de ChampiRoche",
 
   "block.midnight.shadowroot_stairs": "Escaliers en Ombreracine",
   "block.midnight.dead_wood_stairs": "Escaliers en Bois Mort",
@@ -169,7 +169,7 @@
   "block.midnight.dewshroom_stairs": "Escaliers en ChampiRosée",
   "block.midnight.viridshroom_stairs": "Escaliers en ChampiViride",
   "block.midnight.nightshroom_stairs": "Escaliers en ChampiNuit",
-  "block.midnight.rockshroom_bricks_stairs": "Escaliers en Briques de ChampiRoche",
+  "block.midnight.rockshroom_brick_stairs": "Escaliers en Briques de ChampiRoche",
 
   "block.midnight.shadowroot_fence": "Barrière en Ombreracine",
   "block.midnight.dead_wood_fence": "Barrière en Bois Mort",
@@ -182,7 +182,7 @@
   "block.midnight.nightstone_brick_wall": "Muret en Briques de Pierre de Nuit",
   "block.midnight.trenchstone_wall": "Muret en Pierre de Tranchée",
   "block.midnight.trenchstone_brick_wall": "Muret en Briques de Tranchée",
-  "block.midnight.rockshroom_bricks_wall": "Muret en Briques de ChampiRoche",
+  "block.midnight.rockshroom_brick_wall": "Muret en Briques de ChampiRoche",
 
   "block.midnight.shadowroot_fence_gate": "Portillon en Ombreracine",
   "block.midnight.dead_wood_fence_gate": "Portillon en Bois Mort",
@@ -231,7 +231,7 @@
   "item.midnight.tenebrum_nugget": "Pépite de Tenebrum",
   "item.midnight.nagrilite_ingot": "Lingot de Nagrilite",
   "item.midnight.nagrilite_nugget": "Pépite de Nagrilite",
-  "item.midnight.ebonys": "Ébène",
+  "item.midnight.ebonite": "Ébène",
   "item.midnight.archaic_shard": "Tesson Archaïque",
 
   "item.midnight.raw_suavis": "Tranche de Suavis Cru",
@@ -242,7 +242,7 @@
   "item.midnight.cooked_stinger_egg": "Oeuf de Stinger Cuit",
   "item.midnight.hunter_wing": "Aile de Chasseur",
   "item.midnight.cooked_hunter_wing": "Aile de Chasseur Cuite",
-  "item.midnight.bulb_fungus_hand": "Main de Fongus Gluant",
+  "item.midnight.glob_fungus_hand": "Main de Fongus Gluant",
   "item.midnight.unstable_seeds": "Graines Instables",
   "item.midnight.blue_unstable_fruit": "Fruit Instable Bleu",
   "item.midnight.lime_unstable_fruit": "Fruit Instable Vert Clair",
@@ -276,31 +276,31 @@
   "item.midnight.shadowroot_pickaxe": "Pioche en OmbreRacine",
   "item.midnight.tenebrum_pickaxe": "Pioche en Tenebrum",
   "item.midnight.nagrilite_pickaxe": "Pioche en Nagrilite",
-  "item.midnight.ebonys_pickaxe": "Pioche en Ébène",
+  "item.midnight.ebonite_pickaxe": "Pioche en Ébène",
   "item.midnight.nightstone_pickaxe": "Pioche en Pierre de Nuit",
 
   "item.midnight.shadowroot_shovel": "Pelle en OmbreRacine",
   "item.midnight.tenebrum_shovel": "Pelle en Tenebrum",
   "item.midnight.nagrilite_shovel": "Pelle en Nagrilite",
-  "item.midnight.ebonys_shovel": "Pelle en Ébène",
+  "item.midnight.ebonite_shovel": "Pelle en Ébène",
   "item.midnight.nightstone_shovel": "Pelle en Pierre de Nuit",
 
   "item.midnight.shadowroot_axe": "Hache en OmbreRacine",
   "item.midnight.tenebrum_axe": "Hache en Tenebrum",
   "item.midnight.nagrilite_axe": "Hache en Nagrilite",
-  "item.midnight.ebonys_axe": "Hache en Ébène",
+  "item.midnight.ebonite_axe": "Hache en Ébène",
   "item.midnight.nightstone_axe": "Hache en Pierre de Nuit",
 
   "item.midnight.shadowroot_hoe": "Houe en OmbreRacine",
   "item.midnight.tenebrum_hoe": "Houe en Tenebrum",
   "item.midnight.nagrilite_hoe": "Houe en Nagrilite",
-  "item.midnight.ebonys_hoe": "Houe en Ébène",
+  "item.midnight.ebonite_hoe": "Houe en Ébène",
   "item.midnight.nightstone_hoe": "Houe en Pierre de Nuit",
 
   "item.midnight.shadowroot_sword": "Épée en OmbreRacine",
   "item.midnight.tenebrum_sword": "Épée en Tenebrum",
   "item.midnight.nagrilite_sword": "Épée en Nagrilite",
-  "item.midnight.ebonys_sword": "Épée en Ébène",
+  "item.midnight.ebonite_sword": "Épée en Ébène",
   "item.midnight.nightstone_sword": "Épée en Pierre de Nuit",
 
   "item.midnight.rockshroom_helmet": "Heaume en ChampiRoche",
