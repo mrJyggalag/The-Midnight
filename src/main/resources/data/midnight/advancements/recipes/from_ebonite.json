@@ -2,7 +2,7 @@
 	"parent": "midnight:recipes/root",
 	"rewards": {
 		"recipes": [ 
-			"midnight:ebonys_block"
+			"midnight:ebonite_block"
 		]
 	},
 	"criteria": {
@@ -10,7 +10,7 @@
 			"trigger": "minecraft:inventory_changed",
 			"conditions": {
 				"items": [{
-					"item": "midnight:ebonys"
+					"item": "midnight:ebonite"
 				}]
 			}
 		}

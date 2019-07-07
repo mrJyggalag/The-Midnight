@@ -7,10 +7,10 @@
   ],
   "key": {
     "A": {
-      "item": "midnight:ebonys"
+      "item": "midnight:ebonite"
     }
   },
   "result": {
-    "item": "midnight:ebonys_block"
+    "item": "midnight:ebonite_block"
   }
 }

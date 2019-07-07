@@ -7,13 +7,13 @@
   ],
   "key": {
     "A": {
-      "item": "midnight:ebonys"
+      "item": "midnight:ebonite"
     },
     "S": {
       "item": "midnight:dark_stick"
     }
   },
   "result": {
-    "item": "midnight:ebonys_hoe"
+    "item": "midnight:ebonite_hoe"
   }
 }

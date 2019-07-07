@@ -2,7 +2,7 @@
   "replace": false,
   "values": [
     "midnight:nightstone_button",
-    "midnight:rockshroom_bricks_button",
+    "midnight:rockshroom_brick_button",
     "midnight:trenchstone_button"
   ]
 }

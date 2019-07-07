@@ -1,19 +1,19 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    "A",
-    "S",
-    "S"
+    "AAA",
+    " S ",
+    " S "
   ],
   "key": {
     "A": {
-      "item": "midnight:ebonys"
+      "item": "midnight:ebonite"
     },
     "S": {
       "item": "midnight:dark_stick"
     }
   },
   "result": {
-    "item": "midnight:ebonys_shovel"
+    "item": "midnight:ebonite_pickaxe"
   }
 }

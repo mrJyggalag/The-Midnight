@@ -2,11 +2,11 @@
 	"parent": "midnight:recipes/root",
 	"rewards": {
 		"recipes": [ 
-			"midnight:ebonys_axe",
-			"midnight:ebonys_hoe",
-			"midnight:ebonys_pickaxe",
-			"midnight:ebonys_shovel",
-			"midnight:ebonys_sword"
+			"midnight:ebonite_axe",
+			"midnight:ebonite_hoe",
+			"midnight:ebonite_pickaxe",
+			"midnight:ebonite_shovel",
+			"midnight:ebonite_sword"
 		]
 	},
 	"criteria": {
@@ -14,7 +14,7 @@
 			"trigger": "minecraft:inventory_changed",
 			"conditions": {
 				"items": [{
-					"item": "midnight:ebonys"
+					"item": "midnight:ebonite"
 				}]
 			}
 		},

@@ -9,7 +9,7 @@
     "#": {"item": "midnight:rockshroom_bricks"}
   },
   "result": {
-    "item": "midnight:rockshroom_bricks_stairs",
+    "item": "midnight:rockshroom_brick_stairs",
     "count": 4
   }
 }

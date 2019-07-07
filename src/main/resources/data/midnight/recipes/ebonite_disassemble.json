@@ -2,10 +2,11 @@
   "type": "minecraft:crafting_shapeless",
   "ingredients": [
     {
-      "item": "midnight:rockshroom_bricks"
+      "item": "midnight:ebonite_block"
     }
   ],
   "result": {
-    "item": "midnight:rockshroom_bricks_button"
+    "item": "midnight:ebonite",
+    "count": 9
   }
 }

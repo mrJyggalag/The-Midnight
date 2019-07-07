@@ -1,9 +1,9 @@
 {
   "type": "minecraft:smelting",
   "ingredient": {
-    "item": "midnight:ebonys_ore"
+    "item": "midnight:ebonite_ore"
   },
-  "result": "midnight:ebonys",
+  "result": "midnight:ebonite",
   "experience": 1.0,
   "cookingtime": 200
 }

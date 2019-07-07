@@ -2,11 +2,11 @@
 	"parent": "midnight:recipes/root",
 	"rewards": {
 		"recipes": [ 
-			"midnight:rockshroom_bricks_slab",
-			"midnight:rockshroom_bricks_stairs",
-			"midnight:rockshroom_bricks_wall",
-			"midnight:rockshroom_bricks_button",
-			"midnight:rockshroom_bricks_pressure_plate"
+			"midnight:rockshroom_brick_slab",
+			"midnight:rockshroom_brick_stairs",
+			"midnight:rockshroom_brick_wall",
+			"midnight:rockshroom_brick_button",
+			"midnight:rockshroom_brick_pressure_plate"
 		]
 	},
 	"criteria": {

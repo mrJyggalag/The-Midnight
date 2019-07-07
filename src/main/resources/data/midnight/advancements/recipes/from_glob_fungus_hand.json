@@ -2,7 +2,7 @@
 	"parent": "midnight:recipes/root",
 	"rewards": {
 		"recipes": [
-			"midnight:bulb_fungus_stem"
+			"midnight:glob_fungus_stem"
 		]
 	},
 	"criteria": {
@@ -10,7 +10,7 @@
 			"trigger": "minecraft:inventory_changed",
 			"conditions": {
 				"items": [{
-					"item": "midnight:bulb_fungus_hand"
+					"item": "midnight:glob_fungus_hand"
 				}]
 			}
 		}

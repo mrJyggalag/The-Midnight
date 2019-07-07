@@ -1,20 +1,19 @@
 {
-  "forge_marker": 1,
-  "defaults": {
-    "model": "midnight:empty",
-    "textures": {
-      "particle": "midnight:blocks/trenchstone_bricks",
-      "wall": "midnight:blocks/trenchstone_bricks"
-    },
-    "uvlock": true
-  },
-  "variants": {
-    "normal": [{}],
-    "up": {"true": {"submodel": "wall_post"}, "false": {}},
-    "north": {"true": {"submodel": "wall_side"}, "false": {}},
-    "east": {"true": {"submodel": "wall_side", "y": 90}, "false": {}},
-    "south": {"true": {"submodel": "wall_side", "y": 180}, "false": {}},
-    "west": {"true": {"submodel": "wall_side", "y": 270}, "false": {}},
-    "inventory": {"model": "wall_inventory"}
-  }
+    "multipart": [
+        {   "when": { "up": "true" },
+            "apply": { "model": "midnight:block/trenchstone_brick_wall_post" }
+        },
+        {   "when": { "north": "true" },
+            "apply": { "model": "midnight:block/trenchstone_brick_wall_side", "uvlock": true }
+        },
+        {   "when": { "east": "true" },
+            "apply": { "model": "midnight:block/trenchstone_brick_wall_side", "y": 90, "uvlock": true }
+        },
+        {   "when": { "south": "true" },
+            "apply": { "model": "midnight:block/trenchstone_brick_wall_side", "y": 180, "uvlock": true }
+        },
+        {   "when": { "west": "true" },
+            "apply": { "model": "midnight:block/trenchstone_brick_wall_side", "y": 270, "uvlock": true }
+        }
+    ]
 }

@@ -6,10 +6,10 @@
   ],
   "key": {
     "A": {
-      "item": "midnight:bulb_fungus_hand"
+      "item": "midnight:glob_fungus_hand"
     }
   },
   "result": {
-    "item": "midnight:bulb_fungus_stem"
+    "item": "midnight:glob_fungus_stem"
   }
 }
