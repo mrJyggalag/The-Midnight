@@ -1,9 +1,9 @@
 package com.mushroom.midnight.common.world.feature;
 
 import com.mojang.datafixers.Dynamic;
+import com.mushroom.midnight.common.block.MidnightDoublePlantBlock;
 import com.mushroom.midnight.common.registry.MidnightBlocks;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.DoublePlantBlock;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.gen.ChunkGenerator;
@@ -40,7 +40,7 @@ public class TallFungiFeature extends Feature<NoFeatureConfig> {
             BlockState state = this.getRandomFungi(rand);
 
             if (world.isAirBlock(pos) && pos.getY() < world.getWorld().getDimension().getHeight() - 2 && state.isValidPosition(world, pos)) {
-                DoublePlantBlock block = (DoublePlantBlock) state.getBlock();
+                MidnightDoublePlantBlock block = (MidnightDoublePlantBlock) state.getBlock();
                 block.placeAt(world, pos, Constants.BlockFlags.NOTIFY_LISTENERS);
 
                 result = true;
