@@ -12,7 +12,7 @@ public class DeceitfulBogBiome extends SurfaceBiome {
                 .surfaceBuilder(MidnightSurfaceBuilders.BOG, MidnightSurfaceBuilders.PEAT_CONFIG)
                 .category(Category.SWAMP)
                 .grassColor(0x8893AD)
-                .depth(-0.9F) // TODO @gegy water level?
+                .depth(-1F)
                 .scale(0.2F)
                 .ridgeWeight(0.0F)
                 .wet()

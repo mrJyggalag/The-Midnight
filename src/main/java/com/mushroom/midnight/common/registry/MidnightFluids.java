@@ -5,26 +5,23 @@ import com.mushroom.midnight.common.fluid.DarkWaterFluid;
 import com.mushroom.midnight.common.fluid.MiasmaFluid;
 import net.minecraft.fluid.FlowingFluid;
 import net.minecraft.fluid.Fluid;
-import net.minecraft.fluid.Fluids;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.registries.ObjectHolder;
 
-@ObjectHolder(Midnight.MODID)
 @Mod.EventBusSubscriber(modid = Midnight.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class MidnightFluids {
-    public static final FlowingFluid DARK_WATER = Fluids.WATER;
-    public static final FlowingFluid MIASMA = Fluids.LAVA;
-    public static final FlowingFluid FLOWING_DARK_WATER = Fluids.FLOWING_WATER;
-    public static final FlowingFluid FLOWING_MIASMA = Fluids.FLOWING_LAVA;
+    public static final FlowingFluid DARK_WATER = new DarkWaterFluid.Source();
+    public static final FlowingFluid MIASMA = new MiasmaFluid.Source();
+    public static final FlowingFluid FLOWING_DARK_WATER = new DarkWaterFluid.Flowing();
+    public static final FlowingFluid FLOWING_MIASMA = new MiasmaFluid.Flowing();
 
     @SubscribeEvent
     public static void registerFluids(RegistryEvent.Register<Fluid> event) {
         RegUtil.generic(event.getRegistry())
-                .add("dark_water", new DarkWaterFluid.Source())
-                .add("flowing_dark_water", new DarkWaterFluid.Flowing())
-                .add("miasma", new MiasmaFluid.Source())
-                .add("flowing_miasma", new MiasmaFluid.Flowing());
+                .add("dark_water", DARK_WATER)
+                .add("flowing_dark_water", FLOWING_DARK_WATER)
+                .add("miasma", MIASMA)
+                .add("flowing_miasma", FLOWING_MIASMA);
     }
 }

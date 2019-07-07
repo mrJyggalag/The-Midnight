@@ -5,6 +5,7 @@ import com.mushroom.midnight.common.world.MidnightChunkGenerator;
 import com.mushroom.midnight.common.world.SurfacePlacementLevel;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.GenerationStage;
@@ -38,6 +39,11 @@ public abstract class SurfaceBiome extends Biome implements ConfigurableBiome {
 
         this.grassColor = properties.grassColor;
         this.foliageColor = properties.foliageColor;
+    }
+
+    @Override
+    public boolean doesWaterFreeze(IWorldReader worldIn, BlockPos pos) {
+        return false;
     }
 
     @Override
