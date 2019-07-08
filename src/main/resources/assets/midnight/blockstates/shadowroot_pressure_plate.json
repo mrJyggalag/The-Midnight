@@ -1,13 +1,6 @@
 {
-  "forge_marker": 1,
-  "defaults": {
-    "textures": {
-      "texture": "midnight:blocks/shadowroot_planks"
+    "variants": {
+        "powered=false": { "model": "midnight:block/shadowroot_pressure_plate" },
+        "powered=true": { "model": "midnight:block/shadowroot_pressure_plate_down" }
     }
-  },
-  "variants": {
-    "powered=false": {"model": "midnight:midnight_pressure_plate_up"},
-    "powered=true": {"model": "midnight:midnight_pressure_plate_down"},
-    "inventory": {"model": "midnight:midnight_pressure_plate_up"}
-  }
 }
