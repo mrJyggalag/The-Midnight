@@ -53,7 +53,7 @@ public class MidnightBiomeConfigurator {
     public static void addGlobalFeatures(ConfigurableBiome biome) {
         biome.add(GenerationStage.Decoration.LOCAL_MODIFICATIONS, Biome.createDecoratedFeature(
                 MidnightFeatures.HEAP, new UniformCompositionConfig(MidnightBlocks.ROCKSHROOM.getDefaultState()),
-                MidnightPlacements.CHANCE_SURFACE_DOUBLE, new ChanceConfig(100)
+                MidnightPlacements.CHANCE_SURFACE, new ChanceConfig(100)
         ));
 
         biome.add(GenerationStage.Decoration.VEGETAL_DECORATION, Biome.createDecoratedFeature(
