@@ -1,13 +1,13 @@
 package com.mushroom.midnight.common.block;
 
 import com.mushroom.midnight.client.particle.MidnightParticles;
+import com.mushroom.midnight.common.helper.Helper;
 import com.mushroom.midnight.common.item.UnstableFruitItem;
 import com.mushroom.midnight.common.registry.MidnightBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.IGrowable;
 import net.minecraft.entity.MoverType;
-import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -23,13 +23,11 @@ import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.world.IBlockReader;
-import net.minecraft.world.ServerWorld;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.ForgeHooks;
 
-import java.util.List;
 import java.util.Random;
 import java.util.function.Supplier;
 
@@ -51,28 +49,18 @@ public class UnstableBushBloomedBlock extends MidnightPlantBlock implements IGro
 
     @Override
     public boolean onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
-        if (!state.get(HAS_FRUIT)) {
-            return false;
-        }
-
-        if (!world.isRemote && world instanceof ServerWorld) {
-            List<ItemStack> drops = getDrops(state, (ServerWorld) world, pos, null, player, player.getHeldItem(hand));
-            if (drops.isEmpty()) {
-                return false;
+        if (state.get(HAS_FRUIT)) {
+            if (!world.isRemote) {
+                int fruitCount = world.rand.nextInt(3) + 1;
+                for (int i = 0; i < fruitCount; i++) {
+                    Helper.spawnItemStack(world, pos, this.fruitSupplier.get())
+                            .move(MoverType.SELF, new Vec3d(world.rand.nextFloat() * 0.12f - 0.06f, -0.06f, world.rand.nextFloat() * 0.12f - 0.06f));
+                }
+                world.setBlockState(pos, MidnightBlocks.UNSTABLE_BUSH.getDefaultState().with(UnstableBushBlock.STAGE, UnstableBushBlock.MAX_STAGE), 2);
             }
-
-            int fruitCount = world.rand.nextInt(3) + 1;
-            for (int i = 0; i < fruitCount; i++) {
-                ItemStack stack = drops.get(world.rand.nextInt(drops.size()));
-                ItemEntity item = new ItemEntity(world, pos.getX() + world.rand.nextFloat(), pos.getY(), pos.getZ() + world.rand.nextFloat(), stack);
-                world.addEntity(item);
-                item.move(MoverType.SELF, new Vec3d(world.rand.nextFloat() * 0.12f - 0.06f, -0.06f, world.rand.nextFloat() * 0.12f - 0.06f));
-            }
-
-            world.setBlockState(pos, MidnightBlocks.UNSTABLE_BUSH.getDefaultState().with(UnstableBushBlock.STAGE, UnstableBushBlock.MAX_STAGE), 2);
+            return true;
         }
-
-        return true;
+        return false;
     }
 
     @Override

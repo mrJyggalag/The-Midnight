@@ -29,23 +29,25 @@ public class Helper {
         return rgb;
     }
 
-    public static void spawnItemStack(World world, BlockPos pos, Block block) {
-        spawnItemStack(world, pos, block.asItem());
+    public static ItemEntity spawnItemStack(World world, BlockPos pos, Block block) {
+        return spawnItemStack(world, pos, block.asItem());
     }
 
-    public static void spawnItemStack(World world, BlockPos pos, Item item) {
-        spawnItemStack(world, pos.getX() + 0.5d, pos.getY(), pos.getZ() + 0.5d, item);
+    public static ItemEntity spawnItemStack(World world, BlockPos pos, Item item) {
+        return spawnItemStack(world, pos.getX() + 0.5d, pos.getY(), pos.getZ() + 0.5d, item);
     }
 
-    public static void spawnItemStack(World world, double x, double y, double z, Item item) {
-        spawnItemStack(world, x, y, z, new ItemStack(item, 1));
+    public static ItemEntity spawnItemStack(World world, double x, double y, double z, Item item) {
+        return spawnItemStack(world, x, y, z, new ItemStack(item, 1));
     }
 
-    public static void spawnItemStack(World world, BlockPos pos, ItemStack stack) {
-        spawnItemStack(world, pos.getX() + 0.5d, pos.getY(), pos.getZ() + 0.5d, stack);
+    public static ItemEntity spawnItemStack(World world, BlockPos pos, ItemStack stack) {
+        return spawnItemStack(world, pos.getX() + 0.5d, pos.getY(), pos.getZ() + 0.5d, stack);
     }
 
-    public static void spawnItemStack(World world, double x, double y, double z, ItemStack stack) {
-        world.addEntity(new ItemEntity(world, x, y, z, stack));
+    public static ItemEntity spawnItemStack(World world, double x, double y, double z, ItemStack stack) {
+        ItemEntity itemEntity = new ItemEntity(world, x, y, z, stack);
+        world.addEntity(itemEntity);
+        return itemEntity;
     }
 }
