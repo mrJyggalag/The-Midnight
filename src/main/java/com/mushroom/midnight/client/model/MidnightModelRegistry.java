@@ -5,6 +5,7 @@ import com.mushroom.midnight.client.render.CloudRenderer;
 import com.mushroom.midnight.client.render.CrystalBugRenderer;
 import com.mushroom.midnight.client.render.DeceitfulSnapperRenderer;
 import com.mushroom.midnight.client.render.HunterRenderer;
+import com.mushroom.midnight.client.render.MidnightChestTileEntityRenderer;
 import com.mushroom.midnight.client.render.NightStagRenderer;
 import com.mushroom.midnight.client.render.NovaRenderer;
 import com.mushroom.midnight.client.render.PenumbrianRenderer;
@@ -30,6 +31,7 @@ import com.mushroom.midnight.common.entity.projectile.SporeBombEntity;
 import com.mushroom.midnight.common.entity.projectile.ThrownGeodeEntity;
 import com.mushroom.midnight.common.helper.Helper;
 import com.mushroom.midnight.common.registry.MidnightBlocks;
+import com.mushroom.midnight.common.tile.base.MidnightChestTileEntity;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.color.BlockColors;
@@ -42,6 +44,7 @@ import net.minecraft.world.biome.BiomeColors;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.ModelRegistryEvent;
+import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 
 @OnlyIn(Dist.CLIENT)
@@ -67,14 +70,7 @@ public class MidnightModelRegistry {
         RenderingRegistry.registerEntityRenderingHandler(ThrownGeodeEntity.class, manager -> new SpriteRenderer(MC.getRenderManager(), MC.getItemRenderer()));
         RenderingRegistry.registerEntityRenderingHandler(SporeBombEntity.class, manager -> new SpriteRenderer(MC.getRenderManager(), MC.getItemRenderer()));
         RenderingRegistry.registerEntityRenderingHandler(CloudEntity.class, CloudRenderer::new);
-
-        /*TileEntityMidnightChest shadowrootChest = new TileEntityMidnightChest(ChestModel.SHADOWROOT);
-        Item.getItemFromBlock(MidnightBlocks.SHADOWROOT_CHEST).setTileEntityItemStackRenderer(new TileEntityItemStackRenderer() {
-            @Override
-            public void renderByItem(ItemStack stack) {
-                TileEntityRendererDispatcher.instance.render(shadowrootChest, 0.0, 0.0, 0.0, 0.0F, 1.0F);
-            }
-        });*/
+        ClientRegistry.bindTileEntitySpecialRenderer(MidnightChestTileEntity.class, new MidnightChestTileEntityRenderer());
 
         BlockColors blockColors = MC.getBlockColors();
         ItemColors itemColors = MC.getItemColors();

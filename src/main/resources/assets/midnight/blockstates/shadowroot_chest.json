@@ -1,12 +1,5 @@
 {
-  "forge_marker": 1,
-  "defaults": {
-    "model": "midnight:empty",
-    "textures": {
-      "particle": "midnight:blocks/shadowroot_planks"
+    "variants": {
+        "": { "model": "midnight:block/shadowroot_chest" }
     }
-  },
-  "variants": {
-    "normal": [{}]
-  }
 }

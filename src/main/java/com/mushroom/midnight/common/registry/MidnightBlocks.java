@@ -1,5 +1,6 @@
 package com.mushroom.midnight.common.registry;
 
+import com.mushroom.midnight.client.render.MidnightChestItemRenderer;
 import com.mushroom.midnight.common.block.BasicBlock;
 import com.mushroom.midnight.common.block.BladeshroomBlock;
 import com.mushroom.midnight.common.block.BloomCrystalBlock;
@@ -17,6 +18,7 @@ import com.mushroom.midnight.common.block.FingeredGrassBlock;
 import com.mushroom.midnight.common.block.FungiBlock;
 import com.mushroom.midnight.common.block.MiasmaSurfaceBlock;
 import com.mushroom.midnight.common.block.MidnightChestBlock;
+import com.mushroom.midnight.common.block.MidnightChestBlock.MidnightChestModel;
 import com.mushroom.midnight.common.block.MidnightDoublePlantBlock;
 import com.mushroom.midnight.common.block.MidnightFluidBlock;
 import com.mushroom.midnight.common.block.MidnightFungiHatBlock;
@@ -44,8 +46,6 @@ import com.mushroom.midnight.common.block.UnstableBushBloomedBlock;
 import com.mushroom.midnight.common.block.VioleafBlock;
 import com.mushroom.midnight.common.block.WallSporchBlock;
 import com.mushroom.midnight.common.item.DeceitfulAlgaeItem;
-import com.mushroom.midnight.common.tile.base.TileEntityMidnightChest;
-import com.mushroom.midnight.common.tile.base.TileEntityMidnightFurnace;
 import com.mushroom.midnight.common.world.tree.BogshroomTree;
 import com.mushroom.midnight.common.world.tree.GlobFungusTree;
 import com.mushroom.midnight.common.world.tree.DarkWillowTree;
@@ -76,7 +76,6 @@ import net.minecraft.block.material.MaterialColor;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.WallOrFloorItem;
-import net.minecraft.tileentity.TileEntityType;
 import net.minecraftforge.common.ToolType;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -508,7 +507,7 @@ public class MidnightBlocks {
                 .add("archaic_ore", new MidnightGemBlock(() -> MidnightItems.ARCHAIC_SHARD, 0))
                 .add("archaic_glass", new MidnightGlassBlock())
                 .add("archaic_glass_pane", new MidnightGlassPaneBlock())
-                .add("shadowroot_chest", new MidnightChestBlock(Block.Properties.from(Blocks.CHEST)){})
+                .add("shadowroot_chest", new MidnightChestBlock(MidnightChestModel.SHADOWROOT, Block.Properties.from(Blocks.CHEST)){})
                 .add("suavis", new SuavisBlock());
 
         RegUtil.blocks(event.getRegistry())
@@ -643,14 +642,6 @@ public class MidnightBlocks {
     }
 
     @SubscribeEvent
-    public static void registerTileEntity(final RegistryEvent.Register<TileEntityType<?>> event) {
-        event.getRegistry().registerAll(
-            TileEntityType.Builder.create(TileEntityMidnightChest::new, SHADOWROOT_CHEST).build(null).setRegistryName(MODID, "tile_shadowroot_chest"),
-            TileEntityType.Builder.create(TileEntityMidnightFurnace::new, NIGHTSTONE_FURNACE).build(null).setRegistryName(MODID, "tile_midnight_furnace")
-        );
-    }
-
-    @SubscribeEvent
     public static void registerItems(RegistryEvent.Register<Item> event) {
         RegUtil.items(event.getRegistry())
                 .withProperties(() -> new Item.Properties().group(MidnightItemGroups.BUILDING))
@@ -666,7 +657,7 @@ public class MidnightBlocks {
                         DECEITFUL_PEAT, DECEITFUL_MUD, DECEITFUL_MOSS);
         RegUtil.items(event.getRegistry())
                 .withProperties(() -> new Item.Properties().group(MidnightItemGroups.DECORATION))
-                .addAll(BlockItem::new, SHADOWROOT_CRAFTING_TABLE, SHADOWROOT_CHEST, NIGHTSTONE_FURNACE,
+                .addAll(BlockItem::new, SHADOWROOT_CRAFTING_TABLE, NIGHTSTONE_FURNACE,
                         SHADOWROOT_SAPLING, DARK_WILLOW_SAPLING,
                         LUMEN_BUD, DOUBLE_LUMEN_BUD, BOGWEED, GHOST_PLANT, FINGERED_GRASS, TENDRILWEED, RUNEBUSH, DRAGON_NEST, VIOLEAF, CRYSTAL_FLOWER,
                         SHADOWROOT_DOOR, DEAD_WOOD_DOOR, DARK_WILLOW_DOOR, TENEBRUM_DOOR, NIGHTSHROOM_DOOR, DEWSHROOM_DOOR, VIRIDSHROOM_DOOR,
@@ -687,6 +678,7 @@ public class MidnightBlocks {
                 .add(NIGHTSHROOM_SPORCH, (block, props) -> new WallOrFloorItem(NIGHTSHROOM_SPORCH, NIGHTSHROOM_WALL_SPORCH, props))
                 .add(DEWSHROOM_SPORCH, (block, props) -> new WallOrFloorItem(DEWSHROOM_SPORCH, DEWSHROOM_WALL_SPORCH, props))
                 .add(BOGSHROOM_SPORCH, (block, props) -> new WallOrFloorItem(BOGSHROOM_SPORCH, BOGSHROOM_WALL_SPORCH, props))
-                .add(VIRIDSHROOM_SPORCH, (block, props) -> new WallOrFloorItem(VIRIDSHROOM_SPORCH, VIRIDSHROOM_WALL_SPORCH, props));
+                .add(VIRIDSHROOM_SPORCH, (block, props) -> new WallOrFloorItem(VIRIDSHROOM_SPORCH, VIRIDSHROOM_WALL_SPORCH, props))
+                .add(SHADOWROOT_CHEST, (block, props) -> new BlockItem(block, props.setTEISR(() -> MidnightChestItemRenderer::new)));
     }
 }
