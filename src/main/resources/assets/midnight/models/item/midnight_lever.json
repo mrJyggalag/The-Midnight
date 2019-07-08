@@ -1,3 +1,6 @@
 {
-  "parent": "midnight:block/midnight_lever_inventory"
+    "parent": "item/generated",
+    "textures": {
+        "layer0": "midnight:items/midnight_lever"
+    }
 }
