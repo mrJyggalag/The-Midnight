@@ -2,7 +2,6 @@ package com.mushroom.midnight.common.world;
 
 import com.mushroom.midnight.common.biome.ConfigurableBiome;
 import com.mushroom.midnight.common.config.MidnightConfig;
-import com.mushroom.midnight.common.util.WeightedPool;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntitySpawnPlacementRegistry;
@@ -20,6 +19,7 @@ import net.minecraft.world.ServerWorld;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.chunk.Chunk;
+import net.minecraft.world.gen.Heightmap;
 import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.eventbus.api.Event;
 
@@ -45,11 +45,11 @@ public final class MidnightEntitySpawner<T extends ConfigurableBiome> {
     private static final long ANIMAL_SPAWN_INTERVAL = 400;
 
     private final Function<BlockPos, T> biomeFunction;
-    private final SurfacePlacementLevel placementLevel;
+    private final PlacementLevel placementLevel;
 
     private final Set<ChunkPos> eligibleSpawnChunks = new HashSet<>();
 
-    public MidnightEntitySpawner(Function<BlockPos, T> biomeFunction, SurfacePlacementLevel placementLevel) {
+    public MidnightEntitySpawner(Function<BlockPos, T> biomeFunction, PlacementLevel placementLevel) {
         this.biomeFunction = biomeFunction;
         this.placementLevel = placementLevel;
     }
@@ -199,7 +199,7 @@ public final class MidnightEntitySpawner<T extends ConfigurableBiome> {
             for (int attempt = 0; attempt < 4; attempt++) {
                 boolean spawnedEntity = false;
 
-                BlockPos pos = this.placementLevel.getSurfacePos(world, new BlockPos(x, 0, z));
+                BlockPos pos = this.placementLevel.getSurfacePos(world, Heightmap.Type.MOTION_BLOCKING, new BlockPos(x, 0, z));
                 EntityType<?> entitytype = spawnEntry.entityType;
                 if (canCreatureTypeSpawnAtLocation(EntitySpawnPlacementRegistry.getPlacementType(entitytype), world, pos, entitytype)) {
                     MobEntity creature = this.createEntity(world, pos, spawnEntry);
@@ -280,7 +280,7 @@ public final class MidnightEntitySpawner<T extends ConfigurableBiome> {
         int x = (chunkX << 4) + world.rand.nextInt(16);
         int z = (chunkZ << 4) + world.rand.nextInt(16);
 
-        int surfaceY = MathHelper.roundUp(this.placementLevel.getSurfacePos(world, new BlockPos(x, 0, z)).getY() + 1, 16);
+        int surfaceY = MathHelper.roundUp(this.placementLevel.getSurfacePos(world, Heightmap.Type.MOTION_BLOCKING, new BlockPos(x, 0, z)).getY() + 1, 16);
         int y = world.rand.nextInt(surfaceY > 0 ? surfaceY : chunk.getTopFilledSegment() + 16 - 1);
 
         return new BlockPos(x, y, z);

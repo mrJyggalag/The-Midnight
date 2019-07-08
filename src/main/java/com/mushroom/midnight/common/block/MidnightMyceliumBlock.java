@@ -12,18 +12,17 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.MinecraftForgeClient;
 
 import java.util.Random;
-import java.util.function.Supplier;
 
-public class MidnightMyceliumBlock extends SpreadableSoilBlock {
-    public MidnightMyceliumBlock(Block.Properties properties, Supplier<Block> groundSupplier) {
-        super(properties, groundSupplier);
+public class MidnightMyceliumBlock extends SoilBlock {
+    public MidnightMyceliumBlock(Block.Properties properties) {
+        super(properties, true);
     }
 
     @OnlyIn(Dist.CLIENT)
     public void animateTick(BlockState state, World world, BlockPos pos, Random rand) {
         super.animateTick(state, world, pos, rand);
         if (rand.nextInt(10) == 0) {
-            world.addParticle(ParticleTypes.MYCELIUM, (double) (pos.getX() + rand.nextFloat()), (double) (pos.getY() + 1.1f), (double) (pos.getZ() + rand.nextFloat()), 0d, 0d, 0d);
+            world.addParticle(ParticleTypes.MYCELIUM, pos.getX() + rand.nextFloat(), pos.getY() + 1.1f, pos.getZ() + rand.nextFloat(), 0d, 0d, 0d);
         }
     }
 

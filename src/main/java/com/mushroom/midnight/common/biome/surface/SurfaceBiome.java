@@ -2,14 +2,13 @@ package com.mushroom.midnight.common.biome.surface;
 
 import com.mushroom.midnight.common.biome.ConfigurableBiome;
 import com.mushroom.midnight.common.world.MidnightChunkGenerator;
-import com.mushroom.midnight.common.world.SurfacePlacementLevel;
 import net.minecraft.entity.EntityClassification;
+import net.minecraft.util.SharedSeedRandom;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IWorldReader;
-import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.GenerationStage;
-import net.minecraft.world.gen.Heightmap;
+import net.minecraft.world.gen.WorldGenRegion;
 import net.minecraft.world.gen.carver.ConfiguredCarver;
 import net.minecraft.world.gen.carver.ICarverConfig;
 import net.minecraft.world.gen.feature.ConfiguredFeature;
@@ -20,7 +19,7 @@ import net.minecraft.world.gen.surfacebuilders.ISurfaceBuilderConfig;
 import net.minecraft.world.gen.surfacebuilders.SurfaceBuilder;
 
 import javax.annotation.Nullable;
-import java.util.Random;
+import java.util.Collection;
 
 public abstract class SurfaceBiome extends Biome implements ConfigurableBiome {
     private final float ridgeWeight;
@@ -88,22 +87,14 @@ public abstract class SurfaceBiome extends Biome implements ConfigurableBiome {
         super.addSpawn(classification, entry);
     }
 
-    public static final class PlacementLevel implements SurfacePlacementLevel {
-        public static SurfacePlacementLevel INSTANCE = new PlacementLevel();
+    @Override
+    public void placeFeatures(GenerationStage.Decoration stage, MidnightChunkGenerator generator, WorldGenRegion world, long seed, SharedSeedRandom random, BlockPos origin) {
+        this.decorate(stage, generator, world, seed, random, origin);
+    }
 
-        private PlacementLevel() {
-        }
-
-        @Override
-        public BlockPos getSurfacePos(World world, BlockPos pos) {
-            return world.getHeight(Heightmap.Type.MOTION_BLOCKING, pos);
-        }
-
-        @Override
-        public int generateUpTo(World world, Random random, int y) {
-            int bound = Math.max(y - MidnightChunkGenerator.MIN_SURFACE_LEVEL, 1);
-            return random.nextInt(bound) + MidnightChunkGenerator.MIN_SURFACE_LEVEL;
-        }
+    @Override
+    public Collection<ConfiguredCarver<?>> getCarversFor(GenerationStage.Carving stage) {
+        return this.carvers.get(stage);
     }
 
     public static class Properties extends Biome.Builder {

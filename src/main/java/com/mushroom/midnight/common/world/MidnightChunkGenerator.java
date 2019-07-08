@@ -1,16 +1,25 @@
 package com.mushroom.midnight.common.world;
 
+import com.google.common.collect.Iterables;
 import com.mushroom.midnight.common.biome.BiomeLayers;
 import com.mushroom.midnight.common.biome.cavern.CavernousBiome;
 import com.mushroom.midnight.common.registry.MidnightBlocks;
 import net.minecraft.util.SharedSeedRandom;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.GameRules;
 import net.minecraft.world.ServerWorld;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
+import net.minecraft.world.chunk.IChunk;
 import net.minecraft.world.gen.GenerationSettings;
+import net.minecraft.world.gen.GenerationStage;
 import net.minecraft.world.gen.NoiseChunkGenerator;
 import net.minecraft.world.gen.WorldGenRegion;
+import net.minecraft.world.gen.carver.ConfiguredCarver;
+
+import java.util.BitSet;
+import java.util.Collection;
 
 import static com.mushroom.midnight.common.world.MidnightNoiseGenerator.HORIZONTAL_GRANULARITY;
 import static com.mushroom.midnight.common.world.MidnightNoiseGenerator.VERTICAL_GRANULARITY;
@@ -39,6 +48,60 @@ public class MidnightChunkGenerator extends NoiseChunkGenerator<MidnightChunkGen
 
         this.surfaceLayers = surfaceLayers;
         this.undergroundLayers = undergroundLayers;
+    }
+
+    @Override
+    public void carve(IChunk chunk, GenerationStage.Carving stage) {
+        SharedSeedRandom random = new SharedSeedRandom();
+
+        Collection<ConfiguredCarver<?>> surfaceCarvers = this.getBiome(chunk).getCarvers(stage);
+        Collection<ConfiguredCarver<?>> undergroundCarvers = this.getCavernousBiome(chunk).getCarversFor(stage);
+
+        this.applyCarvers(chunk, stage, random, Iterables.concat(surfaceCarvers, undergroundCarvers));
+    }
+
+    private void applyCarvers(IChunk chunk, GenerationStage.Carving stage, SharedSeedRandom random, Iterable<ConfiguredCarver<?>> carvers) {
+        ChunkPos chunkPos = chunk.getPos();
+        int chunkX = chunkPos.x;
+        int chunkZ = chunkPos.z;
+
+        BitSet mask = chunk.getCarvingMask(stage);
+
+        for (int nz = chunkZ - 8; nz <= chunkZ + 8; nz++) {
+            for (int nx = chunkX - 8; nx <= chunkX + 8; nx++) {
+                int i = 0;
+
+                for (ConfiguredCarver<?> carver : carvers) {
+                    random.setLargeFeatureSeed(this.seed + i, nx, nz);
+                    if (carver.shouldCarve(random, nx, nz)) {
+                        carver.carve(chunk, random, this.getSeaLevel(), nx, nz, chunkX, chunkZ, mask);
+                    }
+
+                    i++;
+                }
+            }
+        }
+    }
+
+    @Override
+    public void decorate(WorldGenRegion world) {
+        super.decorate(world);
+
+        int chunkX = world.getMainChunkX();
+        int chunkZ = world.getMainChunkZ();
+
+        int minX = chunkX * 16;
+        int minZ = chunkZ * 16;
+
+        BlockPos origin = new BlockPos(minX, 0, minZ);
+        CavernousBiome cavernousBiome = this.getCavernousBiome(origin.add(8, 8, 8));
+
+        SharedSeedRandom random = new SharedSeedRandom();
+
+        long seed = random.setDecorationSeed(world.getSeed(), minX, minZ);
+        for (GenerationStage.Decoration stage : GenerationStage.Decoration.values()) {
+            cavernousBiome.placeFeatures(stage, this, world, seed, random, origin);
+        }
     }
 
     // TODO: Cover and generate features for cavernous biomes
@@ -87,6 +150,15 @@ public class MidnightChunkGenerator extends NoiseChunkGenerator<MidnightChunkGen
     @Override
     public int getSeaLevel() {
         return SEA_LEVEL;
+    }
+
+    protected CavernousBiome getCavernousBiome(IChunk chunk) {
+        ChunkPos pos = chunk.getPos();
+        return this.undergroundLayers.block.sample(pos.getXStart(), pos.getZStart());
+    }
+
+    protected CavernousBiome getCavernousBiome(BlockPos pos) {
+        return this.undergroundLayers.block.sample(pos.getX(), pos.getZ());
     }
 
     public static class Config extends GenerationSettings {

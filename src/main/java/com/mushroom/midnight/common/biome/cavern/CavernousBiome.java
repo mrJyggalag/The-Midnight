@@ -5,15 +5,12 @@ import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 import com.mushroom.midnight.common.biome.ConfigurableBiome;
 import com.mushroom.midnight.common.world.MidnightChunkGenerator;
-import com.mushroom.midnight.common.world.SurfacePlacementLevel;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.material.Material;
 import net.minecraft.entity.EntityClassification;
+import net.minecraft.util.SharedSeedRandom;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
-import net.minecraft.world.chunk.IChunk;
 import net.minecraft.world.gen.GenerationStage;
+import net.minecraft.world.gen.WorldGenRegion;
 import net.minecraft.world.gen.carver.ConfiguredCarver;
 import net.minecraft.world.gen.carver.ICarverConfig;
 import net.minecraft.world.gen.feature.ConfiguredFeature;
@@ -26,12 +23,12 @@ import net.minecraft.world.gen.surfacebuilders.SurfaceBuilder;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 
-public class CavernousBiome extends ForgeRegistryEntry<CavernousBiome> implements ConfigurableBiome {
+public abstract class CavernousBiome extends ForgeRegistryEntry<CavernousBiome> implements ConfigurableBiome {
     protected final ConfiguredSurfaceBuilder<?> surfaceBuilder;
     protected final float cavernDensity;
     protected final float floorHeight;
@@ -79,6 +76,23 @@ public class CavernousBiome extends ForgeRegistryEntry<CavernousBiome> implement
         this.spawns.put(classification, entry);
     }
 
+    @Override
+    public void placeFeatures(GenerationStage.Decoration stage, MidnightChunkGenerator generator, WorldGenRegion world, long seed, SharedSeedRandom random, BlockPos origin) {
+        int index = 0;
+
+        for(ConfiguredFeature<?> feature : this.features.get(stage)) {
+            random.setFeatureSeed(seed, index, stage.ordinal());
+            feature.place(world, generator, random, origin);
+
+            index++;
+        }
+    }
+
+    @Override
+    public Collection<ConfiguredCarver<?>> getCarversFor(GenerationStage.Carving stage) {
+        return this.carvers.get(stage);
+    }
+
     public float getCavernDensity() {
         return this.cavernDensity;
     }
@@ -97,37 +111,6 @@ public class CavernousBiome extends ForgeRegistryEntry<CavernousBiome> implement
 
     public float getPillarWeight() {
         return this.pillarWeight;
-    }
-
-    // TODO: Integrate into decoration
-    public static class PlacementLevel implements SurfacePlacementLevel {
-        public static final SurfacePlacementLevel INSTANCE = new PlacementLevel();
-
-        private PlacementLevel() {
-        }
-
-        @Override
-        public BlockPos getSurfacePos(World world, BlockPos pos) {
-            IChunk chunk = world.getChunk(pos);
-
-            BlockPos.MutableBlockPos mutablePos = new BlockPos.MutableBlockPos();
-
-            for (int y = 5; y < MidnightChunkGenerator.MIN_SURFACE_LEVEL; y++) {
-                mutablePos.setPos(pos.getX(), y, pos.getZ());
-
-                BlockState state = chunk.getBlockState(mutablePos);
-                if (state.getMaterial() == Material.AIR) {
-                    return mutablePos.toImmutable();
-                }
-            }
-
-            return pos;
-        }
-
-        @Override
-        public int generateUpTo(World world, Random random, int y) {
-            return random.nextInt(Math.min(y, MidnightChunkGenerator.MIN_SURFACE_LEVEL));
-        }
     }
 
     public static class Properties {

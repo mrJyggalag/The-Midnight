@@ -22,10 +22,10 @@ public class FungalCavernBiome extends CavernousBiome {
                 MidnightCarvers.WIDE_CAVE, new ProbabilityConfig(1.0F / 7.0F)
         ));
 
-        MidnightBiomeConfigurator.addDenseSmallFungis(this);
-        MidnightBiomeConfigurator.addTallFungis(this);
+        MidnightBiomeConfigurator.addUndergroundSmallFungis(this);
+        MidnightBiomeConfigurator.addUndergroundTallFungis(this);
 
-        MidnightBiomeConfigurator.addBulbFungi(this);
+        MidnightBiomeConfigurator.addUndergroundBulbFungi(this);
 
         MidnightBiomeConfigurator.addUndergroundSpawns(this);
     }

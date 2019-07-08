@@ -337,8 +337,8 @@ public class MidnightBlocks {
                 .add("mycelium", new MidnightMyceliumBlock(
                         Block.Properties.create(Material.ROCK, MaterialColor.PINK)
                                 .hardnessAndResistance(1.5f, 10f)
-                                .sound(SoundType.STONE)
-                , () -> MidnightBlocks.NIGHTSTONE))
+                                .sound(SoundType.STONE))
+                )
                 .add("deceitful_mud", new DeceitfulMudBlock())
                 .add("deceitful_peat", new SoilBlock(
                         Block.Properties.create(Material.EARTH, MaterialColor.BLUE_TERRACOTTA)
@@ -449,7 +449,7 @@ public class MidnightBlocks {
                 .add("bogshroom_stem", Block::new)
                 // TODO glob fungus stem drops 4 GLOB_FUNGUS_HAND, can silk touch & sheared
                 .add("glob_fungus_stem", props -> new LogBlock(MaterialColor.BROWN, props.hardnessAndResistance(0.5f, 0f)))
-                .add("fungi_inside", FungiInsideBlock::new);
+                .add("fungi_inside", new FungiInsideBlock(Block.Properties.create(Material.AIR).doesNotBlockMovement()));
 
         RegUtil.blocks(event.getRegistry())
                 .withProperties(() -> Block.Properties.create(Material.LEAVES)
