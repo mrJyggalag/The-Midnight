@@ -4,6 +4,7 @@ import io.netty.buffer.ByteBuf;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraft.world.gen.Heightmap;
 
 public class RiftAttachment {
     private final BlockPos pos;
@@ -34,7 +35,7 @@ public class RiftAttachment {
     }
 
     public RiftAttachment fixedToSurface(World world) {
-        BlockPos surfacePos = new BlockPos(pos.getX(), world.getChunk(pos).getHeight(), pos.getZ());
+        BlockPos surfacePos = new BlockPos(pos.getX(), world.getHeight(Heightmap.Type.MOTION_BLOCKING, pos).getY(), pos.getZ());
         return new RiftAttachment(surfacePos, this.yaw);
     }
 

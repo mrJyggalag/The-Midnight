@@ -29,8 +29,7 @@ public class RiftTraveller implements ICapabilityProvider {
 
         if (entity.world instanceof ServerWorld) {
             if (this.enteredRift != null && this.isReady()) {
-                MidnightTeleporter teleporter = new MidnightTeleporter((ServerWorld) entity.world);
-                teleporter.teleport(entity, this.enteredRift);
+                MidnightTeleporter.INSTANCE.teleport(entity, this.enteredRift);
                 this.enteredRift = null;
             }
         }

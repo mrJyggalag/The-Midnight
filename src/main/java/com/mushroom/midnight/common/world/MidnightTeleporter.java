@@ -16,12 +16,11 @@ import net.minecraft.world.ServerWorld;
 import net.minecraft.world.gen.Heightmap;
 
 public class MidnightTeleporter {
+    public static final MidnightTeleporter INSTANCE = new MidnightTeleporter();
+
     public static final int COOLDOWN = 40;
 
-    private final ServerWorld world;
-
-    public MidnightTeleporter(ServerWorld world) {
-        this.world = world;
+    private MidnightTeleporter() {
     }
 
     public void teleport(Entity entity, RiftEntity originRift) {
@@ -35,7 +34,7 @@ public class MidnightTeleporter {
             bridge.close();
         }
 
-        RiftEntity endpointRift = bridge.computeEndpoint(this.world.dimension.getType());
+        RiftEntity endpointRift = bridge.computeEndpoint(originRift.getEndpointDimension());
         if (endpointRift == null) {
             Midnight.LOGGER.warn("Unable to teleport entity through rift! Endpoint not present from portal {}", originRift);
             return;
@@ -80,7 +79,7 @@ public class MidnightTeleporter {
         float displacementZ = MathHelper.cos(angle) * endpointRift.getWidth() / 2.0F;
 
         Vec3d placementPos = new Vec3d(endpointRift.posX + displacementX, endpointRift.posY + 0.5, endpointRift.posZ + displacementZ);
-        if (!this.world.checkBlockCollision(this.getEntityBoundAt(entity, placementPos))) {
+        if (!endpointRift.world.checkBlockCollision(this.getEntityBoundAt(entity, placementPos))) {
             return placementPos;
         }
 
@@ -93,12 +92,12 @@ public class MidnightTeleporter {
             if (entityBound.intersects(endpointRift.getBoundingBox())) {
                 continue;
             }
-            if (!this.world.checkBlockCollision(entityBound)) {
+            if (!endpointRift.world.checkBlockCollision(entityBound)) {
                 return originPos;
             }
         }
 
-        BlockPos surface = this.world.getHeight(Heightmap.Type.MOTION_BLOCKING, placementBlockPos);
+        BlockPos surface = endpointRift.world.getHeight(Heightmap.Type.MOTION_BLOCKING, placementBlockPos);
         return new Vec3d(placementPos.x + 0.5, surface.getY() + 0.5, placementPos.z + 0.5);
     }
 

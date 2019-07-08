@@ -1,5 +1,6 @@
 package com.mushroom.midnight.common.entity;
 
+import com.google.common.collect.ImmutableSet;
 import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.client.particle.RiftParticleSystem;
 import com.mushroom.midnight.common.config.MidnightConfig;
@@ -254,6 +255,9 @@ public class RiftEntity extends Entity implements IEntityAdditionalSpawnData {
     }
 
     private Set<RiftTravelEntry> getRecursedTravelers(List<Entity> entities) {
+        if (entities.isEmpty()) {
+            return ImmutableSet.of();
+        }
         Set<RiftTravelEntry> recursedEntities = new HashSet<>();
         for (Entity entity : entities) {
             if (entity instanceof IRiftTraveler) {
