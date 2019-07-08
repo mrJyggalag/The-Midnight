@@ -1,0 +1,7 @@
+{
+    "parent": "block/door_bottom",
+    "textures": {
+      "bottom": "midnight:blocks/tenebrum_door_bottom",
+      "top": "midnight:blocks/tenebrum_door_top"
+    }
+}

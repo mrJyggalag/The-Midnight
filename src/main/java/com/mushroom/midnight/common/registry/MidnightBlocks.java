@@ -56,6 +56,7 @@ import com.mushroom.midnight.common.world.tree.ViridshroomTree;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.CraftingTableBlock;
+import net.minecraft.block.DoorBlock;
 import net.minecraft.block.FenceBlock;
 import net.minecraft.block.FenceGateBlock;
 import net.minecraft.block.LadderBlock;
@@ -550,16 +551,16 @@ public class MidnightBlocks {
 
         RegUtil.blocks(event.getRegistry())
                 .withProperties(() -> Block.Properties.create(Material.IRON, MaterialColor.ADOBE).hardnessAndResistance(3f).sound(SoundType.METAL))
-                .add("tenebrum_door", BasicBlock::new);
+                .add("tenebrum_door", props -> new DoorBlock(props) {});
 
         RegUtil.blocks(event.getRegistry())
                 .withProperties(() -> Block.Properties.create(Material.WOOD, MaterialColor.ADOBE).hardnessAndResistance(3f).sound(SoundType.WOOD))
-                .add("shadowroot_door", BasicBlock::new)
-                .add("dark_willow_door", BasicBlock::new)
-                .add("dead_wood_door", BasicBlock::new)
-                .add("nightshroom_door", BasicBlock::new)
-                .add("dewshroom_door", BasicBlock::new)
-                .add("viridshroom_door", BasicBlock::new)
+                .add("shadowroot_door", props -> new DoorBlock(props) {})
+                .add("dark_willow_door", props -> new DoorBlock(props) {})
+                .add("dead_wood_door", props -> new DoorBlock(props) {})
+                .add("nightshroom_door", props -> new DoorBlock(props) {})
+                .add("dewshroom_door", props -> new DoorBlock(props) {})
+                .add("viridshroom_door", props -> new DoorBlock(props) {})
 
                 .add("shadowroot_trapdoor", props -> new TrapDoorBlock(props) {})
                 .add("dark_willow_trapdoor", props -> new TrapDoorBlock(props) {})
