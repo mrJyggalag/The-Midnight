@@ -1,0 +1,8 @@
+{
+    "parent": "block/slab",
+    "textures": {
+        "bottom": "midnight:blocks/rockshroom_bricks",
+        "top": "midnight:blocks/rockshroom_bricks",
+        "side": "midnight:blocks/rockshroom_bricks"
+    }
+}

@@ -1,15 +1,7 @@
 {
-  "forge_marker": 1,
-  "defaults": {
-    "textures": {
-      "all": "midnight:blocks/rockshroom_bricks"
+    "variants": {
+        "type=bottom": { "model": "midnight:block/rockshroom_brick_slab" },
+        "type=top": { "model": "midnight:block/rockshroom_brick_slab_top" },
+        "type=double": { "model": "midnight:block/rockshroom_bricks" }
     }
-  },
-  "variants": {
-    "half": {
-      "bottom": {"model": "midnight:slab_lower"},
-      "top": {"model": "midnight:slab_upper"}
-    },
-    "inventory": {"model": "midnight:slab_lower"}
-  }
 }

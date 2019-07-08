@@ -1,15 +1,7 @@
 {
-  "forge_marker": 1,
-  "defaults": {
-    "textures": {
-      "all": "midnight:blocks/nightstone"
+    "variants": {
+        "type=bottom": { "model": "midnight:block/nightstone_slab" },
+        "type=top": { "model": "midnight:block/nightstone_slab_top" },
+        "type=double": { "model": "midnight:block/nightstone" }
     }
-  },
-  "variants": {
-    "half": {
-      "bottom": {"model": "midnight:slab_lower"},
-      "top": {"model": "midnight:slab_upper"}
-    },
-    "inventory": {"model": "midnight:slab_lower"}
-  }
 }

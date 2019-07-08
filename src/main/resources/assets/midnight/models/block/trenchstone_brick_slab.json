@@ -1,0 +1,8 @@
+{
+    "parent": "block/slab",
+    "textures": {
+        "bottom": "midnight:blocks/trenchstone_bricks",
+        "top": "midnight:blocks/trenchstone_bricks",
+        "side": "midnight:blocks/trenchstone_bricks"
+    }
+}
