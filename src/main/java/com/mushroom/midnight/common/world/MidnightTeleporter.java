@@ -3,10 +3,7 @@ package com.mushroom.midnight.common.world;
 import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.common.entity.RiftBridge;
 import com.mushroom.midnight.common.entity.RiftEntity;
-import com.mushroom.midnight.common.registry.MidnightArmorMaterials;
-import com.mushroom.midnight.common.util.EntityUtil;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
@@ -28,10 +25,6 @@ public class MidnightTeleporter {
         if (bridge == null) {
             Midnight.LOGGER.warn("Unable to teleport entity through rift! Bridge not present on portal {}", originRift);
             return;
-        }
-
-        if (entity instanceof PlayerEntity && !EntityUtil.isCoveredBy((PlayerEntity) entity, MidnightArmorMaterials.TENEBRUM)) {
-            bridge.close();
         }
 
         RiftEntity endpointRift = bridge.computeEndpoint(originRift.getEndpointDimension());
