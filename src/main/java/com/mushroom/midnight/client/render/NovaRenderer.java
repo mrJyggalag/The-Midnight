@@ -5,7 +5,7 @@ import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.client.model.NovaModel;
 import com.mushroom.midnight.common.entity.creature.NovaEntity;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
-import net.minecraft.client.renderer.entity.LivingRenderer;
+import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.api.distmarker.Dist;
@@ -14,7 +14,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import javax.annotation.Nullable;
 
 @OnlyIn(Dist.CLIENT)
-public class NovaRenderer extends LivingRenderer<NovaEntity, NovaModel> {
+public class NovaRenderer extends MobRenderer<NovaEntity, NovaModel> {
     private static final ResourceLocation TEXTURE = new ResourceLocation(Midnight.MODID, "textures/entities/nova.png");
 
     public NovaRenderer(EntityRendererManager manager) {

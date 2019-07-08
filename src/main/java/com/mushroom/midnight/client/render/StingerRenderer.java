@@ -5,12 +5,12 @@ import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.client.model.StingerModel;
 import com.mushroom.midnight.common.entity.creature.StingerEntity;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
-import net.minecraft.client.renderer.entity.LivingRenderer;
+import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.util.ResourceLocation;
 
 import javax.annotation.Nullable;
 
-public class StingerRenderer extends LivingRenderer<StingerEntity, StingerModel> {
+public class StingerRenderer extends MobRenderer<StingerEntity, StingerModel> {
     private static final ResourceLocation TEXTURE = new ResourceLocation(Midnight.MODID, "textures/entities/stinger.png");
 
     public StingerRenderer(EntityRendererManager manager) {

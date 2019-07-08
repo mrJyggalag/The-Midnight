@@ -6,7 +6,7 @@ import com.mushroom.midnight.client.ClientEventHandler;
 import com.mushroom.midnight.client.model.NightStagModel;
 import com.mushroom.midnight.common.entity.creature.NightStagEntity;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
-import net.minecraft.client.renderer.entity.LivingRenderer;
+import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.api.distmarker.Dist;
@@ -15,7 +15,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import javax.annotation.Nullable;
 
 @OnlyIn(Dist.CLIENT)
-public class NightStagRenderer extends LivingRenderer<NightStagEntity, NightStagModel> {
+public class NightStagRenderer extends MobRenderer<NightStagEntity, NightStagModel> {
     private static final ResourceLocation TEXTURE = new ResourceLocation(Midnight.MODID, "textures/entities/nightstag.png");
     private static final ResourceLocation EMISSIVE_TEXTURE = new ResourceLocation(Midnight.MODID, "textures/entities/nightstag_emissive.png");
 

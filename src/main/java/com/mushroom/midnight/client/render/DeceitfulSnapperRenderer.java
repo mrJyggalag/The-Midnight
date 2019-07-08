@@ -5,12 +5,12 @@ import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.client.model.DeceitfulSnapperModel;
 import com.mushroom.midnight.common.entity.creature.DeceitfulSnapperEntity;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
-import net.minecraft.client.renderer.entity.LivingRenderer;
+import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.util.ResourceLocation;
 
 import javax.annotation.Nullable;
 
-public class DeceitfulSnapperRenderer extends LivingRenderer<DeceitfulSnapperEntity, DeceitfulSnapperModel> {
+public class DeceitfulSnapperRenderer extends MobRenderer<DeceitfulSnapperEntity, DeceitfulSnapperModel> {
     private static final ResourceLocation TEXTURE = new ResourceLocation(Midnight.MODID, "textures/entities/deceitful_snapper.png");
 
     public DeceitfulSnapperRenderer(EntityRendererManager manager) {

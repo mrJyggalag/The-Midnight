@@ -5,10 +5,10 @@ import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.client.model.HunterModel;
 import com.mushroom.midnight.common.entity.creature.HunterEntity;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
-import net.minecraft.client.renderer.entity.LivingRenderer;
+import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.util.ResourceLocation;
 
-public class HunterRenderer extends LivingRenderer<HunterEntity, HunterModel> {
+public class HunterRenderer extends MobRenderer<HunterEntity, HunterModel> {
     private static final ResourceLocation TEXTURE = new ResourceLocation(Midnight.MODID, "textures/entities/hunter.png");
 
     public HunterRenderer(EntityRendererManager manager) {

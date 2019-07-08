@@ -6,10 +6,10 @@ import com.mushroom.midnight.client.model.RifterModel;
 import com.mushroom.midnight.common.entity.creature.RifterEntity;
 import com.mushroom.midnight.common.helper.Helper;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
-import net.minecraft.client.renderer.entity.LivingRenderer;
+import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.util.ResourceLocation;
 
-public class RifterRenderer extends LivingRenderer<RifterEntity, RifterModel> {
+public class RifterRenderer extends MobRenderer<RifterEntity, RifterModel> {
     private static final ResourceLocation TEXTURE = new ResourceLocation(Midnight.MODID, "textures/entities/rifter.png");
 
     public RifterRenderer(EntityRendererManager manager) {
