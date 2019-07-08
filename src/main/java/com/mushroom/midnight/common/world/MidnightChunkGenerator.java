@@ -104,7 +104,7 @@ public class MidnightChunkGenerator extends NoiseChunkGenerator<MidnightChunkGen
         }
     }
 
-    // TODO: Cover and generate features for cavernous biomes
+    // TODO: Surfacebuilder and spawning for cavernous biomes
 
     @Override
     public void spawnMobs(WorldGenRegion region) {

@@ -10,7 +10,7 @@ import net.minecraftforge.registries.ObjectHolder;
 // TODO: Register from correct event when Forge is fixed
 @ObjectHolder(Midnight.MODID)
 public class MidnightCarvers {
-    public static final WorldCarver<ProbabilityConfig> WIDE_CAVE = new MidnightCaveCarver(ProbabilityConfig::deserialize, 5.0F);
+    public static final WorldCarver<ProbabilityConfig> WIDE_CAVE = new MidnightCaveCarver(ProbabilityConfig::deserialize, 3.0F);
 
     public static void registerCarvers(IForgeRegistry<WorldCarver<?>> registry) {
         RegUtil.generic(registry)

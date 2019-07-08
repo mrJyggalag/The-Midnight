@@ -467,7 +467,6 @@ public class MidnightBlocks {
                         .tickRandomly()
                         .sound(SoundType.PLANT)
                 )
-                // TODO @Gegy sapling/tree
                 .add("shadowroot_sapling", props -> new MidnightSaplingBlock(new ShadowrootTree(), props))
                 .add("dark_willow_sapling", props -> new MidnightSaplingBlock(new DarkWillowTree(), props));
 
