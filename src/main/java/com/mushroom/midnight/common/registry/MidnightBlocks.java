@@ -33,7 +33,7 @@ import com.mushroom.midnight.common.block.MidnightPlantBlock;
 import com.mushroom.midnight.common.block.MidnightSaplingBlock;
 import com.mushroom.midnight.common.block.MidnightStairsBlock;
 import com.mushroom.midnight.common.block.MidnightWoodPlankBlock;
-import com.mushroom.midnight.common.block.MushroomInsideBlock;
+import com.mushroom.midnight.common.block.FungiInsideBlock;
 import com.mushroom.midnight.common.block.RockshroomBlock;
 import com.mushroom.midnight.common.block.SoilBlock;
 import com.mushroom.midnight.common.block.SporchBlock;
@@ -215,7 +215,7 @@ public class MidnightBlocks {
     public static final Block MIASMA = Blocks.AIR;
     public static final Block DARK_WATER = Blocks.AIR;
 
-    public static final Block MUSHROOM_INSIDE = Blocks.AIR;
+    public static final Block FUNGI_INSIDE = Blocks.AIR;
 
     public static final Block DECEITFUL_PEAT = Blocks.AIR;
     public static final Block DECEITFUL_MUD = Blocks.AIR;
@@ -449,7 +449,7 @@ public class MidnightBlocks {
                 .add("bogshroom_stem", Block::new)
                 // TODO glob fungus stem drops 4 GLOB_FUNGUS_HAND, can silk touch & sheared
                 .add("glob_fungus_stem", props -> new LogBlock(MaterialColor.BROWN, props.hardnessAndResistance(0.5f, 0f)))
-                .add("mushroom_inside", MushroomInsideBlock::new);
+                .add("fungi_inside", FungiInsideBlock::new);
 
         RegUtil.blocks(event.getRegistry())
                 .withProperties(() -> Block.Properties.create(Material.LEAVES)
@@ -673,7 +673,7 @@ public class MidnightBlocks {
                         SHADOWROOT_PRESSURE_PLATE, DEAD_WOOD_PRESSURE_PLATE, DARK_WILLOW_PRESSURE_PLATE, DEWSHROOM_PRESSURE_PLATE, VIRIDSHROOM_PRESSURE_PLATE, NIGHTSHROOM_PRESSURE_PLATE, NIGHTSTONE_PRESSURE_PLATE,
                         TRENCHSTONE_PRESSURE_PLATE, ROCKSHROOM_BRICK_PRESSURE_PLATE, NAGRILITE_PRESSURE_PLATE, TENEBRUM_PRESSURE_PLATE,
                         SHADOWROOT_SLAB, DEAD_WOOD_SLAB, DARK_WILLOW_SLAB, NIGHTSTONE_SLAB, NIGHTSTONE_BRICK_SLAB, TRENCHSTONE_SLAB, TRENCHSTONE_BRICK_SLAB, DEWSHROOM_SLAB, VIRIDSHROOM_SLAB, NIGHTSHROOM_SLAB, ROCKSHROOM_BRICK_SLAB
-                ) //, MUSHROOM_INSIDE, UNSTABLE_BUSH, UNSTABLE_BUSH_BLUE_BLOOMED, UNSTABLE_BUSH_GREEN_BLOOMED, UNSTABLE_BUSH_LIME_BLOOMED, BLADESHROOM,
+                ) //, FUNGI_INSIDE, UNSTABLE_BUSH, UNSTABLE_BUSH_BLUE_BLOOMED, UNSTABLE_BUSH_GREEN_BLOOMED, UNSTABLE_BUSH_LIME_BLOOMED, BLADESHROOM,
                 .add(DECEITFUL_ALGAE, DeceitfulAlgaeItem::new)
                 .add(NIGHTSHROOM_SPORCH, (block, props) -> new WallOrFloorItem(NIGHTSHROOM_SPORCH, NIGHTSHROOM_WALL_SPORCH, props))
                 .add(DEWSHROOM_SPORCH, (block, props) -> new WallOrFloorItem(DEWSHROOM_SPORCH, DEWSHROOM_WALL_SPORCH, props))

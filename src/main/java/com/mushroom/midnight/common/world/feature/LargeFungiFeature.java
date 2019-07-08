@@ -40,7 +40,7 @@ public class LargeFungiFeature extends TemplateTreeFeature {
     @Override
     protected void processMarker(IWorld world, BlockPos pos, String key) {
         if (key.equals("inside")) {
-            this.setBlockState(world, pos, MidnightBlocks.MUSHROOM_INSIDE.getDefaultState());
+            this.setBlockState(world, pos, MidnightBlocks.FUNGI_INSIDE.getDefaultState());
         }
         super.processMarker(world, pos, key);
     }
@@ -51,7 +51,7 @@ public class LargeFungiFeature extends TemplateTreeFeature {
         }
 
         BlockState state = world.getBlockState(pos);
-        if (state.getBlock() == MidnightBlocks.MUSHROOM_INSIDE) {
+        if (state.getBlock() == MidnightBlocks.FUNGI_INSIDE) {
             return false;
         }
 

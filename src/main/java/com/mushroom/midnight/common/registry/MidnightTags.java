@@ -15,6 +15,7 @@ public class MidnightTags {
     public static class Blocks {
         public static final Tag<Block> CAN_HOLD_ORES = tag("can_hold_ores");
         public static final Tag<Block> FUNGI_STEMS = tag("fungi_stems");
+        public static final Tag<Block> FUNGI_HATS = tag("fungi_hats");
         public static final Tag<Block> LOGS = tag("logs");
         public static final Tag<Block> BONEMEAL_GROUNDS = tag("bonemeal_grounds");
         public static final Tag<Block> PLANTABLE_GROUNDS = tag("plantable_grounds");

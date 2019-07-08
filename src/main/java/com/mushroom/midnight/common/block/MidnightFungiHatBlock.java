@@ -8,17 +8,22 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
 import net.minecraft.entity.EntitySpawnPlacementRegistry;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.util.Direction;
+import net.minecraft.util.Hand;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.world.IBlockReader;
-import net.minecraft.world.IWorldReader;
+import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.function.Supplier;
 
 public class MidnightFungiHatBlock extends Block {
@@ -46,47 +51,47 @@ public class MidnightFungiHatBlock extends Block {
         );
     }
 
-    // TODO hatblock
-    /*@Override
-    public BlockState getActualState(BlockState state, IWorldReader world, BlockPos pos) {
-        return state.with(UP, this.isInside(world, pos.up()))
-                .with(DOWN, this.isInside(world, pos.down()))
-                .with(NORTH, this.isInside(world, pos.north()))
-                .with(EAST, this.isInside(world, pos.east()))
-                .with(SOUTH, this.isInside(world, pos.south()))
-                .with(WEST, this.isInside(world, pos.west()));
-    }*/
+    @Override
+    public boolean onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hitResult) {
+        ItemStack stack = player.getHeldItem(hand);
 
-    private boolean isInside(IWorldReader world, BlockPos pos) {
-        return world.getBlockState(pos).getBlock() == MidnightBlocks.MUSHROOM_INSIDE;
+        if (stack.getItem() == Items.SHEARS) {
+            if (!world.isRemote) {
+                BooleanProperty faceProperty = getFaceProperty(hitResult.getFace());
+                world.setBlockState(pos, state.with(faceProperty, true), 11);
+
+                world.playSound(null, pos, SoundEvents.BLOCK_PUMPKIN_CARVE, SoundCategory.BLOCKS, 1.0F, 1.0F);
+                stack.damageItem(1, player, p -> p.sendBreakAnimation(hand));
+            }
+
+            return true;
+        }
+
+        return super.onBlockActivated(state, world, pos, player, hand, hitResult);
+    }
+
+    @Override
+    public void onBlockAdded(BlockState state, World world, BlockPos pos, BlockState oldState, boolean isMoving) {
+        super.onBlockAdded(state, world, pos, oldState, isMoving);
+
+        if (state.get(UP)) placeFungiInside(world, pos, Direction.UP);
+        if (state.get(DOWN)) placeFungiInside(world, pos, Direction.DOWN);
+        if (state.get(NORTH)) placeFungiInside(world, pos, Direction.NORTH);
+        if (state.get(SOUTH)) placeFungiInside(world, pos, Direction.SOUTH);
+        if (state.get(EAST)) placeFungiInside(world, pos, Direction.EAST);
+        if (state.get(WEST)) placeFungiInside(world, pos, Direction.WEST);
+    }
+
+    private static void placeFungiInside(World world, BlockPos pos, Direction direction) {
+        BlockPos insidePos = pos.offset(direction);
+        if (world.isAirBlock(insidePos)) {
+            world.setBlockState(insidePos, MidnightBlocks.FUNGI_INSIDE.getDefaultState());
+        }
     }
 
     @Override
     protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
         builder.add(UP, DOWN, NORTH, EAST, SOUTH, WEST);
-    }
-
-    public static List<Direction> getOuterSides(BlockState state) {
-        List<Direction> outerSides = new ArrayList<>();
-        if (!state.get(UP)) {
-            outerSides.add(Direction.UP);
-        }
-        if (!state.get(DOWN)) {
-            outerSides.add(Direction.DOWN);
-        }
-        if (!state.get(NORTH)) {
-            outerSides.add(Direction.NORTH);
-        }
-        if (!state.get(EAST)) {
-            outerSides.add(Direction.EAST);
-        }
-        if (!state.get(SOUTH)) {
-            outerSides.add(Direction.SOUTH);
-        }
-        if (!state.get(WEST)) {
-            outerSides.add(Direction.WEST);
-        }
-        return outerSides;
     }
 
     @Override
@@ -100,6 +105,26 @@ public class MidnightFungiHatBlock extends Block {
         return false;
     }
 
+    private static BooleanProperty getFaceProperty(Direction direction) {
+        switch (direction) {
+            case DOWN:
+                return DOWN;
+            case UP:
+                return UP;
+            case NORTH:
+                return NORTH;
+            case SOUTH:
+                return SOUTH;
+            case WEST:
+                return WEST;
+            case EAST:
+                return EAST;
+            default:
+                throw new Error();
+        }
+    }
+
+    // TODO
     /*@Override
     public int quantityDropped(Random random) {
         return random.nextInt(5) == 0 ? 1 : 0;
