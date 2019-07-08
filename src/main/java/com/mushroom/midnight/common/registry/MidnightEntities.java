@@ -63,6 +63,7 @@ public class MidnightEntities {
             .setTrackingRange(64)
             .setUpdateInterval(1)
             .setShouldReceiveVelocityUpdates(true)
+            .setCustomClientFactory(BladeshroomCapEntity::new)
             .build(MODID + ":bladeshroom_cap");
     public static final EntityType<NovaEntity> NOVA = EntityType.Builder.create(NovaEntity::new, MIDNIGHT_MOB)
             .setTrackingRange(80)
