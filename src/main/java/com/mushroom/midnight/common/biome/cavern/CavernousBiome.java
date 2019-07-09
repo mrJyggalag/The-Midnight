@@ -5,10 +5,13 @@ import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 import com.mushroom.midnight.common.biome.ConfigurableBiome;
 import com.mushroom.midnight.common.world.MidnightChunkGenerator;
+import net.minecraft.block.BlockState;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.util.SharedSeedRandom;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.biome.Biome;
+import net.minecraft.world.biome.Biomes;
+import net.minecraft.world.chunk.IChunk;
 import net.minecraft.world.gen.GenerationStage;
 import net.minecraft.world.gen.WorldGenRegion;
 import net.minecraft.world.gen.carver.ConfiguredCarver;
@@ -80,7 +83,7 @@ public abstract class CavernousBiome extends ForgeRegistryEntry<CavernousBiome> 
     public void placeFeatures(GenerationStage.Decoration stage, MidnightChunkGenerator generator, WorldGenRegion world, long seed, SharedSeedRandom random, BlockPos origin) {
         int index = 0;
 
-        for(ConfiguredFeature<?> feature : this.features.get(stage)) {
+        for (ConfiguredFeature<?> feature : this.features.get(stage)) {
             random.setFeatureSeed(seed, index, stage.ordinal());
             feature.place(world, generator, random, origin);
 
@@ -91,6 +94,12 @@ public abstract class CavernousBiome extends ForgeRegistryEntry<CavernousBiome> 
     @Override
     public Collection<ConfiguredCarver<?>> getCarversFor(GenerationStage.Carving stage) {
         return this.carvers.get(stage);
+    }
+
+    @Override
+    public void generateSurface(SharedSeedRandom random, IChunk chunk, int x, int z, int startY, double depth, BlockState defaultBlock, BlockState defaultFluid, int seaLevel, long seed) {
+        this.surfaceBuilder.setSeed(seed);
+        this.surfaceBuilder.buildSurface(random, chunk, Biomes.DEFAULT, x, z, startY, depth, defaultBlock, defaultFluid, seaLevel, seed);
     }
 
     public float getCavernDensity() {

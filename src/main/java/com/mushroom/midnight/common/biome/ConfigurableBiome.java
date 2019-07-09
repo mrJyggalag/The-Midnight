@@ -1,10 +1,12 @@
 package com.mushroom.midnight.common.biome;
 
 import com.mushroom.midnight.common.world.MidnightChunkGenerator;
+import net.minecraft.block.BlockState;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.util.SharedSeedRandom;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.biome.Biome;
+import net.minecraft.world.chunk.IChunk;
 import net.minecraft.world.gen.GenerationStage;
 import net.minecraft.world.gen.WorldGenRegion;
 import net.minecraft.world.gen.carver.ConfiguredCarver;
@@ -27,4 +29,6 @@ public interface ConfigurableBiome {
     void placeFeatures(GenerationStage.Decoration stage, MidnightChunkGenerator generator, WorldGenRegion world, long seed, SharedSeedRandom random, BlockPos origin);
 
     Collection<ConfiguredCarver<?>> getCarversFor(GenerationStage.Carving stage);
+
+    void generateSurface(SharedSeedRandom random, IChunk chunk, int x, int z, int y, double depth, BlockState defaultBlock, BlockState defaultFluid, int seaLevel, long seed);
 }

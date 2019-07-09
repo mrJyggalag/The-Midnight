@@ -17,7 +17,10 @@ import net.minecraft.world.chunk.ChunkPrimer;
 import net.minecraft.world.chunk.IChunk;
 import net.minecraft.world.gen.GenerationSettings;
 import net.minecraft.world.gen.GenerationStage;
+import net.minecraft.world.gen.Heightmap;
+import net.minecraft.world.gen.INoiseGenerator;
 import net.minecraft.world.gen.NoiseChunkGenerator;
+import net.minecraft.world.gen.PerlinNoiseGenerator;
 import net.minecraft.world.gen.WorldGenRegion;
 import net.minecraft.world.gen.carver.ConfiguredCarver;
 
@@ -43,6 +46,8 @@ public class MidnightChunkGenerator extends NoiseChunkGenerator<MidnightChunkGen
     private final BiomeLayers<Biome> surfaceLayers;
     private final BiomeLayers<CavernousBiome> undergroundLayers;
 
+    private final INoiseGenerator surfaceDepthNoise;
+
     public MidnightChunkGenerator(World world, BiomeLayers<Biome> surfaceLayers, BiomeLayers<CavernousBiome> undergroundLayers, Config config) {
         super(world, new MidnightBiomeProvider(surfaceLayers), HORIZONTAL_GRANULARITY, VERTICAL_GRANULARITY, 256, config, true);
 
@@ -52,6 +57,8 @@ public class MidnightChunkGenerator extends NoiseChunkGenerator<MidnightChunkGen
 
         this.surfaceLayers = surfaceLayers;
         this.undergroundLayers = undergroundLayers;
+
+        this.surfaceDepthNoise = new PerlinNoiseGenerator(this.randomSeed, 4);
     }
 
     @Override
@@ -65,6 +72,42 @@ public class MidnightChunkGenerator extends NoiseChunkGenerator<MidnightChunkGen
             }
             return null;
         });
+    }
+
+    @Override
+    public void generateSurface(IChunk chunk) {
+        long seed = this.world.getSeed();
+
+        ChunkPos chunkPos = chunk.getPos();
+        int chunkX = chunkPos.x;
+        int chunkZ = chunkPos.z;
+
+        SharedSeedRandom random = new SharedSeedRandom();
+        random.setBaseChunkSeed(chunkX, chunkZ);
+
+        int minChunkX = chunkPos.getXStart();
+        int minChunkZ = chunkPos.getZStart();
+
+        Biome[] biomes = chunk.getBiomes();
+
+        for (int localZ = 0; localZ < 16; localZ++) {
+            for (int localX = 0; localX < 16; localX++) {
+                int globalX = minChunkX + localX;
+                int globalZ = minChunkZ + localZ;
+
+                Biome surfaceBiome = biomes[localX + localZ * 16];
+                CavernousBiome cavernousBiome = this.getCavernousBiome(globalX, globalZ);
+
+                int height = chunk.getTopBlockY(Heightmap.Type.WORLD_SURFACE_WG, localX, localZ) + 1;
+
+                double depth = this.surfaceDepthNoise.func_215460_a(globalX * 0.0625, globalZ * 0.0625, 0.0625, localX * 0.0625);
+
+                surfaceBiome.buildSurface(random, chunk, globalX, globalZ, height, depth, this.defaultBlock, this.defaultFluid, SEA_LEVEL, seed);
+                cavernousBiome.generateSurface(random, chunk, globalX, globalZ, height, depth, this.defaultBlock, this.defaultFluid, SEA_LEVEL, seed);
+            }
+        }
+
+        this.makeBedrock(chunk, random);
     }
 
     @Override
@@ -110,7 +153,7 @@ public class MidnightChunkGenerator extends NoiseChunkGenerator<MidnightChunkGen
         int minZ = chunkZ * 16;
 
         BlockPos origin = new BlockPos(minX, 0, minZ);
-        CavernousBiome cavernousBiome = this.getCavernousBiome(origin.add(8, 8, 8));
+        CavernousBiome cavernousBiome = this.getCavernousBiome(origin.getX() + 8, origin.getZ() + 8);
 
         SharedSeedRandom random = new SharedSeedRandom();
 
@@ -120,7 +163,7 @@ public class MidnightChunkGenerator extends NoiseChunkGenerator<MidnightChunkGen
         }
     }
 
-    // TODO: Surfacebuilder and spawning for cavernous biomes
+    // TODO: spawning for cavernous biomes
 
     @Override
     public void spawnMobs(WorldGenRegion region) {
@@ -173,8 +216,8 @@ public class MidnightChunkGenerator extends NoiseChunkGenerator<MidnightChunkGen
         return this.undergroundLayers.block.sample(pos.getXStart(), pos.getZStart());
     }
 
-    protected CavernousBiome getCavernousBiome(BlockPos pos) {
-        return this.undergroundLayers.block.sample(pos.getX(), pos.getZ());
+    protected CavernousBiome getCavernousBiome(int x, int z) {
+        return this.undergroundLayers.block.sample(x, z);
     }
 
     public static class Config extends GenerationSettings {
