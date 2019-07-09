@@ -17,7 +17,8 @@ public class FungiForestBiome extends SurfaceBiome {
 
         MidnightBiomeConfigurator.addLargeFungis(this);
         MidnightBiomeConfigurator.addLumen(this);
-        MidnightBiomeConfigurator.addSmallFungis(this);
+        MidnightBiomeConfigurator.addDenseSmallFungis(this);
+        MidnightBiomeConfigurator.addDenseTallFungis(this);
         MidnightBiomeConfigurator.addGrasses(this);
         MidnightBiomeConfigurator.addBladeshrooms(this);
 

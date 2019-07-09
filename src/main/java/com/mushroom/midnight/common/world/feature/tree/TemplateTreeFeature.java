@@ -76,8 +76,8 @@ public abstract class TemplateTreeFeature extends MidnightTreeFeature {
         BlockPos minCorner = WorldUtil.min(trunkCorners);
         BlockPos maxCorner = WorldUtil.max(trunkCorners);
 
-        minCorner = new BlockPos(minCorner.getX() - 1, anchor.getY(), minCorner.getZ() - 1);
-        maxCorner = new BlockPos(maxCorner.getX() + 1, anchor.getY(), maxCorner.getZ() + 1);
+        minCorner = new BlockPos(minCorner.getX() + 1, anchor.getY(), minCorner.getZ() + 1);
+        maxCorner = new BlockPos(maxCorner.getX() - 1, anchor.getY(), maxCorner.getZ() - 1);
 
         if (!this.canGrow(world, minCorner, maxCorner) || !this.canFit(world, trunkTop, minCorner, maxCorner)) {
             return false;
