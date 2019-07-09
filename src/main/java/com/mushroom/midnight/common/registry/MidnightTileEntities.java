@@ -1,7 +1,7 @@
 package com.mushroom.midnight.common.registry;
 
 import com.mushroom.midnight.common.tile.base.MidnightChestTileEntity;
-import com.mushroom.midnight.common.tile.base.TileEntityMidnightFurnace;
+import com.mushroom.midnight.common.tile.base.MidnightFurnaceTileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -20,7 +20,7 @@ public class MidnightTileEntities {
     public static void registerTileEntity(final RegistryEvent.Register<TileEntityType<?>> event) {
         event.getRegistry().registerAll(
                 TileEntityType.Builder.create(MidnightChestTileEntity::new, MidnightBlocks.SHADOWROOT_CHEST).build(null).setRegistryName(MODID, "midnight_chest"),
-                TileEntityType.Builder.create(TileEntityMidnightFurnace::new, MidnightBlocks.NIGHTSTONE_FURNACE).build(null).setRegistryName(MODID, "midnight_furnace")
+                TileEntityType.Builder.create(MidnightFurnaceTileEntity::new, MidnightBlocks.NIGHTSTONE_FURNACE).build(null).setRegistryName(MODID, "midnight_furnace")
         );
     }
 }
