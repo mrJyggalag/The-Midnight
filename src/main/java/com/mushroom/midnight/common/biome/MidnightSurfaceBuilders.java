@@ -17,7 +17,7 @@ public final class MidnightSurfaceBuilders {
     public static final SurfaceBuilder<SurfaceBuilderConfig> SURFACE = new LayeredSurfaceBuilder(SurfaceBuilderConfig::deserialize, 0, 0);
 
     public static final SurfaceBuilder<SurfaceBuilderConfig> CAVERN = new LayeredSurfaceBuilder(SurfaceBuilderConfig::deserialize, 1, Integer.MAX_VALUE)
-            .withMaxY(MidnightChunkGenerator.MIN_SURFACE_LEVEL);
+            .withMaxY(MidnightChunkGenerator.SURFACE_CAVE_BOUNDARY);
 
     public static final SurfaceBuilderConfig GRASS_DIRT_MUD_CONFIG = new SurfaceBuilderConfig(
             MidnightBlocks.GRASS_BLOCK.getDefaultState(),

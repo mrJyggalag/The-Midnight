@@ -4,13 +4,16 @@ import com.google.common.collect.Iterables;
 import com.mushroom.midnight.common.biome.BiomeLayers;
 import com.mushroom.midnight.common.biome.cavern.CavernousBiome;
 import com.mushroom.midnight.common.registry.MidnightBlocks;
+import com.mushroom.midnight.common.world.util.NoiseChunkPrimer;
 import net.minecraft.util.SharedSeedRandom;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.GameRules;
+import net.minecraft.world.IWorld;
 import net.minecraft.world.ServerWorld;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
+import net.minecraft.world.chunk.ChunkPrimer;
 import net.minecraft.world.chunk.IChunk;
 import net.minecraft.world.gen.GenerationSettings;
 import net.minecraft.world.gen.GenerationStage;
@@ -21,8 +24,7 @@ import net.minecraft.world.gen.carver.ConfiguredCarver;
 import java.util.BitSet;
 import java.util.Collection;
 
-import static com.mushroom.midnight.common.world.MidnightNoiseGenerator.HORIZONTAL_GRANULARITY;
-import static com.mushroom.midnight.common.world.MidnightNoiseGenerator.VERTICAL_GRANULARITY;
+import static com.mushroom.midnight.common.world.MidnightNoiseGenerator.*;
 
 public class MidnightChunkGenerator extends NoiseChunkGenerator<MidnightChunkGenerator.Config> {
     public static final int SURFACE_LEVEL = 78;
@@ -30,12 +32,13 @@ public class MidnightChunkGenerator extends NoiseChunkGenerator<MidnightChunkGen
     public static final int MIN_CAVE_HEIGHT = 20;
     public static final int MAX_CAVE_HEIGHT = 46;
 
-    public static final int MIN_SURFACE_LEVEL = MAX_CAVE_HEIGHT + 12;
+    public static final int SURFACE_CAVE_BOUNDARY = MAX_CAVE_HEIGHT + 12;
 
     public static final int SEA_LEVEL = SURFACE_LEVEL + 2;
 
     private final World world;
     private final MidnightNoiseGenerator noiseGenerator;
+    private final NoiseChunkPrimer noisePrimer;
 
     private final BiomeLayers<Biome> surfaceLayers;
     private final BiomeLayers<CavernousBiome> undergroundLayers;
@@ -45,26 +48,39 @@ public class MidnightChunkGenerator extends NoiseChunkGenerator<MidnightChunkGen
 
         this.world = world;
         this.noiseGenerator = new MidnightNoiseGenerator(this.randomSeed);
+        this.noisePrimer = new NoiseChunkPrimer(HORIZONTAL_GRANULARITY, VERTICAL_GRANULARITY, NOISE_WIDTH, NOISE_HEIGHT);
 
         this.surfaceLayers = surfaceLayers;
         this.undergroundLayers = undergroundLayers;
     }
 
     @Override
-    public void carve(IChunk chunk, GenerationStage.Carving stage) {
-        SharedSeedRandom random = new SharedSeedRandom();
+    public void makeBase(IWorld world, IChunk chunk) {
+        double[] noise = this.noiseGenerator.sampleChunkNoise(chunk.getPos(), this.surfaceLayers, this.undergroundLayers);
+        this.noisePrimer.primeChunk((ChunkPrimer) chunk, noise, (density, x, y, z) -> {
+            if (density > 0.0F) {
+                return this.defaultBlock;
+            } else if (y < SEA_LEVEL && y > SURFACE_CAVE_BOUNDARY) {
+                return this.defaultFluid;
+            }
+            return null;
+        });
+    }
 
+    @Override
+    public void carve(IChunk chunk, GenerationStage.Carving stage) {
         Collection<ConfiguredCarver<?>> surfaceCarvers = this.getBiome(chunk).getCarvers(stage);
         Collection<ConfiguredCarver<?>> undergroundCarvers = this.getCavernousBiome(chunk).getCarversFor(stage);
 
-        this.applyCarvers(chunk, stage, random, Iterables.concat(surfaceCarvers, undergroundCarvers));
+        this.applyCarvers(chunk, stage, Iterables.concat(surfaceCarvers, undergroundCarvers));
     }
 
-    private void applyCarvers(IChunk chunk, GenerationStage.Carving stage, SharedSeedRandom random, Iterable<ConfiguredCarver<?>> carvers) {
+    private void applyCarvers(IChunk chunk, GenerationStage.Carving stage, Iterable<ConfiguredCarver<?>> carvers) {
         ChunkPos chunkPos = chunk.getPos();
         int chunkX = chunkPos.x;
         int chunkZ = chunkPos.z;
 
+        SharedSeedRandom random = new SharedSeedRandom();
         BitSet mask = chunk.getCarvingMask(stage);
 
         for (int nz = chunkZ - 8; nz <= chunkZ + 8; nz++) {

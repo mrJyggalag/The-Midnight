@@ -23,7 +23,7 @@ public class UndergroundPlacementLevel implements PlacementLevel {
 
         BlockPos.MutableBlockPos mutablePos = new BlockPos.MutableBlockPos();
 
-        for (int y = 5; y < MidnightChunkGenerator.MIN_SURFACE_LEVEL; y++) {
+        for (int y = 5; y < MidnightChunkGenerator.SURFACE_CAVE_BOUNDARY; y++) {
             mutablePos.setPos(pos.getX(), y, pos.getZ());
 
             BlockState state = chunk.getBlockState(mutablePos);
@@ -37,6 +37,6 @@ public class UndergroundPlacementLevel implements PlacementLevel {
 
     @Override
     public boolean containsY(IWorld world, int y) {
-        return y < MidnightChunkGenerator.MIN_SURFACE_LEVEL;
+        return y < MidnightChunkGenerator.SURFACE_CAVE_BOUNDARY;
     }
 }

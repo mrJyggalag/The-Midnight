@@ -19,6 +19,6 @@ public class SurfacePlacementLevel implements PlacementLevel {
 
     @Override
     public boolean containsY(IWorld world, int y) {
-        return y > MidnightChunkGenerator.MIN_SURFACE_LEVEL;
+        return y > MidnightChunkGenerator.SURFACE_CAVE_BOUNDARY;
     }
 }

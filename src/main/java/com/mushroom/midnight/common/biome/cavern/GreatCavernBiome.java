@@ -8,7 +8,6 @@ public class GreatCavernBiome extends CavernousBiome {
         super(new Properties()
                 .surfaceBuilder(MidnightSurfaceBuilders.CAVERN, MidnightSurfaceBuilders.NIGHTSTONE_CONFIG)
                 .heightScale(0.4F)
-                .cavernDensity(5.0F)
         );
 
         MidnightBiomeConfigurator.addUndergroundSpawns(this);

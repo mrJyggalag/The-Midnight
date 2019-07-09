@@ -8,6 +8,7 @@ import com.mushroom.midnight.common.util.RegionInterpolator;
 import com.mushroom.midnight.common.world.noise.OctaveNoiseSampler;
 import com.mushroom.midnight.common.world.noise.PerlinNoiseSampler;
 import com.mushroom.midnight.common.world.util.BiomeWeightTable;
+import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.biome.Biome;
 
@@ -24,7 +25,12 @@ public class MidnightNoiseGenerator {
     public static final int NOISE_WIDTH = 16 / HORIZONTAL_GRANULARITY;
     public static final int NOISE_HEIGHT = 256 / VERTICAL_GRANULARITY;
 
+    private static final int BUFFER_WIDTH = NOISE_WIDTH + 1;
+    private static final int BUFFER_HEIGHT = NOISE_HEIGHT + 1;
+
     private static final int BIOME_WEIGHT_RADIUS = 2;
+
+    private static final int NOISE_SURFACE_CAVE_BOUNDARY = SURFACE_CAVE_BOUNDARY / VERTICAL_GRANULARITY;
 
     private final OctaveNoiseSampler worldNoise;
     private final OctaveNoiseSampler surfaceNoise;
@@ -55,6 +61,26 @@ public class MidnightNoiseGenerator {
         this.ridgedSurfaceNoise.setFrequency(0.08);
 
         this.weightTable = new BiomeWeightTable(BIOME_WEIGHT_RADIUS);
+    }
+
+    public double[] sampleChunkNoise(ChunkPos chunkPos, BiomeLayers<Biome> surfaceLayers, BiomeLayers<CavernousBiome> undergroundLayers) {
+        int globalX = chunkPos.x * NOISE_WIDTH;
+        int globalZ = chunkPos.z * NOISE_WIDTH;
+
+        double[] noise = new double[BUFFER_HEIGHT * BUFFER_WIDTH * BUFFER_WIDTH];
+        double[] column = new double[BUFFER_HEIGHT];
+
+        int index = 0;
+        for (int localZ = 0; localZ < BUFFER_WIDTH; localZ++) {
+            for (int localX = 0; localX < BUFFER_WIDTH; localX++) {
+                this.populateColumnNoise(column, globalX + localX, globalZ + localZ, surfaceLayers, undergroundLayers);
+
+                System.arraycopy(column, 0, noise, index, column.length);
+                index += BUFFER_HEIGHT;
+            }
+        }
+
+        return noise;
     }
 
     public void populateColumnNoise(double[] noise, int x, int z, BiomeLayers<Biome> surfaceLayers, BiomeLayers<CavernousBiome> undergroundLayers) {
@@ -103,6 +129,11 @@ public class MidnightNoiseGenerator {
         RegionInterpolator interpolator = new RegionInterpolator(regions, Curve.linear());
 
         for (int y = 0; y < NOISE_HEIGHT + 1; y++) {
+            if (y == NOISE_SURFACE_CAVE_BOUNDARY) {
+                noise[y] = 5.0;
+                continue;
+            }
+
             double surfaceWeight = MathHelper.clamp((y - cavernRegionEnd) / (surfaceHeight - cavernRegionEnd), 0.0, 1.0);
             double cavernWeight = 1.0 - surfaceWeight;
 
