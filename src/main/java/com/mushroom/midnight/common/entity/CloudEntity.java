@@ -5,8 +5,10 @@ import com.mushroom.midnight.common.registry.MidnightEntities;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.block.material.PushReaction;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.Pose;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.ListNBT;
 import net.minecraft.network.IPacket;
@@ -79,17 +81,21 @@ public class CloudEntity extends Entity {
     protected void registerData() {
         this.dataManager.register(COLOR, 0);
         this.dataManager.register(RADIUS, 0.5f);
-        this.dataManager.register(IGNORE_RADIUS, Boolean.FALSE);
-        this.dataManager.register(PARTICLE, MidnightParticles.AMBIENT_SPORE.ordinal());
+        this.dataManager.register(IGNORE_RADIUS, false);
+        this.dataManager.register(PARTICLE, MidnightParticles.getDefaultParticle().ordinal());
         this.dataManager.register(PARTICLE_PARAM, 0);
     }
 
-    public CloudEntity setRadius(float radius) {
+    @Override
+    public void recalculateSize() {
         double x = this.posX;
         double y = this.posY;
         double z = this.posZ;
-        //setSize(radius * 2f, 0.5f); // size is only important on clientside for cloud
+        super.recalculateSize();
         setPosition(x, y, z);
+    }
+
+    public CloudEntity setRadius(float radius) {
         if (!this.world.isRemote) {
             this.dataManager.set(RADIUS, radius);
         }
@@ -323,17 +329,20 @@ public class CloudEntity extends Entity {
         if (compound.contains("particle_param", Constants.NBT.TAG_INT)) {
             setParticleParam(compound.getInt("particle_param"));
         }
-        if (compound.contains("Color", 99)) {
+        if (compound.contains("Color", Constants.NBT.TAG_ANY_NUMERIC)) {
             setColor(compound.getInt("Color"));
         }
-        if (compound.contains("Potion", 8)) {
+        if (compound.contains("Potion", Constants.NBT.TAG_STRING)) {
             setPotion(PotionUtils.getPotionTypeFromNBT(compound));
         }
-        if (compound.contains("Effects", 9)) {
+        if (compound.contains("Effects", Constants.NBT.TAG_LIST)) {
             ListNBT list = compound.getList("Effects", Constants.NBT.TAG_COMPOUND);
             this.effects.clear();
             for (int i = 0; i < list.size(); ++i) {
-                this.addEffect(EffectInstance.read(list.getCompound(i)));
+                EffectInstance effectInstance = EffectInstance.read(list.getCompound(i));
+                if (effectInstance != null) {
+                    addEffect(effectInstance);
+                }
             }
         }
     }
@@ -372,6 +381,7 @@ public class CloudEntity extends Entity {
     public void notifyDataManagerChange(DataParameter<?> key) {
         if (RADIUS.equals(key)) {
             setRadius(getRadius());
+            recalculateSize();
         }
         super.notifyDataManagerChange(key);
     }
@@ -384,5 +394,10 @@ public class CloudEntity extends Entity {
     @Override
     public IPacket<?> createSpawnPacket() {
         return NetworkHooks.getEntitySpawningPacket(this);
+    }
+
+    @Override
+    public EntitySize getSize(Pose poseIn) {
+        return EntitySize.flexible(getRadius() * 2f, 0.5f);
     }
 }

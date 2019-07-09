@@ -1,16 +1,12 @@
 package com.mushroom.midnight.client.particle;
 
 import com.mushroom.midnight.common.helper.Helper;
-import net.minecraft.client.particle.IParticleFactory;
 import net.minecraft.client.particle.Particle;
-import net.minecraft.particles.IParticleData;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-
-import javax.annotation.Nullable;
 
 @OnlyIn(Dist.CLIENT)
 public class FadingSporeParticle extends MidnightParticle {
@@ -67,12 +63,10 @@ public class FadingSporeParticle extends MidnightParticle {
     }
 
     @OnlyIn(Dist.CLIENT)
-    public static class Factory implements IParticleFactory {
-        @Nullable
+    public static class Factory implements IParticle {
         @Override
-        public Particle makeParticle(IParticleData type, World world, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
-            // TODO params , params.length > 0 ? params[0] : 0xffffff
-            return new FadingSporeParticle(world, x, y, z, xSpeed, ySpeed, zSpeed, 0xffffff);
+        public Particle makeParticle(World world, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed, int... params) {
+            return new FadingSporeParticle(world, x, y, z, xSpeed, ySpeed, zSpeed, params.length > 0 ? params[0] : 0xffffff);
         }
     }
 }

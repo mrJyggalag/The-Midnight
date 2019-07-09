@@ -1,15 +1,11 @@
 package com.mushroom.midnight.client.particle;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.particle.IParticleFactory;
 import net.minecraft.client.particle.Particle;
-import net.minecraft.particles.BasicParticleType;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-
-import javax.annotation.Nullable;
 
 public enum MidnightParticles {
     AMBIENT_SPORE, SPORE, DRIP, UNSTABLE_BUSH, SPORCH, FURNACE_FLAME, BOMB_EXPLOSION, FADING_SPORE;
@@ -18,16 +14,12 @@ public enum MidnightParticles {
     }
 
     @OnlyIn(Dist.CLIENT)
-    @Nullable
-    @SuppressWarnings("unchecked")
-    public Particle create(World world, double x, double y, double z, double velocityX, double velocityY, double velocityZ) {
-        IParticleFactory factory = getFactory();
-        return factory == null ? null : factory.makeParticle(new BasicParticleType(false), world, x, y, z, velocityX, velocityY, velocityZ);
+    public Particle create(World world, double x, double y, double z, double velocityX, double velocityY, double velocityZ, int... params) {
+        return getFactory().makeParticle(world, x, y, z, velocityX, velocityY, velocityZ, params);
     }
 
     @OnlyIn(Dist.CLIENT)
-    @Nullable
-    public IParticleFactory getFactory() {
+    public IParticle getFactory() {
         switch (this) {
             case AMBIENT_SPORE:
                 return new AmbientSporeParticle.Factory();
@@ -46,15 +38,16 @@ public enum MidnightParticles {
             case FADING_SPORE:
                 return new FadingSporeParticle.Factory();
         }
-        return null;
+        return new AmbientSporeParticle.Factory();
+    }
+
+    public static MidnightParticles getDefaultParticle() {
+        return AMBIENT_SPORE;
     }
 
     public void spawn(World world, double x, double y, double z, double velocityX, double velocityY, double velocityZ, int... parameters) {
         if (world.isRemote) {
-            Particle particle = create(world, x, y, z, velocityX, velocityY, velocityZ);
-            if (particle != null) {
-                spawn(particle);
-            }
+            spawn(create(world, x, y, z, velocityX, velocityY, velocityZ, parameters));
         }
     }
 

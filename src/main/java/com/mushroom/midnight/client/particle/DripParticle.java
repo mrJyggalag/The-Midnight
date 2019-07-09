@@ -1,14 +1,10 @@
 package com.mushroom.midnight.client.particle;
 
-import net.minecraft.client.particle.IParticleFactory;
 import net.minecraft.client.particle.Particle;
-import net.minecraft.particles.IParticleData;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-
-import javax.annotation.Nullable;
 
 @OnlyIn(Dist.CLIENT)
 public class DripParticle extends MidnightParticle {
@@ -63,12 +59,10 @@ public class DripParticle extends MidnightParticle {
     }
 
     @OnlyIn(Dist.CLIENT)
-    public static class Factory implements IParticleFactory {
-        @Nullable
+    public static class Factory implements IParticle {
         @Override
-        //TODO params params.length > 0 ? params[0] / 255f : 0f, params.length > 1 ? params[1] / 255f : 0f, params.length > 2 ? params[2] / 255f : 0f
-        public Particle makeParticle(IParticleData type, World world, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
-            return new DripParticle(world, x, y, z, 1f, 0.5f, 0.5f);
+        public Particle makeParticle(World world, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed, int... params) {
+            return new DripParticle(world, x, y, z, params.length > 0 ? params[0] / 255f : 0f, params.length > 1 ? params[1] / 255f : 0f, params.length > 2 ? params[2] / 255f : 0f);
         }
     }
 }

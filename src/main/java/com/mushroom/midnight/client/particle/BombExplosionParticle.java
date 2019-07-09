@@ -2,7 +2,6 @@ package com.mushroom.midnight.client.particle;
 
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mushroom.midnight.common.helper.Helper;
-import net.minecraft.client.particle.IParticleFactory;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.renderer.ActiveRenderInfo;
 import net.minecraft.client.renderer.BufferBuilder;
@@ -11,19 +10,13 @@ import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.client.renderer.vertex.VertexFormat;
 
-import net.minecraft.particles.IParticleData;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-import javax.annotation.Nullable;
-
-import static com.mushroom.midnight.Midnight.MODID;
-
 @OnlyIn(Dist.CLIENT)
 public class BombExplosionParticle extends MidnightParticle {
-    private static final ResourceLocation EXPLOSION_TEXTURE = new ResourceLocation(MODID, "textures/particles/bomb_explosion.png");
     private static final VertexFormat VERTEX_FORMAT = (new VertexFormat()).addElement(DefaultVertexFormats.POSITION_3F).addElement(DefaultVertexFormats.TEX_2F).addElement(DefaultVertexFormats.COLOR_4UB).addElement(DefaultVertexFormats.TEX_2S).addElement(DefaultVertexFormats.NORMAL_3B).addElement(DefaultVertexFormats.PADDING_1B);
     private int life;
     private final int lifeTime;
@@ -40,6 +33,7 @@ public class BombExplosionParticle extends MidnightParticle {
 
     @Override
     public void renderParticle(BufferBuilder buffer, ActiveRenderInfo activeInfo, float partialTicks, float rotationX, float rotationZ, float rotationYZ, float rotationXY, float rotationXZ) {
+        // TODO the particle doesn't render correctly
         int i = (int) (((float) this.life + partialTicks) * 15f / (float) this.lifeTime);
         if (i <= 15) {
             double minU = (i % 4) / 4d;
@@ -91,12 +85,10 @@ public class BombExplosionParticle extends MidnightParticle {
     }
 
     @OnlyIn(Dist.CLIENT)
-    public static class Factory implements IParticleFactory {
-        @Nullable
+    public static class Factory implements IParticle {
         @Override
-        public Particle makeParticle(IParticleData type, World world, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
-            // TODO params scale, params.length > 0 ? params[0] : 0xffffff
-            return new BombExplosionParticle(world, x, y, z, 1f, 0xffffff);
+        public Particle makeParticle(World world, double x, double y, double z, double scale, double unused1, double unused2, int... params) {
+            return new BombExplosionParticle(world, x, y, z, scale, params.length > 0 ? params[0] : 0xffffff);
         }
     }
 }
