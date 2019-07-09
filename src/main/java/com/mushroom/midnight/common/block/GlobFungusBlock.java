@@ -32,7 +32,7 @@ public class GlobFungusBlock extends MidnightPlantBlock implements IGrowable {
 
     @Override
     public void grow(World world, Random rand, BlockPos pos, BlockState state) {
-        if (!ForgeEventFactory.saplingGrowTree(world, rand, pos)) {
+        if (ForgeEventFactory.saplingGrowTree(world, rand, pos)) {
             this.tree.spawn(world, pos, state, rand);
         }
     }

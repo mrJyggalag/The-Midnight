@@ -44,7 +44,7 @@ public class DoubleFungiBlock extends MidnightDoublePlantBlock {
     public void grow(World world, Random rand, BlockPos pos, BlockState state) {
         if (state.get(STAGE) == 0) {
             world.setBlockState(pos, state.cycle(STAGE), 4);
-        } else if (!ForgeEventFactory.saplingGrowTree(world, rand, pos)) {
+        } else if (ForgeEventFactory.saplingGrowTree(world, rand, pos)) {
             this.tree.spawn(world, pos, state, rand);
         }
     }
