@@ -184,7 +184,7 @@ public class MidnightEntities {
     }
 
     private static boolean fishCondition(EntityType<? extends AbstractFishEntity> entityType, IWorld world, SpawnReason spawnReason, BlockPos pos, Random random) {
-        return world.getBlockState(pos).getBlock() == MidnightBlocks.DARK_WATER && world.getBlockState(pos.up()).getBlock() == MidnightBlocks.DARK_WATER;
+        return world.getBlockState(pos).getBlock() == MidnightBlocks.DARK_WATER && (world.getBlockState(pos.down()).getBlock() == MidnightBlocks.DARK_WATER || world.getBlockState(pos.up()).getBlock() == MidnightBlocks.DARK_WATER);
     }
 
     private static boolean monsterCondition(EntityType<? extends MonsterEntity> entityType, IWorld world, SpawnReason spawnReason, BlockPos pos, Random random) {

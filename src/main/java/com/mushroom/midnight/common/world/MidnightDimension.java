@@ -137,11 +137,13 @@ public class MidnightDimension extends Dimension {
 
     @Override
     public void updateWeather(Runnable defaultLogic) {
-        this.setAllowedSpawnTypes(false, false);
+        //this.setAllowedSpawnTypes(false, false);
 
         if (this.world instanceof ServerWorld) {
             ServerWorld serverWorld = (ServerWorld) this.world;
             ServerChunkProvider chunkProvider = serverWorld.getChunkProvider();
+            // disable here for custom spawner if needed
+            //chunkProvider.setAllowedSpawnTypes(false, false);
 
             // TODO
             /*chunkProvider.chunkManager.func_223491_f().forEach(chunkHolder -> {
