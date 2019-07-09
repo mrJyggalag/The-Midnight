@@ -1,9 +1,11 @@
 package com.mushroom.midnight.common.registry;
 
 import net.minecraft.block.Block;
+import net.minecraft.entity.EntityType;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.item.Item;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.Tag;
@@ -43,6 +45,13 @@ public class MidnightTags {
 
         private static Tag<Fluid> tag(String name) {
             return new FluidTags.Wrapper(new ResourceLocation(MODID, name));
+        }
+    }
+
+    public static class EntityTypes {
+
+        private static Tag<EntityType<?>> tag(String name) {
+            return new EntityTypeTags.Wrapper(new ResourceLocation(MODID, name));
         }
     }
 }

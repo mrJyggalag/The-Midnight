@@ -54,7 +54,7 @@ public abstract class GrowableEntity extends CreatureEntity {
     @Override
     public EntitySize getSize(Pose poseIn) {
         float scale = 1f + getGrowingAge() * 0.5f;
-        return EntitySize.flexible(this.ageWidth * scale, this.ageHeight * scale);
+        return EntitySize.flexible(getType().getWidth() * scale, getType().getHeight() * scale);
     }
 
     @Override
