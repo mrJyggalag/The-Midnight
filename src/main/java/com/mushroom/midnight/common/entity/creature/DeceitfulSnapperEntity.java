@@ -3,8 +3,13 @@ package com.mushroom.midnight.common.entity.creature;
 import com.mushroom.midnight.common.registry.MidnightItems;
 import com.mushroom.midnight.common.registry.MidnightLootTables;
 import com.mushroom.midnight.common.registry.MidnightSounds;
-import net.minecraft.block.material.Material;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.ai.goal.HurtByTargetGoal;
+import net.minecraft.entity.ai.goal.MeleeAttackGoal;
+import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
+import net.minecraft.entity.ai.goal.RandomSwimmingGoal;
 import net.minecraft.entity.passive.fish.AbstractFishEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -15,7 +20,6 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
 public class DeceitfulSnapperEntity extends AbstractFishEntity {
@@ -46,30 +50,20 @@ public class DeceitfulSnapperEntity extends AbstractFishEntity {
     }
 
     @Override
-    protected void updateAITasks() {
-        super.updateAITasks();
-        if (inWater) {
-            if (spawnPosition == null || spawnPosition.distanceSq((double) (int) posX, (double) (int) posY, (double) (int) posZ, true) < 4d || rand.nextInt(30) == 0) {
-                spawnPosition = new BlockPos((int) posX + rand.nextInt(7) - rand.nextInt(7), (int) posY + rand.nextInt(4) - 1, (int) posZ + rand.nextInt(7) - rand.nextInt(7));
-                if (spawnPosition.getY() < 1 || (spawnPosition.getX() == (int) posX && spawnPosition.getZ() == (int) posZ) || world.getBlockState(spawnPosition).getMaterial() != Material.WATER) {
-                    spawnPosition = null;
-                }
-            }
-            if (spawnPosition != null) {
-                double d0 = (double) spawnPosition.getX() + 0.5d - posX;
-                double d1 = (double) spawnPosition.getY() + 0.1d - posY;
-                double d2 = (double) spawnPosition.getZ() + 0.5d - posZ;
-                double addX = (Math.signum(d0) * 0.2d - getMotion().x) * 0.1d;
-                double addY = (Math.signum(d1) * 0.2d - getMotion().y) * 0.1d;
-                double addZ = (Math.signum(d2) * 0.2d - getMotion().z) * 0.1d;
-                setMotion(getMotion().add(addX, addY, addZ));
-                moveForward = 0.2f;
-                rotationYaw += MathHelper.wrapDegrees((float) ((MathHelper.atan2(getMotion().z, getMotion().x) * (180d / Math.PI)) - 90f) - rotationYaw);
-            }
-            if (getMotion().y > 0.007f && (Math.abs(getMotion().x) > 0.007f && Math.abs(getMotion().z) > 0.007f) && world.rand.nextFloat() < 0.001f) {
-                setMotion(getMotion().add(0f, 0.8f, 0f));
-            }
-        }
+    protected void registerGoals() {
+        this.goalSelector.addGoal(2, new MeleeAttackGoal(this, 1.1D, false) {
+        });
+        this.goalSelector.addGoal(4, new RandomSwimmingGoal(this, 1.0D, 40){});
+        this.targetSelector.addGoal(1, new HurtByTargetGoal(this));
+        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, PlayerEntity.class,true));
+
+    }
+
+    @Override
+    protected void registerAttributes() {
+        super.registerAttributes();
+
+        this.getAttributes().registerAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(2.0D);
     }
 
     @Override
@@ -90,5 +84,14 @@ public class DeceitfulSnapperEntity extends AbstractFishEntity {
     @Override
     protected SoundEvent getDeathSound() {
         return MidnightSounds.SNAPPER_DEATH;
+    }
+
+    public boolean attackEntityAsMob(Entity entityIn) {
+        boolean flag = entityIn.attackEntityFrom(DamageSource.causeMobDamage(this), (float)((int)this.getAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).getValue()));
+        if (flag) {
+            this.applyEnchantments(this, entityIn);
+        }
+
+        return flag;
     }
 }
