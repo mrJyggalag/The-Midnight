@@ -7,20 +7,14 @@ import com.mushroom.midnight.common.world.feature.BogweedFlowersFeature;
 import com.mushroom.midnight.common.world.feature.BulbFungiFlowersFeature;
 import com.mushroom.midnight.common.world.feature.CrystalClusterFeature;
 import com.mushroom.midnight.common.world.feature.CrystalFlowersFeature;
-import com.mushroom.midnight.common.world.feature.DarkWillowTreeFeature;
 import com.mushroom.midnight.common.world.feature.DeadLogFeature;
-import com.mushroom.midnight.common.world.feature.DeadTreeFeature;
 import com.mushroom.midnight.common.world.feature.FungiFlowersFeature;
 import com.mushroom.midnight.common.world.feature.HeapFeature;
-import com.mushroom.midnight.common.world.feature.LargeBogshroomFeature;
-import com.mushroom.midnight.common.world.feature.LargeBulbFungusFeature;
-import com.mushroom.midnight.common.world.feature.LargeFungiFeature;
 import com.mushroom.midnight.common.world.feature.MidnightDoublePlantFeature;
 import com.mushroom.midnight.common.world.feature.MidnightOreFeature;
 import com.mushroom.midnight.common.world.feature.MossFeature;
 import com.mushroom.midnight.common.world.feature.NightstoneBoulderFeature;
 import com.mushroom.midnight.common.world.feature.ScatteredPlantFeature;
-import com.mushroom.midnight.common.world.feature.ShadowrootTreeFeature;
 import com.mushroom.midnight.common.world.feature.SpikeFeature;
 import com.mushroom.midnight.common.world.feature.TallBogFungiFeature;
 import com.mushroom.midnight.common.world.feature.TallFungiFeature;
@@ -28,6 +22,20 @@ import com.mushroom.midnight.common.world.feature.TrenchstoneBoulderFeature;
 import com.mushroom.midnight.common.world.feature.config.CrystalClusterConfig;
 import com.mushroom.midnight.common.world.feature.config.MidnightOreConfig;
 import com.mushroom.midnight.common.world.feature.config.UniformCompositionConfig;
+import com.mushroom.midnight.common.world.feature.tree.DarkWillowTreeFeature;
+import com.mushroom.midnight.common.world.feature.tree.DeadTreeFeature;
+import com.mushroom.midnight.common.world.feature.tree.LargeBogshroomFeature;
+import com.mushroom.midnight.common.world.feature.tree.LargeBulbFungusFeature;
+import com.mushroom.midnight.common.world.feature.tree.LargeDewshroomFeature;
+import com.mushroom.midnight.common.world.feature.tree.LargeNightshroomFeature;
+import com.mushroom.midnight.common.world.feature.tree.LargeViridshroomFeature;
+import com.mushroom.midnight.common.world.feature.tree.MediumDewshroomFeature;
+import com.mushroom.midnight.common.world.feature.tree.MediumNightshroomFeature;
+import com.mushroom.midnight.common.world.feature.tree.MediumViridshroomFeature;
+import com.mushroom.midnight.common.world.feature.tree.ShadowrootTreeFeature;
+import com.mushroom.midnight.common.world.feature.tree.SmallDewshroomFeature;
+import com.mushroom.midnight.common.world.feature.tree.SmallNightshroomFeature;
+import com.mushroom.midnight.common.world.feature.tree.SmallViridshroomFeature;
 import com.mushroom.midnight.common.world.template.ShelfAttachProcessor;
 import net.minecraft.world.gen.feature.AbstractTreeFeature;
 import net.minecraft.world.gen.feature.DoublePlantConfig;
@@ -57,16 +65,16 @@ public class MidnightFeatures {
 //        }
 //    };
 //
-//    public static final IMidnightFeature[] LARGE_FUNGI_FEATURES = new LargeFungiFeature[] {
-//            new LargeFungiFeature(
+//    public static final IMidnightFeature[] LARGE_FUNGI_FEATURES = new TemplateFungiFeature[] {
+//            new TemplateFungiFeature(
 //                    MidnightBlocks.DEWSHROOM_STEM.getDefaultState(),
 //                    MidnightBlocks.DEWSHROOM_HAT.getDefaultState()
 //            ),
-//            new LargeFungiFeature(
+//            new TemplateFungiFeature(
 //                    MidnightBlocks.NIGHTSHROOM_STEM.getDefaultState(),
 //                    MidnightBlocks.NIGHTSHROOM_HAT.getDefaultState()
 //            ),
-//            new LargeFungiFeature(
+//            new TemplateFungiFeature(
 //                    MidnightBlocks.VIRIDSHROOM_STEM.getDefaultState(),
 //                    MidnightBlocks.VIRIDSHROOM_HAT.getDefaultState()
 //            )
@@ -103,9 +111,18 @@ public class MidnightFeatures {
     public static final Feature<NoFeatureConfig> DEAD_LOG = new DeadLogFeature(NoFeatureConfig::deserialize);
     public static final AbstractTreeFeature<NoFeatureConfig> LARGE_BOGSHROOM = new LargeBogshroomFeature(NoFeatureConfig::deserialize);
     public static final AbstractTreeFeature<NoFeatureConfig> LARGE_BULB_FUNGUS = new LargeBulbFungusFeature(NoFeatureConfig::deserialize);
-    public static final AbstractTreeFeature<NoFeatureConfig> LARGE_NIGHTSHROOM = new LargeFungiFeature(NoFeatureConfig::deserialize, MidnightBlocks.NIGHTSHROOM_STEM.getDefaultState(), MidnightBlocks.NIGHTSHROOM_HAT.getDefaultState());
-    public static final AbstractTreeFeature<NoFeatureConfig> LARGE_DEWSHROOM = new LargeFungiFeature(NoFeatureConfig::deserialize, MidnightBlocks.DEWSHROOM_STEM.getDefaultState(), MidnightBlocks.DEWSHROOM_HAT.getDefaultState());
-    public static final AbstractTreeFeature<NoFeatureConfig> LARGE_VIRIDSHROOM = new LargeFungiFeature(NoFeatureConfig::deserialize, MidnightBlocks.VIRIDSHROOM_STEM.getDefaultState(), MidnightBlocks.VIRIDSHROOM_HAT.getDefaultState());
+
+    public static final AbstractTreeFeature<NoFeatureConfig> LARGE_NIGHTSHROOM = new LargeNightshroomFeature(NoFeatureConfig::deserialize);
+    public static final AbstractTreeFeature<NoFeatureConfig> LARGE_DEWSHROOM = new LargeDewshroomFeature(NoFeatureConfig::deserialize);
+    public static final AbstractTreeFeature<NoFeatureConfig> LARGE_VIRIDSHROOM = new LargeViridshroomFeature(NoFeatureConfig::deserialize);
+
+    public static final AbstractTreeFeature<NoFeatureConfig> MEDIUM_NIGHTSHROOM = new MediumNightshroomFeature(NoFeatureConfig::deserialize);
+    public static final AbstractTreeFeature<NoFeatureConfig> MEDIUM_DEWSHROOM = new MediumDewshroomFeature(NoFeatureConfig::deserialize);
+    public static final AbstractTreeFeature<NoFeatureConfig> MEDIUM_VIRIDSHROOM = new MediumViridshroomFeature(NoFeatureConfig::deserialize);
+
+    public static final AbstractTreeFeature<NoFeatureConfig> SMALL_NIGHTSHROOM = new SmallNightshroomFeature(NoFeatureConfig::deserialize);
+    public static final AbstractTreeFeature<NoFeatureConfig> SMALL_DEWSHROOM = new SmallDewshroomFeature(NoFeatureConfig::deserialize);
+    public static final AbstractTreeFeature<NoFeatureConfig> SMALL_VIRIDSHROOM = new SmallViridshroomFeature(NoFeatureConfig::deserialize);
 
     public static final Feature<NoFeatureConfig> SUAVIS = new ScatteredPlantFeature(NoFeatureConfig::deserialize, MidnightBlocks.SUAVIS.getDefaultState());
     public static final Feature<NoFeatureConfig> DECEITFUL_ALGAE = new AlgaeFeature(NoFeatureConfig::deserialize);
@@ -143,6 +160,12 @@ public class MidnightFeatures {
                 .add("large_nightshroom", LARGE_NIGHTSHROOM)
                 .add("large_dewshroom", LARGE_DEWSHROOM)
                 .add("large_viridshroom", LARGE_VIRIDSHROOM)
+                .add("medium_nightshroom", MEDIUM_NIGHTSHROOM)
+                .add("medium_dewshroom", MEDIUM_DEWSHROOM)
+                .add("medium_viridshroom", MEDIUM_VIRIDSHROOM)
+                .add("small_nightshroom", SMALL_NIGHTSHROOM)
+                .add("small_dewshroom", SMALL_DEWSHROOM)
+                .add("small_viridshroom", SMALL_VIRIDSHROOM)
                 .add("suavis", SUAVIS)
                 .add("deceitful_algae", DECEITFUL_ALGAE)
                 .add("deceitful_moss", DECEITFUL_MOSS)

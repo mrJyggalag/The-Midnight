@@ -1,4 +1,4 @@
-package com.mushroom.midnight.common.world.feature;
+package com.mushroom.midnight.common.world.feature.tree;
 
 import com.google.common.collect.Lists;
 import com.mojang.datafixers.Dynamic;

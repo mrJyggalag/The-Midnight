@@ -279,7 +279,23 @@ public class MidnightBiomeConfigurator {
                         new Feature[] { MidnightFeatures.LARGE_NIGHTSHROOM, MidnightFeatures.LARGE_DEWSHROOM, MidnightFeatures.LARGE_VIRIDSHROOM },
                         new IFeatureConfig[] { IFeatureConfig.NO_FEATURE_CONFIG, IFeatureConfig.NO_FEATURE_CONFIG, IFeatureConfig.NO_FEATURE_CONFIG }
                 ),
-                MidnightPlacements.COUNT_SURFACE, new FrequencyConfig(6)
+                MidnightPlacements.COUNT_SURFACE, new FrequencyConfig(2)
+        ));
+
+        biome.add(GenerationStage.Decoration.VEGETAL_DECORATION, Biome.createDecoratedFeature(
+                Feature.SIMPLE_RANDOM_SELECTOR, new SingleRandomFeature(
+                        new Feature[] { MidnightFeatures.MEDIUM_NIGHTSHROOM, MidnightFeatures.MEDIUM_DEWSHROOM, MidnightFeatures.MEDIUM_VIRIDSHROOM },
+                        new IFeatureConfig[] { IFeatureConfig.NO_FEATURE_CONFIG, IFeatureConfig.NO_FEATURE_CONFIG, IFeatureConfig.NO_FEATURE_CONFIG }
+                ),
+                MidnightPlacements.COUNT_SURFACE, new FrequencyConfig(5)
+        ));
+
+        biome.add(GenerationStage.Decoration.VEGETAL_DECORATION, Biome.createDecoratedFeature(
+                Feature.SIMPLE_RANDOM_SELECTOR, new SingleRandomFeature(
+                        new Feature[] { MidnightFeatures.SMALL_NIGHTSHROOM, MidnightFeatures.SMALL_DEWSHROOM, MidnightFeatures.SMALL_VIRIDSHROOM },
+                        new IFeatureConfig[] { IFeatureConfig.NO_FEATURE_CONFIG, IFeatureConfig.NO_FEATURE_CONFIG, IFeatureConfig.NO_FEATURE_CONFIG }
+                ),
+                MidnightPlacements.COUNT_SURFACE, new FrequencyConfig(10)
         ));
     }
 

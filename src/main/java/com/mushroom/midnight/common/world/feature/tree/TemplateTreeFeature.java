@@ -1,20 +1,15 @@
-package com.mushroom.midnight.common.world.feature;
+package com.mushroom.midnight.common.world.feature.tree;
 
 import com.mojang.datafixers.Dynamic;
 import com.mushroom.midnight.Midnight;
-import com.mushroom.midnight.common.block.MidnightFungiHatBlock;
-import com.mushroom.midnight.common.registry.MidnightTags;
 import com.mushroom.midnight.common.util.WorldUtil;
 import com.mushroom.midnight.common.world.template.CompiledTemplate;
 import com.mushroom.midnight.common.world.template.RotatedSettingConfigurator;
 import com.mushroom.midnight.common.world.template.TemplateCompiler;
-import net.minecraft.block.AirBlock;
+import com.mushroom.midnight.common.world.template.TemplateMarkers;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
-import net.minecraft.block.LeavesBlock;
-import net.minecraft.block.LogBlock;
-import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IWorld;
@@ -28,9 +23,9 @@ import java.util.Random;
 import java.util.function.Function;
 
 public abstract class TemplateTreeFeature extends MidnightTreeFeature {
-    private static final String ANCHOR_KEY = "origin";
-    private static final String TRUNK_TOP_KEY = "trunk_top";
-    private static final String TRUNK_CORNER_KEY = "trunk_corner";
+    private static final String ANCHOR_MARKER = "origin";
+    private static final String TRUNK_TOP_MARKER = "trunk_top";
+    private static final String TRUNK_CORNER_MARKER = "trunk_corner";
 
     protected final ResourceLocation[] templates;
     protected final BlockState log;
@@ -51,7 +46,7 @@ public abstract class TemplateTreeFeature extends MidnightTreeFeature {
 
     protected TemplateCompiler buildCompiler() {
         return TemplateCompiler.of(this.templates)
-                .withAnchor(ANCHOR_KEY)
+                .withAnchor(ANCHOR_MARKER)
                 .withSettingConfigurator(RotatedSettingConfigurator.INSTANCE)
                 .withProcessor(this::processState)
                 .withMarkerProcessor(this::processMarker);
@@ -68,16 +63,21 @@ public abstract class TemplateTreeFeature extends MidnightTreeFeature {
         }
 
         CompiledTemplate template = this.templateCompiler.compile(world, random, origin);
+        TemplateMarkers markers = template.markers;
 
-        BlockPos trunkTop = template.lookupAny(TRUNK_TOP_KEY);
-        Collection<BlockPos> trunkCorners = template.lookup(TRUNK_CORNER_KEY);
+        BlockPos anchor = markers.lookupAny(ANCHOR_MARKER);
+        BlockPos trunkTop = markers.lookupAny(TRUNK_TOP_MARKER);
+        Collection<BlockPos> trunkCorners = markers.lookup(TRUNK_CORNER_MARKER);
         if (trunkTop == null || trunkCorners.isEmpty()) {
-            Midnight.LOGGER.warn("Template '{}' did not have required '{}' and '{}' data blocks", template, TRUNK_TOP_KEY, TRUNK_CORNER_KEY);
+            Midnight.LOGGER.warn("Template '{}' did not have required '{}' and '{}' data blocks", template, TRUNK_TOP_MARKER, TRUNK_CORNER_MARKER);
             return false;
         }
 
-        BlockPos minCorner = WorldUtil.min(trunkCorners).add(1, 0, 1);
-        BlockPos maxCorner = WorldUtil.max(trunkCorners).add(-1, 0, -1);
+        BlockPos minCorner = WorldUtil.min(trunkCorners);
+        BlockPos maxCorner = WorldUtil.max(trunkCorners);
+
+        minCorner = new BlockPos(minCorner.getX() - 1, anchor.getY(), minCorner.getZ() - 1);
+        maxCorner = new BlockPos(maxCorner.getX() + 1, anchor.getY(), maxCorner.getZ() + 1);
 
         if (!this.canGrow(world, minCorner, maxCorner) || !this.canFit(world, trunkTop, minCorner, maxCorner)) {
             return false;
@@ -111,24 +111,17 @@ public abstract class TemplateTreeFeature extends MidnightTreeFeature {
         return true;
     }
 
-    private Template.BlockInfo processState(IWorldReader world, BlockPos origin, Template.BlockInfo srcInfo, Template.BlockInfo info, PlacementSettings settings) {
+    protected Template.BlockInfo processState(IWorldReader world, BlockPos origin, Template.BlockInfo srcInfo, Template.BlockInfo info, PlacementSettings settings) {
         BlockState state = info.state;
         Block block = state.getBlock();
-        if (block instanceof LogBlock) {
-            Direction.Axis axis = state.get(LogBlock.AXIS);
-            return new Template.BlockInfo(info.pos, this.log.with(LogBlock.AXIS, axis), null);
-        } else if (block.isIn(MidnightTags.Blocks.FUNGI_STEMS)) {
-            return new Template.BlockInfo(info.pos, this.log, null);
-        } else if (block instanceof LeavesBlock || block instanceof MidnightFungiHatBlock) {
-            return new Template.BlockInfo(info.pos, this.leaf, null);
-        } else if (block == Blocks.STRUCTURE_BLOCK || block instanceof AirBlock) {
+        if (block == Blocks.STRUCTURE_BLOCK || block == Blocks.AIR) {
             return null;
         }
         return info;
     }
 
     protected void processMarker(IWorld world, BlockPos pos, String key) {
-        if (key.equals(ANCHOR_KEY) || key.equals(TRUNK_TOP_KEY)) {
+        if (key.equals(ANCHOR_MARKER) || key.equals(TRUNK_TOP_MARKER)) {
             this.setBlockState(world, pos, this.log);
         }
     }

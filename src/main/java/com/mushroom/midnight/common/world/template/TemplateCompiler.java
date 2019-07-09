@@ -1,6 +1,5 @@
 package com.mushroom.midnight.common.world.template;
 
-import com.google.common.collect.ImmutableMap;
 import net.minecraft.block.Blocks;
 import net.minecraft.state.properties.StructureMode;
 import net.minecraft.util.ResourceLocation;
@@ -18,7 +17,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 import java.util.Random;
 import java.util.function.BiConsumer;
 
@@ -81,24 +79,20 @@ public class TemplateCompiler {
         PlacementSettings settings = this.buildPlacementSettings(random);
         Template template = templateManager.getTemplate(templateId);
 
-        Map<BlockPos, String> dataBlocks = collectDataMarkers(BlockPos.ZERO, settings, template);
+        TemplateMarkers markers = compileMarkers(BlockPos.ZERO, settings, template);
 
-        BlockPos anchor = this.computeAnchor(dataBlocks);
+        BlockPos anchor = this.computeAnchor(markers);
         BlockPos anchoredOrigin = anchor != null ? origin.subtract(anchor) : origin;
 
         return new CompiledTemplate(templateId, template, settings, anchoredOrigin, this.markerProcessor, this.postProcessors);
     }
 
     @Nullable
-    private BlockPos computeAnchor(Map<BlockPos, String> dataBlocks) {
+    private BlockPos computeAnchor(TemplateMarkers markers) {
         if (this.anchorKey == null) {
             return null;
         }
-        return dataBlocks.entrySet().stream()
-                .filter(e -> e.getValue().equals(this.anchorKey))
-                .map(Map.Entry::getKey)
-                .findFirst()
-                .orElse(null);
+        return markers.lookupAny(this.anchorKey);
     }
 
     private PlacementSettings buildPlacementSettings(Random random) {
@@ -110,8 +104,8 @@ public class TemplateCompiler {
         return settings;
     }
 
-    public static Map<BlockPos, String> collectDataMarkers(BlockPos origin, PlacementSettings settings, Template template) {
-        ImmutableMap.Builder<BlockPos, String> dataBuilder = ImmutableMap.builder();
+    public static TemplateMarkers compileMarkers(BlockPos origin, PlacementSettings settings, Template template) {
+        TemplateMarkers.Builder builder = TemplateMarkers.builder();
 
         List<Template.BlockInfo> structureBlocks = template.func_215381_a(origin, settings, Blocks.STRUCTURE_BLOCK);
         for (Template.BlockInfo info : structureBlocks) {
@@ -119,11 +113,11 @@ public class TemplateCompiler {
                 StructureMode mode = StructureMode.valueOf(info.nbt.getString("mode"));
                 if (mode == StructureMode.DATA) {
                     String metadata = info.nbt.getString("metadata");
-                    dataBuilder.put(info.pos, metadata);
+                    builder.add(info.pos, metadata);
                 }
             }
         }
 
-        return dataBuilder.build();
+        return builder.build();
     }
 }

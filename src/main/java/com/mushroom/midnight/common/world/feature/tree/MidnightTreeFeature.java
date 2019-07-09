@@ -1,4 +1,4 @@
-package com.mushroom.midnight.common.world.feature;
+package com.mushroom.midnight.common.world.feature.tree;
 
 import com.mojang.datafixers.Dynamic;
 import com.mushroom.midnight.common.registry.MidnightBlocks;

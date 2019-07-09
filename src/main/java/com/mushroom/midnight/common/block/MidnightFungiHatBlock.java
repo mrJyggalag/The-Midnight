@@ -16,6 +16,8 @@ import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
+import net.minecraft.util.Mirror;
+import net.minecraft.util.Rotation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
@@ -122,6 +124,42 @@ public class MidnightFungiHatBlock extends Block {
             default:
                 throw new Error();
         }
+    }
+
+    @Override
+    public BlockState rotate(BlockState state, Rotation rotation) {
+        boolean north = state.get(NORTH);
+        boolean south = state.get(SOUTH);
+        boolean east = state.get(EAST);
+        boolean west = state.get(WEST);
+
+        switch (rotation) {
+            case CLOCKWISE_90:
+                return state.with(NORTH, west).with(SOUTH, east).with(EAST, north).with(WEST, south);
+            case CLOCKWISE_180:
+                return state.with(NORTH, south).with(SOUTH, north).with(EAST, west).with(WEST, east);
+            case COUNTERCLOCKWISE_90:
+                return state.with(NORTH, east).with(SOUTH, west).with(EAST, south).with(WEST, north);
+        }
+
+        return state;
+    }
+
+    @Override
+    public BlockState mirror(BlockState state, Mirror mirror) {
+        boolean north = state.get(NORTH);
+        boolean south = state.get(SOUTH);
+        boolean east = state.get(EAST);
+        boolean west = state.get(WEST);
+
+        switch (mirror) {
+            case LEFT_RIGHT:
+                return state.with(NORTH, south).with(SOUTH, north);
+            case FRONT_BACK:
+                return state.with(EAST, west).with(WEST, east);
+        }
+
+        return state;
     }
 
     // TODO
