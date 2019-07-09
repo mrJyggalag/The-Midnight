@@ -8,7 +8,6 @@ import net.minecraft.world.IWorld;
 import net.minecraft.world.chunk.IChunk;
 import net.minecraft.world.gen.Heightmap;
 
-import java.util.Random;
 import java.util.function.Predicate;
 
 public class UndergroundPlacementLevel implements PlacementLevel {
@@ -37,7 +36,7 @@ public class UndergroundPlacementLevel implements PlacementLevel {
     }
 
     @Override
-    public int generateUpTo(IWorld world, Random random, int y) {
-        return random.nextInt(Math.min(y, MidnightChunkGenerator.MIN_SURFACE_LEVEL));
+    public boolean containsY(IWorld world, int y) {
+        return y < MidnightChunkGenerator.MIN_SURFACE_LEVEL;
     }
 }

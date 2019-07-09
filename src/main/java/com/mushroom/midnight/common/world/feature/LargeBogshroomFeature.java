@@ -34,14 +34,6 @@ public class LargeBogshroomFeature extends TemplateTreeFeature {
                 .withPostProcessor(new ShelfAttachProcessor(this::canPlaceShelf, ShelfAttachProcessor.SHELF_BLOCKS));
     }
 
-    @Override
-    protected void processMarker(IWorld world, BlockPos pos, String key) {
-        if (key.equals("inside")) {
-            this.setBlockState(world, pos, MidnightBlocks.FUNGI_INSIDE.getDefaultState());
-        }
-        super.processMarker(world, pos, key);
-    }
-
     private boolean canPlaceShelf(IWorld world, BlockPos pos) {
         if (World.isOutsideBuildHeight(pos)) {
             return false;

@@ -24,15 +24,18 @@ public class CountWithChanceSurfaceDoublePlacement extends Placement<HeightWithC
         this.placementLevel = placementLevel;
     }
 
+    @Override
     public Stream<BlockPos> getPositions(IWorld world, ChunkGenerator<? extends GenerationSettings> generator, Random random, HeightWithChanceConfig config, BlockPos origin) {
         return IntStream.range(0, config.count).filter(i -> random.nextFloat() < config.chance).mapToObj(i -> {
             int x = random.nextInt(16);
             int z = random.nextInt(16);
+
             int maxY = this.placementLevel.getSurfacePos(world, Heightmap.Type.MOTION_BLOCKING, origin.add(x, 0, z)).getY() * 2;
-            if (maxY <= 0) {
-                return null;
-            }
+            if (maxY <= 0) return null;
+
             int y = random.nextInt(maxY);
+            if (!this.placementLevel.containsY(world, y)) return null;
+
             return origin.add(x, y, z);
         }).filter(Objects::nonNull);
     }

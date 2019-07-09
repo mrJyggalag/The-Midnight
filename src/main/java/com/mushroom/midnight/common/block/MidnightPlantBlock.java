@@ -27,7 +27,6 @@ import java.util.Random;
 import java.util.function.Supplier;
 
 // TODO: Shearability in loot table
-// TODO: subclass overriding isReplaceable
 @SuppressWarnings("deprecation")
 public class MidnightPlantBlock extends BushBlock implements IGrowable, IShearable, GeneratablePlant {
     private static final VoxelShape SHAPE = Block.makeCuboidShape(2d, 0d, 2d, 14d, 13d, 14d);

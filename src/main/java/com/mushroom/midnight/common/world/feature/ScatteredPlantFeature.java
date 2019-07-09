@@ -1,6 +1,7 @@
 package com.mushroom.midnight.common.world.feature;
 
 import com.mojang.datafixers.Dynamic;
+import com.mushroom.midnight.common.registry.MidnightTags;
 import net.minecraft.block.BlockState;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IWorld;
@@ -32,7 +33,7 @@ public class ScatteredPlantFeature extends Feature<NoFeatureConfig> {
                     random.nextInt(8) - random.nextInt(8)
             );
 
-            if (world.isAirBlock(pos) && this.state.isValidPosition(world, pos)) {
+            if (world.isAirBlock(pos) && world.getBlockState(pos.down()).isIn(MidnightTags.Blocks.PLANTABLE_GROUNDS)) {
                 world.setBlockState(pos, this.state, Constants.BlockFlags.NOTIFY_LISTENERS);
                 result = true;
             }

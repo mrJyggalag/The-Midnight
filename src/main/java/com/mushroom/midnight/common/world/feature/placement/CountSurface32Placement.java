@@ -10,6 +10,7 @@ import net.minecraft.world.gen.Heightmap.Type;
 import net.minecraft.world.gen.placement.FrequencyConfig;
 import net.minecraft.world.gen.placement.Placement;
 
+import java.util.Objects;
 import java.util.Random;
 import java.util.function.Function;
 import java.util.stream.IntStream;
@@ -28,11 +29,14 @@ public class CountSurface32Placement extends Placement<FrequencyConfig> {
         return IntStream.range(0, config.count).mapToObj(i -> {
             int x = random.nextInt(16);
             int z = random.nextInt(16);
+
             int maxY = this.placementLevel.getSurfacePos(world, Type.MOTION_BLOCKING, origin.add(x, 0, z)).getY() + 32;
             if (maxY <= 0) return null;
 
-            int y = this.placementLevel.generateUpTo(world, random, maxY);
+            int y = random.nextInt(maxY);
+            if (!this.placementLevel.containsY(world, y)) return null;
+
             return origin.add(x, y, z);
-        });
+        }).filter(Objects::nonNull);
     }
 }

@@ -407,7 +407,7 @@ public class MidnightBlocks {
                         .hardnessAndResistance(0f)
                         .doesNotBlockMovement()
                 )
-                .add("grass", props -> new MidnightPlantBlock(props, false, () -> TALL_GRASS))
+                .add("grass", props -> new MidnightPlantBlock(props, false, () -> TALL_GRASS).setReplacable())
                 .add("tall_grass", props -> new MidnightDoublePlantBlock(props, false))
                 .add("nightshroom", props -> new FungiBlock(props, true, () -> DOUBLE_NIGHTSHROOM))
                 .add("dewshroom", props -> new FungiBlock(props, true, () -> DOUBLE_DEWSHROOM))

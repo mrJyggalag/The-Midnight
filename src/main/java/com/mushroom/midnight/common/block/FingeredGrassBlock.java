@@ -12,6 +12,7 @@ import java.util.Random;
 public class FingeredGrassBlock extends MidnightPlantBlock {
     public FingeredGrassBlock(Properties properties) {
         super(properties, false);
+        this.setReplacable();
     }
 
     @Override

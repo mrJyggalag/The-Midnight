@@ -6,8 +6,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.gen.Heightmap;
 
-import java.util.Random;
-
 public class SurfacePlacementLevel implements PlacementLevel {
     public static final PlacementLevel INSTANCE = new SurfacePlacementLevel();
 
@@ -20,8 +18,7 @@ public class SurfacePlacementLevel implements PlacementLevel {
     }
 
     @Override
-    public int generateUpTo(IWorld world, Random random, int y) {
-        int bound = Math.max(y - MidnightChunkGenerator.MIN_SURFACE_LEVEL, 1);
-        return random.nextInt(bound) + MidnightChunkGenerator.MIN_SURFACE_LEVEL;
+    public boolean containsY(IWorld world, int y) {
+        return y > MidnightChunkGenerator.MIN_SURFACE_LEVEL;
     }
 }

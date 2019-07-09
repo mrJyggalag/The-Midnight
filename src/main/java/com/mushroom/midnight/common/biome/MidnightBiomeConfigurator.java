@@ -147,7 +147,7 @@ public class MidnightBiomeConfigurator {
     public static void addGrasses(ConfigurableBiome biome) {
         biome.add(GenerationStage.Decoration.VEGETAL_DECORATION, Biome.createDecoratedFeature(
                 Feature.GRASS, new GrassFeatureConfig(MidnightBlocks.GRASS.getDefaultState()),
-                MidnightPlacements.COUNT_SURFACE_DOUBLE, new FrequencyConfig(6)
+                MidnightPlacements.COUNT_SURFACE_DOUBLE, new FrequencyConfig(4)
         ));
 
         biome.add(GenerationStage.Decoration.VEGETAL_DECORATION, Biome.createDecoratedFeature(
@@ -193,14 +193,14 @@ public class MidnightBiomeConfigurator {
     public static void addSparseSuavis(ConfigurableBiome biome) {
         biome.add(GenerationStage.Decoration.VEGETAL_DECORATION, Biome.createDecoratedFeature(
                 MidnightFeatures.SUAVIS, IFeatureConfig.NO_FEATURE_CONFIG,
-                MidnightPlacements.CHANCE_SURFACE_DOUBLE, new ChanceConfig(32)
+                MidnightPlacements.CHANCE_SURFACE_DOUBLE, new ChanceConfig(4)
         ));
     }
 
     public static void addCommonSuavis(ConfigurableBiome biome) {
         biome.add(GenerationStage.Decoration.VEGETAL_DECORATION, Biome.createDecoratedFeature(
                 MidnightFeatures.SUAVIS, IFeatureConfig.NO_FEATURE_CONFIG,
-                MidnightPlacements.COUNT_SURFACE_DOUBLE, new FrequencyConfig(2)
+                MidnightPlacements.COUNT_SURFACE_DOUBLE, new FrequencyConfig(8)
         ));
     }
 
