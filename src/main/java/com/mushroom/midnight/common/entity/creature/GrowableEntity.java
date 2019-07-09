@@ -20,8 +20,6 @@ import javax.annotation.Nullable;
 public abstract class GrowableEntity extends CreatureEntity {
     private static final DataParameter<Integer> GROWING_AGE = EntityDataManager.createKey(GrowableEntity.class, DataSerializers.VARINT);
     protected int growingTime = 0;
-    private float ageWidth = -1f;
-    private float ageHeight = -1f;
 
     public GrowableEntity(EntityType<? extends GrowableEntity> entityType, World worldIn) {
         super(entityType, worldIn);

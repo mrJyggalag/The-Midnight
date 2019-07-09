@@ -3,7 +3,6 @@ package com.mushroom.midnight.common.entity.creature;
 import com.mushroom.midnight.Midnight;
 import com.mushroom.midnight.common.capability.AnimationCapability;
 import com.mushroom.midnight.common.entity.task.NeutralGoal;
-import com.mushroom.midnight.common.registry.MidnightLootTables;
 import com.mushroom.midnight.common.registry.MidnightSounds;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.CreatureAttribute;
@@ -31,7 +30,6 @@ import net.minecraft.potion.Effects;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.SoundEvents;
@@ -173,11 +171,6 @@ public class StingerEntity extends GrowableEntity implements IMob {
 
     @Override
     public void swingArm(Hand hand) {
-    }
-
-    @Override
-    protected ResourceLocation getLootTable() {
-        return MidnightLootTables.LOOT_TABLE_STINGER;
     }
 
     @Override

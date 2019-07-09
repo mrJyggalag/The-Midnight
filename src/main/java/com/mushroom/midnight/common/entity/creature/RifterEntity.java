@@ -20,7 +20,6 @@ import com.mushroom.midnight.common.event.RifterReleaseEvent;
 import com.mushroom.midnight.common.helper.Helper;
 import com.mushroom.midnight.common.network.CaptureEntityMessage;
 import com.mushroom.midnight.common.registry.MidnightEffects;
-import com.mushroom.midnight.common.registry.MidnightLootTables;
 import com.mushroom.midnight.common.registry.MidnightSounds;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -46,7 +45,6 @@ import net.minecraft.pathfinding.PathNavigator;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.world.IWorld;
@@ -388,10 +386,5 @@ public class RifterEntity extends MonsterEntity implements IRiftTraveler, IEntit
                 this.setCapturedEntity((LivingEntity) entity);
             }
         }
-    }
-
-    @Override
-    protected ResourceLocation getLootTable() {
-        return MidnightLootTables.LOOT_TABLE_RIFTER;
     }
 }

@@ -16,7 +16,6 @@ import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
@@ -26,8 +25,6 @@ import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-
-import static com.mushroom.midnight.common.registry.MidnightLootTables.LOOT_TABLE_CRYSTAL_BUG;
 
 public class CrystalBugEntity extends AmbientEntity {
     private static final DataParameter<Boolean> IS_STANDING = EntityDataManager.createKey(CrystalBugEntity.class, DataSerializers.BOOLEAN);
@@ -198,11 +195,6 @@ public class CrystalBugEntity extends AmbientEntity {
     @Override
     protected SoundEvent getDeathSound() {
         return MidnightSounds.CRYSTAL_BUG_DEATH;
-    }
-
-    @Override
-    protected ResourceLocation getLootTable() {
-        return LOOT_TABLE_CRYSTAL_BUG;
     }
 
     @Override

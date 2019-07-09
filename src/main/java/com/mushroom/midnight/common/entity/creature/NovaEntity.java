@@ -1,7 +1,6 @@
 package com.mushroom.midnight.common.entity.creature;
 
 import com.mushroom.midnight.common.entity.FlyingNavigator;
-import com.mushroom.midnight.common.registry.MidnightLootTables;
 import com.mushroom.midnight.common.registry.MidnightSounds;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.EntitySize;
@@ -28,7 +27,6 @@ import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.pathfinding.PathNavigator;
 import net.minecraft.pathfinding.PathNodeType;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IWorld;
@@ -130,11 +128,6 @@ public class NovaEntity extends MonsterEntity implements IFlyingAnimal {
         getAttribute(SharedMonsterAttributes.ARMOR).setBaseValue(2d);
         getAttributes().registerAttribute(SharedMonsterAttributes.FLYING_SPEED);
         getAttribute(SharedMonsterAttributes.FLYING_SPEED).setBaseValue(0.4d);
-    }
-
-    @Override
-    protected ResourceLocation getLootTable() {
-        return MidnightLootTables.LOOT_TABLE_NOVA;
     }
 
     @Override

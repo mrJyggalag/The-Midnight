@@ -55,7 +55,6 @@ import net.minecraft.potion.Effects;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.DifficultyInstance;
@@ -70,8 +69,6 @@ import javax.annotation.Nullable;
 import java.util.EnumSet;
 import java.util.UUID;
 import java.util.function.Predicate;
-
-import static com.mushroom.midnight.common.registry.MidnightLootTables.LOOT_TABLE_NIGHTSTAG;
 
 public class NightStagEntity extends AnimalEntity {
     private static final DataParameter<Integer> ANTLER_TYPE = EntityDataManager.createKey(NightStagEntity.class, DataSerializers.VARINT);
@@ -337,11 +334,6 @@ public class NightStagEntity extends AnimalEntity {
     @Override
     protected int getExperiencePoints(PlayerEntity player) {
         return isChild() ? 4 : 7;
-    }
-
-    @Override
-    protected ResourceLocation getLootTable() {
-        return LOOT_TABLE_NIGHTSTAG;
     }
 
     @Override

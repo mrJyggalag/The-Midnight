@@ -9,7 +9,6 @@ import com.mushroom.midnight.common.entity.task.HunterTargetGoal;
 import com.mushroom.midnight.common.entity.task.HunterTrackGoal;
 import com.mushroom.midnight.common.entity.util.ChainSolver;
 import com.mushroom.midnight.common.registry.MidnightEffects;
-import com.mushroom.midnight.common.registry.MidnightLootTables;
 import com.mushroom.midnight.common.registry.MidnightSounds;
 import com.mushroom.midnight.common.util.MeanValueRecorder;
 import net.minecraft.block.BlockState;
@@ -30,7 +29,6 @@ import net.minecraft.pathfinding.PathNavigator;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.Direction;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
@@ -286,9 +284,6 @@ public class HunterEntity extends MonsterEntity implements IFlyingAnimal {
     protected SoundEvent getDeathSound() {
         return MidnightSounds.HUNTER_DEATH;
     }
-
-    @Override
-    protected ResourceLocation getLootTable() { return MidnightLootTables.LOOT_TABLE_HUNTER; }
 
     @Override
     public void livingTick() {

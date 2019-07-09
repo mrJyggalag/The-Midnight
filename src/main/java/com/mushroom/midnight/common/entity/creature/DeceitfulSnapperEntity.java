@@ -2,7 +2,6 @@ package com.mushroom.midnight.common.entity.creature;
 
 import com.mushroom.midnight.common.entity.task.FishJumpGoal;
 import com.mushroom.midnight.common.registry.MidnightItems;
-import com.mushroom.midnight.common.registry.MidnightLootTables;
 import com.mushroom.midnight.common.registry.MidnightSounds;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -17,7 +16,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.pathfinding.PathNavigator;
 import net.minecraft.pathfinding.SwimmerPathNavigator;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.world.World;
@@ -45,7 +43,7 @@ public class DeceitfulSnapperEntity extends AbstractFishEntity {
 
     @Override
     public int getMaxSpawnedInChunk() {
-        return 2;
+        return 8; // default for fish
     }
 
     @Override
@@ -70,11 +68,6 @@ public class DeceitfulSnapperEntity extends AbstractFishEntity {
     @Override
     protected int getExperiencePoints(PlayerEntity player) {
         return 1 + this.world.rand.nextInt(3);
-    }
-
-    @Override
-    protected ResourceLocation getLootTable() {
-        return MidnightLootTables.LOOT_TABLE_DECEITFUL_SNAPPER;
     }
 
     @Override

@@ -1,7 +1,6 @@
 package com.mushroom.midnight.common.entity.creature;
 
 import com.mushroom.midnight.common.entity.task.NeutralGoal;
-import com.mushroom.midnight.common.registry.MidnightLootTables;
 import com.mushroom.midnight.common.registry.MidnightSounds;
 import net.minecraft.entity.AgeableEntity;
 import net.minecraft.entity.Entity;
@@ -28,7 +27,6 @@ import net.minecraft.pathfinding.GroundPathNavigator;
 import net.minecraft.pathfinding.PathNavigator;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.Hand;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.IWorld;
@@ -200,10 +198,5 @@ public class SkulkEntity extends AnimalEntity {
     @Override
     protected SoundEvent getDeathSound() {
         return MidnightSounds.SKULK_DEATH;
-    }
-
-    @Override
-    protected ResourceLocation getLootTable() {
-        return MidnightLootTables.LOOT_TABLE_SKULK;
     }
 }
