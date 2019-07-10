@@ -83,7 +83,7 @@ public class MidnightPlantBlock extends BushBlock implements IGrowable, IShearab
 
     @Override
     public OffsetType getOffsetType() {
-        return OffsetType.XYZ;
+        return OffsetType.XZ;
     }
 
     @Override
