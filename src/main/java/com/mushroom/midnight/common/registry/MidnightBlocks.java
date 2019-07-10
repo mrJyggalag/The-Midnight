@@ -643,16 +643,17 @@ public class MidnightBlocks {
                 .add("tenebrum_pressure_plate", props -> new WeightedPressurePlateBlock(150, props){});
 
         RegUtil.blocks(event.getRegistry())
-                .add("dark_water", new MidnightFluidBlock(MidnightFluids.DARK_WATER, Block.Properties.create(Material.WATER)
+                .add("dark_water", new MidnightFluidBlock(MidnightFluids.DARK_WATER, false, Block.Properties.create(Material.WATER)
                         .doesNotBlockMovement()
                         .hardnessAndResistance(100.0F)
                         .lootFrom(Blocks.AIR))
                 )
-                .add("miasma", new MidnightFluidBlock(MidnightFluids.MIASMA, Block.Properties.create(Material.LAVA)
+                .add("miasma", new MidnightFluidBlock(MidnightFluids.MIASMA, true, Block.Properties.create(Material.LAVA)
                         .doesNotBlockMovement()
                         .hardnessAndResistance(100.0F)
-                        .lootFrom(Blocks.AIR))
-                );
+                        .lightValue(15)
+                        .lootFrom(Blocks.AIR)
+                ));
     }
 
     @SubscribeEvent
