@@ -6,40 +6,18 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IEnviromentBlockReader;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.common.ToolType;
-
-import javax.annotation.Nullable;
 
 @SuppressWarnings("FieldCanBeLocal")
 public class BasicBlock extends Block {
-    private ToolType toolType;
-    private int toolLevel;
     private boolean glowing;
 
     public BasicBlock(Properties properties) {
-        this(properties, ToolType.PICKAXE, 0);
-    }
-
-    public BasicBlock(Properties properties, ToolType toolType, int toolLevel) {
         super(properties);
-        this.toolType = toolType;
-        this.toolLevel = toolLevel;
     }
 
     public BasicBlock withGlow() {
         this.glowing = true;
         return this;
-    }
-
-    @Override
-    public int getHarvestLevel(BlockState state) {
-        return this.toolLevel;
-    }
-
-    @Nullable
-    @Override
-    public ToolType getHarvestTool(BlockState state) {
-        return this.toolType;
     }
 
     @Override

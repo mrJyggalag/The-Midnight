@@ -36,6 +36,10 @@ public class MidnightPlantBlock extends BushBlock implements IGrowable, IShearab
     private final boolean glowing;
     private boolean replacable, shearable;
 
+    public MidnightPlantBlock(Block.Properties properties) {
+        this(properties, false, null);
+    }
+
     public MidnightPlantBlock(Block.Properties properties, boolean glowing) {
         this(properties, glowing, null);
     }

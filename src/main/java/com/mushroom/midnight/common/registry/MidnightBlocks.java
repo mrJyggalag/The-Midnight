@@ -5,6 +5,7 @@ import com.mushroom.midnight.common.block.BasicBlock;
 import com.mushroom.midnight.common.block.BladeshroomBlock;
 import com.mushroom.midnight.common.block.BloomCrystalBlock;
 import com.mushroom.midnight.common.block.BogweedBlock;
+import com.mushroom.midnight.common.block.DragonNestBlock;
 import com.mushroom.midnight.common.block.GlobFungusBlock;
 import com.mushroom.midnight.common.block.GlobFungusHatBlock;
 import com.mushroom.midnight.common.block.CrystalBlock;
@@ -13,7 +14,7 @@ import com.mushroom.midnight.common.block.DeceitfulAlgaeBlock;
 import com.mushroom.midnight.common.block.DeceitfulMossBlock;
 import com.mushroom.midnight.common.block.DeceitfulMudBlock;
 import com.mushroom.midnight.common.block.DoubleFungiBlock;
-import com.mushroom.midnight.common.block.DragonNestBlock;
+import com.mushroom.midnight.common.block.HangablePlantBlock;
 import com.mushroom.midnight.common.block.FingeredGrassBlock;
 import com.mushroom.midnight.common.block.FungiBlock;
 import com.mushroom.midnight.common.block.MiasmaSurfaceBlock;
@@ -143,14 +144,20 @@ public class MidnightBlocks {
 
     public static final Block VIRIDSHROOM_STEM = Blocks.AIR;
     public static final Block VIRIDSHROOM_HAT = Blocks.AIR;
+    public static final Block VIRIDSHROOM_ROOTS = Blocks.AIR;
+    public static final Block VIRIDSHROOM_FLOWERING_ROOTS = Blocks.AIR;
 
     public static final Block NIGHTSHROOM_STEM = Blocks.AIR;
     public static final Block NIGHTSHROOM_HAT = Blocks.AIR;
+    public static final Block NIGHTSHROOM_ROOTS = Blocks.AIR;
+    public static final Block NIGHTSHROOM_FLOWERING_ROOTS = Blocks.AIR;
 
     public static final Block NIGHTSHROOM_PLANKS = Blocks.AIR;
 
     public static final Block DEWSHROOM_STEM = Blocks.AIR;
     public static final Block DEWSHROOM_HAT = Blocks.AIR;
+    public static final Block DEWSHROOM_ROOTS = Blocks.AIR;
+    public static final Block DEWSHROOM_FLOWERING_ROOTS = Blocks.AIR;
 
     public static final Block BOGSHROOM = Blocks.AIR;
     public static final Block DOUBLE_BOGSHROOM = Blocks.AIR;
@@ -349,7 +356,7 @@ public class MidnightBlocks {
         RegUtil.blocks(event.getRegistry())
                 .withProperties(() -> Block.Properties.create(Material.ROCK, MaterialColor.BLUE_TERRACOTTA)
                         .hardnessAndResistance(1.5f, 10f)
-                        .sound(SoundType.STONE)
+                        .sound(SoundType.STONE).harvestTool(ToolType.PICKAXE).harvestLevel(0)
                 )
                 .add("nightstone", props -> new SoilBlock(props, true))
                 .add("nightstone_bricks", BasicBlock::new)
@@ -370,14 +377,14 @@ public class MidnightBlocks {
 
         RegUtil.blocks(event.getRegistry())
                 .withProperties(() -> Block.Properties.create(Material.ROCK).hardnessAndResistance(5f, 200f))
-                .add("trenchstone", props -> new BasicBlock(props, ToolType.PICKAXE, 2))
+                .add("trenchstone", props -> new BasicBlock(props.harvestTool(ToolType.PICKAXE).harvestLevel(2)))
                 .add("trenchstone_slab", SlabBlock::new)
                 .add("trenchstone_stairs", props -> new MidnightStairsBlock(() -> TRENCHSTONE.getDefaultState(), props) {})
                 .add("trenchstone_wall", WallBlock::new);
 
         RegUtil.blocks(event.getRegistry())
                 .withProperties(() -> Block.Properties.create(Material.ROCK).hardnessAndResistance(1.5f, 200f))
-                .add("trenchstone_bricks", props -> new BasicBlock(props, ToolType.PICKAXE, 2))
+                .add("trenchstone_bricks", props -> new BasicBlock(props.harvestTool(ToolType.PICKAXE).harvestLevel(2)))
                 .add("trenchstone_brick_slab", SlabBlock::new)
                 .add("trenchstone_brick_stairs", props -> new MidnightStairsBlock(() -> TRENCHSTONE_BRICKS.getDefaultState(), props) {})
                 .add("trenchstone_brick_wall", WallBlock::new);
@@ -436,19 +443,27 @@ public class MidnightBlocks {
                 .add("unstable_bush", UnstableBushBlock::new)
                 .add("unstable_bush_blue_bloomed", props -> new UnstableBushBloomedBlock(props, () -> MidnightItems.BLUE_UNSTABLE_FRUIT))
                 .add("unstable_bush_green_bloomed", props -> new UnstableBushBloomedBlock(props, () -> MidnightItems.GREEN_UNSTABLE_FRUIT))
-                .add("unstable_bush_lime_bloomed", props -> new UnstableBushBloomedBlock(props, () -> MidnightItems.LIME_UNSTABLE_FRUIT));
+                .add("unstable_bush_lime_bloomed", props -> new UnstableBushBloomedBlock(props, () -> MidnightItems.LIME_UNSTABLE_FRUIT))
+
+                .add("nightshroom_roots", HangablePlantBlock::new)
+                .add("dewshroom_roots", HangablePlantBlock::new)
+                .add("viridshroom_roots", HangablePlantBlock::new)
+
+                .add("nightshroom_flowering_roots", props -> new HangablePlantBlock(props, true))
+                .add("dewshroom_flowering_roots", props -> new HangablePlantBlock(props, true))
+                .add("viridshroom_flowering_roots", props -> new HangablePlantBlock(props, true));
 
         RegUtil.blocks(event.getRegistry())
                 .withProperties(() -> Block.Properties.create(Material.WOOD)
                         .sound(SoundType.WOOD)
-                        .hardnessAndResistance(2f, 0f)
+                        .hardnessAndResistance(2f)
                 )
                 .add("nightshroom_stem", Block::new)
                 .add("dewshroom_stem", Block::new)
                 .add("viridshroom_stem", Block::new)
                 .add("bogshroom_stem", Block::new)
                 // TODO glob fungus stem drops 4 GLOB_FUNGUS_HAND, can silk touch & sheared
-                .add("glob_fungus_stem", props -> new LogBlock(MaterialColor.BROWN, props.hardnessAndResistance(0.5f, 0f)))
+                .add("glob_fungus_stem", props -> new LogBlock(MaterialColor.BROWN, props.hardnessAndResistance(0.5f)))
                 .add("fungi_inside", new FungiInsideBlock(Block.Properties.create(Material.AIR).doesNotBlockMovement()));
 
         RegUtil.blocks(event.getRegistry())
@@ -485,7 +500,7 @@ public class MidnightBlocks {
                 .add("viridshroom_shelf", MidnightFungiShelfBlock::new);
 
         RegUtil.blocks(event.getRegistry())
-                .withProperties(() -> Block.Properties.create(Material.IRON).hardnessAndResistance(3f, 0f).sound(SoundType.METAL))
+                .withProperties(() -> Block.Properties.create(Material.IRON).hardnessAndResistance(3f, 0f).sound(SoundType.METAL).harvestTool(ToolType.PICKAXE).harvestLevel(0))
                 .add("dark_pearl_block", BasicBlock::new)
                 .add("tenebrum_block", BasicBlock::new)
                 .add("nagrilite_block", BasicBlock::new)
@@ -495,9 +510,9 @@ public class MidnightBlocks {
                 .add("rockshroom", new RockshroomBlock())
                 .add("stinger_egg", new StingerEggBlock())
                 .add("bloomcrystal", new BloomCrystalBlock(Block.Properties.create(Material.ROCK, MaterialColor.PINK).hardnessAndResistance(2.0F).sound(SoundType.GLASS).lightValue(15).tickRandomly()))
-                .add("bloomcrystal_rock", new BasicBlock(Block.Properties.create(Material.ROCK, MaterialColor.PINK).sound(SoundType.GLASS).lightValue(14).hardnessAndResistance(4f), ToolType.PICKAXE, 1))
+                .add("bloomcrystal_rock", new BasicBlock(Block.Properties.create(Material.ROCK, MaterialColor.PINK).sound(SoundType.GLASS).lightValue(14).hardnessAndResistance(4f).harvestTool(ToolType.PICKAXE).harvestLevel(1)))
                 .add("rouxe", new CrystalBlock(Block.Properties.create(Material.ROCK, MaterialColor.RED).hardnessAndResistance(2.0F).sound(SoundType.GLASS).lightValue(3)))
-                .add("rouxe_rock", new BasicBlock(Block.Properties.create(Material.ROCK, MaterialColor.RED).sound(SoundType.GLASS).lightValue(2).hardnessAndResistance(4f, 0f), ToolType.PICKAXE, 1).withGlow())
+                .add("rouxe_rock", new BasicBlock(Block.Properties.create(Material.ROCK, MaterialColor.RED).sound(SoundType.GLASS).lightValue(2).hardnessAndResistance(4f).harvestTool(ToolType.PICKAXE).harvestLevel(1)).withGlow())
                 .add("miasma_surface", new MiasmaSurfaceBlock())
                 .add("dark_pearl_ore", new MidnightGemBlock(() -> MidnightItems.GEODE, 0))
                 .add("tenebrum_ore", new MidnightOreBlock(2))
@@ -651,7 +666,7 @@ public class MidnightBlocks {
                         DARK_PEARL_ORE, DARK_PEARL_BLOCK, TENEBRUM_ORE, TENEBRUM_BLOCK, NAGRILITE_ORE, NAGRILITE_BLOCK, EBONITE_ORE, EBONITE_BLOCK, ARCHAIC_ORE,
                         COARSE_DIRT, DIRT, GRASS_BLOCK, MYCELIUM, GRASS, TALL_GRASS,
                         NIGHTSHROOM, DOUBLE_NIGHTSHROOM, NIGHTSHROOM_SHELF, DEWSHROOM, DOUBLE_DEWSHROOM, DEWSHROOM_SHELF, VIRIDSHROOM, DOUBLE_VIRIDSHROOM, VIRIDSHROOM_SHELF, BOGSHROOM, DOUBLE_BOGSHROOM, BOGSHROOM_SHELF,
-                        BOGSHROOM_HAT, BOGSHROOM_STEM, NIGHTSHROOM_STEM, NIGHTSHROOM_HAT, DEWSHROOM_STEM, DEWSHROOM_HAT, VIRIDSHROOM_STEM, VIRIDSHROOM_HAT, GLOB_FUNGUS, GLOB_FUNGUS_HAT, GLOB_FUNGUS_STEM,
+                        BOGSHROOM_HAT, BOGSHROOM_STEM, NIGHTSHROOM_STEM, NIGHTSHROOM_HAT, NIGHTSHROOM_ROOTS, NIGHTSHROOM_FLOWERING_ROOTS, DEWSHROOM_STEM, DEWSHROOM_HAT, DEWSHROOM_ROOTS, DEWSHROOM_FLOWERING_ROOTS, VIRIDSHROOM_STEM, VIRIDSHROOM_HAT, VIRIDSHROOM_ROOTS, VIRIDSHROOM_FLOWERING_ROOTS, GLOB_FUNGUS, GLOB_FUNGUS_HAT, GLOB_FUNGUS_STEM,
                         ROCKSHROOM, ROCKSHROOM_BRICKS, BLOOMCRYSTAL, BLOOMCRYSTAL_ROCK, ROUXE, ROUXE_ROCK, ARCHAIC_GLASS, ARCHAIC_GLASS_PANE, MIASMA_SURFACE, //, MIASMA, DARK_WATER
                         DECEITFUL_PEAT, DECEITFUL_MUD, DECEITFUL_MOSS);
         RegUtil.items(event.getRegistry())
