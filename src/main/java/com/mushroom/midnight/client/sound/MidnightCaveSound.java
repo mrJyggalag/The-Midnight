@@ -2,20 +2,23 @@ package com.mushroom.midnight.client.sound;
 
 import com.mushroom.midnight.client.IdleSoundController;
 import com.mushroom.midnight.common.helper.Helper;
-import com.mushroom.midnight.common.registry.MidnightSounds;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.ITickableSound;
-import net.minecraft.client.audio.TickableSound;
+import net.minecraft.client.audio.LocatableSound;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
+import static com.mushroom.midnight.Midnight.MODID;
+
 @OnlyIn(Dist.CLIENT)
-public class MidnightCaveSound extends TickableSound implements ITickableSound {
+public class MidnightCaveSound extends LocatableSound implements ITickableSound {
     private static final Minecraft MC = Minecraft.getInstance();
+    private static final ResourceLocation CAVE_IDLE_RL = new ResourceLocation(MODID, "cave_idle");
 
     public MidnightCaveSound() {
-        super(MidnightSounds.CAVE_IDLE, SoundCategory.AMBIENT);
+        super(CAVE_IDLE_RL, SoundCategory.AMBIENT);
         this.attenuationType = AttenuationType.NONE;
         this.repeat = true;
     }

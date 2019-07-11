@@ -12,88 +12,100 @@ import static com.mushroom.midnight.Midnight.MODID;
 @ObjectHolder(MODID)
 @Mod.EventBusSubscriber(modid = MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class MidnightSounds {
-    public static final SoundEvent AMBIENT = makeSoundEvent("ambient");
-    public static final SoundEvent IDLE = makeSoundEvent("idle");
-    public static final SoundEvent CAVE_IDLE = makeSoundEvent("cave_idle");
+    public static final SoundEvent AMBIENT = null;
+    public static final SoundEvent IDLE = null;
+    public static final SoundEvent CAVE_IDLE = null;
 
-    public static final SoundEvent MUSIC_GENERIC = makeSoundEvent("music_generic");
-    public static final SoundEvent MUSIC_CRYSTAL = makeSoundEvent("music_crystal");
-    public static final SoundEvent MUSIC_DARK_WILLOW = makeSoundEvent("music_dark_willow");
+    public static final SoundEvent MUSIC_GENERIC = null;
+    public static final SoundEvent MUSIC_CRYSTAL = null;
+    public static final SoundEvent MUSIC_DARK_WILLOW = null;
 
-    public static final SoundEvent RIFT_IDLE = makeSoundEvent("rift_idle");
-    public static final SoundEvent RIFT_UNSTABLE = makeSoundEvent("rift_unstable");
+    public static final SoundEvent RIFT_IDLE = null;
+    public static final SoundEvent RIFT_UNSTABLE = null;
 
-    public static final SoundEvent RIFTER_AMBIENT = makeSoundEvent("rifter_ambient");
-    public static final SoundEvent RIFTER_HURT = makeSoundEvent("rifter_hurt");
-    public static final SoundEvent RIFTER_DEATH = makeSoundEvent( "rifter_death");
+    public static final SoundEvent RIFTER_AMBIENT = null;
+    public static final SoundEvent RIFTER_HURT = null;
+    public static final SoundEvent RIFTER_DEATH = null;
 
-    public static final SoundEvent BLADESHROOM_CAP_SHOOT = makeSoundEvent("bladeshroom_cap_shoot");
-    public static final SoundEvent BLADESHROOM_CAP_HIT = makeSoundEvent("bladeshroom_cap_hit");
+    public static final SoundEvent BLADESHROOM_CAP_SHOOT = null;
+    public static final SoundEvent BLADESHROOM_CAP_HIT = null;
 
-    public static final SoundEvent MUD_DIG = makeSoundEvent("mud_dig");
-    public static final SoundEvent MUD_STEP = makeSoundEvent("mud_step");
+    public static final SoundEvent MUD_DIG = null;
+    public static final SoundEvent MUD_STEP = null;
 
-    public static final SoundEvent NIGHTSTAG_AMBIENT = makeSoundEvent("nightstag_ambient");
-    public static final SoundEvent NIGHTSTAG_HURT = makeSoundEvent("nightstag_hurt");
-    public static final SoundEvent NIGHTSTAG_DEATH = makeSoundEvent("nightstag_death");
-    public static final SoundEvent NIGHTSTAG_STEP = makeSoundEvent("nightstag_step");
+    public static final SoundEvent NIGHTSTAG_AMBIENT = null;
+    public static final SoundEvent NIGHTSTAG_HURT = null;
+    public static final SoundEvent NIGHTSTAG_DEATH = null;
+    public static final SoundEvent NIGHTSTAG_STEP = null;
 
-    public static final SoundEvent CRYSTAL_BUG_FLYING = makeSoundEvent("crystal_bug_flying");
-    public static final SoundEvent CRYSTAL_BUG_HURT = makeSoundEvent("crystal_bug_hurt");
-    public static final SoundEvent CRYSTAL_BUG_DEATH = makeSoundEvent("crystal_bug_death");
+    public static final SoundEvent CRYSTAL_BUG_FLYING = null;
+    public static final SoundEvent CRYSTAL_BUG_HURT = null;
+    public static final SoundEvent CRYSTAL_BUG_DEATH = null;
 
-    public static final SoundEvent NOVA_DEATH = makeSoundEvent("nova_death");
-    public static final SoundEvent NOVA_HURT = makeSoundEvent("nova_hurt");
-    public static final SoundEvent NOVA_IDLE = makeSoundEvent("nova_idle");
+    public static final SoundEvent NOVA_DEATH = null;
+    public static final SoundEvent NOVA_HURT = null;
+    public static final SoundEvent NOVA_IDLE = null;
 
-    public static final SoundEvent STINGER_DEATH = makeSoundEvent("stinger_death");
-    public static final SoundEvent STINGER_HURT = makeSoundEvent("stinger_hurt");
-    public static final SoundEvent STINGER_AMBIENT = makeSoundEvent("stinger_ambient");
+    public static final SoundEvent STINGER_DEATH = null;
+    public static final SoundEvent STINGER_HURT = null;
+    public static final SoundEvent STINGER_AMBIENT = null;
 
-    public static final SoundEvent SKULK_DEATH = makeSoundEvent("skulk_death");
-    public static final SoundEvent SKULK_HURT = makeSoundEvent("skulk_hurt");
+    public static final SoundEvent SKULK_DEATH = null;
+    public static final SoundEvent SKULK_HURT = null;
 
-    public static final SoundEvent SNAPPER_DEATH = makeSoundEvent("snapper_death");
-    public static final SoundEvent SNAPPER_HURT = makeSoundEvent("snapper_hurt");
+    public static final SoundEvent SNAPPER_DEATH = null;
+    public static final SoundEvent SNAPPER_HURT = null;
 
-    public static final SoundEvent HUNTER_DEATH = makeSoundEvent("hunter_death");
-    public static final SoundEvent HUNTER_HURT = makeSoundEvent("hunter_hurt");
-    public static final SoundEvent HUNTER_IDLE = makeSoundEvent("hunter_idle"); // unused?
-    public static final SoundEvent HUNTER_FLYING = makeSoundEvent("hunter_flying");
+    public static final SoundEvent HUNTER_DEATH = null;
+    public static final SoundEvent HUNTER_HURT = null;
+    public static final SoundEvent HUNTER_FLYING = null;
 
-    public static final SoundEvent EGG_CRACKED = makeSoundEvent("egg_cracked");
+    public static final SoundEvent EGG_CRACKED = null;
 
     @SubscribeEvent
     public static void onRegisterSounds(RegistryEvent.Register<SoundEvent> event) {
         event.getRegistry().registerAll(
-                AMBIENT,
-                IDLE,
-                CAVE_IDLE,
-                MUSIC_GENERIC,
-                MUSIC_CRYSTAL,
-                MUSIC_DARK_WILLOW,
-                RIFT_IDLE,
-                RIFT_UNSTABLE,
-                RIFTER_AMBIENT,
-                RIFTER_HURT,
-                RIFTER_DEATH,
-                BLADESHROOM_CAP_SHOOT,
-                BLADESHROOM_CAP_HIT,
-                MUD_DIG,
-                MUD_STEP,
-                NIGHTSTAG_AMBIENT, NIGHTSTAG_HURT, NIGHTSTAG_DEATH, NIGHTSTAG_STEP,
-                CRYSTAL_BUG_FLYING, CRYSTAL_BUG_HURT, CRYSTAL_BUG_DEATH,
-                NOVA_DEATH, NOVA_HURT, NOVA_IDLE,
-                STINGER_DEATH, STINGER_HURT, STINGER_AMBIENT,
-                SKULK_DEATH, SKULK_HURT,
-                SNAPPER_DEATH, SNAPPER_HURT,
-                HUNTER_DEATH, HUNTER_HURT, HUNTER_IDLE, HUNTER_FLYING,
-                EGG_CRACKED
+                makeSoundEvent("ambient"),
+                makeSoundEvent("idle"),
+                makeSoundEvent("cave_idle"),
+                makeSoundEvent("music_generic"),
+                makeSoundEvent("music_crystal"),
+                makeSoundEvent("music_dark_willow"),
+                makeSoundEvent("rift_idle"),
+                makeSoundEvent("rift_unstable"),
+                makeSoundEvent("rifter_ambient"),
+                makeSoundEvent("rifter_hurt"),
+                makeSoundEvent( "rifter_death"),
+                makeSoundEvent("bladeshroom_cap_shoot"),
+                makeSoundEvent("bladeshroom_cap_hit"),
+                makeSoundEvent("mud_dig"),
+                makeSoundEvent("mud_step"),
+                makeSoundEvent("nightstag_ambient"),
+                makeSoundEvent("nightstag_hurt"),
+                makeSoundEvent("nightstag_death"),
+                makeSoundEvent("nightstag_step"),
+                makeSoundEvent("crystal_bug_flying"),
+                makeSoundEvent("crystal_bug_hurt"),
+                makeSoundEvent("crystal_bug_death"),
+                makeSoundEvent("nova_death"),
+                makeSoundEvent("nova_hurt"),
+                makeSoundEvent("nova_idle"),
+                makeSoundEvent("stinger_death"),
+                makeSoundEvent("stinger_hurt"),
+                makeSoundEvent("stinger_ambient"),
+                makeSoundEvent("skulk_death"),
+                makeSoundEvent("skulk_hurt"),
+                makeSoundEvent("snapper_death"),
+                makeSoundEvent("snapper_hurt"),
+                makeSoundEvent("hunter_death"),
+                makeSoundEvent("hunter_hurt"),
+                makeSoundEvent("hunter_flying"),
+                makeSoundEvent("egg_cracked")
         );
     }
 
     private static SoundEvent makeSoundEvent(String name) {
-        SoundEvent sound = new SoundEvent(new ResourceLocation(MODID, "midnight." + name));
+        SoundEvent sound = new SoundEvent(new ResourceLocation(MODID, name));
         sound.setRegistryName(new ResourceLocation(MODID, name));
         return sound;
     }

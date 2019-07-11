@@ -1,5 +1,5 @@
 {
-  "midnight.ambient": {
+  "ambient": {
     "category": "ambient",
     "subtitle": "subtitles.ambient.midnight",
     "sounds": [
@@ -8,7 +8,7 @@
       "midnight:ambient/midnight_ambient_3"
     ]
   },
-  "midnight.idle": {
+  "idle": {
     "category": "ambient",
     "sounds": [
       {
@@ -17,7 +17,7 @@
       }
     ]
   },
-  "midnight.cave_idle": {
+  "cave_idle": {
     "category": "ambient",
     "sounds": [
       {
@@ -26,7 +26,7 @@
       }
     ]
   },
-  "midnight.music_generic": {
+  "music_generic": {
     "category": "music",
     "sounds": [
       {
@@ -39,7 +39,7 @@
       }
     ]
   },
-  "midnight.music_crystal": {
+  "music_crystal": {
     "category": "music",
     "sounds": [
       {
@@ -48,7 +48,7 @@
       }
     ]
   },
-  "midnight.music_dark_willow": {
+  "music_dark_willow": {
     "category": "music",
     "sounds": [
       {
@@ -57,17 +57,17 @@
       }
     ]
   },
-  "midnight.rift_idle": {
+  "rift_idle": {
     "category": "ambient",
     "subtitle": "subtitles.entity.rift.idle",
     "sounds": ["midnight:rift_idle"]
   },
-  "midnight.rift_unstable": {
+  "rift_unstable": {
     "category": "ambient",
     "subtitle": "subtitles.entity.rift.unstable",
     "sounds": ["midnight:rift_unstable"]
   },
-  "midnight.rifter_ambient": {
+  "rifter_ambient": {
     "category": "hostile",
     "subtitle": "subtitles.entity.rifter.ambient",
     "sounds": [
@@ -76,7 +76,7 @@
       "midnight:entity/rifter_ambient_3"
     ]
   },
-  "midnight.rifter_hurt": {
+  "rifter_hurt": {
     "category": "hostile",
     "subtitle": "subtitles.entity.rifter.hurt",
     "sounds": [
@@ -85,12 +85,12 @@
       "midnight:entity/rifter_hurt_3"
     ]
   },
-  "midnight.rifter_death": {
+  "rifter_death": {
     "category": "hostile",
     "subtitle": "subtitles.entity.rifter.death",
     "sounds": ["midnight:entity/rifter_death_1"]
   },
-  "midnight.mud_dig": {
+  "mud_dig": {
     "category": "block",
     "subtitle": "subtitles.block.generic.hit",
     "sounds": [
@@ -100,7 +100,7 @@
       "midnight:blocks/dig/mud_4"
     ]
   },
-  "midnight.mud_step": {
+  "mud_step": {
     "category": "block",
     "subtitle": "subtitles.block.generic.footsteps",
     "sounds": [
@@ -110,42 +110,42 @@
       "midnight:blocks/step/mud_4"
     ]
   },
-  "midnight.bladeshroom_cap_shoot": {
+  "bladeshroom_cap_shoot": {
     "category": "hostile",
     "subtitle": "subtitles.entity.bladeshroom_cap.shoot",
     "sounds": [
       "midnight:entity/bladeshroom_cap_shoot"
     ]
   },
-  "midnight.bladeshroom_cap_hit": {
+  "bladeshroom_cap_hit": {
     "category": "hostile",
     "subtitle": "subtitles.entity.bladeshroom_cap.hit",
     "sounds": [
       "midnight:entity/bladeshroom_cap_hit"
     ]
   },
-  "midnight.nightstag_ambient": {
+  "nightstag_ambient": {
     "category": "neutral",
     "subtitle": "subtitles.entity.nightstag.ambient",
     "sounds": [
       "midnight:entity/nightstag_ambient_1"
     ]
   },
-  "midnight.nightstag_death": {
+  "nightstag_death": {
     "category": "neutral",
     "subtitle": "subtitles.entity.nightstag.death",
     "sounds": [
       "midnight:entity/nightstag_death_1"
     ]
   },
-  "midnight.nightstag_hurt": {
+  "nightstag_hurt": {
     "category": "neutral",
     "subtitle": "subtitles.entity.nightstag.hurt",
     "sounds": [
       "midnight:entity/nightstag_hurt_1"
     ]
   },
-  "midnight.nightstag_step": {
+  "nightstag_step": {
     "category": "neutral",
     "subtitle": "subtitles.entity.nightstag.step",
     "sounds": [
@@ -156,40 +156,40 @@
       "mob/llama/step5"
     ]
   },
-  "midnight.egg_cracked": {
+  "egg_cracked": {
     "category": "block",
     "subtitle": "subtitles.block.stinger_egg.crack",
     "sounds": ["midnight:blocks/egg_cracked"]
   },
-  "midnight.crystal_bug_flying": {
+  "crystal_bug_flying": {
     "category": "neutral",
     "subtitle": "subtitles.entity.crystal_bug.flying",
     "sounds": [
       "midnight:entity/crystal_bug_flying"
     ]
   },
-  "midnight.crystal_bug_death": {
+  "crystal_bug_death": {
     "category": "neutral",
     "subtitle": "subtitles.entity.crystal_bug.death",
     "sounds": [
       "midnight:entity/crystal_bug_death"
     ]
   },
-  "midnight.crystal_bug_hurt": {
+  "crystal_bug_hurt": {
     "category": "neutral",
     "subtitle": "subtitles.entity.crystal_bug.hurt",
     "sounds": [
       "midnight:entity/crystal_bug_hurt_1"
     ]
   },
-  "midnight.nova_death": {
+  "nova_death": {
     "category": "hostile",
     "subtitle": "subtitles.entity.nova.death",
     "sounds": [
       "midnight:entity/nova_death"
     ]
   },
-  "midnight.nova_hurt": {
+  "nova_hurt": {
     "category": "hostile",
     "subtitle": "subtitles.entity.nova.hurt",
     "sounds": [
@@ -198,7 +198,7 @@
       "midnight:entity/nova_hurt3"
     ]
   },
-  "midnight.nova_idle": {
+  "nova_idle": {
     "category": "hostile",
     "subtitle": "subtitles.entity.nova.idle",
     "sounds": [
@@ -206,7 +206,7 @@
       "midnight:entity/nova_idle2"
     ]
   },
-  "midnight.stinger_ambient": {
+  "stinger_ambient": {
     "category": "neutral",
     "subtitle": "subtitles.entity.stinger.ambient",
     "sounds": [
@@ -216,7 +216,7 @@
       "mob/spider/say4"
     ]
   },
-  "midnight.stinger_hurt": {
+  "stinger_hurt": {
     "category": "neutral",
     "subtitle": "subtitles.entity.stinger.hurt",
     "sounds": [
@@ -226,14 +226,14 @@
       "mob/spider/say4"
     ]
   },
-  "midnight.stinger_death": {
+  "stinger_death": {
     "category": "neutral",
     "subtitle": "subtitles.entity.stinger.death",
     "sounds": [
       "mob/spider/death"
     ]
   },
-  "midnight.skulk_hurt": {
+  "skulk_hurt": {
     "category": "neutral",
     "subtitle": "subtitles.entity.skulk.hurt",
     "sounds": [
@@ -242,7 +242,7 @@
       "damage/hit3"
     ]
   },
-  "midnight.skulk_death": {
+  "skulk_death": {
     "category": "neutral",
     "subtitle": "subtitles.entity.skulk.death",
     "sounds": [
@@ -251,7 +251,7 @@
       "damage/hit3"
     ]
   },
-  "midnight.snapper_hurt": {
+  "snapper_hurt": {
     "category": "hostile",
     "subtitle": "subtitles.entity.snapper.hurt",
     "sounds": [
@@ -260,7 +260,7 @@
       "damage/hit3"
     ]
   },
-  "midnight.snapper_death": {
+  "snapper_death": {
     "category": "hostile",
     "subtitle": "subtitles.entity.snapper.death",
     "sounds": [
@@ -269,7 +269,7 @@
       "damage/hit3"
     ]
   },
-  "midnight.hunter_hurt": {
+  "hunter_hurt": {
     "category": "hostile",
     "subtitle": "subtitles.entity.hunter.hurt",
     "sounds": [
@@ -278,7 +278,7 @@
       "damage/hit3"
     ]
   },
-  "midnight.hunter_death": {
+  "hunter_death": {
     "category": "hostile",
     "subtitle": "subtitles.entity.hunter.death",
     "sounds": [
@@ -287,7 +287,7 @@
       "damage/hit3"
     ]
   },
-  "midnight.hunter_flying": {
+  "hunter_flying": {
     "category": "hostile",
     "subtitle": "subtitles.entity.hunter.flying",
     "sounds": [
