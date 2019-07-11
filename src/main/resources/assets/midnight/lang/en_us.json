@@ -19,13 +19,16 @@
   "block.midnight.trenchstone_bricks": "Trenchstone Bricks",
 
   "block.midnight.shadowroot_log": "Shadowroot Log",
+  "block.midnight.shadowroot_stripped_log": "Stripped Shadowroot Log",
   "block.midnight.shadowroot_planks": "Shadowroot Planks",
   "block.midnight.shadowroot_leaves": "Shadowroot Leaves",
 
   "block.midnight.dead_wood_log": "Dead Wood Log",
+  "block.midnight.dead_wood_stripped_log": "Stripped Dead Wood Log",
   "block.midnight.dead_wood_planks": "Dead Wood Planks",
 
   "block.midnight.dark_willow_log": "Dark Willow Log",
+  "block.midnight.dark_willow_stripped_log": "Stripped Dark Willow Log",
   "block.midnight.dark_willow_planks": "Dark Willow Planks",
   "block.midnight.dark_willow_leaves": "Dark Willow Leaves",
 
@@ -48,9 +51,15 @@
 
   "block.midnight.shadowroot_chest": "Shadowroot Chest",
   "block.midnight.shadowroot_double_chest": "Shadowroot Double Chest",
-  "block.midnight.shadowroot_crafting_table": "Shadowroot Crafting Table",
   "block.midnight.nightstone_furnace": "Nightstone Furnace",
 
+  "block.midnight.shadowroot_crafting_table": "Shadowroot Crafting Table", 
+  "block.midnight.dark_willow_crafting_table": "Dark Willow Crafting Table", 
+  "block.midnight.dead_wood_crafting_table": "Dead Wood Crafting Table", 
+  "block.midnight.viridshroom_crafting_table": "Viridshroom Crafting Table", 
+  "block.midnight.dewshroom_crafting_table": "Dewshroom Crafting Table", 
+  "block.midnight.nightshroom_crafting_table": "Nightshroom Crafting Table", 
+  
   "block.midnight.grass": "Midnight Grass",
   "block.midnight.tall_grass": "Tall Midnight Grass",
 
