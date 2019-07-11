@@ -91,11 +91,14 @@ import static com.mushroom.midnight.Midnight.MODID;
 public class MidnightBlocks {
 
     public static final Block SHADOWROOT_LOG = Blocks.AIR;
+    public static final Block SHADOWROOT_STRIPPED_LOG = Blocks.AIR;
     public static final Block SHADOWROOT_LEAVES = Blocks.AIR;
     public static final Block SHADOWROOT_PLANKS = Blocks.AIR;
     public static final Block DEAD_WOOD_LOG = Blocks.AIR;
+    public static final Block DEAD_WOOD_STRIPPED_LOG = Blocks.AIR;
     public static final Block DEAD_WOOD_PLANKS = Blocks.AIR;
     public static final Block DARK_WILLOW_LOG = Blocks.AIR;
+    public static final Block DARK_WILLOW_STRIPPED_LOG = Blocks.AIR;
     public static final Block DARK_WILLOW_LEAVES = Blocks.AIR;
     public static final Block DARK_WILLOW_PLANKS = Blocks.AIR;
     public static final Block NIGHTSTONE = Blocks.AIR;
@@ -397,7 +400,10 @@ public class MidnightBlocks {
                 )
                 .add("shadowroot_log", props -> new LogBlock(MaterialColor.BROWN, props))
                 .add("dead_wood_log", props -> new LogBlock(MaterialColor.BROWN, props))
-                .add("dark_willow_log", props -> new LogBlock(MaterialColor.BROWN, props));
+                .add("dark_willow_log", props -> new LogBlock(MaterialColor.BROWN, props))
+                .add("shadowroot_stripped_log", props -> new LogBlock(MaterialColor.BROWN, props))
+                .add("dead_wood_stripped_log", props -> new LogBlock(MaterialColor.BROWN, props))
+                .add("dark_willow_stripped_log", props -> new LogBlock(MaterialColor.BROWN, props));
 
         RegUtil.blocks(event.getRegistry())
                 .withProperties(() ->
@@ -646,13 +652,13 @@ public class MidnightBlocks {
                 .add("dark_water", new MidnightFluidBlock(MidnightFluids.DARK_WATER, false, Block.Properties.create(Material.WATER)
                         .doesNotBlockMovement()
                         .hardnessAndResistance(100.0F)
-                        .lootFrom(Blocks.AIR))
-                )
+                        .noDrops()
+                ))
                 .add("miasma", new MidnightFluidBlock(MidnightFluids.MIASMA, true, Block.Properties.create(Material.LAVA)
                         .doesNotBlockMovement()
                         .hardnessAndResistance(100.0F)
                         .lightValue(15)
-                        .lootFrom(Blocks.AIR)
+                        .noDrops()
                 ));
     }
 
@@ -661,7 +667,7 @@ public class MidnightBlocks {
         RegUtil.items(event.getRegistry())
                 .withProperties(() -> new Item.Properties().group(MidnightItemGroups.BUILDING))
                 .addAll(BlockItem::new,
-                        SHADOWROOT_LOG, SHADOWROOT_LEAVES, SHADOWROOT_PLANKS, DARK_WILLOW_LOG, DARK_WILLOW_LEAVES, DARK_WILLOW_PLANKS, DEAD_WOOD_LOG,
+                        SHADOWROOT_LOG, SHADOWROOT_STRIPPED_LOG, SHADOWROOT_LEAVES, SHADOWROOT_PLANKS, DARK_WILLOW_LOG, DARK_WILLOW_STRIPPED_LOG, DARK_WILLOW_LEAVES, DARK_WILLOW_PLANKS, DEAD_WOOD_LOG, DEAD_WOOD_STRIPPED_LOG,
                         DEAD_WOOD_PLANKS, DEWSHROOM_PLANKS, VIRIDSHROOM_PLANKS, NIGHTSHROOM_PLANKS,
                         NIGHTSTONE, NIGHTSTONE_BRICKS, CHISELED_NIGHTSTONE_BRICKS, TRENCHSTONE, TRENCHSTONE_BRICKS,
                         DARK_PEARL_ORE, DARK_PEARL_BLOCK, TENEBRUM_ORE, TENEBRUM_BLOCK, NAGRILITE_ORE, NAGRILITE_BLOCK, EBONITE_ORE, EBONITE_BLOCK, ARCHAIC_ORE,
