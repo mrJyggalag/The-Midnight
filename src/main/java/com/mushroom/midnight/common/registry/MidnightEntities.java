@@ -13,6 +13,7 @@ import com.mushroom.midnight.common.entity.creature.SkulkEntity;
 import com.mushroom.midnight.common.entity.creature.StingerEntity;
 import com.mushroom.midnight.common.entity.creature.TreeHopperEntity;
 import com.mushroom.midnight.common.entity.projectile.BladeshroomCapEntity;
+import com.mushroom.midnight.common.entity.projectile.NovaSpikeEntity;
 import com.mushroom.midnight.common.entity.projectile.SporeBombEntity;
 import com.mushroom.midnight.common.entity.projectile.ThrownGeodeEntity;
 import net.minecraft.entity.EntityClassification;
@@ -73,6 +74,13 @@ public class MidnightEntities {
             .size(1.2f, 1.8f)
             .immuneToFire()
             .build(MODID + ":nova");
+    public static final EntityType<NovaSpikeEntity> NOVA_SPIKE = EntityType.Builder.<NovaSpikeEntity>create(NovaSpikeEntity::new, EntityClassification.MISC)
+            .setTrackingRange(64)
+            .setUpdateInterval(10)
+            .setShouldReceiveVelocityUpdates(true)
+            .setCustomClientFactory(NovaSpikeEntity::new)
+            .size(0.4f, 0.4f)
+            .build(MODID + ":nova_spike");
     public static final EntityType<CrystalBugEntity> CRYSTAL_BUG = EntityType.Builder.create(CrystalBugEntity::new, MIDNIGHT_AMBIENT)
             .setTrackingRange(80)
             .setUpdateInterval(3)
@@ -150,6 +158,8 @@ public class MidnightEntities {
         event.getRegistry().register(BLADESHROOM_CAP);
         NOVA.setRegistryName(MODID, "nova");
         event.getRegistry().register(NOVA);
+        NOVA_SPIKE.setRegistryName(MODID, "nova_spike");
+        event.getRegistry().register(NOVA_SPIKE);
         CRYSTAL_BUG.setRegistryName(MODID, "crystal_bug");
         event.getRegistry().register(CRYSTAL_BUG);
         PENUMBRIAN.setRegistryName(MODID, "penumbrian");
