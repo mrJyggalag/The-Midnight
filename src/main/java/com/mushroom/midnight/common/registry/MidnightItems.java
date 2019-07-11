@@ -140,7 +140,6 @@ public class MidnightItems {
                 .add("ebonite", Item::new)
                 .add("archaic_shard", Item::new)
 
-                .add("bladeshroom_cap", BladeshroomCapItem::new)
                 .add("raw_suavis", props -> new RawSuavisItem(props.food(MidnightFood.RAW_SUAVIS)))
                 .add("cooked_suavis", props -> new Item(props.food(MidnightFood.COOKED_SUAVIS)))
                 .add("deceitful_snapper", props -> new DeceitfulSnapperItem(props.food(MidnightFood.DECEITFUL_SNAPPER)))
@@ -156,13 +155,6 @@ public class MidnightItems {
                 .add("green_unstable_fruit", props -> new UnstableFruitItem(UnstableFruitItem.Color.GREEN, props.food(MidnightFood.UNSTABLE_FRUIT)))
 
                 .add("deceitful_snapper_bucket", props -> new FishBucketItem(MidnightEntities.DECEITFUL_SNAPPER, MidnightFluids.DARK_WATER, props.maxStackSize(1)));
-
-        RegUtil.items(event.getRegistry())
-                .withProperties(() -> new Item.Properties().group(MidnightItemGroups.ITEMS).maxStackSize(1).setTEISR(() -> BombItemRenderer::new))
-                .add("nightshroom_spore_bomb", props -> new SporeBombItem(SporeBombItem.Type.NIGHTSHROOM, props))
-                .add("dewshroom_spore_bomb", props -> new SporeBombItem(SporeBombItem.Type.DEWSHROOM, props))
-                .add("viridshroom_spore_bomb", props -> new SporeBombItem(SporeBombItem.Type.VIRIDSHROOM, props))
-                .add("bogshroom_spore_bomb", props -> new SporeBombItem(SporeBombItem.Type.BOGSHROOM, props));
 
         RegUtil.items(event.getRegistry())
                 .withProperties(() -> new Item.Properties().group(MidnightItemGroups.TOOLS))
@@ -204,7 +196,16 @@ public class MidnightItems {
                 .add("tenebrum_chestplate", props -> new ArmorItem(MidnightArmorMaterials.TENEBRUM, EquipmentSlotType.CHEST, props))
                 .add("tenebrum_leggings", props -> new ArmorItem(MidnightArmorMaterials.TENEBRUM, EquipmentSlotType.LEGS, props))
                 .add("tenebrum_boots", props -> new ArmorItem(MidnightArmorMaterials.TENEBRUM, EquipmentSlotType.FEET, props))
-                .add("rockshroom_shield", props -> new MidnightShieldItem(MidnightArmorMaterials.ROCKSHROOM, props.maxDamage(336).setTEISR(() -> ShieldItemRenderer::new)));
+                .add("rockshroom_shield", props -> new MidnightShieldItem(MidnightArmorMaterials.ROCKSHROOM, props.maxDamage(336).setTEISR(() -> ShieldItemRenderer::new)))
+
+                .add("bladeshroom_cap", BladeshroomCapItem::new);
+
+        RegUtil.items(event.getRegistry())
+                .withProperties(() -> new Item.Properties().group(MidnightItemGroups.COMBAT).maxStackSize(1).setTEISR(() -> BombItemRenderer::new))
+                .add("nightshroom_spore_bomb", props -> new SporeBombItem(SporeBombItem.Type.NIGHTSHROOM, props))
+                .add("dewshroom_spore_bomb", props -> new SporeBombItem(SporeBombItem.Type.DEWSHROOM, props))
+                .add("viridshroom_spore_bomb", props -> new SporeBombItem(SporeBombItem.Type.VIRIDSHROOM, props))
+                .add("bogshroom_spore_bomb", props -> new SporeBombItem(SporeBombItem.Type.BOGSHROOM, props));
 
         RegUtil.items(event.getRegistry())
                 .withProperties(() -> new Item.Properties().containerItem(Items.BUCKET).maxStackSize(1).group(MidnightItemGroups.ITEMS))
@@ -217,7 +218,7 @@ public class MidnightItems {
                 .add("advancement_snapper", Item::new)
                 .add("advancement_highness", props -> new Item(props.setTEISR(() -> HighnessItemRenderer::new)));
 
-        RegUtil.items(event.getRegistry()).withProperties(() -> new Item.Properties().group(MidnightItemGroups.DECORATION))
+        RegUtil.items(event.getRegistry()).withProperties(() -> new Item.Properties().group(MidnightItemGroups.ITEMS))
                 .add("bladeshroom_spores", MidnightBlocks.BLADESHROOM, BlockNamedItem::new)
                 .add("unstable_seeds", MidnightBlocks.UNSTABLE_BUSH, BlockNamedItem::new);
 

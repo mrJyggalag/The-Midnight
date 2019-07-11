@@ -1,0 +1,13 @@
+{
+  "parent": "block/cube",
+  "textures": {
+      "all": "midnight:blocks/nightshroom_crafting_table_front",
+      "particle": "midnight:blocks/nightshroom_crafting_table_front",
+      "down": "midnight:blocks/nightshroom_planks",
+      "up": "midnight:blocks/nightshroom_crafting_table_top",
+      "north": "midnight:blocks/nightshroom_crafting_table_front",
+      "east": "midnight:blocks/nightshroom_crafting_table_side",
+      "south": "midnight:blocks/nightshroom_crafting_table_side",
+      "west": "midnight:blocks/nightshroom_crafting_table_front"
+  }
+}
