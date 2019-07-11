@@ -18,6 +18,7 @@ public class MidnightSounds {
 
     public static final SoundEvent MUSIC_GENERIC = makeSoundEvent("music_generic");
     public static final SoundEvent MUSIC_CRYSTAL = makeSoundEvent("music_crystal");
+    public static final SoundEvent MUSIC_DARK_WILLOW = makeSoundEvent("music_dark_willow");
 
     public static final SoundEvent RIFT_IDLE = makeSoundEvent("rift_idle");
     public static final SoundEvent RIFT_UNSTABLE = makeSoundEvent("rift_unstable");
@@ -70,6 +71,7 @@ public class MidnightSounds {
                 CAVE_IDLE,
                 MUSIC_GENERIC,
                 MUSIC_CRYSTAL,
+                MUSIC_DARK_WILLOW,
                 RIFT_IDLE,
                 RIFT_UNSTABLE,
                 RIFTER_AMBIENT,

@@ -48,6 +48,15 @@
       }
     ]
   },
+  "midnight.music_dark_willow": {
+    "category": "music",
+    "sounds": [
+      {
+        "name": "midnight:music/dark_willow",
+        "stream": true
+      }
+    ]
+  },
   "midnight.rift_idle": {
     "category": "ambient",
     "subtitle": "subtitles.entity.rift.idle",

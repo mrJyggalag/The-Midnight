@@ -252,6 +252,8 @@ public class ClientEventHandler {
         Biome biome = player.world.getBiome(player.getPosition());
         if (biome == MidnightSurfaceBiomes.CRYSTAL_SPIRES) {
             return MidnightSounds.MUSIC_CRYSTAL;
+        } else if (biome == MidnightSurfaceBiomes.DECEITFUL_BOG) {
+            return MidnightSounds.MUSIC_DARK_WILLOW;
         }
         return MidnightSounds.MUSIC_GENERIC;
     }
