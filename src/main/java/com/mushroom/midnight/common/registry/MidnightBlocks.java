@@ -5,18 +5,19 @@ import com.mushroom.midnight.common.block.BasicBlock;
 import com.mushroom.midnight.common.block.BladeshroomBlock;
 import com.mushroom.midnight.common.block.BloomCrystalBlock;
 import com.mushroom.midnight.common.block.BogweedBlock;
-import com.mushroom.midnight.common.block.DragonNestBlock;
-import com.mushroom.midnight.common.block.GlobFungusBlock;
-import com.mushroom.midnight.common.block.GlobFungusHatBlock;
 import com.mushroom.midnight.common.block.CrystalBlock;
 import com.mushroom.midnight.common.block.CrystalotusBlock;
 import com.mushroom.midnight.common.block.DeceitfulAlgaeBlock;
 import com.mushroom.midnight.common.block.DeceitfulMossBlock;
 import com.mushroom.midnight.common.block.DeceitfulMudBlock;
 import com.mushroom.midnight.common.block.DoubleFungiBlock;
-import com.mushroom.midnight.common.block.HangablePlantBlock;
+import com.mushroom.midnight.common.block.DragonNestBlock;
 import com.mushroom.midnight.common.block.FingeredGrassBlock;
 import com.mushroom.midnight.common.block.FungiBlock;
+import com.mushroom.midnight.common.block.FungiInsideBlock;
+import com.mushroom.midnight.common.block.GlobFungusBlock;
+import com.mushroom.midnight.common.block.GlobFungusHatBlock;
+import com.mushroom.midnight.common.block.HangablePlantBlock;
 import com.mushroom.midnight.common.block.MiasmaSurfaceBlock;
 import com.mushroom.midnight.common.block.MidnightChestBlock;
 import com.mushroom.midnight.common.block.MidnightChestBlock.MidnightChestModel;
@@ -34,7 +35,6 @@ import com.mushroom.midnight.common.block.MidnightPlantBlock;
 import com.mushroom.midnight.common.block.MidnightSaplingBlock;
 import com.mushroom.midnight.common.block.MidnightStairsBlock;
 import com.mushroom.midnight.common.block.MidnightWoodPlankBlock;
-import com.mushroom.midnight.common.block.FungiInsideBlock;
 import com.mushroom.midnight.common.block.RockshroomBlock;
 import com.mushroom.midnight.common.block.SoilBlock;
 import com.mushroom.midnight.common.block.SporchBlock;
@@ -48,9 +48,9 @@ import com.mushroom.midnight.common.block.VioleafBlock;
 import com.mushroom.midnight.common.block.WallSporchBlock;
 import com.mushroom.midnight.common.item.DeceitfulAlgaeItem;
 import com.mushroom.midnight.common.world.tree.BogshroomTree;
-import com.mushroom.midnight.common.world.tree.GlobFungusTree;
 import com.mushroom.midnight.common.world.tree.DarkWillowTree;
 import com.mushroom.midnight.common.world.tree.DewshroomTree;
+import com.mushroom.midnight.common.world.tree.GlobFungusTree;
 import com.mushroom.midnight.common.world.tree.NightshroomTree;
 import com.mushroom.midnight.common.world.tree.ShadowrootTree;
 import com.mushroom.midnight.common.world.tree.ViridshroomTree;
@@ -125,6 +125,12 @@ public class MidnightBlocks {
     public static final Block VIRIDSHROOM_CRAFTING_TABLE = Blocks.AIR;
 
     public static final Block SHADOWROOT_CHEST = Blocks.AIR;
+    public static final Block DARK_WILLOW_CHEST = Blocks.AIR;
+    public static final Block DEAD_WOOD_CHEST = Blocks.AIR;
+    public static final Block NIGHTSHROOM_CHEST = Blocks.AIR;
+    public static final Block DEWSHROOM_CHEST = Blocks.AIR;
+    public static final Block VIRIDSHROOM_CHEST = Blocks.AIR;
+
     public static final Block NIGHTSTONE_FURNACE = Blocks.AIR;
 
     public static final Block COARSE_DIRT = Blocks.AIR;
@@ -534,6 +540,11 @@ public class MidnightBlocks {
                 .add("archaic_glass", new MidnightGlassBlock())
                 .add("archaic_glass_pane", new MidnightGlassPaneBlock())
                 .add("shadowroot_chest", new MidnightChestBlock(MidnightChestModel.SHADOWROOT, Block.Properties.from(Blocks.CHEST)){})
+                .add("dark_willow_chest", new MidnightChestBlock(MidnightChestModel.DARK_WILLOW, Block.Properties.from(Blocks.CHEST)){})
+                .add("dead_wood_chest", new MidnightChestBlock(MidnightChestModel.DEAD_WOOD, Block.Properties.from(Blocks.CHEST)){})
+                .add("nightshroom_chest", new MidnightChestBlock(MidnightChestModel.NIGHTSHROOM, Block.Properties.from(Blocks.CHEST)){})
+                .add("dewshroom_chest", new MidnightChestBlock(MidnightChestModel.DEWSHROOM, Block.Properties.from(Blocks.CHEST)){})
+                .add("viridshroom_chest", new MidnightChestBlock(MidnightChestModel.VIRIDSHROOM, Block.Properties.from(Blocks.CHEST)){})
                 .add("suavis", new SuavisBlock());
 
         RegUtil.blocks(event.getRegistry())
@@ -712,7 +723,15 @@ public class MidnightBlocks {
                 .add(NIGHTSHROOM_SPORCH, (block, props) -> new WallOrFloorItem(NIGHTSHROOM_SPORCH, NIGHTSHROOM_WALL_SPORCH, props))
                 .add(DEWSHROOM_SPORCH, (block, props) -> new WallOrFloorItem(DEWSHROOM_SPORCH, DEWSHROOM_WALL_SPORCH, props))
                 .add(BOGSHROOM_SPORCH, (block, props) -> new WallOrFloorItem(BOGSHROOM_SPORCH, BOGSHROOM_WALL_SPORCH, props))
-                .add(VIRIDSHROOM_SPORCH, (block, props) -> new WallOrFloorItem(VIRIDSHROOM_SPORCH, VIRIDSHROOM_WALL_SPORCH, props))
-                .add(SHADOWROOT_CHEST, (block, props) -> new BlockItem(block, props.setTEISR(() -> MidnightChestItemRenderer::new)));
+                .add(VIRIDSHROOM_SPORCH, (block, props) -> new WallOrFloorItem(VIRIDSHROOM_SPORCH, VIRIDSHROOM_WALL_SPORCH, props));
+
+        RegUtil.items(event.getRegistry())
+                .withProperties(() -> new Item.Properties().group(MidnightItemGroups.DECORATION))
+                .add(SHADOWROOT_CHEST, (block, props) -> new BlockItem(block, props.setTEISR(() -> () -> new MidnightChestItemRenderer(MidnightChestModel.SHADOWROOT))))
+                .add(DARK_WILLOW_CHEST, (block, props) -> new BlockItem(block, props.setTEISR(() -> () -> new MidnightChestItemRenderer(MidnightChestModel.DARK_WILLOW))))
+                .add(DEAD_WOOD_CHEST, (block, props) -> new BlockItem(block, props.setTEISR(() -> () -> new MidnightChestItemRenderer(MidnightChestModel.DEAD_WOOD))))
+                .add(NIGHTSHROOM_CHEST, (block, props) -> new BlockItem(block, props.setTEISR(() -> () -> new MidnightChestItemRenderer(MidnightChestModel.NIGHTSHROOM))))
+                .add(DEWSHROOM_CHEST, (block, props) -> new BlockItem(block, props.setTEISR(() -> () -> new MidnightChestItemRenderer(MidnightChestModel.DEWSHROOM))))
+                .add(VIRIDSHROOM_CHEST, (block, props) -> new BlockItem(block, props.setTEISR(() -> () -> new MidnightChestItemRenderer(MidnightChestModel.VIRIDSHROOM))));
     }
 }

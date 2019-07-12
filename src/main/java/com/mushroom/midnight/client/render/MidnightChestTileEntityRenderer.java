@@ -17,8 +17,18 @@ import net.minecraft.util.ResourceLocation;
 import static com.mushroom.midnight.Midnight.MODID;
 
 public class MidnightChestTileEntityRenderer extends TileEntityRenderer<MidnightChestTileEntity> {
-    private static final ResourceLocation TEXTURE_NORMAL_DOUBLE = new ResourceLocation(MODID, "textures/entities/chest/shadowroot_chest_double.png");
-    private static final ResourceLocation TEXTURE_NORMAL = new ResourceLocation(MODID, "textures/entities/chest/shadowroot_chest.png");
+    private static final ResourceLocation TEXTURE_SHADOWROOT_DOUBLE = new ResourceLocation(MODID, "textures/entities/chest/shadowroot_chest_double.png");
+    private static final ResourceLocation TEXTURE_SHADOWROOT_NORMAL = new ResourceLocation(MODID, "textures/entities/chest/shadowroot_chest.png");
+    private static final ResourceLocation TEXTURE_DARK_WILLOW_DOUBLE = new ResourceLocation(MODID, "textures/entities/chest/dark_willow_chest_double.png");
+    private static final ResourceLocation TEXTURE_DARK_WILLOW_NORMAL = new ResourceLocation(MODID, "textures/entities/chest/dark_willow_chest.png");
+    private static final ResourceLocation TEXTURE_DEAD_WOOD_DOUBLE = new ResourceLocation(MODID, "textures/entities/chest/dead_wood_chest_double.png");
+    private static final ResourceLocation TEXTURE_DEAD_WOOD_NORMAL = new ResourceLocation(MODID, "textures/entities/chest/dead_wood_chest.png");
+    private static final ResourceLocation TEXTURE_NIGHTSHROOM_DOUBLE = new ResourceLocation(MODID, "textures/entities/chest/nightshroom_chest_double.png");
+    private static final ResourceLocation TEXTURE_NIGHTSHROOM_NORMAL = new ResourceLocation(MODID, "textures/entities/chest/nightshroom_chest.png");
+    private static final ResourceLocation TEXTURE_DEWSHROOM_DOUBLE = new ResourceLocation(MODID, "textures/entities/chest/dewshroom_chest_double.png");
+    private static final ResourceLocation TEXTURE_DEWSHROOM_NORMAL = new ResourceLocation(MODID, "textures/entities/chest/dewshroom_chest.png");
+    private static final ResourceLocation TEXTURE_VIRIDSHROOM_DOUBLE = new ResourceLocation(MODID, "textures/entities/chest/viridshroom_chest_double.png");
+    private static final ResourceLocation TEXTURE_VIRIDSHROOM_NORMAL = new ResourceLocation(MODID, "textures/entities/chest/viridshroom_chest.png");
     private final ChestModel simpleChest = new ChestModel();
     private final LargeChestModel largeChest = new LargeChestModel();
 
@@ -31,9 +41,24 @@ public class MidnightChestTileEntityRenderer extends TileEntityRenderer<Midnight
             rl = DESTROY_STAGES[destroyStage];
         } else {
             switch (chestModel) {
+                case DARK_WILLOW:
+                    rl = isDouble ? TEXTURE_DARK_WILLOW_DOUBLE : TEXTURE_DARK_WILLOW_NORMAL;
+                    break;
+                case DEAD_WOOD:
+                    rl = isDouble ? TEXTURE_DEAD_WOOD_DOUBLE : TEXTURE_DEAD_WOOD_NORMAL;
+                    break;
+                case NIGHTSHROOM:
+                    rl = isDouble ? TEXTURE_NIGHTSHROOM_DOUBLE : TEXTURE_NIGHTSHROOM_NORMAL;
+                    break;
+                case DEWSHROOM:
+                    rl = isDouble ? TEXTURE_DEWSHROOM_DOUBLE : TEXTURE_DEWSHROOM_NORMAL;
+                    break;
+                case VIRIDSHROOM:
+                    rl = isDouble ? TEXTURE_VIRIDSHROOM_DOUBLE : TEXTURE_VIRIDSHROOM_NORMAL;
+                    break;
                 case SHADOWROOT:
                 default:
-                    rl = isDouble ? TEXTURE_NORMAL_DOUBLE : TEXTURE_NORMAL;
+                    rl = isDouble ? TEXTURE_SHADOWROOT_DOUBLE : TEXTURE_SHADOWROOT_NORMAL;
                     break;
             }
         }
@@ -52,7 +77,7 @@ public class MidnightChestTileEntityRenderer extends TileEntityRenderer<Midnight
             state = te.getBlockState();
             textureModel = ((MidnightChestBlock)state.getBlock()).chestModel;
         } else {
-            textureModel = MidnightChestModel.getDefault();
+            textureModel = te.getChestModel();
             state = textureModel.getBlockType().getDefaultState().with(ChestBlock.FACING, Direction.SOUTH);
         }
         ChestType chestType = state.has(ChestBlock.TYPE) ? state.get(ChestBlock.TYPE) : ChestType.SINGLE;

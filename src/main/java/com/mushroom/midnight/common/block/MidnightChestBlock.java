@@ -23,7 +23,12 @@ public class MidnightChestBlock extends ChestBlock {
     }
 
     public enum MidnightChestModel implements IStringSerializable {
-        SHADOWROOT(() -> MidnightBlocks.SHADOWROOT_CHEST, () -> MidnightTileEntities.MIDNIGHT_CHEST);
+        SHADOWROOT(() -> MidnightBlocks.SHADOWROOT_CHEST, () -> MidnightTileEntities.MIDNIGHT_CHEST),
+        DARK_WILLOW(() -> MidnightBlocks.DARK_WILLOW_CHEST, () -> MidnightTileEntities.MIDNIGHT_CHEST),
+        DEAD_WOOD(() -> MidnightBlocks.DEAD_WOOD_CHEST, () -> MidnightTileEntities.MIDNIGHT_CHEST),
+        NIGHTSHROOM(() -> MidnightBlocks.NIGHTSHROOM_CHEST, () -> MidnightTileEntities.MIDNIGHT_CHEST),
+        DEWSHROOM(() -> MidnightBlocks.DEWSHROOM_CHEST, () -> MidnightTileEntities.MIDNIGHT_CHEST),
+        VIRIDSHROOM(() -> MidnightBlocks.VIRIDSHROOM_CHEST, () -> MidnightTileEntities.MIDNIGHT_CHEST);
 
         private final Supplier<Block> blockSupplier;
         private final Supplier<TileEntityType<?>> tileSupplier;
