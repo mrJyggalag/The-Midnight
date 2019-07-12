@@ -1,8 +1,11 @@
 package com.mushroom.midnight.common.entity.creature;
 
 import com.mushroom.midnight.common.entity.FlyingNavigator;
+import com.mushroom.midnight.common.entity.projectile.NovaSpikeEntity;
+import com.mushroom.midnight.common.entity.task.NovaSpikeShootGoal;
 import com.mushroom.midnight.common.registry.MidnightSounds;
 import net.minecraft.block.BlockState;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -77,6 +80,8 @@ public class NovaEntity extends MonsterEntity implements IFlyingAnimal {
 
     @Override
     protected void registerGoals() {
+
+        this.goalSelector.addGoal(1, new NovaSpikeShootGoal(this, 24));
         this.goalSelector.addGoal(2, new MeleeAttackGoal(this, 1d, false) {
             @Override
             public void resetTask() {
@@ -166,6 +171,18 @@ public class NovaEntity extends MonsterEntity implements IFlyingAnimal {
     @Override
     protected SoundEvent getAmbientSound() {
         return MidnightSounds.NOVA_IDLE;
+    }
+
+    @Override
+    public boolean attackEntityFrom(DamageSource source, float amount) {
+        Entity entity = source.getImmediateSource();
+        if (this.isInvulnerableTo(source)) {
+            return false;
+        } else if (entity instanceof NovaSpikeEntity) {
+            return false;
+        } else {
+            return super.attackEntityFrom(source, amount);
+        }
     }
 
     @Override

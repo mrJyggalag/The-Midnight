@@ -8,6 +8,7 @@ import com.mushroom.midnight.client.render.HunterRenderer;
 import com.mushroom.midnight.client.render.MidnightChestTileEntityRenderer;
 import com.mushroom.midnight.client.render.NightStagRenderer;
 import com.mushroom.midnight.client.render.NovaRenderer;
+import com.mushroom.midnight.client.render.NovaSpikeRenderer;
 import com.mushroom.midnight.client.render.PenumbrianRenderer;
 import com.mushroom.midnight.client.render.RiftRenderer;
 import com.mushroom.midnight.client.render.RifterRenderer;
@@ -27,6 +28,7 @@ import com.mushroom.midnight.common.entity.creature.SkulkEntity;
 import com.mushroom.midnight.common.entity.creature.StingerEntity;
 import com.mushroom.midnight.common.entity.creature.TreeHopperEntity;
 import com.mushroom.midnight.common.entity.projectile.BladeshroomCapEntity;
+import com.mushroom.midnight.common.entity.projectile.NovaSpikeEntity;
 import com.mushroom.midnight.common.entity.projectile.SporeBombEntity;
 import com.mushroom.midnight.common.entity.projectile.ThrownGeodeEntity;
 import com.mushroom.midnight.common.helper.Helper;
@@ -70,6 +72,7 @@ public class MidnightModelRegistry {
         RenderingRegistry.registerEntityRenderingHandler(ThrownGeodeEntity.class, manager -> new SpriteRenderer(MC.getRenderManager(), MC.getItemRenderer()));
         RenderingRegistry.registerEntityRenderingHandler(SporeBombEntity.class, manager -> new SpriteRenderer(MC.getRenderManager(), MC.getItemRenderer()));
         RenderingRegistry.registerEntityRenderingHandler(CloudEntity.class, CloudRenderer::new);
+        RenderingRegistry.registerEntityRenderingHandler(NovaSpikeEntity.class, NovaSpikeRenderer::new);
         ClientRegistry.bindTileEntitySpecialRenderer(MidnightChestTileEntity.class, new MidnightChestTileEntityRenderer());
 
         BlockColors blockColors = MC.getBlockColors();
