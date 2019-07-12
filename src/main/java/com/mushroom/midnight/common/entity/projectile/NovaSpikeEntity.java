@@ -1,5 +1,6 @@
 package com.mushroom.midnight.common.entity.projectile;
 
+import com.mushroom.midnight.client.particle.MidnightParticles;
 import com.mushroom.midnight.common.registry.MidnightEntities;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
@@ -19,6 +20,7 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.fml.network.FMLPlayMessages;
 import net.minecraftforge.fml.network.NetworkHooks;
 
@@ -59,9 +61,31 @@ public class NovaSpikeEntity extends ThrowableEntity {
         if (result.getType() == RayTraceResult.Type.ENTITY) {
             Entity entity = ((EntityRayTraceResult) result).getEntity();
 
-            entity.attackEntityFrom(DamageSource.causeThrownDamage(this, livingentity), getDamage());
+            int j = entity.func_223314_ad();
 
-            this.remove();
+            DamageSource damagesource;
+
+            if(livingentity == null){
+               damagesource = DamageSource.causeThrownDamage(this, this);
+            }else {
+                damagesource = DamageSource.causeThrownDamage(this, livingentity);
+            }
+
+            if(entity.attackEntityFrom(damagesource, getDamage())){
+                this.remove();
+            }else {
+                entity.func_223308_g(j);
+                this.setMotion(this.getMotion().scale(-0.1D));
+                this.rotationYaw += 180.0F;
+                this.prevRotationYaw += 180.0F;
+                this.ticksInAir = 0;
+                if (!this.world.isRemote && this.getMotion().lengthSquared() < 1.0E-7D) {
+
+                    this.remove();
+                }
+            }
+
+
         } else if (result.getType() == RayTraceResult.Type.BLOCK) {
             BlockRayTraceResult blockraytraceresult = (BlockRayTraceResult) result;
             BlockState blockstate = this.world.getBlockState(blockraytraceresult.getPos());
@@ -102,6 +126,7 @@ public class NovaSpikeEntity extends ThrowableEntity {
         } else {
             super.tick();
             this.doBlockCollisions();
+            MidnightParticles.SPORE.spawn(world, this.posX,this.posY, this.posZ, 0.0D, 0.05, 0.0D);
         }
     }
 
@@ -121,12 +146,12 @@ public class NovaSpikeEntity extends ThrowableEntity {
      */
     public void readAdditional(CompoundNBT compound) {
         this.ticksInGround = compound.getShort("life");
-        if (compound.contains("inBlockState", 10)) {
+        if (compound.contains("inBlockState", Constants.NBT.TAG_COMPOUND)) {
             this.inBlockState = NBTUtil.readBlockState(compound.getCompound("inBlockState"));
         }
 
         this.inGround = compound.getByte("inGround") == 1;
-        if (compound.contains("damage", 99)) {
+        if (compound.contains("damage", Constants.NBT.TAG_ANY_NUMERIC)) {
             this.damage = compound.getFloat("damage");
         }
 
