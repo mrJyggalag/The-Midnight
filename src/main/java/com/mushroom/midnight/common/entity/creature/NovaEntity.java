@@ -178,7 +178,7 @@ public class NovaEntity extends MonsterEntity implements IFlyingAnimal {
         Entity entity = source.getImmediateSource();
         if (this.isInvulnerableTo(source)) {
             return false;
-        }else if(entity instanceof NovaSpikeEntity){
+        } else if (entity instanceof NovaSpikeEntity) {
             return false;
         } else {
             return super.attackEntityFrom(source, amount);

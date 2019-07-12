@@ -65,15 +65,15 @@ public class NovaSpikeEntity extends ThrowableEntity {
 
             DamageSource damagesource;
 
-            if(livingentity == null){
-               damagesource = DamageSource.causeThrownDamage(this, this);
-            }else {
+            if (livingentity == null) {
+                damagesource = DamageSource.causeThrownDamage(this, this);
+            } else {
                 damagesource = DamageSource.causeThrownDamage(this, livingentity);
             }
 
-            if(entity.attackEntityFrom(damagesource, getDamage())){
+            if (entity.attackEntityFrom(damagesource, getDamage())) {
                 this.remove();
-            }else {
+            } else {
                 entity.func_223308_g(j);
                 this.setMotion(this.getMotion().scale(-0.1D));
                 this.rotationYaw += 180.0F;
@@ -126,7 +126,7 @@ public class NovaSpikeEntity extends ThrowableEntity {
         } else {
             super.tick();
             this.doBlockCollisions();
-            MidnightParticles.SPORE.spawn(world, this.posX,this.posY, this.posZ, 0.0D, 0.05, 0.0D);
+            MidnightParticles.SPORE.spawn(world, this.posX, this.posY, this.posZ, 0.0D, 0.05, 0.0D);
         }
     }
 
