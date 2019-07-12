@@ -73,14 +73,19 @@ import net.minecraft.block.WeightedPressurePlateBlock;
 import net.minecraft.block.WoodButtonBlock;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
+import net.minecraft.client.renderer.tileentity.ItemStackTileEntityRenderer;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.WallOrFloorItem;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.ToolType;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.ObjectHolder;
+
+import java.util.concurrent.Callable;
 
 import static com.mushroom.midnight.Midnight.MODID;
 
@@ -726,11 +731,16 @@ public class MidnightBlocks {
 
         RegUtil.items(event.getRegistry())
                 .withProperties(() -> new Item.Properties().group(MidnightItemGroups.DECORATION))
-                .add(SHADOWROOT_CHEST, (block, props) -> new BlockItem(block, props.setTEISR(() -> () -> new MidnightChestItemRenderer(block))))
-                .add(DARK_WILLOW_CHEST, (block, props) -> new BlockItem(block, props.setTEISR(() -> () -> new MidnightChestItemRenderer(block))))
-                .add(DEAD_WOOD_CHEST, (block, props) -> new BlockItem(block, props.setTEISR(() -> () -> new MidnightChestItemRenderer(block))))
-                .add(NIGHTSHROOM_CHEST, (block, props) -> new BlockItem(block, props.setTEISR(() -> () -> new MidnightChestItemRenderer(block))))
-                .add(DEWSHROOM_CHEST, (block, props) -> new BlockItem(block, props.setTEISR(() -> () -> new MidnightChestItemRenderer(block))))
-                .add(VIRIDSHROOM_CHEST, (block, props) -> new BlockItem(block, props.setTEISR(() -> () -> new MidnightChestItemRenderer(block))));
+                .add(SHADOWROOT_CHEST, (block, props) -> new BlockItem(block, props.setTEISR(() -> getChestItemRenderer(block))))
+                .add(DARK_WILLOW_CHEST, (block, props) -> new BlockItem(block, props.setTEISR(() -> getChestItemRenderer(block))))
+                .add(DEAD_WOOD_CHEST, (block, props) -> new BlockItem(block, props.setTEISR(() -> getChestItemRenderer(block))))
+                .add(NIGHTSHROOM_CHEST, (block, props) -> new BlockItem(block, props.setTEISR(() -> getChestItemRenderer(block))))
+                .add(DEWSHROOM_CHEST, (block, props) -> new BlockItem(block, props.setTEISR(() -> getChestItemRenderer(block))))
+                .add(VIRIDSHROOM_CHEST, (block, props) -> new BlockItem(block, props.setTEISR(() -> getChestItemRenderer(block))));
+    }
+
+    @OnlyIn(Dist.CLIENT)
+    private static Callable<ItemStackTileEntityRenderer> getChestItemRenderer(Block block) {
+        return () -> new MidnightChestItemRenderer(block);
     }
 }

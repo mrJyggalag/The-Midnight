@@ -14,9 +14,12 @@ import net.minecraft.state.properties.ChestType;
 import net.minecraft.tileentity.IChestLid;
 import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
 import static com.mushroom.midnight.Midnight.MODID;
 
+@OnlyIn(Dist.CLIENT)
 public class MidnightChestTileEntityRenderer extends TileEntityRenderer<MidnightChestTileEntity> {
     private static final ResourceLocation TEXTURE_SHADOWROOT_DOUBLE = new ResourceLocation(MODID, "textures/entities/chest/shadowroot_chest_double.png");
     private static final ResourceLocation TEXTURE_SHADOWROOT_NORMAL = new ResourceLocation(MODID, "textures/entities/chest/shadowroot_chest.png");

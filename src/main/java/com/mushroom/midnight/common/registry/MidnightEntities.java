@@ -162,10 +162,10 @@ public class MidnightEntities {
         event.getRegistry().register(NOVA_SPIKE);
         CRYSTAL_BUG.setRegistryName(MODID, "crystal_bug");
         event.getRegistry().register(CRYSTAL_BUG);
-        PENUMBRIAN.setRegistryName(MODID, "penumbrian");
-        event.getRegistry().register(PENUMBRIAN);
-        TREE_HOPPER.setRegistryName(MODID, "tree_hopper");
-        event.getRegistry().register(TREE_HOPPER);
+        //PENUMBRIAN.setRegistryName(MODID, "penumbrian");
+        //event.getRegistry().register(PENUMBRIAN);
+        //TREE_HOPPER.setRegistryName(MODID, "tree_hopper");
+        //event.getRegistry().register(TREE_HOPPER);
         STINGER.setRegistryName(MODID, "stinger");
         event.getRegistry().register(STINGER);
         NIGHTSTAG.setRegistryName(MODID, "nightstag");
