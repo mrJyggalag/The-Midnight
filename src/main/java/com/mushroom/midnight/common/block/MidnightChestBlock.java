@@ -7,7 +7,6 @@ import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ChestBlock;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.IStringSerializable;
 import net.minecraft.world.IBlockReader;
 
@@ -23,27 +22,21 @@ public class MidnightChestBlock extends ChestBlock {
     }
 
     public enum MidnightChestModel implements IStringSerializable {
-        SHADOWROOT(() -> MidnightBlocks.SHADOWROOT_CHEST, () -> MidnightTileEntities.MIDNIGHT_CHEST),
-        DARK_WILLOW(() -> MidnightBlocks.DARK_WILLOW_CHEST, () -> MidnightTileEntities.MIDNIGHT_CHEST),
-        DEAD_WOOD(() -> MidnightBlocks.DEAD_WOOD_CHEST, () -> MidnightTileEntities.MIDNIGHT_CHEST),
-        NIGHTSHROOM(() -> MidnightBlocks.NIGHTSHROOM_CHEST, () -> MidnightTileEntities.MIDNIGHT_CHEST),
-        DEWSHROOM(() -> MidnightBlocks.DEWSHROOM_CHEST, () -> MidnightTileEntities.MIDNIGHT_CHEST),
-        VIRIDSHROOM(() -> MidnightBlocks.VIRIDSHROOM_CHEST, () -> MidnightTileEntities.MIDNIGHT_CHEST);
+        SHADOWROOT(() -> MidnightBlocks.SHADOWROOT_CHEST),
+        DARK_WILLOW(() -> MidnightBlocks.DARK_WILLOW_CHEST),
+        DEAD_WOOD(() -> MidnightBlocks.DEAD_WOOD_CHEST),
+        NIGHTSHROOM(() -> MidnightBlocks.NIGHTSHROOM_CHEST),
+        DEWSHROOM(() -> MidnightBlocks.DEWSHROOM_CHEST),
+        VIRIDSHROOM(() -> MidnightBlocks.VIRIDSHROOM_CHEST);
 
         private final Supplier<Block> blockSupplier;
-        private final Supplier<TileEntityType<?>> tileSupplier;
 
-        MidnightChestModel(Supplier<Block> blockSupplier, Supplier<TileEntityType<?>> tileSupplier) {
+        MidnightChestModel(Supplier<Block> blockSupplier) {
             this.blockSupplier = blockSupplier;
-            this.tileSupplier = tileSupplier;
         }
 
         public Block getBlockType() {
             return this.blockSupplier.get();
-        }
-
-        public TileEntityType<?> getTileType() {
-            return this.tileSupplier.get();
         }
 
         @Override
@@ -53,15 +46,6 @@ public class MidnightChestBlock extends ChestBlock {
 
         public static MidnightChestModel getDefault() {
             return SHADOWROOT;
-        }
-
-        public static MidnightChestModel getModel(TileEntityType<?> tileType) {
-            for (MidnightChestModel currentChestModel : MidnightChestModel.values()) {
-                if (currentChestModel.getTileType().equals(tileType)) {
-                    return currentChestModel;
-                }
-            }
-            return getDefault();
         }
     }
 
