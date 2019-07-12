@@ -26,13 +26,6 @@ public class NovaSpikeModel<T extends Entity> extends EntityModel<T> {
         this.spike.render(scale);
     }
 
-    @Override
-    public void setRotationAngles(T entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scaleFactor) {
-        super.setRotationAngles(entityIn, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scaleFactor);
-        this.spike.rotateAngleY = netHeadYaw * ((float) Math.PI / 180F);
-        this.spike.rotateAngleX = headPitch * ((float) Math.PI / 180F);
-    }
-
     public void setRotateAngle(RendererModel modelRenderer, float x, float y, float z) {
         modelRenderer.rotateAngleX = x;
         modelRenderer.rotateAngleY = y;
