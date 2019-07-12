@@ -1,52 +1,18 @@
 package com.mushroom.midnight.common.block;
 
 import com.mushroom.midnight.common.registry.MidnightTileEntities;
-import com.mushroom.midnight.common.registry.MidnightBlocks;
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ChestBlock;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.IStringSerializable;
 import net.minecraft.world.IBlockReader;
 
 import javax.annotation.Nullable;
-import java.util.function.Supplier;
 
 public class MidnightChestBlock extends ChestBlock {
-    public MidnightChestModel chestModel;
 
-    public MidnightChestBlock(MidnightChestModel chestModel, Properties properties) {
+    public MidnightChestBlock(Properties properties) {
         super(properties);
-        this.chestModel = chestModel;
-    }
-
-    public enum MidnightChestModel implements IStringSerializable {
-        SHADOWROOT(() -> MidnightBlocks.SHADOWROOT_CHEST),
-        DARK_WILLOW(() -> MidnightBlocks.DARK_WILLOW_CHEST),
-        DEAD_WOOD(() -> MidnightBlocks.DEAD_WOOD_CHEST),
-        NIGHTSHROOM(() -> MidnightBlocks.NIGHTSHROOM_CHEST),
-        DEWSHROOM(() -> MidnightBlocks.DEWSHROOM_CHEST),
-        VIRIDSHROOM(() -> MidnightBlocks.VIRIDSHROOM_CHEST);
-
-        private final Supplier<Block> blockSupplier;
-
-        MidnightChestModel(Supplier<Block> blockSupplier) {
-            this.blockSupplier = blockSupplier;
-        }
-
-        public Block getBlockType() {
-            return this.blockSupplier.get();
-        }
-
-        @Override
-        public String getName() {
-            return name().toLowerCase();
-        }
-
-        public static MidnightChestModel getDefault() {
-            return SHADOWROOT;
-        }
     }
 
     @Override
@@ -56,6 +22,7 @@ public class MidnightChestBlock extends ChestBlock {
     }
 
     @Override
+    @SuppressWarnings("deprecation")
     public BlockRenderType getRenderType(BlockState state) {
         return BlockRenderType.ENTITYBLOCK_ANIMATED;
     }

@@ -2,8 +2,9 @@ package com.mushroom.midnight.client.render;
 
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mushroom.midnight.common.block.MidnightChestBlock;
-import com.mushroom.midnight.common.block.MidnightChestBlock.MidnightChestModel;
+import com.mushroom.midnight.common.registry.MidnightBlocks;
 import com.mushroom.midnight.common.tile.base.MidnightChestTileEntity;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ChestBlock;
 import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
@@ -35,32 +36,22 @@ public class MidnightChestTileEntityRenderer extends TileEntityRenderer<Midnight
     public MidnightChestTileEntityRenderer() {
     }
 
-    private void bindTexture(MidnightChestModel chestModel, int destroyStage, boolean isDouble) {
-        ResourceLocation rl;
+    private void bindTexture(Block chestModel, int destroyStage, boolean isDouble) {
+        ResourceLocation rl = TEXTURE_SHADOWROOT_NORMAL;
         if (destroyStage >= 0) {
             rl = DESTROY_STAGES[destroyStage];
-        } else {
-            switch (chestModel) {
-                case DARK_WILLOW:
-                    rl = isDouble ? TEXTURE_DARK_WILLOW_DOUBLE : TEXTURE_DARK_WILLOW_NORMAL;
-                    break;
-                case DEAD_WOOD:
-                    rl = isDouble ? TEXTURE_DEAD_WOOD_DOUBLE : TEXTURE_DEAD_WOOD_NORMAL;
-                    break;
-                case NIGHTSHROOM:
-                    rl = isDouble ? TEXTURE_NIGHTSHROOM_DOUBLE : TEXTURE_NIGHTSHROOM_NORMAL;
-                    break;
-                case DEWSHROOM:
-                    rl = isDouble ? TEXTURE_DEWSHROOM_DOUBLE : TEXTURE_DEWSHROOM_NORMAL;
-                    break;
-                case VIRIDSHROOM:
-                    rl = isDouble ? TEXTURE_VIRIDSHROOM_DOUBLE : TEXTURE_VIRIDSHROOM_NORMAL;
-                    break;
-                case SHADOWROOT:
-                default:
-                    rl = isDouble ? TEXTURE_SHADOWROOT_DOUBLE : TEXTURE_SHADOWROOT_NORMAL;
-                    break;
-            }
+        } else if (chestModel == MidnightBlocks.SHADOWROOT_CHEST) {
+            rl = isDouble ? TEXTURE_SHADOWROOT_DOUBLE : TEXTURE_SHADOWROOT_NORMAL;
+        } else if (chestModel == MidnightBlocks.DARK_WILLOW_CHEST) {
+            rl = isDouble ? TEXTURE_DARK_WILLOW_DOUBLE : TEXTURE_DARK_WILLOW_NORMAL;
+        } else if (chestModel == MidnightBlocks.DEAD_WOOD_CHEST) {
+            rl = isDouble ? TEXTURE_DEAD_WOOD_DOUBLE : TEXTURE_DEAD_WOOD_NORMAL;
+        } else if (chestModel == MidnightBlocks.NIGHTSHROOM_CHEST) {
+            rl = isDouble ? TEXTURE_NIGHTSHROOM_DOUBLE : TEXTURE_NIGHTSHROOM_NORMAL;
+        } else if (chestModel == MidnightBlocks.DEWSHROOM_CHEST) {
+            rl = isDouble ? TEXTURE_DEWSHROOM_DOUBLE : TEXTURE_DEWSHROOM_NORMAL;
+        } else if (chestModel == MidnightBlocks.VIRIDSHROOM_CHEST) {
+            rl = isDouble ? TEXTURE_VIRIDSHROOM_DOUBLE : TEXTURE_VIRIDSHROOM_NORMAL;
         }
         bindTexture(rl);
     }
@@ -71,21 +62,21 @@ public class MidnightChestTileEntityRenderer extends TileEntityRenderer<Midnight
         GlStateManager.depthFunc(515);
         GlStateManager.depthMask(true);
 
-        final MidnightChestModel textureModel;
+        final Block blockModel;
         final BlockState state;
         if (te.hasWorld() && te.getBlockState().getBlock() instanceof MidnightChestBlock) {
             state = te.getBlockState();
-            textureModel = ((MidnightChestBlock)state.getBlock()).chestModel;
+            blockModel = state.getBlock();
         } else {
-            textureModel = te.getChestModel();
-            state = textureModel.getBlockType().getDefaultState().with(ChestBlock.FACING, Direction.SOUTH);
+            blockModel = te.getChestModel();
+            state = blockModel.getDefaultState().with(ChestBlock.FACING, Direction.SOUTH);
         }
         ChestType chestType = state.has(ChestBlock.TYPE) ? state.get(ChestBlock.TYPE) : ChestType.SINGLE;
 
         if (chestType != ChestType.LEFT) {
             boolean flag = chestType != ChestType.SINGLE;
             ChestModel chestmodel = flag ? this.largeChest : this.simpleChest;
-            bindTexture(textureModel, destroyStage, flag);
+            bindTexture(blockModel, destroyStage, flag);
             if (destroyStage >= 0) {
                 GlStateManager.matrixMode(5890);
                 GlStateManager.pushMatrix();

@@ -1,13 +1,15 @@
 package com.mushroom.midnight.common.tile.base;
 
-import com.mushroom.midnight.common.block.MidnightChestBlock;
+import com.mushroom.midnight.common.registry.MidnightBlocks;
 import com.mushroom.midnight.common.registry.MidnightTileEntities;
+import net.minecraft.block.Block;
+import net.minecraft.block.Blocks;
 import net.minecraft.tileentity.ChestTileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.math.AxisAlignedBB;
 
 public class MidnightChestTileEntity extends ChestTileEntity {
-    private MidnightChestBlock.MidnightChestModel chestModel = null;
+    private Block block = Blocks.AIR;
 
     protected MidnightChestTileEntity(TileEntityType<?> entityType) {
         super(entityType);
@@ -25,11 +27,11 @@ public class MidnightChestTileEntity extends ChestTileEntity {
         );
     }
 
-    public void setChestModel(MidnightChestBlock.MidnightChestModel chestModel) {
-        this.chestModel = chestModel;
+    public void setChestModel(Block block) {
+        this.block = block;
     }
 
-    public MidnightChestBlock.MidnightChestModel getChestModel() {
-        return this.chestModel != null ? this.chestModel : MidnightChestBlock.MidnightChestModel.getDefault();
+    public Block getChestModel() {
+        return this.block != Blocks.AIR ? this.block : MidnightBlocks.SHADOWROOT_CHEST;
     }
 }
