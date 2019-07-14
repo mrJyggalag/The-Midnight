@@ -9,6 +9,7 @@ import com.mushroom.midnight.common.entity.creature.NightStagEntity;
 import com.mushroom.midnight.common.entity.creature.NovaEntity;
 import com.mushroom.midnight.common.entity.creature.PenumbrianEntity;
 import com.mushroom.midnight.common.entity.creature.RifterEntity;
+import com.mushroom.midnight.common.entity.creature.ShadeSquirreEntity;
 import com.mushroom.midnight.common.entity.creature.SkulkEntity;
 import com.mushroom.midnight.common.entity.creature.StingerEntity;
 import com.mushroom.midnight.common.entity.creature.TreeHopperEntity;
@@ -123,6 +124,12 @@ public class MidnightEntities {
             .setShouldReceiveVelocityUpdates(true)
             .size(0.6f, 0.6f)
             .build(MODID + ":skulk");
+    public static final EntityType<ShadeSquirreEntity> SHADESQUIRRE = EntityType.Builder.create(ShadeSquirreEntity::new, EntityClassification.CREATURE)
+            .setTrackingRange(80)
+            .setUpdateInterval(3)
+            .setShouldReceiveVelocityUpdates(true)
+            .size(0.6f, 0.75f)
+            .build(MODID + ":shadesquiire");
     public static final EntityType<ThrownGeodeEntity> THROWN_GEODE = EntityType.Builder.<ThrownGeodeEntity>create(ThrownGeodeEntity::new, EntityClassification.MISC)
             .setTrackingRange(64)
             .setUpdateInterval(10)
@@ -174,6 +181,8 @@ public class MidnightEntities {
         event.getRegistry().register(DECEITFUL_SNAPPER);
         SKULK.setRegistryName(MODID, "skulk");
         event.getRegistry().register(SKULK);
+        SHADESQUIRRE.setRegistryName(MODID, "shade_squirre");
+        event.getRegistry().register(SHADESQUIRRE);
         THROWN_GEODE.setRegistryName(MODID, "thrown_geode");
         event.getRegistry().register(THROWN_GEODE);
         SPORE_BOMB.setRegistryName(MODID, "spore_bomb");
