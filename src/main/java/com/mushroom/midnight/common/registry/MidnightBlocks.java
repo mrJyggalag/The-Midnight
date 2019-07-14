@@ -5,6 +5,7 @@ import com.mushroom.midnight.common.block.BasicBlock;
 import com.mushroom.midnight.common.block.BladeshroomBlock;
 import com.mushroom.midnight.common.block.BloomCrystalBlock;
 import com.mushroom.midnight.common.block.BogweedBlock;
+import com.mushroom.midnight.common.block.CacheBlock;
 import com.mushroom.midnight.common.block.CrystalBlock;
 import com.mushroom.midnight.common.block.CrystalotusBlock;
 import com.mushroom.midnight.common.block.DeceitfulAlgaeBlock;
@@ -136,6 +137,7 @@ public class MidnightBlocks {
     public static final Block VIRIDSHROOM_CHEST = Blocks.AIR;
 
     public static final Block NIGHTSTONE_FURNACE = Blocks.AIR;
+    public static final Block VIRIDSHROOM_STEM_CACHE = Blocks.AIR;
 
     public static final Block COARSE_DIRT = Blocks.AIR;
     public static final Block DIRT = Blocks.AIR;
@@ -583,7 +585,9 @@ public class MidnightBlocks {
                 .add("dark_willow_stairs", props -> new MidnightStairsBlock(() -> DARK_WILLOW_PLANKS.getDefaultState(), props) {})
                 .add("dewshroom_stairs", props -> new MidnightStairsBlock(() -> DEWSHROOM_PLANKS.getDefaultState(), props) {})
                 .add("viridshroom_stairs", props -> new MidnightStairsBlock(() -> VIRIDSHROOM_PLANKS.getDefaultState(), props) {})
-                .add("nightshroom_stairs", props -> new MidnightStairsBlock(() -> NIGHTSHROOM_PLANKS.getDefaultState(), props) {});
+                .add("nightshroom_stairs", props -> new MidnightStairsBlock(() -> NIGHTSHROOM_PLANKS.getDefaultState(), props) {})
+
+                .add("viridshroom_stem_cache", props -> new CacheBlock(Block.Properties.create(Material.WOOD).sound(SoundType.WOOD).hardnessAndResistance(2f)){});
 
         RegUtil.blocks(event.getRegistry())
                 .withProperties(() -> Block.Properties.from(Blocks.CRAFTING_TABLE))
@@ -736,7 +740,8 @@ public class MidnightBlocks {
                 .add(DEAD_WOOD_CHEST, (block, props) -> new BlockItem(block, props.setTEISR(() -> getChestItemRenderer(block))))
                 .add(NIGHTSHROOM_CHEST, (block, props) -> new BlockItem(block, props.setTEISR(() -> getChestItemRenderer(block))))
                 .add(DEWSHROOM_CHEST, (block, props) -> new BlockItem(block, props.setTEISR(() -> getChestItemRenderer(block))))
-                .add(VIRIDSHROOM_CHEST, (block, props) -> new BlockItem(block, props.setTEISR(() -> getChestItemRenderer(block))));
+                .add(VIRIDSHROOM_CHEST, (block, props) -> new BlockItem(block, props.setTEISR(() -> getChestItemRenderer(block))))
+                .add(VIRIDSHROOM_STEM_CACHE, BlockItem::new);
     }
 
     @OnlyIn(Dist.CLIENT)

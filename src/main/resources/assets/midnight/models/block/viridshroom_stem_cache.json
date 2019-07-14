@@ -1,0 +1,7 @@
+{
+    "parent": "midnight:block/cache",
+    "textures": {
+		"all": "midnight:blocks/viridshroom_stem",
+		"cache": "midnight:blocks/viridshroom_stem_cache"
+    }
+}

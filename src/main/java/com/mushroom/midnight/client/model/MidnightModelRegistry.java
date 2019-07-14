@@ -1,6 +1,8 @@
 package com.mushroom.midnight.client.model;
 
+import com.mushroom.midnight.client.gui.CacheScreen;
 import com.mushroom.midnight.client.render.BladeshroomCapRenderer;
+import com.mushroom.midnight.client.render.CacheTileEntityRenderer;
 import com.mushroom.midnight.client.render.CloudRenderer;
 import com.mushroom.midnight.client.render.CrystalBugRenderer;
 import com.mushroom.midnight.client.render.DeceitfulSnapperRenderer;
@@ -33,9 +35,12 @@ import com.mushroom.midnight.common.entity.projectile.SporeBombEntity;
 import com.mushroom.midnight.common.entity.projectile.ThrownGeodeEntity;
 import com.mushroom.midnight.common.helper.Helper;
 import com.mushroom.midnight.common.registry.MidnightBlocks;
+import com.mushroom.midnight.common.registry.MidnightContainers;
+import com.mushroom.midnight.common.tile.base.CacheTileEntity;
 import com.mushroom.midnight.common.tile.base.MidnightChestTileEntity;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.client.renderer.color.BlockColors;
 import net.minecraft.client.renderer.color.ItemColors;
 import net.minecraft.client.renderer.entity.SpriteRenderer;
@@ -74,6 +79,9 @@ public class MidnightModelRegistry {
         RenderingRegistry.registerEntityRenderingHandler(CloudEntity.class, CloudRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(NovaSpikeEntity.class, NovaSpikeRenderer::new);
         ClientRegistry.bindTileEntitySpecialRenderer(MidnightChestTileEntity.class, new MidnightChestTileEntityRenderer());
+        ClientRegistry.bindTileEntitySpecialRenderer(CacheTileEntity.class, new CacheTileEntityRenderer());
+
+        ScreenManager.registerFactory(MidnightContainers.CACHE, CacheScreen::new);
 
         BlockColors blockColors = MC.getBlockColors();
         ItemColors itemColors = MC.getItemColors();
