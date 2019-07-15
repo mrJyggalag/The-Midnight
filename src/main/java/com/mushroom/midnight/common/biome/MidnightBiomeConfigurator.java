@@ -371,7 +371,7 @@ public class MidnightBiomeConfigurator {
 
     public static void addForestSpawns(ConfigurableBiome biome) {
         addMonster(biome, MidnightEntities.SKULK, 100, 1, 2);
-        addCreature(biome, MidnightEntities.SHADESQUIRREL, 60, 2, 3);
+        addCreature(biome, MidnightEntities.SHADE_SQUIRREL, 60, 2, 3);
     }
 
     private static void addCreature(ConfigurableBiome biome, EntityType<?> type, int weight, int minGroupSize, int maxGroupSize) {

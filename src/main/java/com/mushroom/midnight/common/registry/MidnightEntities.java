@@ -126,7 +126,7 @@ public class MidnightEntities {
             .setShouldReceiveVelocityUpdates(true)
             .size(0.6f, 0.6f)
             .build(MODID + ":skulk");
-    public static final EntityType<ShadeSquirrelEntity> SHADESQUIRREL = EntityType.Builder.create(ShadeSquirrelEntity::new, EntityClassification.CREATURE)
+    public static final EntityType<ShadeSquirrelEntity> SHADE_SQUIRREL = EntityType.Builder.create(ShadeSquirrelEntity::new, EntityClassification.CREATURE)
             .setTrackingRange(80)
             .setUpdateInterval(3)
             .setShouldReceiveVelocityUpdates(true)
@@ -183,8 +183,8 @@ public class MidnightEntities {
         event.getRegistry().register(DECEITFUL_SNAPPER);
         SKULK.setRegistryName(MODID, "skulk");
         event.getRegistry().register(SKULK);
-        SHADESQUIRREL.setRegistryName(MODID, "shade_squirrel");
-        event.getRegistry().register(SHADESQUIRREL);
+        SHADE_SQUIRREL.setRegistryName(MODID, "shade_squirrel");
+        event.getRegistry().register(SHADE_SQUIRREL);
         THROWN_GEODE.setRegistryName(MODID, "thrown_geode");
         event.getRegistry().register(THROWN_GEODE);
         SPORE_BOMB.setRegistryName(MODID, "spore_bomb");

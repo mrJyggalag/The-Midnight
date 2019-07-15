@@ -56,9 +56,9 @@ public class ShadeSquirrelEntity extends TameableEntity {
 
     private static final Map<Pose, EntitySize> pose_map = ImmutableMap.<Pose, EntitySize>builder().put(Pose.STANDING, normal_size).put(Pose.SLEEPING, EntitySize.flexible(0.6f, 0.55f)).put(Pose.FALL_FLYING, EntitySize.flexible(0.6f, 0.75f)).put(Pose.SWIMMING, EntitySize.flexible(0.6f, 0.6f)).put(Pose.SNEAKING, EntitySize.flexible(0.65f, 0.6f)).put(Pose.DYING, EntitySize.fixed(0.2F, 0.2F)).build();
 
-    public static final Predicate<LivingEntity> attackSmallTarget = (p_213440_0_) -> {
-        EntityType<?> entitytype = p_213440_0_.getType();
-        return entitytype != EntityType.CAT && entitytype != MidnightEntities.SHADESQUIRREL && entitytype.getWidth() <= 0.8F && entitytype.getHeight() <= 0.8F;
+    public static final Predicate<LivingEntity> attackSmallTarget = (entity) -> {
+        EntityType<?> entitytype = entity.getType();
+        return entitytype != EntityType.CAT && entitytype != MidnightEntities.SHADE_SQUIRREL && entitytype.getWidth() <= 0.8F && entitytype.getHeight() <= 0.8F;
     };
 
     public ShadeSquirrelEntity(EntityType<? extends ShadeSquirrelEntity> type, World worldIn) {
@@ -287,7 +287,7 @@ public class ShadeSquirrelEntity extends TameableEntity {
     @Nullable
     @Override
     public AgeableEntity createChild(AgeableEntity ageable) {
-        return MidnightEntities.SHADESQUIRREL.create(this.world);
+        return MidnightEntities.SHADE_SQUIRREL.create(this.world);
     }
 
     @Override
