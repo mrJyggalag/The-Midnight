@@ -1,15 +1,19 @@
 package com.mushroom.midnight.common.entity.creature;
 
 import com.google.common.collect.ImmutableMap;
+import com.mojang.datafixers.Dynamic;
 import com.mushroom.midnight.common.registry.MidnightEntities;
 import com.mushroom.midnight.common.registry.MidnightItems;
 import net.minecraft.entity.AgeableEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.ILivingEntityData;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.Pose;
 import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.SpawnReason;
+import net.minecraft.entity.ai.brain.Brain;
 import net.minecraft.entity.ai.goal.BreedGoal;
 import net.minecraft.entity.ai.goal.FollowOwnerGoal;
 import net.minecraft.entity.ai.goal.HurtByTargetGoal;
@@ -35,8 +39,15 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.network.datasync.DataParameter;
+import net.minecraft.network.datasync.DataSerializers;
+import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.Hand;
 import net.minecraft.util.SoundEvents;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.DifficultyInstance;
+import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
@@ -44,6 +55,7 @@ import java.util.Map;
 import java.util.function.Predicate;
 
 public class ShadeSquirreEntity extends TameableEntity {
+    private static final DataParameter<BlockPos> HOME_POS = EntityDataManager.createKey(ShadeSquirreEntity.class, DataSerializers.BLOCK_POS);
     public static final EntitySize normal_size = EntitySize.flexible(0.6f, 0.75f);
 
     private static final Ingredient BREEDING_ITEMS = Ingredient.fromItems(MidnightItems.GLOB_FUNGUS_HAND);
@@ -52,7 +64,7 @@ public class ShadeSquirreEntity extends TameableEntity {
 
     public static final Predicate<LivingEntity> attackSmallTarget= (p_213440_0_) -> {
         EntityType<?> entitytype = p_213440_0_.getType();
-        return entitytype.getWidth() <= 0.8F && entitytype.getHeight() <= 0.8F;
+        return entitytype != EntityType.CAT && entitytype != MidnightEntities.SHADESQUIRRE && entitytype.getWidth() <= 0.8F && entitytype.getHeight() <= 0.8F;
     };
 
     public ShadeSquirreEntity(EntityType<? extends ShadeSquirreEntity> type, World worldIn) {
@@ -84,17 +96,47 @@ public class ShadeSquirreEntity extends TameableEntity {
         this.targetSelector.addGoal(4, new NonTamedTargetGoal<>(this, AnimalEntity.class, false, attackSmallTarget));
     }
 
+    public void setHome(BlockPos position) {
+        this.dataManager.set(HOME_POS, position);
+    }
+
+    private BlockPos getHome() {
+        return this.dataManager.get(HOME_POS);
+    }
+
+    protected void registerData() {
+        super.registerData();
+        this.dataManager.register(HOME_POS, BlockPos.ZERO);
+    }
+
     @Override
     protected void registerAttributes() {
         super.registerAttributes();
         this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue((double)0.3F);
         if (this.isTamed()) {
-            this.getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(10.0D);
+            this.getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(12.0D);
         } else {
             this.getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(8.0D);
         }
 
         this.getAttributes().registerAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(2.0D);
+    }
+
+    public void writeAdditional(CompoundNBT compound) {
+        super.writeAdditional(compound);
+        compound.putInt("HomePosX", this.getHome().getX());
+        compound.putInt("HomePosY", this.getHome().getY());
+        compound.putInt("HomePosZ", this.getHome().getZ());
+    }
+
+    public void readAdditional(CompoundNBT compound) {
+        int i = compound.getInt("HomePosX");
+        int j = compound.getInt("HomePosY");
+        int k = compound.getInt("HomePosZ");
+        if(!new BlockPos(i, j, k).equals(BlockPos.ZERO)) {
+            this.setHome(new BlockPos(i, j, k));
+        }
+        super.readAdditional(compound);
     }
 
 
@@ -103,7 +145,6 @@ public class ShadeSquirreEntity extends TameableEntity {
 
         return this.isChild() ? sizeIn.height * 0.45F : sizeIn.height * 0.85F;
     }
-
 
     public EntitySize getSize(Pose p_213305_1_) {
         return pose_map.getOrDefault(p_213305_1_, normal_size);
@@ -114,6 +155,11 @@ public class ShadeSquirreEntity extends TameableEntity {
         super.tick();
 
         this.updatePose();
+    }
+
+    @Override
+    public BlockPos getHomePosition() {
+        return super.getHomePosition();
     }
 
     protected void updatePose() {
@@ -147,10 +193,15 @@ public class ShadeSquirreEntity extends TameableEntity {
     }
 
     @Override
+    protected Brain<?> createBrain(Dynamic<?> p_213364_1_) {
+        return super.createBrain(p_213364_1_);
+    }
+
+    @Override
     public void setTamed(boolean tamed) {
         super.setTamed(tamed);
         if (tamed) {
-            this.getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(10.0D);
+            this.getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(12.0D);
         } else {
             this.getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(8.0D);
         }
@@ -164,7 +215,7 @@ public class ShadeSquirreEntity extends TameableEntity {
         if (this.isTamed()) {
             if (!itemstack.isEmpty()) {
                 if (item.isFood()) {
-                    if (this.isBreedingItem(itemstack)) {
+                    if (this.isBreedingItem(itemstack) && this.getHealth() < this.getMaxHealth()) {
                         ItemStack itemstack1 = itemstack.onItemUseFinish(this.world, this);
 
                         if (!player.abilities.isCreativeMode) {
@@ -189,7 +240,7 @@ public class ShadeSquirreEntity extends TameableEntity {
             this.consumeItemFromStack(player, itemstack);
 
             if (!this.world.isRemote) {
-                if (this.rand.nextInt(3) == 0 && !net.minecraftforge.event.ForgeEventFactory.onAnimalTame(this, player)) {
+                if (this.rand.nextInt(4) == 0 && !net.minecraftforge.event.ForgeEventFactory.onAnimalTame(this, player)) {
                     this.setTamedBy(player);
                     this.navigator.clearPath();
                     this.setAttackTarget((LivingEntity)null);
