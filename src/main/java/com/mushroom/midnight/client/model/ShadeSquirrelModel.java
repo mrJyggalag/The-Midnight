@@ -1,5 +1,6 @@
 package com.mushroom.midnight.client.model;
 
+import com.mojang.blaze3d.platform.GlStateManager;
 import com.mushroom.midnight.common.entity.creature.ShadeSquirrelEntity;
 import net.minecraft.client.renderer.entity.model.EntityModel;
 import net.minecraft.client.renderer.entity.model.IHasArm;
@@ -90,9 +91,24 @@ public class ShadeSquirrelModel extends EntityModel<ShadeSquirrelEntity> impleme
     }
 
     @Override
-    public void render(ShadeSquirrelEntity entity, float f, float f1, float f2, float f3, float f4, float f5) {
-        this.body.render(f5);
-        this.head.render(f5);
+    public void render(ShadeSquirrelEntity entity, float f, float f1, float f2, float f3, float f4, float scale) {
+        if (entity.isChild()) {
+            float f6 = 3.0F;
+            GlStateManager.pushMatrix();
+            float f7 = 0.6F;
+            GlStateManager.scalef(0.75F, 0.75F, 0.75F);
+            GlStateManager.translatef(0.0F, 9.5F * scale, 0.0F);
+            this.head.render(scale);
+            GlStateManager.popMatrix();
+            GlStateManager.pushMatrix();
+            GlStateManager.scalef(0.5555555F, 0.5555555F, 0.5555555F);
+            GlStateManager.translatef(0.0F, 20.5F * scale, 0.0F);
+            this.body.render(scale);
+            GlStateManager.popMatrix();
+        } else {
+            this.body.render(scale);
+            this.head.render(scale);
+        }
     }
 
     @Override

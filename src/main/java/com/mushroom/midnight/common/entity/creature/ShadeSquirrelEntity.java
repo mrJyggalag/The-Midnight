@@ -58,7 +58,7 @@ public class ShadeSquirrelEntity extends TameableEntity {
 
     public static final Predicate<LivingEntity> attackSmallTarget = (p_213440_0_) -> {
         EntityType<?> entitytype = p_213440_0_.getType();
-        return entitytype != EntityType.CAT && entitytype != MidnightEntities.SHADESQUIRRE && entitytype.getWidth() <= 0.8F && entitytype.getHeight() <= 0.8F;
+        return entitytype != EntityType.CAT && entitytype != MidnightEntities.SHADESQUIRREL && entitytype.getWidth() <= 0.8F && entitytype.getHeight() <= 0.8F;
     };
 
     public ShadeSquirrelEntity(EntityType<? extends ShadeSquirrelEntity> type, World worldIn) {
@@ -287,7 +287,7 @@ public class ShadeSquirrelEntity extends TameableEntity {
     @Nullable
     @Override
     public AgeableEntity createChild(AgeableEntity ageable) {
-        return MidnightEntities.SHADESQUIRRE.create(this.world);
+        return MidnightEntities.SHADESQUIRREL.create(this.world);
     }
 
     @Override
