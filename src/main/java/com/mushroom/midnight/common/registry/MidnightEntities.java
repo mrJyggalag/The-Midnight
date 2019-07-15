@@ -9,7 +9,7 @@ import com.mushroom.midnight.common.entity.creature.NightStagEntity;
 import com.mushroom.midnight.common.entity.creature.NovaEntity;
 import com.mushroom.midnight.common.entity.creature.PenumbrianEntity;
 import com.mushroom.midnight.common.entity.creature.RifterEntity;
-import com.mushroom.midnight.common.entity.creature.ShadeSquirreEntity;
+import com.mushroom.midnight.common.entity.creature.ShadeSquirrelEntity;
 import com.mushroom.midnight.common.entity.creature.SkulkEntity;
 import com.mushroom.midnight.common.entity.creature.StingerEntity;
 import com.mushroom.midnight.common.entity.creature.TreeHopperEntity;
@@ -36,7 +36,9 @@ import net.minecraftforge.registries.ObjectHolder;
 
 import java.util.Random;
 
-import static com.mushroom.midnight.Midnight.*;
+import static com.mushroom.midnight.Midnight.MIDNIGHT_AMBIENT;
+import static com.mushroom.midnight.Midnight.MIDNIGHT_MOB;
+import static com.mushroom.midnight.Midnight.MODID;
 
 @Mod.EventBusSubscriber(modid = MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 @ObjectHolder(MODID)
@@ -124,12 +126,12 @@ public class MidnightEntities {
             .setShouldReceiveVelocityUpdates(true)
             .size(0.6f, 0.6f)
             .build(MODID + ":skulk");
-    public static final EntityType<ShadeSquirreEntity> SHADESQUIRRE = EntityType.Builder.create(ShadeSquirreEntity::new, EntityClassification.CREATURE)
+    public static final EntityType<ShadeSquirrelEntity> SHADESQUIRRE = EntityType.Builder.create(ShadeSquirrelEntity::new, EntityClassification.CREATURE)
             .setTrackingRange(80)
             .setUpdateInterval(3)
             .setShouldReceiveVelocityUpdates(true)
             .size(0.6f, 0.75f)
-            .build(MODID + ":shadesquiire");
+            .build(MODID + ":shade_squirrel");
     public static final EntityType<ThrownGeodeEntity> THROWN_GEODE = EntityType.Builder.<ThrownGeodeEntity>create(ThrownGeodeEntity::new, EntityClassification.MISC)
             .setTrackingRange(64)
             .setUpdateInterval(10)
@@ -181,7 +183,7 @@ public class MidnightEntities {
         event.getRegistry().register(DECEITFUL_SNAPPER);
         SKULK.setRegistryName(MODID, "skulk");
         event.getRegistry().register(SKULK);
-        SHADESQUIRRE.setRegistryName(MODID, "shade_squirre");
+        SHADESQUIRRE.setRegistryName(MODID, "shade_squirrel");
         event.getRegistry().register(SHADESQUIRRE);
         THROWN_GEODE.setRegistryName(MODID, "thrown_geode");
         event.getRegistry().register(THROWN_GEODE);

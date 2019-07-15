@@ -5,14 +5,11 @@ import com.mojang.datafixers.Dynamic;
 import com.mushroom.midnight.common.registry.MidnightEntities;
 import com.mushroom.midnight.common.registry.MidnightItems;
 import net.minecraft.entity.AgeableEntity;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.ILivingEntityData;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.Pose;
 import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.brain.Brain;
 import net.minecraft.entity.ai.goal.BreedGoal;
 import net.minecraft.entity.ai.goal.FollowOwnerGoal;
@@ -46,18 +43,15 @@ import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.Hand;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.DifficultyInstance;
-import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
 import java.util.Map;
 import java.util.function.Predicate;
 
-public class ShadeSquirreEntity extends TameableEntity {
-    private static final DataParameter<BlockPos> HOME_POS = EntityDataManager.createKey(ShadeSquirreEntity.class, DataSerializers.BLOCK_POS);
+public class ShadeSquirrelEntity extends TameableEntity {
+    private static final DataParameter<BlockPos> HOME_POS = EntityDataManager.createKey(ShadeSquirrelEntity.class, DataSerializers.BLOCK_POS);
     public static final EntitySize normal_size = EntitySize.flexible(0.6f, 0.75f);
-
     private static final Ingredient BREEDING_ITEMS = Ingredient.fromItems(MidnightItems.GLOB_FUNGUS_HAND);
 
     private static final Map<Pose, EntitySize> pose_map = ImmutableMap.<Pose, EntitySize>builder().put(Pose.STANDING, normal_size).put(Pose.SLEEPING, EntitySize.flexible(0.6f, 0.55f)).put(Pose.FALL_FLYING, EntitySize.flexible(0.6f, 0.75f)).put(Pose.SWIMMING, EntitySize.flexible(0.6f, 0.6f)).put(Pose.SNEAKING, EntitySize.flexible(0.65f, 0.6f)).put(Pose.DYING, EntitySize.fixed(0.2F, 0.2F)).build();
@@ -67,7 +61,7 @@ public class ShadeSquirreEntity extends TameableEntity {
         return entitytype != EntityType.CAT && entitytype != MidnightEntities.SHADESQUIRRE && entitytype.getWidth() <= 0.8F && entitytype.getHeight() <= 0.8F;
     };
 
-    public ShadeSquirreEntity(EntityType<? extends ShadeSquirreEntity> type, World worldIn) {
+    public ShadeSquirrelEntity(EntityType<? extends ShadeSquirrelEntity> type, World worldIn) {
         super(type, worldIn);
         this.setTamed(false);
     }
@@ -141,8 +135,6 @@ public class ShadeSquirreEntity extends TameableEntity {
 
 
     protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn) {
-
-
         return this.isChild() ? sizeIn.height * 0.45F : sizeIn.height * 0.85F;
     }
 
@@ -273,8 +265,8 @@ public class ShadeSquirreEntity extends TameableEntity {
                 }
             }
 
-            if (target instanceof ShadeSquirreEntity) {
-                ShadeSquirreEntity squirreEntity = (ShadeSquirreEntity) target;
+            if (target instanceof ShadeSquirrelEntity) {
+                ShadeSquirrelEntity squirreEntity = (ShadeSquirrelEntity) target;
                 if (squirreEntity.isTamed() && squirreEntity.getOwner() == owner) {
                     return false;
                 }

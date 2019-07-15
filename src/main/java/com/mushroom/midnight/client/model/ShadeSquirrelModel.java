@@ -1,17 +1,16 @@
 package com.mushroom.midnight.client.model;
 
-import com.mushroom.midnight.common.entity.creature.ShadeSquirreEntity;
+import com.mushroom.midnight.common.entity.creature.ShadeSquirrelEntity;
 import net.minecraft.client.renderer.entity.model.EntityModel;
 import net.minecraft.client.renderer.entity.model.IHasArm;
 import net.minecraft.client.renderer.entity.model.RendererModel;
-import net.minecraft.entity.Entity;
 import net.minecraft.util.HandSide;
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
-public class ShadeSquirreModel  extends EntityModel<ShadeSquirreEntity> implements IHasArm {
+public class ShadeSquirrelModel extends EntityModel<ShadeSquirrelEntity> implements IHasArm {
     public RendererModel body;
     public RendererModel legL;
     public RendererModel legR;
@@ -26,7 +25,7 @@ public class ShadeSquirreModel  extends EntityModel<ShadeSquirreEntity> implemen
     public RendererModel earR2;
     public RendererModel earL2;
 
-    public ShadeSquirreModel() {
+    public ShadeSquirrelModel() {
         this.textureWidth = 64;
         this.textureHeight = 32;
         this.earL = new RendererModel(this, 0, 22);
@@ -91,13 +90,13 @@ public class ShadeSquirreModel  extends EntityModel<ShadeSquirreEntity> implemen
     }
 
     @Override
-    public void render(ShadeSquirreEntity entity, float f, float f1, float f2, float f3, float f4, float f5) {
+    public void render(ShadeSquirrelEntity entity, float f, float f1, float f2, float f3, float f4, float f5) {
         this.body.render(f5);
         this.head.render(f5);
     }
 
     @Override
-    public void setRotationAngles(ShadeSquirreEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scaleFactor) {
+    public void setRotationAngles(ShadeSquirrelEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scaleFactor) {
         super.setRotationAngles(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scaleFactor);
         this.head.rotateAngleY = netHeadYaw * ((float)Math.PI / 180F);
 
