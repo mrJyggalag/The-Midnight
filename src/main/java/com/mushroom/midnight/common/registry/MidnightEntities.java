@@ -36,9 +36,7 @@ import net.minecraftforge.registries.ObjectHolder;
 
 import java.util.Random;
 
-import static com.mushroom.midnight.Midnight.MIDNIGHT_AMBIENT;
-import static com.mushroom.midnight.Midnight.MIDNIGHT_MOB;
-import static com.mushroom.midnight.Midnight.MODID;
+import static com.mushroom.midnight.Midnight.*;
 
 @Mod.EventBusSubscriber(modid = MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 @ObjectHolder(MODID)
