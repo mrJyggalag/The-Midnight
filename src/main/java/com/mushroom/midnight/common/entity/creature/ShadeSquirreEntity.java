@@ -62,7 +62,7 @@ public class ShadeSquirreEntity extends TameableEntity {
 
     private static final Map<Pose, EntitySize> pose_map = ImmutableMap.<Pose, EntitySize>builder().put(Pose.STANDING, normal_size).put(Pose.SLEEPING, EntitySize.flexible(0.6f, 0.55f)).put(Pose.FALL_FLYING, EntitySize.flexible(0.6f, 0.75f)).put(Pose.SWIMMING, EntitySize.flexible(0.6f, 0.6f)).put(Pose.SNEAKING, EntitySize.flexible(0.65f, 0.6f)).put(Pose.DYING, EntitySize.fixed(0.2F, 0.2F)).build();
 
-    public static final Predicate<LivingEntity> attackSmallTarget= (p_213440_0_) -> {
+    public static final Predicate<LivingEntity> attackSmallTarget = (p_213440_0_) -> {
         EntityType<?> entitytype = p_213440_0_.getType();
         return entitytype != EntityType.CAT && entitytype != MidnightEntities.SHADESQUIRRE && entitytype.getWidth() <= 0.8F && entitytype.getHeight() <= 0.8F;
     };
@@ -77,7 +77,7 @@ public class ShadeSquirreEntity extends TameableEntity {
         this.sitGoal = new SitGoal(this);
         this.goalSelector.addGoal(1, new SwimGoal(this));
         this.goalSelector.addGoal(2, this.sitGoal);
-        this.goalSelector.addGoal(3, new TemptGoal(this, 0.7D,BREEDING_ITEMS,true){
+        this.goalSelector.addGoal(3, new TemptGoal(this, 0.7D, BREEDING_ITEMS, true) {
             @Override
             public boolean shouldExecute() {
                 return super.shouldExecute() && !isTamed();
@@ -112,7 +112,7 @@ public class ShadeSquirreEntity extends TameableEntity {
     @Override
     protected void registerAttributes() {
         super.registerAttributes();
-        this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue((double)0.3F);
+        this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue((double) 0.3F);
         if (this.isTamed()) {
             this.getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(12.0D);
         } else {
@@ -133,7 +133,7 @@ public class ShadeSquirreEntity extends TameableEntity {
         int i = compound.getInt("HomePosX");
         int j = compound.getInt("HomePosY");
         int k = compound.getInt("HomePosZ");
-        if(!new BlockPos(i, j, k).equals(BlockPos.ZERO)) {
+        if (!new BlockPos(i, j, k).equals(BlockPos.ZERO)) {
             this.setHome(new BlockPos(i, j, k));
         }
         super.readAdditional(compound);
@@ -222,9 +222,9 @@ public class ShadeSquirreEntity extends TameableEntity {
                             itemstack1.shrink(1);
                         }
 
-                        this.playSound(SoundEvents.ENTITY_GENERIC_EAT,0.8F,1.2F + this.rand.nextFloat() * 0.3F);
+                        this.playSound(SoundEvents.ENTITY_GENERIC_EAT, 0.8F, 1.2F + this.rand.nextFloat() * 0.3F);
 
-                        this.heal((float)item.getFood().getHealing());
+                        this.heal((float) item.getFood().getHealing());
                         return true;
                     }
                 }
@@ -234,7 +234,7 @@ public class ShadeSquirreEntity extends TameableEntity {
                 this.sitGoal.setSitting(!this.isSitting());
                 this.isJumping = false;
                 this.navigator.clearPath();
-                this.setAttackTarget((LivingEntity)null);
+                this.setAttackTarget((LivingEntity) null);
             }
         } else if (this.isBreedingItem(itemstack)) {
             this.consumeItemFromStack(player, itemstack);
@@ -243,14 +243,14 @@ public class ShadeSquirreEntity extends TameableEntity {
                 if (this.rand.nextInt(4) == 0 && !net.minecraftforge.event.ForgeEventFactory.onAnimalTame(this, player)) {
                     this.setTamedBy(player);
                     this.navigator.clearPath();
-                    this.setAttackTarget((LivingEntity)null);
+                    this.setAttackTarget((LivingEntity) null);
                     this.sitGoal.setSitting(true);
                     this.setHealth(20.0F);
                     this.playTameEffect(true);
-                    this.world.setEntityState(this, (byte)7);
+                    this.world.setEntityState(this, (byte) 7);
                 } else {
                     this.playTameEffect(false);
-                    this.world.setEntityState(this, (byte)6);
+                    this.world.setEntityState(this, (byte) 6);
                 }
             }
 
@@ -267,25 +267,25 @@ public class ShadeSquirreEntity extends TameableEntity {
     public boolean shouldAttackEntity(LivingEntity target, LivingEntity owner) {
         if (!(target instanceof CreeperEntity) && !(target instanceof GhastEntity)) {
             if (target instanceof WolfEntity) {
-                WolfEntity wolfentity = (WolfEntity)target;
+                WolfEntity wolfentity = (WolfEntity) target;
                 if (wolfentity.isTamed() && wolfentity.getOwner() == owner) {
                     return false;
                 }
             }
 
             if (target instanceof ShadeSquirreEntity) {
-                ShadeSquirreEntity squirreEntity = (ShadeSquirreEntity)target;
+                ShadeSquirreEntity squirreEntity = (ShadeSquirreEntity) target;
                 if (squirreEntity.isTamed() && squirreEntity.getOwner() == owner) {
                     return false;
                 }
             }
 
-            if (target instanceof PlayerEntity && owner instanceof PlayerEntity && !((PlayerEntity)owner).canAttackPlayer((PlayerEntity)target)) {
+            if (target instanceof PlayerEntity && owner instanceof PlayerEntity && !((PlayerEntity) owner).canAttackPlayer((PlayerEntity) target)) {
                 return false;
-            } else if (target instanceof AbstractHorseEntity && ((AbstractHorseEntity)target).isTame()) {
+            } else if (target instanceof AbstractHorseEntity && ((AbstractHorseEntity) target).isTame()) {
                 return false;
             } else {
-                return !(target instanceof CatEntity) || !((CatEntity)target).isTamed();
+                return !(target instanceof CatEntity) || !((CatEntity) target).isTamed();
             }
         } else {
             return false;
