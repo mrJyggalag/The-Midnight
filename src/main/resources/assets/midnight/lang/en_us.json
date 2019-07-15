@@ -250,16 +250,15 @@
 
   "block.midnight.midnight_lever": "Midnight Lever",
 
-  "_comment": "Items",
-
   "block.midnight.shadowroot_door": "Shadowroot Door",
   "block.midnight.dark_willow_door": "Dark Willow Door",
   "block.midnight.dead_wood_door": "Dead Wood Door",
   "block.midnight.tenebrum_door": "Tenebrum Door",
-
   "block.midnight.nightshroom_door": "Nightshroom Door",
   "block.midnight.dewshroom_door": "Dewshroom Door",
   "block.midnight.viridshroom_door": "Viridshroom Door",
+
+  "_comment": "Items",
 
   "item.midnight.bogshroom_powder": "Bogshroom Powder",
   "item.midnight.nightshroom_powder": "Nightshroom Powder",
@@ -312,7 +311,8 @@
   "item.midnight.stinger_spawn_egg": "Stinger Spawn Egg",
   "item.midnight.nightstag_spawn_egg": "Nightstag Spawn Egg",
   "item.midnight.deceitful_snapper_spawn_egg": "Deceitful Snapper Spawn Egg",
-  "item.midnight.skulk_spawn_egg": "Skulk Spawn Egg", 
+  "item.midnight.skulk_spawn_egg": "Skulk Spawn Egg",
+  "item.midnight.shade_squirrel": "Shade Squirrel Egg",
 
   "_comment": "Tools, Weapons and Armors",
 
@@ -379,6 +379,7 @@
   "entity.midnight.deceitful_snapper": "Deceitful Snapper",
   "entity.midnight.skulk": "Skulk",
   "entity.midnight.thrown_geode": "Thrown Geode",
+  "entity.midnight.shade_squirrel": "Shade Squirrel",
 
   "_comment": "Config",
 

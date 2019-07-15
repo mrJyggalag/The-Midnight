@@ -93,9 +93,7 @@ public class ShadeSquirrelModel extends EntityModel<ShadeSquirrelEntity> impleme
     @Override
     public void render(ShadeSquirrelEntity entity, float f, float f1, float f2, float f3, float f4, float scale) {
         if (entity.isChild()) {
-            float f6 = 3.0F;
             GlStateManager.pushMatrix();
-            float f7 = 0.6F;
             GlStateManager.scalef(0.75F, 0.75F, 0.75F);
             GlStateManager.translatef(0.0F, 9.5F * scale, 0.0F);
             this.head.render(scale);

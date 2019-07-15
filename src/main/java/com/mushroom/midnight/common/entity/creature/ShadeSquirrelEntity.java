@@ -7,9 +7,11 @@ import com.mushroom.midnight.common.registry.MidnightItems;
 import net.minecraft.entity.AgeableEntity;
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.ILivingEntityData;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.Pose;
 import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.brain.Brain;
 import net.minecraft.entity.ai.goal.BreedGoal;
 import net.minecraft.entity.ai.goal.FollowOwnerGoal;
@@ -43,6 +45,8 @@ import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.Hand;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.DifficultyInstance;
+import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
@@ -53,6 +57,7 @@ public class ShadeSquirrelEntity extends TameableEntity {
     private static final DataParameter<BlockPos> HOME_POS = EntityDataManager.createKey(ShadeSquirrelEntity.class, DataSerializers.BLOCK_POS);
     public static final EntitySize normal_size = EntitySize.flexible(0.6f, 0.75f);
     private static final Ingredient BREEDING_ITEMS = Ingredient.fromItems(MidnightItems.GLOB_FUNGUS_HAND);
+    private static final int GROWING_TIME = -24000;
 
     private static final Map<Pose, EntitySize> pose_map = ImmutableMap.<Pose, EntitySize>builder().put(Pose.STANDING, normal_size).put(Pose.SLEEPING, EntitySize.flexible(0.6f, 0.55f)).put(Pose.FALL_FLYING, EntitySize.flexible(0.6f, 0.75f)).put(Pose.SWIMMING, EntitySize.flexible(0.6f, 0.6f)).put(Pose.SNEAKING, EntitySize.flexible(0.65f, 0.6f)).put(Pose.DYING, EntitySize.fixed(0.2F, 0.2F)).build();
 
@@ -86,7 +91,7 @@ public class ShadeSquirrelEntity extends TameableEntity {
         this.goalSelector.addGoal(10, new LookRandomlyGoal(this));
         this.targetSelector.addGoal(1, new OwnerHurtByTargetGoal(this));
         this.targetSelector.addGoal(2, new OwnerHurtTargetGoal(this));
-        this.targetSelector.addGoal(3, (new HurtByTargetGoal(this)).setCallsForHelp());
+        this.targetSelector.addGoal(3, (new HurtByTargetGoal(this)).setCallsForHelp(ShadeSquirrelEntity.class));
         this.targetSelector.addGoal(4, new NonTamedTargetGoal<>(this, AnimalEntity.class, false, attackSmallTarget));
     }
 
@@ -106,7 +111,7 @@ public class ShadeSquirrelEntity extends TameableEntity {
     @Override
     protected void registerAttributes() {
         super.registerAttributes();
-        this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue((double) 0.3F);
+        this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.25d);
         if (this.isTamed()) {
             this.getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(12.0D);
         } else {
@@ -116,6 +121,7 @@ public class ShadeSquirrelEntity extends TameableEntity {
         this.getAttributes().registerAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(2.0D);
     }
 
+    @Override
     public void writeAdditional(CompoundNBT compound) {
         super.writeAdditional(compound);
         compound.putInt("HomePosX", this.getHome().getX());
@@ -123,6 +129,7 @@ public class ShadeSquirrelEntity extends TameableEntity {
         compound.putInt("HomePosZ", this.getHome().getZ());
     }
 
+    @Override
     public void readAdditional(CompoundNBT compound) {
         int i = compound.getInt("HomePosX");
         int j = compound.getInt("HomePosY");
@@ -133,11 +140,12 @@ public class ShadeSquirrelEntity extends TameableEntity {
         super.readAdditional(compound);
     }
 
-
+    @Override
     protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn) {
         return this.isChild() ? sizeIn.height * 0.45F : sizeIn.height * 0.85F;
     }
 
+    @Override
     public EntitySize getSize(Pose p_213305_1_) {
         return pose_map.getOrDefault(p_213305_1_, normal_size);
     }
@@ -145,8 +153,7 @@ public class ShadeSquirrelEntity extends TameableEntity {
     @Override
     public void tick() {
         super.tick();
-
-        this.updatePose();
+        updatePose();
     }
 
     @Override
@@ -154,7 +161,7 @@ public class ShadeSquirrelEntity extends TameableEntity {
         return super.getHomePosition();
     }
 
-    protected void updatePose() {
+    private void updatePose() {
         if (this.isPoseClear(Pose.SWIMMING)) {
             Pose pose;
             if (this.isSleeping()) {
@@ -201,12 +208,13 @@ public class ShadeSquirrelEntity extends TameableEntity {
         this.getAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(3.0D);
     }
 
+    @Override
     public boolean processInteract(PlayerEntity player, Hand hand) {
         ItemStack itemstack = player.getHeldItem(hand);
         Item item = itemstack.getItem();
         if (this.isTamed()) {
             if (!itemstack.isEmpty()) {
-                if (item.isFood()) {
+                if (item.getFood() != null) {
                     if (this.isBreedingItem(itemstack) && this.getHealth() < this.getMaxHealth()) {
                         ItemStack itemstack1 = itemstack.onItemUseFinish(this.world, this);
 
@@ -226,7 +234,7 @@ public class ShadeSquirrelEntity extends TameableEntity {
                 this.sitGoal.setSitting(!this.isSitting());
                 this.isJumping = false;
                 this.navigator.clearPath();
-                this.setAttackTarget((LivingEntity) null);
+                this.setAttackTarget(null);
             }
         } else if (this.isBreedingItem(itemstack)) {
             this.consumeItemFromStack(player, itemstack);
@@ -235,7 +243,7 @@ public class ShadeSquirrelEntity extends TameableEntity {
                 if (this.rand.nextInt(4) == 0 && !net.minecraftforge.event.ForgeEventFactory.onAnimalTame(this, player)) {
                     this.setTamedBy(player);
                     this.navigator.clearPath();
-                    this.setAttackTarget((LivingEntity) null);
+                    this.setAttackTarget(null);
                     this.sitGoal.setSitting(true);
                     this.setHealth(20.0F);
                     this.playTameEffect(true);
@@ -252,10 +260,12 @@ public class ShadeSquirrelEntity extends TameableEntity {
         return super.processInteract(player, hand);
     }
 
+    @Override
     public boolean isBreedingItem(ItemStack stack) {
         return BREEDING_ITEMS.test(stack);
     }
 
+    @Override
     public boolean shouldAttackEntity(LivingEntity target, LivingEntity owner) {
         if (!(target instanceof CreeperEntity) && !(target instanceof GhastEntity)) {
             if (target instanceof WolfEntity) {
@@ -287,7 +297,21 @@ public class ShadeSquirrelEntity extends TameableEntity {
     @Nullable
     @Override
     public AgeableEntity createChild(AgeableEntity ageable) {
-        return MidnightEntities.SHADE_SQUIRREL.create(this.world);
+        ShadeSquirrelEntity child = MidnightEntities.SHADE_SQUIRREL.create(this.world);
+        if (child != null) {
+            child.setGrowingAge(GROWING_TIME);
+            return child;
+        }
+        return null;
+    }
+
+    @Override
+    @Nullable
+    public ILivingEntityData onInitialSpawn(IWorld worldIn, DifficultyInstance difficulty, SpawnReason reason, @Nullable ILivingEntityData livingdata, @Nullable CompoundNBT dataTag) {
+        if (this.rand.nextInt(5) == 0) {
+            setGrowingAge(GROWING_TIME);
+        }
+        return livingdata;
     }
 
     @Override

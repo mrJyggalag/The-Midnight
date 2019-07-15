@@ -19,13 +19,16 @@
   "block.midnight.trenchstone_bricks": "Briques de Tranchée",
 
   "block.midnight.shadowroot_log": "Bûche d'Ombreracine",
+  "block.midnight.shadowroot_stripped_log": "Bûche d'Ombreracine écorcée",
   "block.midnight.shadowroot_planks": "Planches d'Ombreracine",
   "block.midnight.shadowroot_leaves": "Feuilles d'Ombreracine",
 
   "block.midnight.dead_wood_log": "Bûche de Bois Mort",
+  "block.midnight.dead_wood_stripped_log": "Bûche de Bois Mort écorcée",
   "block.midnight.dead_wood_planks": "Planches de Bois Mort",
 
   "block.midnight.dark_willow_log": "Bûche de Saule Sombre",
+  "block.midnight.dark_willow_stripped_log": "Bûche de Saule Sombre écorcée",
   "block.midnight.dark_willow_planks": "Planches de Saule Sombre",
   "block.midnight.dark_willow_leaves": "Feuilles de Saule Sombre",
 
@@ -48,8 +51,16 @@
 
   "block.midnight.shadowroot_chest": "Coffre en Ombreracine",
   "block.midnight.shadowroot_double_chest": "Coffre Double en Ombreracine",
-  "block.midnight.shadowroot_crafting_table": "Établi en Ombreracine",
   "block.midnight.nightstone_furnace": "Fourneau en Pierre de Nuit",
+
+  "block.midnight.viridshroom_stem_cache": "Cache",
+
+  "block.midnight.shadowroot_crafting_table": "Établi en Ombreracine",
+  "block.midnight.dark_willow_crafting_table": "Établi en Saule Sombre",
+  "block.midnight.dead_wood_crafting_table": "Établi en Bois Mort",
+  "block.midnight.viridshroom_crafting_table": "Établi en ChampiViride",
+  "block.midnight.dewshroom_crafting_table": "Établi en ChampiRosée",
+  "block.midnight.nightshroom_crafting_table": "Établi en ChampiNuit",
 
   "block.midnight.grass": "Hautes Herbes de Minuit",
   "block.midnight.tall_grass": "Très Hautes Herbes de Minuit",
@@ -87,12 +98,18 @@
 
   "block.midnight.dewshroom": "ChampiRosée",
   "block.midnight.double_dewshroom": "Grand ChampiRosée",
+  "block.midnight.dewshroom_roots": "Racines de ChampiRosée",
+  "block.midnight.dewshroom_flowering_roots": "Racines Fleuries de ChampiRosée",
 
   "block.midnight.nightshroom": "ChampiNuit",
   "block.midnight.double_nightshroom": "Grand ChampiNuit",
+  "block.midnight.nightshroom_roots": "Racines de ChampiRosée de ChampiNuit",
+  "block.midnight.nightshroom_flowering_roots": "Racines Fleuries de ChampiNuit",
 
   "block.midnight.viridshroom": "ChampiViride",
   "block.midnight.double_viridshroom": "Grand ChampiViride",
+  "block.midnight.viridshroom_roots": "Racines de ChampiRosée de ChampiViride",
+  "block.midnight.viridshroom_flowering_roots": "Racines Fleuries de ChampiViride",
 
   "block.midnight.bogshroom": "ChampiTourbe",
   "block.midnight.double_bogshroom": "Grand ChampiTourbe",
@@ -102,7 +119,7 @@
 
   "block.midnight.glob_fungus": "Fongus Gluant",
   "block.midnight.glob_fungus_stem": "Tronc de Fongus Gluant",
-  "block.midnight.glob_fungus_cap": "Chapeau de Fongus Gluant",
+  "block.midnight.glob_fungus_hat": "Chapeau de Fongus Gluant",
 
   "block.midnight.bladeshroom": "ChampiLame",
 
@@ -207,16 +224,41 @@
   "block.midnight.dewshroom_sporch": "Sporche de ChampiRosée",
   "block.midnight.viridshroom_sporch": "Sporche de ChampiViride",
 
+  "block.midnight.crystalotus": "Crystalotus",
+
+  "block.midnight.shadowroot_button": "Bouton en Ombreracine",
+  "block.midnight.dead_wood_button": "Bouton en Bois Mort",
+  "block.midnight.dark_willow_button": "Bouton en Saule Sombre",
+  "block.midnight.dewshroom_button": "Bouton en ChampiRosée",
+  "block.midnight.viridshroom_button": "Bouton en ChampiViride",
+  "block.midnight.nightshroom_button": "Bouton en ChampiNuit",
+  "block.midnight.nightstone_button": "Bouton en Pierre de Nuit",
+  "block.midnight.trenchstone_button": "Bouton en Pierre de Tranchée",
+  "block.midnight.rockshroom_brick_button": "Bouton en Briques de Tranchée",
+
+  "block.midnight.shadowroot_pressure_plate": "Plaque de pression en Ombreracine",
+  "block.midnight.dead_wood_pressure_plate": "Plaque de pression en Bois Mort",
+  "block.midnight.dark_willow_pressure_plate": "Plaque de pression en Saule Sombre",
+  "block.midnight.dewshroom_pressure_plate": "Plaque de pression en ChampiRosée",
+  "block.midnight.viridshroom_pressure_plate": "Plaque de pression en ChampiViride",
+  "block.midnight.nightshroom_pressure_plate": "Plaque de pression en ChampiNuit",
+  "block.midnight.nightstone_pressure_plate": "Plaque de pression en Pierre de Nuit",
+  "block.midnight.trenchstone_pressure_plate": "Plaque de pression en Pierre de Tranchée",
+  "block.midnight.rockshroom_brick_pressure_plate": "Plaque de pression en Briques de Tranchée",
+  "block.midnight.nagrilite_pressure_plate": "Plaque de pression en Nagrilite",
+  "block.midnight.tenebrum_pressure_plate": "Plaque de pression en Tenebrum",
+
+  "block.midnight.midnight_lever": "Levier de Minuit",
+
+  "block.midnight.shadowroot_door": "Porte en Ombreracine",
+  "block.midnight.dark_willow_door": "Porte en Saule Sombre",
+  "block.midnight.dead_wood_door": "Porte en Bois Mort",
+  "block.midnight.tenebrum_door": "Porte en Tenebrum",
+  "block.midnight.nightshroom_door": "Porte en ChampiNuit",
+  "block.midnight.dewshroom_door": "Porte en ChampiRosée",
+  "block.midnight.viridshroom_door": "Porte en ChampiViride",
+
   "_comment": "Items",
-
-  "item.midnight.shadowroot_door": "Porte en Ombreracine",
-  "item.midnight.dark_willow_door": "Porte en Saule Sombre",
-  "item.midnight.dead_wood_door": "Porte en Bois Mort",
-  "item.midnight.tenebrum_door": "Porte en Tenebrum",
-
-  "item.midnight.nightshroom_door": "Porte en ChampiNuit",
-  "item.midnight.dewshroom_door": "Porte en ChampiRosée",
-  "item.midnight.viridshroom_door": "Porte en ChampiViride",
 
   "item.midnight.bogshroom_powder": "Poudre de ChampiTourbe",
   "item.midnight.nightshroom_powder": "Poudre de ChampiNuit",
@@ -260,16 +302,17 @@
   
   "_comment": "Spawn Eggs",
   
-  "item.midnight.rifter_spawn_egg": "Rifter Spawn Egg",
-  "item.midnight.hunter_spawn_egg": "Hunter Spawn Egg",
-  "item.midnight.nova_spawn_egg": "Nova Egg",
-  "item.midnight.crystal_bug_spawn_egg": "Crystal Bug Spawn Egg",
-  "item.midnight.penumbrian_spawn_egg": "Penumbrian Spawn Egg",
-  "item.midnight.tree_hopper_spawn_egg": "Treehopper Spawn Egg",
-  "item.midnight.stinger_spawn_egg": "Stinger Spawn Egg",
-  "item.midnight.nightstag_spawn_egg": "Nightstag Spawn Egg",
-  "item.midnight.deceitful_snapper_spawn_egg": "Deceitful Snapper Spawn Egg",
-  "item.midnight.skulk_spawn_egg": "Skulk Spawn Egg", 
+  "item.midnight.rifter_spawn_egg": "Oeuf d'apparition de Passeur de Faille",
+  "item.midnight.hunter_spawn_egg": "Oeuf d'apparition de Chasseur",
+  "item.midnight.nova_spawn_egg": "Oeuf d'apparition de Nova",
+  "item.midnight.crystal_bug_spawn_egg": "Oeuf d'apparition d'Insecte de Cristal",
+  "item.midnight.penumbrian_spawn_egg": "Oeuf d'apparition de Pénombrien",
+  "item.midnight.tree_hopper_spawn_egg": "Oeuf d'apparition de Cigale Épineuse",
+  "item.midnight.stinger_spawn_egg": "Oeuf d'apparition de Piqueur",
+  "item.midnight.nightstag_spawn_egg": "Oeuf d'apparition de Cerf Obscure",
+  "item.midnight.deceitful_snapper_spawn_egg": "Oeuf d'apparition de Vivaneau Fourbe",
+  "item.midnight.skulk_spawn_egg": "Oeuf d'apparition de Faufileur",
+  "item.midnight.shade_squirrel": "Oeuf d'apparition d'Écureuil de l'Ombre",
 
   "_comment": "Tools, Weapons and Armors",
 
@@ -318,6 +361,8 @@
 
   "fluid.midnight.miasma": "Miasme",
   "fluid.midnight.dark_water": "Eau Sombre",
+  "item.midnight.miasma_bucket": "Seau de Miasme",
+  "item.midnight.dark_water_bucket": "Seau d'Eau Sombre",
 
   "_comment": "Entities",
 
@@ -334,6 +379,7 @@
   "entity.midnight.deceitful_snapper": "Vivaneau Fourbe",
   "entity.midnight.skulk": "Faufileur",
   "entity.midnight.thrown_geode": "Géode Lancée",
+  "entity.midnight.shade_squirrel": "Écureuil de l'Ombre",
 
   "_comment": "Config",
 
@@ -449,5 +495,42 @@
   "advancement.surface_biomes.desc": "Traverser chaque biome de la surface de Minuit",
 
   "advancement.violeaf.title": "Remède à base de plantes",
-  "advancement.violeaf.desc": "Guérir de l'effet de nausée en marchant près d'une Viofeuille"
+  "advancement.violeaf.desc": "Guérir de l'effet de nausée en marchant près d'une Viofeuille",
+
+  "_comment": "Internationalization Compatible Item Tooltip Translations",
+
+  "tooltip.midnight.pressure_plate.weightless": "non pondérée",
+  "tooltip.midnight.pressure_plate.heavy_weighted": "pondérée lourde",
+  "tooltip.midnight.pressure_plate.light_weighted": "pondérée légère",
+
+  "_comment": "Subtitles",
+  "subtitles.ambient.midnight": "Hurlement étrange",
+  "subtitles.entity.rift.idle": "Faille bourdonne",
+  "subtitles.entity.rift.unstable": "Faille vascille",
+  "subtitles.entity.rifter.ambient": "Passeur de Faille grogne",
+  "subtitles.entity.rifter.hurt": "Passeur de Faille est blessé",
+  "subtitles.entity.rifter.death": "Passeur de Faille meurt",
+  "subtitles.entity.bladeshroom_cap.shoot": "Chapeau de ChampiLame vole",
+  "subtitles.entity.bladeshroom_cap.hit": "Chapeau de ChampiLame frappe",
+  "subtitles.entity.nightstag.ambient": "Cerf Obscure souffle",
+  "subtitles.entity.nightstag.hurt": "Cerf Obscure est blessé",
+  "subtitles.entity.nightstag.death": "Cerf Obscure meurt",
+  "subtitles.entity.nightstag.step": "Cerf Obscure trotte",
+  "subtitles.block.stinger_egg.crack": "Craquement d'Oeuf",
+  "subtitles.entity.crystal_bug.flying": "Insecte de Cristal bat des ailes",
+  "subtitles.entity.crystal_bug.hurt": "Insecte de Cristal est blessé",
+  "subtitles.entity.crystal_bug.death": "Insecte de Cristal meurt",
+  "subtitles.entity.nova.idle": "Nova fait du bruit",
+  "subtitles.entity.nova.hurt": "Nova est blessé",
+  "subtitles.entity.nova.death": "Nova meurt",
+  "subtitles.entity.stinger.ambient": "Piqueur crisse",
+  "subtitles.entity.stinger.hurt": "Piqueur est blessé",
+  "subtitles.entity.stinger.death": "Piqueur meurt",
+  "subtitles.entity.skulk.hurt": "Faufileur est blessé",
+  "subtitles.entity.skulk.death": "Faufileur meurt",
+  "subtitles.entity.snapper.hurt": "Vivaneau Fourbe est blessé",
+  "subtitles.entity.snapper.death": "Vivaneau Fourbe meurt",
+  "subtitles.entity.hunter.hurt": "Chasseur est blessé",
+  "subtitles.entity.hunter.death": "Chasseur meurt",
+  "subtitles.entity.hunter.flying": "Chasseur bat des ailes"
 }
