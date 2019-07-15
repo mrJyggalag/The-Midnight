@@ -26,7 +26,7 @@ public class ShadeSquirrelRenderer extends MobRenderer<ShadeSquirrelEntity, Shad
     }
 
     private static int computeBrightness(ShadeSquirrelEntity entity, float partialTicks) {
-        return 12000;
+        return 0xf0;
     }
 
 
