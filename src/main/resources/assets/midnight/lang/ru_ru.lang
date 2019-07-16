@@ -1,0 +1,468 @@
+# Item Groups
+
+itemGroup.midnight_building=Midnight: строительные блоки
+itemGroup.midnight_decoration=Midnight: декорации
+itemGroup.midnight_items=Midnight: предметы
+itemGroup.midnight_tools=Midnight: инструменты
+itemGroup.midnight_combat=Midnight: оружие и броня
+
+# Blocks
+
+tile.midnight.nightstone.name=Ночнокамень
+tile.midnight.midnight_grass.name=Полночная трава
+tile.midnight.midnight_coarse_dirt.name=Каменистая полночная земля
+tile.midnight.midnight_dirt.name=Полночная земля
+tile.midnight.midnight_mycelium.name=Полночный мицелий
+
+tile.midnight.trenchstone.name=Траншейный камень
+tile.midnight.trenchstone_bricks.name=Траншейные кирпичи
+
+tile.midnight.shadowroot_log.name=Бревно тенекорня
+tile.midnight.shadowroot_planks.name=Доски из тенекорня
+tile.midnight.shadowroot_leaves.name=Листья тенекорня
+
+tile.midnight.dead_wood_log.name=Бревно мёртвого дерева
+tile.midnight.dead_wood_planks.name=Доски из мёртвого дерева
+
+tile.midnight.dark_willow_log.name=Бревно тёмной ивы
+tile.midnight.dark_willow_planks.name=Доски из тёмной ивы
+tile.midnight.dark_willow_leaves.name=Листья тёмной ивы
+
+tile.midnight.nightstone_bricks.name=Кирпичи из ночнокамня
+tile.midnight.chiseled_nightstone_bricks.name=Резной кирпич из ночнокамня
+
+tile.midnight.dark_pearl_ore.name=Руда тёмных жемчужин
+tile.midnight.dark_pearl_block.name=Блок тёмных жемчужин
+
+tile.midnight.ebonys_ore.name=Руда эбониса
+tile.midnight.ebonys_block.name=Блок эбониса
+
+tile.midnight.archaic_ore.name=Руда архаика
+
+tile.midnight.nagrilite_ore.name=Руда нагрилита
+tile.midnight.nagrilite_block.name=Блок нагрилита
+
+tile.midnight.tenebrum_ore.name=Руда тенебрия
+tile.midnight.tenebrum_block.name=Блок тенебрия
+
+tile.midnight.shadowroot_chest.name=Сундук из темнекорня
+tile.midnight.shadowroot_double_chest.name=Двойной сундук из темнекорня
+tile.midnight.shadowroot_crafting_table.name=Верстак из темнекорня
+tile.midnight.midnight_furnace.name=Полночная печь
+
+tile.midnight.tall_midnight_grass.name=Высокая полночная трава
+tile.midnight.double_midnight_grass.name=Двойная высокая полночная трава
+
+tile.midnight.lumen_bud.name=Люмен
+tile.midnight.double_lumen_bud.name=Двойной люмен
+
+tile.midnight.shadowroot_trapdoor.name=Люк из темнекорня
+tile.midnight.dark_willow_trapdoor.name=Люк из тёмной ивы
+tile.midnight.dead_wood_trapdoor.name=Люк из мёртвой древесины
+tile.midnight.tenebrum_trapdoor.name=Тенебриевый люк
+
+tile.midnight.shadowroot_sapling.name=Саженец темнекорня
+tile.midnight.dark_willow_sapling.name=Саженец тёмной ивы
+
+tile.midnight.bloomcrystal.name=Светокристалл
+tile.midnight.bloomcrystal_rock.name=Блок светокристалла
+
+tile.midnight.rouxe.name=Роукс кристалл
+tile.midnight.rouxe_rock.name=Блок роукс кристалла
+
+tile.midnight.archaic_glass.name=Стекло из архаика
+tile.midnight.archaic_glass_pane.name=Стеклянная панель из архаика
+
+tile.midnight.miasma_surface.name=Поверхность миазмов
+tile.midnight.miasma.name=Миазмы
+
+tile.midnight.crystal_flower.name=Кристалльный цветок
+tile.midnight.ghost_plant.name=Призрачный цветок
+tile.midnight.fingered_grass.name=Хлорис
+tile.midnight.bogweed.name=Борщевик
+tile.midnight.tendrilweed.name=Плевел
+tile.midnight.runebush.name=Рункуст
+tile.midnight.dragon_nest.name=Драконье гнездо
+
+tile.midnight.dewshroom.name=Росгриб
+tile.midnight.double_dewshroom.name=Двойной росгриб
+
+tile.midnight.nightshroom.name=Ночегриб
+tile.midnight.double_nightshroom.name=Двойной ночегриб
+
+tile.midnight.viridshroom.name=Виргриб
+tile.midnight.double_viridshroom.name=Двойной виргриб
+
+tile.midnight.bogshroom.name=Болотник
+tile.midnight.double_bogshroom.name=Двойной болотник
+tile.midnight.bogshroom_stem.name=Блок болотника
+tile.midnight.bogshroom_hat.name=Блок шляпки болотника
+tile.midnight.bogshroom_shelf.name=Нарост болотника
+
+tile.midnight.bulb_fungus.name=Капельник
+tile.midnight.bulb_fungus_stem.name=Блок капельника
+tile.midnight.bulb_fungus_hat.name=Блок шляпки капельника
+
+tile.midnight.bladeshroom.name=Клинкогриб
+
+tile.midnight.nightshroom_stem.name=Блок ночегриба
+tile.midnight.nightshroom_hat.name=Блок шляпки ночегриба
+tile.midnight.nightshroom_planks.name=Доски из ночегриба
+tile.midnight.nightshroom_shelf.name=Нарост ночегриба
+tile.midnight.nightshroom_trapdoor.name=Люк из ночегриба
+
+tile.midnight.dewshroom_stem.name=Блок росгриба
+tile.midnight.dewshroom_hat.name=Блок шляпки росгриба
+tile.midnight.dewshroom_planks.name=Доски из росгриба
+tile.midnight.dewshroom_shelf.name=Нарост росгриба
+tile.midnight.dewshroom_trapdoor.name=Люк из росгриба
+
+tile.midnight.viridshroom_stem.name=Блок виргриба
+tile.midnight.viridshroom_hat.name=Блок шляпки виргриба
+tile.midnight.viridshroom_planks.name=Доски из виргриба
+tile.midnight.viridshroom_shelf.name=Нарост виргриба
+tile.midnight.viridshroom_trapdoor.name=Люк из виргриба
+
+tile.midnight.deceitful_mud.name=Ложная грязь
+tile.midnight.deceitful_peat.name=Ложный торф
+tile.midnight.deceitful_algae.name=Ложные водоросли
+tile.midnight.deceitful_moss.name=Ложный мох
+
+tile.midnight.shadowroot_ladder.name=Лестница из темнекорня
+tile.midnight.dead_wood_ladder.name=Лесница из мёртвой древесины
+tile.midnight.dark_willow_ladder.name=Лестница из тёмной ивы
+tile.midnight.dewshroom_ladder.name=Лестница из росгриба
+tile.midnight.viridshroom_ladder.name=Лестница из виргриба
+tile.midnight.nightshroom_ladder.name=Лестница из ночегриба
+
+tile.midnight.shadowroot_slab.name=Полублок из темнекорня
+tile.midnight.shadowroot_double_slab.name=Двойной полублок из темнекорня
+tile.midnight.dead_wood_slab.name=Полублок из мёртвой древесины
+tile.midnight.dead_wood_double_slab.name=Двойной полублок из мёртвой древесины
+tile.midnight.dark_willow_slab.name=Полублок из тёмной ивы
+tile.midnight.dark_willow_double_slab.name=Двойной полублок из тёмной ивы
+tile.midnight.nightstone_slab.name=Плита из ночнокамня
+tile.midnight.nightstone_double_slab.name=Двойная плита из ночнокамня
+tile.midnight.nightstone_brick_slab.name=Плита из ночнокаменного кирпича
+tile.midnight.nightstone_brick_double_slab.name=Двойная плита из ночнокаменного кирпича
+tile.midnight.trenchstone_slab.name=Плита из траншейного камня
+tile.midnight.trenchstone_double_slab.name=Двойная плита из траншейного камня
+tile.midnight.trenchstone_brick_slab.name=Плита из траншейного кирпича
+tile.midnight.trenchstone_brick_double_slab.name=Двойная плита из траншейного кирпича
+tile.midnight.dewshroom_slab.name=Полублок росгриба
+tile.midnight.dewshroom_double_slab.name=Двойной полублок росгриба
+tile.midnight.viridshroom_slab.name=Полублок виргриба
+tile.midnight.viridshroom_double_slab.name=Двойной полублок виргриба
+tile.midnight.nightshroom_slab.name=Полублок ночегриба
+tile.midnight.nightshroom_double_slab.name=Двойной полублок ночегриба
+tile.midnight.rockshroom_bricks_slab.name=Полублок камнегриба
+tile.midnight.rockshroom_bricks_double_slab.name=Двойной полублок камнегриба
+
+tile.midnight.shadowroot_stairs.name=Ступеньки из темнекорня
+tile.midnight.dead_wood_stairs.name=Ступеньки из мёртвой древесины
+tile.midnight.dark_willow_stairs.name=Ступеньки из тёмной ивы
+tile.midnight.nightstone_stairs.name=Ступени из ночнокамня
+tile.midnight.nightstone_brick_stairs.name=Ступени из ночнокаменных кирпичей
+tile.midnight.trenchstone_stairs.name=Ступени из траншейного камня
+tile.midnight.trenchstone_brick_stairs.name=Ступени из траншейного кирпича
+tile.midnight.dewshroom_stairs.name=Ступеньки из росгриба
+tile.midnight.viridshroom_stairs.name=Ступеньки из виргриба
+tile.midnight.nightshroom_stairs.name=Ступеньки из ночегриба
+tile.midnight.rockshroom_bricks_stairs.name=Ступеньки из камнегриба
+
+tile.midnight.shadowroot_fence.name=Забор из темнекорня
+tile.midnight.dead_wood_fence.name=Забор из мёртвой древесины
+tile.midnight.dark_willow_fence.name=Забор из тёмной ивы
+tile.midnight.dewshroom_fence.name=Забор из росгриба
+tile.midnight.viridshroom_fence.name=Забор из виргриба
+tile.midnight.nightshroom_fence.name=Забор из ночегриба
+
+tile.midnight.nightstone_wall.name=Стена из ночнокамня
+tile.midnight.nightstone_brick_wall.name=Стена из ночнокаменных кирпичей
+tile.midnight.trenchstone_wall.name=Стена из траншейного камня
+tile.midnight.trenchstone_brick_wall.name=Стена из траншейного кирпича
+tile.midnight.rockshroom_bricks_wall.name=Стена из камнегриба
+
+tile.midnight.shadowroot_fence_gate.name=Ворота из темнекорня
+tile.midnight.dead_wood_fence_gate.name=Ворота из мёртвой древесины
+tile.midnight.dark_willow_fence_gate.name=Ворота из тёмной ивы
+tile.midnight.dewshroom_fence_gate.name=Ворота из росгриба
+tile.midnight.viridshroom_fence_gate.name=Ворота из виргриба
+tile.midnight.nightshroom_fence_gate.name=Ворота из ночегриба
+
+tile.midnight.suavis.name=Суавис
+tile.midnight.rockshroom.name=Камнегриб
+tile.midnight.rockshroom_bricks.name=Кирпичи из камнегриба
+
+tile.midnight.stinger_egg.name=Яйцо стингера
+tile.midnight.violeaf.name=Фиалка
+tile.midnight.unstable_bush.name=Неустойчивый куст
+tile.midnight.unstable_bush_blue.name=Синий неустойчивый куст
+tile.midnight.unstable_bush_green.name=Зелёный неустойчивый куст
+tile.midnight.unstable_bush_lime.name=Лаймовый неустойчивый куст
+
+tile.midnight.bogshroom_sporch.name=Кольцо болотника
+tile.midnight.nightshroom_sporch.name=Кольцо ночегриба
+tile.midnight.dewshroom_sporch.name=Кольцо росгриба
+tile.midnight.viridshroom_sporch.name=Кольцо виргриба
+
+tile.midnight.crystalotus.name=Хрустальный лотос
+
+tile.midnight.shadowroot_button.name=Кнопка из темнекорня
+tile.midnight.dead_wood_button.name=Кнопка из мёртвой древесины
+tile.midnight.dark_willow_button.name=Кнопка из тёмной ивы
+tile.midnight.dewshroom_button.name=Кнопка из росгриба
+tile.midnight.viridshroom_button.name=Кпока из виргриба
+tile.midnight.nightshroom_button.name=Кнопка из ночегриба
+tile.midnight.nightstone_button.name=Кнопка из ночнокаменя
+tile.midnight.trenchstone_button.name=Кнопка из траншейного камня
+tile.midnight.rockshroom_bricks_button.name=Кнопка из камнегрибного кирпича
+
+tile.midnight.shadowroot_pressure_plate.name=Нажимная плита из темнекорня
+tile.midnight.dead_wood_pressure_plate.name=Нажимная плита из мёртвой древесины
+tile.midnight.dark_willow_pressure_plate.name=Нажимная плита из тёмной ивы
+tile.midnight.dewshroom_pressure_plate.name=Нажимная плита из росгриба
+tile.midnight.viridshroom_pressure_plate.name=Нажимная плита из виргриба
+tile.midnight.nightshroom_pressure_plate.name=Нажимная плита из ночегриба
+tile.midnight.nightstone_pressure_plate.name=Нажимная плита из ночнокаменя
+tile.midnight.trenchstone_pressure_plate.name=Нажимная плита из траншейного камня
+tile.midnight.rockshroom_bricks_pressure_plate.name=Нажимная плита из камнегрибного кирпича
+tile.midnight.nagrilite_pressure_plate.name=Нажимная плита из нагрилита
+tile.midnight.tenebrum_pressure_plate.name=Нажимная плита из тенебрия
+
+tile.midnight.midnight_lever.name=Полночный рычаг
+
+# Items
+
+tile.midnight.shadowroot_door.name=Дверь из темнекорня
+tile.midnight.dark_willow_door.name=Дверь из тёмной ивы
+tile.midnight.dead_wood_door.name=Дверь из мёртвой древесины
+tile.midnight.tenebrum_door.name=Дверь из тенебрия
+
+tile.midnight.nightshroom_door.name=Дверь из ночегриба
+tile.midnight.dewshroom_door.name=Дверь из росгриба
+tile.midnight.viridshroom_door.name=Дверь из виргриба
+
+item.midnight.bogshroom_powder.name=Прах болника
+item.midnight.nightshroom_powder.name=Прах ночегриба
+item.midnight.dewshroom_powder.name=Прах росгриба
+item.midnight.viridshroom_powder.name=Прах виргриба
+
+item.midnight.geode.name=Геод
+item.midnight.dark_pearl.name=Тёмный жемчуг
+item.midnight.dark_stick.name=Тёмная палка
+item.midnight.rockshroom_clump.name=Кусок камнегриба
+item.midnight.tenebrum_ingot.name=Слиток тенебрия
+item.midnight.tenebrum_nugget.name=Кусочек тенебрия
+item.midnight.nagrilite_ingot.name=Нагрилитовый слиток
+item.midnight.nagrilite_nugget.name=Кусочек нагрилита
+item.midnight.ebonys.name=Эбонис
+item.midnight.archaic_shard.name=Кусочек архаика
+
+item.midnight.raw_suavis.name=Сырой кусочек суависа
+item.midnight.cook_suavis.name=Приготовленный кусочек суависа
+item.midnight.deceitful_snapper.name=Ложный окунь
+item.midnight.raw_stag_flank.name=Сырая оленина
+item.midnight.cook_stag_flank.name=Приготовленная оленина
+item.midnight.cook_stinger_egg.name=Приготовленное яйцо стингера
+item.midnight.hunter_wing.name=Крыло охотника
+item.midnight.cook_hunter_wing.name=Приготовленное крыло охотника
+item.midnight.bulb_fungus_hand.name=Кусок капельника
+item.midnight.unstable_seeds.name=Неустойчивые семена
+item.midnight.unstable_fruit_blue.name=Синий неустойчивый фрукт 
+item.midnight.unstable_fruit_lime.name=Лаймовый некстойчивый фрукт
+item.midnight.unstable_fruit_green.name=Зелёный неустойчивый фрукт
+
+item.midnight.spore_bomb.nightshroom.name=Споровая бомба ночегриба
+item.midnight.spore_bomb.dewshroom.name=Споровая бомба росгриба
+item.midnight.spore_bomb.viridshroom.name=Споровая бомба виргриба
+item.midnight.spore_bomb.bogshroom.name=Споровая бомба болотника
+
+item.midnight.bladeshroom_cap.name=Шапка клинкогриба
+item.midnight.bladeshroom_spores.name=Споры клинкогриба
+
+# Tools, Weapons and Armors
+
+item.midnight.shadowroot_pickaxe.name=Кирка из темнекорня
+item.midnight.tenebrum_pickaxe.name=Тенебриевая кирка
+item.midnight.nagrilite_pickaxe.name=Нагрилитовая кирка
+item.midnight.ebonys_pickaxe.name=Кирка из эбониса
+item.midnight.nightstone_pickaxe.name=Ночнокаменная кирка
+
+item.midnight.shadowroot_shovel.name=Лопата из темнекорня
+item.midnight.tenebrum_shovel.name=Тенебриевая лопата
+item.midnight.nagrilite_shovel.name=Нагрилитовая лопата
+item.midnight.ebonys_shovel.name=Лопата из эбониса
+item.midnight.nightstone_shovel.name=Ночнокаменная кирка
+
+item.midnight.shadowroot_axe.name=Топор из темнекорня
+item.midnight.tenebrum_axe.name=Тенебриевый топор
+item.midnight.nagrilite_axe.name=Нагрилитовый топор
+item.midnight.ebonys_axe.name=Топор из эбониса
+item.midnight.nightstone_axe.name=Ночнокаменный топор
+
+item.midnight.shadowroot_hoe.name=Мотыга из темнекорня
+item.midnight.tenebrum_hoe.name=Тенебриевая мотыга
+item.midnight.nagrilite_hoe.name=Нагрилитовая мотыга
+item.midnight.ebonys_hoe.name=Мотыга из эбониса
+item.midnight.nightstone_hoe.name=Ночнокаменная мотыга
+
+item.midnight.shadowroot_sword.name=Мечь из темнекорня
+item.midnight.tenebrum_sword.name=Тенебриевый меч
+item.midnight.nagrilite_sword.name=Нагрилитовый меч
+item.midnight.ebonys_sword.name=Меч из эбониса
+item.midnight.nightstone_sword.name=Ночнокаменный меч
+
+item.midnight.rockshroom_helmet.name=Шлем из камнегриба
+item.midnight.rockshroom_chestplate.name=Кираса из камнегриба
+item.midnight.rockshroom_leggings.name=Поножи из камнегриба
+item.midnight.rockshroom_boots.name=Ботинки из камнегриба
+item.midnight.rockshroom_shield.name=Щит из камнегриба
+
+item.midnight.tenebrum_helmet.name=Тенебриевый шлем
+item.midnight.tenebrum_chestplate.name=Тенебриевая кираса
+item.midnight.tenebrum_leggings.name=Тенебриевые поножи
+item.midnight.tenebrum_boots.name=Тенебриевые ботинки
+
+# Fluids
+
+fluid.midnight.miasma=Миазмы
+fluid.midnight.dark_water=Тёмная вода
+
+# Entities
+
+entity.midnight.rift.name=Разлом в Миднайт
+entity.midnight.rifter.name=Разломщик
+entity.midnight.hunter.name=Охотник
+entity.midnight.bladeshroom_cap.name=Шляпка клинкогриба
+entity.midnight.nova.name=Нова
+entity.midnight.crystal_bug.name=Кристальный жук
+entity.midnight.stinger.name=Стингер
+entity.midnight.penumbrian.name=Полутень
+entity.midnight.tree_hopper.name=Горбатка
+entity.midnight.nightstag.name=Ночнолень
+entity.midnight.deceitful_snapper.name=Ложный окунь
+entity.midnight.skulk.name=Крадущийся
+entity.midnight.thrown_geode.name=Геод
+
+# Config
+
+config_cat.midnight.general=Основные
+config_cat.midnight.general.tooltip=Все параметры, которые можно задать только на сервере.
+config_cat.midnight.client=Клиент
+config_cat.midnight.client.tooltip=Все параметры, которые могут задать игроки только на сервере.
+
+config.midnight.midnight_dimension_id=ID  Миднайта:
+config.midnight.midnight_dimension_id.tooltip=ID, которое будет использоваться для Измерения Миднайт 
+
+config.midnight.rift_shaders=Шейдеры Разлома
+config.midnight.rift_shaders.tooltip=Если true, Разломы будут отрендерены с использованием пользовательских шейдеров для стандартных эффектов. Если false, то будет рендерится более простая текстура
+
+config.midnight.bladeshroom_damage_chance=Шанс урона от клинкогриба
+config.midnight.bladeshroom_damage_chance.tooltip=Шанс получения урона от подъёма клинкогриба. Если установлено значение "0", то урон не будет наносится
+
+config.midnight.can_respawn_in_midnight=Респаун игроков в Миднайте
+config.midnight.can_respawn_in_midnight.tooltip=Если установлено значение "true", игроки будут респавниться в Миднайте, если умрут в измерении.
+
+config.midnight.hide_vignette_effect=Скрыть эффект виньетки
+config.midnight.hide_vignette_effect.tooltip=Скрывает эффект виньетки в темных областях Миднайта.
+
+config.midnight.allow_lightning_damage=Разрешить урон от молнии
+config.midnight.allow_lightning_damage.tooltip=Позволят молниям в Миднайте поджигать блоки и наносить урон.
+
+config.midnight.rift_spawn_rarity=Редкость Разлома
+config.midnight.rift_spawn_rarity.tooltip=Частота появления разломов. Чем выше значение, тем чаще появляются разломы; значение "0" означает что Разломы, ведущие в Миднайт, появляться не будут.
+
+config.midnight.rifter_spawn_rarity=Редкость разломщиков
+config.midnight.rifter_spawn_rarity.tooltip=Частота появления разломщиков. Чем выше значение, тем чаще появляются разломщики; значение "0" означает что разломщики появляться не будут.
+
+config.midnight.max_rifter_by_rift=Максимальное количество рифтеров у Разломов
+config.midnight.max_rifter_by_rift.tooltip=Максимальное количество рифтеров, которые появляются из Разлома.
+
+config.midnight.allow_rifter_teleport=Телепортация рифтеров 
+config.midnight.allow_rifter_teleport.tooltip=Позволяет рифтерам телепортироваться к игрокам, когда на них не смотрят игроки.
+
+config.midnight.monster_spawn_rate=Частота появления монстров
+config.midnight.monster_spawn_rate.tooltip=Частота появления враждебных существ в Миднайте (например Рифтер, Охотник и т.д). 
+
+config.midnight.rifter_capture_tamed_animal=Захват прирученных животных
+config.midnight.rifter_capture_tamed_animal.tooltip=Позволятет рифтерам захватывать прирученных существ и кидать их в Разломы для перемещения в Миднайт.
+
+config.midnight.capturable_entities=Захваченные существа
+config.midnight.capturable_entities.tooltip=Мобы, указанные в белом списке могут быть захвачены рифтерами, игроки и животные изначально могут быть захвачены. 
+
+config.midnight.not_capturable_animals=Не захватываемые существа
+config.midnight.not_capturable_animals.tooltip=Мобы, указанные в чёрном списке не могут быть захвачены рифтерами.
+
+config.midnight.foreign_flowers_from_bonemeal=Цветы от костной муки
+config.midnight.foreign_flowers_from_bonemeal.tooltip=Позволяет цветам из других модов появляться в Миднайте при использовании костной муки.
+
+status.midnight.rift_nearby=Вы не можете уснуть, ощущая злое присутствие рядом
+status.midnight.snapped=Рыба набросилась на тебя
+
+# Biomes
+
+biome.midnight.vigilant_forest.name=Vigilant Forest
+biome.midnight.black_ridge.name=Black Ridge
+biome.midnight.deceitful_bog.name=Deceitful Bog
+biome.midnight.fungi_forest.name=Fungi Forest
+biome.midnight.obscured_peaks.name=Obscured Peaks
+biome.midnight.warped_fields.name=Warped Fields
+biome.midnight.crystal_spires.name=Crystal Spires
+biome.midnight.night_plains.name=Night Plains
+biome.midnight.obscured_plateau.name=Obscured Plateau
+biome.midnight.phantasmal_valley.name=Phantasmal Valley
+biome.midnight.runebush_grove.name=Runebush Grove
+biome.midnight.hilly_vigilant_forest.name=Hilly Vigilant Forest
+biome.midnight.hilly_fungi_forest.name=Hilly Fungi Forest
+
+# Potions
+
+potion.midnight.stunned.name=Оглушенный
+potion.midnight.pollinated.name=Опыленный
+potion.midnight.dragon_guard.name=Стража дракона
+potion.midnight.darkness.name=Темнота
+potion.midnight.tormented.name=Измученный
+potion.midnight.unstable_fall.name=Неустойчивое падение
+potion.midnight.confusion.name=Путаница
+
+# DamageSources
+death.midnight.bladeshroom=% был заколот до смерти клинкогриба
+death.midnight.deceitful_snapper=% был раскусан попалам
+death.midnight.rockshroom_spore=% был поражён спорами камнегриба
+death.midnight.tormented=% был замучен до смерти
+
+# Advancements
+
+advancement.midnight.title=Миднайт
+advancement.midnight.desc=Туши свет!
+
+advancement.inebriated.title=Нетрезвый
+advancement.inebriated.desc=Сорвите Суавист
+
+advancement.shroomikens.title=Грибосюрикен
+advancement.shroomikens.desc=Киньте шляпку клинкогриба
+
+advancement.fungi_forest.title=Это что, свет?
+advancement.fungi_forest.desc=Найдите грибной лес в Миднайте
+
+advancement.snapped_by_snapper.title=Кэшбэк
+advancement.snapped_by_snapper.desc=Попытайтесь съесть ложного окуня, а затем удивитесь агрессивности своей еды
+
+advancement.your_highness.title=Ваше Святейшество
+advancement.your_highness.desc=Пусть каждый цвет ночноленя преклонится перед вами
+
+advancement.thrown_geode.title=Сломанный
+advancement.thrown_geode.desc=Откройте геод, бросив его во что-т твёрдое
+
+advancement.surface_biomes.title=Ночной странник
+advancement.surface_biomes.desc=Пересеките каждый биом и суб-биом в Миднайте
+
+advancement.violeaf.title=Народная медецина
+advancement.violeaf.desc=Излечитесь от эффекта тошноты, пройдя через фиалку 
+
+# Internationalization Compatible Item Tooltip Translations
+
+tooltip.midnight.pressure_plate.weightless=Not weighted
+tooltip.midnight.pressure_plate.heavy_weighted=Heavy weighted
+tooltip.midnight.pressure_plate.light_weighted=Light weighted
