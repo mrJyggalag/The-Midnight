@@ -312,7 +312,7 @@
   "item.midnight.nightstag_spawn_egg": "Oeuf d'apparition de Cerf Obscure",
   "item.midnight.deceitful_snapper_spawn_egg": "Oeuf d'apparition de Vivaneau Fourbe",
   "item.midnight.skulk_spawn_egg": "Oeuf d'apparition de Faufileur",
-  "item.midnight.shade_squirrel": "Oeuf d'apparition d'Écureuil de l'Ombre",
+  "item.midnight.shade_squirrel_spawn_egg": "Oeuf d'apparition d'Écureuil de l'Ombre",
 
   "_comment": "Tools, Weapons and Armors",
 
@@ -463,6 +463,7 @@
   "potion.midnight.confusion": "Confusion",
 
   "_comment": "DamageSources",
+
   "death.midnight.bladeshroom": "%s a été piqué mortellement par un ChampiLame",
   "death.midnight.deceitful_snapper": "%s a été dévoré",
   "death.midnight.rockshroom_spore": "%s a été touché par un spore de ChampiRoche",
@@ -504,6 +505,7 @@
   "tooltip.midnight.pressure_plate.light_weighted": "pondérée légère",
 
   "_comment": "Subtitles",
+
   "subtitles.ambient.midnight": "Hurlement étrange",
   "subtitles.entity.rift.idle": "Faille bourdonne",
   "subtitles.entity.rift.unstable": "Faille vascille",
