@@ -152,7 +152,7 @@ public class CommonEventHandler {
     public static void onSleep(PlayerSleepInBedEvent event) {
         if (event.getResultStatus() == null) {
             PlayerEntity player = event.getEntityPlayer();
-            BlockPos bedPos = event.getPos();
+            BlockPos bedPos = player.getPosition(); // event.getPos() is nullable in the forge event
 
             List<RiftEntity> rifts = player.world.getEntitiesWithinAABB(RiftEntity.class, new AxisAlignedBB(bedPos).grow(6.0));
             if (!rifts.isEmpty()) {
