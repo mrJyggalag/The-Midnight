@@ -22,6 +22,7 @@ import com.mushroom.midnight.common.world.feature.TrenchstoneBoulderFeature;
 import com.mushroom.midnight.common.world.feature.config.CrystalClusterConfig;
 import com.mushroom.midnight.common.world.feature.config.MidnightOreConfig;
 import com.mushroom.midnight.common.world.feature.config.UniformCompositionConfig;
+import com.mushroom.midnight.common.world.feature.structure.WellStructure;
 import com.mushroom.midnight.common.world.feature.tree.DarkWillowTreeFeature;
 import com.mushroom.midnight.common.world.feature.tree.DeadTreeFeature;
 import com.mushroom.midnight.common.world.feature.tree.LargeBogshroomFeature;
@@ -103,7 +104,6 @@ public class MidnightFeatures {
 //                }
 //            }
 //    };
-
     public static final AbstractTreeFeature<NoFeatureConfig> SHADOWROOT_TREE = new ShadowrootTreeFeature(NoFeatureConfig::deserialize);
     public static final AbstractTreeFeature<NoFeatureConfig> DARK_WILLOW_TREE = new DarkWillowTreeFeature(NoFeatureConfig::deserialize);
     public static final Feature<NoFeatureConfig> DEAD_TREE = new DeadTreeFeature(NoFeatureConfig::deserialize, ShelfAttachProcessor.FOREST_SHELF_BLOCKS);
@@ -147,6 +147,8 @@ public class MidnightFeatures {
 
     public static final Feature<MidnightOreConfig> ORE = new MidnightOreFeature(MidnightOreConfig::deserialize);
 
+    //structure
+    public static final Feature<NoFeatureConfig> WELL = new WellStructure(NoFeatureConfig::deserialize);
     @SubscribeEvent
     public static void registerFeatures(IForgeRegistry<Feature<?>> event) {
         RegUtil.generic(event)
@@ -183,6 +185,12 @@ public class MidnightFeatures {
                 .add("trenchstone_boulder", TRENCHSTONE_BOULDER)
                 .add("crystal_cluster", CRYSTAL_CLUSTER)
                 .add("crystal_spire", CRYSTAL_SPIRE)
-                .add("ore", ORE);
+                .add("ore", ORE)
+                .add("well", WELL);
+
+        //I think it is necessary when generating the structure
+        //Feature.STRUCTURES.put("Well".toLowerCase(Locale.ROOT), WELL);
+        //Registry.register(Registry.STRUCTURE_FEATURE, new ResourceLocation(Midnight.MODID,"well"), WELL);
     }
+
 }

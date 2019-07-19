@@ -351,6 +351,13 @@ public class MidnightBiomeConfigurator {
         ));
     }
 
+    public static void addWell(ConfigurableBiome biome) {
+        biome.add(GenerationStage.Decoration.SURFACE_STRUCTURES, Biome.createDecoratedFeature(
+                MidnightFeatures.WELL, IFeatureConfig.NO_FEATURE_CONFIG,
+                MidnightPlacements.CHANCE_SURFACE, new ChanceConfig(60))
+        );
+    }
+
     public static void addStandardCreatureSpawns(ConfigurableBiome biome) {
         addCreature(biome, MidnightEntities.NIGHTSTAG, 100, 1, 3);
     }
