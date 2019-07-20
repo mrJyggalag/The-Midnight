@@ -2,11 +2,11 @@
   "type": "minecraft:crafting_shapeless",
   "ingredients": [
     {
-      "item": "midnight:dark_pearl_block"
+      "item": "midnight:tenebrum_ingot"
     }
   ],
   "result": {
-    "item": "midnight:dark_pearl",
+    "item": "midnight:tenebrum_nugget",
     "count": 9
   }
 }

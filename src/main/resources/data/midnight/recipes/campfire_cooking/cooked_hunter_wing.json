@@ -1,9 +1,10 @@
 {
-  "type": "minecraft:smelting",
+  "experience": 0.35,
+  "cookingtime": 400,
+  "type": "minecraft:campfire_cooking",
   "ingredient": {
     "item": "midnight:hunter_wing"
   },
   "result": "midnight:cooked_hunter_wing",
-  "experience": 0.35,
-  "cookingtime": 200
+  "count": 1
 }
